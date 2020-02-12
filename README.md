@@ -1,15 +1,13 @@
 
-# Guido Music Notation Format
+# Faust Online Documentation
 
-The GUIDO Music Notation Format (GMN) is a general purpose formal language for representing score level music in a platform independent, plain-text and human-readable way. This repository is intended to build the documentation of the language, and to provide the corresponding examples. 
+[Faust](https://faust.grame.fr) is a Functional Programming Language for sound synthesis and audio processing with a strong focus on the design of synthesizers, musical instruments, audio effects, etc. Faust targets high-performance signal processing applications and audio plug-ins for a variety of platforms and standards.
+
+This repository is intended to build the documentation of the Faust environment, and to provide the corresponding examples. 
 
 ### Prerequisites
 - you must have python and pip installed.
 - you must have the Guidolib source code installed. You can get it from [github](https://github.com/grame-cncm/guidolib)
-- you must have the following Guido tools available from the command line :
-	- guido2svg
-	- guidogetpagecount
-  see the guidolib build process
 
 
 ### Building the documentation
@@ -38,5 +36,10 @@ $ make serve
 When ready, you can generate the documentation web site. Type:
 ~~~~~~~~~~~~~~~~
 $ make build
+~~~~~~~~~~~~~~~~
+
+More details on the build process:
+~~~~~~~~~~~~~~~~
+$ make help
 ~~~~~~~~~~~~~~~~
 
