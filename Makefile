@@ -72,17 +72,18 @@ publish:
 	git checkout gh-pages
 	cp -Rf $(MKDIR)/site/* .
 	@echo "Review the changes, add new files, commit and push manually"
+	@echo "... and switch back to master branch"
 	
 
 ####################################################################
-# building md files
+# building md and svg files
 md : $(MD)
 
 options: $(DOCDIR)/refs/options.md
 
 $(DOCDIR)/refs/options.md:
 	@echo "#Faust compiler options\n\n" > $@
-	faust --help | awk -f scripts/options.awk >> $@
+	faust --help | $(AWK) -f scripts/options.awk >> $@
 
 $(DOCDIR)/%.md:src/%.md 
 	@echo ========= building $<
@@ -131,34 +132,14 @@ tagschapters:
 tagsindex:  $(DOCDIR)/refs/index.md
 
 $(DOCDIR)/refs/index.md: Tags.txt
-	cat Tags.txt | awk -f scripts/tagslist.awk > $(DOCDIR)/refs/index.md
+	cat Tags.txt | $(AWK) -f scripts/tagslist.awk > $(DOCDIR)/refs/index.md
 
 ####################################################################
 # rules to convert gmn to html
-$(DOCDIR)/GMN/examples/%.html: examples/mkdocs/examples/%.gmn
-	@[ -d $(DOCDIR)/GMN/examples ] || mkdir $(DOCDIR)/GMN/examples
-	sh scripts/guido2svg.sh $<	> $@
-
-$(DOCDIR)/GMN/notes.html: examples/mkdocs/notes.gmn
-	$(eval b64 := $(shell openssl base64 -in $< |  tr -d '\n'))
-	@echo '<button class="try_it" onclick=window.open("$(EDITOR)?code=$(b64)")> Try it online </button>' > $@
-	@echo '<div class="guido-code guido-medium">' >> $@
-	@echo  >> $@
-	guido2svg $< >> $@
-	@echo '</div>' >> $@
-
-$(DOCDIR)/GMN/%.html: examples/mkdocs/%.gmn
-	$(eval b64 := $(shell openssl base64 -in $< |  tr -d '\n'))
-	@echo '<button class="try_it" onclick=window.open("$(EDITOR)?code=$(b64)")> Try it online </button>' > $@
-	@echo '<div class="guido-code">' >> $@
-	@echo  >> $@
-	guido2svg $< >> $@
-	@echo '</div>' >> $@
-
 $(DOCDIR)/examples/%.md: examples/mkdocs/examples/%.gmn
 	@[ -d $(DOCDIR)/examples ] || mkdir $(DOCDIR)/examples
 	$(eval name := $(patsubst $(DOCDIR)/examples/%.md, %, $@))	
-	awk -v FILE=$(name) -f scripts/sample2md.awk $< > $@
+	$(AWK) -v FILE=$(name) -f scripts/sample2md.awk $< > $@
 
 ####################################################################
 # rules to convert gmn to base 64
