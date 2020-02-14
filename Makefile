@@ -10,6 +10,7 @@ EXDIR    ?= $(FAUSTDIR)/examples
 SRC   	 := $(shell find src -name "*.md")
 MD   	 := $(SRC:src/%=$(DOCDIR)/%)
 DSP   	 := $(shell find $(DOCDIR) -name "*.dsp")
+SVGDIRS  := $(shell find $(DOCDIR) -type d -name "exfaust*")
 SVG   	 := $(DSP:%.dsp=%.svg)
 
 EXSRC    := $(shell find $(EXDIR) -type d -d 1 | sort -f | grep -v old)
@@ -75,6 +76,8 @@ clean:
 	rm -f $(MD)
 	rm -rf $(GENERATED)
 	rm -f $(EXOUT)
+	rm -rf $(SVGDIRS)
+
 
 publish:
 	$(MAKE) clean	# make sure previous svg output is removed
