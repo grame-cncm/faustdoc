@@ -244,7 +244,7 @@ An exhaustive list of the standard Faust UI elements is given in the
 [corresponding section](#user-interface-primitives-and-configuration). Be aware 
 that they not all supported by all the Faust targets. For example, you wont be 
 able to declare vertical sliders if you're using the 
-[Faust Playground](../../tool/playground/index.html), etc. 
+[Faust Playground](https://faustplayground.grame.fr), etc. 
 
 In the current case, we'd like to control the `ctFreq`, `q` and `gain` 
 parameters of the previous program with horizontal sliders. To do this, we can 
