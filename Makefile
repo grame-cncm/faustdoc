@@ -80,6 +80,7 @@ publish:
 	$(MAKE) all
 	$(MAKE) build
 	git checkout gh-pages
+	rm -rf examples guide refs	# clean previous folders
 	cp -Rf $(MKDIR)/site/* .
 	rm -rf $(MKDIR)
 	rm -f Makefile
