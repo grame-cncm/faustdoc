@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+
+while [ $1 ]
+do
+	echo
+	echo "## " $(basename $1)
+	echo "<pre class=faust-tools>"
+	sh $1 -help
+	echo "</pre>"
+	echo
+
+	shift
+done
+
