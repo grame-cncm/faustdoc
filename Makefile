@@ -4,7 +4,7 @@ AWK		?= awk
 
 MKDIR    := mkdocs
 DOCDIR   := $(MKDIR)/docs
-FAUSTDIR ?= ../faust
+FAUSTDIR ?= ../../faust
 
 SRC   	 := $(shell find src -name "*.md")
 MD   	 := $(SRC:src/%=$(DOCDIR)/%)
@@ -84,7 +84,7 @@ $(DOCDIR)/refs/options.md:
 	@echo "#Faust compiler options\n\n" > $@
 	faust --help | awk -f scripts/options.awk >> $@
 
-$(DOCDIR)/%.md:src/%.md
+$(DOCDIR)/%.md:src/%.md 
 	@echo ========= building $<
 	@[ -d $(DOCDIR)/$* ] | mkdir -p $(DOCDIR)/$*
 	cat $< | $(AWK) -f scripts/faustcode.awk IMG=$* DOCROOT=$(DOCDIR) > $@
@@ -96,7 +96,7 @@ svg : $(SVG)
 
 ####################################################################
 # building tools doc
-tools : $(DOCDIR)/refs/tools.md
+tools : $(FAUSTDIR) $(DOCDIR)/refs/tools.md 
 
 $(DOCDIR)/refs/tools.md: src/refs/tools.md $(TOOLS)
 	cat src/refs/tools.md > $@
