@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> delayEcho  - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../bela/"> bela </a>
+</li>
+                                    
+<li class="active">
+    <a href="./"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../spat/"> spat </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../bela/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../dynamic/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#delayecho">delayEcho</a></li>
+            <li><a href="#echo">echo</a></li>
+            <li><a href="#quadecho">quadEcho</a></li>
+            <li><a href="#smoothdelay">smoothDelay</a></li>
+            <li><a href="#stereoecho">stereoEcho</a></li>
+            <li><a href="#tapiir">tapiir</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="delayecho">delayEcho</h1>
+<h2 id="echo">echo</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="/examples/delayEcho/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check misceffects.lib
+// for more accurate examples of echo functions
+
+declare name        &quot;echo&quot;;
+declare version     &quot;1.0&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2006&quot;;
+//-----------------------------------------------
+//              A Simple Echo
+//-----------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+process = vgroup(&quot;echo-simple&quot;, ef.echo1s);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//examples/delayEcho/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="quadecho">quadEcho</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="/examples/delayEcho/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check misceffects.lib
+// for more accurate examples of echo functions
+
+declare name        &quot;quadEcho&quot;;
+declare version     &quot;1.0&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2007&quot;;
+
+//-----------------------------------------------
+//              A 1 second quadriphonic Echo
+//-----------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+process = vgroup(&quot;stereo echo&quot;, multi(ef.echo1s, 4))
+    with{ 
+        multi(f,1) = f;
+        multi(f,n) = f,multi(f,n-1);
+    };                          
+
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//examples/delayEcho/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="smoothdelay">smoothDelay</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="/examples/delayEcho/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name    &quot;smoothDelay&quot;;
+declare author  &quot;Yann Orlarey&quot;;
+declare copyright &quot;Grame&quot;;
+declare version &quot;1.0&quot;;
+declare license &quot;STK-4.3&quot;;
+
+//--------------------------process----------------------------
+//
+//  A stereo smooth delay with a feedback control
+//  
+//  This example shows how to use sdelay, a delay that doesn't
+//  click and doesn't transpose when the delay time is changed
+//-------------------------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+process = par(i, 2, voice)
+    with 
+    { 
+        voice   = (+ : de.sdelay(N, interp, dtime)) ~ *(fback);
+        N       = int(2^19); 
+        interp  = hslider(&quot;interpolation[unit:ms][style:knob]&quot;,10,1,100,0.1)*ma.SR/1000.0; 
+        dtime   = hslider(&quot;delay[unit:ms][style:knob]&quot;, 0, 0, 5000, 0.1)*ma.SR/1000.0;
+        fback   = hslider(&quot;feedback[style:knob]&quot;,0,0,100,0.1)/100.0; 
+    };
+
+
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//examples/delayEcho/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="stereoecho">stereoEcho</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="/examples/delayEcho/exfaust3/exfaust3-svg/process.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check misceffects.lib
+// for more accurate examples of echo functions
+
+declare name        &quot;stereoEcho&quot;;
+declare version     &quot;1.0&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2007&quot;;
+
+//-----------------------------------------------
+//              A 1 second Stereo Echo
+//-----------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+process = vgroup(&quot;stereo echo&quot;, (ef.echo1s, ef.echo1s));
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//examples/delayEcho/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="tapiir">tapiir</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="/examples/delayEcho/exfaust4/exfaust4-svg/process.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name        &quot;tapiir&quot;;
+declare version     &quot;1.0&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2006&quot;;
+
+//======================================================
+//
+//                  TAPIIR
+//    (from Maarten de Boer's Tapiir)
+//
+//======================================================
+
+import(&quot;stdfaust.lib&quot;);
+
+dsize = 524288;
+
+// user interface
+//---------------
+tap(n) = vslider(&quot;tap %n&quot;, 0,0,1,0.1);
+in(n) = vslider(&quot;input %n&quot;, 1,0,1,0.1);
+gain = vslider(&quot;gain&quot;, 1,0,1,0.1);
+del = vslider(&quot;delay (sec)&quot;, 0, 0, 5, 0.01) * ma.SR;
+
+// mixer and matrix
+//-----------------------------------------------------------
+mixer(taps,lines) = par(i,taps,*(tap(i))), par(i,lines,*(in(i))) :&gt; *(gain);
+
+matrix(taps,lines) = (si.bus(lines+taps)
+                        &lt;: tgroup(&quot;&quot;,
+                        par(i, taps, hgroup(&quot;Tap %i&quot;, mixer(taps,lines) : de.delay(dsize,del))))
+                    ) ~ si.bus(taps);
+
+// tapiir
+//--------
+tapiir(taps,lines) = vgroup(&quot;Tapiir&quot;,
+                            si.bus(lines)
+                            &lt;: (matrix(taps,lines), si.bus(lines))
+                            &lt;: vgroup( &quot;outputs&quot;, par( i, lines, hgroup(&quot;output %i&quot;, mixer(taps,lines)) ) )
+                            );
+
+process = tapiir(6,2);
+
+
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//examples/delayEcho/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run --></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

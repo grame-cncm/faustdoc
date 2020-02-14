@@ -104,6 +104,79 @@
 </li>
                                 </ul>
                             </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                </ul>
+                            </li>
                             <li >
                                 <a href="../../about/">About</a>
                             </li>
@@ -168,18 +241,21 @@ but this step is absolutely not required,</p>
 <p>Write the following code in the <a href="../../tools/editor">Faust online editor</a>:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust0 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust0
-<div class="faust-run"><img src="/guide/quick-start/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 process = no.noise;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>and then click on the "run" button on the top left corner. Alternatively, you
 can also click on the "Try it Yourself" button of the window above if you're
 reading the online version of this documentation. You should now hear white 
@@ -206,8 +282,8 @@ other language. </p>
 <a href="#sequential-composition">sequential composition operator</a>: <code>:</code></p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust1 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust1
-<div class="faust-run"><img src="/guide/quick-start/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = 500;
@@ -217,10 +293,13 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p><a href="../libraries/index.html#fi.resonlp"><code>fi.resonlp</code></a> has four arguments (in 
 order): <em>cut-off frequency</em>, <em>q</em>, <em>gain</em> and its <em>input</em>. Here, we're setting 
 the first three arguments with fixed variables. Variables don't have a type in 
@@ -237,8 +316,8 @@ implicit input, we can connect them together. This is essentially the same as
 writing something like:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust2 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust2
-<div class="faust-run"><img src="/guide/quick-start/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = 500;
@@ -248,10 +327,13 @@ process = fi.resonlp(ctFreq,q,gain,no.noise);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>While this would work, it's kind of ugly and not very "Faustian", so we don't do 
 it... ;)</p>
 <p>At this point, you should be able to use and plug various elements of the Faust 
@@ -276,8 +358,8 @@ parameters (<code>a</code> and <code>b</code>). On the other hand:</p>
 online editor so that the <code>process</code> line looks like this:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust3 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust3
-<div class="faust-run"><img src="/guide/quick-start/exfaust3/exfaust3-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust3/exfaust3-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = 500;
@@ -287,18 +369,21 @@ process = no.noise : _ : fi.resonlp(ctFreq,q,gain) : _;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>Of course, this should not affect the result.</p>
 <p>You probably noticed that we used the 
 <a href="#parallel-composition"><code>,</code> Faust composition operator to express two signals in parallel</a>. 
 We can easily turn our filtered noise example into a stereo object using it:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust4 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust4
-<div class="faust-run"><img src="/guide/quick-start/exfaust4/exfaust4-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust4/exfaust4-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = 500;
@@ -308,15 +393,18 @@ process = no.noise : _ &lt;: fi.resonlp(ctFreq,q,gain),fi.resonlp(ctFreq,q,gain)
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>or we could even write this in a cleaner way:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust5 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust5
-<div class="faust-run"><img src="/guide/quick-start/exfaust5/exfaust5-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust5/exfaust5-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = 500;
@@ -327,10 +415,13 @@ process = no.noise &lt;: filter,filter;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <blockquote>
 <p>Note that this example allows us to have 2 separate filters for each channel.
 Since both filters currently have the same parameters, another way of
@@ -360,17 +451,20 @@ process = no.noise &lt;: filter+filter;
 each copy, for example, in the expression:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust6 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust6
-<div class="faust-run"><img src="/guide/quick-start/exfaust6/exfaust6-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust6/exfaust6-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 process = 1 &lt;: _,_;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>the two <code>_</code> both contain 1...</p>
 <p>All right, it's now time to add a basic user interface to our Faust program to 
 make things a bit more interactive.</p>
@@ -379,8 +473,8 @@ make things a bit more interactive.</p>
 the previous section:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust7 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust7
-<div class="faust-run"><img src="/guide/quick-start/exfaust7/exfaust7-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust7/exfaust7-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = 500;
@@ -390,10 +484,13 @@ process = no.noise : fi.resonlp(ctFreq,q,gain) ;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>Faust allows us to declare basic 
 <a href="#user-interface-primitives-and-configuration">user interface (UI) elements</a> to 
 control the parameters of a Faust object. Since Faust can be used to make a wide 
@@ -414,8 +511,8 @@ parameters of the previous program with horizontal sliders. To do this, we can
 write something like:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust8 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust8
-<div class="faust-run"><img src="/guide/quick-start/exfaust8/exfaust8-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust8/exfaust8-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = hslider(&quot;cutoffFrequency&quot;,500,50,10000,0.01);
@@ -425,10 +522,13 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>The first argument of <a href="#hslider-primitive"><code>hslider</code></a> is the 
 <em>name of the parameter</em> as it will be displayed in the interface or used in the 
 API (it can be different from the name of the variable associated with the UI 
@@ -438,8 +538,8 @@ and finally the <em>step</em>. To summarize: <code>hslider("paramName",default,m
 (where <code>gate</code> is just the name of the button):</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust9 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust9
-<div class="faust-run"><img src="/guide/quick-start/exfaust9/exfaust9-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust9/exfaust9-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = hslider(&quot;[0]cutoffFrequency&quot;,500,50,10000,0.01);
@@ -450,10 +550,13 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust9/exfaust9.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust9/exfaust9.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>Note that we were able to 
 <a href="#ordering-ui-elements">order parameters in the interface</a> by numbering them in 
 the parameter name field using squared brackets. </p>
@@ -463,8 +566,8 @@ This problem can be easily solved by "smoothing" down the output of the sliders
 using the <a href="../libraries/index.html#smoo"><code>si.smoo</code></a> function:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust10 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust10
-<div class="faust-run"><img src="/guide/quick-start/exfaust10/exfaust10-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust10/exfaust10-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = hslider(&quot;[0]cutoffFrequency&quot;,500,50,10000,0.01) : si.smoo;
@@ -475,10 +578,13 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust10/exfaust10.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust10/exfaust10.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>Note that we're also using <code>si.smoo</code> on the output of the <code>gate</code> button to 
 apply a exponential envelope on its signal. </p>
 <p>This is a very broad introduction to making user interface elements in Faust. 
@@ -497,8 +603,8 @@ also need to split the output of the filter (otherwise you will get an error
 because Faust wont know how to connect things):</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust11 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust11
-<div class="faust-run"><img src="/guide/quick-start/exfaust11/exfaust11-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust11/exfaust11-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 ctFreq = hslider(&quot;[0]cutoffFrequency&quot;,500,50,10000,0.01) : si.smoo;
@@ -509,10 +615,13 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t &lt;: dm.zita_light;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust11/exfaust11.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust11/exfaust11.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>Hopefully, you should see many more UI elements in your interface. </p>
 <p>That's it folks! At this point you should be able to use 
 <a href="../libraries/index.html#standard-functions">Faust standard functions</a>, connect 
@@ -548,8 +657,8 @@ process =
 <p>Make a guitar effect chain:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/quick-start/exfaust12 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust12
-<div class="faust-run"><img src="/guide/quick-start/exfaust12/exfaust12-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/quick-start/exfaust12/exfaust12-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 process = 
@@ -561,10 +670,13 @@ process =
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust12/exfaust12.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/quick-start/exfaust12/exfaust12.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>Since we're only using functions from 
 <a href="../libraries/index.html#demo.lib"><code>demo.lib</code></a> here, there's no need to define 
 any UI since it is built-in in the functions that we're calling. Note that the 

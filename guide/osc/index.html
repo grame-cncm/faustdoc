@@ -104,6 +104,79 @@
 </li>
                                 </ul>
                             </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                </ul>
+                            </li>
                             <li >
                                 <a href="../../about/">About</a>
                             </li>
@@ -282,18 +355,21 @@ stuff like the online editor. -->
 with a level control (we'll call it <code>noise.dsp</code>):</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/osc/exfaust0 ] || mkdir -p mkdocs/docs/guide/osc/exfaust0
-<div class="faust-run"><img src="/guide/osc/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/osc/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 process = no.noise*hslider(&quot;level&quot;,0,0,1,0.01);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/osc/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/osc/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>This example can be compiled as a standalone Jack Qt application with OSC 
 support simply by running the following command:</p>
 <pre><code>faust2jaqt -osc noise.dsp
@@ -429,18 +505,21 @@ monophonic audio mixer with 4 inputs and one output. For each input we have a
 mute button and a level slider:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/osc/exfaust1 ] || mkdir -p mkdocs/docs/guide/osc/exfaust1
-<div class="faust-run"><img src="/guide/osc/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/osc/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 input(v) = vgroup(&quot;input %v&quot;, *(1-checkbox(&quot;mute&quot;)) : *(vslider(&quot;level&quot;, 0, 0, 1, 0.01)));
 process = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/osc/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/osc/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->  </p>
+
+<!-- /faust-run -->
+
 <p>If we query this application:</p>
 <pre><code>T1$ oscsend localhost 5510 &quot;/*&quot; s get 
 </code></pre>

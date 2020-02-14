@@ -104,6 +104,79 @@
 </li>
                                 </ul>
                             </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                </ul>
+                            </li>
                             <li >
                                 <a href="../../about/">About</a>
                             </li>
@@ -173,31 +246,37 @@ example, <code>+</code> is considered as a valid function (and block) taking two
 (signals) and returning one:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/introduction/exfaust0 ] || mkdir -p mkdocs/docs/guide/introduction/exfaust0
-<div class="faust-run"><img src="/guide/introduction/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/introduction/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 process = +;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>Blocks can be easily connected together using the <code>:</code> "connection" composition:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/introduction/exfaust1 ] || mkdir -p mkdocs/docs/guide/introduction/exfaust1
-<div class="faust-run"><img src="/guide/introduction/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/introduction/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 process = + : *(0.5);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>In that case, we add two signals together and then scale the result of this 
 operation.</p>
 <p>Thus, <strong>Faust is perfect to implement time-domain algorithms that can be easily 
@@ -208,18 +287,21 @@ filter/integrator equivalent to $y(n) = x(n) + a_{1}y(n-1)$ (where $a_{1}$ is
 the pole):</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/introduction/exfaust2 ] || mkdir -p mkdocs/docs/guide/introduction/exfaust2
-<div class="faust-run"><img src="/guide/introduction/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/introduction/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 a1 = 0.9;
 process = +~*(a1);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p><strong>Codes generated by Faust are extremely optimized</strong> and usually more efficient 
 that handwritten codes (at least for C and C++). The Faust compiler tries to 
 optimize each element of an algorithm. For example, you shouldn't have to 

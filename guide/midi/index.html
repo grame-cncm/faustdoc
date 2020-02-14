@@ -104,6 +104,79 @@
 </li>
                                 </ul>
                             </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                </ul>
+                            </li>
                             <li >
                                 <a href="../../about/">About</a>
                             </li>
@@ -194,8 +267,8 @@ controlled by MIDI CC 11. When CC11=0, then the frequency is 200Hz, when
 CC11=127, then the frequency is 1000Hz.</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust0 ] || mkdir -p mkdocs/docs/guide/midi/exfaust0
-<div class="faust-run"><img src="/guide/midi/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;frequency[midi:ctrl 11]&quot;,200,50,1000,0.01) : si.smoo;
@@ -203,10 +276,13 @@ process = os.sawtooth(freq);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <h3 id="midikeyon-midikey-metadata"><code>[midi:keyon midikey]</code> Metadata</h3>
 <p>The <code>[midi:keyon midikey]</code> metadata assigns the velocity value of a key-on MIDI 
 message received on a specific <code>midikey</code> to a Faust parameter. When used in a 
@@ -227,8 +303,8 @@ controlled by the velocity value received on key 62 when a key-on message is
 sent. Therefore, the frequency will only be updated when MIDI key 62 is pressed.</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust1 ] || mkdir -p mkdocs/docs/guide/midi/exfaust1
-<div class="faust-run"><img src="/guide/midi/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;frequency[midi:keyon 62]&quot;,200,50,1000,0.01) : si.smoo;
@@ -236,10 +312,13 @@ process = os.sawtooth(freq);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <h3 id="midikeyoff-midikey-metadata"><code>[midi:keyoff midikey]</code> Metadata</h3>
 <p>The <code>[midi:keyoff midikey]</code> metadata assigns the velocity value of a key-off MIDI 
 message received on a specific <code>midikey</code> to a Faust parameter. When used in a 
@@ -261,8 +340,8 @@ sent. Therefore, the frequency will only be updated when MIDI key 62 is
 released.</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust2 ] || mkdir -p mkdocs/docs/guide/midi/exfaust2
-<div class="faust-run"><img src="/guide/midi/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;frequency[midi:keyon 62]&quot;,200,50,1000,0.01) : si.smoo;
@@ -270,10 +349,13 @@ process = os.sawtooth(freq);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <h3 id="midikey-midikey-metadata"><code>[midi:key midikey]</code> Metadata</h3>
 <p>The <code>[midi:key midikey]</code> metadata assigns the velocity value of key-on and 
 key-off MIDI messages received on a specific <code>midikey</code> to a Faust parameter. 
@@ -295,8 +377,8 @@ messages are sent. Therefore, the frequency will only be updated when MIDI key
 62 is pressed and released.</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust3 ] || mkdir -p mkdocs/docs/guide/midi/exfaust3
-<div class="faust-run"><img src="/guide/midi/exfaust3/exfaust3-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust3/exfaust3-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;frequency[midi:key 62]&quot;,200,50,1000,0.01) : si.smoo;
@@ -304,10 +386,13 @@ process = os.sawtooth(freq);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <h3 id="midikeypress-midikey-metadata"><code>[midi:keypress midikey]</code> Metadata</h3>
 <p>The <code>[midi:keypress midikey]</code> metadata assigns the pressure (after-touch) value 
 of a specific <code>midikey</code> to a Faust parameter. When used in a slider or a 
@@ -327,8 +412,8 @@ mapped to 0.</p>
 controlled by the pressure (after-touch) values received on key 62.</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust4 ] || mkdir -p mkdocs/docs/guide/midi/exfaust4
-<div class="faust-run"><img src="/guide/midi/exfaust4/exfaust4-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust4/exfaust4-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;frequency[midi:keypress 62]&quot;,200,50,1000,0.01) : si.smoo;
@@ -336,10 +421,13 @@ process = os.sawtooth(freq);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <!-- TODO: don't understand what those means: check with Stéphane  -->
 
 <!-- 
@@ -362,8 +450,8 @@ checkbox, 1 will be mapped to 16383, 0 will be mapped to 0.</p>
 controlled by the pitch-wheel.</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust5 ] || mkdir -p mkdocs/docs/guide/midi/exfaust5
-<div class="faust-run"><img src="/guide/midi/exfaust5/exfaust5-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust5/exfaust5-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;frequency[midi:pitchwheel]&quot;,200,50,1000,0.01) : si.smoo;
@@ -371,10 +459,13 @@ process = os.sawtooth(freq);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <h3 id="midistart-metadata"><code>[midi:start]</code> Metadata</h3>
 <p>When used with a button or a checkbox, <code>[midi:start]</code> will trigger a value of 
 1 when a <code>start</code> MIDI message is received. </p>
@@ -408,8 +499,8 @@ clock stream, and starting/stopping when receiving the MIDI start/stop
 messages:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust6 ] || mkdir -p mkdocs/docs/guide/midi/exfaust6
-<div class="faust-run"><img src="/guide/midi/exfaust6/exfaust6-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust6/exfaust6-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 
@@ -429,10 +520,13 @@ process = os.osc(8*freq(front(clocker))) * play;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <h2 id="midi-polyphony-support">MIDI Polyphony Support</h2>
 <p>Polyphony is conveniently handled in Faust directly by 
 <a href="TODO">Faust Architectures</a>. Note that programming polyphonic instrument 
@@ -473,8 +567,8 @@ velocity value contained in a key-on or a key-off message.</li>
 are used to implement a simple polyphonic synth.</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust7 ] || mkdir -p mkdocs/docs/guide/midi/exfaust7
-<div class="faust-run"><img src="/guide/midi/exfaust7/exfaust7-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust7/exfaust7-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;freq&quot;,200,50,1000,0.01);
@@ -484,10 +578,13 @@ process = os.sawtooth(freq)*gain*gate;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <blockquote>
 <p>Note that if you execute this code in the 
 <a href="https://faust.grame.fr/editor">Faust online editor</a> with polyphony
@@ -499,8 +596,8 @@ Google Chrome (most other browsers are not MIDI-compatible).</p>
 and controlling it with <code>gain</code> and <code>gate</code>: </p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust8 ] || mkdir -p mkdocs/docs/guide/midi/exfaust8
-<div class="faust-run"><img src="/guide/midi/exfaust8/exfaust8-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust8/exfaust8-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;freq&quot;,200,50,1000,0.01);
@@ -511,10 +608,13 @@ process = os.sawtooth(freq)*envelope;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p><strong>Warning:</strong> Note that all the active voices of polyphony are added together 
 without scaling! This means that the previous example will likely click if
 several voices are played at the same time. It is the Faust programmer's
@@ -537,8 +637,8 @@ voices of polyphony (<code>n</code>) that will be allocated in the generated pro
 that: </p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust9 ] || mkdir -p mkdocs/docs/guide/midi/exfaust9
-<div class="faust-run"><img src="/guide/midi/exfaust9/exfaust9-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust9/exfaust9-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 declare options &quot;[midi:on][nvoices:12]&quot;;
 import(&quot;stdfaust.lib&quot;);
@@ -550,10 +650,13 @@ process = os.sawtooth(freq)*envelope;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust9/exfaust9.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust9/exfaust9.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <!--
 > Note that the `[midi:on]` metadata must also be declared in order to be able
 to control this program with an external MIDI keyboard.
@@ -580,8 +683,8 @@ polyphonic synthesizer.</p>
 writing:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust10 ] || mkdir -p mkdocs/docs/guide/midi/exfaust10
-<div class="faust-run"><img src="/guide/midi/exfaust10/exfaust10-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust10/exfaust10-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 declare options &quot;[midi:on][nvoices:12]&quot;;
 import(&quot;stdfaust.lib&quot;);
@@ -594,10 +697,13 @@ effect = dm.zita_light;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust10/exfaust10.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust10/exfaust10.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>In this case, the polyphonic part is based on <code>process</code> and a single instance
 of the effect defined in <code>effect</code> will be created and shared by all voices.</p>
 <p>Note that since <a href="TODO"><code>dm.zita_light</code></a> is a stereo effect, the output of
@@ -638,8 +744,8 @@ for a given number of samples when a trigger is activated.</p>
 polyphonic synthesizer with continuous pitch control:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust11 ] || mkdir -p mkdocs/docs/guide/midi/exfaust11
-<div class="faust-run"><img src="/guide/midi/exfaust11/exfaust11-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust11/exfaust11-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 declare options &quot;[midi:on][nvoices:12]&quot;;
 import(&quot;stdfaust.lib&quot;);
@@ -654,10 +760,13 @@ effect = dm.zita_light;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust11/exfaust11.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust11/exfaust11.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>Observe the usage of <a href="TODO"><code>si.polySmooth</code></a> here: when <code>gate=0</code> the signal is
 not smoothed, when <code>gate=1</code> the signal is smoothed with a factor of 0.999 after
 one sample.</p>
@@ -679,8 +788,8 @@ sawtooth oscillator) can be slightly improved by processing it with a
 dynamically-controlled lowpass filter:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/guide/midi/exfaust12 ] || mkdir -p mkdocs/docs/guide/midi/exfaust12
-<div class="faust-run"><img src="/guide/midi/exfaust12/exfaust12-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/guide/midi/exfaust12/exfaust12-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 declare options &quot;[midi:on][nvoices:12]&quot;;
 import(&quot;stdfaust.lib&quot;);
@@ -698,10 +807,13 @@ effect = dm.zita_light;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust12/exfaust12.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/midi/exfaust12/exfaust12.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>MIDI CC 1 corresponds to the modulation wheel which is used here to control
 the cut-off frequency of the lowpass filter.</p>
 <!-- Note: the original documentation of polyphony support from the quick 

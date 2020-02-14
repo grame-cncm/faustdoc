@@ -104,6 +104,79 @@
 </li>
                                 </ul>
                             </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                </ul>
+                            </li>
                             <li >
                                 <a href="../../about/">About</a>
                             </li>
@@ -413,8 +486,8 @@ Faust code that computes the Root Mean Square of a sliding window of 1000
 samples:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/refs/compiler/exfaust0 ] || mkdir -p mkdocs/docs/refs/compiler/exfaust0
-<div class="faust-run"><img src="/refs/compiler/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/refs/compiler/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 // Root Mean Square of n consecutive samples
 RMS(n) = square : mean(n) : sqrt;
@@ -438,10 +511,13 @@ process = RMS(1000);
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//refs/compiler/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//refs/compiler/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>The <a href="#strucutre-of-the-generated-code">corresponding <code>compute()</code> method</a> 
 generated in scalar mode is the following:</p>
 <pre><code>virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
@@ -648,18 +724,21 @@ for (...) {
 example, two 1-pole filters in parallel connected to an adder:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/refs/compiler/exfaust1 ] || mkdir -p mkdocs/docs/refs/compiler/exfaust1
-<div class="faust-run"><img src="/refs/compiler/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/refs/compiler/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 filter(c) = *(1-c) : + ~ *(c);
 process = filter(0.9), filter(0.9) : +;
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//refs/compiler/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//refs/compiler/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>The corresponding <code>compute()</code> method obtained using the <code>-omp</code> option looks
 like this:</p>
 <pre><code>virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
@@ -788,18 +867,21 @@ new scheduler option has it's own value.  We plan to improve it adding a
 example made of two 1-pole filters in parallel connected to an adder:</p>
 <!-- faust-run -->
 
-<p>[ -d mkdocs/docs/refs/compiler/exfaust2 ] || mkdir -p mkdocs/docs/refs/compiler/exfaust2
-<div class="faust-run"><img src="/refs/compiler/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block"></p>
+<div class="faust-run"><img src="/refs/compiler/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block">
+
 <pre><code>
 filter(c) = *(1-c) : + ~ *(c);
 process = filter(0.9), filter(0.9) : +; 
 
 </code></pre>
 
-<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//refs/compiler/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//refs/compiler/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <p>When <code>-sch</code> option is used, the content of the additional 
 <code>architecture/scheduler.h</code> file is inserted in the generated code. It contains 
 code to deal with WSQ and thread management. The <code>compute()</code> and 
