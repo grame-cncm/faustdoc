@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Using the Compiler - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../options/">Compiler Options</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../options/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../tools/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#using-the-faust-compiler">Using the Faust Compiler</a></li>
+            <li><a href="#structure-of-the-generated-code">Structure of the Generated Code</a></li>
+            <li><a href="#controlling-code-generation">Controlling Code Generation</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="using-the-faust-compiler">Using the Faust Compiler</h1>
+<p>While the Faust compiler is available in different forms (e.g., 
+<a href="TODO">Embedded Compiler</a>, etc.), its most "common" one is the command line
+version, which can be invoked using the <code>faust</code> command. It translates 
+a Faust program into code in a wide range of languages (C, O-C++, C++, Rust, 
+JAVA, JavaScript, ASM JavaScript, LLVM, C-LLVM, FIR, and WebAssembly). The 
+generated code can be wrapped into an optional <em>architecture file</em> allowing to 
+directly produce a fully operational program.</p>
+<p>A typical call of the Faust command line compiler is:</p>
+<pre><code>faust [OPTIONS] faustFile.dsp
+</code></pre>
+
+<p>The Faust compiler outputs C++ code by default therefore running: </p>
+<pre><code>faust noise.dsp 
+</code></pre>
+
+<p>will compile <a href="misc/noise.dsp"><code>noise.dsp</code></a> and output the corresponding C++ 
+code on the standard output. The option <code>-o</code> allows to reroute the standard 
+output to a file: </p>
+<pre><code>faust noise.dsp -o noise.cpp
+</code></pre>
+
+<p>The <code>-a</code> option allows us to wrap the generated code into an architecture file:</p>
+<pre><code>faust -a alsa-gtk.cpp noise.dsp 
+</code></pre>
+
+<p>which can either be placed in the same folder as the current Faust file 
+(<code>noise.dsp</code> here) or be one of the standard Faust architectures.</p>
+<!-- TODO: we must check if talk about architectures somewhere in greater
+details and put a link to that here -->
+
+<p>To compile a Faust program into an ALSA application on Linux, the following 
+commands can be used: </p>
+<pre><code>faust -a alsa-gtk.cpp noise.dsp -o noise.cpp
+g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
+</code></pre>
+
+<p>Note that a wide range of <a href="TODO"><code>faust2...</code> compilation scripts</a> can be used
+to facilitate this operation by taking a Faust file and returning the
+corresponding binary for your platform.</p>
+<h2 id="structure-of-the-generated-code">Structure of the Generated Code</h2>
+<p>A Faust DSP C++ class derives from the base <code>dsp</code> class defined as below (a
+similar structure is used for languages than C++):</p>
+<pre><code>class dsp {
+  public:
+  dsp() {}
+  virtual ~dsp() {}
+
+  // Returns the number of inputs of the Faust program
+  virtual int getNumInputs() = 0;
+
+  // Returns the number of outputs of the Faust program
+  virtual int getNumOutputs() = 0;
+
+  // This method can be called to retrieve the UI description of
+  // the Faust program and its associated fields
+  virtual void buildUserInterface(UI* ui_interface) = 0;
+
+  // Returns the current sampling rate
+  virtual int getSampleRate() = 0;
+
+  // Init methods
+  virtual void init(int samplingRate) = 0;
+  virtual void instanceInit(int samplingRate) = 0;
+  virtual void instanceConstants(int samplingRate) = 0;
+  virtual void instanceResetUserInterface() = 0;
+  virtual void instanceClear() = 0;
+
+  // Returns a clone of the instance
+  virtual dsp* clone() = 0;
+
+  // Retrieve the global metadata of the Faust program
+  virtual void metadata(Meta* m) = 0;
+
+  // Compute one audio frame
+  virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) = 0;
+
+  // Compute a time-stamped audio frame
+  virtual void compute(double /*date_usec*/, int count, FAUSTFLOAT** inputs,
+     FAUSTFLOAT** outputs) { compute(count, inputs, outputs); }
+};
+</code></pre>
+
+<p>Methods are filled by the compiler with the actual code. In the case of
+<code>noise.dsp</code>:</p>
+<pre><code>class mydsp : public dsp {
+  private:
+  int iRec0[2];
+  int fSamplingFreq;
+
+  public:
+  void metadata(Meta* m) { 
+    m-&gt;declare(&quot;author&quot;, &quot;GRAME&quot;);
+    m-&gt;declare(&quot;filename&quot;, &quot;noise&quot;);
+    m-&gt;declare(&quot;name&quot;, &quot;Noise&quot;);
+    m-&gt;declare(&quot;noises.lib/name&quot;, &quot;Faust Noise Generator Library&quot;);
+    m-&gt;declare(&quot;noises.lib/version&quot;, &quot;0.0&quot;);
+  }
+  virtual int getNumInputs() {
+    return 0;
+  }
+  virtual int getNumOutputs() {
+    return 1;
+  }
+  virtual int getInputRate(int channel) {
+    int rate;
+    switch (channel) {
+      default: {
+        rate = -1;
+        break;
+      }
+    }
+    return rate;
+  }
+  virtual int getOutputRate(int channel) {
+    int rate;
+    switch (channel) {
+      case 0: {
+        rate = 1;
+        break;
+      }
+      default: {
+        rate = -1;
+        break;
+      }
+    }
+    return rate;
+  }
+  static void classInit(int samplingFreq) {}
+  virtual void instanceConstants(int samplingFreq) {
+    fSamplingFreq = samplingFreq;
+  }
+  virtual void instanceResetUserInterface() {}
+  virtual void instanceClear() {
+    for (int l0 = 0; (l0 &lt; 2); l0 = (l0 + 1)) {
+      iRec0[l0] = 0;
+    }
+  }
+  virtual void init(int samplingFreq) {
+    classInit(samplingFreq);
+    instanceInit(samplingFreq);
+  }
+  virtual void instanceInit(int samplingFreq) {
+    instanceConstants(samplingFreq);
+    instanceResetUserInterface();
+    instanceClear();
+  }
+  virtual mydsp* clone() {
+    return new mydsp();
+  }
+  virtual int getSampleRate() {
+    return fSamplingFreq;
+  }
+  virtual void buildUserInterface(UI* ui_interface) {
+    ui_interface-&gt;openVerticalBox(&quot;Noise&quot;);
+    ui_interface-&gt;closeBox();
+  }
+  virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i = 0; (i &lt; count); i = (i + 1)) {
+      iRec0[0] = ((1103515245 * iRec0[1]) + 12345);
+      output0[i] = FAUSTFLOAT((4.65661287e-10f * float(iRec0[0])));
+      iRec0[1] = iRec0[0];
+    }
+  }
+};
+</code></pre>
+
+<p>Several fine-grained initialization methods are available. The <code>instanceInit</code> 
+method calls several additional initialization methods. The <code>instanceConstants</code>
+method sets the instance constant state. The <code>instanceClear</code> method resets the 
+instance dynamic state (delay lines...).  The <code>instanceResetUserInterface</code> 
+method resets all control value to their default state. All of those methods 
+can be used individually on an allocated instance to reset part of its state. </p>
+<p>The <code>init</code> method combines class static state and instance initialization.</p>
+<p>When using a single instance, calling <code>init</code> is the simplest way to do 
+"what is needed." When using several instances, all of them can be 
+initialized using <code>instanceInit</code>, with a single call to <code>classInit</code> to 
+initialize the static shared state.</p>
+<!-- 
+## Compilation Options
+
+| Short | Long | Description |
+| --- | --- | --- |
+| `-h` | `--help` | print the help message |
+| `-v` | `--version` | print the compiler version information |
+| `-d` | `--details` | print the compilation details |
+| `-tg` | `--task-graph` | Draw a graph of all internal computational loops as `.dot` (graphviz) file |
+| `-sg` | `--signal-graph` | Draw a graph of all internal computational loops as `.dot` (graphviz) file |
+| `-ps` | `--postscript` | Generate the block-diagram postscript file |
+| `-svg` | `--svg` | Generate the block-diagram svg file |
+| `-mdoc` | `--mathdoc` | Generate the full mathematical documentation of a Faust program |
+| `-mdlang <l>` | `--mathdoc-lang` | Choose the language of the mathematical description (*l* = en, fr, etc.) |
+| `-stripmdoc` | `--strip-mdoc-tags` | Remove documentation tags when printing Faust listings |
+| `-sd` | `--simplify-diagrams` |  Try to further simplify block diagrams before drawing them |
+| `-f <n>` | `--fold <n>` | Max complexity of svg diagrams before splitting into several files (default 25 elements) |
+| `-mns <n>` | `--max-name-size <n>` | Max character size used in svg diagrams labels |
+| `-sn` | `--simple-names` | Use simple names (without arguments) for block-diagram generation (default max size: 40 chars) |
+| `-xml` | `-xml` | Generate an XML description file |
+| `-exp10` | `--generate-exp10` | Function call instead of pow(10) function |
+| `-json` | `-json` | Generate a JSON description file |
+| `-blur` | `--shadow-blur` | Add a blur to boxes shadows in block diagrams |
+| `-lb` | `--left-balanced` | Generate left-balanced expressions in block diagrams |
+| `-mb` | `--mid-balanced` | Generate mid-balanced expressions in block diagrams |
+| `-rb` | `--right-balanced` | Generate right-balanced expressions in block diagrams |
+| `-lt` | `--less-temporaries` | Generate less temporaries in compiling delays |
+| `-mcd <n>` | `--max-copy-delay <n>` | Threshold between copy and ring buffer delays (default 16 samples) |
+| `-mem` | `--memory` | Allocate static in global state using a custom memory manager |
+| `-a <file>` | `-a` | Specifies a wrapper architecture file |
+| `-i` | `--inline-architecture-files` | Inline architecture files in the generated code | 
+| `-cn <name>` | `--class-name <name>` | Specify the name of the DSP class to be used instead of `mydsp` | 
+| `-scn <name>` | `--super-class-name <name>` | Specify the name of the super class to be used instead of `dsp` | 
+| `-pn <name>` | `--process-name <name>` | Specify the name of the dsp entry-point instead of process |
+| `-t <sec>` | `--timeout <sec>` | Abort compilation after `<sec>` seconds (default 120) |
+| `-time` | `--compilation-time` | Flag to display compilation phases timing information |
+| `-o <file>` | `-o <file>` | C, C++, JAVA, JavaScript, ASM JavaScript, WebAssembly, LLVM IR or FVM (interpreter) output file |
+| `-scal` | `--scalar` | Generate non-vectorized code |
+| `-vec` | `--vectorize` | Generate easier to vectorize code |
+| `-vs <n>` | `--vec-size <n>` | Size of the vector (default 32 samples) |
+| `-lv <n>` | `--loop-variant` | Loop variant when `-vec` [0:fastest (default), 1:simple] |
+| `-omp` | `--openMP` | Generate OpenMP pragmas, activates the `--vectorize` option |
+| `-pl` | `--par-loop` | Generate parallel loops in `--openMP` mode |
+| `-sch` | `--scheduler` | Generate tasks and use a Work Stealing scheduler, activates the `--vectorize` option |
+| `-ocl` | `--openCL` | Generate tasks with OpenCL (experimental) | 
+| `-cuda`| `--cuda` | Generate tasks with CUDA (experimental) | 
+| `-dfs` | `--deepFirstScheduling` | Schedule vector loops in deep first order |
+| `-g` | `--groupTasks` | Group single-threaded sequential tasks together when `-omp` or `-sch` is used |
+| `-fun` | `--funTasks` | Separate tasks code as separated functions (in `-vec`, `-sch`, or `-omp` mode) |
+| `-lang <lang>` | `--language` | Generate various output formats: `c`, `ocpp`, `cpp`, `rust`, `java`, `js`, `ajs`, `llvm`, `cllvm`, `fir`, `wast`/`wasm`, `interp` (default `cpp`) |
+| `-uim` | `--user-interface-macros` | Add user interface macro definitions in the output code |
+| `-single` | `--single-precision-floats` | Use single precision floats for internal computations (default) |
+| `-double` | `--double-precision-floats` | Use `--double-precision-floats` for internal computations |
+| `-quad` | `--quad-precision-floats` | Use quad precision floats for internal computations |
+| `-es 1|0` | `--enable-semantics 1|0` | Use `--enable-semantics 1|0` when 1, and simple multiplication otherwise |
+| `-flist` | `--file-list` | Use --file-list used to eval process |
+| `-norm` | `--normalized-form` | Prints signals in normalized form and exits |
+| `-A <dir>` | `--architecture-dir <dir>` | Add the directory `<dir>` to the architecture search path |
+| `-I <dir>` | `--import-dir <dir>` | Add the directory `<dir>` to the import search path |
+| `-L <file>` | `--library <file>` | Link with the LLVM module `<file>` |
+| `-O <dir>` | `--output-dir <dir>` | Specify the relative directory of the generated output code, and the output directory of additional generated files (SVG, XML, etc.) |
+| `-e` | `--export-dsp` | Export expanded DSP (all included libraries) |
+| `-inpl` | `--in-place generates` | Code working when input and output buffers are the same (in scalar mode only) | 
+| `-inj <f>` | `--inject <f>` | inject source file `<f>` into architecture file instead of compile a dsp file |
+| `-ftz` | `--flush-to-zero` | Flush to zero the code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)] |
+| `-fm <file>` | `--fast-math <file>` | Uses optimized versions of mathematical functions implemented in `<file>`, take the `/faust/dsp/fastmath.cpp` file if 'def' is used |
+ -->
+
+<h2 id="controlling-code-generation">Controlling Code Generation</h2>
+<p>Several options of the Faust compiler allow to control the generated C++ code. 
+By default computation is done sample by sample in a single loop. But the 
+compiler can also generate <em>vector</em> and <em>parallel</em> code.</p>
+<h3 id="vector-code-generation">Vector Code Generation</h3>
+<p>Modern C++ compilers are able to do autovectorization, that is to use SIMD 
+instructions to speedup the code. These instructions can typically operate in 
+parallel on short vectors of 4 simple precision floating point numbers, leading 
+to a theoretical speedup of $\times4$.</p>
+<p>Autovectorization of C/C++ programs is a difficult task. Current compilers are 
+very sensitive to the way the code is arranged. In particular, complex loops 
+can prevent autovectorization. The goal of the vector code generation is to 
+rearrange the C++ code in a way that facilitates the autovectorization job of 
+the C++ compiler. Instead of generating a single sample computation loop, it 
+splits the computation into several simpler loops that communicates by vectors.</p>
+<p>The vector code generation is activated by passing the 
+<a href="#compilation-options"><code>--vectorize</code> (or <code>-vec</code>)</a> option to the Faust compiler. 
+Two additional options are available: <code>--vec-size &lt;n&gt;</code> controls the size of the 
+vector (by default 32 samples) and <code>--loop-variant 0/1</code> gives some additional 
+control on the loops.  </p>
+<p>To illustrate the difference between scalar code and vector code, let's take 
+the computation of the RMS (Root Mean Square) value of a signal.  Here is the 
+Faust code that computes the Root Mean Square of a sliding window of 1000 
+samples:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/refs/compiler/exfaust0 ] || mkdir -p mkdocs/docs/refs/compiler/exfaust0
+<div class="faust-run"><img src="/refs/compiler/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+// Root Mean Square of n consecutive samples
+RMS(n) = square : mean(n) : sqrt;
+
+// Square of a signal
+square(x) = x * x;
+
+// Mean of n consecutive samples of a signal (uses fixpoint to avoid the 
+// accumulation of rounding errors) 
+mean(n) = float2fix : integrate(n) : fix2float : /(n); 
+
+// Sliding sum of n consecutive samples
+integrate(n,x) = x - x@n : +~_;
+
+// Convertion between float and fix point
+float2fix(x) = int(x*(1&lt;&lt;20));      
+fix2float(x) = float(x)/(1&lt;&lt;20);    
+
+// Root Mean Square of 1000 consecutive samples
+process = RMS(1000);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/refs/compiler/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>The <a href="#strucutre-of-the-generated-code">corresponding <code>compute()</code> method</a> 
+generated in scalar mode is the following:</p>
+<pre><code>virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+  FAUSTFLOAT* input0 = inputs[0];
+  FAUSTFLOAT* output0 = outputs[0];
+  for (int i = 0; (i &lt; count); i = (i + 1)) {
+    int iTemp0 = int((1048576.0f * mydsp_faustpower2_f(float(input0[i]))));
+    iVec0[(IOTA &amp; 1023)] = iTemp0;
+    iRec0[0] = ((iRec0[1] + iTemp0) - iVec0[((IOTA - 1000) &amp; 1023)]);
+    output0[i] = FAUSTFLOAT(std::sqrt((9.53674362e-10f * float(iRec0[0]))));
+    IOTA = (IOTA + 1);
+    iRec0[1] = iRec0[0];
+  }
+}
+</code></pre>
+
+<p>The <code>-vec</code> option leads to the following reorganization of the code:</p>
+<pre><code>virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+  fInput0_ptr = inputs[0];
+  FAUSTFLOAT* fInput0 = 0;
+  fOutput0_ptr = outputs[0];
+  FAUSTFLOAT* fOutput0 = 0;
+  int iRec0_tmp[36];
+  int* iRec0 = &amp;iRec0_tmp[4];
+  int fullcount = count;
+  int index = 0;
+  /* Main loop */
+  for (index = 0; (index &lt;= (fullcount - 32)); index = (index + 32)) {
+    fInput0 = &amp;fInput0_ptr[index];
+    fOutput0 = &amp;fOutput0_ptr[index];
+    int count = 32;
+    /* Recursive loop 0 */
+    /* Pre code */
+    iYec0_idx = ((iYec0_idx + iYec0_idx_save) &amp; 2047);
+    /* Compute code */
+    for (int i = 0; (i &lt; count); i = (i + 1)) {
+      iYec0[((i + iYec0_idx) &amp; 2047)] = 
+      int((1048576.0f mydsp_faustpower2_f(float(fInput0[i]))));
+    }
+    /* Post code */
+    iYec0_idx_save = count;
+    /* Recursive loop 1 */
+    /* Pre code */
+    for (int j0 = 0; (j0 &lt; 4); j0 = (j0 + 1)) {
+      iRec0_tmp[j0] = iRec0_perm[j0];
+    }
+    /* Compute code */
+    for (int i = 0; (i &lt; count); i = (i + 1)) {
+      iRec0[i] = ((iRec0[(i - 1)] + iYec0[((i + iYec0_idx) &amp; 2047)]) - 
+      iYec0[(((i + iYec0_idx) - 1000) &amp; 2047)]);
+    }
+    /* Post code */
+    for (int j = 0; (j &lt; 4); j = (j + 1)) {
+      iRec0_perm[j] = iRec0_tmp[(count + j)];
+    }
+    /* Vectorizable loop 2 */
+    /* Compute code */
+    for (int i = 0; (i &lt; count); i = (i + 1)) {
+      fOutput0[i] = FAUSTFLOAT(std::sqrt((9.53674362e-10f * float(iRec0[i]))));
+    }
+  }
+
+  /* Remaining frames */
+  if (index &lt; fullcount) {
+    fInput0 = &amp;fInput0_ptr[index];
+    fOutput0 = &amp;fOutput0_ptr[index];
+    int count = (fullcount - index);
+    /* Recursive loop 0 */
+    /* Pre code */
+    iYec0_idx = ((iYec0_idx + iYec0_idx_save) &amp; 2047);
+    /* Compute code */
+    for (int i = 0; (i &lt; count); i = (i + 1)) {
+      iYec0[((i + iYec0_idx) &amp; 2047)] = int((1048576.0f * 
+        mydsp_faustpower2_f(float(fInput0[i]))));
+    }
+    /* Post code */
+    iYec0_idx_save = count;
+    /* Recursive loop 1 */
+    /* Pre code */
+    for (int j0 = 0; (j0 &lt; 4); j0 = (j0 + 1)) {
+      iRec0_tmp[j0] = iRec0_perm[j0];
+    }
+    /* Compute code */
+    for (int i = 0; (i &lt; count); i = (i + 1)) {
+      iRec0[i] = ((iRec0[(i - 1)] + iYec0[((i + iYec0_idx) &amp; 2047)]) - 
+      iYec0[(((i + iYec0_idx) - 1000) &amp; 2047)]);
+    }
+    /* Post code */
+    for (int j = 0; (j &lt; 4); j = (j + 1)) {
+      iRec0_perm[j] = iRec0_tmp[(count + j)];
+    }
+    /* Vectorizable loop 2 */
+    /* Compute code */
+    for (int i = 0; (i &lt; count); i = (i + 1)) {
+      fOutput0[i] = FAUSTFLOAT(std::sqrt((9.53674362e-10f * float(iRec0[i]))));
+    }
+  }
+}
+</code></pre>
+
+<p>While the second version of the code is more complex, it turns out to be much 
+easier to vectorize efficiently by the C++ compiler. With the exact same 
+compilation options: <code>-O3 -xHost -ftz -fno-alias -fp-model fast=2</code>, the scalar 
+version leads to a throughput performance of 129.144  MB/s, while the vector 
+version achieves 359.548  MB/s, a speedup of x2.8 ! </p>
+<p><img src="img/compilerStack.svg" class="mx-auto d-block" width="30%"></p>
+<p>The vector code generation is built on top of the scalar code generation (see 
+previous figure). Every time an expression needs to be compiled, the compiler 
+checks if it requires a separate loop or not. Expressions that are shared (and 
+are complex enough) are good candidates to be compiled in a separate loop, as 
+well as recursive expressions and expressions used in delay lines. </p>
+<p>The result is a directed graph in which each node is a computation loop (see 
+figure below). This graph is stored in the class object and a topological 
+sort is applied to it before printing the code. </p>
+<p><img src="img/loopgraph2.svg" class="mx-auto d-block" width="30%"></p>
+<h3 id="parallel-code-generation">Parallel Code Generation</h3>
+<p>Parallel code generation is activated by passing either the <a href="#compilation-options"><code>--openMP</code> (or 
+<code>-omp</code>) option or the <code>--scheduler</code> (or <code>-sch</code>) option</a>. 
+It implies that the <code>-vec</code> option as well as the parallel code generation are 
+built on top of the vector code generation.</p>
+<h4 id="the-openmp-code-generator">The OpenMP Code Generator</h4>
+<p><img src="img/openmpModel.svg" class="mx-auto d-block" width="100%"></p>
+<p>The <a href="#compilation-options"><code>--openMP</code> (or <code>-omp</code>) option</a>, when given to the 
+Faust compiler, will insert appropriate <a href="https://www.openmp.org/">OpenMP</a> 
+directives into the C++ code. OpenMP is a well established API that is used to 
+explicitly define direct multi-threaded, shared memory parallelism. It is based 
+on a fork-join model of parallelism (see figure above). Parallel regions are 
+delimited by <code>#pragma omp parallel</code> constructs. At the entrance of a parallel 
+region, a group of parallel threads is activated. The code within a parallel 
+region is executed by each thread of the parallel group until the end of the 
+region. </p>
+<pre><code>#pragma omp parallel
+{
+  // the code here is executed simultaneously by every thread of the parallel 
+  // team
+  ...
+}
+</code></pre>
+
+<p>In order not to have every thread doing redundantly the exact same work, OpenMP 
+provides specific <em>work-sharing</em> directives. For example <code>#pragma omp sections</code> 
+allows to break the work into separate, discrete sections, each section being 
+executed by one thread:</p>
+<pre><code>#pragma omp parallel
+{
+  #pragma omp sections
+  {
+    #pragma omp section
+    {
+      // job 1
+    }
+    #pragma omp section
+    {
+      // job 2
+    }
+    ...
+  }
+  ...
+}
+</code></pre>
+
+<h4 id="adding-open-mp-directives">Adding Open MP Directives</h4>
+<p>As said before, parallel code generation is built on top of vector code 
+generation. The graph of loops produced by the vector code generator is 
+topologically sorted in order to detect the loops that can be computed in 
+parallel. The first set $S_0$ (loops $L1$, $L2$ and $L3$) contains the loops 
+that don't depend on any other loops, the set $S_1$ contains the loops that 
+only depend on loops of $S_0$, (that is loops $L4$ and $L5$), etc.. </p>
+<p>As all the loops of a given set $S_n$ can be computed in parallel, the compiler 
+will generate a <code>sections</code> construct with a <code>section</code> for each loop. </p>
+<pre><code>#pragma omp sections
+{
+  #pragma omp section
+  for (...) {
+    // Loop 1
+  }
+  #pragma omp section
+  for (...) {
+    // Loop 2
+  }
+  ...
+}
+</code></pre>
+
+<p>If a given set contains only one loop, then the compiler checks to see if the 
+loop can be parallelized (no recursive dependencies) or not. If it can be 
+parallelized, it generates:</p>
+<pre><code>#pragma omp for
+for (...) {
+ // Loop code
+}
+</code></pre>
+
+<p>otherwise it generates a <code>single</code> construct so that only one thread will 
+execute the loop:</p>
+<pre><code>#pragma omp single
+for (...) {
+ // Loop code
+}
+</code></pre>
+
+<h4 id="example-of-parallel-openmp-code">Example of Parallel OpenMP Code</h4>
+<p>To illustrate how Faust uses the OpenMP directives, here is a very simple 
+example, two 1-pole filters in parallel connected to an adder:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/refs/compiler/exfaust1 ] || mkdir -p mkdocs/docs/refs/compiler/exfaust1
+<div class="faust-run"><img src="/refs/compiler/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+filter(c) = *(1-c) : + ~ *(c);
+process = filter(0.9), filter(0.9) : +;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/refs/compiler/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>The corresponding <code>compute()</code> method obtained using the <code>-omp</code> option looks
+like this:</p>
+<pre><code>virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+  float fRec0_tmp[36];
+  float fRec1_tmp[36];
+  FAUSTFLOAT* fInput0 = 0;
+  FAUSTFLOAT* fInput1 = 0;
+  FAUSTFLOAT* fOutput0 = 0;
+  float* fRec0 = &amp;fRec0_tmp[4];
+  float* fRec1 = &amp;fRec1_tmp[4];
+  fInput0_ptr = inputs[0];
+  fInput1_ptr = inputs[1];
+  fOutput0_ptr = outputs[0];
+  #pragma omp parallel\
+      firstprivate(fInput0, fInput1, fOutput0, fRec0, fRec1)
+  {
+    for (int index = 0; (index &lt; fullcount); index = (index + 32)) {
+      fInput0 = &amp;fInput0_ptr[index];
+      fInput1 = &amp;fInput1_ptr[index];
+      fOutput0 = &amp;fOutput0_ptr[index];
+      int count = min(32, (fullcount - index));
+      #pragma omp sections
+      {
+        #pragma omp section
+        {
+          /* Recursive loop 0 */
+          /* Pre code */
+          for (int j0 = 0; (j0 &lt; 4); j0 = (j0 + 1)) {
+            fRec0_tmp[j0] = fRec0_perm[j0];
+          }
+          /* Compute code */
+          for (int i = 0; (i &lt; count); i = (i + 1)) {
+            fRec0[i] = ((0.899999976f * fRec0[(i - 1)]) + 
+            (0.100000001f * float(fInput0[i])));
+          }
+          /* Post code */
+          for (int j = 0; (j &lt; 4); j = (j + 1)) {
+            fRec0_perm[j] = fRec0_tmp[(count + j)];
+          }
+        }
+        #pragma omp section
+        {
+          /* Recursive loop 1 */
+          /* Pre code */
+          for (int j1 = 0; (j1 &lt; 4); j1 = (j1 + 1)) {
+            fRec1_tmp[j1] = fRec1_perm[j1];
+          }
+          /* Compute code */
+          for (int i = 0; (i &lt; count); i = (i + 1)) {
+            fRec1[i] = ((0.899999976f * fRec1[(i - 1)]) + 
+            (0.100000001f * float(fInput1[i])));
+          }
+          /* Post code */
+          for (int j = 0; (j &lt; 4); j = (j + 1)) {
+            fRec1_perm[j] = fRec1_tmp[(count + j)];
+          }
+        }
+      }
+      #pragma omp single
+      {
+        /* Vectorizable loop 2 */
+        /* Compute code */
+        for (int i = 0; (i &lt; count); i = (i + 1)) {
+          fOutput0[i] = FAUSTFLOAT((fRec0[i] + fRec1[i]));
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+<p>This code requires some comments:</p>
+<ul>
+<li>The parallel construct <code>#pragma omp parallel</code> is the fundamental construct 
+that starts parallel execution. The number of parallel threads is generally the 
+number of CPU cores but it can be controlled in several ways.</li>
+<li>Variables external to the parallel region are shared by default. The pragma 
+<code>firstprivate(fRec0,fRec1)</code> indicates that each thread should have its private 
+copy of <code>fRec0</code> and <code>fRec1</code>. The reason is that accessing shared variables 
+requires an indirection and is quite inefficient compared to private copies.</li>
+<li>The top level loop <code>for (int index = 0;...)...</code> is executed by all threads 
+simultaneously. The subsequent work-sharing directives inside the loop will 
+indicate how the work must be shared between threads. </li>
+<li>Please note that an implied barrier exists at the end of each work-sharing 
+region. All threads must have executed the barrier before any of them can 
+continue.</li>
+<li>The work-sharing directive <code>#pragma omp single</code> indicates that this first 
+section will be executed by only one thread (any of them).</li>
+<li>The work-sharing directive <code>#pragma omp sections</code> indicates that each 
+corresponding <code>#pragma omp section</code>, here our two filters, will be executed in 
+parallel.</li>
+<li>The loop construct <code>#pragma omp for</code> specifies that the iterations of the 
+associated loop will be executed in parallel. The iterations of the loop are 
+distributed across the parallel threads. For example, if we have two threads, 
+the first one can compute indices between 0 and count/2 and the other one 
+between count/2 and count. </li>
+<li>Finally <code>#pragma omp single</code> indicates that this section will be executed 
+by only one thread (any of them).</li>
+</ul>
+<h4 id="the-scheduler-code-generator">The Scheduler Code Generator</h4>
+<p>With the <a href="#compilation-options"><code>--scheduler</code> (or <code>-sch</code>) option</a> given to the 
+Faust compiler, the computation graph is cut into separate computation loops 
+(called "tasks"), and a "Work Stealing Scheduler" is used to activate and 
+execute them following their dependencies. A pool of worked threads is created 
+and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ 
+is a special queue with a Push operation, a "private" LIFO Pop operation and a 
+"public" FIFO Pop operation.</p>
+<p>Starting from a ready task, each thread follows the dependencies, possibly 
+pushing ready sub-tasks into it's own local WSQ. When no more tasks can be 
+activated on a given computation path, the thread pops a task from it's local 
+WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from 
+other threads WSQ.</p>
+<p>The local LIFO Pop operation allows better cache locality and the FIFO steal 
+Pop "larger chuck" of work to be done. The reason for this is that many work 
+stealing workloads are divide-and-conquer in nature, stealing one of the oldest 
+task implicitly also steals a (potentially) large sub-tree of computations that 
+will unfold once that piece of work is stolen and run.</p>
+<p>Compared to the OpenMP model (<code>-omp</code>) the new model is worse for simple Faust 
+programs and usually starts to behave comparable or sometimes better for 
+"complex enough" Faust programs. In any case, since OpenMP does not behave so 
+well with GCC compilers, and is unusable on OSX in real-time contexts, this 
+new scheduler option has it's own value.  We plan to improve it adding a 
+"pipelining" idea in the future.</p>
+<h4 id="example-of-parallel-scheduler-code">Example of Parallel Scheduler Code</h4>
+<p>To illustrate how Faust generates the scheduler code, let's reuse the previous
+example made of two 1-pole filters in parallel connected to an adder:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/refs/compiler/exfaust2 ] || mkdir -p mkdocs/docs/refs/compiler/exfaust2
+<div class="faust-run"><img src="/refs/compiler/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+filter(c) = *(1-c) : + ~ *(c);
+process = filter(0.9), filter(0.9) : +; 
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/refs/compiler/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>When <code>-sch</code> option is used, the content of the additional 
+<code>architecture/scheduler.h</code> file is inserted in the generated code. It contains 
+code to deal with WSQ and thread management. The <code>compute()</code> and 
+<code>computeThread()</code> methods are the following:</p>
+<pre><code>virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+  fInput0_ptr = inputs[0];
+  fInput1_ptr = inputs[1];
+  fOutput0_ptr = outputs[0];
+  fCount = count;
+  fIndex = 0;
+  /* End task has only one input, so will be directly activated */
+  /* Only initialize tasks with more than one input */
+  initTask(fScheduler, 4, 2);
+  /* Push ready tasks in each thread WSQ */
+  initTaskList(fScheduler, -1);
+  signalAll(fScheduler);
+  computeThread(0);
+  syncAll(fScheduler);
+}
+void computeThread(int num_thread) {
+  int count = fCount;
+  FAUSTFLOAT* fInput0 = 0;
+  FAUSTFLOAT* fInput1 = 0;
+  FAUSTFLOAT* fOutput0 = 0;
+  int tasknum = 0;
+  while ((fIndex &lt; fCount)) {
+    fInput0 = &amp;fInput0_ptr[fIndex];
+    fInput1 = &amp;fInput1_ptr[fIndex];
+    fOutput0 = &amp;fOutput0_ptr[fIndex];
+    count = min(32, (fCount - fIndex));
+    switch (tasknum) {
+      case 0: {
+        /* Work Stealing task */
+        tasknum = getNextTask(fScheduler, num_thread);
+        break;
+      }
+      case 1: {
+        /* Last task */
+        fIndex = (fIndex + 32);
+        if (fIndex &lt; fCount) {
+          /* End task has only one input, so will be directly activated */
+          /* Only initialize tasks with more than one input */
+          initTask(fScheduler, 4, 2);
+          /* Push ready tasks in 'num_thread' WSQ */
+          initTaskList(fScheduler, num_thread);
+        }
+        tasknum = 0;
+        break;
+      }
+      case 2: {
+        /* Recursive loop 2 */
+        /* Pre code */
+        for (int j0 = 0; (j0 &lt; 4); j0 = (j0 + 1)) {
+          fRec0_tmp[j0] = fRec0_perm[j0];
+        }
+        /* Compute code */
+        for (int i = 0; (i &lt; count); i = (i + 1)) {
+          fRec0[i] = ((0.899999976f * fRec0[(i - 1)]) + 
+          (0.100000001f * float(fInput0[i])));
+        }
+        /* Post code */
+        for (int j = 0; (j &lt; 4); j = (j + 1)) {
+          fRec0_perm[j] = fRec0_tmp[(count + j)];
+        }
+        /* One output only */
+        activateOneOutputTask(fScheduler, num_thread, 4, &amp;tasknum);
+        break;
+      }
+      case 3: {
+        /* Recursive loop 3 */
+        /* Pre code */
+        for (int j1 = 0; (j1 &lt; 4); j1 = (j1 + 1)) {
+          fRec1_tmp[j1] = fRec1_perm[j1];
+        }
+        /* Compute code */
+        for (int i = 0; (i &lt; count); i = (i + 1)) {
+          fRec1[i] = ((0.899999976f * fRec1[(i - 1)]) + 
+          (0.100000001f * float(fInput1[i])));
+        }
+        /* Post code */
+        for (int j = 0; (j &lt; 4); j = (j + 1)) {
+          fRec1_perm[j] = fRec1_tmp[(count + j)];
+        }
+        /* One output only */
+        activateOneOutputTask(fScheduler, num_thread, 4, &amp;tasknum);
+        break;
+      }
+      case 4: {
+        /* Vectorizable loop 4 */
+        /* Compute code */
+        for (int i = 0; (i &lt; count); i = (i + 1)) {
+          fOutput0[i] = FAUSTFLOAT((fRec0[i] + fRec1[i]));
+        }
+        tasknum = 1;
+        break;
+      }
+    }
+  }
+}
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

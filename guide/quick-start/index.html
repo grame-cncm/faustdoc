@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Quick start - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../introduction/">Introduction</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../introduction/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../embedding/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#quick-start">Quick Start</a></li>
+            <li><a href="#making-sound">Making Sound</a></li>
+            <li><a href="#building-a-simple-user-interface">Building a Simple User Interface</a></li>
+            <li><a href="#final-polishing">Final Polishing</a></li>
+            <li><a href="#some-project-ideas">Some Project Ideas</a></li>
+            <li><a href="#what-to-do-from-here">What to Do From Here?</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="quick-start">Quick Start</h1>
+<p>The goal of this section is to teach you how to use the basic elements of the 
+Faust programming language in approximately two hours! While DSP algorithms can 
+be easily written from scratch in Faust, we'll just show you here how to use 
+existing elements implemented in the <a href="../libraries">Faust libraries</a>, connect them to 
+each other, and implement basic user interfaces (UI) to control them.</p>
+<p>One of the strength of Faust lies in its libraries that implement hundreds of 
+functions. So you should be able to go a long way after reading this section, 
+simply by using what's already out here.</p>
+<p>This tutorial was written assuming that the reader is already familiar with 
+basic concepts of computer music and programming.</p>
+<p>More generally, at the end of this section: </p>
+<ul>
+<li>your Faust development environment should be up and running, <!-- TODO: true? --></li>
+<li>you should know enough to write basic Faust programs,</li>
+<li>you should be able to use them on different platforms.</li>
+</ul>
+<p>This tutorial was designed to be carried out in the 
+<a href="../../tools/editor">Faust online editor</a>. If you wish to do it locally, you'll
+have to <a href="#compiling-and-installing-the-faust-compiler">install Faust on your system</a>
+but this step is absolutely not required,</p>
+<h2 id="making-sound">Making Sound</h2>
+<p>Write the following code in the <a href="../../tools/editor">Faust online editor</a>:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust0 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust0
+<div class="faust-run"><img src="/guide/quick-start/exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+process = no.noise;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>and then click on the "run" button on the top left corner. Alternatively, you
+can also click on the "Try it Yourself" button of the window above if you're
+reading the online version of this documentation. You should now hear white 
+noise, of course... ;)</p>
+<p><code>stdfaust.lib</code> gives access to all the Faust libraries from a single point 
+through a series of environments. For instance, we're using here the <code>no</code> 
+environment which stands for <code>noise.lib</code> and the <code>noise</code> function (which is the 
+standard white noise generator of Faust). The Faust 
+<a href="../libraries/index.html#using-the-faust-libraries">libraries documentation</a> 
+provides more details about this system.</p>
+<p>The most fundamental element of any Faust code is the <code>process</code> line, which 
+gives access to the audio inputs and outputs of the target. This system is
+completely dynamic and since <code>no.noise</code> has only one output and no input, the 
+corresponding program will have a single output. </p>
+<p>Let's statically change the gain of the output of <code>no.noise</code> simply by 
+multiplying it by a number between 0 and 1:</p>
+<pre><code>process = no.noise*0.5;
+</code></pre>
+
+<p>Thus, standard mathematical operations can be used in Faust just like in any 
+other language. </p>
+<p>We'll now connect the noise generator to a resonant lowpass filter 
+(<a href="../libraries/index.html#fi.resonlp"><code>fi.resonlp</code></a>) by using the Faust 
+<a href="#sequential-composition">sequential composition operator</a>: <code>:</code></p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust1 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust1
+<div class="faust-run"><img src="/guide/quick-start/exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = 500;
+q = 5;
+gain = 1;
+process = no.noise : fi.resonlp(ctFreq,q,gain);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p><a href="../libraries/index.html#fi.resonlp"><code>fi.resonlp</code></a> has four arguments (in 
+order): <em>cut-off frequency</em>, <em>q</em>, <em>gain</em> and its <em>input</em>. Here, we're setting 
+the first three arguments with fixed variables. Variables don't have a type in 
+Faust and everything is considered as a signal. The Faust compiler takes care 
+of making the right optimizations by choosing which variable is ran at audio 
+rate, what their types are, etc. Thus, <code>ctFreq</code>, <code>q</code> and <code>gain</code> could well be 
+controlled by oscillators (i.e., signals running at audio rate) here. </p>
+<p>Since the input of the filter is not specified as an argument here (but it 
+could, of course), it automatically becomes an "implicit" input/argument of 
+<code>fi.resonlp</code>. The <code>:</code> <a href="#sequential-composition">sequential composition operator</a> 
+can be used to connect two elements that have the same number of outputs and 
+inputs. Since <code>no.noise</code> has one output and <code>fi.resonlp(ctFreq,q,gain)</code> has one 
+implicit input, we can connect them together. This is essentially the same as 
+writing something like:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust2 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust2
+<div class="faust-run"><img src="/guide/quick-start/exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = 500;
+q = 5;
+gain = 1;
+process = fi.resonlp(ctFreq,q,gain,no.noise);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>While this would work, it's kind of ugly and not very "Faustian", so we don't do 
+it... ;)</p>
+<p>At this point, you should be able to use and plug various elements of the Faust 
+libraries together. The Faust libraries implement hundreds of functions and 
+some of them have a very specialized use. Fortunately, the Faust libraries 
+documentation contains a section on 
+<a href="../libraries/index.html#standard-functions-1">Standard Faust Libraries</a> listing 
+all the high level "standard" Faust functions organized by types. 
+<strong>We recommend you to have a look at it now</strong>. As you do this, be aware that 
+implicit signals in Faust can be explicitly represented with the <code>_</code> character. 
+Thus, when you see something like this in the libraries documentation:</p>
+<pre><code>_ : aFunction(a,b) : _
+</code></pre>
+
+<p>it means that this function has one implicit input, one implicit output and two 
+parameters (<code>a</code> and <code>b</code>). On the other hand:</p>
+<pre><code>anotherFunction(a,b,c) : _,_
+</code></pre>
+
+<p>is a function that has three parameters, no implicit input and two outputs.</p>
+<p>Just for "fun," try to rewrite the previous example running in the Faust 
+online editor so that the <code>process</code> line looks like this:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust3 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust3
+<div class="faust-run"><img src="/guide/quick-start/exfaust3/exfaust3-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = 500;
+q = 5;
+gain = 1;
+process = no.noise : _ : fi.resonlp(ctFreq,q,gain) : _;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>Of course, this should not affect the result.</p>
+<p>You probably noticed that we used the 
+<a href="#parallel-composition"><code>,</code> Faust composition operator to express two signals in parallel</a>. 
+We can easily turn our filtered noise example into a stereo object using it:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust4 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust4
+<div class="faust-run"><img src="/guide/quick-start/exfaust4/exfaust4-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = 500;
+q = 5;
+gain = 1;
+process = no.noise : _ &lt;: fi.resonlp(ctFreq,q,gain),fi.resonlp(ctFreq,q,gain);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>or we could even write this in a cleaner way:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust5 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust5
+<div class="faust-run"><img src="/guide/quick-start/exfaust5/exfaust5-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = 500;
+q = 5;
+gain = 1;
+filter = fi.resonlp(ctFreq,q,gain);
+process = no.noise &lt;: filter,filter;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<blockquote>
+<p>Note that this example allows us to have 2 separate filters for each channel.
+Since both filters currently have the same parameters, another way of
+writing this could be: <code>process = no.noise : filter &lt;: _,_;</code>.</p>
+</blockquote>
+<p>Since <code>filter,filter</code> is considered here as a full expression, we cannot use the 
+<code>:</code> operator to connect <code>no.noise</code> to the two filters in parallel because 
+<code>filter,filter</code> has two inputs (<code>_,_ : filter,filter : _,_</code>) and <code>no.noise</code> only 
+has one output. </p>
+<p>The <code>&lt;:</code> <a href="#split-composition">split composition operator</a> used here takes <code>n</code> 
+signals and splits them into <code>m</code> signals. The only rule is that <code>m</code> has to be a 
+multiple of <code>n</code>.</p>
+<p>The <a href="#merge-composition">merge <code>:&gt;</code> composition operator</a> can be used exactly 
+the same way:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+process = no.noise &lt;: filter,filter :&gt; _;
+</code></pre>
+
+<p>Here we split the signal of <code>no.noise</code> into two signals that are connected to 
+two filters in parallel. Finally, we merge the outputs of the filters into one 
+signal. Note, that the previous expression could have been written as such too:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+process = no.noise &lt;: filter+filter;
+</code></pre>
+
+<p>Keep in mind that splitting a signal doesn't mean that its energy get spread in 
+each copy, for example, in the expression:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust6 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust6
+<div class="faust-run"><img src="/guide/quick-start/exfaust6/exfaust6-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+process = 1 &lt;: _,_;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>the two <code>_</code> both contain 1...</p>
+<p>All right, it's now time to add a basic user interface to our Faust program to 
+make things a bit more interactive.</p>
+<h2 id="building-a-simple-user-interface">Building a Simple User Interface</h2>
+<p>In this section, we'll add a simple user interface to the code that we wrote in 
+the previous section:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust7 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust7
+<div class="faust-run"><img src="/guide/quick-start/exfaust7/exfaust7-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = 500;
+q = 5;
+gain = 1;
+process = no.noise : fi.resonlp(ctFreq,q,gain) ;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>Faust allows us to declare basic 
+<a href="#user-interface-primitives-and-configuration">user interface (UI) elements</a> to 
+control the parameters of a Faust object. Since Faust can be used to make a wide 
+range of elements ranging from standalone applications to audio plug-ins or API, 
+the role of UI declarations differs a little in function of the target. For 
+example, in the Faust Online Editor, a UI is a window with various kind of 
+controllers (sliders, buttons, etc.). On the other hand, if you're using Faust 
+to generate an audio engine using <a href="#faust2api"><code>faust2api</code></a>, then UI elements
+declared in your Faust code will be the parameters visible to "the rest of the 
+world" and controllable through the API.</p>
+<p>An exhaustive list of the standard Faust UI elements is given in the 
+<a href="#user-interface-primitives-and-configuration">corresponding section</a>. Be aware 
+that they not all supported by all the Faust targets. For example, you wont be 
+able to declare vertical sliders if you're using the 
+<a href="../../tool/playground/index.html">Faust Playground</a>, etc. </p>
+<p>In the current case, we'd like to control the <code>ctFreq</code>, <code>q</code> and <code>gain</code> 
+parameters of the previous program with horizontal sliders. To do this, we can 
+write something like:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust8 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust8
+<div class="faust-run"><img src="/guide/quick-start/exfaust8/exfaust8-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = hslider(&quot;cutoffFrequency&quot;,500,50,10000,0.01);
+q = hslider(&quot;q&quot;,5,1,30,0.1);
+gain = hslider(&quot;gain&quot;,1,0,1,0.01);
+process = no.noise : fi.resonlp(ctFreq,q,gain);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>The first argument of <a href="#hslider-primitive"><code>hslider</code></a> is the 
+<em>name of the parameter</em> as it will be displayed in the interface or used in the 
+API (it can be different from the name of the variable associated with the UI 
+element), the next one is the <em>default value</em>, then the <em>min</em> and <em>max</em> values 
+and finally the <em>step</em>. To summarize: <code>hslider("paramName",default,min,max,step)</code>.</p>
+<p>Let's now add a "gate" <a href="#button-primitive"><code>button</code></a> to start and stop the sound 
+(where <code>gate</code> is just the name of the button):</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust9 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust9
+<div class="faust-run"><img src="/guide/quick-start/exfaust9/exfaust9-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = hslider(&quot;[0]cutoffFrequency&quot;,500,50,10000,0.01);
+q = hslider(&quot;[1]q&quot;,5,1,30,0.1);
+gain = hslider(&quot;[2]gain&quot;,1,0,1,0.01);
+t = button(&quot;[3]gate&quot;);
+process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust9/exfaust9.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>Note that we were able to 
+<a href="#ordering-ui-elements">order parameters in the interface</a> by numbering them in 
+the parameter name field using squared brackets. </p>
+<p>Faust user interface elements run at control rate. Thus, 
+you might have noticed that clicks are produced when moving sliders quickly. 
+This problem can be easily solved by "smoothing" down the output of the sliders 
+using the <a href="../libraries/index.html#smoo"><code>si.smoo</code></a> function:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust10 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust10
+<div class="faust-run"><img src="/guide/quick-start/exfaust10/exfaust10-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = hslider(&quot;[0]cutoffFrequency&quot;,500,50,10000,0.01) : si.smoo;
+q = hslider(&quot;[1]q&quot;,5,1,30,0.1) : si.smoo;
+gain = hslider(&quot;[2]gain&quot;,1,0,1,0.01) : si.smoo;
+t = button(&quot;[3]gate&quot;) : si.smoo;
+process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust10/exfaust10.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>Note that we're also using <code>si.smoo</code> on the output of the <code>gate</code> button to 
+apply a exponential envelope on its signal. </p>
+<p>This is a very broad introduction to making user interface elements in Faust. 
+You can do much more like creating groups, using knobs, different types of 
+menus, etc. but at least you should be able to make Faust programs at this 
+point that are controllable and sound good (or not ;) ).</p>
+<h2 id="final-polishing">Final Polishing</h2>
+<p>Some Faust functions already contain a built-in UI and are ready-to-be-used. 
+These functions are all placed in 
+<a href="../libraries/index.html#demo.lib">demo.lib</a> and are accessible through the 
+<code>dm.</code> environment. </p>
+<p>As an example, let's add a reverb to our previous code by calling 
+<a href="../libraries/index.html#dm.zita_light"><code>dm.zita_light</code></a> (high quality feedback 
+delay network based reverb). Since this function has two implicit inputs, we 
+also need to split the output of the filter (otherwise you will get an error 
+because Faust wont know how to connect things):</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust11 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust11
+<div class="faust-run"><img src="/guide/quick-start/exfaust11/exfaust11-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+ctFreq = hslider(&quot;[0]cutoffFrequency&quot;,500,50,10000,0.01) : si.smoo;
+q = hslider(&quot;[1]q&quot;,5,1,30,0.1) : si.smoo;
+gain = hslider(&quot;[2]gain&quot;,1,0,1,0.01) : si.smoo;
+t = button(&quot;[3]gate&quot;) : si.smoo;
+process = no.noise : fi.resonlp(ctFreq,q,gain)*t &lt;: dm.zita_light;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust11/exfaust11.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>Hopefully, you should see many more UI elements in your interface. </p>
+<p>That's it folks! At this point you should be able to use 
+<a href="../libraries/index.html#standard-functions">Faust standard functions</a>, connect 
+them together and build a simple UI at the top of them.</p>
+<h2 id="some-project-ideas">Some Project Ideas</h2>
+<p>In this section, we present a couple of project ideas that you could try to 
+implement using 
+<a href="../libraries/index.html#standard-functions">Faust standard functions</a>. Also, 
+feel free to check the <a href="https://github.com/grame-cncm/faust/tree/master/examples"><code>/examples</code> folder of the Faust repository</a>.</p>
+<h3 id="additive-synthesizer">Additive Synthesizer</h3>
+<p>Make an additive synthesizer using <a href="../libraries/index.html#os.osc"><code>os.osc</code></a> 
+(sine wave oscillator):</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+// freqs and gains definitions go here
+process = 
+    os.osc(freq0)*gain0,
+    os.osc(freq2)*gain2 
+    :&gt; _ // merging signals here
+    &lt;: dm.zita_light; // and then splitting them for stereo in
+</code></pre>
+
+<h3 id="fm-synthesizer">FM Synthesizer</h3>
+<p>Make a frequency modulation (FM) synthesizer using 
+<a href="../libraries/index.html#os.osc"><code>os.osc</code></a> (sine wave oscillator):</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+// carrierFreq, modulatorFreq and index definitions go here
+process = 
+    os.osc(carrierFreq+os.osc(modulatorFreq)*index)
+    &lt;: dm.zita_light; // splitting signals for stereo in
+</code></pre>
+
+<h3 id="guitar-effect-chain">Guitar Effect Chain</h3>
+<p>Make a guitar effect chain:</p>
+<!-- faust-run -->
+
+<p>[ -d mkdocs/docs/guide/quick-start/exfaust12 ] || mkdir -p mkdocs/docs/guide/quick-start/exfaust12
+<div class="faust-run"><img src="/guide/quick-start/exfaust12/exfaust12-svg/process.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+process = 
+    dm.cubicnl_demo : // distortion 
+    dm.wah4_demo &lt;: // wah pedal
+    dm.phaser2_demo : // stereo phaser 
+    dm.compressor_demo : // stereo compressor
+    dm.zita_light; // stereo reverb
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://faustdoc.grame.fr/guide/quick-start/exfaust12/exfaust12.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<p>Since we're only using functions from 
+<a href="../libraries/index.html#demo.lib"><code>demo.lib</code></a> here, there's no need to define 
+any UI since it is built-in in the functions that we're calling. Note that the 
+mono output of <code>dm.wah4_demo</code> is split to fit the stereo input of 
+<code>dm.phaser2_demo</code>. The last three effects have the same number of inputs and 
+outputs (2x2) so no need to split or merge them.</p>
+<h3 id="string-physical-model-based-on-a-comb-filter">String Physical Model Based On a Comb Filter</h3>
+<p>Make a string physical model based on a feedback comb filter:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+// freq, res and gate definitions go here
+string(frequency,resonance,trigger) = trigger : ba.impulsify : fi.fb_fcomb(1024,del,1,resonance)
+with {
+    del = ma.SR/frequency;
+};
+process = string(freq,res,gate);
+</code></pre>
+
+<p>Sampling rate is defined in <a href="../libraries/index.html#maths.lib"><code>maths.lib</code></a> as 
+<a href="../libraries/index.html#ma.sr"><code>SR</code></a>. We're using it here to compute the 
+length of the delay of the comb filter. <a href="#with-expression"><code>with{}</code></a> is a Faust 
+primitive to attach local variables to a function. So in the current case, 
+<code>del</code> is a local variable of <code>string</code>.</p>
+<h2 id="what-to-do-from-here">What to Do From Here?</h2>
+<p>TODO.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

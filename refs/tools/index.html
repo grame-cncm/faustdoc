@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Using Tools - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../compiler/">Using the Compiler</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../compiler/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../../about/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#using-the-faust-tools">Using the Faust Tools</a></li>
+            <li><a href="#faust2alqt">faust2alqt</a></li>
+            <li><a href="#faust2alsa">faust2alsa</a></li>
+            <li><a href="#faust2alsaconsole">faust2alsaconsole</a></li>
+            <li><a href="#faust2android">faust2android</a></li>
+            <li><a href="#faust2androidunity">faust2androidunity</a></li>
+            <li><a href="#faust2api">faust2api</a></li>
+            <li><a href="#faust2atomsnippets">faust2atomsnippets</a></li>
+            <li><a href="#faust2au">faust2au</a></li>
+            <li><a href="#faust2bela">faust2bela</a></li>
+            <li><a href="#faust2caqt">faust2caqt</a></li>
+            <li><a href="#faust2caqtios">faust2caqtios</a></li>
+            <li><a href="#faust2csound">faust2csound</a></li>
+            <li><a href="#faust2csvplot">faust2csvplot</a></li>
+            <li><a href="#faust2dssi">faust2dssi</a></li>
+            <li><a href="#faust2dummy">faust2dummy</a></li>
+            <li><a href="#faust2dummymem">faust2dummymem</a></li>
+            <li><a href="#faust2eps">faust2eps</a></li>
+            <li><a href="#faust2esp32">faust2esp32</a></li>
+            <li><a href="#faust2faustvst">faust2faustvst</a></li>
+            <li><a href="#faust2firefox">faust2firefox</a></li>
+            <li><a href="#faust2gen">faust2gen</a></li>
+            <li><a href="#faust2graph">faust2graph</a></li>
+            <li><a href="#faust2graphviewer">faust2graphviewer</a></li>
+            <li><a href="#faust2ios">faust2ios</a></li>
+            <li><a href="#faust2jack">faust2jack</a></li>
+            <li><a href="#faust2jackconsole">faust2jackconsole</a></li>
+            <li><a href="#faust2jackinternal">faust2jackinternal</a></li>
+            <li><a href="#faust2jackrust">faust2jackrust</a></li>
+            <li><a href="#faust2jackserver">faust2jackserver</a></li>
+            <li><a href="#faust2jaqt">faust2jaqt</a></li>
+            <li><a href="#faust2jaqtchain">faust2jaqtchain</a></li>
+            <li><a href="#faust2javaswing">faust2javaswing</a></li>
+            <li><a href="#faust2juce">faust2juce</a></li>
+            <li><a href="#faust2ladspa">faust2ladspa</a></li>
+            <li><a href="#faust2linuxunity">faust2linuxunity</a></li>
+            <li><a href="#faust2lv2">faust2lv2</a></li>
+            <li><a href="#faust2mathdoc">faust2mathdoc</a></li>
+            <li><a href="#faust2mathviewer">faust2mathviewer</a></li>
+            <li><a href="#faust2max6">faust2max6</a></li>
+            <li><a href="#faust2md">faust2md</a></li>
+            <li><a href="#faust2msp">faust2msp</a></li>
+            <li><a href="#faust2netjackconsole">faust2netjackconsole</a></li>
+            <li><a href="#faust2netjackqt">faust2netjackqt</a></li>
+            <li><a href="#faust2nodejs">faust2nodejs</a></li>
+            <li><a href="#faust2octave">faust2octave</a></li>
+            <li><a href="#faust2osxiosunity">faust2osxiosunity</a></li>
+            <li><a href="#faust2owl">faust2owl</a></li>
+            <li><a href="#faust2paqt">faust2paqt</a></li>
+            <li><a href="#faust2pdf">faust2pdf</a></li>
+            <li><a href="#faust2plot">faust2plot</a></li>
+            <li><a href="#faust2png">faust2png</a></li>
+            <li><a href="#faust2portaudiorust">faust2portaudiorust</a></li>
+            <li><a href="#faust2pure">faust2pure</a></li>
+            <li><a href="#faust2puredata">faust2puredata</a></li>
+            <li><a href="#faust2raqt">faust2raqt</a></li>
+            <li><a href="#faust2ros">faust2ros</a></li>
+            <li><a href="#faust2rosgtk">faust2rosgtk</a></li>
+            <li><a href="#faust2rpialsaconsole">faust2rpialsaconsole</a></li>
+            <li><a href="#faust2rpinetjackconsole">faust2rpinetjackconsole</a></li>
+            <li><a href="#faust2sam">faust2sam</a></li>
+            <li><a href="#faust2sig">faust2sig</a></li>
+            <li><a href="#faust2sigviewer">faust2sigviewer</a></li>
+            <li><a href="#faust2smartkeyb">faust2smartkeyb</a></li>
+            <li><a href="#faust2sndfile">faust2sndfile</a></li>
+            <li><a href="#faust2soul">faust2soul</a></li>
+            <li><a href="#faust2supercollider">faust2supercollider</a></li>
+            <li><a href="#faust2svg">faust2svg</a></li>
+            <li><a href="#faust2svgviewer">faust2svgviewer</a></li>
+            <li><a href="#faust2teensy">faust2teensy</a></li>
+            <li><a href="#faust2unity">faust2unity</a></li>
+            <li><a href="#faust2vst">faust2vst</a></li>
+            <li><a href="#faust2vsti">faust2vsti</a></li>
+            <li><a href="#faust2w32max6">faust2w32max6</a></li>
+            <li><a href="#faust2w32msp">faust2w32msp</a></li>
+            <li><a href="#faust2w32puredata">faust2w32puredata</a></li>
+            <li><a href="#faust2w32vst">faust2w32vst</a></li>
+            <li><a href="#faust2w64max6">faust2w64max6</a></li>
+            <li><a href="#faust2wasm">faust2wasm</a></li>
+            <li><a href="#faust2webaudiowasm">faust2webaudiowasm</a></li>
+            <li><a href="#faust2webaudiowast">faust2webaudiowast</a></li>
+            <li><a href="#faust2winunity">faust2winunity</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="using-the-faust-tools">Using the Faust Tools</h1>
+<p>While in its most <em>primitive</em> form, Faust is distributed as a command-line 
+compiler, a wide range of tools have been developed around it in the course of 
+the past few years. Their variety and their function might be hard to grab at 
+first. This sort chapter provides an overview of their role and will hopefully 
+help you decide which one is better suited for your personal use. </p>
+<p>The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools name are in the form <code>faust2xxx</code> where <code>xxx</code> is the target architecture.</p>
+<h2 id="faust2alqt">faust2alqt</h2>
+<p><pre class=faust-tools>
+faust2alqt [-httpd] [-qrcode] [-midi] [-osc] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-qrcode' to activate QR code generation
+Use '-poly' to produce a polyphonic DSP, ready to be used with MIDI events
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+</pre></p>
+<h2 id="faust2alsa">faust2alsa</h2>
+<p><pre class=faust-tools>
+faust2alsa [-httpd] [-qrcode] [-midi] [-osc] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-qrcode' to activate QR code generation
+Use '-poly' to produce a polyphonic DSP, ready to be used with MIDI events
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+</pre></p>
+<h2 id="faust2alsaconsole">faust2alsaconsole</h2>
+<p><pre class=faust-tools>
+faust2alsaconsole [-nvoices <num>] [-midi] [-osc] [-httpd] [-arch32] [-arch64] <file.dsp>
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+Use '-httpd' to activate HTTP control
+Use '-arch32' to compile a 32 bits binary
+Use '-arch64' to compile a 64 bits binary
+</pre></p>
+<h2 id="faust2android">faust2android</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2androidunity">faust2androidunity</h2>
+<p><pre class=faust-tools>
+faust2androidunity [-nvoices <num>] [additional Faust options (-vec -vs 8...)] <file1.dsp> [<file2.dsp>]
+Creates android libraries (armeabi-v7a and x86) for faust unity plugin.
+Android sdk should be installed. Make sure the ANDROID_HOME environment variable is correctly set up. It should be pointing to the sdk folder.
+Use 'faust2unity -android' to also create the c# and JSON files
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+If you need other android architectures, open architecture/unity/Android/Application.mk and modify APP_ABI.
+See architecture/unity/README.md for more info or in the compile folder
+</pre></p>
+<h2 id="faust2api">faust2api</h2>
+<p><pre class=faust-tools>
+faust2api can be used to generate Faust based dsp objects for various platforms:</p>
+<p>To generate an iOS API, run: faust2api -ios yourFaustCode.dsp
+To generate an Android API, run: faust2api -android yourFaustCode.dsp
+To generate an OSX CoreAudio API, run: faust2api -coreaudio yourFaustCode.dsp
+To generate an ALSA API, run: faust2api -alsa yourFaustCode.dsp
+To generate a JACK API, run: faust2api -jack yourFaustCode.dsp
+To generate a PortAudio API, run: faust2api -portaudio yourFaustCode.dsp
+To generate a RTAudio API, run: faust2api -rtaudio yourFaustCode.dsp
+To generate a OpenFrameworks API, run: faust2api -of yourFaustCode.dsp
+To generate a JUCE API, run: faust2api -juce yourFaustCode.dsp
+To generate a dummy audio API, run: faust2api -dummy yourFaustCode.dsp</p>
+<p>Global options:
+   -opt native|generic: to activate the best compilation options for the native or generic CPU.
+   -nvoices <num>: creates a polyphonic object with <num> voices.
+   -effect <effect.dsp>: adds an effect to the polyphonic synth (this option is ignored if -nvoices is not specified).
+   -effect auto: adds an effect (extracted automatically from the dsp file) to the polyphonic synth (this option is ignored if -nvoices is not specified).
+   -nodoc: prevents documentation from being generated.
+   -nozip: prevents generated files to be put in a zip file.</p>
+<p>Android specific options:
+   -package: set the JAVA package name (e.g. '-package mypackage' will change the JAVA package name to 'mypackage.DspFaust'). The default package name is 'com.DspFaust.'
+   -soundfile : add built-in Soundfile support to the API.</p>
+<p>iOS specific options
+   -midi: add built-in RtMidi support to the API.
+   -osc: add built-in OSC support to the API.
+   -soundfile : add built-in Soundfile support to the API.</p>
+<p>CoreAudio specific options
+   -midi: add built-in RtMidi support to the API.
+   -osc: add built-in OSC support to the API.
+   -soundfile : add built-in Soundfile support to the API.</p>
+<p>ALSA specific options
+   -midi: add built-in RtMidi support to the API.
+   -osc: add built-in OSC support to the API.
+   -soundfile: add built-in Soundfile support to the API.</p>
+<p>JACK specific options
+   -midi: activate JACK MIDI support to the API.
+   -osc: add built-in OSC support to the API.
+   -soundfile: add built-in Soundfile support to the API.
+   -build: build a ready to test binary.
+   -dynamic: add libfaust/LLVM dynamic DSP compilation mode.</p>
+<p>PortAudio specific options
+   -midi: add built-in RtMidi support to the API.
+   -osc: add built-in OSC support to the API.
+   -soundfile: add built-in Soundfile support to the API.</p>
+<p>RTAudio specific options
+   -midi: add built-in RtMidi support to the API.
+   -osc: add built-in OSC support to the API.
+   -soundfile: add built-in Soundfile support to the API.</p>
+<p>JUCE specific options
+   -midi: add JUCE MIDI support to the API.
+   -osc: add JUCE OSC support to the API.
+   -soundfile: add built-in Soundfile support to the API.</p>
+<p>Additional Faust options (like -vec -vs 8...) can be given at the end of the command line.</p>
+</pre>
+
+<h2 id="faust2atomsnippets">faust2atomsnippets</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2au">faust2au</h2>
+<p><pre class=faust-tools>
+faust2au [-httpd] [-osc] [-install] [-debug] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-osc' to activate OSC control
+Use '-debug' to print all the build steps and keep intermediate build folder
+</pre></p>
+<h2 id="faust2bela">faust2bela</h2>
+<p><pre class=faust-tools>
+faust2bela [-midi] [-gui] [-nvoices <num>] [-effect <auto or file.dsp>] [-soundfile] [-osc] [-tobela] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-midi' to activate MIDI control
+Use '-gui' to activate a self-hosted GUI interface. This requires that you installed libmicrohttpd and libHTTPDFaust.
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, it must need -midi option also
+Polyphonic mode means MIDI instrument with at least 1 voice, so include monophonic instrument. Use no arguments for a simple effect.
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI
+Use '-soundfile' when compiling DSP using 'soundfile' primitive, to add needed resources
+Use '-osc' to activate OSC control
+Use '-tobela' to send C++ file into bela, and run it.
+</pre></p>
+<h2 id="faust2caqt">faust2caqt</h2>
+<p><pre class=faust-tools>
+faust2caqt [-opt native|generic] [-httpd] [-qrcode] [-soundfile] [-resample] [-nvoices <num>] [-effect auto|<effect.dsp>] [-midi] [-osc] [-preset auto|<directory>] [-me] [-debug] [-nodeploy] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-opt native' to activate the best compilation options for the native CPU
+Use '-opt generic' to activate the best compilation options for a generic CPU
+Use '-httpd' to activate HTTP control
+Use '-qrcode' to activate QR code generation
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-soundfile' when compiling DSP using 'soundfile' primitive, to add needed resources
+Use '-resample' to resample soundfiles to the audio driver sample rate
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+Use '-preset <directory>' to add a preset manager on top of GUI and save the preset files in a given directory
+Use '-preset auto' to add a preset manager on top of GUI and save the preset files in a system temporary directory
+Use '-me' to catch math computation exception (floating point exceptions and integer div-by-zero or overflow)
+Use '-debug' to print all the build steps
+Use '-nodeploy' to not create a self-contained application using 'macdeployqt'
+</pre></p>
+<h2 id="faust2caqtios">faust2caqtios</h2>
+<p><pre class=faust-tools>
+faust2caqtios [-httpd] [-qrcode] [-poly] [-midi] [-osc] [-debug] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-qrcode' to activate QR code generation
+Use '-poly' to produce a polyphonic DSP, ready to be used with MIDI events
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+Use '-debug' to print all the build steps
+</pre></p>
+<h2 id="faust2csound">faust2csound</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2csvplot">faust2csvplot</h2>
+<p><pre class=faust-tools>
+faust2csvplot [-soundfile] <file.dsp>
+Use '-soundfile' when compiling DSP using 'soundfile' primitive
+</pre></p>
+<h2 id="faust2dssi">faust2dssi</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2dummy">faust2dummy</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2dummymem">faust2dummymem</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2eps">faust2eps</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2esp32">faust2esp32</h2>
+<p><pre class=faust-tools>
+FAUST2ESP32 HELP
+faust2esp32 can be used to fully program the ESP32 microncontroller and to generate DSP objects that can be integrated into any ESP32 project. 
+Additional information about this tool can be found on the Faust website: https://faust.grame.fr.</p>
+<p>USAGE:
+faust2esp32 -lib faustFile.dsp: Generates a package containing an object compatible with any ESP32 project.</p>
+<p>Optional: -wm8978 or -ac101 to choose codec driver.</p>
+</pre>
+
+<h2 id="faust2faustvst">faust2faustvst</h2>
+<p><pre class=faust-tools>
+faust2faustvst [options ...] <file.dsp></p>
+<p>Options:
+-gui: build the plugin GUI
+-httpd: activate HTTP control (add -qrcode to activate QR code generation)
+-keep: retain the build directory
+-nometa: ignore metadata (author information etc.) from the Faust source
+-nomidicc: plugin doesn't process MIDI control data
+-notuning: disable the tuning control (instruments only)
+-novoicectrls: no extra polyphony/tuning controls on GUI (instruments only)
+-nvoices N: number of synth voices (instruments only; arg must be an integer)
+-osc: activate OSC control
+-qt4, -qt5: select the GUI toolkit (requires Qt4/5; implies -gui)
+-style S: select the stylesheet (arg must be Default, Blue, Grey or Salmon)</p>
+<p>Environment variables:
+FAUSTINC: specify the location of the Faust include directory
+  Default: /Users/fober/FAUST/current/include
+FAUSTARCH: specify the location of the Faust VST library files
+  Default: /Users/fober/FAUST/current/share/faust
+QMAKE: specify the location of the qmake binary
+  Default: qmake
+SDK: specify the location of the VST SDK
+  Default: /usr/local/src/vstsdk
+SDKSRC: specify the location of the VST SDK sources
+  Default: /usr/local/src/vstsdk/public.sdk/source/vst2.x
+</pre></p>
+<h2 id="faust2firefox">faust2firefox</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2gen">faust2gen</h2>
+<p><pre class=faust-tools>
+faust2gen [-nvoices <num>] <file.dsp>
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+</pre></p>
+<h2 id="faust2graph">faust2graph</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2graphviewer">faust2graphviewer</h2>
+<p><pre class=faust-tools>
+Usage : args of faust2graphviewer should be a '.dsp' file, or a list of '.dsp' files.
+</pre></p>
+<h2 id="faust2ios">faust2ios</h2>
+<p><pre class=faust-tools>
+faust2ios [-xcode] [-xcodeproj] [-archive] [-32bits] [-noagc] [-nvoices <num>] [-effect auto|<effect.dsp>] [-midi] [-osc] [-soundfile] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-xcode' to compile and keep the intermediate Xcode project
+Use '-xcodeproj' to produce the intermediate Xcode project
+Use '-archive' to generate the archive for Apple Store
+Use '-32bits' to compile 32 bits only binary
+Use '-noagc' to deactivate audio automatic gain control
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+Use '-soundfile' when compiling DSP using 'soundfile' primitive, to add needed resources
+</pre></p>
+<h2 id="faust2jack">faust2jack</h2>
+<p><pre class=faust-tools>
+faust2jack [-httpd] [-soundfile] [-resample] [-nvoices <num>] [-effect auto|<effect.dsp>] [-midi] [-osc] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-soundfile' when compiling DSP using 'soundfile' primitive, to add needed resources
+Use '-resample' to resample soundfiles to the audio driver sample rate
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+</pre></p>
+<h2 id="faust2jackconsole">faust2jackconsole</h2>
+<p><pre class=faust-tools>
+faust2jackconsole [-httpd] [-osc] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+</pre></p>
+<h2 id="faust2jackinternal">faust2jackinternal</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2jackrust">faust2jackrust</h2>
+<p><pre class=faust-tools>
+faust2jackrust [-source] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-source' to only generate the source project
+</pre></p>
+<h2 id="faust2jackserver">faust2jackserver</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2jaqt">faust2jaqt</h2>
+<p><pre class=faust-tools>
+faust2jaqt [-httpd] [-qrcode] [-soundfile] [-resample] [-nvoices <num>] [-effect auto|<effect.dsp>] [-midi] [-osc] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-qrcode' to activate QR code generation
+Use '-soundfile' when compiling DSP using 'soundfile' primitive, to add needed resources
+Use '-resample' to resample soundfiles to the audio driver sample rate
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+</pre></p>
+<h2 id="faust2jaqtchain">faust2jaqtchain</h2>
+<p><pre class=faust-tools>
+faust2jaqtchain [-httpd] [-osc] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-osc' to activate OSC control
+</pre></p>
+<h2 id="faust2javaswing">faust2javaswing</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2juce">faust2juce</h2>
+<p><pre class=faust-tools>
+faust2juce [-standalone] [-nvoices <num>] [-effect auto|<effect.dsp>] [-jucemodulesdir <dir>] [-jsynth] [-midi] [-osc] [-llvm] [-soundfile] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-standalone' to produce a standalone project, otherwise a plugin project is generated
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
+Use '-jucemodulesdir <dir>' to set JUCE modules directory to <dir>, such as ~/JUCE/modules
+Use '-jsynth' to use JUCE polyphonic Synthesizer instead of Faust polyphonic code
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+Use '-llvm' to use the LLVM compilation chain (OSX and Linux for now)
+Use '-soundfile' when compiling DSP using 'soundfile' primitive, to add needed resources
+</pre></p>
+<h2 id="faust2ladspa">faust2ladspa</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2linuxunity">faust2linuxunity</h2>
+<p><pre class=faust-tools>
+faust2linuxunity [additional Faust options (-vec -vs 8...)] <file1.dsp> [<file2.dsp>]
+Create Linux shared library for faust unity plugin.
+Use 'faust2unity -linux' to also create the c# files
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+See architecture/unity/README.md for more info
+</pre></p>
+<h2 id="faust2lv2">faust2lv2</h2>
+<p><pre class=faust-tools>
+faust2lv2 [options ...] <file.dsp></p>
+<p>Options:
+-dyn-manifest: use dynamic manifests (requires LV2 host support)
+-gui: build the plugin GUI (requires LV2 UI host support)
+-httpd: activate HTTP control (add -qrcode to activate QR code generation)
+-keep: retain the build directory
+-nometa: ignore metadata (author information etc.) from the Faust source
+-nomidicc: plugin doesn't process MIDI control data
+-notuning: disable the tuning control (instruments only)
+-novoicectrls: no extra polyphony/tuning controls on GUI (instruments only)
+-nvoices N: number of synth voices (instruments only; arg must be an integer)
+-osc: activate OSC control
+-qt4, -qt5: select the GUI toolkit (requires Qt4/5; implies -gui)
+-style S: select the stylesheet (arg must be Default, Blue, Grey or Salmon)
+-uri-prefix URI: URI prefix of plugin (arg must be a valid URI)</p>
+<p>Environment variables:
+FAUSTINC: specify the location of the Faust include directory
+  Default: /Users/fober/FAUST/current/include/faust
+FAUSTLIB: specify the location of the Faust LV2 library files
+  Default: .
+QMAKE: specify the location of the qmake binary of the desired Qt version
+  Default: qmake
+</pre></p>
+<h2 id="faust2mathdoc">faust2mathdoc</h2>
+<p><pre class=faust-tools>
+usage: faust2mathdoc [-l LANG] [-utf8] faust_file.dsp ...
+ LANG is usually a 2-lowercase-letters language name, like en, fr, or it.
+ -utf8 force faust_file.dsp to be recoded in UTF-8 before being processed
+</pre></p>
+<h2 id="faust2mathviewer">faust2mathviewer</h2>
+<p><pre class=faust-tools>
+Usage : args of faust2mathviewer should be a '.dsp' file, or a list of '.dsp' files.
+</pre></p>
+<h2 id="faust2max6">faust2max6</h2>
+<p><pre class=faust-tools>
+faust2max6 [-opt native|generic] [-native] [-nvoices <num>] [-effect <effect.dsp>] [-midi] [-osc] [-universal] [-nopatch] [-soundfile/-soundfile-static] [additional Faust options (-vec -vs 8...)] <file.dsp>
+NOTE : -double mode is used by default
+Use '-opt native' to activate the best compilation options for the native CPU
+Use '-opt generic' to activate the best compilation options for a generic CPU
+Use '-native' to compile for the native CPU (otherwise the 'generic' mode is used by default)
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+Use '-universal' to generate a 64/32 bits external
+Use '-nopatch' to deactivate patch generation
+Use '-soundfile' when compiling DSP using 'soundfile' primitive, to add needed resources
+Use '-soundfile-static' when compiling DSP using 'soundfile' primitive, to add needed resources in static mode
+</pre></p>
+<h2 id="faust2md">faust2md</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2msp">faust2msp</h2>
+<p><pre class=faust-tools>
+faust2msp [-native] [-nvoices <num>] [-effect <effect.dsp>] [-midi] [-osc] [-soundfile] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-native' to compile for the native CPU (otherwise the 'generic' mode is used by default)
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+Use '-soundfile' when compiling DSP using 'soundfile' primitive, to add needed resources
+</pre></p>
+<h2 id="faust2netjackconsole">faust2netjackconsole</h2>
+<p><pre class=faust-tools>
+faust2netjackconsole [-httpd] [-nvoices <num>] [-effect auto|<effect.dsp>] [-midi] [-osc] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+</pre></p>
+<h2 id="faust2netjackqt">faust2netjackqt</h2>
+<p><pre class=faust-tools>
+faust2netjackqt [-httpd] [-nvoices <num>] [-effect auto|<effect.dsp>] [-midi] [-osc] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+</pre></p>
+<h2 id="faust2nodejs">faust2nodejs</h2>
+<p><pre class=faust-tools>
+faust2nodejs can be used to generate Faust-based nodejs native addons. The generated addons can embed most of the audio engines supported by Faust: alsa, JACK, CoreAudio, RtAudio, PortAudio, etc. Since faust2nodejs essentially acts as a wrapper to faust2api, it offers the same features than this system (MIDI and OSC suport, polyphony, separate effect file, etc.).</p>
+<p>USAGE: faust2nodejs [DRIVER] [OPTIONS] <file.dsp></p>
+<p>The following drivers (DRIVER) are available: -coreaudio // -alsa // -jack // -portaudio // -rtaudio // -dummy. For example, to create a native nodejs addon with a JACK audio engine, run: faust2nodjs -jack faustFile.dsp</p>
+<p>The following options (OPTIONS) are inherited directly from faust2api and can be used with faust2nodejs:
+   -nvoices N : creates a polyphonic object with N voices.
+   -effect <effect.dsp>: adds an effect to the polyphonic synth (this option is ignored if -nvoices is not specified).
+   -midi : add built-in RtMidi support to the API.
+   -osc : add built-in OSC support to the API.
+   -soundfile : add built-in Soundfile support to the API.
+   -source : generates the source of the addon without compiling it.
+   -electronv <VERSION>: allows to specify the current version of electron if generating an addon for this framework.
+   -debug : prints compilation output.
+</pre></p>
+<h2 id="faust2octave">faust2octave</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2osxiosunity">faust2osxiosunity</h2>
+<p><pre class=faust-tools>
+faust2osxiosunity [-ios] [-universal] [additional Faust options (-vec -vs 8...)] <file1.dsp> [<file2.dsp>]
+Use '-ios' to create an iOS static library
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+Use '-universal' to generate a 64/32 bits external
+Use 'faust2unity -osx -ios' to also create the c# and JSON files
+See architecture/unity/README.md for more info
+</pre></p>
+<h2 id="faust2owl">faust2owl</h2>
+<pre class=faust-tools>
+
+<pre><code>       Instructions to add Patch.hpp to your owl pedal
+</code></pre>
+<p>Copy file [[ Patch.hpp ]] to OwlWare/Libraries/OwlPatches directory</p>
+<p>Add line [[ #include "Patch.hpp" ]] to OwlWare/Libraries/OwlPatches/includes.h file</p>
+<p>Add line [[ REGISTER_PATCH(Patch, "Patch", 2, 2); ]] to OwlWare/Libraries/OwlPatches/patches.cpp file</p>
+<p>Rebuild the firmware using the command make in OwlWare directory</p>
+<p>Upload the resulting firmware OwlWare/build/OwlWare.bin to the pedal using the OwlNest software.</p>
+</pre>
+
+<h2 id="faust2paqt">faust2paqt</h2>
+<p><pre class=faust-tools>
+faust2paqt [-httpd] [-qrcode] [-poly] [-midi] [-osc] [-nodeploy] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-qrcode' to activate QR code generation
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI or OSC
+Use '-midi' to activate MIDI control
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
+Use '-osc' to activate OSC control
+Use '-nodeploy' to not create a self-contained application using 'macdeployqt'
+</pre></p>
+<h2 id="faust2pdf">faust2pdf</h2>
+<p><pre class=faust-tools>
+-help-svg
+</pre></p>
+<h2 id="faust2plot">faust2plot</h2>
+<p><pre class=faust-tools>
+faust2plot <file.dsp>
+With the compiled program 'file', you can add [-s start] [-n samples] [-r rate]:
+Use -s to start at the given sample number (default is 0)
+Use -n to render the wanted number of samples (default is 16)
+Use -r to change the sample rate (default is 44100 Hz)
+</pre></p>
+<h2 id="faust2png">faust2png</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2portaudiorust">faust2portaudiorust</h2>
+<p><pre class=faust-tools>
+faust2portaudiorust [-source] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-source' to only generate the source project
+</pre></p>
+<h2 id="faust2pure">faust2pure</h2>
+<p><pre class=faust-tools>
+faust2pure [-bitcode] [-keep] <file.dsp></p>
+<p>Options:
+-bitcode: generate an LLVM bitcode module (requires clang++)
+-keep: retain the build directory</p>
+<p>Environment variables:
+FAUSTLIB: specify the location of the Faust library (where pure.cpp lives)
+  Default: .
+</pre></p>
+<h2 id="faust2puredata">faust2puredata</h2>
+<p><pre class=faust-tools>
+faust2puredata [-arch32] [-arch64]  <file.dsp>
+Use '-arch32' to compile in 32 bits
+Use '-arch64' to compile in 64 bits
+Use '-poly' to produce a polyphonic self-contained DSP
+Use '-tosource' to skip the C++ compiling step and only generate the C++ source file
+</pre></p>
+<h2 id="faust2raqt">faust2raqt</h2>
+<p><pre class=faust-tools>
+faust2raqt [-osc] [-httpd] [-poly] [-midi] [-nodeploy] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-httpd' to activate HTTP control
+Use '-qrcode' to activate QR code generation
+Use '-poly' to produce a polyphonic DSP, ready to be used with MIDI events
+Use '-midi' to activate MIDI control
+Use '-osc' to activate OSC control
+Use '-nodeploy' to not create a self-contained application using 'macdeployqt'
+</pre></p>
+<h2 id="faust2ros">faust2ros</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2rosgtk">faust2rosgtk</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2rpialsaconsole">faust2rpialsaconsole</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2rpinetjackconsole">faust2rpinetjackconsole</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2sam">faust2sam</h2>
+<pre class=faust-tools>
+
+<p>faust2sam can be used to generate faust-based dsp objects for the ADI SHARC Audio Module board</p>
+<p>Global options:
+   -midi
+   -nvoices <num> : creates a polyphonic object with <num> voices.
+   -effect <effect.dsp>: adds an effect to the polyphonic synth (this option is ignored if -nvoices is not specified).</p>
+</pre>
+
+<h2 id="faust2sig">faust2sig</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2sigviewer">faust2sigviewer</h2>
+<p><pre class=faust-tools>
+Usage : args of faust2graphviewer should be a '.dsp' file, or a list of '.dsp' files.
+</pre></p>
+<h2 id="faust2smartkeyb">faust2smartkeyb</h2>
+<p><pre class=faust-tools>
+FAUST2SMARTKEYB - MUSICAL MOBILE APP GENERATOR</p>
+<p>faust2smartkeyb takes a Faust code as its main argument and convert it into a ready-to-use app for Android or iOS. The only two required arguments of faust2smartkeyb are a Faust file and the target platform (-android or -ios):</p>
+<p>faust2smartkeyb -ios mySynth.dsp
+or
+faust2smartkeyb -android mySynth.dsp</p>
+<p>OPTIONS:</p>
+<p>-android: generate an Android app
+-ios: generate an iOS app
+-debug: activate debug mode
+-effect: allow to specify an effect Faust file (e.g., -effect myEffect.dsp)
+-help: dispay this help page
+-install: install the app on the connected device (Android only)
+-nvoices: specify the max number of voices
+-reuse: reuse the same project source
+-source: only generate the source (no compilation)
+-osc: adds OSC support to the app</p>
+<p>More information and tutorials at: https://ccrma.stanford.edu/~rmichon/smartKeyboard
+</pre></p>
+<h2 id="faust2sndfile">faust2sndfile</h2>
+<p><pre class=faust-tools>
+faust2sndfile <foo.dsp></p>
+</pre>
+
+<h2 id="faust2soul">faust2soul</h2>
+<p><pre class=faust-tools>
+faust2soul [-nvoices <num>] [-effect auto|<effect.dsp>] [-midi] [-play] [additional Faust options (-vec -vs 8...)] <file.dsp>
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI
+Use '-midi' to activate MIDI control
+Use '-play' to start the 'soul' runtime with the generated SOUL file
+</pre></p>
+<h2 id="faust2supercollider">faust2supercollider</h2>
+<p><pre class=faust-tools>
+Can't find SuperCollider headers
+</pre></p>
+<h2 id="faust2svg">faust2svg</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2svgviewer">faust2svgviewer</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2teensy">faust2teensy</h2>
+<p><pre class=faust-tools>
+FAUST2TEENSY HELP
+faust2teensy can be used to fully program the Teensy microncontroller and to generate DSP objects compatible with the Teensy audio library. In bose cases, we strongly recommend to use the Teensy 3.6 which hosts an FPU (i.e., the Teensy 3.2 doesn't have one). Additional information about this tool can be found on the Faust website: https://faust.grame.fr.</p>
+<p>USAGE:
+faust2teensy -lib faustFile.dsp: Generates a package containing an object compatible with the Teensy audio library.
+</pre></p>
+<h2 id="faust2unity">faust2unity</h2>
+<p><pre class=faust-tools>
+faust2unity [-w32] .. [-android] [-nvoices <num>] [-source] [-unpacked] [additional Faust options (-vec -vs 8...)] <file1.dsp> [<file2.dsp>] ..
+Generates a unity package (compressed .unitypackage folder) with all available architecture libraries for faust unity plugin and the C# files required. Use arguments to generate specific architectures
+Use -w32 to produce a Windows 32 bits library
+Use -w64 to produce a Windows 64 bits library
+Use -osx to produce a macOS library
+Use -ios to produce an iOS library
+Use -android to produce Android libraries (armeabi-v7a and x86).
+Use -linux to produce a Linux library
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+Use -source to produce the source files (uncompressed folder)
+Use -unpacked to produce an unpacked folder with files organized like the Unity Asset hierarchy. Use this options to add specific files in the unity package (in the Assets folder, then use <code>encoderunitypackage &lt;folder&gt;</code> to compress and pack it. 
+See architecture/unity/README.md for more info.
+</pre></p>
+<h2 id="faust2vst">faust2vst</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2vsti">faust2vsti</h2>
+<pre class=faust-tools>
+
+</pre>
+
+<h2 id="faust2w32max6">faust2w32max6</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2w32msp">faust2w32msp</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2w32puredata">faust2w32puredata</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2w32vst">faust2w32vst</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2w64max6">faust2w64max6</h2>
+<p><pre class=faust-tools>
+</pre></p>
+<h2 id="faust2wasm">faust2wasm</h2>
+<p><pre class=faust-tools>
+faust2wasm [-poly] [-effect auto|<effect.dsp>] [-comb] [-opt] [-worklet] [-emcc] [-wap] [-npm] <file.dsp>
+Use '-poly' to produce a polyphonic DSP, ready to be used with MIDI events
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI
+Use '-opt' to optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
+Use '-worklet' to generate AudioWorklet compatible code
+Use '-wap' to generate a WAP (Web Audio Plugin). This forces -worklet mode, and create additional files
+Use '-comb' to combine several DSPs in a unique resulting 'comb.js' file, sharing the same Emscripten runtime
+Use '-emcc' to compile C++ generated code to wasm with Emscripten, otherwise the internal wasm backend is used [experimental]
+Use '-npm' to add a package.json file for npm package distribution
+</pre></p>
+<h2 id="faust2webaudiowasm">faust2webaudiowasm</h2>
+<p><pre class=faust-tools>
+faust2webaudiowasm [-poly] [-effect auto|<effect.dsp>] [-links] [-opt] [-worklet] [-emcc] <file.dsp>
+Use '-poly' to produce a polyphonic DSP, ready to be used with MIDI events
+Use '-effect <effect.dsp>' to produce a polyphonic DSP connected to a global output effect, ready to be used with MIDI
+Use '-effect auto' to produce a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI
+Use '-links' to add links to source code and SVG diagrams in the generated HTML file
+Use '-opt' to optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
+Use '-worklet' to generate AudioWorklet compatible code
+Use '-emcc' to use the EMCC generated glue (mandatory when using 'soundfiles' in the DSP code) [experimental]
+</pre></p>
+<h2 id="faust2webaudiowast">faust2webaudiowast</h2>
+<p><pre class=faust-tools>
+faust2webaudiowast [-poly] [-links] [-opt] [-worklet] [-emcc] <file.dsp>
+Use '-poly' to produce a polyphonic DSP, ready to be used with MIDI events
+Use '-links' to add links to source code and SVG diagrams in the generated HTML file
+Use '-opt' to optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
+Use '-worklet' to generate AudioWorklet compatible code
+Use '-emcc' to compile C++ generated code to wasm with Emscripten, otherwise the internal wasm backend is used
+</pre></p>
+<h2 id="faust2winunity">faust2winunity</h2>
+<p><pre class=faust-tools>
+faust2unitywin -32 -64 [additional Faust options (-vec -vs 8...)] <file1.dsp> [<file2.dsp>]
+Create Microsoft 32/64bits library for faust unity plugin.
+Mingw crosscompiler should be installed ('mingw32' package on Ubuntu)
+Use 'faust2unity -w32 -w64' to also create the C# and JSON files
+Use '-nvoices <num>' to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI
+See architecture/unity/README.md for more info
+</pre></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
