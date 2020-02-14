@@ -86,8 +86,7 @@ publish:
 	git checkout gh-pages
 	rm -rf examples guide refs	# clean previous folders
 	cp -Rf $(MKDIR)/site/* .
-	rm -rf $(MKDIR)
-	rm -f Makefile
+	rm -rf $(MKDIR) src Makefile
 	@echo "Review the changes, add new files, commit and push manually"
 	@echo "... and switch back to master branch"
 	
