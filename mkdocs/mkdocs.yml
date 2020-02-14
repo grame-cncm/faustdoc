@@ -16,6 +16,25 @@ nav:
         - 'Compiler Options':   refs/options.md
         - 'Using the Compiler': refs/compiler.md
         - 'Using Tools':        refs/tools.md
+    - Examples: 
+         - ' ambisonics ':  examples/ambisonics.md
+         - ' analysis ':  examples/analysis.md
+         - ' bela ':  examples/bela.md
+         - ' delayEcho ':  examples/delayEcho.md
+         - ' dynamic ':  examples/dynamic.md
+         - ' filtering ':  examples/filtering.md
+         - ' gameaudio ':  examples/gameaudio.md
+         - ' generator ':  examples/generator.md
+         - ' misc ':  examples/misc.md
+         - ' phasing ':  examples/phasing.md
+         - ' physicalModeling ':  examples/physicalModeling.md
+         - ' pitchShifting ':  examples/pitchShifting.md
+         - ' psychoacoustic ':  examples/psychoacoustic.md
+         - ' reverb ':  examples/reverb.md
+         - ' SAM ':  examples/SAM.md
+         - ' smartKeyboard ':  examples/smartKeyboard.md
+         - ' spat ':  examples/spat.md
+
 #        - 'Language':
 #       - 'Targets':
 #            - 'faust2alqt': 

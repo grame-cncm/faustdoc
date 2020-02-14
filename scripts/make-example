@@ -1,0 +1,21 @@
+#!/bin/sh
+
+
+GROUP=$1
+shift
+echo "# $GROUP"
+echo
+
+while [ $1 ]
+do
+	echo 
+	echo "## $(basename $1 .dsp)"
+	echo 
+	echo "<!-- faust-run -->"
+	echo 
+	cat $1
+	echo 
+	echo "<!-- /faust-run -->"
+	echo
+	shift
+done

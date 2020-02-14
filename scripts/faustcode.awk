@@ -7,7 +7,6 @@ function makeFaust(code, i) {
 	svg = folder"/"current"-svg/process.svg";
 	cmd = "[ -d " DOCROOT"/"folder " ] || mkdir -p " DOCROOT"/"folder;
 	system (cmd);
-	print cmd;
 	print code > DOCROOT"/"dsp;
 	print "<div class=\"faust-run\"><img src=\"/"svg"\" class=\"mx-auto d-block\">"
 	print "~~~";

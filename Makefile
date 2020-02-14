@@ -5,17 +5,21 @@ AWK		?= awk
 MKDIR    := mkdocs
 DOCDIR   := $(MKDIR)/docs
 FAUSTDIR ?= ../../faust
+EXDIR    ?= $(FAUSTDIR)/examples
 
 SRC   	 := $(shell find src -name "*.md")
 MD   	 := $(SRC:src/%=$(DOCDIR)/%)
 DSP   	 := $(shell find $(DOCDIR) -name "*.dsp")
 SVG   	 := $(DSP:%.dsp=%.svg)
 
+EXSRC    := $(shell find $(EXDIR) -type d -d 1 | sort -f | grep -v old)
+GEN      := $(EXSRC:$(EXDIR)/%=src/examples/%)
+EXLIST   := $(EXSRC:$(EXDIR)/%=%)
+EXOUT    := $(GEN:%=%.md)
+
+
 GENERATED := $(shell find $(DOCDIR) -type d -name "exfaust*")
-
 TOOLS    := $(wildcard $(FAUSTDIR)/tools/faust2appls/faust2*)
-
-TMP		 := __tmp.txt
 
 EDITOR      := https://fausteditor.grame.fr/
 
@@ -33,19 +37,23 @@ help:
 	@echo "  build    : build the web site"
 	@echo "  serve    : launch the mkdoc server"
 	@echo "  all      : generates all the necessary files from the src folder"
-	@echo "             actually call the 'md', 'options', 'tools' and 'svg' targets"
+	@echo "             actually call the 'md', 'options', 'tools', 'svg' and 'examples' targets"
 	@echo "Development specific targets are available:"
 	@echo "  md       : build the md files"
 	@echo "  svg      : build the svg files"
+	@echo "             the 'svg' target should be the last target called"
 	@echo "  options  : build the compiler options page"
 	@echo "  tools    : build the faust tools page"
+	@echo "  examples : build the faust examples page"
+	@echo "             call the 'md' target after the 'examples' target"
+	@echo "  exlist   : list the examples for mkdocs.yml"
 #	@echo "  zip      : create a zip file with all examples at the appropriate location"
 	@echo "Making the current version publicly available:"
 	@echo "  publish  : make all + build, switch to gh-pages and copy to root"
 	@echo "             commit and push are still manual operations"
 
 test: 
-	@echo GENERATED: $(GENERATED)
+	@echo EXLIST: $(EXLIST)
 
 ####################################################################
 build:
@@ -56,6 +64,7 @@ serve:
 	cd $(MKDIR) && mkdocs serve
 
 all:
+	$(MAKE) examples
 	$(MAKE) md
 	$(MAKE) options
 	$(MAKE) tools
@@ -65,6 +74,7 @@ all:
 clean:
 	rm -f $(MD)
 	rm -rf $(GENERATED)
+	rm -f $(EXOUT)
 
 publish:
 	$(MAKE) all
@@ -108,9 +118,21 @@ $(DOCDIR)/refs/tools.md: src/refs/tools.md $(TOOLS)
 
 ####################################################################
 # building faust examples
-examples : $(FAUSTDIR)
-	echo building faust examples
-	
+examples : $(FAUSTDIR) src/examples $(EXOUT)
+
+src/examples/%.md: $(EXDIR)/%
+	@echo ========= building  $(*F) example
+	$(eval tmp := $(shell ls $</*.dsp | grep -v 'multibandFilter\|guitarix\|mixer'))
+	scripts/make-example $(*F) $(tmp) > $@
+
+exlist :
+	@echo $(foreach e, $(EXLIST), "        - '" $e "':  examples/"$e.md"\n")
+
+src/examples:
+	mkdir src/examples
+
+####################################################################
+# zip the faust examples
 zip: 
 	@[ -d $(DOCDIR)/rsrc ] || mkdir $(DOCDIR)/rsrc
 	cd examples/mkdocs && zip -r examples examples 
