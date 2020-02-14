@@ -8,8 +8,14 @@ nav:
         - 'Quick start':   guide/quick-start.md
         - 'Embedding':     guide/embedding.md
         - 'OSC Support':   guide/osc.md
+        - 'HTTP Support':  guide/http.md
+        - 'MIDI Support':  guide/midi.md
+        - 'Math. Doc':     guide/mathdoc.md
     - Reference: 
-        - 'Compiler': refs/compiler.md
+        - 'Faust Syntax':       refs/syntax.md
+        - 'Compiler Options':   refs/options.md
+        - 'Using the Compiler': refs/compiler.md
+        - 'Using Tools':        refs/tools.md
 #        - 'Language':
 #       - 'Targets':
 #            - 'faust2alqt': 

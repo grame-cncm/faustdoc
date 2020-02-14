@@ -8,6 +8,7 @@ This repository is intended to build the documentation of the Faust environment,
 ### Prerequisites
 - you must have python and pip installed.
 - you must have the Faust source code installed. You can get it from [github](https://github.com/grame-cncm/faust)
+- you must have openssl installed for base64 convertion.
 
 
 ### Building the documentation

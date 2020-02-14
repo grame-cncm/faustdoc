@@ -2,23 +2,22 @@
 MAKE 	?= make
 AWK		?= awk
 
-TMPTAGDIR := .tmptags
-
-IGNORED  := "shareLocation|splitChord|chord|bembel|merge|port|shortFermata|color|colour|symbol|unit"
 MKDIR    := mkdocs
 DOCDIR   := $(MKDIR)/docs
-TAGSDEST := $(DOCDIR)/refs/tags
 FAUSTDIR ?= ../faust
-SRCDIR   := $(GUIDODIR)/src/engine
 
-INLINEGMN 	:= $(wildcard examples/mkdocs/*.gmn)
-INLINEHTML 	:= $(INLINEGMN:examples/mkdocs/%.gmn=$(DOCDIR)/GMN/%.html)
-GMNEXAMPLES := $(wildcard examples/mkdocs/examples/*.gmn)
-HTMLEXAMPLES:= $(GMNEXAMPLES:examples/mkdocs/examples/%.gmn=$(DOCDIR)/GMN/examples/%.html) 
-MDEXAMPLES  := $(GMNEXAMPLES:examples/mkdocs/examples/%.gmn=$(DOCDIR)/examples/%.md)
-EXAMPLESMENU:= $(MDEXAMPLES:%.md=%.item)
+SRC   	 := $(shell find src -name "*.md")
+MD   	 := $(SRC:src/%=$(DOCDIR)/%)
+DSP   	 := $(shell find $(DOCDIR) -name "*.dsp")
+SVG   	 := $(DSP:%.dsp=%.svg)
 
-EDITOR      := https://guidoeditor.grame.fr/
+GENERATED := $(shell find $(DOCDIR) -type d -name "exfaust*")
+
+TOOLS    := $(wildcard $(FAUSTDIR)/tools/faust2appls/faust2*)
+
+TMP		 := __tmp.txt
+
+EDITOR      := https://fausteditor.grame.fr/
 
 .PHONY: tagslist.txt
 
@@ -33,33 +32,39 @@ help:
 	@echo "  install  : install the required components"
 	@echo "  build    : build the web site"
 	@echo "  serve    : launch the mkdoc server"
-	@echo "  all      : generates all the necessary files from the src code or from gmn files"
-	@echo "             actually call the 'tagfiles', 'tagsindex', 'gmn' and 'zip' targets"
+	@echo "  all      : generates all the necessary files from the src folder"
+	@echo "             actually call the 'md', 'options', 'tools' and 'svg' targets"
 	@echo "Development specific targets are available:"
-	@echo "  tagfiles : create the tags documention md files from the src files"
-	@echo "  zip      : create a zip file with all examples at the appropriate location"
-	@echo "  gmnclean : remove the output of the gmn target"
-	@echo "Making the current version publicly available:"
-	@echo "  publish  : make all + build, switch to gh-pages and copy to root"
-	@echo "             commit and push are still manual operations"
+	@echo "  md       : build the md files"
+	@echo "  svg      : build the svg files"
+	@echo "  options  : build the compiler options page"
+	@echo "  tools    : build the faust tools page"
+#	@echo "  zip      : create a zip file with all examples at the appropriate location"
+#	@echo "Making the current version publicly available:"
+#	@echo "  publish  : make all + build, switch to gh-pages and copy to root"
+#	@echo "             commit and push are still manual operations"
 
 test: 
-	@echo EXAMPLESMENU: $(EXAMPLESMENU)
+	@echo GENERATED: $(GENERATED)
 
 ####################################################################
 build:
 	cd $(MKDIR) && mkdocs build
 
 serve:
-	@echo "you can browse the site at http://localhost:8000
+	@echo "you can browse the site at http://localhost:8000"
 	cd $(MKDIR) && mkdocs serve
 
 all:
-	$(MAKE) tagfiles
-	$(MAKE) tagsindex
-	$(MAKE) gmn
-	$(MAKE) zip
-	cp -r Introduction $(DOCDIR)
+	$(MAKE) md
+	$(MAKE) options
+	$(MAKE) tools
+	$(MAKE) svg
+#	$(MAKE) zip
+
+clean:
+	rm -f $(MD)
+	rm -rf $(GENERATED)
 
 publish:
 	$(MAKE) all
@@ -70,23 +75,39 @@ publish:
 	
 
 ####################################################################
-# building guido examples
-gmn:
-	$(MAKE) inlinegmn
-	$(MAKE) examples
+# building md files
+md : $(MD)
+
+options: $(DOCDIR)/refs/options.md
+
+$(DOCDIR)/refs/options.md:
+	@echo "#Faust compiler options\n\n" > $@
+	faust --help | awk -f scripts/options.awk >> $@
+
+$(DOCDIR)/%.md:src/%.md
+	@echo ========= building $<
+	@[ -d $(DOCDIR)/$* ] | mkdir -p $(DOCDIR)/$*
+	cat $< | $(AWK) -f scripts/faustcode.awk IMG=$* DOCROOT=$(DOCDIR) > $@
+
+svg : $(SVG)
+%.svg:%.dsp
+	faust -svg $< > /dev/null
+
+
+####################################################################
+# building tools doc
+tools : $(DOCDIR)/refs/tools.md
+
+$(DOCDIR)/refs/tools.md: src/refs/tools.md $(TOOLS)
+	cat src/refs/tools.md > $@
+	./scripts/buildtools $(TOOLS) >> $@
+
+
+####################################################################
+# building faust examples
+examples : $(FAUSTDIR)
+	echo building faust examples
 	
-inlinegmn: $(INLINEHTML)
-
-examples : $(MDEXAMPLES) $(HTMLEXAMPLES)
-
-examplesmd : $(MDEXAMPLES)
-exampleshtml : $(HTMLEXAMPLES)
-
-gmnclean: 
-	rm -f $(INLINEHTML) $(MDEXAMPLES) $(HTMLEXAMPLES)
-	
-menu: $(EXAMPLESMENU)
-
 zip: 
 	@[ -d $(DOCDIR)/rsrc ] || mkdir $(DOCDIR)/rsrc
 	cd examples/mkdocs && zip -r examples examples 
@@ -94,16 +115,6 @@ zip:
 	
 
 ####################################################################
-tagfiles: $(FAUSTDIR)
-	@rm -rf $(TMPTAGDIR)
-	@[ -d $(TMPTAGDIR) ] || mkdir $(TMPTAGDIR)
-	awk -v OUT=$(TMPTAGDIR) -f scripts/maketag.awk $(SRCDIR)/abstract/AR*.h
-	@[ -d  $(TAGSDEST) ] || mkdir  $(TAGSDEST)
-	mv -f $(TMPTAGDIR)/*.md $(TAGSDEST)
-
-tagslist:
-	$(MAKE) -C $(GUIDODIR)/build/ tags | egrep -v 'make|grep' | egrep -v $(IGNORED) | grep -v ^s$ | sort -u
-
 $(FAUSTDIR):
 	@echo "FAUSTDIR not found ! ($(FAUSTDIR))"
 	@echo "you should either:"
@@ -153,12 +164,6 @@ $(DOCDIR)/examples/%.md: examples/mkdocs/examples/%.gmn
 # rules to convert gmn to base 64
 %.b64.txt : %.gmn
 	openssl base64 -in $< |  tr -d '\n' > $@
-
-####################################################################
-# rule to generate the example menu items
-$(DOCDIR)/examples/%.item : $(DOCDIR)/examples/%.md
-	$(eval file := $(patsubst $(DOCDIR)/examples/%.item, %, $@))	
-	@echo "        - '$(shell egrep '^# ' $< | sed 's/# *//' | sed 's/ *$$//')': examples/$(file).md"
 
 
 ####################################################################
