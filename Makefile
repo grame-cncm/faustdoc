@@ -40,9 +40,9 @@ help:
 	@echo "  options  : build the compiler options page"
 	@echo "  tools    : build the faust tools page"
 #	@echo "  zip      : create a zip file with all examples at the appropriate location"
-#	@echo "Making the current version publicly available:"
-#	@echo "  publish  : make all + build, switch to gh-pages and copy to root"
-#	@echo "             commit and push are still manual operations"
+	@echo "Making the current version publicly available:"
+	@echo "  publish  : make all + build, switch to gh-pages and copy to root"
+	@echo "             commit and push are still manual operations"
 
 test: 
 	@echo GENERATED: $(GENERATED)
@@ -71,6 +71,8 @@ publish:
 	$(MAKE) build
 	git checkout gh-pages
 	cp -Rf $(MKDIR)/site/* .
+	rm -rf $(MKDIR)
+	rm -f Makefile
 	@echo "Review the changes, add new files, commit and push manually"
 	@echo "... and switch back to master branch"
 	
