@@ -4,11 +4,11 @@ function makeFaust(code, i) {
 	current = "exfaust"i;
 	folder = IMG"/"current;
 	dsp = folder"/"current".dsp";
-	svg = folder"/"current"-svg/process.svg";
+	svg = current"/"current"-svg/process.svg";
 	cmd = "[ -d " DOCROOT"/"folder " ] || mkdir -p " DOCROOT"/"folder;
 	system (cmd);
 	print code > DOCROOT"/"dsp;
-	print "<div class=\"faust-run\"><img src=\"/"svg"\" class=\"mx-auto d-block\">"
+	print "<div class=\"faust-run\"><img src=\""svg"\" class=\"mx-auto d-block\">"
 	print "~~~";
 	print code;
 	print "~~~\n";
