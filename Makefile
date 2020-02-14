@@ -77,6 +77,7 @@ clean:
 	rm -f $(EXOUT)
 
 publish:
+	$(MAKE) clean	# make sure previous svg output is removed
 	$(MAKE) all
 	$(MAKE) build
 	git checkout gh-pages
