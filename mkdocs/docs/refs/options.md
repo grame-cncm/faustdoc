@@ -2,34 +2,34 @@
 
 
 ## FAUST compiler version 2.19.1
-<pre class=faust-tools>
+~~~
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
 	and fileN represents a Faust source file (.dsp extension).
-</pre>;
+~~~
 ## Input options:
 ---------------------------------------
-<pre class=faust-tools>
+~~~
   -a <file>                               wrapper architecture file.
   -i        --inline-architecture-files   inline architecture files.
   -A <dir>  --architecture-dir <dir>      add the directory <dir> to the architecture search path.
   -I <dir>  --import-dir <dir>            add the directory <dir> to the import search path.
   -L <file> --library <file>              link with the LLVM module <file>.
   -t <sec>  --timeout <sec>               abort compilation after <sec> seconds (default 120).
-</pre>;
+~~~
 ## Output options:
 ---------------------------------------
-<pre class=faust-tools>
+~~~
   -o <file>                               the output file.
   -e        --export-dsp                  export expanded DSP (with all included libraries).
   -uim      --user-interface-macros       add user interface macro definitions to the output code.
   -xml                                    generate an XML description file.
   -json                                   generate a JSON description file.
   -O <dir>  --output-dir <dir>            specify the relative directory of the generated output code and of additional generated files (SVG, XML...).
-</pre>;
+~~~
 ## Code generation options:
 ---------------------------------------
-<pre class=faust-tools>
+~~~
   -lang <lang> --language                 select output language,
                                           'lang' should be in c, ocpp, cpp (default), rust, java, llvm, cllvm, fir, wast/wasm, soul, interp.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
@@ -68,10 +68,10 @@ usage : faust [options] file1 [file2 ...].
   -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
   -fm <file> --fast-math <file>           use optimized versions of mathematical functions implemented in <file>,
                                           use 'faust/dsp/fastmath.cpp' when file is 'def'.
-</pre>;
+~~~
 ## Block diagram options:
 ---------------------------------------
-<pre class=faust-tools>
+~~~
   -ps        --postscript                 print block-diagram to a postscript file.
   -svg       --svg                        print block-diagram to a svg file.
   -sd        --simplify-diagrams          try to further simplify diagrams before drawing.
@@ -81,27 +81,27 @@ usage : faust [options] file1 [file2 ...].
   -mns <n>   --max-name-size <n>          threshold during block-diagram generation (default 40 char).
   -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
   -blur      --shadow-blur                add a shadow blur to SVG boxes.
-</pre>;
+~~~
 ## Math doc options:
 ---------------------------------------
-<pre class=faust-tools>
+~~~
   -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
   -mdlang <l> --mathdoc-lang <l>          if translation file exists (<l> = en, fr, ...).
   -stripmdoc  --strip-mdoc-tags           strip mdoc tags when printing Faust -mdoc listings.
-</pre>;
+~~~
 ## Debug options:
 ---------------------------------------
-<pre class=faust-tools>
+~~~
   -d          --details                   print compilation details.
   -time       --compilation-time          display compilation phases timing information.
   -tg         --task-graph                print the internal task graph in dot format.
   -sg         --signal-graph              print the internal signal graph in dot format.
   -norm       --normalized-form           print signals in normalized form and exit.
   -ct         --check-table               check table index range.
-</pre>;
+~~~
 ## Information options:
 ---------------------------------------
-<pre class=faust-tools>
+~~~
   -h          --help                      print this help message.
   -v          --version                   print version information and embedded backends list.
   -libdir     --libdir                    print directory containing the Faust libraries.
@@ -109,9 +109,9 @@ usage : faust [options] file1 [file2 ...].
   -archdir    --archdir                   print directory containing the Faust architectures.
   -dspdir     --dspdir                    print directory containing the Faust dsp libraries.
   -pathslist  --pathslist                 print the architectures and dsp library paths.
-</pre>;
+~~~
 ## Example:
 ---------------------------------------
-<pre class=faust-tools>
+~~~
 faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
-</pre>;
+~~~
