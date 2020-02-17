@@ -241,7 +241,7 @@ but this step is absolutely not required,</p>
 <p>Write the following code in the <a href="../../tools/editor">Faust online editor</a>:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -282,7 +282,7 @@ other language. </p>
 <a href="#sequential-composition">sequential composition operator</a>: <code>:</code></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -316,7 +316,7 @@ implicit input, we can connect them together. This is essentially the same as
 writing something like:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -358,7 +358,7 @@ parameters (<code>a</code> and <code>b</code>). On the other hand:</p>
 online editor so that the <code>process</code> line looks like this:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust3/exfaust3-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -382,7 +382,7 @@ process = no.noise : _ : fi.resonlp(ctFreq,q,gain) : _;
 We can easily turn our filtered noise example into a stereo object using it:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust4/exfaust4-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -403,7 +403,7 @@ process = no.noise : _ &lt;: fi.resonlp(ctFreq,q,gain),fi.resonlp(ctFreq,q,gain)
 <p>or we could even write this in a cleaner way:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust5/exfaust5-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -451,7 +451,7 @@ process = no.noise &lt;: filter+filter;
 each copy, for example, in the expression:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust6/exfaust6-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 1 &lt;: _,_;
@@ -473,7 +473,7 @@ make things a bit more interactive.</p>
 the previous section:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust7/exfaust7-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -511,7 +511,7 @@ parameters of the previous program with horizontal sliders. To do this, we can
 write something like:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust8/exfaust8-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -538,7 +538,7 @@ and finally the <em>step</em>. To summarize: <code>hslider("paramName",default,m
 (where <code>gate</code> is just the name of the button):</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust9/exfaust9-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -566,7 +566,7 @@ This problem can be easily solved by "smoothing" down the output of the sliders
 using the <a href="../libraries/index.html#smoo"><code>si.smoo</code></a> function:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust10/exfaust10-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -603,7 +603,7 @@ also need to split the output of the filter (otherwise you will get an error
 because Faust wont know how to connect things):</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust11/exfaust11-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -657,7 +657,7 @@ process =
 <p>Make a guitar effect chain:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust12/exfaust12-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);

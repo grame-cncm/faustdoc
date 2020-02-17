@@ -355,7 +355,7 @@ stuff like the online editor. -->
 with a level control (we'll call it <code>noise.dsp</code>):</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -505,7 +505,7 @@ monophonic audio mixer with 4 inputs and one output. For each input we have a
 mute button and a level slider:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
 input(v) = vgroup(&quot;input %v&quot;, *(1-checkbox(&quot;mute&quot;)) : *(vslider(&quot;level&quot;, 0, 0, 1, 0.01)));

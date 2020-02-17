@@ -246,7 +246,7 @@ example, <code>+</code> is considered as a valid function (and block) taking two
 (signals) and returning one:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
 process = +;
@@ -263,7 +263,7 @@ process = +;
 <p>Blocks can be easily connected together using the <code>:</code> "connection" composition:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
 process = + : *(0.5);
@@ -287,7 +287,7 @@ filter/integrator equivalent to $y(n) = x(n) + a_{1}y(n-1)$ (where $a_{1}$ is
 the pole):</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 a1 = 0.9;

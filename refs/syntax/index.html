@@ -236,7 +236,7 @@ statements : two <a href="#global-metadata"><em>global metadata</em></a> declara
 study later how <a href="#documentation-tags"><em>documentation statements</em></a> work:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust0/exfaust0-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;Noise&quot;;
@@ -337,7 +337,7 @@ whose role role is described in the following table:</p>
 access to all the standard Faust libraries from a single point:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust1/exfaust1-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -443,7 +443,7 @@ duplicate(n,x) = x, duplicate(n-1,x);
 parallel:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust2/exfaust2-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -569,7 +569,7 @@ and frequencies in parallel, which will result in a Faust program with 3
 outputs:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust3/exfaust3-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -589,7 +589,7 @@ process = os.osc(440),os.sawtooth(550),os.triangle(660);
 one which will result in a Faust program with 2 inputs and 2 outputs:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust4/exfaust4-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -609,7 +609,7 @@ process = ve.autowah(level),ve.autowah(level);
 <a href="#par-iteration"><code>par</code> iteration</a>: </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust5/exfaust5-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -638,7 +638,7 @@ Faust uses right associativity and therefore builds internally the expression <c
 <em>sequential composition</em> can be simply used to pass an argument to a function:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust6/exfaust6-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -658,7 +658,7 @@ process = 440 : os.osc;
 we're plugging a guitar distortion to an autowah:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust7/exfaust7-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -689,7 +689,7 @@ of the number of outputs of $A$: </p>
 of the following sawtooth oscillator is duplicated 3 times in parallel.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust8/exfaust8-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -711,7 +711,7 @@ process = os.sawtooth(440) &lt;: _,_,_;
 certain number of output to a block with a greater number of inputs: </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust9/exfaust9-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -731,7 +731,7 @@ process = ef.cubicnl(drive,offset) &lt;: dm.zita_light;
 <p>Note that an arbitrary number of signals can be split, for example:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust10/exfaust10-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -767,7 +767,7 @@ Here's an example of a simple additive synthesizer (note that the result of the
 sum of the signals is divided by 3 to prevent clicking):</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust11/exfaust11-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -790,7 +790,7 @@ process = os.osc(freq),os.osc(freq*2),os.osc(freq*3) :&gt; /(3)*envelope;
 mathematically equivalent to:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust12/exfaust12-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -814,7 +814,7 @@ process = (os.osc(freq) + os.osc(freq*2) + os.osc(freq*3))/(3)*envelope;
 certain number of output to a block with a smaller number of inputs: </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust13/exfaust13-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -834,7 +834,7 @@ process = dm.zita_light :&gt; ef.cubicnl(drive,offset);
 <p>Note that an arbitrary number of signals can be split, for example:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust14/exfaust14-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -871,7 +871,7 @@ of $A$. The outputs are all the outputs of $A$.</p>
 sample starting at time $n=0$:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust15/exfaust15-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _~+(1);
@@ -893,7 +893,7 @@ process = _~+(1);
 line of code and just a few characters:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust16/exfaust16-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
 
 <pre><code>
 a1 = 0.999; // the pole
@@ -919,7 +919,7 @@ time simply by using <code>inputs(expression)</code> and <code>outputs(expressio
 simply by writing the following program:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust17/exfaust17-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -956,7 +956,7 @@ with {
 substraction:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust18/exfaust18-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -996,7 +996,7 @@ starting at 0,</li>
 <p><strong>Example: Simple Additive Synthesizer</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust19/exfaust19-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -1035,7 +1035,7 @@ order "peak equalizer" section (gain boost or cut near some frequency). When
 placed in series, it can be used to implement a full peak equalizer:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust20/exfaust20-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -1081,7 +1081,7 @@ block diagrams look slightly different, the generated code is exactly the
 same.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust21/exfaust21-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -1118,7 +1118,7 @@ starting at 0,</li>
 an arbitrary number of oscillators thanks to the <code>prod</code> iteration:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust22/exfaust22-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -1288,7 +1288,7 @@ argument, it will correspond to the first parameter.</p>
 context of a gain controller:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust23/exfaust23-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust23/exfaust23.svg" class="mx-auto d-block">
 
 <pre><code>
 gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
@@ -1307,7 +1307,7 @@ process = *(gain);
 <p><code>'</code> is used to express a one sample delay. For example:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust24/exfaust24-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust24/exfaust24.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _';
@@ -1325,7 +1325,7 @@ process = _';
 <p><code>'</code> time expressions can be chained, so the output signal of this program:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust25/exfaust25-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust25/exfaust25.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 1'';
@@ -1347,7 +1347,7 @@ equivalent to <code>@(1)</code> (see the <a href="#time-expression-1"><code>@</c
 example:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust26/exfaust26-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust26/exfaust26.svg" class="mx-auto d-block">
 
 <pre><code>
 process = @(10);
@@ -1366,7 +1366,7 @@ process = @(10);
 and bounded. Therefore, the values of a slider are perfectly acceptable:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust27/exfaust27-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust27/exfaust27.svg" class="mx-auto d-block">
 
 <pre><code>
 process = @(hslider(&quot;delay&quot;,0,0,100,1));
@@ -1397,7 +1397,7 @@ of definition that will be used to evaluate the left hand expression.</p>
 <p>In the following example :</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust28/exfaust28-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
 
 <pre><code>
 pink = f : + ~ g 
@@ -1441,7 +1441,7 @@ generator with an attack and a release time (as a number of samples), and a
 gate signal. A possible definition could be:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust29/exfaust29-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust29/exfaust29.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -1651,7 +1651,7 @@ would probably be easier to read like:</p>
 <p>A name can be given to the abstraction and in turn use it on <code>dm.zita_light</code>:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust30/exfaust30-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust30/exfaust30.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -1749,7 +1749,7 @@ and the periodic signal $(0,1,2,3,0,1,2,3,0,1,\dots)$. </p>
 <p>In the following example:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust31/exfaust31-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust31/exfaust31.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -1814,7 +1814,7 @@ $\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)$. <code>+</code> can be used to
 very simply implement a mixer: </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust32/exfaust32-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust32/exfaust32.svg" class="mx-auto d-block">
 
 <pre><code>
 process = +;
@@ -1831,7 +1831,7 @@ process = +;
 <p>Note that this is equivalent to (see <a href="#identity-function">Identity Function</a>):</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust33/exfaust33-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust33/exfaust33.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _+_;
@@ -1865,7 +1865,7 @@ and can be described mathematically as $y(t)=n$.</p>
 <p><strong>Example: DC Offset of 1</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust34/exfaust34-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust34/exfaust34.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 1;
@@ -1887,7 +1887,7 @@ Faust and can be described as $y(t)=n.m$.</p>
 <p><strong>Example: DC Offset of 0.5</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust35/exfaust35-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust35/exfaust35.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.5;
@@ -1914,7 +1914,7 @@ process = 0.5;
 audio input of a Faust program to its output:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust36/exfaust36-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust36/exfaust36.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _;
@@ -1940,7 +1940,7 @@ process = _;
 signals:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust37/exfaust37-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust37/exfaust37.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 1,2 : !,_;
@@ -1966,7 +1966,7 @@ indices to read in a table, etc.</p>
 <p><strong>Example: Simple Cast</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust38/exfaust38-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust38/exfaust38.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 1.5 : int;
@@ -1989,7 +1989,7 @@ process = 1.5 : int;
 <p><strong>Example: Simple Cast</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust39/exfaust39-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust39/exfaust39.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 1.5 : float;
@@ -2012,7 +2012,7 @@ process = 1.5 : float;
 <p><strong>Example: Simple Mixer</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust40/exfaust40-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust40/exfaust40.svg" class="mx-auto d-block">
 
 <pre><code>
 process = +;
@@ -2035,7 +2035,7 @@ process = +;
 <p><strong>Example: Subtracting Two Input Signals</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust41/exfaust41-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust41/exfaust41.svg" class="mx-auto d-block">
 
 <pre><code>
 process = -;
@@ -2058,7 +2058,7 @@ process = -;
 <p><strong>Example: Multiplying a Signal by 0.5</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust42/exfaust42-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust42/exfaust42.svg" class="mx-auto d-block">
 
 <pre><code>
 process = *(0.5);
@@ -2081,7 +2081,7 @@ process = *(0.5);
 <p><strong>Example: Dividing a Signal by 2</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust43/exfaust43-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust43/exfaust43.svg" class="mx-auto d-block">
 
 <pre><code>
 process = ^(2);
@@ -2104,7 +2104,7 @@ process = ^(2);
 <p><strong>Example: Power of Two of a Signal</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust44/exfaust44-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust44/exfaust44.svg" class="mx-auto d-block">
 
 <pre><code>
 process = ^(2);
@@ -2129,7 +2129,7 @@ process = ^(2);
 basic phaser:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust45/exfaust45-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust45/exfaust45.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _~+(1) : -(1) : %(10);
@@ -2164,7 +2164,7 @@ or greater than 0.7 and 0 otherwise. Note that the result of this operation
 could be multiplied to another signal to create a condition.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust46/exfaust46-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust46/exfaust46.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _ &lt;: &lt;(0.5) | &gt;(0.7);
@@ -2187,7 +2187,7 @@ process = _ &lt;: &lt;(0.5) | &gt;(0.7);
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust47/exfaust47-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust47/exfaust47.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _ &lt;: &lt;(0.5) xor &gt;(0.7);
@@ -2210,7 +2210,7 @@ process = _ &lt;: &lt;(0.5) xor &gt;(0.7);
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust48/exfaust48-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust48/exfaust48.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 1 &lt;&lt; 2;
@@ -2233,7 +2233,7 @@ process = 1 &lt;&lt; 2;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust49/exfaust49-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust49/exfaust49.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 1 &gt;&gt; 2;
@@ -2258,7 +2258,7 @@ process = 1 &gt;&gt; 2;
 0 otherwise.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust50/exfaust50-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust50/exfaust50.svg" class="mx-auto d-block">
 
 <pre><code>
 process = &lt;(0.5);
@@ -2284,7 +2284,7 @@ primitive.</p>
 0.5 and 0 otherwise.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust51/exfaust51-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust51/exfaust51.svg" class="mx-auto d-block">
 
 <pre><code>
 process = &lt;=(0.5);
@@ -2309,7 +2309,7 @@ process = &lt;=(0.5);
 0 otherwise.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust52/exfaust52-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust52/exfaust52.svg" class="mx-auto d-block">
 
 <pre><code>
 process = &gt;(0.5);
@@ -2335,7 +2335,7 @@ primitive.</p>
 0.5 and 0 otherwise.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust53/exfaust53-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust53/exfaust53.svg" class="mx-auto d-block">
 
 <pre><code>
 process = &gt;=(0.5);
@@ -2358,7 +2358,7 @@ process = &gt;=(0.5);
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust54/exfaust54-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust54/exfaust54.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0 == 1;
@@ -2381,7 +2381,7 @@ process = 0 == 1;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust55/exfaust55-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust55/exfaust55.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0 != 1;
@@ -2407,7 +2407,7 @@ are defined as external functions in file <code>math.lib</code>).</p>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust56/exfaust56-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust56/exfaust56.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : acos;
@@ -2430,7 +2430,7 @@ process = 0.1 : acos;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust57/exfaust57-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust57/exfaust57.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : asin;
@@ -2453,7 +2453,7 @@ process = 0.1 : asin;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust58/exfaust58-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust58/exfaust58.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : atan;
@@ -2476,7 +2476,7 @@ process = 0.1 : atan;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust59/exfaust59-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust59/exfaust59.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1,-0.1 : atan2;
@@ -2499,7 +2499,7 @@ process = 0.1,-0.1 : atan2;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust60/exfaust60-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust60/exfaust60.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : cos;
@@ -2522,7 +2522,7 @@ process = 0.1 : cos;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust61/exfaust61-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust61/exfaust61.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : sin;
@@ -2545,7 +2545,7 @@ process = 0.1 : sin;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust62/exfaust62-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust62/exfaust62.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : tan;
@@ -2568,7 +2568,7 @@ process = 0.1 : tan;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust63/exfaust63-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust63/exfaust63.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : exp;
@@ -2591,7 +2591,7 @@ process = 0.1 : exp;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust64/exfaust64-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust64/exfaust64.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : log;
@@ -2614,7 +2614,7 @@ process = 0.1 : log;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust65/exfaust65-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust65/exfaust65.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.1 : log10;
@@ -2637,7 +2637,7 @@ process = 0.1 : log10;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust66/exfaust66-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust66/exfaust66.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 2,4 : pow;
@@ -2660,7 +2660,7 @@ process = 2,4 : pow;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust67/exfaust67-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust67/exfaust67.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 4 : sqrt;
@@ -2684,7 +2684,7 @@ $y(t)=\mathrm{fabsf}(x(t))$ (float)</li>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust68/exfaust68-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust68/exfaust68.svg" class="mx-auto d-block">
 
 <pre><code>
 process = -0.5 : abs;
@@ -2707,7 +2707,7 @@ process = -0.5 : abs;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust69/exfaust69-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust69/exfaust69.svg" class="mx-auto d-block">
 
 <pre><code>
 process = -0.5,0.2 : min;
@@ -2730,7 +2730,7 @@ process = -0.5,0.2 : min;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust70/exfaust70-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust70/exfaust70.svg" class="mx-auto d-block">
 
 <pre><code>
 process = -0.5,0.2 : max;
@@ -2753,7 +2753,7 @@ process = -0.5,0.2 : max;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust71/exfaust71-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust71/exfaust71.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 5.3,2 : fmod;
@@ -2776,7 +2776,7 @@ process = 5.3,2 : fmod;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust72/exfaust72-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust72/exfaust72.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 5.3,2 : remainder;
@@ -2799,7 +2799,7 @@ process = 5.3,2 : remainder;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust73/exfaust73-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust73/exfaust73.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 3.6 : floor;
@@ -2822,7 +2822,7 @@ process = 3.6 : floor;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust74/exfaust74-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust74/exfaust74.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 3.6 : ceil;
@@ -2845,7 +2845,7 @@ process = 3.6 : ceil;
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust75/exfaust75-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust75/exfaust75.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 3.6 : rint;
@@ -2874,7 +2874,7 @@ delay of arbitrary length. They are presented in this section.  </p>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust76/exfaust76-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust76/exfaust76.svg" class="mx-auto d-block">
 
 <pre><code>
 process = mem;
@@ -2898,7 +2898,7 @@ size of the Faust code.</p>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust77/exfaust77-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust77/exfaust77.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _';
@@ -2935,7 +2935,7 @@ standard libraries.</p>
 <p><strong>Example: Static N Samples Delay</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust78/exfaust78-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust78/exfaust78.svg" class="mx-auto d-block">
 
 <pre><code>
 N = 10;
@@ -2953,7 +2953,7 @@ process = @(N);
 <p><strong>Example: Dynamic N Samples Delay</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust79/exfaust79-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust79/exfaust79.svg" class="mx-auto d-block">
 
 <pre><code>
 N = hslider(&quot;N&quot;,10,1,10,1);
@@ -2997,7 +2997,7 @@ step and before audio computation begins. </p>
 and a phasor to implement a triangle wave oscillator. Note that the output of</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust80/exfaust80-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust80/exfaust80.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3022,7 +3022,7 @@ parses the <code>sin</code> function during the initialization step of the Faust
 It is then used with <code>rdtable</code> to implement a sine wave oscillator. </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust81/exfaust81-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust81/exfaust81.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3069,7 +3069,7 @@ The table size is set to 48000, which corresponds to one second if the sampling
 rate is 48000 KHz. </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust82/exfaust82-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust82/exfaust82.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3117,7 +3117,7 @@ between 2 signals.</p>
 wave oscillator.  </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust83/exfaust83-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust83/exfaust83.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3138,7 +3138,7 @@ process = sig;
 Boolean primitives:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust84/exfaust84-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust84/exfaust84.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3180,7 +3180,7 @@ the third one)</li>
 a triangle wave oscillator.  </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust85/exfaust85-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust85/exfaust85.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3201,7 +3201,7 @@ process = sig;
 Boolean primitives:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust86/exfaust86-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust86/exfaust86.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3236,7 +3236,7 @@ produces a signal which is 1 when the button is pressed and 0 otherwise: </p>
 following code is perfectly valid and will generate sound:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust87/exfaust87-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust87/exfaust87.svg" class="mx-auto d-block">
 
 <pre><code>
 process = button(&quot;DC&quot;);
@@ -3261,7 +3261,7 @@ controlling. In some cases, this range is used during compilation to allocate
 memory and will impact the generated code. For example, in the case of:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust88/exfaust88-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust88/exfaust88.svg" class="mx-auto d-block">
 
 <pre><code>
 process = @(hslider(&quot;N&quot;,1,1,10,1));
@@ -3280,7 +3280,7 @@ process = @(hslider(&quot;N&quot;,1,1,10,1));
 following example:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust89/exfaust89-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust89/exfaust89.svg" class="mx-auto d-block">
 
 <pre><code>
 process = @(hslider(&quot;N&quot;,1,1,20,1));
@@ -3308,7 +3308,7 @@ element in the interface</li>
 <p><strong>Example: Trigger</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust90/exfaust90-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust90/exfaust90.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3337,7 +3337,7 @@ element in the interface</li>
 <p><strong>Example: Trigger</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust91/exfaust91-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust91/exfaust91.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3371,7 +3371,7 @@ element in the interface</li>
 <p><strong>Example: Gain Control</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust92/exfaust92-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust92/exfaust92.svg" class="mx-auto d-block">
 
 <pre><code>
 gain = hslider(&quot;gain&quot;,0,0,1,0.01);
@@ -3405,7 +3405,7 @@ element in the interface</li>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust93/exfaust93-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust93/exfaust93.svg" class="mx-auto d-block">
 
 <pre><code>
 gain = vslider(&quot;gain&quot;,0,0,1,0.01);
@@ -3439,7 +3439,7 @@ to count 0.1 by 0.1, etc.)</li>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust94/exfaust94-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust94/exfaust94.svg" class="mx-auto d-block">
 
 <pre><code>
 gain = nentry(&quot;gain&quot;,0,0,1,0.01);
@@ -3473,7 +3473,7 @@ element in the interface</li>
 encapsulated in a group.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust95/exfaust95-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust95/exfaust95.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3494,7 +3494,7 @@ process = hgroup(&quot;Oscillator&quot;,os.sawtooth(freq)*gain);
 like to add elements to it multiple times. </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust96/exfaust96-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust96/exfaust96.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3531,7 +3531,7 @@ element in the interface</li>
 encapsulated in a group.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust97/exfaust97-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust97/exfaust97.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3552,7 +3552,7 @@ process = vgroup(&quot;Oscillator&quot;,os.sawtooth(freq)*gain);
 like to add elements to it multiple times. </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust98/exfaust98-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust98/exfaust98.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3590,7 +3590,7 @@ element in the interface</li>
 encapsulated in a group.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust99/exfaust99-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust99/exfaust99.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3611,7 +3611,7 @@ process = tgroup(&quot;Oscillator&quot;,os.sawtooth(freq)*gain);
 like to add elements to it multiple times. </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust100/exfaust100-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust100/exfaust100.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3647,7 +3647,7 @@ the UI.</p>
 <p>A simple VU meter can be implemented using the <code>vbargraph</code> primitive:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust101/exfaust101-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust101/exfaust101.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3683,7 +3683,7 @@ the UI.</p>
 <p>A simple VU meter can be implemented using the <code>hbargraph</code> primitive:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust102/exfaust102-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust102/exfaust102.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3723,7 +3723,7 @@ in order to replace the variable parts by the value of the variable.
 For example:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust103/exfaust103-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust103/exfaust103.svg" class="mx-auto d-block">
 
 <pre><code>
 process = par(i,8,hslider(&quot;Voice %i&quot;, 0.9, 0, 1, 0.01));
@@ -3795,7 +3795,7 @@ following identifiers:</p>
 <a href="#hgroup-primitive">section on the <code>hgroup</code> primitive</a> can be rewritten as:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust104/exfaust104-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust104/exfaust104.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3838,7 +3838,7 @@ create clicks (in the case of <code>gain</code>) or abrupt jumps (in the case of
 in the signal:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust105/exfaust105-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust105/exfaust105.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3861,7 +3861,7 @@ lowpass with a pole at 0.999 (<code>si.smoo</code> is just sugar for <code>si.sm
 Therefore, the previous example can be rewritten as:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust106/exfaust106-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust106/exfaust106.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3952,7 +3952,7 @@ is declared first.</p>
 on elements at the same level. For example:  </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust107/exfaust107-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust107/exfaust107.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3974,7 +3974,7 @@ process = os.sawtooth(freqS)*gainS + os.triangle(freqT)*gainT;
 <p>Note that this could also be written as:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust108/exfaust108-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust108/exfaust108.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4013,7 +4013,7 @@ sections related to these topics.</p>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust109/exfaust109-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust109/exfaust109.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4045,7 +4045,7 @@ process = os.sawtooth(freq);
 <p><strong>Example: Selector</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust110/exfaust110-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust110/exfaust110.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4078,7 +4078,7 @@ and <code>vslider</code> for vertical).</p>
 <p><strong>Example: Selector</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust111/exfaust111-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust111/exfaust111.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4101,7 +4101,7 @@ intensity).</p>
 <p><strong>Example: Level Display</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust112/exfaust112-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust112/exfaust112.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4122,7 +4122,7 @@ process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[style:led]
 <p><strong>Example: Level Display</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust113/exfaust113-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust113/exfaust113.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4144,7 +4144,7 @@ dB. This impacts its overall appearance by applying a rainbow color scheme, etc.
 <p><strong>Example: Level Display</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust114/exfaust114-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust114/exfaust114.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4174,7 +4174,7 @@ the interface. </p>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust115/exfaust115-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust115/exfaust115.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4209,7 +4209,7 @@ implementing complex interfaces.   </p>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust116/exfaust116-svg/process.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust116/exfaust116.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
