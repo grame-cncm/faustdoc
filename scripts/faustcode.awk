@@ -4,7 +4,7 @@ function makeFaust(code, i) {
 	current = "exfaust"i;
 	folder = IMG"/"current;
 	dsp = folder"/"current".dsp";
-	svg = current"/"current"-svg/process.svg";
+	svg = current"/"current".svg";
 	cmd = "[ -d " DOCROOT"/"folder " ] || mkdir -p " DOCROOT"/"folder;
 	system (cmd);
 	print code > DOCROOT"/"dsp;

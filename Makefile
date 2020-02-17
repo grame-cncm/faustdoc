@@ -54,7 +54,7 @@ help:
 	@echo "             commit and push are still manual operations"
 
 test: 
-	@echo EXLIST: $(EXLIST)
+	@echo SVG: $(SVG)
 
 ####################################################################
 build:
@@ -109,6 +109,8 @@ $(DOCDIR)/%.md:src/%.md
 svg : $(SVG)
 %.svg:%.dsp
 	faust -svg $< > /dev/null
+	mv $(@D)/exfaust*-svg/process.svg $@
+	rm -rf $(@D)/exfaust*-svg
 
 
 ####################################################################
