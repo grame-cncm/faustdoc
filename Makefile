@@ -78,7 +78,6 @@ clean:
 	rm -f $(EXOUT)
 	rm -rf $(SVGDIRS)
 
-
 publish:
 	$(MAKE) clean	# make sure previous svg output is removed
 	$(MAKE) all
@@ -112,7 +111,6 @@ svg : $(SVG)
 	mv $(@D)/exfaust*-svg/process.svg $@
 	rm -rf $(@D)/exfaust*-svg
 
-
 ####################################################################
 # building tools doc
 tools : $(FAUSTDIR) $(DOCDIR)/refs/tools.md 
@@ -120,7 +118,6 @@ tools : $(FAUSTDIR) $(DOCDIR)/refs/tools.md
 $(DOCDIR)/refs/tools.md: src/refs/tools.md $(TOOLS)
 	cat src/refs/tools.md > $@
 	./scripts/buildtools $(TOOLS) >> $@
-
 
 ####################################################################
 # building faust examples
@@ -142,8 +139,7 @@ src/examples:
 zip: 
 	@[ -d $(DOCDIR)/rsrc ] || mkdir $(DOCDIR)/rsrc
 	cd examples/mkdocs && zip -r examples examples 
-	mv examples/mkdocs/examples.zip $(DOCDIR)/rsrc
-	
+	mv examples/mkdocs/examples.zip $(DOCDIR)/rsrc	
 
 ####################################################################
 $(FAUSTDIR):
@@ -152,30 +148,6 @@ $(FAUSTDIR):
 	@echo "   - set FAUSTDIR to the faust projet location in this Makefile"
 	@echo "   - call $(MAKE) FAUSTDIR=faust_projet_path"
 	@false;
-
-chapters:
-	cat tags.txt | cut -d':' -f 2 | sort -u
-	
-tagschapters:
-	cat tags.txt | sed -e 's/\([^:]*\):\([^:]*\)/\2:\1/' | sed 's/ *//g' | sort -u
-	
-tagsindex:  $(DOCDIR)/refs/index.md
-
-$(DOCDIR)/refs/index.md: Tags.txt
-	cat Tags.txt | $(AWK) -f scripts/tagslist.awk > $(DOCDIR)/refs/index.md
-
-####################################################################
-# rules to convert gmn to html
-$(DOCDIR)/examples/%.md: examples/mkdocs/examples/%.gmn
-	@[ -d $(DOCDIR)/examples ] || mkdir $(DOCDIR)/examples
-	$(eval name := $(patsubst $(DOCDIR)/examples/%.md, %, $@))	
-	$(AWK) -v FILE=$(name) -f scripts/sample2md.awk $< > $@
-
-####################################################################
-# rules to convert gmn to base 64
-%.b64.txt : %.gmn
-	openssl base64 -in $< |  tr -d '\n' > $@
-
 
 ####################################################################
 install:
