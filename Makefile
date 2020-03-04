@@ -4,12 +4,12 @@ AWK		?= awk
 
 MKDIR    := mkdocs
 DOCDIR   := $(MKDIR)/docs
-FAUSTDIR ?= ../../faust
+FAUSTDIR ?= ../faust
 EXDIR    ?= $(FAUSTDIR)/examples
 
 SRC   	 := $(shell find src -name "*.md")
 MD   	 := $(SRC:src/%=$(DOCDIR)/%)
-DSP   	 := $(shell find $(DOCDIR) -name "*.dsp")
+DSP   	 := $(shell find $(DOCDIR) -name "*.dsp" | grep -v mix4.dsp )
 SVGDIRS  := $(shell find $(DOCDIR) -type d -name "exfaust*")
 SVG   	 := $(DSP:%.dsp=%.svg)
 
@@ -48,7 +48,7 @@ help:
 	@echo "  examples : build the faust examples page"
 	@echo "             call the 'md' target after the 'examples' target"
 	@echo "  exlist   : list the examples for mkdocs.yml"
-#	@echo "  zip      : create a zip file with all examples at the appropriate location"
+	@echo "  zip      : create a zip file with all examples at the appropriate location"
 	@echo "Making the current version publicly available:"
 	@echo "  publish  : make all + build, switch to gh-pages and copy to root"
 	@echo "             commit and push are still manual operations"
@@ -70,7 +70,7 @@ all:
 	$(MAKE) options
 	$(MAKE) tools
 	$(MAKE) svg
-#	$(MAKE) zip
+	$(MAKE) examples
 
 clean:
 	rm -f $(MD)
@@ -121,7 +121,10 @@ $(DOCDIR)/refs/tools.md: src/refs/tools.md $(TOOLS)
 
 ####################################################################
 # building faust examples
-examples : $(FAUSTDIR) src/examples $(EXOUT)
+examples : $(FAUSTDIR) src/examples $(EXOUT) $(DOCDIR)/rsrc/examples.zip $(DOCDIR)/rsrc/mix4.dsp
+
+$(DOCDIR)/rsrc/mix4.dsp:
+	cp src/mix4.dsp $(DOCDIR)/rsrc/
 
 src/examples/%.md: $(EXDIR)/%
 	@echo ========= building  $(*F) example
@@ -136,10 +139,17 @@ src/examples:
 
 ####################################################################
 # zip the faust examples
-zip: 
-	@[ -d $(DOCDIR)/rsrc ] || mkdir $(DOCDIR)/rsrc
-	cd examples/mkdocs && zip -r examples examples 
-	mv examples/mkdocs/examples.zip $(DOCDIR)/rsrc	
+zip: $(DOCDIR)/rsrc $(DOCDIR)/rsrc/examples.zip
+
+$(DOCDIR)/rsrc/examples.zip: $(EXSRC)
+	rm -rf examples
+	mkdir examples
+	cp -R $(EXSRC) examples
+	zip -r examples examples 
+	mv examples.zip $(DOCDIR)/rsrc
+
+$(DOCDIR)/rsrc:
+	mkdir $(DOCDIR)/rsrc
 
 ####################################################################
 $(FAUSTDIR):

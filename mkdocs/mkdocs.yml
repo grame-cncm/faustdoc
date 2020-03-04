@@ -34,14 +34,12 @@ nav:
          - ' SAM ':  examples/SAM.md
          - ' smartKeyboard ':  examples/smartKeyboard.md
          - ' spat ':  examples/spat.md
-
-#        - 'Language':
-#       - 'Targets':
-#            - 'faust2alqt': 
-#    - Examples: 
+         - ' Download examples ':  rsrc/examples.zip
     - About: about.md
 
 #theme: readthedocs
+
+site_dir: ../docs
 
 
 extra:
@@ -61,12 +59,6 @@ plugins:
           combined: true
           combined_output_path: Faust-Documentation.pdf
           enabled_if_env: ENABLE_PDF_EXPORT
-
-
-extra_javascript:
-#  - '/GMN/guidolib/libGUIDOEngine.js'
-#  - '/GMN/guidolib/guidocode.js'
-#  - '/BNF/railroad-diagrams/railroad-diagrams.js'
 
 extra_css:
    - '/css/faust.css'
