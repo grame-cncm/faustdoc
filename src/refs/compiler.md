@@ -20,7 +20,7 @@ The Faust compiler outputs C++ code by default therefore running:
 faust noise.dsp 
 ```
 
-will compile [`noise.dsp`](misc/noise.dsp) and output the corresponding C++ 
+will compile `noise.dsp` and output the corresponding C++ 
 code on the standard output. The option `-o` allows to reroute the standard 
 output to a file: 
 
