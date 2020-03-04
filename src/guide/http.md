@@ -68,7 +68,7 @@ The following tables lists Faust's architectures providing HTTP support:
 ## A Simple Example
 
 To illustrate how HTTP support works, let's reuse our previous 
-[`mix4.dsp`](misc/mix4.dsp) example, a simple monophonic audio mixer with 4 
+[`mix4.dsp`]mix4.dsp) example, a simple monophonic audio mixer with 4 
 inputs and one output. For each input we have a mute button and a level slider:
 
 <!-- faust-run -->

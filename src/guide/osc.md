@@ -242,7 +242,7 @@ by underscores and some other characters (asterisk, comma, forward, question
 mark, open bracket, close bracket, open curly brace, close curly brace) are 
 replaced by hyphens.
 
-Here is as an example [`mix4.dsp`](misc/mix4.dsp), a very simplified 
+Here is as an example [`mix4.dsp`](mix4.dsp), a very simplified 
 monophonic audio mixer with 4 inputs and one output. For each input we have a 
 mute button and a level slider:
 
