@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Compiler Options - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../syntax/">Faust Syntax</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../syntax/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../compiler/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#faust-compiler-options">Faust compiler options</a></li>
+            <li><a href="#faust-compiler-version-2191">FAUST compiler version 2.19.1</a></li>
+            <li><a href="#input-options">Input options:</a></li>
+            <li><a href="#output-options">Output options:</a></li>
+            <li><a href="#code-generation-options">Code generation options:</a></li>
+            <li><a href="#block-diagram-options">Block diagram options:</a></li>
+            <li><a href="#math-doc-options">Math doc options:</a></li>
+            <li><a href="#debug-options">Debug options:</a></li>
+            <li><a href="#information-options">Information options:</a></li>
+            <li><a href="#example">Example:</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="faust-compiler-options">Faust compiler options</h1>
+<h2 id="faust-compiler-version-2191">FAUST compiler version 2.19.1</h2>
+<pre><code>usage : faust [options] file1 [file2 ...].
+        where options represent zero or more compiler options 
+    and fileN represents a Faust source file (.dsp extension).
+</code></pre>
+
+<h2 id="input-options">Input options:</h2>
+<hr />
+<pre><code>  -a &lt;file&gt;                               wrapper architecture file.
+  -i        --inline-architecture-files   inline architecture files.
+  -A &lt;dir&gt;  --architecture-dir &lt;dir&gt;      add the directory &lt;dir&gt; to the architecture search path.
+  -I &lt;dir&gt;  --import-dir &lt;dir&gt;            add the directory &lt;dir&gt; to the import search path.
+  -L &lt;file&gt; --library &lt;file&gt;              link with the LLVM module &lt;file&gt;.
+  -t &lt;sec&gt;  --timeout &lt;sec&gt;               abort compilation after &lt;sec&gt; seconds (default 120).
+</code></pre>
+
+<h2 id="output-options">Output options:</h2>
+<hr />
+<pre><code>  -o &lt;file&gt;                               the output file.
+  -e        --export-dsp                  export expanded DSP (with all included libraries).
+  -uim      --user-interface-macros       add user interface macro definitions to the output code.
+  -xml                                    generate an XML description file.
+  -json                                   generate a JSON description file.
+  -O &lt;dir&gt;  --output-dir &lt;dir&gt;            specify the relative directory of the generated output code and of additional generated files (SVG, XML...).
+</code></pre>
+
+<h2 id="code-generation-options">Code generation options:</h2>
+<hr />
+<pre><code>  -lang &lt;lang&gt; --language                 select output language,
+                                          'lang' should be in c, ocpp, cpp (default), rust, java, llvm, cllvm, fir, wast/wasm, soul, interp.
+  -single     --single-precision-floats   use single precision floats for internal computations (default).
+  -double     --double-precision-floats   use double precision floats for internal computations.
+  -quad       --quad-precision-floats     use quad precision floats for internal computations.
+  -es 1|0     --enable-semantics 1|0      use enable semantics when 1 (default), and simple multiplication otherwise.
+  -lcc        --local-causality-check     check causality also at local level.
+  -light      --light-mode                do not generate the entire DSP API.
+  -clang      --clang                     when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
+  -flist      --file-list                 use file list used to eval process.
+  -exp10      --generate-exp10            function call instead of pow(10) function.
+  -os         --one-sample                generate one sample computation.
+  -cn &lt;name&gt;  --class-name &lt;name&gt;         specify the name of the dsp class to be used instead of mydsp.
+  -scn &lt;name&gt; --super-class-name &lt;name&gt;   specify the name of the super class to be used instead of dsp.
+  -pn &lt;name&gt;  --process-name &lt;name&gt;       specify the name of the dsp entry-point instead of process.
+  -lb         --left-balanced             generate left balanced expressions.
+  -mb         --mid-balanced              generate mid balanced expressions (default).
+  -rb         --right-balanced            generate right balanced expressions.
+  -lt         --less-temporaries          generate less temporaries in compiling delays.
+  -mcd &lt;n&gt;    --max-copy-delay &lt;n&gt;        threshold between copy and ring buffer implementation (default 16 samples).
+  -mem        --memory                    allocate static in global state using a custom memory manager.
+  -ftz &lt;n&gt;    --flush-to-zero &lt;n&gt;         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
+  -inj &lt;f&gt;    --inject &lt;f&gt;                inject source file &lt;f&gt; into architecture file instead of compile a dsp file.
+  -scal      --scalar                     generate non-vectorized code.
+  -inpl      --in-place                   generates code working when input and output buffers are the same (scalar mode only).
+  -vec       --vectorize                  generate easier to vectorize code.
+  -vs &lt;n&gt;    --vec-size &lt;n&gt;               size of the vector (default 32 samples).
+  -lv &lt;n&gt;    --loop-variant &lt;n&gt;           [0:fastest (default), 1:simple].
+  -omp       --openmp                     generate OpenMP pragmas, activates --vectorize option.
+  -pl        --par-loop                   generate parallel loops in --openmp mode.
+  -sch       --scheduler                  generate tasks and use a Work Stealing scheduler, activates --vectorize option.
+  -ocl       --opencl                     generate tasks with OpenCL (experimental).
+  -cuda      --cuda                       generate tasks with CUDA (experimental).
+  -dfs       --deep-first-scheduling      schedule vector loops in deep first order.
+  -g         --group-tasks                group single-threaded sequential tasks together when -omp or -sch is used.
+  -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
+  -fm &lt;file&gt; --fast-math &lt;file&gt;           use optimized versions of mathematical functions implemented in &lt;file&gt;,
+                                          use 'faust/dsp/fastmath.cpp' when file is 'def'.
+</code></pre>
+
+<h2 id="block-diagram-options">Block diagram options:</h2>
+<hr />
+<pre><code>  -ps        --postscript                 print block-diagram to a postscript file.
+  -svg       --svg                        print block-diagram to a svg file.
+  -sd        --simplify-diagrams          try to further simplify diagrams before drawing.
+  -drf       --draw-route-frame           draw route frames instead of simple cables.
+  -f &lt;n&gt;     --fold &lt;n&gt;                   threshold to activate folding mode during block-diagram generation (default 25 elements).
+  -fc &lt;n&gt;    --fold-complexity &lt;n&gt;       complexity threshold to fold an expression in folding mode (default 2)
+  -mns &lt;n&gt;   --max-name-size &lt;n&gt;          threshold during block-diagram generation (default 40 char).
+  -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
+  -blur      --shadow-blur                add a shadow blur to SVG boxes.
+</code></pre>
+
+<h2 id="math-doc-options">Math doc options:</h2>
+<hr />
+<pre><code>  -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
+  -mdlang &lt;l&gt; --mathdoc-lang &lt;l&gt;          if translation file exists (&lt;l&gt; = en, fr, ...).
+  -stripmdoc  --strip-mdoc-tags           strip mdoc tags when printing Faust -mdoc listings.
+</code></pre>
+
+<h2 id="debug-options">Debug options:</h2>
+<hr />
+<pre><code>  -d          --details                   print compilation details.
+  -time       --compilation-time          display compilation phases timing information.
+  -tg         --task-graph                print the internal task graph in dot format.
+  -sg         --signal-graph              print the internal signal graph in dot format.
+  -norm       --normalized-form           print signals in normalized form and exit.
+  -ct         --check-table               check table index range.
+</code></pre>
+
+<h2 id="information-options">Information options:</h2>
+<hr />
+<pre><code>  -h          --help                      print this help message.
+  -v          --version                   print version information and embedded backends list.
+  -libdir     --libdir                    print directory containing the Faust libraries.
+  -includedir --includedir                print directory containing the Faust headers.
+  -archdir    --archdir                   print directory containing the Faust architectures.
+  -dspdir     --dspdir                    print directory containing the Faust dsp libraries.
+  -pathslist  --pathslist                 print the architectures and dsp library paths.
+</code></pre>
+
+<h2 id="example">Example:</h2>
+<hr />
+<pre><code>faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

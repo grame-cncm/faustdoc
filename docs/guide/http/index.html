@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>HTTP Support - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../osc/">OSC Support</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../osc/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../midi/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#http-support">HTTP Support</a></li>
+            <li><a href="#a-simple-example">A Simple Example</a></li>
+            <li><a href="#json-description-of-the-user-interface">JSON Description of the User Interface</a></li>
+            <li><a href="#querying-the-state-of-the-application">Querying the State of the Application</a></li>
+            <li><a href="#changing-the-value-of-a-widget">Changing the Value of a Widget</a></li>
+            <li><a href="#proxy-control-access-to-the-web-server">Proxy Control Access to the Web Server</a></li>
+            <li><a href="#http-cheat-sheet">HTTP Cheat Sheet</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="http-support">HTTP Support</h1>
+<p>Similarly to OSC, several Faust architectures also provide HTTP support. This 
+allows Faust applications to be remotely controlled from any Web browser using 
+specific URLs. Moreover OSC and HTTPD can be freely combined.</p>
+<p>While OSC support is installed by default when Faust is built, this is not the 
+case for HTTP. That's because it depends on the GNU <em>libmicrohttpd</em> library 
+which is usually not installed by default on the system. An additional 
+<code>make httpd</code> step is therefore required when compiling and installing Faust:</p>
+<pre><code>make httpd
+make
+sudo make install
+</code></pre>
+
+<p>Note that <code>make httpd</code> will fail if <em>libmicrohttpd</em> is not available on the 
+system.</p>
+<p>HTTP support can be added to any Faust program (as long as the target 
+architecture supports it: see tables below) simply by adding the <code>[http:on]</code> 
+metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a>:</p>
+<pre><code>declare options &quot;[http:on]&quot;;
+</code></pre>
+
+<p>The following tables lists Faust's architectures providing HTTP support: </p>
+<table>
+<thead>
+<tr>
+<th>Audio System</th>
+<th>Environment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alsa</td>
+<td>GTK, Qt, Console</td>
+</tr>
+<tr>
+<td>Jack</td>
+<td>GTK, Qt, Console</td>
+</tr>
+<tr>
+<td>Netjack</td>
+<td>GTK, Qt, Console</td>
+</tr>
+<tr>
+<td>PortAudio</td>
+<td>GTK, Qt</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center;">
+**_Linux Faust Architectures with HTTP Support_**
+</div>
+
+<hr />
+<table>
+<thead>
+<tr>
+<th>Audio System</th>
+<th>Environment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CoreAudio</td>
+<td>Qt</td>
+</tr>
+<tr>
+<td>Jack</td>
+<td>Qt, Console</td>
+</tr>
+<tr>
+<td>Netjack</td>
+<td>Qt, Console</td>
+</tr>
+<tr>
+<td>PortAudio</td>
+<td>Qt</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center;">
+**_OSX Faust Architectures with HTTP Support_**
+</div>
+
+<hr />
+<table>
+<thead>
+<tr>
+<th>Audio System</th>
+<th>Environment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jack</td>
+<td>Qt, Console</td>
+</tr>
+<tr>
+<td>PortAudio</td>
+<td>Qt</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center;">
+**_Windows Faust Architectures with HTTP Support_**
+</div>
+
+<hr />
+<h2 id="a-simple-example">A Simple Example</h2>
+<p>To illustrate how HTTP support works, let's reuse our previous 
+[<code>mix4.dsp</code>]mix4.dsp) example, a simple monophonic audio mixer with 4 
+inputs and one output. For each input we have a mute button and a level slider:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+input(v) = vgroup(&quot;input %v&quot;, *(1-checkbox(&quot;mute&quot;)) : *(vslider(&quot;level&quot;, 0, 0, 1, 0.01)));
+process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/http/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>This example can be compiled as a standalone Jack QT application with HTTP 
+support using the command:</p>
+<pre><code>faust2jaqt -httpd mix4.dsp
+</code></pre>
+
+<p>The <code>-httpd</code> option embeds a small Web server into the generated application. 
+Its purpose is to serve an HTML page implementing the interface of the app. 
+This page makes use of JavaScript and SVG, and is quite similar to the native 
+QT interface.</p>
+<p>When the application is started from the command line:</p>
+<pre><code>./mix4 
+</code></pre>
+
+<p>various information are printed on the standard output, including:</p>
+<pre><code>Faust httpd server version 0.73 is running on TCP port 5510
+</code></pre>
+
+<p>As we can see, the embedded Web server is running by default on TCP port 5510. 
+The entry point is <a href="http://localhost:5510">http://localhost:5510</a>. It can be open from any recent 
+browser and it produces the page presented in the figure below:</p>
+<p><img src="img/mix4-http.png" class="mx-auto d-block" width="70%"></p>
+<h2 id="json-description-of-the-user-interface">JSON Description of the User Interface</h2>
+<p>The communication between the application and the Web browser is based on 
+several underlying URLs. The first one is <a href="http://localhost:5510/JSON">http://localhost:5510/JSON</a> that 
+returns a JSON description of the user interface of the application. This 
+JSON description is used internally by the JavaScript code to build the 
+graphical user interface. Here is (part of) the json returned by <code>mix4</code>:</p>
+<pre><code>{
+  &quot;name&quot;: &quot;mix4&quot;,
+  &quot;address&quot;: &quot;YannAir.local&quot;,
+  &quot;port&quot;: &quot;5511&quot;,
+  &quot;ui&quot;: [
+    {
+      &quot;type&quot;: &quot;hgroup&quot;,
+      &quot;label&quot;: &quot;mixer&quot;,
+      &quot;items&quot;: [
+        {
+          &quot;type&quot;: &quot;vgroup&quot;,
+          &quot;label&quot;: &quot;input_0&quot;,
+          &quot;items&quot;: [
+            {
+              &quot;type&quot;: &quot;vslider&quot;,
+              &quot;label&quot;: &quot;level&quot;,
+              &quot;address&quot;: &quot;/mixer/input_0/level&quot;,
+              &quot;init&quot;: &quot;0&quot;, &quot;min&quot;: &quot;0&quot;, &quot;max&quot;: &quot;1&quot;, 
+              &quot;step&quot;: &quot;0.01&quot;
+            },
+            {
+              &quot;type&quot;: &quot;checkbox&quot;,
+              &quot;label&quot;: &quot;mute&quot;,
+              &quot;address&quot;: &quot;/mixer/input_0/mute&quot;,
+              &quot;init&quot;: &quot;0&quot;, &quot;min&quot;: &quot;0&quot;, &quot;max&quot;: &quot;0&quot;, 
+              &quot;step&quot;: &quot;0&quot;
+            }
+          ]
+        },
+
+        ...
+
+      ]
+    }
+  ]
+}
+</code></pre>
+
+<h2 id="querying-the-state-of-the-application">Querying the State of the Application</h2>
+<p>Each widget has a unique "address" field that can be used to query its value. 
+In our example here the level of the input 0 has the address 
+<code>/mixer/input_0/level</code>. The address can be used to forge a URL to get the 
+value of the widget: <a href="http://localhost:5510/mixer/input_0/level">http://localhost:5510/mixer/input_0/level</a>, resulting in:</p>
+<pre><code>/mixer/input_0/level 0.00000  
+</code></pre>
+
+<p>Multiple widgets can be queried at once by using an address higher in the 
+hierarchy. For example to get the values of the level and the mute state of 
+input 0 we use <a href="http://localhost:5510/mixer/input_0">http://localhost:5510/mixer/input_0</a>, resulting in:</p>
+<pre><code>/mixer/input_0/level 0.00000 
+/mixer/input_0/mute  0.00000 
+</code></pre>
+
+<p>To get the all the values at once we simply use <a href="http://localhost:5510/mixer">http://localhost:5510/mixer</a>, 
+resulting in:</p>
+<pre><code>/mixer/input_0/level 0.00000 
+/mixer/input_0/mute  0.00000 
+/mixer/input_1/level 0.00000 
+/mixer/input_1/mute  0.00000 
+/mixer/input_2/level 0.00000 
+/mixer/input_2/mute  0.00000 
+/mixer/input_3/level 0.00000 
+/mixer/input_3/mute  0.00000 
+</code></pre>
+
+<h2 id="changing-the-value-of-a-widget">Changing the Value of a Widget</h2>
+<p><img src="img/mix4-http-mute.png" class="mx-auto d-block" width="70%"></p>
+<p>Let's say that we want to mute input 1 of our mixer. For that purpose, we can
+use the URL <a href="http://localhost:5510/mixer/input_1/mute?value=1">http://localhost:5510/mixer/input_1/mute?value=1</a> obtained by 
+concatenating <code>?value=1</code> at the end of the widget URL. </p>
+<p>All widgets can be controlled in a similar way. For example 
+<a href="http://localhost:5510/mixer/input_3/level?value=0.7">http://localhost:5510/mixer/input_3/level?value=0.7</a> will set the input 3 
+level to 0.7.</p>
+<h2 id="proxy-control-access-to-the-web-server">Proxy Control Access to the Web Server</h2>
+<p>A control application may want to access and control the running DSP using 
+its Web server, but without using the delivered HTML page in a browser. Since 
+the complete JSON can be retrieved, control applications can be purely 
+developed in C/C++. A <em>proxy</em> version of the user interface can then be built, 
+and parameters can be "set and get" using HTTP requests. </p>
+<p>This mode can be started dynamically using the <code>-server URL</code> parameter. 
+Assuming an application with HTTP support is running remotely at the given 
+URL, the control application will fetch its JSON description, use it to 
+dynamically build the user interface, and allow for the access of the remote 
+parameters.</p>
+<h2 id="http-cheat-sheet">HTTP Cheat Sheet</h2>
+<p>Here is a summary of the various URLs used to interact with the application's 
+Web server.</p>
+<h3 id="default-ports">Default Ports</h3>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5510</code></td>
+<td>default TCP port used by the application's Web server</td>
+</tr>
+<tr>
+<td><code>5511...</code></td>
+<td>alternative TCP ports</td>
+</tr>
+</tbody>
+</table>
+<h3 id="command-line-options">Command Line Options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-port n</code></td>
+<td>set the TCP port number used by the application's Web server</td>
+</tr>
+<tr>
+<td><code>-server URL</code></td>
+<td>start a proxy control application accessing the remote application running on the given URL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="urls">URLs</h3>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>http://host:port</code></td>
+<td>the base URL to be used in proxy control access mode</td>
+</tr>
+<tr>
+<td><code>http://host:port/JSON</code></td>
+<td>get a json description of the user interface</td>
+</tr>
+<tr>
+<td><code>http://host:port/address</code></td>
+<td>get the value of a widget or a group of widgets</td>
+</tr>
+<tr>
+<td><code>http://host:port/address?value=v</code></td>
+<td>set the value of a widget to <code>v</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="json">JSON</h3>
+<p><strong>Top Level</strong></p>
+<p>The JSON describes the name, host, and port of the application and a hierarchy 
+of user interface items:</p>
+<pre><code>{
+  &quot;name&quot;: &lt;name&gt;,
+  &quot;address&quot;: &lt;host&gt;,
+  &quot;port&quot;: &lt;port&gt;,
+  &quot;ui&quot;: [ &lt;item&gt; ]
+}
+</code></pre>
+
+<p>An <code>&lt;item&gt;</code> is either a group (of items) or a widget.</p>
+<p><strong>Groups</strong></p>
+<p>A group is essentially a list of items with a specific layout: </p>
+<pre><code>{
+    &quot;type&quot;: &lt;type&gt;,
+    &quot;label&quot;: &lt;label&gt;,
+    &quot;items&quot;: [ &lt;item&gt;, &lt;item&gt;,...]
+}
+</code></pre>
+
+<p>The <code>&lt;type&gt;</code> defines the layout. It can be either <code>"vgroup"</code>, <code>"hgroup"</code> or 
+<code>"tgroup"</code></p>
+<p><strong>Widgets</strong></p>
+<pre><code>{
+    &quot;type&quot;: &lt;type&gt;,
+    &quot;label&quot;: &lt;label&gt;,
+    &quot;address&quot;: &lt;address&gt;,
+    &quot;meta&quot;: [ { &quot;key&quot;: &quot;value&quot;},... ],
+    &quot;init&quot;: &lt;num&gt;,
+    &quot;min&quot;: &lt;num&gt;,
+    &quot;max&quot;: &lt;num&gt;,
+    &quot;step&quot;: &lt;num&gt;
+},
+</code></pre>
+
+<p>Widgets are the basic items of the user interface. They can be of different 
+<code>&lt;type&gt;</code>: <code>"button"</code>,  <code>"checkbox"</code>, <code>"nentry"</code>, <code>"vslider"</code>, <code>"hslider"</code>, 
+<code>"vbargraph"</code> or <code>"hbargraph"</code>.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

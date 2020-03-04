@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Introduction - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li class="active">
+    <a href="./">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../..">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../quick-start/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#introduction">Introduction</a></li>
+            <li><a href="#what-is-faust">What is Faust?</a></li>
+            <li><a href="#what-is-faust-good-for">What is Faust Good For?</a></li>
+            <li><a href="#what-is-faust-not-so-good-for">What is Faust Not (So) Good For?</a></li>
+            <li><a href="#design-principles">Design Principles</a></li>
+            <li><a href="#signal-processor-semantic">Signal Processor Semantic</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<!-- doc-begin -->
+
+<h1 id="introduction">Introduction</h1>
+<h2 id="what-is-faust">What is Faust?</h2>
+<p>Faust (Functional Audio Stream) is a functional programming language for sound 
+synthesis and audio processing with a strong focus on the design of 
+synthesizers, musical instruments, audio effects, etc. Faust targets 
+high-performance signal processing applications and audio plug-ins for 
+a variety of platforms and standards. It is used on stage for concerts and 
+artistic productions, in education and research, in open source projects as 
+well as in commercial applications.</p>
+<p>The core component of Faust is its compiler. It allows to "translate" any Faust 
+digital signal processing (DSP) specification to a wide range of non-domain 
+specific languages such as C++, C, JAVA, JavaScript, LLVM bit code, WebAssembly, 
+etc. In this regard, Faust can be seen as an alternative to C++ but is much 
+simpler and intuitive to learn. </p>
+<p>Thanks to a wrapping system called "architectures," codes generated by Faust 
+can be easily compiled into a wide variety of objects ranging from 
+<a href="TODO-tutorial">audio plug-ins</a> to <a href="TODO-tutorial">standalone applications</a> or 
+<a href="TODO-tutorial">smartphone</a> and <a href="TODO-tutorial">web apps</a>, etc. (check the 
+<a href="#a-quick-tour-of-the-faust-targets">Quick Tour of the Faust Targets</a> section
+for an exhaustive list.</p>
+<p>This manual gives an overview of the Faust programming language and of its 
+features through various interactive examples.</p>
+<h2 id="what-is-faust-good-for">What is Faust Good For?</h2>
+<p>Faust's syntax allows to express any DSP algorithm as a block diagram. For 
+example, <code>+</code> is considered as a valid function (and block) taking two arguments 
+(signals) and returning one:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+process = +;
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>Blocks can be easily connected together using the <code>:</code> "connection" composition:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+process = + : *(0.5);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>In that case, we add two signals together and then scale the result of this 
+operation.</p>
+<p>Thus, <strong>Faust is perfect to implement time-domain algorithms that can be easily 
+represented as block diagrams</strong> such as filters, waveguide physical models, 
+virtual analog elements, etc.</p>
+<p><strong>Faust is very concise</strong>, for example, here's the implementation of a one pole 
+filter/integrator equivalent to $y(n) = x(n) + a_{1}y(n-1)$ (where $a_{1}$ is 
+the pole):</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+a1 = 0.9;
+process = +~*(a1);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p><strong>Codes generated by Faust are extremely optimized</strong> and usually more efficient 
+that handwritten codes (at least for C and C++). The Faust compiler tries to 
+optimize each element of an algorithm. For example, you shouldn't have to 
+worry about using divides instead of multiplies as they get automatically 
+replaced by multiplies by the compiler when possible, etc.</p>
+<p><strong>Faust is very generic</strong> and allows to write code that will run on dozens of 
+platforms.</p>
+<!-- If we stick to this, we should also talk about the web capabilities: in
+other words be a bit more specific here. -->
+
+<h2 id="what-is-faust-not-so-good-for">What is Faust Not (So) Good For?</h2>
+<p>Despite all this, Faust does have some limitations. For instance, it doesn't 
+allow for the efficient implementation of algorithms requiring multi-rates such 
+as the FFT, convolution, etc. While there are tricks to go around this issue, 
+we're fully aware that it is a big one and we're working as hard as possible on 
+it.</p>
+<p>Faust's conciseness can sometimes become a problem too, especially for complex 
+algorithms with lots of recursive signals. It is usually crucial in Faust to 
+have the "mental global picture" of the algorithm to be implemented which in 
+some cases can be hard.</p>
+<p>While the Faust compiler is relatively bug-free, it does have some limitations 
+and might get stuck in some extreme cases that you will probably never 
+encounter. If you do, <a href="https://sourceforge.net/p/faudiostream/mailman/">shoot us an e-mail</a>!</p>
+<p>From here, you can jump to ... if you wanna get your hands dirty, etc. TODO.</p>
+<h2 id="design-principles">Design Principles</h2>
+<p>Since the beginning of its development in 2002, Faust has been guided by
+various design principles:</p>
+<ul>
+<li>Faust is a <em>specification language</em>. It aims at providing an adequate 
+notation to describe <em>signal processors</em> from a mathematical point of view. 
+Faust is, as much as possible, free from implementation details. </li>
+<li>Faust programs are fully compiled (i.e., not interpreted). The compiler 
+translates Faust programs into equivalent programs in other languages (e.g., 
+JAVA, JavaScript, LLVM bit code, WebAssembly, etc.) taking care of generating 
+the most efficient code. The result can generally compete with, and sometimes 
+even outperform, C++ code written by seasoned programmers. </li>
+<li>The generated code works at the sample level. It is therefore suited to 
+implement low-level DSP functions like recursive filters. Moreover the code can 
+be easily embedded. It is self-contained and doesn't depend of any DSP library 
+or runtime system. It has a very deterministic behavior and a constant memory 
+footprint. </li>
+<li>The semantic of Faust is simple and well defined. This is not just of 
+academic interest. It allows the Faust compiler to be <em>semantically driven</em>. 
+Instead of compiling a program literally, it compiles the mathematical function 
+it denotes. This feature is useful for example to promote components reuse 
+while preserving optimal performance.  </li>
+<li>Faust is a textual language but nevertheless block-diagram oriented. It 
+actually combines two approaches: <em>functional programming</em> and <em>algebraic 
+block-diagrams</em>. The key idea is to view block-diagram construction as function 
+composition. For that purpose, Faust relies on a <em>block-diagram algebra</em> of 
+five composition operations: <code>: , ~ &lt;: :&gt;</code> (see the section on 
+<a href="#diagram-composition-operations">Diagram Composition Operations</a> for more
+details).</li>
+<li>Thanks to the concept of <em>architecture</em>, Faust programs can be easily 
+deployed on a large variety of audio platforms and plug-in formats without any 
+change to the Faust code.</li>
+</ul>
+<h2 id="signal-processor-semantic">Signal Processor Semantic</h2>
+<p>A Faust program describes a <em>signal processor</em>. The role of a <em>signal processor</em> 
+is to transforms a (possibly empty) group of <em>input signals</em> in order to 
+produce a (possibly empty) group of <em>output signals</em>. Most audio equipments can 
+be modeled as <em>signal processors</em>. They have audio inputs, audio outputs as 
+well as control signals interfaced with sliders, knobs, vu-meters, etc. </p>
+<p>More precisely :</p>
+<ul>
+<li>A <em>signal</em> $s$ is a discrete function of time 
+$s:\mathbb{Z}\rightarrow\mathbb{R}$. The value of a signal $s$ at time $t$ is 
+written $s(t)$. The values of signals are usually needed starting from time $0$. 
+But to take into account <em>delay operations</em>, negative times are possible and 
+are always mapped to zeros. Therefore for any Faust signal $s$ we have 
+$\forall t&lt;0, s(t)=0$. In operational terms this corresponds to assuming that 
+all delay lines are signals initialized with $0$s. </li>
+<li>Faust considers two type of signals: <em>integer signals</em> 
+($s:\mathbb{Z}\rightarrow\mathbb{Z}$) and <em>floating point signals</em> 
+($s:\mathbb{Z}\rightarrow\mathbb{Q}$). Exchanges with the outside world are, by 
+convention, made using floating point signals. The full range is represented by 
+sample values between $-1.0$ and $+1.0$.</li>
+<li>The set of all possible  signals is $\mathbb{S}=\mathbb{Z}\rightarrow\mathbb{R}$.</li>
+<li>A group of $n$ signals (a <em>n</em>-tuple of signals) is written 
+$(s_{1},\ldots,s_{n})\in \mathbb{S}^{n}$. The <em>empty tuple</em>, single element of 
+$\mathbb{S}^{0}$ is notated $()$.</li>
+<li>A <em>signal processors</em> $p$, is a function from <em>n</em>-tuples of signals to 
+<em>m</em>-tuples of signals $p:\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}$. The set 
+$\mathbb{P}=\bigcup_{n,m}\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}$ is the
+set of all possible signal processors.</li>
+</ul>
+<p>As an example, let's express the semantic of the Faust primitive <code>+</code>. Like any 
+Faust expression, it is a signal processor. Its signature is
+$\mathbb{S}^{2}\rightarrow\mathbb{S}$. It takes two input signals $X_0$ and 
+$X_1$ and produces an output signal $Y$ such that $Y(t) = X_0(t)+X_1(t)$. </p>
+<p>Numbers are signal processors too. For example the number $3$ has signature  $\mathbb{S}^{0}\rightarrow\mathbb{S}$. It takes no input signals and produce an 
+output signal $Y$ such that $Y(t) = 3$. </p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

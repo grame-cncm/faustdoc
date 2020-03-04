@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>OSC Support - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../embedding/">Embedding</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../embedding/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../http/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#osc-support">OSC Support</a></li>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#simple-example">Simple Example</a></li>
+            <li><a href="#automatic-port-allocation">Automatic Port Allocation</a></li>
+            <li><a href="#discovering-osc-applications">Discovering OSC Applications</a></li>
+            <li><a href="#discovering-the-osc-interface-of-an-application">Discovering the OSC Interface of an Application</a></li>
+            <li><a href="#widgets-osc-address">Widget's OSC Address</a></li>
+            <li><a href="#controlling-the-application-via-osc">Controlling the Application Via OSC</a></li>
+            <li><a href="#turning-transmission-on">Turning Transmission ON</a></li>
+            <li><a href="#filtering-osc-messages">Filtering OSC Messages</a></li>
+            <li><a href="#using-osc-aliases">Using OSC Aliases</a></li>
+            <li><a href="#osc-cheat-sheet">OSC Cheat Sheet</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="osc-support">OSC Support</h1>
+<h2 id="overview">Overview</h2>
+<p>Most Faust architectures provide 
+<a href="http://opensoundcontrol.org/">Open Sound Control (OSC)</a> support (the 
+implementation is based internally on the <em>oscpack</em> library by Ross Bencina). 
+This allows applications to be remotely controlled from any OSC-capable 
+application, programming language, or hardware device. </p>
+<p>OSC support can be added to any Faust program (as long as the target 
+architecture supports it: see tables below) simply by adding the <code>[osc:on]</code> 
+metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a>:</p>
+<pre><code>declare options &quot;[osc:on]&quot;;
+</code></pre>
+
+<p>The following tables provides a list of Faust architectures providing OSC support. </p>
+<table>
+<thead>
+<tr>
+<th>Audio System</th>
+<th>Environment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alsa</td>
+<td>GTK, Qt, Console</td>
+</tr>
+<tr>
+<td>Jack</td>
+<td>GTK, Qt, Console</td>
+</tr>
+<tr>
+<td>Netjack</td>
+<td>GTK, Qt, Console</td>
+</tr>
+<tr>
+<td>PortAudio</td>
+<td>GTK, Qt</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center;">
+**_Linux Faust Architectures with OSC Support_**
+</div>
+
+<hr />
+<table>
+<thead>
+<tr>
+<th>Audio System</th>
+<th>Environment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CoreAudio</td>
+<td>Qt</td>
+</tr>
+<tr>
+<td>Jack</td>
+<td>Qt, Console</td>
+</tr>
+<tr>
+<td>Netjack</td>
+<td>Qt, Console</td>
+</tr>
+<tr>
+<td>PortAudio</td>
+<td>Qt</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center;">
+**_OSX Faust Architectures with OSC Support_**
+</div>
+
+<hr />
+<table>
+<thead>
+<tr>
+<th>Audio System</th>
+<th>Environment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jack</td>
+<td>Qt, Console</td>
+</tr>
+<tr>
+<td>PortAudio</td>
+<td>Qt</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center;">
+**_Windows Faust Architectures with OSC Support_**
+</div>
+
+<hr />
+<table>
+<thead>
+<tr>
+<th>Environment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Android</td>
+</tr>
+<tr>
+<td>iOS</td>
+</tr>
+<tr>
+<td>JUCE</td>
+</tr>
+<tr>
+<td>Bela</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center;">
+**_Other Faust Architectures with OSC Support_**
+</div>
+
+<hr />
+<h2 id="simple-example">Simple Example</h2>
+<!-- TODO: check that we explain that some of these features are built-in in
+stuff like the online editor. -->
+
+<p>To illustrate how OSC support works let's define a very simple noise generator 
+with a level control (we'll call it <code>noise.dsp</code>):</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+process = no.noise*hslider(&quot;level&quot;,0,0,1,0.01);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/osc/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>This example can be compiled as a standalone Jack Qt application with OSC 
+support simply by running the following command:</p>
+<pre><code>faust2jaqt -osc noise.dsp
+</code></pre>
+
+<p>When the generated application is ran from the command line:</p>
+<pre><code>./noise 
+</code></pre>
+
+<p>various information is printed in the standard output, including:</p>
+<pre><code>Faust OSC version 0.93 application 'noise' is running on UDP ports 5510, 5511, 5512
+</code></pre>
+
+<p>Hence, the OSC module makes use of three different UDP ports:</p>
+<ul>
+<li><code>5510</code> is the listening port number: control messages should be addressed to 
+this port.</li>
+<li><code>5511</code> is the output port number: control messages sent by the application 
+and answers to query messages are sent to this port.</li>
+<li><code>5512</code> is the error port number: used for asynchronous error notifications.</li>
+</ul>
+<p>These OSC parameters can be changed from the command line using one of the 
+following options:</p>
+<ul>
+<li><code>-port number</code> sets the port number used by the application to receive 
+messages.</li>
+<li><code>-outport number</code> sets the port number used by the application to transmit 
+messages.</li>
+<li><code>-errport number</code> sets the port number used by the application to transmit 
+error messages.</li>
+<li><code>-desthost host</code> sets the destination host for the messages sent by the 
+application.</li>
+<li><code>-xmit 0|1|2</code> turns transmission OFF, ALL, or ALIAS (default OFF). When 
+transmission is OFF, input elements can be controlled using their addresses or 
+aliases (if present). When transmission is ALL, input elements can be controlled 
+using their addresses or aliases (if present), user's actions and output 
+elements (i.e., <code>bargraph</code>, etc.) are transmitted as OSC messages as well as 
+aliases (if present). When transmission is ALIAS, input elements can only be 
+controlled using their aliases, user's actions and output elements are 
+transmitted as aliases only.</li>
+<li><code>-xmitfilter path</code> allows to filter output messages. Note that <code>path</code> can be 
+a regular expression (like <code>/freeverb/Reverb1/*</code>).</li>
+</ul>
+<p>For example:</p>
+<pre><code>./noise -xmit 1 -desthost 192.168.1.104 -outport 6000
+</code></pre>
+
+<p>will run <code>noise</code> with transmission mode ON, using <code>192.168.1.104</code> on port <code>6000</code>
+as destination.</p>
+<h2 id="automatic-port-allocation">Automatic Port Allocation</h2>
+<p>In order to address each application individually, only one application can be 
+listening on a single port at one time. Therefore when the default incoming port 
+5510 is already opened by some other application, an application will 
+automatically try increasing port numbers until it finds an available port. 
+Let say that we start <code>noise</code> and <code>mixer</code> (two Faust-generated applications 
+with OSC support) on the same machine, we'll get the following:</p>
+<pre><code>$ ./noise &amp;
+...
+Faust OSC version 0.93 application 'noise' is running on UDP ports 5510, 5511, 5512
+$ ./mixer
+...
+Faust OSC version 0.93 application 'mixer' is running on UDP ports 5513, 5511, 5512
+</code></pre>
+
+<p>The <code>mixer</code> application fails to open the default incoming port <code>5510</code> because 
+it is already opened by <code>noise</code>. Therefore it tries to find an available port 
+starting from <code>5513</code> and opens it. Please note that the two outcoming ports 
+<code>5511</code> and <code>5512</code> are shared by all running applications.</p>
+<h2 id="discovering-osc-applications">Discovering OSC Applications</h2>
+<p>The commands <code>oscsend</code> and <code>oscdump</code> from the liblo package provide a 
+convenient mean to experiment with OSC control and potentially debug 
+applications with OSC support. </p>
+<blockquote>
+<p><code>oscsend [hostname] [port] [address] [types] [values]</code>: sends OSC messages 
+via UDP. <code>[types]</code> is a string, the letters indicates the type of the following 
+values: <code>i=integer</code>, <code>f=float</code>, <code>s=string</code>, etc.</p>
+<p><code>oscdump [port]</code>: receives OSC messages via UDP and dump to standard output</p>
+<p>Note that OSC messages can be sent from any OSC-compatible applications
+(e.g., PureData, Max/MSP, etc.).</p>
+</blockquote>
+<p>In the following examples, we'll use two separate terminal windows. The first 
+one will be used to send OSC messages to the <code>noise</code> application using 
+<code>oscsend</code>. The second terminal will be used to monitor the messages sent by the 
+application using <code>oscdump</code>. Commands executed on terminal 1 will be preceded 
+by <code>T1$</code>. Messages received on terminal 2 will be preceded by <code>T2:</code>. To monitor 
+on terminal T2 the OSC messages received on UDP port 5511, <code>oscdump</code> will be 
+used:</p>
+<pre><code>T2$ oscdump 5511
+</code></pre>
+
+<p>Once set we can use the <code>hello</code> message to scan UDP ports for Faust 
+applications. For example:</p>
+<pre><code>T1$ oscsend localhost 5510 &quot;/*&quot; s hello
+</code></pre>
+
+<p>gives us the root message address, the network and the UDP ports used by the 
+noise application:</p>
+<pre><code>T2: /noise siii &quot;192.168.1.102&quot; 5510 5511 5512
+</code></pre>
+
+<h2 id="discovering-the-osc-interface-of-an-application">Discovering the OSC Interface of an Application</h2>
+<p>The OSC interface of an application (the set of OSC messages we can use to 
+control it) can be discovered by sending the <code>get</code> message to the root:</p>
+<pre><code>T1$ oscsend localhost 5510 /noise s get 
+</code></pre>
+
+<p>As an answer to this OSC message, a full description is printed in terminal T2:</p>
+<pre><code>T2: /noise sF &quot;xmit&quot; #F
+T2: /noise ss &quot;desthost&quot; &quot;127.0.0.1&quot;
+T2: /noise si &quot;outport&quot; 5511
+T2: /noise si &quot;errport&quot; 5512
+T2: /noise/level fff 0.000000 0.000000 1.000000
+</code></pre>
+
+<p>The root of the OSC interface is <code>/noise</code>. Transmission is OFF, <code>xmit</code> is set 
+to false. The destination host for sending messages is <code>127.0.0.1</code>, the output 
+port is <code>5511</code> and the error port is <code>5512</code>. The application has only one user 
+interface element: <code>/noise/level</code> with current value <code>0.0</code>, minimal value <code>0.0</code> 
+and maximal value <code>1.0</code>.</p>
+<h2 id="widgets-osc-address">Widget's OSC Address</h2>
+<p>Each widget of an application has a unique OSC address obtained by 
+concatenating the labels of it's surrounding groups with its own label. </p>
+<blockquote>
+<p>There are potential conflicts between widget's labels and the OSC address 
+space. An OSC symbolic name is an ASCII string consisting of a restricted set 
+of printable characters. Therefore to ensure compatibility spaces are replaced 
+by underscores and some other characters (asterisk, comma, forward, question 
+mark, open bracket, close bracket, open curly brace, close curly brace) are 
+replaced by hyphens.</p>
+</blockquote>
+<p>Here is as an example <a href="../mix4.dsp"><code>mix4.dsp</code></a>, a very simplified 
+monophonic audio mixer with 4 inputs and one output. For each input we have a 
+mute button and a level slider:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+input(v) = vgroup(&quot;input %v&quot;, *(1-checkbox(&quot;mute&quot;)) : *(vslider(&quot;level&quot;, 0, 0, 1, 0.01)));
+process = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/osc/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>If we query this application:</p>
+<pre><code>T1$ oscsend localhost 5510 &quot;/*&quot; s get 
+</code></pre>
+
+<p>We get a full description of its OSC interface on terminal T2:</p>
+<pre><code>T2: /mixer sF &quot;xmit&quot; #F
+T2: /mixer ss &quot;desthost&quot; &quot;127.0.0.1&quot;
+T2: /mixer si &quot;outport&quot; 5511
+T2: /mixer si &quot;errport&quot; 5512
+T2: /mixer/input_0/level fff 0.0000 0.0000 1.0000
+T2: /mixer/input_0/mute  fff 0.0000 0.0000 1.0000
+T2: /mixer/input_1/level fff 0.0000 0.0000 1.0000
+T2: /mixer/input_1/mute  fff 0.0000 0.0000 1.0000
+T2: /mixer/input_2/level fff 0.0000 0.0000 1.0000
+T2: /mixer/input_2/mute  fff 0.0000 0.0000 1.0000
+T2: /mixer/input_3/level fff 0.0000 0.0000 1.0000
+T2: /mixer/input_3/mute  fff 0.0000 0.0000 1.0000
+</code></pre>
+
+<p>As we can see, each widget has a unique OSC address obtained by concatenating 
+the top level group label "mixer," with the "input" group label and the widget 
+label (see the <a href="labels-as-pathnames">Labels as Pathnames Section</a>). Please, note 
+that blank spaces are replaced by underscores and metadata are removed during
+this operation. </p>
+<p>All addresses must have a common root. This is the case in our example because 
+there is a unique horizontal group <code>mixer</code> containing all widgets. If a common 
+root is missing as in the following code:</p>
+<pre><code>input(v) = vgroup(&quot;input %v&quot;, *(1-checkbox(&quot;mute&quot;)) : *(vslider(&quot;level&quot;, 0, 0, 1, 0.01)));
+process = par(i, 4, input(i)) :&gt; _;
+</code></pre>
+
+<p>then a default vertical group is automatically create by the Faust compiler 
+using the name of the file <code>mix4</code> as label:</p>
+<!-- TODO: is this still true? -->
+
+<pre><code>T2: /mix4 sF &quot;xmit&quot; #F
+T2: /mix4 ss &quot;desthost&quot; &quot;127.0.0.1&quot;
+T2: /mix4 si &quot;outport&quot; 5511
+T2: /mix4 si &quot;errport&quot; 5512
+T2: /mix4/input_0/level fff 0.0000 0.0000 1.0000
+T2: /mix4/input_0/mute  fff 0.0000 0.0000 1.0000
+T2: /mix4/input_1/level fff 0.0000 0.0000 1.0000
+T2: /mix4/input_1/mute  fff 0.0000 0.0000 1.0000
+T2: /mix4/input_2/level fff 0.0000 0.0000 1.0000
+T2: /mix4/input_2/mute  fff 0.0000 0.0000 1.0000
+T2: /mix4/input_3/level fff 0.0000 0.0000 1.0000
+T2: /mix4/input_3/mute  fff 0.0000 0.0000 1.0000
+</code></pre>
+
+<h2 id="controlling-the-application-via-osc">Controlling the Application Via OSC</h2>
+<p>Any user interface element of the application can be controlled by sending one 
+of the previously discovered messages/addresses. For example, to set the noise 
+level of the application to <code>0.2</code> the following message can be sent:</p>
+<pre><code>T1$ oscsend localhost 5510 /noise/level f 0.2
+</code></pre>
+
+<p>If we now query <code>/noise/level</code> we get, as expected, the value <code>0.2</code>:</p>
+<pre><code>T1$ oscsend localhost 5510 /noise/level s get
+T2: /noise/level fff 0.2000 0.0000 1.0000
+</code></pre>
+
+<h2 id="turning-transmission-on">Turning Transmission ON</h2>
+<p>The <code>xmit</code> message at the root level is used to control the realtime 
+transmission of OSC messages corresponding to user interface's actions. For 
+example:</p>
+<pre><code>T1$ oscsend localhost 5510 /noise si xmit 1
+</code></pre>
+
+<p>turns transmission in <code>ALL</code> mode. Now if we move the level slider we get a 
+bunch of messages:</p>
+<pre><code>T2: /noise/level f 0.024000
+T2: /noise/level f 0.032000
+T2: /noise/level f 0.105000
+T2: /noise/level f 0.250000
+T2: /noise/level f 0.258000
+T2: /noise/level f 0.185000
+T2: /noise/level f 0.145000
+T2: /noise/level f 0.121000
+T2: /noise/level f 0.105000
+T2: /noise/level f 0.008000
+T2: /noise/level f 0.000000
+</code></pre>
+
+<p>This feature can be typically used for automation to record and replay actions 
+on the user interface, or to remote control from one application to another. 
+It can be turned OFF any time using:</p>
+<pre><code>T1$ oscsend localhost 5510 /noise si xmit 0
+</code></pre>
+
+<p>Use the ALIAS (<code>xmit = 2</code>) mode if you need to restrict the access to your 
+program: when the ALIAS mode is used, only aliases of input elements (sliders, 
+buttons...) can be used to control them, and output elements (bargraph) will 
+only emit on their aliases.</p>
+<h2 id="filtering-osc-messages">Filtering OSC Messages</h2>
+<p>When the transmission of OSC messages is ON, all the user interface elements 
+are sent through the OSC connection.  </p>
+<pre><code>T2: /harpe/level f 0.024000
+T2: /harpe/hand f 0.1
+T2: /harpe/level f 0.024000
+T2: /harpe/hand f 0.25
+T2: /harpe/level f 0.024000
+T2: /harpe/hand f 0.44
+T2: /noise/level f 0.145000
+T2: /harpe/hand f 0.78
+T2: /noise/level f 0.145000
+T2: /harpe/hand f 0.99
+</code></pre>
+
+<p>We can choose to filter unwanted parameters (or group of parameters).  For 
+example:</p>
+<pre><code>T1$ oscsend localhost 5510 /harpe si xmit 1 xmitfilter /harpe/level
+</code></pre>
+
+<p>As a result, we will receive:</p>
+<pre><code>T2: /harpe/hand f 0.1
+T2: /harpe/hand f 0.25
+T2: /harpe/hand f 0.44
+T2: /harpe/hand f 0.78
+</code></pre>
+
+<p>To reset the filter, send:</p>
+<pre><code>T1$ oscsend localhost 5510 /harpe si xmit 1 xmitfilter
+</code></pre>
+
+<h2 id="using-osc-aliases">Using OSC Aliases</h2>
+<p>Aliases are a convenient mechanism to control a Faust application from a 
+preexisting set of OSC messages. </p>
+<p>Let's say we want to control our previous noise example with 
+<a href="https://hexler.net/software/touchosc-android">TouchOSC</a> on Android. The first 
+step is to configure the TouchOSC host to <code>192.168.1.102</code> (the host running our 
+noise application) and outgoing port to <code>5510</code>. </p>
+<p>Then we can use <code>oscdump 5510</code> (after quitting the noise application in order 
+to free port <code>5510</code>) to visualize the OSC messages sent by TouchOSC. Let's use 
+for that the left slider of "simple layout". Here is what we get:</p>
+<!-- TODO: not sure about all this: at least we could add a figure with the 
+interface but do we even want to use TouchOSC at all? -->
+
+<pre><code>T2: /1/fader1 f 0.000000
+T2: /1/fader1 f 0.004975
+T2: /1/fader1 f 0.004975
+T2: /1/fader1 f 0.008125
+T2: /1/fader1 f 0.017473
+T2: /1/fader1 f 0.032499
+T2: /1/fader1 f 0.051032
+T2: ...
+T2: /1/fader1 f 0.993289
+T2: /1/fader1 f 1.000000
+</code></pre>
+
+<p>We can associate this OSC message to the noise level slider by inserting the 
+metadata <code>[osc:/1/fader1 0 1]</code> into the slider's label:</p>
+<blockquote>
+<p>Several osc aliases can be inserted into a single label allowing the same 
+widget to be controlled by several OSC messages</p>
+</blockquote>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+process = no.noise*hslider(&quot;level[osc:/1/fader1 0 1]&quot;,0,0,1,0.01);
+</code></pre>
+
+<p>Because the range of <code>/1/fader1</code> is 0 to 1 (like the level slider), we can 
+remove the range mapping information and write simply :</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+process = no.noise*hslider(&quot;level[osc:/1/fader1]&quot;,0,0,1,0.01);
+</code></pre>
+
+<p>TouchOSC can also send accelerometer data by enabling 
+<code>Settings/Options/Accelerometer</code>. Using again <code>oscdump 5510</code> we can visualize 
+the messages sent by TouchOSC:</p>
+<pre><code>T2: ...
+T2: /accxyz fff -0.147842 0.019752 9.694721
+T2: /accxyz fff -0.157419 0.016161 9.686341
+T2: /accxyz fff -0.167594 0.012570 9.683948
+T2: ...
+</code></pre>
+
+<p>As we can see, TouchOSC sends the x, y and z accelerometers in a single message, 
+as a triplet of values ranging approximately from -9.81 to 9.81. In order to 
+select the appropriate accelerometer, we need to concatenate to <code>/accxyz</code> a 
+suffix <code>/0</code>, <code>/1</code> or <code>/2</code>. For example <code>/accxyz/0</code> will correspond to x, 
+<code>/accxyz/1</code> to y, etc. We also need to define a mapping because the ranges are 
+different:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+process = no.noise * hslider(&quot;level[osc:/accxyz/0 0 9.81]&quot;,0,0,1,0.01);
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th><strong>alias</strong></th>
+<th><strong>description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[osc:/1/rotary1 0 1]</code></td>
+<td>top left rotary knob</td>
+</tr>
+<tr>
+<td><code>[osc:/1/rotary2 0 1]</code></td>
+<td>middle left rotary knob</td>
+</tr>
+<tr>
+<td><code>[osc:/1/rotary3 0 1]</code></td>
+<td>bottom left rotary knob</td>
+</tr>
+<tr>
+<td><code>[osc:/1/push1 0 1]</code></td>
+<td>bottom left push button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/push2 0 1]</code></td>
+<td>bottom center left push button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/toggle1 0 1]</code></td>
+<td>top center left toggle button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/toggle2 0 1]</code></td>
+<td>middle center left toggle button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/fader1 0 1]</code></td>
+<td>center left vertical fader</td>
+</tr>
+<tr>
+<td><code>[osc:/1/toggle3 0 1]</code></td>
+<td>top center right toggle button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/toggle4 0 1]</code></td>
+<td>middle center right toggle button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/fader2 0 1]</code></td>
+<td>center right vertical toggle button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/rotary4 0 1]</code></td>
+<td>top right rotary knob</td>
+</tr>
+<tr>
+<td><code>[osc:/1/rotary5 0 1]</code></td>
+<td>middle right rotary knob</td>
+</tr>
+<tr>
+<td><code>[osc:/1/rotary6 0 1]</code></td>
+<td>bottom right rotary knob</td>
+</tr>
+<tr>
+<td><code>[osc:/1/push3 0 1]</code></td>
+<td>bottom center right push button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/push4 0 1]</code></td>
+<td>bottom right push button</td>
+</tr>
+<tr>
+<td><code>[osc:/1/fader3 0 1]</code></td>
+<td>bottom horizontal fader</td>
+</tr>
+<tr>
+<td><code>[osc:/accxyz/0 -10 10]</code></td>
+<td>$x$ accelerometer</td>
+</tr>
+<tr>
+<td><code>[osc:/accxyz/1 -10 10]</code></td>
+<td>$y$ accelerometer</td>
+</tr>
+<tr>
+<td><code>[osc:/accxyz/2 -10 10]</code></td>
+<td>$z$ accelerometer</td>
+</tr>
+</tbody>
+</table>
+<div style="text-align: center;">
+**_Examples of OSC Message Aliases for TouchOSC (Layout Mix2)._**
+</div>
+
+<h2 id="osc-cheat-sheet">OSC Cheat Sheet</h2>
+<h3 id="default-ports">Default Ports</h3>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5510</code></td>
+<td>default listening port</td>
+</tr>
+<tr>
+<td><code>5511</code></td>
+<td>default transmission port</td>
+</tr>
+<tr>
+<td><code>5512</code></td>
+<td>default error port</td>
+</tr>
+<tr>
+<td><code>5513</code></td>
+<td>alternative listening ports</td>
+</tr>
+</tbody>
+</table>
+<h3 id="command-line-options">Command Line Options</h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-port n</code></td>
+<td>set the port number used by the application to receive messages</td>
+</tr>
+<tr>
+<td><code>-outport n</code></td>
+<td>set the port number used by the application to transmit messages</td>
+</tr>
+<tr>
+<td><code>-errport n</code></td>
+<td>set the port number used by the application to transmit error messages</td>
+</tr>
+<tr>
+<td><code>-desthost h</code></td>
+<td>set the destination host for the messages sent by the application</td>
+</tr>
+<tr>
+<td><code>-xmit 0|1|2</code></td>
+<td>turn transmission OFF, ALL or ALIAS (default OFF)</td>
+</tr>
+<tr>
+<td><code>-xmitfilter s</code></td>
+<td>filter the Faust paths at emission time</td>
+</tr>
+</tbody>
+</table>
+<h3 id="discovery-messages">Discovery Messages</h3>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oscsend host port "/*" s hello</code></td>
+<td>discover if any OSC application is listening on port <em>p</em></td>
+</tr>
+<tr>
+<td><code>oscsend host port "/*" s get</code></td>
+<td>query OSC interface of application listening on port <em>p</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="control-messages">Control Messages</h3>
+<table>
+<thead>
+<tr>
+<th>Message</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>oscsend host port "/*" si xmit 0|1|2</code></td>
+<td>set transmission mode</td>
+</tr>
+<tr>
+<td><code>oscsend host port widget s get</code></td>
+<td>get widget's value</td>
+</tr>
+<tr>
+<td><code>oscsend host port widget f v</code></td>
+<td>set widget's value</td>
+</tr>
+</tbody>
+</table>
+<h3 id="alias">Alias</h3>
+<table>
+<thead>
+<tr>
+<th>Alias</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"...[osc: address lo  hi ]..."</code></td>
+<td>alias with $lo \rightarrow min$, $hi \rightarrow max$ mapping</td>
+</tr>
+<tr>
+<td><code>"...[osc:' address]..."</code></td>
+<td>alias with <em>min</em>, <em>max</em> clipping</td>
+</tr>
+</tbody>
+</table></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
