@@ -121,10 +121,7 @@ $(DOCDIR)/refs/tools.md: src/refs/tools.md $(TOOLS)
 
 ####################################################################
 # building faust examples
-examples : $(FAUSTDIR) src/examples $(EXOUT) $(DOCDIR)/rsrc/examples.zip $(DOCDIR)/rsrc/mix4.dsp
-
-$(DOCDIR)/rsrc/mix4.dsp:
-	cp src/mix4.dsp $(DOCDIR)/rsrc/
+examples : $(FAUSTDIR) src/examples $(EXOUT) $(DOCDIR)/rsrc/examples.zip
 
 src/examples/%.md: $(EXDIR)/%
 	@echo ========= building  $(*F) example
