@@ -500,9 +500,9 @@ process = no.noise * hslider("level[osc:/accxyz/0 0 9.81]",0,0,1,0.01);
 | `[osc:/1/push3 0 1]` | bottom center right push button |
 | `[osc:/1/push4 0 1]` | bottom right push button |
 | `[osc:/1/fader3 0 1]` | bottom horizontal fader |
-| `[osc:/accxyz/0 -10 10]` |  $x$ accelerometer |
-| `[osc:/accxyz/1 -10 10]` |  $y$ accelerometer |
-| `[osc:/accxyz/2 -10 10]` |  $z$ accelerometer |
+| `[osc:/accxyz/0 -10 10]` |   <span class="math inline">\\(x\\)</span> accelerometer |
+| `[osc:/accxyz/1 -10 10]` |   <span class="math inline">\\(y\\)</span> accelerometer |
+| `[osc:/accxyz/2 -10 10]` |   <span class="math inline">\\(z\\)</span> accelerometer |
 
 <div style="text-align: center;">
 **_Examples of OSC Message Aliases for TouchOSC (Layout Mix2)._**
@@ -549,6 +549,6 @@ process = no.noise * hslider("level[osc:/accxyz/0 0 9.81]",0,0,1,0.01);
 
 | Alias | Description |
 | --- | --- |
-| `"...[osc: address lo  hi ]..."` | alias with $lo \rightarrow min$, $hi \rightarrow max$ mapping |
+| `"...[osc: address lo  hi ]..."` | alias with  <span class="math inline">\\(lo \rightarrow min\\)</span>,  <span class="math inline">\\(hi \rightarrow max\\)</span> mapping |
 | `"...[osc:' address]..."` | alias with *min*, *max* clipping |
 
