@@ -6,7 +6,7 @@ the past few years. Their variety and their function might be hard to grab at
 first. This sort chapter provides an overview of their role and will hopefully 
 help you decide which one is better suited for your personal use. 
 
-The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools name are in the form `faust2xxx` where `xxx` is the target architecture.
+The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools names are in the form `faust2xxx` where `xxx` is the target architecture.
 
 
 
