@@ -1,15 +1,15 @@
 #Faust compiler options
 
 
-## FAUST compiler version 2.19.1
-~~~
+## FAUST compiler version 2.23.2
+~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
 	and fileN represents a Faust source file (.dsp extension).
 ~~~
 ## Input options:
 ---------------------------------------
-~~~
+~~~faust-options
   -a <file>                               wrapper architecture file.
   -i        --inline-architecture-files   inline architecture files.
   -A <dir>  --architecture-dir <dir>      add the directory <dir> to the architecture search path.
@@ -19,7 +19,7 @@ usage : faust [options] file1 [file2 ...].
 ~~~
 ## Output options:
 ---------------------------------------
-~~~
+~~~faust-options
   -o <file>                               the output file.
   -e        --export-dsp                  export expanded DSP (with all included libraries).
   -uim      --user-interface-macros       add user interface macro definitions to the output code.
@@ -29,7 +29,7 @@ usage : faust [options] file1 [file2 ...].
 ~~~
 ## Code generation options:
 ---------------------------------------
-~~~
+~~~faust-options
   -lang <lang> --language                 select output language,
                                           'lang' should be in c, ocpp, cpp (default), rust, java, llvm, cllvm, fir, wast/wasm, soul, interp.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
@@ -68,40 +68,42 @@ usage : faust [options] file1 [file2 ...].
   -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
   -fm <file> --fast-math <file>           use optimized versions of mathematical functions implemented in <file>,
                                           use 'faust/dsp/fastmath.cpp' when file is 'def'.
+  -ns <name> --namespace <name>           generate C++ code in a namespace <name> 
 ~~~
 ## Block diagram options:
 ---------------------------------------
-~~~
+~~~faust-options
   -ps        --postscript                 print block-diagram to a postscript file.
   -svg       --svg                        print block-diagram to a svg file.
   -sd        --simplify-diagrams          try to further simplify diagrams before drawing.
   -drf       --draw-route-frame           draw route frames instead of simple cables.
   -f <n>     --fold <n>                   threshold to activate folding mode during block-diagram generation (default 25 elements).
-  -fc <n>    --fold-complexity <n>       complexity threshold to fold an expression in folding mode (default 2)
+  -fc <n>    --fold-complexity <n>        complexity threshold to fold an expression in folding mode (default 2)
   -mns <n>   --max-name-size <n>          threshold during block-diagram generation (default 40 char).
   -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
   -blur      --shadow-blur                add a shadow blur to SVG boxes.
 ~~~
 ## Math doc options:
 ---------------------------------------
-~~~
+~~~faust-options
   -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
   -mdlang <l> --mathdoc-lang <l>          if translation file exists (<l> = en, fr, ...).
   -stripmdoc  --strip-mdoc-tags           strip mdoc tags when printing Faust -mdoc listings.
 ~~~
 ## Debug options:
 ---------------------------------------
-~~~
+~~~faust-options
   -d          --details                   print compilation details.
   -time       --compilation-time          display compilation phases timing information.
   -tg         --task-graph                print the internal task graph in dot format.
   -sg         --signal-graph              print the internal signal graph in dot format.
   -norm       --normalized-form           print signals in normalized form and exit.
-  -ct         --check-table               check table index range.
+  -ct         --check-table               check table index range and fails.
+  -cat        --check-all-table           check all table index range.
 ~~~
 ## Information options:
 ---------------------------------------
-~~~
+~~~faust-options
   -h          --help                      print this help message.
   -v          --version                   print version information and embedded backends list.
   -libdir     --libdir                    print directory containing the Faust libraries.
@@ -112,6 +114,6 @@ usage : faust [options] file1 [file2 ...].
 ~~~
 ## Example:
 ---------------------------------------
-~~~
+~~~faust-options
 faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
 ~~~

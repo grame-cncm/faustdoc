@@ -3,7 +3,7 @@
 BEGIN {
 #	STARTDOC = "<pre class=faust-tools>";
 #	ENDDOC   = "</pre>;"
-	STARTDOC = "~~~";
+	STARTDOC = "~~~faust-options";
 	ENDDOC   = "~~~";
 }
 
