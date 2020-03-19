@@ -19,6 +19,6 @@ This site documents all the Faust environment :
 ## Getting Started
 There are many ways to get started with Faust, choose the one that suits you the best:
 
-- If you have an hour or two to spare, check out Quick Start Tutorial (recommended option).
-- If you're in a hurry or if you hate to wait, check out our Online Examples.
-- If you wanna do things the right way, read the Faust Manual.
+- If you have an hour or two to spare, check out [Quick Start](guide/quick-start/) Tutorial (recommended option).
+- If you're in a hurry or if you hate to wait, check out our [Online Examples](https://faustide.grame.fr).
+- If you wanna do things the right way, read the [Faust Manual](https://github.com/grame-cncm/faust/raw/master-dev/documentation/faust-quick-reference.pdf).
