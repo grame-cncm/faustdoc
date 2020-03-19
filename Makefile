@@ -20,7 +20,9 @@ EXOUT    := $(GEN:%=%.md)
 
 
 GENERATED := $(shell find $(DOCDIR) -type d -name "exfaust*")
-TOOLS    := $(wildcard $(FAUSTDIR)/tools/faust2appls/faust2*)
+#TOOLS    := $(wildcard $(FAUSTDIR)/tools/faust2appls/faust2*)
+IGNORED := "atomsnippets|dummy|faust2eps|firefox|graph|jackinternal|javaswing|mathviewer|faust2md|octave|owl|faust2pdf|faust2png|faust2pure|faust2ros|faust2sig|supercollider|faust2svg|faust2teensy|faust2vst|faust2w32|faust2w64|faust2winunity"
+TOOLS    := $(shell find $(FAUSTDIR)/tools/faust2appls -name "faust2*" | egrep -v $(IGNORED) | sort)
 
 EDITOR      := https://fausteditor.grame.fr/
 
@@ -37,9 +39,9 @@ help:
 	@echo "  install  : install the required components"
 	@echo "  build    : build the web site"
 	@echo "  serve    : launch the mkdoc server"
+	@echo "Development specific targets are available:"
 	@echo "  all      : generates all the necessary files from the src folder"
 	@echo "             actually call the 'md', 'options', 'tools', 'svg' and 'examples' targets"
-	@echo "Development specific targets are available:"
 	@echo "  md       : build the md files"
 	@echo "  svg      : build the svg files"
 	@echo "             the 'svg' target should be the last target called"
@@ -54,12 +56,14 @@ help:
 	@echo "             commit and push are still manual operations"
 
 test: 
-	@echo SVG: $(SVG)
+	@echo TOOLS: $(TOOLS)
 
 ####################################################################
 build:
+	$(MAKE) all
 	cd $(MKDIR) && mkdocs build
-
+	git checkout docs/CNAME
+	
 serve:
 	@echo "you can browse the site at http://localhost:8000"
 	cd $(MKDIR) && mkdocs serve
