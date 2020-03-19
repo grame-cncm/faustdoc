@@ -1,16 +1,15 @@
 #!/bin/sh
 #
 
-cd $1
+#cd $1
 shift
-PATH=.:$PATH
 while [ $1 ]
 do
 	tool=$(basename $1)
 	echo
 	echo "## " $tool
 	echo "<pre class=faust-tools>"
-	sh ./$tool -help
+	sh $tool -help
 	echo "</pre>"
 	echo
 
