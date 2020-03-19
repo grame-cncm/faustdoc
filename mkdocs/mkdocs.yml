@@ -37,7 +37,8 @@ nav:
          - ' Download examples ':  rsrc/examples.zip
     - About: about.md
 
-#theme: readthedocs
+theme: flatly
+#The available installed themes are: mkdocs, readthedocs, cinder, cosmo, flatly, spacelab, united, yeti
 
 site_dir: ../docs
 
