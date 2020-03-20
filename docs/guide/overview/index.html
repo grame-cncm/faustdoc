@@ -8,11 +8,11 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Overview of the Faust Universe - Faust Language</title>
+        <title>Overview - Faust Language</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -50,12 +50,16 @@
                             <li >
                                 <a href="../..">Home</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
     <a href="../introduction/">Introduction</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Overview</a>
 </li>
                                     
 <li >
@@ -192,6 +196,16 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
+                            <li >
+                                <a rel="next" href="../introduction/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../quick-start/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -202,6 +216,11 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#overview-of-the-faust-universe">Overview of the Faust Universe</a></li>
             <li><a href="#the-faust-distribution">The Faust Distribution</a></li>
+            <li><a href="#faustlive">FaustLive</a></li>
+            <li><a href="#faustgen">Faustgen</a></li>
+            <li><a href="#online-faust-editor">Online Faust Editor</a></li>
+            <li><a href="#online-faust-ide">Online Faust IDE</a></li>
+            <li><a href="#faust-playground">Faust Playground</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -210,75 +229,48 @@
 <p>While in its most <em>primitive</em> form, Faust is distributed as a command-line 
 compiler, a wide range of tools have been developed around it in the course of 
 the past few years. Their variety and their function might be hard to grab at 
-first. This sort chapter provides an overview of their role and will hopefully 
+first. This chapter provides an overview of their role and will hopefully 
 help you decide which one is better suited for your personal use. </p>
 <!-- TODO: it'd be nice to have some kind of figure here summarizing everything
 the various Faust branches should appear in this figure: we want something
 as complete as possible. -->
 
-<p>TODO: here say a few words about the philosophy behind the disto: the online
-editor is the way to go for most users, then various pre-compiled packages
-of the compiler can be found, then source, then git. Finally other external
-tools for development.   </p>
 <h2 id="the-faust-distribution">The Faust Distribution</h2>
 <p>The Faust distribution hosts the source of the Faust compiler (both in its 
 command line and library version), the source of the Faust <em>architectures</em>
 (targets), the various Faust compilation scripts, a wide range of 
-Faust-related-tools, the <a href="TODO">Faust DSP Libraries</a> (which in practice
+Faust-related-tools, the <a href="https://faustlibrairies.grame.fr">Faust DSP Libraries</a> (which in practice
 are hosted a separate Git submodule), etc.</p>
-<p>The latest stable release of the Faust distribution can be found here:
-<a href="https://github.com/grame-cncm/faust/releases">https://github.com/grame-cncm/faust/releases</a>. It is recommended for most
-Faust users willing to compile the Faust compiler and <code>libfaust</code> from scratch.</p>
-<p>To have the latest stable development version, you can use the <code>master</code>
-branch of the Faust git repository which is hosted on GitHub: 
-<a href="https://github.com/grame-cncm/faust/tree/master">https://github.com/grame-cncm/faust/tree/master</a>.</p>
+<p>The latest stable release of the Faust distribution can be found <a href="https://github.com/grame-cncm/faust/releases">here</a>. It is recommended for most Faust users willing to compile the Faust compiler and libfaust from scratch.</p>
+<p>To have the latest stable development version, you can use the <a href="https://github.com/grame-cncm/faust/tree/master&gt;">master branch</a> of the Faust git repository which is hosted on GitHub: </p>
 <p>For something even more bleeding edge (to be used at your own risks), you might
-use the <code>master-dev</code> branch of the Faust git repository: 
-<a href="https://github.com/grame-cncm/faust/tree/master-dev">https://github.com/grame-cncm/faust/tree/master-dev</a>. <code>master-dev</code> is the 
-development sub-branch of <code>master</code>. It is used by Faust developers to commit 
-their changes and can be considered as "the main development branch." The goal 
+use the <code>master-dev</code> branch of the Faust <a href="https://github.com/grame-cncm/faust/tree/master-dev">git repository</a>. 
+<code>master-dev</code> is the development sub-branch of <code>master</code>. It is used by Faust developers to commit 
+their changes and can be considered as "the main development branch". The goal 
 is to make sure that <code>master</code> is always functional. Merges between <code>master-dev</code> 
 and <code>master</code> are carried out multiple times a week by the GRAME team.</p>
-<blockquote>
-<p>Also, note that pre-compiled packages of the Faust compiler and of <code>libfaust</code>
-for various platforms can be found on the <a href="__FAUST_DOMAIN__/download">Download Page</a>
-of the Faust website.</p>
-</blockquote>
+<p>Also, note that pre-compiled packages of the Faust compiler and of libfaust
+for various platforms can be found on the of the <a href="https://faust.grame.fr">Faust website</a>.</p>
 <p>The Faust distribution is organized as follows:</p>
-<pre><code>architecture/          : the source of the architecture files
-benchmark/             : tools to measure the efficiency of the generated code
-build/                 : the various makefiles and build folders
-compiler/              : sources of the Faust compiler
-COPYING                : license information
-debian/                : files for Debian installation
-Dockerfile             : docker file
-documentation/         : Faust's documentations
-examples/              : Faust programs examples organized by categories
-installer/             : various installers for Linux distribution
-libraries/             : Faust DSP libraries
-Makefile               : makefile used to build and install Faust
-README.md              : instructions on how to build and install Faust
-syntax-highlighting/   : support for syntax highlighting for several editors
-tests/                 : various tests
-tools/                 : tools to produce audio applications and plug-ins
-windows/               : Windows related ressources
+<pre><code>bin/           : contains the compiler and the [Faust tools](../refs/tools)
+include/       : contains header files required by the Faust tools
+lib/           : contains the Faust libraries
+share/         : conatins documentation, the Faust libraries and architecture files
 </code></pre>
 
-<p>The following subsections present some of the main components of the Faust 
-distribution.</p>
-<h3 id="command-line-compiler">Command-Line Compiler</h3>
-<ul>
-<li>Link to precompiled version versions (download page)</li>
-<li>What is the Faust compiler? (Quickly)</li>
-<li>Link to <a href="#using-the-faust-compiler">Using the Faust Compiler</a></li>
-</ul>
-<h3 id="libfaust"><code>libfaust</code></h3>
-<ul>
-<li>Link to precompiled version versions (download page)</li>
-<li>What is it? (Quickly)</li>
-<li>Link to tutorial 
-<a href="__FAUST_DOMAIN__/learn/embedding-faust">Embedding the Faust Compiler Using <code>libfaust</code></a></li>
-</ul></div>
+<p><strong>Note</strong>: you can install the Faust distribution anywhere you want, provided that the <code>faust</code> command is available from your PATH (requires to update your .profile if not in a standard location). </p>
+<p>The following subsections present the main tools build on top of the Faust compiler and intended to facilitate your life. </p>
+<h2 id="faustlive">FaustLive</h2>
+<p><a href="https://github.com/grame-cncm/faustlive">FaustLive</a> is an advanced self-contained prototyping environment for the Faust programming language with an ultra-short edit-compile-run cycle. Thanks to its fully embedded compilation chain, FaustLive is simple to install and doesn't require any external compiler, development toolchain or SDK to run.</p>
+<p>FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled and run on the fly by simple drag and drop. They can even be edited and recompiled while running, without sound interruption. It supports also native applications generation using the Faust online compiler.</p>
+<h2 id="faustgen">Faustgen</h2>
+<p>Faustgen is a Max-MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max-MSP. Faustgen is part of the <a href="https://github.com/grame-cncm/faust">Faust</a> project. It is part of the <a href="https://github.com/grame-cncm/faust/releases">Faust releases</a>.</p>
+<h2 id="online-faust-editor">Online Faust Editor</h2>
+<p>The <a href="https://fausteditor.grame.fr">Online Faust Editor</a> is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures.</p>
+<h2 id="online-faust-ide">Online Faust IDE</h2>
+<p>The <a href="https://faustide.grame.fr">Online Faust IDE</a> is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures, but also various utilities for signal processing development.</p>
+<h2 id="faust-playground">Faust Playground</h2>
+<p><a href="https://faustplayground.grame.fr">Faust Playground</a> is a graphical environment to develop Faust programs with a higher level approach. It has been initially designed for kids and for pedagogical purpose.</p></div>
         </div>
 
         <footer class="col-md-12">

@@ -12,7 +12,7 @@
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -56,6 +56,10 @@
                                     
 <li >
     <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/overview/">Overview</a>
 </li>
                                     
 <li >
@@ -481,6 +485,7 @@ Options:
    -multi :      generate for GRAME Gramophone in multi DSP mode
    -lib :       generates a package containing an object compatible with any ESP32 project
    -midi :   activates MIDI control
+   -main :       add a 'main' entry point
    -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -wm8978 or -ac101 : to choose codec driver
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
@@ -675,7 +680,7 @@ Environment variables:
   FAUSTINC: specify the location of the Faust include directory
     Default: /Users/fober/FAUST/current/include/faust
   FAUSTLIB: specify the location of the Faust LV2 library files
-    Default: .
+    Default: /usr/local/share/faust
   QMAKE: specify the location of the qmake binary
     Default: qmake
 </pre></p>

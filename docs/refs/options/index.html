@@ -12,7 +12,7 @@
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -56,6 +56,10 @@
                                     
 <li >
     <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/overview/">Overview</a>
 </li>
                                     
 <li >
@@ -211,7 +215,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#faust-compiler-options">Faust compiler options</a></li>
-            <li><a href="#faust-compiler-version-2191">FAUST compiler version 2.19.1</a></li>
+            <li><a href="#faust-compiler-version-2232">FAUST compiler version 2.23.2</a></li>
             <li><a href="#input-options">Input options:</a></li>
             <li><a href="#output-options">Output options:</a></li>
             <li><a href="#code-generation-options">Code generation options:</a></li>
@@ -225,15 +229,15 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="faust-compiler-options">Faust compiler options</h1>
-<h2 id="faust-compiler-version-2191">FAUST compiler version 2.19.1</h2>
-<pre><code>usage : faust [options] file1 [file2 ...].
+<h2 id="faust-compiler-version-2232">FAUST compiler version 2.23.2</h2>
+<pre><code class="faust-options">usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
     and fileN represents a Faust source file (.dsp extension).
 </code></pre>
 
 <h2 id="input-options">Input options:</h2>
 <hr />
-<pre><code>  -a &lt;file&gt;                               wrapper architecture file.
+<pre><code class="faust-options">  -a &lt;file&gt;                               wrapper architecture file.
   -i        --inline-architecture-files   inline architecture files.
   -A &lt;dir&gt;  --architecture-dir &lt;dir&gt;      add the directory &lt;dir&gt; to the architecture search path.
   -I &lt;dir&gt;  --import-dir &lt;dir&gt;            add the directory &lt;dir&gt; to the import search path.
@@ -243,7 +247,7 @@
 
 <h2 id="output-options">Output options:</h2>
 <hr />
-<pre><code>  -o &lt;file&gt;                               the output file.
+<pre><code class="faust-options">  -o &lt;file&gt;                               the output file.
   -e        --export-dsp                  export expanded DSP (with all included libraries).
   -uim      --user-interface-macros       add user interface macro definitions to the output code.
   -xml                                    generate an XML description file.
@@ -253,7 +257,7 @@
 
 <h2 id="code-generation-options">Code generation options:</h2>
 <hr />
-<pre><code>  -lang &lt;lang&gt; --language                 select output language,
+<pre><code class="faust-options">  -lang &lt;lang&gt; --language                 select output language,
                                           'lang' should be in c, ocpp, cpp (default), rust, java, llvm, cllvm, fir, wast/wasm, soul, interp.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
@@ -291,16 +295,17 @@
   -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
   -fm &lt;file&gt; --fast-math &lt;file&gt;           use optimized versions of mathematical functions implemented in &lt;file&gt;,
                                           use 'faust/dsp/fastmath.cpp' when file is 'def'.
+  -ns &lt;name&gt; --namespace &lt;name&gt;           generate C++ code in a namespace &lt;name&gt; 
 </code></pre>
 
 <h2 id="block-diagram-options">Block diagram options:</h2>
 <hr />
-<pre><code>  -ps        --postscript                 print block-diagram to a postscript file.
+<pre><code class="faust-options">  -ps        --postscript                 print block-diagram to a postscript file.
   -svg       --svg                        print block-diagram to a svg file.
   -sd        --simplify-diagrams          try to further simplify diagrams before drawing.
   -drf       --draw-route-frame           draw route frames instead of simple cables.
   -f &lt;n&gt;     --fold &lt;n&gt;                   threshold to activate folding mode during block-diagram generation (default 25 elements).
-  -fc &lt;n&gt;    --fold-complexity &lt;n&gt;       complexity threshold to fold an expression in folding mode (default 2)
+  -fc &lt;n&gt;    --fold-complexity &lt;n&gt;        complexity threshold to fold an expression in folding mode (default 2)
   -mns &lt;n&gt;   --max-name-size &lt;n&gt;          threshold during block-diagram generation (default 40 char).
   -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
   -blur      --shadow-blur                add a shadow blur to SVG boxes.
@@ -308,24 +313,25 @@
 
 <h2 id="math-doc-options">Math doc options:</h2>
 <hr />
-<pre><code>  -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
+<pre><code class="faust-options">  -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
   -mdlang &lt;l&gt; --mathdoc-lang &lt;l&gt;          if translation file exists (&lt;l&gt; = en, fr, ...).
   -stripmdoc  --strip-mdoc-tags           strip mdoc tags when printing Faust -mdoc listings.
 </code></pre>
 
 <h2 id="debug-options">Debug options:</h2>
 <hr />
-<pre><code>  -d          --details                   print compilation details.
+<pre><code class="faust-options">  -d          --details                   print compilation details.
   -time       --compilation-time          display compilation phases timing information.
   -tg         --task-graph                print the internal task graph in dot format.
   -sg         --signal-graph              print the internal signal graph in dot format.
   -norm       --normalized-form           print signals in normalized form and exit.
-  -ct         --check-table               check table index range.
+  -ct         --check-table               check table index range and fails.
+  -cat        --check-all-table           check all table index range.
 </code></pre>
 
 <h2 id="information-options">Information options:</h2>
 <hr />
-<pre><code>  -h          --help                      print this help message.
+<pre><code class="faust-options">  -h          --help                      print this help message.
   -v          --version                   print version information and embedded backends list.
   -libdir     --libdir                    print directory containing the Faust libraries.
   -includedir --includedir                print directory containing the Faust headers.
@@ -336,7 +342,7 @@
 
 <h2 id="example">Example:</h2>
 <hr />
-<pre><code>faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
+<pre><code class="faust-options">faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
 </code></pre></div>
         </div>
 
