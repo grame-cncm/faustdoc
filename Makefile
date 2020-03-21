@@ -165,6 +165,7 @@ install:
 	pip install mkdocs
 	pip install mkdocs-pdf-export-plugin
 	pip install markdown-include
+	pip install mkdocs-bootswatch
 #	npm i railroad-diagrams
 
 uninstall:
