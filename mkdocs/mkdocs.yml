@@ -36,6 +36,9 @@ nav:
          - ' smartKeyboard ':  examples/smartKeyboard.md
          - ' spat ':  examples/spat.md
          - ' Download examples ':  rsrc/examples.zip
+    - Workshops:
+      - ' 2018-12-01 PAW ' : workshops/2018-12-01-paw.md
+      - ' 2020-03-24 CITI ': workshops/2020-03-24-faust-citi.md
     - About: about.md
 
 theme: flatly
@@ -55,12 +58,6 @@ extra:
 
 plugins:
     - search
-    - pdf-export:
-          verbose: false
-          media_type: print
-          combined: true
-          combined_output_path: Faust-Documentation.pdf
-          enabled_if_env: ENABLE_PDF_EXPORT
 
 extra_css:
    - '/css/faust.css'
