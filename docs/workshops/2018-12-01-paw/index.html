@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> 2018-12-01 PAW  - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/overview/">Overview</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li class="active">
+    <a href="./"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li >
+    <a href="../2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../../examples/spat/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../2020-03-24-faust-citi/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#building-a-simple-midi-synthesizer">Building a Simple MIDI Synthesizer</a></li>
+            <li><a href="#phase-generator">Phase Generator</a></li>
+            <li><a href="#controlling-the-frequency-of-the-phase-signal">Controlling the Frequency of the Phase Signal</a></li>
+            <li><a href="#creating-a-sine-wave-oscillator">Creating a Sine Wave Oscillator</a></li>
+            <li><a href="#controlling-the-frequency-and-gain-of-the-oscillator">Controlling the Frequency and Gain of the Oscillator</a></li>
+            <li><a href="#adding-a-gate-button">Adding a Gate Button</a></li>
+            <li><a href="#adding-an-envelope-generator">Adding an Envelope Generator</a></li>
+            <li><a href="#improving-the-timbre">Improving the Timbre</a></li>
+            <li><a href="#running-as-a-polyphonic-midi-synth">Running as a Polyphonic MIDI Synth</a></li>
+            <li><a href="#adding-a-global-effect">Adding a Global Effect</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="building-a-simple-midi-synthesizer">Building a Simple MIDI Synthesizer</h1>
+<p>We are going to build a MIDI synthesizer from scratch (without using the Faust libraries).</p>
+<h2 id="phase-generator">Phase Generator</h2>
+<p>The first step is to build a <em>phase generator</em> that produces a periodic sawtooth signal between 0 and 1. Here is the signal we want to generate:</p>
+<p><img src="img/phase-sig.png" width="80%" class="mx-auto d-block"></p>
+<h3 id="ramp">Ramp</h3>
+<p>In order to produce the above signal we need first to produce a ramp signal
+<img src="img/ramp-sig.png" width="80%" class="mx-auto d-block"></p>
+<p>using the following Faust program:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+process = 0.125 : + ~ _;
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2018-12-01-paw/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>You can think of a Faust program as a description of an audio circuit
+where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</em> of the language (predefined elementary audio components), and the other two signs: <code>:</code> and <code>~</code> are used to connect together these audio components.</p>
+<h3 id="semantics">Semantics</h3>
+<p>To understand the above diagram let's annotate it with its mathematical semantics.</p>
+<p><img src="img/ramp-diag-math.svg" width="80%" class="mx-auto d-block"></p>
+<p>As we can see in the diagram, the formula of the output signal is: $y(t) = y(t-1) + 0.125$</p>
+<p>We can compute the first values of $y(t)$:</p>
+<ul>
+<li>$y(t&lt;0)=0$</li>
+<li>$y(0) = y(-1) + 0.125 = 0.125$</li>
+<li>$y(1) = y(0) + 0.125 = 2*0.125 = 0.250$</li>
+<li>$y(2) = y(1) + 0.125 = 3*0.125 = 0.375$</li>
+<li>...</li>
+<li>$y(6) = y(5) + 0.125 = 7*0.125 = 0.875$</li>
+<li>$y(7) = y(6) + 0.125 = 8*0.125 = 1.000$</li>
+<li>$y(8) = y(7) + 0.125 = 9*0.125 = 1.125$</li>
+<li>...</li>
+</ul>
+<h3 id="phase-signal">Phase Signal</h3>
+<p>How can we transform the above ramp into sawtooth signal ? By removing the integer part of the samples in order to keep only the decimal (fractional) part (<code>3.14159</code> -&gt; <code>0.14159</code>).</p>
+<p>Let's define a function to do that:</p>
+<pre><code>decimalpart(x) = x - int(x);
+</code></pre>
+
+<p>We can now use that function to transform our ramp into a sawtooth It is then tempting to write:</p>
+<pre><code>process = 0.125 : + ~ _ : decimalpart;
+</code></pre>
+
+<p>From a mathematical point of view that would be perfectly correct, but we will accumulate rounding errors. To keep full precision it is better to place the decimal part operation inside the loop:</p>
+<pre><code>process = 0.125 : (+ : decimalpart) ~ _ ;
+</code></pre>
+
+<p>We can now listen the produced signal. Just copy and past <code>decimalpart</code> and <code>process</code> definitions into the <a href="https://faust.grame.fr/tools/editor">Faust editor</a></p>
+<h2 id="controlling-the-frequency-of-the-phase-signal">Controlling the Frequency of the Phase Signal</h2>
+<p>Let's first rearrange our code</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+decimalpart(x) = x-int(x);
+phase = 0.125 : (+ : decimalpart) ~ _ ;
+process = phase;
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2018-12-01-paw/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>In our <code>phase</code> definition the step value, here <code>0.125</code> controls the frequency of the generated signal. We would like to compute this step value according to the desired frequency. In order to do the conversion we need to know the sampling rate. It is available from the standard library as <code>ma.SR</code>. </p>
+<p>Let say we would like our phase signal to have a frequency of 1 Hz, then the step should be very small <code>1/ma.SR</code> so that is will take <code>ma.SR</code> samples (i.e. 1 second) for the phase signal to reach 1.</p>
+<p>If we want a frequency of 440 Hz, we need a step 440 times bigger for the phase signal to reach 1 440 times faster. </p>
+<pre><code>phase = 440/ma.SR : (+ : decimalpart) ~ _ ;
+</code></pre>
+
+<p>We can generalize this definition by replacing <code>440</code> by a parameter <code>f</code>:</p>
+<pre><code>phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+</code></pre>
+
+<p>and by indicating the desired frequency when we use <code>phase</code>:</p>
+<pre><code>process = phase(440);
+</code></pre>
+
+<h2 id="creating-a-sine-wave-oscillator">Creating a Sine Wave Oscillator</h2>
+<p>The next step is to transform above phase generator into a sine wave generator. We will use the <code>sin</code> primitive that computes the sine of x (measured in radians). Therefore we start for the phase signal, we multiply it by $2\pi$ to obtain radiants, and compute the sine. The full program is the following:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+osc(f) = phase(f) * 2 * ma.PI : sin;
+process = osc(440);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2018-12-01-paw/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="controlling-the-frequency-and-gain-of-the-oscillator">Controlling the Frequency and Gain of the Oscillator</h2>
+<p>The next step is to add some controls on the frequency and gain of the oscillator. We can replace the fixed frequency <code>440</code> by a user interface slider:</p>
+<pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1));
+</code></pre>
+
+<p>and add a gain to control the output level of the oscillator:</p>
+<pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
+</code></pre>
+
+<h2 id="adding-a-gate-button">Adding a Gate Button</h2>
+<p>In order to prepare our MIDI synthesizer we need to add a gate button so that the sound is only when we press it:</p>
+<pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) * button(&quot;gate&quot;);
+</code></pre>
+
+<h2 id="adding-an-envelope-generator">Adding an Envelope Generator</h2>
+<p>It is a good idea to also add an envelop generator. Here we will use a predefined adsr in the Standard Faust library.</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+osc(f) = phase(f) * 2 * ma.PI : sin;
+process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
+        * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
+        * (button(&quot;gate&quot;) : en.adsr(0.1,0.1,0.98,0.1));
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2018-12-01-paw/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="improving-the-timbre">Improving the Timbre</h2>
+<p>Instead of playing pure sine waves tones, let's improve the timbre with simple additive synthesis:</p>
+<pre><code>timbre(f) = osc(f)*0.5 + osc(f*2)*0.25 + osc(f*3)*0.125;
+process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
+        * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
+        * (button(&quot;gate&quot;) : en.adsr(0.1,0.1,0.98,0.1));
+</code></pre>
+
+<h2 id="running-as-a-polyphonic-midi-synth">Running as a Polyphonic MIDI Synth</h2>
+<p>To control the synthesizer using MIDI you need to use Chrome. The polyphonic MIDI mode is activated using the drop down menu <em>Poly Voices</em> on the left side of the editor. Choose <em>Computer Keyboard</em> as MIDI input to play notes with the computer keyboard, or plug a MIDI keyboard.</p>
+<h2 id="adding-a-global-effect">Adding a Global Effect</h2>
+<p>A global effect can be added by providing a definition for <code>effect</code>.</p>
+<pre><code>// Common effect
+effect = dm.zita_light;
+</code></pre>
+
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+timbre(f) = phase(f)*0.5 + phase(f*2)*0.25 + phase(f*3)*0.125;
+
+process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
+* hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
+* (button(&quot;gate&quot;) : en.adsr(0.1,0.1,0.98,0.1));
+
+effect = dm.zita_light;
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2018-12-01-paw/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run --></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

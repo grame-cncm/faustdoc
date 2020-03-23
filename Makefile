@@ -7,13 +7,20 @@ DOCDIR   := $(MKDIR)/docs
 FAUSTDIR ?= ../faust
 EXDIR    ?= $(FAUSTDIR)/examples
 
+UNAME := $(shell uname)
+
+MAXDEPTH := '-d'
+ifeq ($(UNAME), Linux)
+MAXDEPTH := '-maxdepth'
+endif
+
 SRC   	 := $(shell find src -name "*.md")
 MD   	 := $(SRC:src/%=$(DOCDIR)/%)
 DSP   	 := $(shell find $(DOCDIR) -name "*.dsp" | grep -v mix4.dsp )
 SVGDIRS  := $(shell find $(DOCDIR) -type d -name "exfaust*")
 SVG   	 := $(DSP:%.dsp=%.svg)
 
-EXSRC    := $(shell find $(EXDIR) -type d -d 1 | sort -f | grep -v old)
+EXSRC    := $(shell find $(EXDIR) -type d $(MAXDEPTH) 1 | sort -f | grep -v old)
 GEN      := $(EXSRC:$(EXDIR)/%=src/examples/%)
 EXLIST   := $(EXSRC:$(EXDIR)/%=%)
 EXOUT    := $(GEN:%=%.md)
@@ -163,7 +170,7 @@ $(FAUSTDIR):
 ####################################################################
 install:
 	pip install mkdocs
-	pip install mkdocs-pdf-export-plugin
+#	pip install mkdocs-pdf-export-plugin
 	pip install markdown-include
 	pip install mkdocs-bootswatch
 #	npm i railroad-diagrams
@@ -172,4 +179,4 @@ uninstall:
 	pip uninstall -y mkdocs-material
 	pip uninstall -y pymdown-extensions
 	pip uninstall -y markdown-blockdiag
-	pip uninstall -y mkdocs-pdf-export-plugin
+#	pip uninstall -y mkdocs-pdf-export-plugin
