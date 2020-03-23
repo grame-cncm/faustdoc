@@ -12,14 +12,14 @@ function makeFaust(code, i) {
 	print "~~~";
 	print code;
 	print "~~~\n";
-	print "<a href=\"https://fausteditor.grame.fr/?code="FAUSTDOC"/"dsp"\" target=\"editor\">";
+	print "<a href=\"https://faustide.grame.fr/?code="FAUSTDOC"/"dsp"\" target=\"editor\">";
 	print "<button type=\"button\" class=\"btn btn-primary\">Try it Yourself >></button></a>";
 	print "</div>";
 }
 
 BEGIN {
-#	FAUSTDOC = "https://faustdoc.grame.fr";
-	FAUSTDOC = "https://grame-cncm.github.io/faustdoc/";
+	FAUSTDOC = "https://faustdoc.grame.fr";
+#	FAUSTDOC = "https://grame-cncm.github.io/faustdoc/";
 	INDEX = 0;
 	INFAUST = 0;
 	FAUSTCODE = "";

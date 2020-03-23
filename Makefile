@@ -31,7 +31,7 @@ GENERATED := $(shell find $(DOCDIR) -type d -name "exfaust*")
 IGNORED := "atomsnippets|dummy|faust2eps|firefox|graph|jackinternal|javaswing|mathviewer|faust2md|octave|owl|faust2pdf|faust2png|faust2pure|faust2ros|faust2sig|supercollider|faust2svg|faust2teensy|faust2vst|faust2w32|faust2w64|faust2winunity"
 TOOLS    := $(shell find $(FAUSTDIR)/tools/faust2appls -name "faust2*" | egrep -v $(IGNORED) | sort)
 
-EDITOR      := https://fausteditor.grame.fr/
+EDITOR      := https://faustide.grame.fr/
 
 .PHONY: tagslist.txt
 
