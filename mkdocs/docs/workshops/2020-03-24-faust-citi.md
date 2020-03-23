@@ -20,7 +20,7 @@ process = os.osc(440);
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust0/exfaust0.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -39,7 +39,7 @@ process = os.osc(440) * hslider("gain", 0.1, 0, 1, 0.01);
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -59,7 +59,7 @@ process = os.osc(440 /*a remplacer*/) * hslider("gain", 0.1, 0, 1, 0.01);
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -83,7 +83,7 @@ process 	= sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -107,7 +107,7 @@ process = squarewave(55);
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust4/exfaust4.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -131,7 +131,7 @@ process = sawtooth(55);
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust5/exfaust5.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -154,7 +154,7 @@ process = os.osc(hslider("freq", 440, 20, 20000, 1));
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust6/exfaust6.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -177,7 +177,7 @@ process = exactsquarewave(hslider("freq", 440, 20, 8000, 1))*hslider("gain", 0.5
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust7/exfaust7.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -199,7 +199,7 @@ process = os.squareN(3,hslider("freq", 220, 20, 8000, 1))*hslider("gain", 0.5, 0
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust8/exfaust8.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -223,7 +223,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01);
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust9/exfaust9.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -243,7 +243,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.lowpass(3, hslider("
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust10/exfaust10.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust10/exfaust10.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -263,7 +263,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.highpass(3, hslider(
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust11/exfaust11.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust11/exfaust11.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -285,7 +285,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust12/exfaust12.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust12/exfaust12.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -308,7 +308,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust13/exfaust13.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust13/exfaust13.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -331,7 +331,7 @@ transformation = @(1) : *(hslider("gain", 0, -1, 1, 0.1));
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust14/exfaust14.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust14/exfaust14.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -354,7 +354,7 @@ transformation = @(0) : *(hslider("gain", 0, -0.95, 0.95, 0.01));
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust15/exfaust15.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust15/exfaust15.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -377,7 +377,7 @@ transformation = @(hslider("delay", 0, 0, 20, 1)) : *(hslider("gain", 0, -0.98, 
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust16/exfaust16.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust16/exfaust16.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -402,7 +402,7 @@ moyenne(x) = (x+x')/2;
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust17/exfaust17.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust17/exfaust17.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -433,7 +433,7 @@ upfront(x) = x>x';
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust18/exfaust18.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust18/exfaust18.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -555,7 +555,7 @@ string(coef, freq, t60, level, trig) = no.noise*level
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust19/exfaust19.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust19/exfaust19.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -586,7 +586,7 @@ process = FM(
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust20/exfaust20.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust20/exfaust20.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -622,7 +622,7 @@ upfront(x) = x>x';
 
 ~~~
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust21/exfaust21.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust21/exfaust21.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
