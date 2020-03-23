@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> 2020-03-24 CITI  - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/overview/">Overview</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../2018-12-01-paw/"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li class="active">
+    <a href="./"> 2020-03-24 CITI </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../2018-12-01-paw/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../../about/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#faust-workshop-at-citi">Faust workshop at CITI</a></li>
+            <li><a href="#synthese-additive">Synthèse additive</a></li>
+            <li><a href="#synthese-soustractive">Synthèse soustractive</a></li>
+            <li><a href="#synthese-par-modulation-de-frequence">Synthèse par modulation de fréquence</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="faust-workshop-at-citi">Faust workshop at CITI</h1>
+<p>L'objectif de ce workshop est de se familiariser avec le langage Faust à travers des exemples simples de synthèse sonore. Pour cela on va utiliser Faust pour décrire des <em>circuits audio</em> qui produisent des sons suivant différentes méthodes. </p>
+<p>Tous les exemples seront executé dans l'IDE Faust en ligne <a href="https://faustide.grame.fr">https://faustide.grame.fr</a></p>
+<h2 id="synthese-additive">Synthèse additive</h2>
+<h3 id="exemple-1-une-onde-sinusoidale">Exemple 1 : une onde sinusoidale</h3>
+<p>Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = os.osc(440);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="exemple-2-une-onde-sinusoidale-avec-controle-de-volume">Exemple 2 : une onde sinusoidale avec controle de volume</h3>
+<p>Dans ce deuxième exemple on a utilisé un slider horizontal <code>hslider(...)</code> pour régler le niveau sonore. </p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = os.osc(440) * hslider(&quot;gain&quot;, 0.1, 0, 1, 0.01);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>Le premier paramètre est une chaine de caractère qui indique le nom du slider. Il est suivi de quatre paramètres numériques. Le deuxième paramètre <code>0.1</code> indique la valeur par défaut du slider, c'est à dire la valeur que va délivrer le slider quand on lance le programme. Ensuite nous avons la valeur minimale <code>0</code>, la valeur maximale <code>1</code> et le pas de variation <code>0.01</code>.</p>
+<h3 id="exemple-3-exercice-ajouter-un-controle-de-frequence">Exemple 3 : Exercice, ajouter un contrôle de fréquence</h3>
+<p>A titre d'exercice, remplacer, dans l'exemple précédent, la fréquence 440 par un slider horizontal dont le nom sera <code>"freq"</code>, la valeur par défaut <code>110</code>, la valeur minimale <code>40</code>, la valeur maximale <code>8000</code> et le pas <code>1</code>.
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = os.osc(440 /*a remplacer*/) * hslider(&quot;gain&quot;, 0.1, 0, 1, 0.01);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<h3 id="exemple-4-synthese-additive">Exemple 4 : Synthese additive</h3>
+<p>Un exemple de synthèse additive ou le niveau de chaque partiel peut être réglé individuellement. 
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+//----------------------------------------------------------------------
+// partial(f,n);
+// f = fréquence en Hz
+// n = numero du partiel en partant de 1
+partial(n,f) = os.osc(f*n) * hslider(&quot;partial %n&quot;, 0.25, 0, 1, 0.01);
+
+process     = sum(i, 4, partial(i+1,hslider(&quot;freq&quot;, 440, 20, 8000, 0.001)));
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run -->
+ A noter l'utilisation de la construction <code>sum(i, n, foo(i))</code> qui est equivalente à <code>foo(0)+foo(1)+...+foo(n-1)</code>.</p>
+<h3 id="exemple-5-approximation-dun-signal-carre-par-synthese-additive">Exemple 5 : Approximation d'un signal carré par synthèse additive</h3>
+<p><a href="https://fr.wikipedia.org/wiki/Signal_carré">wikipedia</a>
+Blabla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// Approximation of a square wave using additive synthesis
+
+squarewave(f) = 4/ma.PI*sum(k, 8, os.osc((2*k+1)*f)/(2*k+1));
+
+process = squarewave(55);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run -->
+Blabla</p>
+<h3 id="exemple-6-approximation-dun-signal-en-dent-de-scie-par-synthese-additive">Exemple 6 : Approximation d'un signal en dent de scie par synthèse additive</h3>
+<p>Blabla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// Approximation of a sawtooth wave using additive synthesis
+
+sawtooth(f) = 2/ma.PI*sum(k, 8, (-1)^k * os.osc((k+1)*f)/(k+1));
+
+process = sawtooth(55);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run -->
+Blabla</p>
+<h3 id="exemple-7-phenomene-de-repliement-de-frequence-si-lon-va-au-dela-de-sr2">Exemple 7 : Phénomène de repliement de fréquence si l'on va au-delà de SR/2</h3>
+<p>Blabla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// Phénomène de repliement de fréquence si l'on va au-delà de SR/2
+
+process = os.osc(hslider(&quot;freq&quot;, 440, 20, 20000, 1));
+
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run -->
+Blabla</p>
+<h3 id="exemple-8-mathematical-square-wave-doesnt-sound-great-because-of-aliasing">Exemple 8 : Mathematical square wave doesn't sound great because of aliasing</h3>
+<p>Blabla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// Mathematical square wave doesn't sound great because of aliasing
+phasor(f) = f/ma.SR : (+,1:fmod)~_;
+exactsquarewave(f) = (os.phasor(1,f)&gt;0.5)*2.0-1.0;
+process = exactsquarewave(hslider(&quot;freq&quot;, 440, 20, 8000, 1))*hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run -->
+Blabla</p>
+<h3 id="exemple-9-virtual-analog-square-wave-with-less-aliasing">Exemple 9 : Virtual Analog square wave with less aliasing</h3>
+<p>Blabla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// Virtual Analog square wave with less aliasing
+
+process = os.squareN(3,hslider(&quot;freq&quot;, 220, 20, 8000, 1))*hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run -->
+Blabla</p>
+<h2 id="synthese-soustractive">Synthèse soustractive</h2>
+<h3 id="exemple-1-un-bruit-blanc">Exemple 1 : un bruit blanc</h3>
+<p>Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01);
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust9/exfaust9.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="exemple-2-lowpass">Exemple 2 : lowpass</h3>
+<p>Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) : fi.lowpass(3, hslider(&quot;hifreq&quot;, 2000, 20, 20000, 1));
+
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust10/exfaust10.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="exemple-3-high-pass">Exemple 3 : high pass</h3>
+<p>Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) : fi.highpass(3, hslider(&quot;lowfreq&quot;, 400, 20, 20000, 1));
+
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust11/exfaust11.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="exemple-4-bandpass">Exemple 4 : bandpass</h3>
+<p>Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) 
+: fi.highpass(3, hslider(&quot;lowfreq&quot;, 400, 20, 20000, 1))
+: fi.lowpass(3, hslider(&quot;hifreq&quot;, 2000, 20, 20000, 1));
+
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust12/exfaust12.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="exemple-5-resonnant">Exemple 5 : resonnant</h3>
+<p>Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) 
+        : fi.resonlp(
+                hslider(&quot;hifreq&quot;, 400, 20, 20000, 1),
+                hslider(&quot;Q&quot;, 1, 1, 100, 0.01),
+                hslider(&quot;gain&quot;, 1, 0, 2, 0.01));
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust13/exfaust13.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="exemple-6-fir">Exemple 6 : fir</h3>
+<p>bla bla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// FIR
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) 
+        &lt;: _ , transformation :&gt; _;
+
+transformation = @(1) : *(hslider(&quot;gain&quot;, 0, -1, 1, 0.1));
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust14/exfaust14.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<h3 id="exemple-7-iir">Exemple 7 : iir</h3>
+<p>bla bla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// IIR
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) :
+        + ~ transformation;
+
+transformation = @(0) : *(hslider(&quot;gain&quot;, 0, -0.95, 0.95, 0.01));
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust15/exfaust15.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<h3 id="exemple-8-filtre-en-peigne">Exemple 8 : filtre en peigne</h3>
+<p>bla bla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// IIR, Filtre en peigne
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) :
+        + ~ transformation;
+
+transformation = @(hslider(&quot;delay&quot;, 0, 0, 20, 1)) : *(hslider(&quot;gain&quot;, 0, -0.98, 0.98, 0.01));
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust16/exfaust16.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<h3 id="exemple-9-karplus-strong-12">Exemple 9 : Karplus Strong (1/2)</h3>
+<p>bla bla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// Karplus Strong (1/2)
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) :
+        + ~ transformation;
+
+transformation = @(hslider(&quot;delay&quot;, 0, 0, 200, 1)) : moyenne : *(hslider(&quot;gain&quot;, 0, -0.98, 0.98, 0.01));
+
+moyenne(x) = (x+x')/2;
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust17/exfaust17.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<h3 id="exemple-10-karplus-strong-22">Exemple 10 : Karplus Strong (2/2)</h3>
+<p>bla bla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block"></p>
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// Karplus Strong (2/2)
+process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) 
+        : *(envelop)
+        : + ~ transformation;
+
+transformation = @(hslider(&quot;delay&quot;, 0, 0, 200, 1)) : moyenne : *(hslider(&quot;gain&quot;, 0, -0.999, 0.999, 0.001));
+
+moyenne(x) = (x+x')/2;
+
+envelop = button(&quot;gate&quot;) : upfront : en.ar(0.002, 0.01);
+
+upfront(x) = x&gt;x';
+
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust18/exfaust18.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<h3 id="exemple-11-kisana">Exemple 11 : Kisana</h3>
+<p>bla bla
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block"></p>
+<pre><code>
+declare name    &quot;myKisana&quot;;
+declare author  &quot;Yann Orlarey&quot;;
+
+//Modifications GRAME July 2015
+
+/* ========= DESCRITPION =============
+
+- Kisana : 3-loops string instrument (based on Karplus-Strong)
+- Head = Silence
+- Tilt = High frequencies 
+- Front = High + Medium frequencies
+- Bottom = High + Medium + Low frequencies
+- Left = Minimum brightness
+- Right = Maximum birghtness
+- Front = Long notes
+- Back = Short notes
+
+*/
+
+import(&quot;stdfaust.lib&quot;);
+
+KEY = 60;   // basic midi key
+NCY = 15;   // note cycle length
+CCY = 15;   // control cycle length
+BPS = 360;  // general tempo (ba.beat per sec)
+
+process = kisana;    
+
+//-------------------------------kisana----------------------------------
+// USAGE:  kisana : _,_;
+//      3-loops string instrument
+//-----------------------------------------------------------------------
+
+kisana = vgroup(&quot;MyKisana&quot;, harpe(C,11,48), harpe(C,11,60), (harpe(C,11,72) : *(1.5), *(1.5)) 
+    :&gt; *(l), *(l))
+    with {
+        l = -20 : ba.db2linear;//hslider(&quot;[1]Volume&quot;,-20, -60, 0, 0.01) : ba.db2linear;
+        C = hslider(&quot;[2]Brightness[acc:0 1 -10 0 10]&quot;, 0.2, 0, 1, 0.01) : ba.automat(BPS, CCY, 0.0);
+    };
+
+//----------------------------------Harpe--------------------------------
+// USAGE:  harpe(C,10,60) : _,_;
+//      C is the filter coefficient 0..1
+//      Build a N (10) strings harpe using a pentatonic scale 
+//      based on midi key b (60)
+//      Each string is triggered by a specific
+//      position of the &quot;hand&quot;
+//-----------------------------------------------------------------------
+harpe(C,N,b) =  hand(b) &lt;: par(i, N, position(i+1)
+                            : string(C,Penta(b).degree2Hz(i), att, lvl)
+                            : pan((i+0.5)/N) )
+                    :&gt; _,_
+    with {
+        att  = hslider(&quot;[3]Resonance[acc:2 1 -10 0 12]&quot;, 4, 0.1, 10, 0.01); 
+        hand(48) = vslider(&quot;h:[1]Instrument Hands/1 (Note %b)[unit:pk]&quot;, 0, 0, N, 1) : int : ba.automat(120, CCY, 0.0);
+        hand(60) = vslider(&quot;h:[1]Instrument Hands/2 (Note %b)[unit:pk]&quot;, 2, 0, N, 1) : int : ba.automat(240, CCY, 0.0);
+        hand(72) = vslider(&quot;h:[1]Instrument Hands/3 (Note %b)[unit:pk]&quot;, 4, 0, N, 1) : int : ba.automat(480, CCY, 0.0);
+        //lvl  = vslider(&quot;h:loop/level&quot;, 0, 0, 6, 1) : int : ba.automat(BPS, CCY, 0.0) : -(6) : ba.db2linear; 
+        lvl = 1;
+        pan(p) = _ &lt;: *(sqrt(1-p)), *(sqrt(p));
+        position(a,x) = abs(x - a) &lt; 0.5;
+    };
+
+//----------------------------------Penta-------------------------------
+// Pentatonic scale with degree to midi and degree to Hz conversion
+// USAGE: Penta(60).degree2midi(3) ==&gt; 67 midikey
+//        Penta(60).degree2Hz(4)   ==&gt; 440 Hz
+//-----------------------------------------------------------------------
+
+Penta(key) = environment {
+
+    A4Hz = 440; 
+
+    degree2midi(0) = key+0;
+    degree2midi(1) = key+2;
+    degree2midi(2) = key+4;
+    degree2midi(3) = key+7;
+    degree2midi(4) = key+9;
+    degree2midi(d) = degree2midi(d-5)+12;
+
+    degree2Hz(d) = A4Hz*semiton(degree2midi(d)-69) with { semiton(n) = 2.0^(n/12.0); };
+
+}; 
+
+//----------------------------------String-------------------------------
+// A karplus-strong string.
+//
+// USAGE: string(440Hz, 4s, 1.0, button(&quot;play&quot;))
+// or     button(&quot;play&quot;) : string(440Hz, 4s, 1.0)
+//-----------------------------------------------------------------------
+
+string(coef, freq, t60, level, trig) = no.noise*level
+                            : *(trig : trigger(freq2samples(freq)))
+                            : resonator(freq2samples(freq), att)
+    with {
+        resonator(d,a)  = (+ : @(d-1)) ~ (average : *(a));
+        average(x)      = (x*(1+coef)+x'*(1-coef))/2;
+        trigger(n)      = upfront : + ~ decay(n) : &gt;(0.0);
+        upfront(x)      = (x-x') &gt; 0.0;
+        decay(n,x)      = x - (x&gt;0.0)/n;
+        freq2samples(f) = 44100.0/f;
+        att             = pow(0.001,1.0/(freq*t60)); // attenuation coefficient
+        random          = +(12345)~*(1103515245);
+        noise           = random/2147483647.0;
+    };
+
+
+</code></pre>
+
+<p><a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust19/exfaust19.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+</div>
+<!-- /faust-run --></p>
+<h2 id="synthese-par-modulation-de-frequence">Synthèse par modulation de fréquence</h2>
+<h3 id="exemple-1-fm1">Exemple 1 : fm1</h3>
+<p>Bla bla</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// FM: Frequency moulation
+
+FM(fc,fm,amp) = fm : os.osc : *(amp) : +(1) : *(fc) : os.osc;
+
+process = FM( 
+            hslider(&quot;freq carrier&quot;, 880, 40, 8000, 1),
+            hslider(&quot;freq modulation&quot;, 200, 10, 1000, 1),
+            hslider(&quot;amp modulation&quot;, 0, 0, 1, 0.01)
+            ) 
+        &lt;: _,_;
+
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust20/exfaust20.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="exemple-2-fm2">Exemple 2 : fm2</h3>
+<p>Bla bla</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+// FM: Frequency moulation 2
+
+FM(fc,fm,amp) = fm : os.osc : *(amp) : +(1) : *(fc) : os.osc;
+
+process = FM( 
+            hslider(&quot;freq carrier&quot;, 880, 40, 8000, 1),
+            hslider(&quot;freq modulation&quot;, 200, 10, 1000, 1)*(2+envelop2)/3,
+            hslider(&quot;amp modulation&quot;, 0, 0, 1, 0.01)*(0.5+envelop2)/1.5
+            ) 
+        : *(envelop1)
+        &lt;: dm.freeverb_demo;
+
+envelop1 = button(&quot;gate&quot;) : upfront : en.ar(0.001, 1);
+envelop2 = button(&quot;gate&quot;) : upfront : en.ar(0.5, 0.5);
+
+upfront(x) = x&gt;x';
+
+
+</code></pre>
+
+
+<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//workshops/2020-03-24-faust-citi/exfaust21/exfaust21.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run --></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
