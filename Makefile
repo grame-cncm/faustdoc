@@ -7,13 +7,20 @@ DOCDIR   := $(MKDIR)/docs
 FAUSTDIR ?= ../faust
 EXDIR    ?= $(FAUSTDIR)/examples
 
+UNAME := $(shell uname)
+
+MAXDEPTH := '-d'
+ifeq ($(UNAME), Linux)
+MAXDEPTH := '-maxdepth'
+endif
+
 SRC   	 := $(shell find src -name "*.md")
 MD   	 := $(SRC:src/%=$(DOCDIR)/%)
 DSP   	 := $(shell find $(DOCDIR) -name "*.dsp" | grep -v mix4.dsp )
 SVGDIRS  := $(shell find $(DOCDIR) -type d -name "exfaust*")
 SVG   	 := $(DSP:%.dsp=%.svg)
 
-EXSRC    := $(shell find $(EXDIR) -type d -maxdepth 1 | sort -f | grep -v old)
+EXSRC    := $(shell find $(EXDIR) -type d $(MAXDEPTH) 1 | sort -f | grep -v old)
 GEN      := $(EXSRC:$(EXDIR)/%=src/examples/%)
 EXLIST   := $(EXSRC:$(EXDIR)/%=%)
 EXOUT    := $(GEN:%=%.md)
