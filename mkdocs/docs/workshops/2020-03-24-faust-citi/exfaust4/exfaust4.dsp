@@ -1,9 +1,10 @@
 
 import("stdfaust.lib");
 
-// Approximation of a square wave using additive synthesis
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
 
-squarewave(f) = 4/ma.PI*sum(k, 8, os.osc((2*k+1)*f)/(2*k+1));
+osc(f) = sin(phase(f) * 2 * ma.PI);
 
-process = squarewave(55);
+process = osc(440);
 

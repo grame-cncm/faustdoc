@@ -1,11 +1,10 @@
 
 import("stdfaust.lib");
 
-//----------------------------------------------------------------------
-// partial(f,n);
-// f = fréquence en Hz
-// n = numero du partiel en partant de 1
-partial(n,f) = os.osc(f*n) * hslider("partial %n", 0.25, 0, 1, 0.01);
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
 
-process 	= sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
+squarewave(f) = (phase(f) > 0.5) * 2 - 1;
+
+process = squarewave(440);
 

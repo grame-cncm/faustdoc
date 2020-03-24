@@ -1,9 +1,6 @@
 
 import("stdfaust.lib");
 
-// FIR
-process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) 
-        <: _ , transformation :> _;
+process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.highpass(3, hslider("lowfreq", 400, 20, 20000, 1));
 
-transformation = @(1) : *(hslider("gain", 0, -1, 1, 0.1));
 

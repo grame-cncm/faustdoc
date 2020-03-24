@@ -1,17 +1,205 @@
 # Faust workshop at CITI
 
-L'objectif de ce workshop est de se familiariser avec le langage Faust à travers des exemples simples de synthèse sonore. Pour cela on va utiliser Faust pour décrire des _circuits audio_ qui produisent des sons suivant différentes méthodes. 
+L'objectif de ce workshop est de se familiariser avec le langage Faust à travers des exemples simples de synthèse sonore. Tous les exemples seront executé dans l'IDE Faust en ligne [https://faustide.grame.fr](https://faustide.grame.fr). Si jamais les sons produits avec l'IDE sont de mauvaise qualité, avec des clics, on peut utiliser l'éditeur en ligne, plus rustique, mais aussi plus léger [https://fausteditor.grame.fr](https://fausteditor.grame.fr)
 
-Tous les exemples seront executé dans l'IDE Faust en ligne [https://faustide.grame.fr](https://faustide.grame.fr)
+## 1. Signal en dent de scie
 
-## Synthèse additive
+Par convention, en Faust, un signal audio à pleine échelle varie entre -1 et +1. Mais dans un premier temps nous allons commencer par un signal en dent de scie entre 0 et 1 qui nous servira par la suite de _générateur de phase_ pour produire différentes formes d'onde.
 
-### Exemple 1 : une onde sinusoidale
+### Générateur de Phase
 
-Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !
+La première étape consiste à construire un _générateur de phase_ qui produit un signal périodique en dents de scie entre 0 et 1. Voici le signal que nous voulons générer :
+
+<img src="img/phase-sig.png" width="80%" class="mx-auto d-block">
+
+### Rampe
+
+Pour cela nous allons produire une rampe "infinie", que nous transformerons ensuite en un signal périodique grâce à une opération _partie-decimale_.
+
+<img src="img/ramp-sig.png" width="80%" class="mx-auto d-block">
+
+La rampe est produite par le programme suivant
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+~~~
+
+process = 0.125 : + ~ _;
+
+~~~
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+
+### Sémantique
+
+Dans l'exemple précédent, `0,125`, `+` et `_` sont des *primitives* du langage. Les deux autres signes : `:` et `~` sont des opérateurs de cablage. Ils sont utilisés pour relier entre elles les expressions du langages.
+
+Pour comprendre le diagramme ci-dessus, nous allons l'annoter avec sa sémantique mathématique.
+
+<img src="img/ramp-diag-math.svg" width="80%" class="mx-auto d-block">
+
+Comme on peut le voir dans le diagramme, la formule du signal de sortie est : $y(t) = y(t-1) + 0,125$
+
+On peut calculer les premières valeurs de $y(t)$:
+
+- $y(t<0)=0$
+- $y(0) = y(-1) + 0.125 = 0.125$
+- $y(1) = y(0) + 0.125 = 2*0.125 = 0.250$
+- $y(2) = y(1) + 0.125 = 3*0.125 = 0.375$
+- ...
+- $y(6) = y(5) + 0.125 = 7*0.125 = 0.875$
+- $y(7) = y(6) + 0.125 = 8*0.125 = 1.000$
+- $y(8) = y(7) + 0.125 = 9*0.125 = 1.125$
+- ...
+
+### Signal de phase
+
+Comment transformer la rampe ci-dessus en signal en dents de scie ? En supprimant la partie entière des échantillons afin de ne garder que la partie décimale (fractionnaire) (`3.14159` -> `0.14159`).
+
+Définissons une fonction pour faire cela :
+
+```
+decimalpart(x) = x - int(x);
+```
+
+Nous pouvons maintenant utiliser cette fonction pour transformer notre rampe en dents de scie. Il est alors tentant d'écrire :
+
+```
+process = 0.125 : + ~ _ : decimalpart;
+```
+
+D'un point de vue mathématique, ce serait parfaitement correct, mais nous allons accumuler les erreurs d'arrondi. Pour conserver une précision totale, il est préférable de placer l'opération de la partie décimale à l'intérieur de la boucle comme ceci :
+
+```
+process = 0.125 : (+ : decimalpart) ~ _ ;
+```
+
+On peut maintenant essayer l'ensemble du code (**pensez à baisser le volume**) :
+
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+~~~
+
+decimalpart(x) = x-int(x);
+phase = 0.125 : (+ : decimalpart) ~ _ ;
+process = phase;
+
+~~~
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+Dans notre définition de la `phase`, la valeur du pas, ici `0,125`, contrôle la fréquence du signal généré. Nous aimerions calculer cette valeur de pas en fonction de la fréquence souhaitée. Afin de faire la conversion, nous devons connaître la fréquence d'échantillonnage. Elle est disponible dans la bibliothèque standard sous le nom de `ma.SR`. Pour utiliser cette bibliothèque standard nous ajoutons au programme la ligne suivante : `import("stdfaust.lib");`
+
+Supposons que nous voulions que notre signal de phase ait une fréquence de 1 Hz, alors le pas devrait être très petit `1/ma.SR`, afin qu'il faille  `ma.SR` échantillons (c'est à dire 1 seconde) pour que le signal de phase passe de 0 à 1.
+
+Si nous voulons une fréquence de 440 Hz, nous avons besoin d'un pas 440 fois plus grand pour que le signal de phase passe de 0 à 1 440 fois plus vite.
+
+```
+phase = 440/ma.SR : (+ : decimalpart) ~ _ ;
+```
+
+On peut généraliser cette définition en remplaçant `440` par un paramètre `f`:
+
+```
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+```
+
+et en passant la fréquence souhaitée à `phase`:
+
+```
+process = phase(440);
+```
+
+### Generateur de signal en dent de scie
+
+Nous pouvons maintenant nous servir du générateur de phase pour produire un signal en dent de scie :
+
+
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+~~~
+
+import("stdfaust.lib");
+
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+
+sawtooth(f) = phase(f) * 2 - 1;
+
+process = sawtooth(440);
+
+~~~
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+### Generateur de signal carré
+
+Nous pouvons également nous servir du générateurr de phase pour produire un signal carré :
+
+
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+~~~
+
+import("stdfaust.lib");
+
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+
+squarewave(f) = (phase(f) > 0.5) * 2 - 1;
+
+process = squarewave(440);
+
+~~~
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+
+## Synthèse additive
+
+### Exemple 1 : générateur sinusoidal
+
+Le générateur de phase est également à la base de l'oscillateur sinusoidal :
+
+
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+~~~
+
+import("stdfaust.lib");
+
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+
+osc(f) = sin(phase(f) * 2 * ma.PI);
+
+process = osc(440);
+
+~~~
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+
+Mais maintenant que nous avons vu comment créer de toutes pièces un oscillateur sinusoidal, nous allons utiliser celui qui est défini dans la libraries standard de Faust.
+
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -20,7 +208,7 @@ process = os.osc(440);
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust0/exfaust0.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -30,7 +218,7 @@ process = os.osc(440);
 Dans ce deuxième exemple on a utilisé un slider horizontal `hslider(...)` pour régler le niveau sonore. 
 
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -39,7 +227,7 @@ process = os.osc(440) * hslider("gain", 0.1, 0, 1, 0.01);
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -50,7 +238,7 @@ Le premier paramètre est une chaine de caractère qui indique le nom du slider.
 
 A titre d'exercice, remplacer, dans l'exemple précédent, la fréquence 440 par un slider horizontal dont le nom sera `"freq"`, la valeur par défaut `110`, la valeur minimale `40`, la valeur maximale `8000` et le pas `1`.
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -59,16 +247,40 @@ process = os.osc(440 /*a remplacer*/) * hslider("gain", 0.1, 0, 1, 0.01);
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
-### Exemple 4 : Synthese additive
+
+
+### Exemple 4 : Phénomène de repliement de fréquence au-delà de SR/2
+
+Un problème bien connu dans le domaine de la synthèse numérique du son est celui du repliement de fréquence : toute fréquence au dela de la moitié de la fréquence d'échatillonnage se retrouve _repliée_ dans le spectre audible. 
+
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+~~~
+
+import("stdfaust.lib");
+
+// A frequency aliasing phenomenon if one goes beyond SR/2
+
+process = os.osc(hslider("freq", 440, 20, 20000, 1)) * hslider("gain", 0.1, 0, 1, 0.01);
+
+
+~~~
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+### Exemple 5 : Synthèse additive
 
 Un exemple de synthèse additive ou le niveau de chaque partiel peut être réglé individuellement. 
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -83,138 +295,74 @@ process 	= sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
  A noter l'utilisation de la construction `sum(i, n, foo(i))` qui est equivalente à `foo(0)+foo(1)+...+foo(n-1)`.
 
 
-### Exemple 5 : Approximation d'un signal carré par synthèse additive
-[wikipedia](https://fr.wikipedia.org/wiki/Signal_carré)
-Blabla
+
+
+### Exemple 6 : Approximation d'un signal carré par synthèse additive
+Nous avons vu précédemment comment produire une signal carré parfait. Ce signal carré parfait comporte une infinité d'harmoniques qui, du fait de l'échantillonnage, vont se replier sur le spectre audible, ce qui va donner un son bruité moins fidèle ! On peut approximer un signal carré par synthèse additive, en additionnant une serie infinie d'harmoniques impaires (voir [https://fr.wikipedia.org/wiki/Signal_carré](https://fr.wikipedia.org/wiki/Signal_carré)).
+
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
 
 // Approximation of a square wave using additive synthesis
 
-squarewave(f) = 4/ma.PI*sum(k, 8, os.osc((2*k+1)*f)/(2*k+1));
+squarewave(f) = 4/ma.PI*sum(k, 4, os.osc((2*k+1)*f)/(2*k+1));
 
 process = squarewave(55);
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust4/exfaust4.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust10/exfaust10.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
-Blabla
+A titre d'excercice, faire varier le nombre d'harmoniques pour voir l'approximation s'améliorer (mais sans dépasser SR/2)
 
 
-### Exemple 6 : Approximation d'un signal en dent de scie par synthèse additive
 
-Blabla
+
+### Exemple 7 : Approximation d'un signal en dent de scie par synthèse additive
+
+De même on peut approximer un signal en dent de scie par synthèse additive, en additionnant une serie infinie d'harmoniques (voir [https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie](https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie)).
+
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
 
 // Approximation of a sawtooth wave using additive synthesis
 
-sawtooth(f) = 2/ma.PI*sum(k, 8, (-1)^k * os.osc((k+1)*f)/(k+1));
+sawtooth(f) = 2/ma.PI*sum(k, 4, (-1)^k * os.osc((k+1)*f)/(k+1));
 
 process = sawtooth(55);
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust5/exfaust5.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust11/exfaust11.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
-Blabla
-
-
-### Exemple 7 : Phénomène de repliement de fréquence si l'on va au-delà de SR/2
-
-Blabla
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
-~~~
-
-import("stdfaust.lib");
-
-// Phénomène de repliement de fréquence si l'on va au-delà de SR/2
-
-process = os.osc(hslider("freq", 440, 20, 20000, 1));
-
-
-~~~
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-Blabla
-
-
-### Exemple 8 : Mathematical square wave doesn't sound great because of aliasing
-
-Blabla
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
-~~~
-
-import("stdfaust.lib");
-
-// Mathematical square wave doesn't sound great because of aliasing
-phasor(f) = f/ma.SR : (+,1:fmod)~_;
-exactsquarewave(f) = (os.phasor(1,f)>0.5)*2.0-1.0;
-process = exactsquarewave(hslider("freq", 440, 20, 8000, 1))*hslider("gain", 0.5, 0, 1, 0.01);
-
-~~~
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-Blabla
-
-
-### Exemple 9 : Virtual Analog square wave with less aliasing
-
-Blabla
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
-~~~
-
-import("stdfaust.lib");
-
-// Virtual Analog square wave with less aliasing
-
-process = os.squareN(3,hslider("freq", 220, 20, 8000, 1))*hslider("gain", 0.5, 0, 1, 0.01);
-
-~~~
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-Blabla
 
 
 
 ## Synthèse soustractive
+La synthèse soustractive procède à l'inverse de la synthèse additive. Elle consiste à partir d'un son riche, par exemple un bruit blanc, et à sculpter son spectre.
 
 ### Exemple 1 : un bruit blanc
 
-Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !
-
+Un bruit blan
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -223,17 +371,16 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01);
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust9/exfaust9.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust12/exfaust12.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 ### Exemple 2 : lowpass
 
-Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !
 
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -243,17 +390,16 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.lowpass(3, hslider("
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust10/exfaust10.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust13/exfaust13.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 ### Exemple 3 : high pass
 
-Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !
 
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -263,17 +409,16 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.highpass(3, hslider(
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust11/exfaust11.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust14/exfaust14.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 ### Exemple 4 : bandpass
 
-Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !
 
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -285,17 +430,16 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust12/exfaust12.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust15/exfaust15.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 ### Exemple 5 : resonnant
 
-Commençons par une simple onde sinusoidale. Attention à mettre le volume bas !
 
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -308,7 +452,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust13/exfaust13.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust16/exfaust16.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -316,9 +460,9 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 
 ### Exemple 6 : fir
 
-bla bla
+
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -331,7 +475,7 @@ transformation = @(1) : *(hslider("gain", 0, -1, 1, 0.1));
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust14/exfaust14.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust17/exfaust17.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -339,9 +483,9 @@ transformation = @(1) : *(hslider("gain", 0, -1, 1, 0.1));
 
 ### Exemple 7 : iir
 
-bla bla
+
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -354,7 +498,7 @@ transformation = @(0) : *(hslider("gain", 0, -0.95, 0.95, 0.01));
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust15/exfaust15.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust18/exfaust18.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -362,9 +506,9 @@ transformation = @(0) : *(hslider("gain", 0, -0.95, 0.95, 0.01));
 
 ### Exemple 8 : filtre en peigne
 
-bla bla
+
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -377,7 +521,7 @@ transformation = @(hslider("delay", 0, 0, 20, 1)) : *(hslider("gain", 0, -0.98, 
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust16/exfaust16.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust19/exfaust19.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -385,9 +529,9 @@ transformation = @(hslider("delay", 0, 0, 20, 1)) : *(hslider("gain", 0, -0.98, 
 
 ### Exemple 9 : Karplus Strong (1/2)
 
-bla bla
+
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -402,7 +546,7 @@ moyenne(x) = (x+x')/2;
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust17/exfaust17.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust20/exfaust20.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -410,9 +554,9 @@ moyenne(x) = (x+x')/2;
 
 ### Exemple 10 : Karplus Strong (2/2)
 
-bla bla
+
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -433,7 +577,7 @@ upfront(x) = x>x';
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust18/exfaust18.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust21/exfaust21.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -441,9 +585,9 @@ upfront(x) = x>x';
 
 ### Exemple 11 : Kisana
 
-bla bla
+
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
 ~~~
 
 declare name  	"myKisana";
@@ -555,7 +699,7 @@ string(coef, freq, t60, level, trig) = no.noise*level
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust19/exfaust19.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust22/exfaust22.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -564,10 +708,10 @@ string(coef, freq, t60, level, trig) = no.noise*level
 
 ### Exemple 1 : fm1
 
-Bla bla
+
 
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust23/exfaust23.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -586,7 +730,7 @@ process = FM(
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust20/exfaust20.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust23/exfaust23.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -594,10 +738,10 @@ process = FM(
 
 ### Exemple 2 : fm2
 
-Bla bla
+
 
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust24/exfaust24.svg" class="mx-auto d-block">
 ~~~
 
 import("stdfaust.lib");
@@ -622,7 +766,7 @@ upfront(x) = x>x';
 
 ~~~
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust21/exfaust21.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-03-24-faust-citi/exfaust24/exfaust24.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->

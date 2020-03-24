@@ -1,7 +1,8 @@
 
 import("stdfaust.lib");
 
-// Virtual Analog square wave with less aliasing
+// A frequency aliasing phenomenon if one goes beyond SR/2
 
-process = os.squareN(3,hslider("freq", 220, 20, 8000, 1))*hslider("gain", 0.5, 0, 1, 0.01);
+process = os.osc(hslider("freq", 440, 20, 20000, 1)) * hslider("gain", 0.1, 0, 1, 0.01);
+
 

@@ -1,15 +1,11 @@
 
 import("stdfaust.lib");
 
-// FM: Frequency moulation
+// Karplus Strong (1/2)
+process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) :
+        + ~ transformation;
+        
+transformation = @(hslider("delay", 0, 0, 200, 1)) : moyenne : *(hslider("gain", 0, -0.98, 0.98, 0.01));
 
-FM(fc,fm,amp) = fm : os.osc : *(amp) : +(1) : *(fc) : os.osc;
-
-process = FM( 
-            hslider("freq carrier", 880, 40, 8000, 1),
-            hslider("freq modulation", 200, 10, 1000, 1),
-            hslider("amp modulation", 0, 0, 1, 0.01)
-            ) 
-        <: _,_;
-
+moyenne(x) = (x+x')/2;
 
