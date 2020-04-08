@@ -154,7 +154,7 @@ $(DOCDIR)/rsrc/examples.zip: $(EXSRC)
 	mkdir examples
 	cp -R $(EXSRC) examples
 	zip -r examples examples 
-	mv examples.zip $(DOCDIR)/rsrc
+	mv examples.zip $@
 
 $(DOCDIR)/rsrc:
 	mkdir $(DOCDIR)/rsrc
