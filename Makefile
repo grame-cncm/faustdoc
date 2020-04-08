@@ -173,6 +173,7 @@ install:
 #	pip install mkdocs-pdf-export-plugin
 	pip install markdown-include
 	pip install mkdocs-bootswatch
+	pip install python-markdown-math
 #	npm i railroad-diagrams
 
 uninstall:
