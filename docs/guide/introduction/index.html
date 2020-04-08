@@ -279,7 +279,7 @@ process = +;
 </code></pre>
 
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust0/exfaust0.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/guide/introduction/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -296,7 +296,7 @@ process = + : *(0.5);
 </code></pre>
 
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/guide/introduction/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -308,7 +308,7 @@ operation.</p>
 represented as block diagrams</strong> such as filters, waveguide physical models, 
 virtual analog elements, etc.</p>
 <p><strong>Faust is very concise</strong>, for example, here's the implementation of a one pole 
-filter/integrator equivalent to <span class="math inline">\(y(n) = x(n) + a_{1}y(n-1)\)</span> (where  <span class="math inline"\\(>a_{1}\)</span> is 
+filter/integrator equivalent to <script type="math/tex; mode=display">y(n) = x(n) + a_{1}y(n-1)</script> (where  <script type="math/tex">a_{1}</script> is 
 the pole):</p>
 <!-- faust-run -->
 
@@ -321,7 +321,7 @@ process = +~*(a1);
 </code></pre>
 
 
-<a href="https://fausteditor.grame.fr/?code=https://grame-cncm.github.io/faustdoc//guide/introduction/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/guide/introduction/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -392,33 +392,34 @@ be modeled as <em>signal processors</em>. They have audio inputs, audio outputs 
 well as control signals interfaced with sliders, knobs, vu-meters, etc. </p>
 <p>More precisely :</p>
 <ul>
-<li>A <em>signal</em> <span class="math inline">\(s\)</span> is a discrete function of time 
-<span class="math inline">\(s:\mathbb{Z}\rightarrow\mathbb{R}\)</span>. The value of a signal <span class="math inline">\(s\)</span> at time <span class="math inline">\(t\)</span> is 
-written <span class="math inline">\(s(t)\)</span>. The values of signals are usually needed starting from time <span class="math inline">\(0\)</span>. 
+<li>A <em>signal</em> <script type="math/tex">s</script> is a discrete function of time 
+<script type="math/tex">s:\mathbb{Z}\rightarrow\mathbb{R}</script>. The value of a signal <script type="math/tex">s</script> at time <script type="math/tex">t</script> is 
+written <script type="math/tex">s(t)</script>. The values of signals are usually needed starting from time <script type="math/tex">0</script>. 
 But to take into account <em>delay operations</em>, negative times are possible and 
-are always mapped to zeros. Therefore for any Faust signal <span class="math inline">\(s\)</span> we have 
-<span class="math inline">\(\forall t&lt;0, s(t)=0\)</span>. In operational terms this corresponds to assuming that 
-all delay lines are signals initialized with <span class="math inline">\(0\)</span>s. </li>
+are always mapped to zeros. Therefore for any Faust signal <script type="math/tex">s</script> we have 
+<script type="math/tex">\forall t<0, s(t)=0</script>. In operational terms this corresponds to assuming that 
+all delay lines are signals initialized with <script type="math/tex">0</script>s. </li>
 <li>Faust considers two type of signals: <em>integer signals</em> 
-(<span class="math inline">\(s:\mathbb{Z}\rightarrow\mathbb{Z}\)</span>) and <em>floating point signals</em> 
-(<span class="math inline">\(s:\mathbb{Z}\rightarrow\mathbb{Q}\)</span>). Exchanges with the outside world are, by 
+<script type="math/tex; mode=display">s:\mathbb{Z}\rightarrow\mathbb{Z}</script> and <em>floating point signals</em> 
+<script type="math/tex; mode=display">s:\mathbb{Z}\rightarrow\mathbb{Q}</script>. 
+Exchanges with the outside world are, by 
 convention, made using floating point signals. The full range is represented by 
-sample values between <span class="math inline">\(-1.0\)</span> and <span class="math inline">\(+1.0\)</span>.</li>
-<li>The set of all possible  signals is <span class="math inline">\(\mathbb{S}=\mathbb{Z}\rightarrow\mathbb{R}\)</span>.</li>
-<li>A group of <span class="math inline">\(n\)</span> signals (a <em>n</em>-tuple of signals) is written 
-<span class="math inline">\((s_{1},\ldots,s_{n})\in \mathbb{S}^{n}\)</span>. The <em>empty tuple</em>, single element of 
-<span class="math inline">\(\mathbb{S}^{0}\)</span> is notated <span class="math inline">\(()\)</span>.</li>
-<li>A <em>signal processors</em> <span class="math inline">\(p\)</span>, is a function from <em>n</em>-tuples of signals to 
-<em>m</em>-tuples of signals <span class="math inline">\(p:\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}\)</span>. The set 
-<span class="math inline">\(\mathbb{P}=\bigcup_{n,m}\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}\)</span> is the
+sample values between <script type="math/tex">-1.0</script> and <script type="math/tex">+1.0</script>.</li>
+<li>The set of all possible  signals is <script type="math/tex">\mathbb{S}=\mathbb{Z}\rightarrow\mathbb{R}</script>.</li>
+<li>A group of <script type="math/tex">n</script> signals (a <em>n</em>-tuple of signals) is written 
+<script type="math/tex">(s_{1},\ldots,s_{n})\in \mathbb{S}^{n}</script>. The <em>empty tuple</em>, single element of 
+<script type="math/tex">\mathbb{S}^{0}</script> is notated <script type="math/tex">()</script>.</li>
+<li>A <em>signal processors</em> <script type="math/tex">p</script>, is a function from <em>n</em>-tuples of signals to 
+<em>m</em>-tuples of signals <script type="math/tex; mode=display">p:\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}</script>. The set 
+<script type="math/tex; mode=display">\mathbb{P}=\bigcup_{n,m}\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}</script> is the
 set of all possible signal processors.</li>
 </ul>
 <p>As an example, let's express the semantic of the Faust primitive <code>+</code>. Like any 
 Faust expression, it is a signal processor. Its signature is
-<span class="math inline">\(\mathbb{S}^{2}\rightarrow\mathbb{S}\)</span>. It takes two input signals <span class="math inline">\(X_0\)</span> and 
-<span class="math inline">\(X_1\)</span> and produces an output signal <span class="math inline">\(Y\)</span> such that <span class="math inline">\(Y(t) = X_0(t)+X_1(t)\)</span>. </p>
-<p>Numbers are signal processors too. For example the number <span class="math inline">\(3\)</span> has signature  <span class="math inline">\(\mathbb{S}^{0}\rightarrow\mathbb{S}\)</span>. It takes no input signals and produce an 
-output signal <span class="math inline">\(Y\)</span> such that <span class="math inline">\(Y(t) = 3\)</span>. </p></div>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}</script>. It takes two input signals <script type="math/tex">X_0</script> and 
+<script type="math/tex">X_1</script> and produces an output signal <script type="math/tex">Y</script> such that <script type="math/tex">Y(t) = X_0(t)+X_1(t)</script>. </p>
+<p>Numbers are signal processors too. For example the number <script type="math/tex">3</script> has signature  <script type="math/tex">\mathbb{S}^{0}\rightarrow\mathbb{S}</script>. It takes no input signals and produce an 
+output signal <script type="math/tex">Y</script> such that <script type="math/tex">Y(t) = 3</script>. </p></div>
         </div>
 
         <footer class="col-md-12">
@@ -431,7 +432,7 @@ output signal <span class="math inline">\(Y\)</span> such that <span class="math
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
