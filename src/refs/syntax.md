@@ -318,13 +318,13 @@ connect two block diagrams.
 <img src="img/diagcomposition.svg" class="mx-auto d-block">
 
 To describe precisely how these connections are done, we have to introduce some 
-notation. The number of inputs and outputs of a block-diagram $A$ are expressed 
-as $\mathrm{inputs}(A)$ and $\mathrm{outputs}(A)$. The inputs and outputs 
-themselves are respectively expressed as: $[0]A$, $[1]A$, $[2]A$, $\ldots$ and 
-$A[0]$, $A[1]$, $A[2]$, etc. 
-
-For each composition operation between two block-diagrams $A$ and $B$ we will 
-describe the connections $A[i]\rightarrow [j]B$ that are created and the 
+notation. The number of inputs and outputs of a block-diagram \(A\) are expressed 
+as \(\mathrm{inputs}(A)\) and \(\mathrm{outputs}(A)\). The inputs and outputs 
+themselves are respectively expressed as: \([0]A\), \([1]A\), \([2]A\), \(\ldots\) and 
+\(A[0]\), \(A[1]\), \(A[2]\), etc. 
+ 
+For each composition operation between two block-diagrams \(A\) and \(B\) we will 
+describe the connections \(A[i]\rightarrow [j]B\) that are created and the 
 constraints on their relative numbers of inputs and outputs.
 
 The priority and associativity of this five operations are:
@@ -393,7 +393,7 @@ The *sequential composition*  (e.g., `A:B`) expects:
 
 $$\mathrm{outputs}(A)=\mathrm{inputs}(B)$$ 
 
-It connects each output of $A$ to the corresponding input of $B$: 
+It connects each output of \(A\) to the corresponding input of \(B\): 
 
 $$A[i]\rightarrow[i]B$$
 
@@ -431,14 +431,14 @@ process = ef.cubicnl(drive,offset) : ve.autowah(autoWahLevel);
 #### Split Composition
 
 The *split composition* (e.g., `A<:B`) operator is used to distribute the 
-outputs of $A$ to the inputs of $B$.
+outputs of \(A\) to the inputs of \(B\).
 
-For the operation to be valid, the number of inputs of $B$ must be a multiple 
-of the number of outputs of $A$: 
+For the operation to be valid, the number of inputs of \(B\) must be a multiple 
+of the number of outputs of \(A\): 
 
 $$\mathrm{outputs}(A).k=\mathrm{inputs}(B)$$
 
-Each input $i$ of $B$ is connected to the output $i \bmod k$ of $A$: 
+Each input \(i\) of \(B\) is connected to the output \(i \bmod k\) of \(A\): 
 
 $$A[i \bmod k]\rightarrow[i]B$$
 
@@ -491,16 +491,16 @@ else in the doc -->
 #### Merge Composition
 
 The *merge composition* (e.g., `A:>B`) is the dual of the 
-[*split composition*](#split-composition). The number of outputs of $A$ must be 
-a multiple of the number of inputs of $B$: 
+[*split composition*](#split-composition). The number of outputs of \(A\) must be 
+a multiple of the number of inputs of \(B\): 
 
 $$\mathrm{outputs}(A)=k.\mathrm{inputs}(B)$$
 
-Each output $i$ of $A$ is connected to the input $i \bmod k$ of $B$ : 
+Each output \(i\) of \(A\) is connected to the input \(i \bmod k\) of \(B\) : 
 
 $$A[i]\rightarrow\ [i \bmod k]B$$
 
-The $k$ incoming signals of an input of $B$ are summed together.
+The \(k\) incoming signals of an input of \(B\) are summed together.
 
 **Example: Summing Signals Together - Additive Synthesis**
 
@@ -571,23 +571,23 @@ To be applicable, it requires that:
 
 $$\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)$$
 
-Each input of $B$ is connected to the corresponding output of $A$ via an 
+Each input of \(B\) is connected to the corresponding output of \(A\) via an 
 implicit 1-sample delay :
  
 
 $$A[i]\stackrel{Z^{-1}}{\rightarrow}[i]B$$
  
-and each output of $B$ is connected to the corresponding input of $A$:
+and each output of \(B\) is connected to the corresponding input of \(A\):
 
 $$B[i]\rightarrow [i]A$$
 
 The inputs of the resulting block diagram are the remaining unconnected inputs 
-of $A$. The outputs are all the outputs of $A$.
+of \(A\). The outputs are all the outputs of \(A\).
 
 **Example: Timer**
 
 *Recursive composition* can be used to implement a "timer" that will count each
-sample starting at time $n=0$:
+sample starting at time \(n=0\):
 
 <!-- faust-run -->
 ```
@@ -599,7 +599,7 @@ The difference equation corresponding to this program is:
 
 $$y(n) = y(n-1) + 1$$
 
-an its output signal will look like: $(1,2,3,4,5,6,\dots)$. 
+an its output signal will look like: \((1,2,3,4,5,6,\dots)\). 
 
 **Example: One Pole Filter**
 
@@ -821,7 +821,7 @@ frequency drift between each oscillator.
 ### Infix Notation and Other Syntax Extensions
 
 > Infix notation is commonly used in mathematics. It consists in placing the 
-operand between the arguments as in $2+3$
+operand between the arguments as in \(2+3\)
 
 Besides its algebra-based core syntax, Faust provides some syntax extensions, 
 in particular the familiar *infix notation*. For example if you want to 
@@ -837,11 +837,11 @@ Here are a few examples of equivalences:
 
 | Infix Syntax | | Core Syntax | 
 | ----- | -------- | --------- |
-| `2-3` | $\equiv$ | `2,3 : -` |
-| `2*3` | $\equiv$ | `2,3 : *` |
-| `_@7` | $\equiv$ | `_,7 : @` |
-| `_/2` | $\equiv$ | `_,2 : /` |
-| `A<B` | $\equiv$ | `A,B : <` |
+| `2-3` | \(\equiv\) | `2,3 : -` |
+| `2*3` | \(\equiv\) | `2,3 : *` |
+| `_@7` | \(\equiv\) | `_,7 : @` |
+| `_/2` | \(\equiv\) | `_,2 : /` |
+| `A<B` | \(\equiv\) | `A,B : <` |
 
 In case of doubts on the meaning of an infix expression, for example `_*_`, it 
 is useful to translate it to its core syntax equivalent, here `_,_:*`, which is 
@@ -859,17 +859,17 @@ of these operators is available [section on primitives](#primitives).
 
 Beside *infix notation*, it is also possible to use *prefix notation*. 
 The *prefix notation* is the usual mathematical notation for functions 
-$f(x,y,z,\ldots)$, but extended to *infix operators*.
+\(f(x,y,z,\ldots)\), but extended to *infix operators*.
  
 It consists in first having the operator, for example `/`, followed by its 
 arguments between parentheses: `/(2,3)`: 
  
 | Prefix Syntax | | Core Syntax |
 | -------- | -------- | --------- |
-| `*(2,3)` | $\equiv$ | `2,3 : *` |
-| `@(_,7)` | $\equiv$ | `_,7 : @` |
-| `/(_,2)` | $\equiv$ | `_,2 : /` |
-| `<(A,B)` | $\equiv$ | `A,B : <` | 
+| `*(2,3)` | \(\equiv\) | `2,3 : *` |
+| `@(_,7)` | \(\equiv\) | `_,7 : @` |
+| `/(_,2)` | \(\equiv\) | `_,2 : /` |
+| `<(A,B)` | \(\equiv\) | `A,B : <` | 
 
 #### Partial Application
 
@@ -885,10 +885,10 @@ second one:
 
 | Prefix Partial Application Syntax | | Core Syntax |
 | -------- | -------- | --------- |
-| `+(C)` | $\equiv$ | `_,C : *` |
-| `-(C)` | $\equiv$ | `_,C : -` |
-| `<(C)` | $\equiv$ | `_,C : <` |
-| `/(C)` | $\equiv$ | `_,C : /` |
+| `+(C)` | \(\equiv\) | `_,C : *` |
+| `-(C)` | \(\equiv\) | `_,C : -` |
+| `<(C)` | \(\equiv\) | `_,C : <` |
+| `/(C)` | \(\equiv\) | `_,C : /` |
 
 For commutative operations that doesn't matter. But for non-commutative ones, 
 it is more "natural" to fix the second argument.  We use divide by 2 (`/(2)`) 
@@ -930,7 +930,7 @@ process = 1'';
 ```
 <!-- /faust-run -->
 
-will look like: $(0,0,1,1,1,1,\dots)$.
+will look like: \((0,0,1,1,1,1,\dots)\).
 
 The `'` time expression is useful when designing filters, etc. and is 
 equivalent to `@(1)` (see the [`@` Time Expression](#time-expression-1)).
@@ -1036,7 +1036,7 @@ process = os.osc(440)*ar(1000,1000,gate);
 ```
 <!-- /faust-run -->
 
-With the following semantics for $n(t)$ and $v(t)$:
+With the following semantics for \(n(t)\) and \(v(t)\):
 
 $$
 n(t) = (n(t-1)+1) * (g(t) <= g(t-1))\\
@@ -1393,9 +1393,9 @@ Floats are available in decimal or scientific notation.
 
 Like any other Faust expression, numbers are signal processors. For example the 
 number 0.95 is a signal processor of type 
-$\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}$ that transforms an empty tuple of 
-signals $()$ into a 1-tuple of signals $(y)$ such that 
-$\forall t\in\mathbb{N}, y(t)=0.95$.
+\(\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}\) that transforms an empty tuple of 
+signals \(()\) into a 1-tuple of signals \((y)\) such that 
+\(\forall t\in\mathbb{N}, y(t)=0.95\).
 
 ### `waveform` Primitive
 
@@ -1411,7 +1411,7 @@ signal as a list of samples.
 <img src="img/waveform.svg" class="mx-auto d-block">
 
 For example `waveform{0,1,2,3}` produces two outputs: the constant signal 4 
-and the periodic signal $(0,1,2,3,0,1,2,3,0,1,\dots)$. 
+and the periodic signal \((0,1,2,3,0,1,2,3,0,1,\dots)\). 
 
 In the following example:
 
@@ -1471,9 +1471,9 @@ mechanism.
 
 Most Faust primitives are analogous to their C counterpart but adapted to 
 signal processing. For example `+` is a function of type 
-$\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ that transforms a pair of 
-signals $(x_1,x_2)$ into a 1-tuple of signals $(y)$ such that 
-$\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)$. `+` can be used to 
+\(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) that transforms a pair of 
+signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) such that 
+\(\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)\). `+` can be used to 
 very simply implement a mixer: 
 
 <!-- faust-run -->
@@ -1490,9 +1490,9 @@ process = _+_;
 ```
 <!-- /faust-run -->		
 
-The function `-` has type $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ and 
-transforms a pair of signals $(x_1,x_2)$ into a 1-tuple of signals $(y)$ 
-such that $\forall t\in\mathbb{N}, y(t)=x_{1}(t)-x_{2}(t)$. 
+The function `-` has type \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) and 
+transforms a pair of signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) 
+such that \(\forall t\in\mathbb{N}, y(t)=x_{1}(t)-x_{2}(t)\). 
 
 **Be aware that** the unary `-` only exists in a limited form. It can be used 
 with numbers: `-0.5` and variables: `-myvar`, but not with expressions 
@@ -1506,8 +1506,8 @@ are properly documented/mentioned somewhere and demonstrated -->
 
 #### Integer Number
 
-Integer numbers are of type $\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}$ in Faust
-and can be described mathematically as $y(t)=n$.
+Integer numbers are of type \(\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}\) in Faust
+and can be described mathematically as \(y(t)=n\).
 
 **Example: DC Offset of 1**
 
@@ -1519,8 +1519,8 @@ process = 1;
 
 #### Floating Point Number
 
-Floating point numbers are of type $\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}$ in 
-Faust and can be described as $y(t)=n.m$.
+Floating point numbers are of type \(\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}\) in 
+Faust and can be described as \(y(t)=n.m\).
 
 **Example: DC Offset of 0.5**
 
@@ -1534,8 +1534,8 @@ process = 0.5;
 
 The identity function is expressed in Faust with the `_` primitive. 
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x(t)$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x(t)\)
 
 **Example: a Signal Passing Through**
 
@@ -1553,8 +1553,8 @@ process = _;
 The cut primitive is expressed in Faust with `!`. It can be used to 
 "stop"/terminate a signal.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{0}$ 
-* **Mathematical Description:** $\forall x\in\mathbb{S},(x)\rightarrow ()$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{0}\) 
+* **Mathematical Description:** \(\forall x\in\mathbb{S},(x)\rightarrow ()\)
 
 **Example: Stopping a Signal**
 
@@ -1570,12 +1570,12 @@ process = 1,2 : !,_;
 #### `int` Primitive
 
 The `int` primitive can be used to force the cast of a signal to int. It is 
-of type $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ and can be described 
-mathematically as $y(t)=(int)x(t)$. This primitive is useful when declaring
+of type \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) and can be described 
+mathematically as \(y(t)=(int)x(t)\). This primitive is useful when declaring
 indices to read in a table, etc.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=(int)x(t)$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=(int)x(t)\)
 
 **Example: Simple Cast**
 
@@ -1589,8 +1589,8 @@ process = 1.5 : int;
 
 The `float` primitive can be used to force the cast of a signal to float.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=(float)x(t)$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=(float)x(t)\)
 
 **Example: Simple Cast**
 
@@ -1604,8 +1604,8 @@ process = 1.5 : float;
 
 The `+` primitive can be used to add two signals together. 
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)+x_{2}(t)$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)+x_{2}(t)\)
 
 **Example: Simple Mixer**
 
@@ -1619,8 +1619,8 @@ process = +;
 
 The `-` primitive can be used to subtract two signals. 
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)-x_{2}(t)$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)-x_{2}(t)\)
 
 **Example: Subtracting Two Input Signals**
 
@@ -1634,8 +1634,8 @@ process = -;
 
 The `*` primitive can be used to multiply two signals. 
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)*x_{2}(t)$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)*x_{2}(t)\)
 
 **Example: Multiplying a Signal by 0.5**
 
@@ -1649,8 +1649,8 @@ process = *(0.5);
 
 The `/` primitive can be used to divide two signals. 
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)/{x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)/{x_{2}(t)}\)
 
 **Example: Dividing a Signal by 2**
 
@@ -1664,8 +1664,8 @@ process = ^(2);
 
 The `^` primitive can be used to raise to the power of `N` a signal. 
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)^{x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)^{x_{2}(t)}\)
 
 **Example: Power of Two of a Signal**
 
@@ -1679,8 +1679,8 @@ process = ^(2);
 
 The `%` primitive can be used to take the modulo of a signal. 
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)\%{x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)\%{x_{2}(t)}\)
 
 **Example: Phaser**
 
@@ -1699,8 +1699,8 @@ will output a signal: `(0,1,2,3,4,5,6,7,8,9,0,1,2,3,4)`.
 
 Logical AND can be expressed in Faust with the `&` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)\&{x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)\&{x_{2}(t)}\)
 
 **Example**
 
@@ -1710,8 +1710,8 @@ TODO
 
 Logical OR can be expressed in Faust with the `|` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)|{x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)|{x_{2}(t)}\)
 
 **Example**
 
@@ -1729,8 +1729,8 @@ process = _ <: <(0.5) | >(0.7);
 
 Logical XOR can be expressed in Faust with the `xor` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t)\land {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t)\land {x_{2}(t)}\)
 
 **Example**
 
@@ -1744,8 +1744,8 @@ process = _ <: <(0.5) xor >(0.7);
 
 Left shift can be expressed in Faust with the `<<` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t) << {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t) << {x_{2}(t)}\)
 
 **Example**
 
@@ -1759,8 +1759,8 @@ process = 1 << 2;
 
 Right shift can be expressed in Faust with the `>>` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t) >> {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t) >> {x_{2}(t)}\)
 
 **Example**
 
@@ -1774,8 +1774,8 @@ process = 1 >> 2;
 
 The smaller than comparison can be expressed in Faust with the `<` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t) < {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t) < {x_{2}(t)}\)
 
 **Example**
 
@@ -1793,8 +1793,8 @@ process = <(0.5);
 The smaller or equal than comparison can be expressed in Faust with the `<=` 
 primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t) <= {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t) <= {x_{2}(t)}\)
 
 **Example**
 
@@ -1811,8 +1811,8 @@ process = <=(0.5);
 
 The greater than comparison can be expressed in Faust with the `>` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t) > {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t) > {x_{2}(t)}\)
 
 **Example**
 
@@ -1830,8 +1830,8 @@ process = >(0.5);
 The greater or equal than comparison can be expressed in Faust with the `>=` 
 primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t) >= {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t) >= {x_{2}(t)}\)
 
 **Example**
 
@@ -1848,8 +1848,8 @@ process = >=(0.5);
 
 The equal to comparison can be expressed in Faust with the `==` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t) == {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t) == {x_{2}(t)}\)
 
 **Example**
 
@@ -1863,8 +1863,8 @@ process = 0 == 1;
 
 The different than comparison can be expressed in Faust with the `!=` primitive.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=x_{1}(t) != {x_{2}(t)}$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=x_{1}(t) != {x_{2}(t)}\)
 
 **Example**
 
@@ -1883,8 +1883,8 @@ are defined as external functions in file `math.lib`).
 
 Arc cosine can be expressed as `acos` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{acosf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{acosf}(x(t))\)
 
 **Example**
 
@@ -1898,8 +1898,8 @@ process = 0.1 : acos;
 
 Arc sine can be expressed as `asin` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{asinf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{asinf}(x(t))\)
 
 **Example**
 
@@ -1913,8 +1913,8 @@ process = 0.1 : asin;
 
 Arc tangent can be expressed as `atan` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{atanf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{atanf}(x(t))\)
 
 **Example**
 
@@ -1928,8 +1928,8 @@ process = 0.1 : atan;
 
 The arc tangent of 2 signals can be expressed as `atan2` in Faust.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{atan2f}(x_{1}(t), x_{2}(t))$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{atan2f}(x_{1}(t), x_{2}(t))\)
 
 **Example**
 
@@ -1943,8 +1943,8 @@ process = 0.1,-0.1 : atan2;
 
 Cosine can be expressed as `cos` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{cosf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{cosf}(x(t))\)
 
 **Example**
 
@@ -1958,8 +1958,8 @@ process = 0.1 : cos;
 
 Sine can be expressed as `sin` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{sinf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{sinf}(x(t))\)
 
 **Example**
 
@@ -1973,8 +1973,8 @@ process = 0.1 : sin;
 
 Tangent can be expressed as `tan` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{tanf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{tanf}(x(t))\)
 
 **Example**
 
@@ -1988,8 +1988,8 @@ process = 0.1 : tan;
 
 Base-e exponential can be expressed as `exp` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{expf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{expf}(x(t))\)
 
 **Example**
 
@@ -2003,8 +2003,8 @@ process = 0.1 : exp;
 
 Base-e logarithm can be expressed as `log` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{logf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{logf}(x(t))\)
 
 **Example**
 
@@ -2018,8 +2018,8 @@ process = 0.1 : log;
 
 Base-10 logarithm can be expressed as `log10` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{log10}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{log10}(x(t))\)
 
 **Example**
 
@@ -2033,8 +2033,8 @@ process = 0.1 : log10;
 
 Power can be expressed as `pow` in Faust.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{powf}(x_{1}(t),x_{2}(t))$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{powf}(x_{1}(t),x_{2}(t))\)
 
 **Example**
 
@@ -2048,8 +2048,8 @@ process = 2,4 : pow;
 
 Square root can be expressed as `sqrt` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{sqrtf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{sqrtf}(x(t))\)
 
 **Example**
 
@@ -2063,9 +2063,9 @@ process = 4 : sqrt;
 
 Absolute value can be expressed as `abs` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{abs}(x(t))$ (int) or  
-$y(t)=\mathrm{fabsf}(x(t))$ (float)
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{abs}(x(t))\) (int) or  
+\(y(t)=\mathrm{fabsf}(x(t))\) (float)
 
 **Example**
 
@@ -2079,8 +2079,8 @@ process = -0.5 : abs;
 
 *Minimum* can be expressed as `min` in Faust.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{min}(x_{1}(t),x_{2}(t))$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{min}(x_{1}(t),x_{2}(t))\)
 
 **Example**
 
@@ -2094,8 +2094,8 @@ process = -0.5,0.2 : min;
 
 *Maximum* can be expressed as `max` in Faust.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{max}(x_{1}(t),x_{2}(t))$ 
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{max}(x_{1}(t),x_{2}(t))\) 
 
 **Example**
 
@@ -2109,8 +2109,8 @@ process = -0.5,0.2 : max;
 
 Float modulo can be expressed as `fmod` in Faust.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{fmodf}(x_{1}(t),x_{2}(t))$ 
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{fmodf}(x_{1}(t),x_{2}(t))\) 
 
 **Example**
 
@@ -2124,8 +2124,8 @@ process = 5.3,2 : fmod;
 
 Float remainder can be expressed as `remainder` in Faust.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{remainderf}(x_{1}(t),x_{2}(t))$ 
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{remainderf}(x_{1}(t),x_{2}(t))\) 
 
 **Example**
 
@@ -2139,8 +2139,8 @@ process = 5.3,2 : remainder;
 
 Largest int can be expressed as `floor` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $\leq$: $y(t)=\mathrm{floorf}(x(t))$ 
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(\leq\): \(y(t)=\mathrm{floorf}(x(t))\) 
 
 **Example**
 
@@ -2154,8 +2154,8 @@ process = 3.6 : floor;
 
 Smallest int can be expressed as `ceil` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $\geq$: $y(t)=\mathrm{ceilf}(x(t))$ 
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(\geq\): \(y(t)=\mathrm{ceilf}(x(t))\) 
 
 **Example**
 
@@ -2169,8 +2169,8 @@ process = 3.6 : ceil;
 
 Closest int can be expressed as `rint` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=\mathrm{rintf}(x(t))$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{rintf}(x(t))\)
 
 **Example**
 
@@ -2192,8 +2192,8 @@ delay of arbitrary length. They are presented in this section.
 
 A 1 sample delay can be expressed as `mem` in Faust.
 
-* **Type:** $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t+1)=x(t),y(0)=0$
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t+1)=x(t),y(0)=0\)
 
 **Example**
 
@@ -2232,8 +2232,8 @@ Note that floating point delay is also available in Faust by the mean of
 [various fractional delay implementations](TODO) available in the Faust 
 standard libraries.
 
-* **Type:** $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t+x_{2}(t))=x_{1}(t), y(t<x_{2}(t))=0$
+* **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t+x_{2}(t))=x_{1}(t), y(t<x_{2}(t))=0\)
 
 **Usage**
 
@@ -2276,8 +2276,8 @@ the first example, or by using the `waveform` primitive (as shown in the
 second example). The idea is that the table is parsed during the initialization
 step and before audio computation begins. 
 
-* **Type:** $\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $y(t)=T[r(t)]$
+* **Type:** \(\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=T[r(t)]\)
 
 **Usage**
 
@@ -2331,8 +2331,8 @@ The `rwtable` primitive can be used to implement a read/write table. It takes
 an audio input that can be written in the table using a *record index* (i.e.,
 `w` below) and read using a read index (i.e., `r` below).
 
-* **Type:** $\mathbb{S}^{5}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $T[w(t)]=c(t); y(t)=T[r(t)]$
+* **Type:** \(\mathbb{S}^{5}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(T[w(t)]=c(t); y(t)=T[r(t)]\)
 
 **Usage**
 
@@ -2384,8 +2384,8 @@ selected signal.
 The `select2` primitive is a "two-ways selector" that can be used to select 
 between 2 signals.
 
-* **Type:** $\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $T[]=\{x_{0}(t),x_{1}(t)\}; y(t)=T[s(t)]$ 
+* **Type:** \(\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(T[]=\{x_{0}(t),x_{1}(t)\}; y(t)=T[s(t)]\) 
 
 **Usage**
 
@@ -2433,8 +2433,8 @@ will both be computed all the time.
 The `select3` primitive is a "three-ways selector" that can be used to select 
 between 3 signals.
 
-* **Type:** $\mathbb{S}^{4}\rightarrow\mathbb{S}^{1}$ 
-* **Mathematical Description:** $T[]=\{x_{0}(t),x_{1}(t),x_{2}(t)\}; y(t)=T[s(t)]$ 
+* **Type:** \(\mathbb{S}^{4}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(T[]=\{x_{0}(t),x_{1}(t),x_{2}(t)\}; y(t)=T[s(t)]\) 
 
 **Usage**
 

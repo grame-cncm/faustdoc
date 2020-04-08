@@ -56,7 +56,7 @@ represented as block diagrams** such as filters, waveguide physical models,
 virtual analog elements, etc.
 
 **Faust is very concise**, for example, here's the implementation of a one pole 
-filter/integrator equivalent to <span class="math inline">\\(y(n) = x(n) + a_{1}y(n-1)\\)</span> (where  <span class="math inline"\\(>a_{1}\\)</span> is 
+filter/integrator equivalent to $$y(n) = x(n) + a_{1}y(n-1)$$ (where  \(a_{1}\) is 
 the pole):
 
 <!-- faust-run -->
@@ -141,31 +141,32 @@ well as control signals interfaced with sliders, knobs, vu-meters, etc.
 
 More precisely :
 
-* A *signal* <span class="math inline">\\(s\\)</span> is a discrete function of time 
-<span class="math inline">\\(s:\mathbb{Z}\rightarrow\mathbb{R}\\)</span>. The value of a signal <span class="math inline">\\(s\\)</span> at time <span class="math inline">\\(t\\)</span> is 
-written <span class="math inline">\\(s(t)\\)</span>. The values of signals are usually needed starting from time <span class="math inline">\\(0\\)</span>. 
+* A *signal* \(s\) is a discrete function of time 
+\(s:\mathbb{Z}\rightarrow\mathbb{R}\). The value of a signal \(s\) at time \(t\) is 
+written \(s(t)\). The values of signals are usually needed starting from time \(0\). 
 But to take into account *delay operations*, negative times are possible and 
-are always mapped to zeros. Therefore for any Faust signal <span class="math inline">\\(s\\)</span> we have 
-<span class="math inline">\\(\forall t<0, s(t)=0\\)</span>. In operational terms this corresponds to assuming that 
-all delay lines are signals initialized with <span class="math inline">\\(0\\)</span>s. 
+are always mapped to zeros. Therefore for any Faust signal \(s\) we have 
+\(\forall t<0, s(t)=0\). In operational terms this corresponds to assuming that 
+all delay lines are signals initialized with \(0\)s. 
 * Faust considers two type of signals: *integer signals* 
-(<span class="math inline">\\(s:\mathbb{Z}\rightarrow\mathbb{Z}\\)</span>) and *floating point signals* 
-(<span class="math inline">\\(s:\mathbb{Z}\rightarrow\mathbb{Q}\\)</span>). Exchanges with the outside world are, by 
+$$s:\mathbb{Z}\rightarrow\mathbb{Z}$$ and *floating point signals* 
+$$s:\mathbb{Z}\rightarrow\mathbb{Q}$$. 
+Exchanges with the outside world are, by 
 convention, made using floating point signals. The full range is represented by 
-sample values between <span class="math inline">\\(-1.0\\)</span> and <span class="math inline">\\(+1.0\\)</span>.
-* The set of all possible  signals is <span class="math inline">\\(\mathbb{S}=\mathbb{Z}\rightarrow\mathbb{R}\\)</span>.
-* A group of <span class="math inline">\\(n\\)</span> signals (a *n*-tuple of signals) is written 
-<span class="math inline">\\((s_{1},\ldots,s_{n})\in \mathbb{S}^{n}\\)</span>. The *empty tuple*, single element of 
-<span class="math inline">\\(\mathbb{S}^{0}\\)</span> is notated <span class="math inline">\\(()\\)</span>.
-* A *signal processors* <span class="math inline">\\(p\\)</span>, is a function from *n*-tuples of signals to 
-*m*-tuples of signals <span class="math inline">\\(p:\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}\\)</span>. The set 
-<span class="math inline">\\(\mathbb{P}=\bigcup_{n,m}\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}\\)</span> is the
+sample values between \(-1.0\) and \(+1.0\).
+* The set of all possible  signals is \(\mathbb{S}=\mathbb{Z}\rightarrow\mathbb{R}\).
+* A group of \(n\) signals (a *n*-tuple of signals) is written 
+\((s_{1},\ldots,s_{n})\in \mathbb{S}^{n}\). The *empty tuple*, single element of 
+\(\mathbb{S}^{0}\) is notated \(()\).
+* A *signal processors* \(p\), is a function from *n*-tuples of signals to 
+*m*-tuples of signals $$p:\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}$$. The set 
+$$\mathbb{P}=\bigcup_{n,m}\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}$$ is the
 set of all possible signal processors.
 
 As an example, let's express the semantic of the Faust primitive `+`. Like any 
 Faust expression, it is a signal processor. Its signature is
-<span class="math inline">\\(\mathbb{S}^{2}\rightarrow\mathbb{S}\\)</span>. It takes two input signals <span class="math inline">\\(X_0\\)</span> and 
-<span class="math inline">\\(X_1\\)</span> and produces an output signal <span class="math inline">\\(Y\\)</span> such that <span class="math inline">\\(Y(t) = X_0(t)+X_1(t)\\)</span>. 
+\(\mathbb{S}^{2}\rightarrow\mathbb{S}\). It takes two input signals \(X_0\) and 
+\(X_1\) and produces an output signal \(Y\) such that \(Y(t) = X_0(t)+X_1(t)\). 
 
-Numbers are signal processors too. For example the number <span class="math inline">\\(3\\)</span> has signature  <span class="math inline">\\(\mathbb{S}^{0}\rightarrow\mathbb{S}\\)</span>. It takes no input signals and produce an 
-output signal <span class="math inline">\\(Y\\)</span> such that <span class="math inline">\\(Y(t) = 3\\)</span>. 
+Numbers are signal processors too. For example the number \(3\) has signature  \(\mathbb{S}^{0}\rightarrow\mathbb{S}\). It takes no input signals and produce an 
+output signal \(Y\) such that \(Y(t) = 3\). 
