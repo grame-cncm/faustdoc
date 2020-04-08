@@ -268,7 +268,7 @@ process = _;
 <li>the <code>_</code> sign represents one of the <em>primitives</em> of the language (primitives are the predefined functions of the language). It represents an <em>audio cable</em> that lets the signal pass through without transforming it. This is what one calls in mathematics the <em>identity</em> function, the signal which enters on the left comes out on the right identically. </li>
 </ul>
 <p>Lets try this program using the online Faust IDE...</p>
-<h3 id="other-primitives-addition">Other primitives: addition</h3>
+<h3 id="adding-two-signals">Adding two signals</h3>
 <p>We saw in the previous example the primitive <code>_</code>. Faust has a large number of primitives, including all mathematical operations (see ).</p>
 <p>The <code>+</code> primitive for instance is used to add two signals. It can therefore be used to transform a stereophonic signal (on two channels) into a monophonic signal as in the following example:</p>
 <!-- faust-run -->
@@ -287,7 +287,7 @@ process = +;
 
 <!-- /faust-run -->
 
-<h3 id="other-primitives-multiplication">Other primitives: multiplication</h3>
+<h3 id="multiplying-two-signals">Multiplying two signals</h3>
 <p>The <code>*</code> primitive for instance is used to multiply two signals. </p>
 <!-- faust-run -->
 
@@ -395,7 +395,7 @@ process = (_, 0.1) : *; // try to replace 0.1 by other values between 0 and 1
 <p>Note that we have used parentheses in this example to clearly mark the order in which things should be done. We start by putting <code>_</code> and <code>0.1</code> in parallel, and then compose them in sequence with <code>*</code>.</p>
 <p>But, just as in <code>(2*3)+7</code> were the parentheses are not really necessary because multiplication takes precedence over addition, one could write directly <code>process = _,0.1 : *;</code> without the parentheses, because parallel composing takes precedence over sequential composing. The priority of the composition operators is shown in the previous table.</p>
 <h3 id="controlling-the-volume-with-a-slider">Controlling the volume with a slider</h3>
-<p>Instead of controlling the volume by editing the code, it is far more convenient to use a graphical slider. </p>
+<p>Instead of controlling the volume by editing the code, it is far more convenient to use a graphical slider. For that purpose we can use a <code>hslider(...)</code>, a horizontal slider. It takes five parameters. The first one is the name <code>"volume"</code>, then we have the defaut value <code>0.1</code>, the mimimun value <code>0</code>, the maximum value <code>1</code> and a step value <code>0.1</code>. So here the default value is <code>0.1</code> </p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
