@@ -20,3 +20,26 @@
 }
 
 .try_it:focus 	{ outline: none; }
+
+h1,h2,h3 {
+	margin-top: 40px;
+	font-weight: 700;
+}
+
+h3 {
+	font-size: 22px;
+}
+
+.btn {
+	margin-bottom: 20px;
+}
+
+pre {
+	background-color: #f8f8ff;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+code {
+	color: #775177;
+}
