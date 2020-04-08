@@ -326,7 +326,74 @@ process = _, _;
 <!-- /faust-run -->
 
 <p>We made a <em>stereo cable</em> and when we play the audio file we now hear it on both speakers.</p>
-<p>It is very important to distinguish between <em>primitives</em>, such as <code>_</code>, <code>+</code> or <code>*</code>, and <em>composition operations</em> such as <code>,</code> or <code>;</code>.  <em>Primitives</em> represent operations on audio signals, whereas composition operations are used to link two audio circuits together. In other words, you can write <code>+</code> or <code>*</code> alone, because they represent valid audio circuits, but you can never write <code>,</code> or <code>:</code> alone. You must always write <code>A,B</code> or <code>A:B</code>.</p></div>
+<p>It is very important to distinguish between <em>primitives</em>, such as <code>_</code>, <code>+</code> or <code>*</code>, and <em>composition operations</em> such as <code>,</code> or <code>;</code>.  <em>Primitives</em> represent operations on audio signals, whereas composition operations are used to link two audio operations together. In other words, you can write <code>+</code> or <code>*</code> alone, because they represent valid audio operations, but you can never write <code>,</code> or <code>:</code> alone because they are used to connect two audio operations You must always write <code>A,B</code> or <code>A:B</code>.</p>
+<p>Here is a summary table of the five composition operators:</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Priority</th>
+<th>Association</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>A ~ B</code></td>
+<td>4</td>
+<td>left</td>
+<td>Recursive Composition</td>
+</tr>
+<tr>
+<td><code>A , B</code></td>
+<td>3</td>
+<td>right</td>
+<td>Parallel Composition</td>
+</tr>
+<tr>
+<td><code>A : B</code></td>
+<td>2</td>
+<td>right</td>
+<td>Sequential Composition</td>
+</tr>
+<tr>
+<td><code>A &lt;: B</code></td>
+<td>1</td>
+<td>right</td>
+<td>Split Composition</td>
+</tr>
+<tr>
+<td><code>A :&gt; B</code></td>
+<td>1</td>
+<td>right</td>
+<td>Merge Composition</td>
+</tr>
+</tbody>
+</table>
+<h3 id="controlling-the-volume">Controlling the volume</h3>
+<p>Let's see an example where we combine three primitives:
+  <code>_</code>, <code>0.1</code> and <code>*</code>,
+with two composition operators:
+<code>,</code> and <code>:</code>.</p>
+<p>The idea here is to lower the volume of the incoming signal to one tenth of its initial value. This is done by multiplying the incoming signal by 0.1:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+process = (_, 0.1) : *; // try to replace 0.1 by other values between 0 and 1
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>Note that we have used parentheses in this example to clearly mark the order in which things should be done. We start by putting <code>_</code> and <code>0.1</code> in parallel, and then compose them in sequence with <code>*</code>.</p>
+<p>But, just as in <code>(2*3)+7</code> the parentheses are not really necessary because multiplication takes precedence over addition, one could write <code>_,0.1:*</code> directly because parallel composing takes precedence over sequential composing as indicated in the previous table.</p></div>
         </div>
 
         <footer class="col-md-12">
