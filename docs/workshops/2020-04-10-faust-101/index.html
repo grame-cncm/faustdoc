@@ -375,7 +375,7 @@ process = _, _;
   <code>_</code>, <code>0.1</code> and <code>*</code>,
 with two composition operators:
 <code>,</code> and <code>:</code>.</p>
-<p>The idea here is to lower the volume of the incoming signal to one tenth of its initial value. This is done by multiplying the incoming signal by 0.1:</p>
+<p>The idea here is to lower the volume of the incoming signal to one tenth of its initial value. This is done by multiplying the incoming signal by <code>0.1</code>:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
@@ -393,7 +393,24 @@ process = (_, 0.1) : *; // try to replace 0.1 by other values between 0 and 1
 <!-- /faust-run -->
 
 <p>Note that we have used parentheses in this example to clearly mark the order in which things should be done. We start by putting <code>_</code> and <code>0.1</code> in parallel, and then compose them in sequence with <code>*</code>.</p>
-<p>But, just as in <code>(2*3)+7</code> the parentheses are not really necessary because multiplication takes precedence over addition, one could write <code>_,0.1:*</code> directly because parallel composing takes precedence over sequential composing as indicated in the previous table.</p></div>
+<p>But, just as in <code>(2*3)+7</code> were the parentheses are not really necessary because multiplication takes precedence over addition, one could write directly <code>process = _,0.1 : *;</code> without the parentheses, because parallel composing takes precedence over sequential composing. The priority of the composition operators is shown in the previous table.</p>
+<h3 id="controlling-the-volume-with-a-slider">Controlling the volume with a slider</h3>
+<p>Instead of controlling the volume by editing the code, it is far more convenient to use a graphical slider. </p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+
+<pre><code>
+process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run --></div>
         </div>
 
         <footer class="col-md-12">
