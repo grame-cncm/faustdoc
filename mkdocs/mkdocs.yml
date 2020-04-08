@@ -64,8 +64,9 @@ extra_css:
    - '/css/faust.css'
 
 extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 markdown_extensions:
+    - mdx_math
     - markdown_include.include:
         base_path: './docs'
