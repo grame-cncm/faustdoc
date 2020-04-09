@@ -412,7 +412,8 @@ process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 
 <!-- /faust-run -->
 
-<h3 id="structuring-the-program">Structuring the program</h3>
+<h3 id="mono-amplifier">Mono Amplifier</h3>
+<p>So far we have written very simple programs that fit into one line of code. We will now introduce additional definitions. A definition should be understood as a way of giving a name to something, which saves us from typing the definition every time and makes the program easier to understand.</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
@@ -431,6 +432,7 @@ process = monoamp;
 <!-- /faust-run -->
 
 <h3 id="stereo-amplifier">Stereo Amplifier</h3>
+<p>Continuing in the same vein, we will define a stereo amplifier as two mono amplifiers in parallel.</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
@@ -450,14 +452,16 @@ process = stereoamp;
 
 <!-- /faust-run -->
 
-<h3 id="some-gui-control">Some gui control</h3>
+<p>Note that even if the hslider volume appears several times in our code, there will only be one in the user interface.</p>
+<h3 id="vertical-sliders">Vertical sliders</h3>
+<p>Instead of horizontal sliders, we could use vertical sliders. Just replace hslider(...) with vslider(...).</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
-monoamp = _, hslider(&quot;volume[type:knob]&quot;, 0.1, 0, 1, 0.01) : *;
-stereoamp = hgroup(&quot;amp&quot;, monoamp,monoamp);
+monoamp = _, vslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
+stereoamp = monoamp,monoamp;
 
 process = stereoamp;
 
@@ -465,6 +469,28 @@ process = stereoamp;
 
 
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="knobs-instead-of-sliders">Knobs instead of sliders</h3>
+<p>By default sliders are ... sliders! You can change their appearance by using the metadata mechanism. </p>
+<p>Metadata is information that you put in square brackets in the slider name. For example the metadata "...[style:knob]..." allows you to turn the slider into a rotary knob.</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+
+<pre><code>
+monoamp = _, vslider(&quot;volume[type:knob]&quot;, 0.1, 0, 1, 0.01) : *;
+stereoamp = monoamp,monoamp;
+
+process = stereoamp;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -478,7 +504,7 @@ process = stereoamp;
         </footer>
         <script>
             var base_url = "../..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
         </script>
         <script src="../../js/base.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
