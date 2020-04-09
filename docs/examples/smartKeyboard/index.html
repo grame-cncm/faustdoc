@@ -9,208 +9,221 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title> smartKeyboard  - Faust Language</title>
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <a class="navbar-brand" href="../..">Faust Language</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
 
                 <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../.." class="nav-link">Home</a>
+                            <li >
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../guide/introduction/" class="dropdown-item">Introduction</a>
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
 </li>
                                     
-<li>
-    <a href="../../guide/overview/" class="dropdown-item">Overview</a>
+<li >
+    <a href="../../guide/overview/">Overview</a>
 </li>
                                     
-<li>
-    <a href="../../guide/quick-start/" class="dropdown-item">Quick start</a>
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
 </li>
                                     
-<li>
-    <a href="../../guide/embedding/" class="dropdown-item">Embedding</a>
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
 </li>
                                     
-<li>
-    <a href="../../guide/osc/" class="dropdown-item">OSC Support</a>
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
 </li>
                                     
-<li>
-    <a href="../../guide/http/" class="dropdown-item">HTTP Support</a>
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
 </li>
                                     
-<li>
-    <a href="../../guide/midi/" class="dropdown-item">MIDI Support</a>
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
 </li>
                                     
-<li>
-    <a href="../../guide/mathdoc/" class="dropdown-item">Math. Doc</a>
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../refs/syntax/" class="dropdown-item">Faust Syntax</a>
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
 </li>
                                     
-<li>
-    <a href="../../refs/options/" class="dropdown-item">Compiler Options</a>
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
 </li>
                                     
-<li>
-    <a href="../../refs/compiler/" class="dropdown-item">Using the Compiler</a>
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
 </li>
                                     
-<li>
-    <a href="../../refs/tools/" class="dropdown-item">Using Tools</a>
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../ambisonics/" class="dropdown-item"> ambisonics </a>
+<li >
+    <a href="../ambisonics/"> ambisonics </a>
 </li>
                                     
-<li>
-    <a href="../analysis/" class="dropdown-item"> analysis </a>
+<li >
+    <a href="../analysis/"> analysis </a>
 </li>
                                     
-<li>
-    <a href="../bela/" class="dropdown-item"> bela </a>
+<li >
+    <a href="../bela/"> bela </a>
 </li>
                                     
-<li>
-    <a href="../delayEcho/" class="dropdown-item"> delayEcho </a>
+<li >
+    <a href="../delayEcho/"> delayEcho </a>
 </li>
                                     
-<li>
-    <a href="../dynamic/" class="dropdown-item"> dynamic </a>
+<li >
+    <a href="../dynamic/"> dynamic </a>
 </li>
                                     
-<li>
-    <a href="../filtering/" class="dropdown-item"> filtering </a>
+<li >
+    <a href="../filtering/"> filtering </a>
 </li>
                                     
-<li>
-    <a href="../gameaudio/" class="dropdown-item"> gameaudio </a>
+<li >
+    <a href="../gameaudio/"> gameaudio </a>
 </li>
                                     
-<li>
-    <a href="../generator/" class="dropdown-item"> generator </a>
+<li >
+    <a href="../generator/"> generator </a>
 </li>
                                     
-<li>
-    <a href="../misc/" class="dropdown-item"> misc </a>
+<li >
+    <a href="../misc/"> misc </a>
 </li>
                                     
-<li>
-    <a href="../phasing/" class="dropdown-item"> phasing </a>
+<li >
+    <a href="../phasing/"> phasing </a>
 </li>
                                     
-<li>
-    <a href="../physicalModeling/" class="dropdown-item"> physicalModeling </a>
+<li >
+    <a href="../physicalModeling/"> physicalModeling </a>
 </li>
                                     
-<li>
-    <a href="../pitchShifting/" class="dropdown-item"> pitchShifting </a>
+<li >
+    <a href="../pitchShifting/"> pitchShifting </a>
 </li>
                                     
-<li>
-    <a href="../psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+<li >
+    <a href="../psychoacoustic/"> psychoacoustic </a>
 </li>
                                     
-<li>
-    <a href="../reverb/" class="dropdown-item"> reverb </a>
+<li >
+    <a href="../reverb/"> reverb </a>
 </li>
                                     
-<li>
-    <a href="../SAM/" class="dropdown-item"> SAM </a>
+<li >
+    <a href="../SAM/"> SAM </a>
 </li>
                                     
-<li>
-    <a href="./" class="dropdown-item active"> smartKeyboard </a>
+<li class="active">
+    <a href="./"> smartKeyboard </a>
 </li>
                                     
-<li>
-    <a href="../spat/" class="dropdown-item"> spat </a>
+<li >
+    <a href="../spat/"> spat </a>
 </li>
                                     
-<li>
-    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+<li >
+    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+<li >
+    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/"> 2020-04-10 Faust & JUCE </a>
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
-                                <a href="../../about/" class="nav-link">About</a>
+                            <li >
+                                <a href="../../about/">About</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../SAM/" class="nav-link">
+                            <li >
+                                <a rel="next" href="../SAM/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../spat/" class="nav-link">
+                            <li >
+                                <a rel="prev" href="../spat/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -220,106 +233,32 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#smartkeyboard" class="nav-link">smartKeyboard</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#acguitar" class="nav-link">acGuitar</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#bells" class="nav-link">bells</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#bowed" class="nav-link">bowed</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#brass" class="nav-link">brass</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#clarinet" class="nav-link">clarinet</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#crazyguiro" class="nav-link">crazyGuiro</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#drums" class="nav-link">drums</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#dubdub" class="nav-link">dubDub</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#elecguitar" class="nav-link">elecGuitar</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#fm" class="nav-link">fm</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#frog" class="nav-link">frog</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#harp" class="nav-link">harp</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#midionly" class="nav-link">midiOnly</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#multisynth" class="nav-link">multiSynth</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#toy" class="nav-link">toy</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#trumpet" class="nav-link">trumpet</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#turenas" class="nav-link">turenas</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#violin" class="nav-link">violin</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#violin2" class="nav-link">violin2</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#vocal" class="nav-link">vocal</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#smartkeyboard">smartKeyboard</a></li>
+            <li><a href="#acguitar">acGuitar</a></li>
+            <li><a href="#bells">bells</a></li>
+            <li><a href="#bowed">bowed</a></li>
+            <li><a href="#brass">brass</a></li>
+            <li><a href="#clarinet">clarinet</a></li>
+            <li><a href="#crazyguiro">crazyGuiro</a></li>
+            <li><a href="#drums">drums</a></li>
+            <li><a href="#dubdub">dubDub</a></li>
+            <li><a href="#elecguitar">elecGuitar</a></li>
+            <li><a href="#fm">fm</a></li>
+            <li><a href="#frog">frog</a></li>
+            <li><a href="#harp">harp</a></li>
+            <li><a href="#midionly">midiOnly</a></li>
+            <li><a href="#multisynth">multiSynth</a></li>
+            <li><a href="#toy">toy</a></li>
+            <li><a href="#trumpet">trumpet</a></li>
+            <li><a href="#turenas">turenas</a></li>
+            <li><a href="#violin">violin</a></li>
+            <li><a href="#violin2">violin2</a></li>
+            <li><a href="#vocal">vocal</a></li>
+    </ul>
 </div></div>
-                    <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="smartkeyboard">smartKeyboard</h1>
 <h2 id="acguitar">acGuitar</h2>
@@ -2261,7 +2200,6 @@ process = pm.SFFormantModelBP(1,vowel,0,voiceFreq,gain) &lt;: _,_;
 </div>
 
 <!-- /faust-run --></div>
-            </div>
         </div>
 
         <footer class="col-md-12">
@@ -2271,25 +2209,25 @@ process = pm.SFFormantModelBP(1,vowel,0,voiceFreq,gain) &lt;: _,_;
         </footer>
         <script>
             var base_url = "../..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
         </script>
         <script src="../../js/base.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
             <div class="modal-body">
                 <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-                <form>
+                <form role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
@@ -2300,12 +2238,12 @@ process = pm.SFFormantModelBP(1,vowel,0,voiceFreq,gain) &lt;: _,_;
             </div>
         </div>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
             </div>
             <div class="modal-body">
               <table class="table">

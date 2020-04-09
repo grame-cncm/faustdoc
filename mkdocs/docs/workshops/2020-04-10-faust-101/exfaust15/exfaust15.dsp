@@ -1,3 +1,6 @@
 
-process = _, 44100 : @;
+process = @(44100); 
+
+// equivalent to core syntax
+// process = _, 44100 ; @;
 
