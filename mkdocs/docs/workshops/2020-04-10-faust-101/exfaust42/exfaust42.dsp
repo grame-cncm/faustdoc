@@ -1,7 +1,7 @@
 
 import("stdfaust.lib");
 
-// FM: Frequency moulation 2
+// FM: Frequency modulation 2
 
 FM(fc,fm,amp) = fm : os.osc : *(amp) : +(1) : *(fc) : os.osc;
 

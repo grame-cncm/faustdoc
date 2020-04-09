@@ -236,20 +236,46 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#faust-101-for-the-confined">Faust 101 for the confined</a></li>
+            <li><a href="#faust-in-few-words">Faust in few words</a></li>
             <li><a href="#part-1-very-simple-examples">Part 1: Very simple examples</a></li>
             <li><a href="#part-2-delays-and-feedbacks">Part 2: Delays and Feedbacks</a></li>
             <li><a href="#part-3-basic-oscillators">Part 3: Basic Oscillators</a></li>
             <li><a href="#part-4-additive-synthesis">Part 4: Additive synthesis</a></li>
-            <li><a href="#subtractive-synthesis">Subtractive synthesis</a></li>
-            <li><a href="#synthesis-by-frequency-modulation">Synthesis by frequency modulation</a></li>
+            <li><a href="#part-5-subtractive-synthesis">Part 5: Subtractive synthesis</a></li>
+            <li><a href="#part-6-synthesis-by-frequency-modulation">Part 6: Synthesis by frequency modulation</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
+<p><img src="img/logo-faust.png" width="80%" class="mx-auto d-block"></p>
 <h1 id="faust-101-for-the-confined">Faust 101 for the confined</h1>
 <p>The covid-19 containment offers us at least one excellent opportunity to train! If you've always wanted to get into Faust programming but didn't have the time, here's your chance! </p>
 <p>The objective of this workshop is to familiarize you with the Faust language through very simple examples of signal processing and sound synthesis.
-The documentation and the examples we will use can be found here: <a href="https://faustdoc.grame.fr">https://faustdoc.grame.fr</a>. All examples will be run in the online Faust IDE <a href="https://faustide.grame.fr">https://faustide.grame.fr</a>. If ever the sounds produced with the IDE are of poor quality, with some clicks, one can use the online editor, which is more rustic, but also lighter <a href="https://fausteditor.grame.fr">https://fausteditor.grame.fr</a>.</p>
+The documentation and the examples we will use can be found here:</p>
+<ul>
+<li><strong><a href="https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/">https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/</a></strong></li>
+</ul>
+<p>Additionnally, the documentation of the Faust libraries is available here:</p>
+<ul>
+<li><strong><a href="https://faustlibraries.grame.fr/">https://faustlibraries.grame.fr/</a></strong></li>
+</ul>
+<p>All examples will be run in the online Faust IDE:</p>
+<ul>
+<li><strong><a href="https://faustide.grame.fr">https://faustide.grame.fr</a></strong></li>
+</ul>
+<p>If ever the sounds produced with the IDE are of poor quality, with some clicks, one can use the online editor, which is more rustic, but also lighter: </p>
+<ul>
+<li><strong><a href="https://fausteditor.grame.fr">https://fausteditor.grame.fr</a></strong></li>
+</ul>
+<h2 id="faust-in-few-words">Faust in few words</h2>
+<ul>
+<li>Faust is a Domain-Specific Language for real-time signal processing and synthesis (like Csound, Max/MSP, Supercollider, Puredata,. . . ).</li>
+<li>Faust is based on purely functional approach</li>
+<li>A Faust program denotes a signal processor : a function that maps input signals to output signals.</li>
+<li>Programming in Faust is essentially combining signal processors using an algebra of 5 composition operations: <code>&lt;: :&gt; : , ~</code></li>
+<li>Faust is a compiled language, the role of the Faust compiler is to synthesize the most efficient implementations.</li>
+<li>Faust offers end-users a high-level alternative to C to develop audio applications for a large variety of platforms.</li>
+</ul>
 <h2 id="part-1-very-simple-examples">Part 1: Very simple examples</h2>
 <p>Let start with some simple examples of Faust programs.</p>
 <h3 id="example-1-the-simplest-faust-program">Example 1: The simplest Faust program</h3>
@@ -277,7 +303,7 @@ process = _;
 <li>the <code>_</code> sign represents one of the <em>primitives</em> of the language (primitives are the predefined functions of the language). It represents an <em>audio cable</em> that lets the signal pass through without transforming it. This is what one calls in mathematics the <em>identity</em> function, the signal which enters on the left comes out on the right identically. </li>
 </ul>
 <p>Lets try this program using the online Faust IDE...</p>
-<h3 id="example-1-adding-two-signals">Example 1: Adding two signals</h3>
+<h3 id="example-2-adding-two-signals">Example 2: Adding two signals</h3>
 <p>We saw in the previous example the primitive <code>_</code>. Faust has a large number of primitives, including all mathematical operations (see ).</p>
 <p>The <code>+</code> primitive for instance is used to add two signals. It can therefore be used to transform a stereophonic signal (on two channels) into a monophonic signal as in the following example:</p>
 <!-- faust-run -->
@@ -296,7 +322,7 @@ process = +;
 
 <!-- /faust-run -->
 
-<h3 id="example-1-multiplying-two-signals">Example 1: Multiplying two signals</h3>
+<h3 id="example-3-multiplying-two-signals">Example 3: Multiplying two signals</h3>
 <p>The <code>*</code> primitive for instance is used to multiply two signals. </p>
 <!-- faust-run -->
 
@@ -315,7 +341,7 @@ process = *;
 <!-- /faust-run -->
 
 <p>As you can hear, multiplying the two channels of a signal between them transforms the sound quite drastically.</p>
-<h3 id="example-1-parallel-composition">Example 1: Parallel composition</h3>
+<h3 id="example-4-parallel-composition">Example 4: Parallel composition</h3>
 <p>Programming in Faust consists in assembling primitive operations to form more or less complex audio circuits. To realize these assemblies Faust has 5 composition operations: <code>~</code>, <code>,</code>, <code>;</code>, <code>&lt;:</code>, <code>:&gt;</code>.  </p>
 <p>Let's first look at the parallel composition represented by the comma <code>,</code>. </p>
 <!-- faust-run -->
@@ -334,8 +360,51 @@ process = _, _;
 
 <!-- /faust-run -->
 
-<p>We made a <em>stereo cable</em> and when we play the audio file we now hear it on both speakers.</p>
+<p>We made a <em>stereo cable</em> and when we play the audio file, we now hear it on both speakers.</p>
 <p>It is very important to distinguish between <em>primitives</em>, such as <code>_</code>, <code>+</code> or <code>*</code>, and <em>composition operations</em> such as <code>,</code> or <code>;</code>.  <em>Primitives</em> represent operations on audio signals, whereas composition operations are used to link two audio operations together. In other words, you can write <code>+</code> or <code>*</code> alone, because they represent valid audio operations, but you can never write <code>,</code> or <code>:</code> alone because they are used to connect two audio operations. You must always write <code>A,B</code> or <code>A:B</code>.</p>
+<p>The primitives of Faust are organized in several categories. We find all the numerical functions of the C language, but applied to audio signals:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Primitives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arithmetic</td>
+<td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, ...</td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td><code>&lt;</code>, <code>==</code>, <code>!=</code>, <code>&lt;=</code>, ...</td>
+</tr>
+<tr>
+<td>Trigonometric</td>
+<td><code>sin</code>, <code>cos</code>, ...</td>
+</tr>
+<tr>
+<td>Log and Co.</td>
+<td><code>log</code>, <code>exp</code>, ...</td>
+</tr>
+<tr>
+<td>Min, Max</td>
+<td><code>min</code>, <code>max</code>, ...</td>
+</tr>
+<tr>
+<td>Selectors</td>
+<td><code>select2</code>, <code>select3</code>, ...</td>
+</tr>
+<tr>
+<td>Delays and Tables</td>
+<td><code>@</code>, <code>rdtable</code>, ...</td>
+</tr>
+<tr>
+<td>GUI</td>
+<td><code>hslider()</code>, <code>button()</code>, ...</td>
+</tr>
+</tbody>
+</table>
 <p>Here is a summary table of the five composition operators:</p>
 <table>
 <thead>
@@ -379,7 +448,7 @@ process = _, _;
 </tr>
 </tbody>
 </table>
-<h3 id="example-1-controlling-the-volume">Example 1: Controlling the volume</h3>
+<h3 id="example-5-controlling-the-volume">Example 5: Controlling the volume</h3>
 <p>Let's see an example where we combine three primitives:
   <code>_</code>, <code>0.1</code> and <code>*</code>,
 with two composition operators:
@@ -403,7 +472,7 @@ process = (_, 0.1) : *; // try to replace 0.1 by other values between 0 and 1
 
 <p>Note that we have used parentheses in this example to clearly mark the order in which things should be done. We start by putting <code>_</code> and <code>0.1</code> in parallel, and then compose them in sequence with <code>*</code>.</p>
 <p>But, just as in <code>(2*3)+7</code> were the parentheses are not really necessary because multiplication takes precedence over addition, one could write directly <code>process = _,0.1 : *;</code> without the parentheses, because parallel composing takes precedence over sequential composing. The priority of the composition operators is shown in the previous table.</p>
-<h3 id="example-1-controlling-the-volume-with-a-slider">Example 1: Controlling the volume with a slider</h3>
+<h3 id="example-6-controlling-the-volume-with-a-slider">Example 6: Controlling the volume with a slider</h3>
 <p>Instead of controlling the volume by editing the code, it is far more convenient to use a graphical slider. For that purpose we can use a <code>hslider(...)</code>, a horizontal slider. It takes five parameters. The first one is the name <code>"volume"</code>, then we have the defaut value <code>0.1</code>, the mimimun value <code>0</code>, the maximum value <code>1</code> and a step value <code>0.1</code>. So here the default value is <code>0.1</code> </p>
 <!-- faust-run -->
 
@@ -421,7 +490,7 @@ process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 
 <!-- /faust-run -->
 
-<h3 id="example-1-mono-amplifier">Example 1: Mono Amplifier</h3>
+<h3 id="example-7-mono-amplifier">Example 7: Mono Amplifier</h3>
 <p>So far we have written very simple programs that fit into one line of code. We will now introduce additional definitions. A definition should be understood as a way of giving a name to something, which saves us from typing the definition every time and makes the program easier to understand.</p>
 <!-- faust-run -->
 
@@ -440,7 +509,7 @@ process = monoamp;
 
 <!-- /faust-run -->
 
-<h3 id="example-1-stereo-amplifier">Example 1: Stereo Amplifier</h3>
+<h3 id="example-8-stereo-amplifier">Example 8: Stereo Amplifier</h3>
 <p>Continuing in the same vein, we will define a stereo amplifier as two mono amplifiers in parallel.</p>
 <!-- faust-run -->
 
@@ -462,7 +531,7 @@ process = stereoamp;
 <!-- /faust-run -->
 
 <p>Note that even if the hslider volume appears several times in our code, there will only be one in the user interface.</p>
-<h3 id="example-1-vertical-sliders">Example 1: Vertical sliders</h3>
+<h3 id="example-9-vertical-sliders">Example 9: Vertical sliders</h3>
 <p>Instead of horizontal sliders, we could use vertical sliders. Just replace hslider(...) with vslider(...).</p>
 <!-- faust-run -->
 
@@ -483,7 +552,7 @@ process = stereoamp;
 
 <!-- /faust-run -->
 
-<h3 id="example-1-knobs-instead-of-sliders">Example 1: Knobs instead of sliders</h3>
+<h3 id="example-10-knobs-instead-of-sliders">Example 10: Knobs instead of sliders</h3>
 <p>By default sliders are ... sliders! You can change their appearance by using the metadata mechanism. </p>
 <p>Metadata is information that you put in square brackets in the slider name. For example the metadata "...[style:knob]..." allows you to turn the slider into a rotary knob.</p>
 <!-- faust-run -->
@@ -506,7 +575,7 @@ process = stereoamp;
 
 <!-- /faust-run -->
 
-<h3 id="example-1-syntactic-sugar">Example 1: Syntactic sugar</h3>
+<h3 id="example-11-syntactic-sugar">Example 11: Syntactic sugar</h3>
 <p>So far we used the core syntax of Faust. For example to multiply the incomming signal by <code>0.1</code> we wrote <code>_,0.1:*</code>. For numerical expressions this notation is not always the most convenient and sometime we would prefer to use the more traditional infix notation and write instead <code>_*0.1</code>. We can also use the prefixed notation and write <code>*(0.1)</code>. </p>
 <p>Let's rewrite the definition of the monoamp using the prefix notation:</p>
 <!-- faust-run -->
@@ -576,7 +645,7 @@ process = stereoamp;
 </tr>
 </tbody>
 </table>
-<h3 id="example-1-a-mute-button">Example 1: A <em>mute</em> button</h3>
+<h3 id="example-12-a-mute-button">Example 12: A <em>mute</em> button</h3>
 <p>We would like to be able to mute the sound completely at the touch of a button, without having to change the volume. </p>
 <p>Let's add a mute stage to our mono amplifier. In order to mute the signal we just have to mutiply it by 0. We will use for that purpose a <code>checkbox(...)</code>, a user interface element that produces a signal which is 0 by default and 1 when it is checked. As we want to multiply the signal by 0 when the checkbox is checked we will use <code>1-checkbox ("mute")</code>.</p>
 <!-- faust-run -->
@@ -601,7 +670,7 @@ process = stereoamp;
 
 <!-- /faust-run -->
 
-<h3 id="example-1-vertical-and-horizontal-layout">Example 1: Vertical and horizontal Layout</h3>
+<h3 id="example-13-vertical-and-horizontal-layout">Example 13: Vertical and horizontal Layout</h3>
 <p>As can be seen in the previous example, by default, the layout of the elements is vertical. You can change this layout by using  <code>hgroup(...)</code> and  <code>vgroup(...)</code>. For example to make the layout horizontal you can write:</p>
 <!-- faust-run -->
 
@@ -625,7 +694,7 @@ process = stereoamp;
 
 <!-- /faust-run -->
 
-<h3 id="example-1-differentiate-the-volume-of-the-two-channels">Example 1: Differentiate the volume of the two channels</h3>
+<h3 id="example-14-differentiate-the-volume-of-the-two-channels">Example 14: Differentiate the volume of the two channels</h3>
 <p>To differentiate the volume control of our two channels, we will parametrize monoamp with a channel number <code>c</code> which will be used to differentiate the name of each volume control. Note that the name <code>c</code> of the parameter must only have one letter to be well interpreted in the slider name <code>"volume %c[style:knob]"</code>.</p>
 <!-- faust-run -->
 
@@ -649,7 +718,7 @@ process = stereoamp;
 
 <!-- /faust-run -->
 
-<h3 id="example-1-having-many-channels">Example 1: Having many channels</h3>
+<h3 id="example-15-having-many-channels">Example 15: Having many channels</h3>
 <p>We have built a stereo amp, but suppose we wanted to generalize this construction to an arbitrary number of channels. To do so, we will instroduce the <code>par(i, N, ...)</code> construction which allows us to put several times an expression in parallel. It is in a way the equivalent of the for() loop of a classical programming language. </p>
 <p>In our case we want to indicate the number of channels of our amplifier.</p>
 <!-- faust-run -->
@@ -697,7 +766,7 @@ process = @(44100);
 
 <!-- /faust-run -->
 
-<h3 id="example-1-delay-of-01-second-on-the-right-channel">Example 1: Delay of 0.1 second on the right channel</h3>
+<h3 id="example-2-delay-of-01-second-on-the-right-channel">Example 2: Delay of 0.1 second on the right channel</h3>
 <p>To hear the delay better, let's put it only on the right channel and leave the left channel unchanged.</p>
 <!-- faust-run -->
 
@@ -715,7 +784,7 @@ process = _, @(4410);
 
 <!-- /faust-run -->
 
-<h3 id="example-1-stereo-delay-with-freeze">Example 1: Stereo Delay with freeze</h3>
+<h3 id="example-3-stereo-delay-with-freeze">Example 3: Stereo Delay with freeze</h3>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
@@ -747,7 +816,7 @@ process = stereoecho_demo;
 <h3 id="phase-generator">Phase Generator</h3>
 <p>The first step is to build a <em>phase generator</em> that produces a periodic sawtooth signal between 0 and 1. Here is the signal we want to generate :</p>
 <p><img src="img/phase-sig.png" width="80%" class="mx-auto d-block"></p>
-<h3 id="ramp">Ramp</h3>
+<h3 id="example-1-ramp">Example 1: Ramp</h3>
 <p>To do this we will produce an "infinite" ramp, which we will then transform into a periodic signal thanks to a <em>part-decimal</em> operation.</p>
 <p><img src="img/ramp-sig.png" width="80%" class="mx-auto d-block"></p>
 <p>The ramp is produced by the following program :</p>
@@ -796,7 +865,7 @@ process = 0.125 : + ~ _;
 </li>
 <li>...</li>
 </ul>
-<h3 id="signal-de-phase">Signal de phase</h3>
+<h3 id="example-2-a-phase-signal">Example 2: a phase signal</h3>
 <p>How do I turn the above ramp into a sawtooth signal? By deleting the whole part of the samples in order to keep only the decimal part: <script type="math/tex">3.14159\rightarrow 0.14159</script>.</p>
 <p>Let's define a function to do this:</p>
 <pre><code>decimalpart(x) = x - int(x);
@@ -843,7 +912,7 @@ process = phase;
 <pre><code>process = phase(440);
 </code></pre>
 
-<h3 id="sawtooth-signal-generator">Sawtooth signal generator</h3>
+<h3 id="example-3-sawtooth-signal-generator">Example 3: Sawtooth signal generator</h3>
 <p>We can now use the phase generator to produce a sawtooth signal:</p>
 <!-- faust-run -->
 
@@ -868,7 +937,7 @@ process = sawtooth(440);
 
 <!-- /faust-run -->
 
-<h3 id="square-wave-generator">Square wave generator</h3>
+<h3 id="example-4-square-wave-generator">Example 4: Square wave generator</h3>
 <p>We can also use the phase generatorr to produce a square wave signal:</p>
 <!-- faust-run -->
 
@@ -1020,7 +1089,7 @@ process     = sum(i, 4, partial(i+1,hslider(&quot;freq&quot;, 440, 20, 8000, 0.0
 <!-- /faust-run -->
 Note the use of the <code>sum(i, n, foo(i))</code> construction which is equivalent to <code>foo(0)+foo(1)+...+foo(n-1)</code>.</p>
 <h3 id="example-6-approximation-of-a-square-signal-by-additive-synthesis">Example 6: Approximation of a square signal by additive synthesis</h3>
-<p>We saw earlier how to produce a perfect square wave signal. This perfect square signal contains an infinite number of harmonics which, due to sampling, will fold over the audible spectrum, resulting in a less faithful noisy sound! A square signal can be approximated by additive synthesis, by adding an infinite series of odd harmonics (see <a href="https://fr.wikipedia.org/wiki/Signal_carré">https://fr.wikipedia.org/wiki/Signal_carré</a>).</p>
+<p>We saw earlier how to produce a perfect square wave signal. This perfect square signal contains an infinite number of harmonics which, due to sampling, will fold over the audible spectrum, resulting in a less faithful noisy sound! A square signal can be approximated by additive synthesis, by adding an infinite series of odd harmonics (see <a href="https://en.wikipedia.org/wiki/Square_wave">https://en.wikipedia.org/wiki/Square_wave</a>).</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
@@ -1045,7 +1114,7 @@ process = squarewave(55);
 
 <p>As an exercise, change the number of harmonics to see the approximation improve (but do not exceed SR/2).</p>
 <h3 id="example-7-approximation-of-a-sawtooth-signal-by-additive-synthesis">Example 7: Approximation of a sawtooth signal by additive synthesis</h3>
-<p>Similarly, a sawtooth signal can be approximated by additive synthesis, by adding an infinite series of harmonics (see <a href="https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie">https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie</a>).</p>
+<p>Similarly, a sawtooth signal can be approximated by additive synthesis, by adding an infinite series of harmonics (see <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">https://en.wikipedia.org/wiki/Sawtooth_wave</a>).</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust29/exfaust29.svg" class="mx-auto d-block">
@@ -1068,7 +1137,7 @@ process = sawtooth(55);
 
 <!-- /faust-run -->
 
-<h2 id="subtractive-synthesis">Subtractive synthesis</h2>
+<h2 id="part-5-subtractive-synthesis">Part 5: Subtractive synthesis</h2>
 <p>Subtractive synthesis is the opposite of additive synthesis. It consists of starting from a rich sound, for example white noise, and sculpting its spectrum.</p>
 <h3 id="example-1-a-white-noise">Example 1 : a white noise</h3>
 <p>A white noise generator
@@ -1216,7 +1285,7 @@ transformation = @(0) : *(hslider(&quot;gain&quot;, 0, -0.95, 0.95, 0.01));
 
 <!-- /faust-run -->
 
-<h3 id="example-8-filtre-en-peigne">Example 8 : filtre en peigne</h3>
+<h3 id="example-8-comb-filter">Example 8 : comb filter</h3>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust37/exfaust37.svg" class="mx-auto d-block">
@@ -1417,8 +1486,8 @@ string(coef, freq, t60, level, trig) = no.noise*level
 
 <!-- /faust-run -->
 
-<h2 id="synthesis-by-frequency-modulation">Synthesis by frequency modulation</h2>
-<h3 id="example-1-fm1">Example 1 : fm1</h3>
+<h2 id="part-6-synthesis-by-frequency-modulation">Part 6: Synthesis by frequency modulation</h2>
+<h3 id="example-1-frequency-modulation">Example 1 : frequency modulation</h3>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust41/exfaust41.svg" class="mx-auto d-block">
@@ -1426,7 +1495,7 @@ string(coef, freq, t60, level, trig) = no.noise*level
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 
-// FM: Frequency moulation
+// FM: Frequency modulation
 
 FM(fc,fm,amp) = fm : os.osc : *(amp) : +(1) : *(fc) : os.osc;
 
@@ -1447,7 +1516,7 @@ process = FM(
 
 <!-- /faust-run -->
 
-<h3 id="example-2-fm2">Example 2 : fm2</h3>
+<h3 id="example-2-frequency-modulation-with-envelops">Example 2 : frequency modulation with envelops</h3>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust42/exfaust42.svg" class="mx-auto d-block">
@@ -1455,7 +1524,7 @@ process = FM(
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 
-// FM: Frequency moulation 2
+// FM: Frequency modulation 2
 
 FM(fc,fm,amp) = fm : os.osc : *(amp) : +(1) : *(fc) : os.osc;
 
