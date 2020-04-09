@@ -240,11 +240,11 @@
 <h1 id="faust-101-for-the-confined">Faust 101 for the confined</h1>
 <p>The covid-19 containment offers us at least one excellent opportunity to train! If you've always wanted to get into Faust programming but didn't have the time, here's your chance! </p>
 <p>The objective of this workshop is to familiarize you with the Faust language through very simple examples of signal processing and sound synthesis.
-The documentation and the examples we will use can be found here : <a href="https://faustdoc.grame.fr">https://faustdoc.grame.fr</a>. All examples will be run in the online Faust IDE <a href="https://faustide.grame.fr">https://faustide.grame.fr</a>. If ever the sounds produced with the IDE are of poor quality, with some clicks, one can use the online editor, which is more rustic, but also lighter <a href="https://fausteditor.grame.fr">https://fausteditor.grame.fr</a>.</p>
+The documentation and the examples we will use can be found here: <a href="https://faustdoc.grame.fr">https://faustdoc.grame.fr</a>. All examples will be run in the online Faust IDE <a href="https://faustide.grame.fr">https://faustide.grame.fr</a>. If ever the sounds produced with the IDE are of poor quality, with some clicks, one can use the online editor, which is more rustic, but also lighter <a href="https://fausteditor.grame.fr">https://fausteditor.grame.fr</a>.</p>
 <h2 id="super-simple-examples">Super simple examples</h2>
 <p>Let start with super simple examples.</p>
 <h3 id="the-simplest-faust-program">The simplest Faust program</h3>
-<p>This is the simplest Faust program imaginable. It contains only one line of code, thr definition : <code>process = _;</code>.</p>
+<p>This is the simplest Faust program imaginable. It contains only one line of code, the definition: <code>process = _;</code>.</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -326,7 +326,7 @@ process = _, _;
 <!-- /faust-run -->
 
 <p>We made a <em>stereo cable</em> and when we play the audio file we now hear it on both speakers.</p>
-<p>It is very important to distinguish between <em>primitives</em>, such as <code>_</code>, <code>+</code> or <code>*</code>, and <em>composition operations</em> such as <code>,</code> or <code>;</code>.  <em>Primitives</em> represent operations on audio signals, whereas composition operations are used to link two audio operations together. In other words, you can write <code>+</code> or <code>*</code> alone, because they represent valid audio operations, but you can never write <code>,</code> or <code>:</code> alone because they are used to connect two audio operations You must always write <code>A,B</code> or <code>A:B</code>.</p>
+<p>It is very important to distinguish between <em>primitives</em>, such as <code>_</code>, <code>+</code> or <code>*</code>, and <em>composition operations</em> such as <code>,</code> or <code>;</code>.  <em>Primitives</em> represent operations on audio signals, whereas composition operations are used to link two audio operations together. In other words, you can write <code>+</code> or <code>*</code> alone, because they represent valid audio operations, but you can never write <code>,</code> or <code>:</code> alone because they are used to connect two audio operations. You must always write <code>A,B</code> or <code>A:B</code>.</p>
 <p>Here is a summary table of the five composition operators:</p>
 <table>
 <thead>
@@ -410,6 +410,64 @@ process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
+<!-- /faust-run -->
+
+<h3 id="structuring-the-program">Structuring the program</h3>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+
+<pre><code>
+monoamp = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
+process = monoamp;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="stereo-amplifier">Stereo Amplifier</h3>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+
+<pre><code>
+monoamp = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
+stereoamp = monoamp,monoamp;
+
+process = stereoamp;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="some-gui-control">Some gui control</h3>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+
+<pre><code>
+monoamp = _, hslider(&quot;volume[type:knob]&quot;, 0.1, 0, 1, 0.01) : *;
+stereoamp = hgroup(&quot;amp&quot;, monoamp,monoamp);
+
+process = stereoamp;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
 <!-- /faust-run --></div>
         </div>
 
@@ -420,10 +478,10 @@ process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
         </footer>
         <script>
             var base_url = "../..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
         </script>
         <script src="../../js/base.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
