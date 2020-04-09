@@ -18,7 +18,7 @@ Pour cela nous allons produire une rampe "infinie", que nous transformerons ensu
 
 <img src="img/ramp-sig.png" width="80%" class="mx-auto d-block">
 
-La rampe est produite par le programme suivant
+La rampe est produite par le programme suivant :
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -234,6 +234,7 @@ process = os.osc(440) * hslider("gain", 0.1, 0, 1, 0.01);
 
 Le premier paramètre est une chaine de caractère qui indique le nom du slider. Il est suivi de quatre paramètres numériques. Le deuxième paramètre `0.1` indique la valeur par défaut du slider, c'est à dire la valeur que va délivrer le slider quand on lance le programme. Ensuite nous avons la valeur minimale `0`, la valeur maximale `1` et le pas de variation `0.01`.
 
+
 ### Exemple 3 : Exercice, ajouter un contrôle de fréquence
 
 A titre d'exercice, remplacer, dans l'exemple précédent, la fréquence 440 par un slider horizontal dont le nom sera `"freq"`, la valeur par défaut `110`, la valeur minimale `40`, la valeur maximale `8000` et le pas `1`.
@@ -276,6 +277,7 @@ process = os.osc(hslider("freq", 440, 20, 20000, 1)) * hslider("gain", 0.1, 0, 1
 </div>
 <!-- /faust-run -->
 
+
 ### Exemple 5 : Synthèse additive
 
 Un exemple de synthèse additive ou le niveau de chaque partiel peut être réglé individuellement. 
@@ -302,8 +304,6 @@ process 	= sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
  A noter l'utilisation de la construction `sum(i, n, foo(i))` qui est equivalente à `foo(0)+foo(1)+...+foo(n-1)`.
 
 
-
-
 ### Exemple 6 : Approximation d'un signal carré par synthèse additive
 Nous avons vu précédemment comment produire une signal carré parfait. Ce signal carré parfait comporte une infinité d'harmoniques qui, du fait de l'échantillonnage, vont se replier sur le spectre audible, ce qui va donner un son bruité moins fidèle ! On peut approximer un signal carré par synthèse additive, en additionnant une serie infinie d'harmoniques impaires (voir [https://fr.wikipedia.org/wiki/Signal_carré](https://fr.wikipedia.org/wiki/Signal_carré)).
 
@@ -325,9 +325,7 @@ process = squarewave(55);
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
-A titre d'excercice, faire varier le nombre d'harmoniques pour voir l'approximation s'améliorer (mais sans dépasser SR/2)
-
-
+A titre d'excercice, faire varier le nombre d'harmoniques pour voir l'approximation s'améliorer (mais sans dépasser SR/2).
 
 
 ### Exemple 7 : Approximation d'un signal en dent de scie par synthèse additive
@@ -352,7 +350,6 @@ process = sawtooth(55);
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
-
 
 
 ## Synthèse soustractive
@@ -709,7 +706,6 @@ string(coef, freq, t60, level, trig) = no.noise*level
 ### Exemple 1 : fm1
 
 
-
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust23/exfaust23.svg" class="mx-auto d-block">
 ~~~
@@ -737,7 +733,6 @@ process = FM(
 
 
 ### Exemple 2 : fm2
-
 
 
 <!-- faust-run -->

@@ -302,7 +302,7 @@ where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</
 <pre><code>process = 0.125 : (+ : decimalpart) ~ _ ;
 </code></pre>
 
-<p>We can now listen the produced signal. Just copy and past <code>decimalpart</code> and <code>process</code> definitions into the <a href="https://faust.grame.fr/tools/editor">Faust editor</a></p>
+<p>We can now listen the produced signal. Just copy and past <code>decimalpart</code> and <code>process</code> definitions into the <a href="https://fausteditor.grame.fr">Faust editor</a></p>
 <h2 id="controlling-the-frequency-of-the-phase-signal">Controlling the Frequency of the Phase Signal</h2>
 <p>Let's first rearrange our code</p>
 <!-- faust-run -->
@@ -374,7 +374,7 @@ process = osc(440);
 </code></pre>
 
 <h2 id="adding-an-envelope-generator">Adding an Envelope Generator</h2>
-<p>It is a good idea to also add an envelop generator. Here we will use a predefined adsr in the Standard Faust library.</p>
+<p>It is a good idea to also add an envelop generator. Here we will use a predefined ADSR in the Standard Faust library.</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
