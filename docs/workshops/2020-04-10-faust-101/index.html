@@ -495,6 +495,149 @@ process = stereoamp;
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
+<!-- /faust-run -->
+
+<h3 id="syntactic-sugar">Syntactic sugar</h3>
+<p>So far we used the core syntax of Faust. For example to multiply the incomming signal by <code>0.1</code> we wrote <code>_,0.1:*</code>. For numerical expressions this notation is not always the most convenient and sometime we would prefer to use the more traditional infix notation and write instead <code>_*0.1</code>. We can also use the prefixed notation and write <code>*(0.1)</code>. </p>
+<p>Let's rewrite the definition of the monoamp using the prefix notation:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+
+<pre><code>
+monoamp = *(vslider(&quot;volume[style:knob]&quot;, 0.1, 0, 1, 0.01));
+
+stereoamp = monoamp,monoamp;
+
+process = stereoamp;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust10/exfaust10.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>Here is a table of equivalent notations. Keep in mind that infix and prefix expressions are translated to core syntax.</p>
+<p>Here is a table with the same expression in all three syntaxes.</p>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_,0.1:*</code></td>
+<td>core syntax</td>
+</tr>
+<tr>
+<td><code>_*0.1</code></td>
+<td>infix notation</td>
+</tr>
+<tr>
+<td><code>*(0.1)</code></td>
+<td>prefix notation</td>
+</tr>
+</tbody>
+</table>
+<p>These notations can be freely combined. For example, the following expressions are all equivalent:</p>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*(1-m)</code></td>
+<td>prefix + infix notation</td>
+</tr>
+<tr>
+<td><code>_*(1-m)</code></td>
+<td>only infix notation</td>
+</tr>
+<tr>
+<td><code>_,(1,m:-):*</code></td>
+<td>core syntax</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a-mute-button">A <em>mute</em> button</h3>
+<p>We would like to be able to mute the sound completely at the touch of a button, without having to change the volume. </p>
+<p>Let's add a mute stage to our mono amplifier. In order to mute the signal we just have to mutiply it by 0. We will use for that purpose a <code>checkbox(...)</code>, a user interface element that produces a signal which is 0 by default and 1 when it is checked. As we want to multiply the signal by 0 when the checkbox is checked we will use <code>1-checkbox ("mute")</code>.</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+
+<pre><code>
+mute = *(1-checkbox(&quot;mute&quot;));
+
+monoamp = *(vslider(&quot;volume[style:knob]&quot;, 0.1, 0, 1, 0.01)) : mute;
+
+stereoamp = monoamp,monoamp;
+
+process = stereoamp;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust11/exfaust11.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="vertical-and-horizontal-layout">Vertical and horizontal Layout</h3>
+<p>As can be seen in the previous example, by default, the layout of the elements is vertical. You can change this layout by using  <code>hgroup(...)</code> and  <code>vgroup(...)</code>. For example to make the layout horizontal you can write:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+
+<pre><code>
+mute = *(1-checkbox(&quot;mute&quot;));
+
+monoamp = *(vslider(&quot;volume[style:knob]&quot;, 0.1, 0, 1, 0.01)) : mute;
+
+stereoamp = hgroup(&quot;Marshall&quot;, monoamp,monoamp);
+
+process = stereoamp;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust12/exfaust12.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="differentiate-the-volume-of-the-two-channels">Differentiate the volume of the two channels</h3>
+<p>To differentiate the volume control of our two channels, we will parametrize monoamp with a channel number <code>c</code> which will be used to differentiate the name of each volume control. Note that the name <code>c</code> of the parameter must only have one letter to be well interpreted in the slider name <code>"volume %c[style:knob]"</code>.</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+
+<pre><code>
+mute = *(1-checkbox(&quot;mute&quot;));
+
+monoamp(c) = *(vslider(&quot;volume %c[style:knob]&quot;, 0.1, 0, 1, 0.01)) : mute;
+
+stereoamp = hgroup(&quot;Marshall&quot;, monoamp(1),monoamp(2));
+
+process = stereoamp;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust13/exfaust13.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
 <!-- /faust-run --></div>
         </div>
 
