@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> generator  - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/overview/">Overview</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li class="active">
+    <a href="./"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li >
+    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li >
+    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../gameaudio/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../misc/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#generator">generator</a></li>
+            <li><a href="#filterosc">filterOsc</a></li>
+            <li><a href="#kisana">kisana</a></li>
+            <li><a href="#noise">noise</a></li>
+            <li><a href="#noisemetadata">noiseMetadata</a></li>
+            <li><a href="#osc">osc</a></li>
+            <li><a href="#osci">osci</a></li>
+            <li><a href="#sawtoothlab">sawtoothLab</a></li>
+            <li><a href="#virtualanalog">virtualAnalog</a></li>
+            <li><a href="#virtualanaloglab">virtualAnalogLab</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="generator">generator</h1>
+<h2 id="filterosc">filterOsc</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;filterOSC&quot;;
+declare version &quot;0.0&quot;;
+declare author &quot;JOS, revised by RM&quot;;
+declare description &quot;Simple application demoing filter based oscillators.&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = dm.oscrs_demo;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="kisana">kisana</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+process = vgroup(&quot;Kisana&quot;,environment{declare name      &quot;Kisana&quot;;
+declare author  &quot;Yann Orlarey&quot;;
+
+//Modifications GRAME July 2015
+
+/* ========= DESCRITPION =============
+
+- Kisana : 3-loops string instrument (based on Karplus-Strong)
+- Head = Silence
+- Tilt = High frequencies 
+- Front = High + Medium frequencies
+- Bottom = High + Medium + Low frequencies
+- Left = Minimum brightness
+- Right = Maximum birghtness
+- Front = Long notes
+- Back = Short notes
+
+*/
+
+import(&quot;stdfaust.lib&quot;);
+
+KEY = 60;   // basic midi key
+NCY = 15;   // note cycle length
+CCY = 15;   // control cycle length
+BPS = 360;  // general tempo (ba.beat per sec)
+
+process = kisana;    
+
+//-------------------------------kisana----------------------------------
+// USAGE:  kisana : _,_;
+//      3-loops string instrument
+//-----------------------------------------------------------------------
+
+kisana = vgroup(&quot;Kisana&quot;, harpe(C,11,48), harpe(C,11,60), (harpe(C,11,72) : *(1.5), *(1.5)) 
+    :&gt;*(l))
+    with {
+        l = -20 : ba.db2linear;//hslider(&quot;[1]Volume&quot;,-20, -60, 0, 0.01) : ba.db2linear;
+        C = hslider(&quot;[2]Brightness[acc:0 1 -10 0 10]&quot;, 0.2, 0, 1, 0.01) : ba.automat(BPS, CCY, 0.0);
+    };
+
+//----------------------------------Harpe--------------------------------
+// USAGE:  harpe(C,10,60) : _,_;
+//      C is the filter coefficient 0..1
+//      Build a N (10) strings harpe using a pentatonic scale 
+//      based on midi key b (60)
+//      Each string is triggered by a specific
+//      position of the &quot;hand&quot;
+//-----------------------------------------------------------------------
+harpe(C,N,b) =  hand(b) &lt;: par(i, N, position(i+1)
+                            : string(C,Penta(b).degree2Hz(i), att, lvl)
+                            : pan((i+0.5)/N) )
+                    :&gt; _,_
+    with {
+        att  = hslider(&quot;[3]Resonance[acc:2 1 -10 0 12]&quot;, 4, 0.1, 10, 0.01); 
+        hand(48) = vslider(&quot;h:[1]Instrument Hands/1 (Note %b)[unit:pk][acc:1 0 -10 0 14]&quot;, 0, 0, N, 1) : int : ba.automat(120, CCY, 0.0);
+        hand(60) = vslider(&quot;h:[1]Instrument Hands/2 (Note %b)[unit:pk][acc:1 0 -10 0 14]&quot;, 2, 0, N, 1) : int : ba.automat(240, CCY, 0.0);
+        hand(72) = vslider(&quot;h:[1]Instrument Hands/3 (Note %b)[unit:pk][acc:1 0 -10 0 10]&quot;, 4, 0, N, 1) : int : ba.automat(480, CCY, 0.0);
+        //lvl  = vslider(&quot;h:loop/level&quot;, 0, 0, 6, 1) : int : ba.automat(BPS, CCY, 0.0) : -(6) : ba.db2linear; 
+        lvl = 1;
+        pan(p) = _ &lt;: *(sqrt(1-p)), *(sqrt(p));
+        position(a,x) = abs(x - a) &lt; 0.5;
+    };
+
+//----------------------------------Penta-------------------------------
+// Pentatonic scale with degree to midi and degree to Hz conversion
+// USAGE: Penta(60).degree2midi(3) ==&gt; 67 midikey
+//        Penta(60).degree2Hz(4)   ==&gt; 440 Hz
+//-----------------------------------------------------------------------
+
+Penta(key) = environment {
+
+    A4Hz = 440; 
+
+    degree2midi(0) = key+0;
+    degree2midi(1) = key+2;
+    degree2midi(2) = key+4;
+    degree2midi(3) = key+7;
+    degree2midi(4) = key+9;
+    degree2midi(d) = degree2midi(d-5)+12;
+
+    degree2Hz(d) = A4Hz*semiton(degree2midi(d)-69) with { semiton(n) = 2.0^(n/12.0); };
+
+}; 
+
+//----------------------------------String-------------------------------
+// A karplus-strong string.
+//
+// USAGE: string(440Hz, 4s, 1.0, button(&quot;play&quot;))
+// or     button(&quot;play&quot;) : string(440Hz, 4s, 1.0)
+//-----------------------------------------------------------------------
+
+string(coef, freq, t60, level, trig) = no.noise*level
+                            : *(trig : trigger(freq2samples(freq)))
+                            : resonator(freq2samples(freq), att)
+    with {
+        resonator(d,a)  = (+ : @(d-1)) ~ (average : *(a));
+        average(x)      = (x*(1+coef)+x'*(1-coef))/2;
+        trigger(n)      = upfront : + ~ decay(n) : &gt;(0.0);
+        upfront(x)      = (x-x') &gt; 0.0;
+        decay(n,x)      = x - (x&gt;0.0)/n;
+        freq2samples(f) = 44100.0/f;
+        att             = pow(0.001,1.0/(freq*t60)); // attenuation coefficient
+        random          = +(12345)~*(1103515245);
+        noise           = random/2147483647.0;
+    };
+
+
+}.process);
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="noise">noise</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check noises.lib
+// for more accurate examples of noise functions
+
+declare name        &quot;Noise&quot;;
+declare version     &quot;1.1&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2009&quot;;
+
+//-----------------------------------------------------------------
+// Noise generator and demo file for the Faust math documentation
+//-----------------------------------------------------------------
+
+&lt;mdoc&gt;
+\section{Presentation of the &quot;noise.dsp&quot; Faust program}
+This program describes a white noise generator with an interactive volume, using a random function.
+
+\subsection{The random function}
+The \texttt{random} function describes a generator of random numbers, which equation follows. You should notice hereby the use of an integer arithmetic on 32 bits, relying on integer wrapping for big numbers.
+&lt;equation&gt;random&lt;/equation&gt;
+
+\subsection{The noise function}
+The white noise then corresponds to:
+&lt;equation&gt;noise&lt;/equation&gt;
+&lt;/mdoc&gt;
+
+random  = +(12345)~*(1103515245);
+noise   = random/2147483647.0;
+
+&lt;mdoc&gt;
+\subsection{Just add a user interface element to play volume!}
+Endly, the sound level of this program is controlled by a user slider, which gives the following equation: 
+&lt;equation&gt;process&lt;/equation&gt;
+&lt;/mdoc&gt;
+
+&lt;mdoc&gt;
+\section{Block-diagram schema of process}
+This process is illustrated on figure 1.
+&lt;diagram&gt;process&lt;/diagram&gt;
+&lt;/mdoc&gt;
+
+process = noise * vslider(&quot;Volume[style:knob][acc: 0 0 -10 0 10]&quot;, 0.5, 0, 1, 0.1);
+
+&lt;mdoc&gt;
+\section{Notice of this documentation}
+You might be careful of certain information and naming conventions used in this documentation:
+&lt;notice/&gt;
+
+\section{Listing of the input code}
+The following listing shows the input Faust code, parsed to compile this mathematical documentation.
+&lt;listing/&gt;
+&lt;/mdoc&gt;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="noisemetadata">noiseMetadata</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check noises.lib
+// for more accurate examples of noise functions
+
+&lt;mdoc&gt;
+\title{&lt;metadata&gt;name&lt;/metadata&gt;}
+\author{&lt;metadata&gt;author&lt;/metadata&gt;}
+\date{\today}
+\maketitle
+
+\begin{tabular}{ll}
+    \hline
+    \textbf{name}       &amp; &lt;metadata&gt;name&lt;/metadata&gt; \\
+    \textbf{version}    &amp; &lt;metadata&gt;version&lt;/metadata&gt; \\
+    \textbf{author}     &amp; &lt;metadata&gt;author&lt;/metadata&gt; \\
+    \textbf{license}    &amp; &lt;metadata&gt;license&lt;/metadata&gt; \\
+    \textbf{copyright}  &amp; &lt;metadata&gt;copyright&lt;/metadata&gt; \\
+    \hline
+\end{tabular}
+\bigskip
+&lt;/mdoc&gt;
+//-----------------------------------------------------------------
+// Noise generator and demo file for the Faust math documentation
+//-----------------------------------------------------------------
+
+declare name        &quot;noiseMetadata&quot;; // avoid same name as in noise.dsp
+declare version     &quot;1.1&quot;;
+declare author      &quot;Grame&quot;;
+declare author      &quot;Yghe&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2009&quot;;
+
+&lt;mdoc&gt;
+\section{Presentation of the &quot;noise.dsp&quot; Faust program}
+This program describes a white noise generator with an interactive volume, using a random function.
+
+\subsection{The random function}
+&lt;/mdoc&gt;
+
+random  = +(12345)~*(1103515245);
+
+&lt;mdoc&gt;
+The \texttt{random} function describes a generator of random numbers, which equation follows. You should notice hereby the use of an integer arithmetic on 32 bits, relying on integer wrapping for big numbers.
+&lt;equation&gt;random&lt;/equation&gt;
+
+\subsection{The noise function}
+&lt;/mdoc&gt;
+
+noise   = random/2147483647.0;
+
+&lt;mdoc&gt;
+The white noise then corresponds to:
+&lt;equation&gt;noise&lt;/equation&gt;
+
+\subsection{Just add a user interface element to play volume!}
+&lt;/mdoc&gt;
+
+process = noise * vslider(&quot;Volume[style:knob]&quot;, 0, 0, 1, 0.1);
+
+&lt;mdoc&gt;
+Endly, the sound level of this program is controlled by a user slider, which gives the following equation: 
+&lt;equation&gt;process&lt;/equation&gt;
+
+\section{Block-diagram schema of process}
+This process is illustrated on figure 1.
+&lt;diagram&gt;process&lt;/diagram&gt;
+
+\section{Notice of this documentation}
+You might be careful of certain information and naming conventions used in this documentation:
+&lt;notice /&gt;
+
+\section{Listing of the input code}
+The following listing shows the input Faust code, parsed to compile this mathematical documentation.
+&lt;listing mdoctags=&quot;false&quot; dependencies=&quot;false&quot; distributed=&quot;false&quot; /&gt;
+&lt;/mdoc&gt;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="osc">osc</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name        &quot;osc&quot;;
+declare version     &quot;1.0&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2009&quot;;
+
+//-----------------------------------------------
+//          Sinusoidal Oscillator
+//-----------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq = hslider(&quot;freq [unit:Hz]&quot;, 1000, 20, 24000, 1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol);
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="osci">osci</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name        &quot;osci&quot;;
+declare version     &quot;1.0&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2009&quot;;
+
+//-----------------------------------------------
+//          Sinusoidal Oscillator
+//      (with linear interpolation)
+//-----------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo ;
+freq = hslider(&quot;freq [unit:Hz]&quot;, 1000, 20, 24000, 1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osci(freq) * vol);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="sawtoothlab">sawtoothLab</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;sawtoothLab&quot;;
+declare version &quot;0.0&quot;;
+declare author &quot;JOS, revised by RM&quot;;
+declare description &quot;An application demonstrating the different sawtooth oscillators of Faust.&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = dm.sawtooth_demo;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="virtualanalog">virtualAnalog</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;VirtualAnalog&quot;;
+declare version &quot;0.0&quot;;
+declare author &quot;JOS, revised by RM&quot;;
+declare description &quot;Virtual analog oscillator demo application.&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = dm.virtual_analog_oscillator_demo;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="virtualanaloglab">virtualAnalogLab</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;virtualAnalogLab&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = 
+ vgroup(&quot;[1]&quot;, dm.virtual_analog_oscillator_demo) : 
+ vgroup(&quot;[2]&quot;, dm.moog_vcf_demo) : 
+ vgroup(&quot;[3]&quot;, dm.spectral_level_demo)
+ // See also: vgroup(&quot;[3]&quot;, dm.fft_spectral_level_demo(32))
+  &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run --></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

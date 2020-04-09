@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> physicalModeling  - Faust Language</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Language</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../guide/introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/overview/">Overview</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/midi/">MIDI Support</a>
+</li>
+                                    
+<li >
+    <a href="../../guide/mathdoc/">Math. Doc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../refs/syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../../refs/tools/">Using Tools</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../phasing/"> phasing </a>
+</li>
+                                    
+<li class="active">
+    <a href="./"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li >
+    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li >
+    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../phasing/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../pitchShifting/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#physicalmodeling">physicalModeling</a></li>
+            <li><a href="#brass">brass</a></li>
+            <li><a href="#brassmidi">brassMIDI</a></li>
+            <li><a href="#churchbell">churchBell</a></li>
+            <li><a href="#clarinet">clarinet</a></li>
+            <li><a href="#clarinetmidi">clarinetMIDI</a></li>
+            <li><a href="#djembemidi">djembeMIDI</a></li>
+            <li><a href="#elecguitarmidi">elecGuitarMIDI</a></li>
+            <li><a href="#englishbell">englishBell</a></li>
+            <li><a href="#flute">flute</a></li>
+            <li><a href="#flutemidi">fluteMIDI</a></li>
+            <li><a href="#frenchbell">frenchBell</a></li>
+            <li><a href="#germanbell">germanBell</a></li>
+            <li><a href="#guitarmidi">guitarMIDI</a></li>
+            <li><a href="#karplus">karplus</a></li>
+            <li><a href="#marimbamidi">marimbaMIDI</a></li>
+            <li><a href="#modularinterpinstrmidi">modularInterpInstrMIDI</a></li>
+            <li><a href="#nylonguitarmidi">nylonGuitarMIDI</a></li>
+            <li><a href="#russianbell">russianBell</a></li>
+            <li><a href="#standardbell">standardBell</a></li>
+            <li><a href="#violin">violin</a></li>
+            <li><a href="#violinmidi">violinMIDI</a></li>
+            <li><a href="#vocalbp">vocalBP</a></li>
+            <li><a href="#vocalbpmidi">vocalBPMIDI</a></li>
+            <li><a href="#vocalfof">vocalFOF</a></li>
+            <li><a href="#vocalfofmidi">vocalFOFMIDI</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="physicalmodeling">physicalModeling</h1>
+<h2 id="brass">brass</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;Brass&quot;;
+declare description &quot;Simple brass instrument physical model with physical parameters.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.brass_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="brassmidi">brassMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;BrassMIDI&quot;;
+declare description &quot;Simple MIDI-controllable brass instrument physical model with physical parameters.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.brass_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="churchbell">churchBell</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;ChurchBell&quot;;
+declare description &quot;Generic church bell physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.churchBell_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="clarinet">clarinet</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;Clarinet&quot;;
+declare description &quot;Simple clarinet physical model with physical parameters.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.clarinet_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="clarinetmidi">clarinetMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;ClarinetMIDI&quot;;
+declare description &quot;Simple MIDI-controllable clarinet physical model with physical parameters.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.clarinet_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="djembemidi">djembeMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;DjembeMIDI&quot;;
+declare description &quot;Simple MIDI-controllable djembe physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.djembe_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="elecguitarmidi">elecGuitarMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;ElecGuitarMidi&quot;;
+declare description &quot;Simple electric guitar model without effect chain.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+// TODO: We could potentially add an audio effect chain here
+
+process = pm.elecGuitar_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="englishbell">englishBell</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;EnglishChurchBell&quot;;
+declare description &quot;English church bell physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.englishBell_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="flute">flute</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;Flute&quot;;
+declare description &quot;Simple flute physical model with physical parameters.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.flute_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="flutemidi">fluteMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;FluteMIDI&quot;;
+declare description &quot;Simple MIDI-controllable flute physical model with physical parameters.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.flute_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust9/exfaust9.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="frenchbell">frenchBell</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;FrenchChurchBell&quot;;
+declare description &quot;French church bell physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.frenchBell_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust10/exfaust10.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="germanbell">germanBell</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;GermanChurchBell&quot;;
+declare description &quot;German church bell physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.germanBell_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust11/exfaust11.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="guitarmidi">guitarMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;GuitarMidi&quot;;
+declare description &quot;Simple acoustic guitar model with steel strings.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.guitar_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust12/exfaust12.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="karplus">karplus</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;KarplusStrong&quot;;
+declare description &quot;Simple call of the Karplus-Strong model for the Faust physical modeling library&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.ks_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust13/exfaust13.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="marimbamidi">marimbaMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: this model is incomplete and is only here for testing purposes
+
+declare name &quot;MarimbaMIDI&quot;;
+declare description &quot;Simple MIDI-controllable marimba physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.marimba_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust14/exfaust14.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="modularinterpinstrmidi">modularInterpInstrMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;ModularInterpInstrMidi&quot;;
+declare description &quot;String instrument with a modular body&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon &amp; John Granzow, CCRMA (Stanford University), GRAME, University of Michigan&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.modularInterpInstr_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust15/exfaust15.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="nylonguitarmidi">nylonGuitarMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;NylonGuitarMidi&quot;;
+declare description &quot;Simple acoustic guitar model with nylon strings.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.nylonGuitar_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust16/exfaust16.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="russianbell">russianBell</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;RussianChurchBell&quot;;
+declare description &quot;Russian church bell physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.russianBell_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust17/exfaust17.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="standardbell">standardBell</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;StandardChurchBell&quot;;
+declare description &quot;Standard church bell physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.standardBell_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust18/exfaust18.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="violin">violin</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;Violin&quot;;
+declare description &quot;Simple violin physical model controlled with continuous parameters.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.violin_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust19/exfaust19.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="violinmidi">violinMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;ViolinMidi&quot;;
+declare description &quot;Simple MIDI-controllable violin physical model.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.violin_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust20/exfaust20.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="vocalbp">vocalBP</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;Vocal BandPass&quot;;
+declare description &quot;Simple source-filter vocal synthesizer.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.SFFormantModelBP_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust21/exfaust21.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="vocalbpmidi">vocalBPMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;Vocal BandPass MIDI&quot;;
+declare description &quot;Simple MIDI-controllable source-filter vocal synthesizer.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.SFFormantModelBP_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust22/exfaust22.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="vocalfof">vocalFOF</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust23/exfaust23.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;Vocal FOF&quot;;
+declare description &quot;FOF vocal synthesizer.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Mike Olsen, CCRMA (Stanford University)&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.SFFormantModelFofSmooth_ui &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust23/exfaust23.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="vocalfofmidi">vocalFOFMIDI</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust24/exfaust24.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;Vocal FOF MIDI&quot;;
+declare description &quot;MIDI-controllable FOF vocal synthesizer.&quot;;
+declare license &quot;MIT&quot;;
+declare copyright &quot;(c)Mike Olsen, CCRMA (Stanford University)&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = pm.SFFormantModelFofSmooth_ui_MIDI &lt;: _,_;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust24/exfaust24.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run --></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
