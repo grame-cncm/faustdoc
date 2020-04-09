@@ -3,7 +3,7 @@ mute = *(1-checkbox("mute"));
 
 monoamp(c) = *(vslider("volume %c[style:knob]", 0.1, 0, 1, 0.01)) : mute;
 
-stereoamp = hgroup("Marshall", monoamp(0),monoamp(1));
+multiamp(N) = hgroup("Marshall", par(i, N, monoamp(i)));
 
-process = stereoamp;
+process = multiamp(2); // try multiamp(4)
 
