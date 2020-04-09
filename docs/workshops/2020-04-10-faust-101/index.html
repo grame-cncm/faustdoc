@@ -482,7 +482,7 @@ process = stereoamp;
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 
 <pre><code>
-monoamp = _, vslider(&quot;volume[type:knob]&quot;, 0.1, 0, 1, 0.01) : *;
+monoamp = _, vslider(&quot;volume[style:knob]&quot;, 0.1, 0, 1, 0.01) : *;
 
 stereoamp = monoamp,monoamp;
 

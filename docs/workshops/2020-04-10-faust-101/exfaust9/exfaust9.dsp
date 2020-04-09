@@ -1,5 +1,5 @@
 
-monoamp = _, vslider("volume[type:knob]", 0.1, 0, 1, 0.01) : *;
+monoamp = _, vslider("volume[style:knob]", 0.1, 0, 1, 0.01) : *;
 
 stereoamp = monoamp,monoamp;
 
