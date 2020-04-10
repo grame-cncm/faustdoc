@@ -236,7 +236,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#faust-101-for-the-confined">Faust 101 for the confined</a></li>
-            <li><a href="#faust-in-few-words">Faust in few words</a></li>
+            <li><a href="#faust-in-a-few-words">Faust in a few words</a></li>
             <li><a href="#part-1-very-simple-examples">Part 1: Very simple examples</a></li>
             <li><a href="#part-2-delays-and-feedbacks">Part 2: Delays and Feedbacks</a></li>
             <li><a href="#part-3-basic-oscillators">Part 3: Basic Oscillators</a></li>
@@ -249,13 +249,13 @@
 
 <p><img src="img/logo-faust.png" width="80%" class="mx-auto d-block"></p>
 <h1 id="faust-101-for-the-confined">Faust 101 for the confined</h1>
-<p>The covid-19 containment offers us at least one excellent opportunity to train! If you've always wanted to get into Faust programming but didn't have the time, here's your chance! </p>
-<p>The objective of this workshop is to familiarize you with the Faust language through very simple examples of signal processing and sound synthesis.
+<p>The covid-19 containment gives us at least one excellent opportunity to train! If you've always wanted to get into Faust programming but didn't have the time, here's your chance! </p>
+<p>The objective of this workshop is to help you get familiar with the Faust language through very simple examples of signal processing and sound synthesis.
 The documentation and the examples we will use can be found here:</p>
 <ul>
 <li><strong><a href="https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/">https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/</a></strong></li>
 </ul>
-<p>Additionnally, the documentation of the Faust libraries is available here:</p>
+<p>Additionnally, the documentation of Faust libraries is available here:</p>
 <ul>
 <li><strong><a href="https://faustlibraries.grame.fr/">https://faustlibraries.grame.fr/</a></strong></li>
 </ul>
@@ -267,7 +267,7 @@ The documentation and the examples we will use can be found here:</p>
 <ul>
 <li><strong><a href="https://fausteditor.grame.fr">https://fausteditor.grame.fr</a></strong></li>
 </ul>
-<h2 id="faust-in-few-words">Faust in few words</h2>
+<h2 id="faust-in-a-few-words">Faust in a few words</h2>
 <ul>
 <li>Faust is a Domain-Specific Language for real-time signal processing and synthesis (like Csound, Max/MSP, Supercollider, Puredata,. . . ).</li>
 <li>Faust is based on purely functional approach</li>
@@ -277,7 +277,7 @@ The documentation and the examples we will use can be found here:</p>
 <li>Faust offers end-users a high-level alternative to C to develop audio applications for a large variety of platforms.</li>
 </ul>
 <h2 id="part-1-very-simple-examples">Part 1: Very simple examples</h2>
-<p>Let start with some simple examples of Faust programs.</p>
+<p>Let's start with some simple examples of Faust programs.</p>
 <h3 id="example-1-the-simplest-faust-program">Example 1: The simplest Faust program</h3>
 <p>This is the simplest Faust program imaginable. It contains only one line of code, the definition: <code>process = _;</code>.</p>
 <!-- faust-run -->
@@ -300,9 +300,9 @@ process = _;
 <ul>
 <li>a Faust program has at least one definition, that of the keyword <code>process</code> which indicates the entry point of the program. </li>
 <li>A definition always ends with a <code>;</code>. A common mistake is to forget the semicolon at the end of a definition.</li>
-<li>the <code>_</code> sign represents one of the <em>primitives</em> of the language (primitives are the predefined functions of the language). It represents an <em>audio cable</em> that lets the signal pass through without transforming it. This is what one calls in mathematics the <em>identity</em> function, the signal which enters on the left comes out on the right identically. </li>
+<li>the <code>_</code> sign represents one of the <em>primitives</em> of the language (primitives are the predefined functions of the language). It represents an <em>audio cable</em> that lets the signal pass through without transforming it. This is what one calls in mathematics the <em>identity</em> function, the signal that enters on the left comes out on the right identically. </li>
 </ul>
-<p>Lets try this program using the online Faust IDE...</p>
+<p>Let's try this program using the online Faust IDE...</p>
 <h3 id="example-2-adding-two-signals">Example 2: Adding two signals</h3>
 <p>We saw in the previous example the primitive <code>_</code>. Faust has a large number of primitives, including all mathematical operations (see ).</p>
 <p>The <code>+</code> primitive for instance is used to add two signals. It can therefore be used to transform a stereophonic signal (on two channels) into a monophonic signal as in the following example:</p>
@@ -491,7 +491,7 @@ process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 <!-- /faust-run -->
 
 <h3 id="example-7-mono-amplifier">Example 7: Mono Amplifier</h3>
-<p>So far we have written very simple programs that fit into one line of code. We will now introduce additional definitions. A definition should be understood as a way of giving a name to something, which saves us from typing the definition every time and makes the program easier to understand.</p>
+<p>We have written very simple programs so far, that fit into one line of code. We will now introduce additional definitions. A definition should be understood as a way of giving a name to something, which saves us from typing the definition every time and makes the program easier to understand.</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
@@ -576,7 +576,7 @@ process = stereoamp;
 <!-- /faust-run -->
 
 <h3 id="example-11-syntactic-sugar">Example 11: Syntactic sugar</h3>
-<p>So far we used the core syntax of Faust. For example to multiply the incomming signal by <code>0.1</code> we wrote <code>_,0.1:*</code>. For numerical expressions this notation is not always the most convenient and sometime we would prefer to use the more traditional infix notation and write instead <code>_*0.1</code>. We can also use the prefixed notation and write <code>*(0.1)</code>. </p>
+<p>We have used the core syntax of Faust so far. For example to multiply the incomming signal by <code>0.1</code> we wrote <code>_,0.1:*</code>. For numerical expressions this notation is not always the most convenient and sometimes we would prefer to use the more traditional infix notation and write instead <code>_*0.1</code>. We can also use the prefixed notation and write <code>*(0.1)</code>. </p>
 <p>Let's rewrite the definition of the monoamp using the prefix notation:</p>
 <!-- faust-run -->
 
@@ -812,7 +812,7 @@ process = stereoecho_demo;
 <!-- /faust-run -->
 
 <h2 id="part-3-basic-oscillators">Part 3: Basic Oscillators</h2>
-<p>By convention, in Faust, a full-scale audio signal varies between -1 and +1, but first we will start with a sawtooth signal between 0 and 1 which will then be used as a <em>phase generator</em> to produce different waveforms.</p>
+<p>By convention, in Faust, a full-scale audio signal varies between -1 and +1, but we will first start with a sawtooth signal between 0 and 1 which will then be used as a <em>phase generator</em> to produce different waveforms.</p>
 <h3 id="phase-generator">Phase Generator</h3>
 <p>The first step is to build a <em>phase generator</em> that produces a periodic sawtooth signal between 0 and 1. Here is the signal we want to generate :</p>
 <p><img src="img/phase-sig.png" width="80%" class="mx-auto d-block"></p>
@@ -938,7 +938,7 @@ process = sawtooth(440);
 <!-- /faust-run -->
 
 <h3 id="example-4-square-wave-generator">Example 4: Square wave generator</h3>
-<p>We can also use the phase generatorr to produce a square wave signal:</p>
+<p>We can also use the phase generator to produce a square wave signal:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
@@ -1138,7 +1138,7 @@ process = sawtooth(55);
 <!-- /faust-run -->
 
 <h2 id="part-5-subtractive-synthesis">Part 5: Subtractive synthesis</h2>
-<p>Subtractive synthesis is the opposite of additive synthesis. It consists of starting from a rich sound, for example white noise, and sculpting its spectrum.</p>
+<p>Subtractive synthesis is the opposite of additive synthesis. It consists in starting from a rich sound, for example white noise, and sculpting its spectrum.</p>
 <h3 id="example-1-a-white-noise">Example 1 : a white noise</h3>
 <p>A white noise generator
 <!-- faust-run -->
