@@ -1,5 +1,12 @@
 
 import("stdfaust.lib");
 
-process = no.noise * hslider("noise", 0.5, 0, 1, 0.01);
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
+
+sawtooth(f) = phase(f) * 2 - 1;
+
+//process = sawtooth(440);
+
+process = os.sawN(3,400);
 
