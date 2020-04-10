@@ -247,7 +247,7 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p><img src="img/logo-faust.png" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/logo-faust.png" width="100%" class="mx-auto d-block"></p>
 <h1 id="faust-101-for-the-confined">Faust 101 for the confined</h1>
 <p>The covid-19 containment gives us at least one excellent opportunity to train! If you've always wanted to get into Faust programming but didn't have the time, here's your chance! </p>
 <p>The objective of this workshop is to help you get familiar with the Faust language through very simple examples of signal processing and sound synthesis.
@@ -277,6 +277,7 @@ The documentation and the examples we will use can be found here:</p>
 <li>Faust offers end-users a high-level alternative to C to develop audio applications for a large variety of platforms.</li>
 </ul>
 <h2 id="part-1-very-simple-examples">Part 1: Very simple examples</h2>
+<p><img src="img/bande-simple.png" width="100%" class="mx-auto d-block"></p>
 <p>Let's start with some simple examples of Faust programs.</p>
 <h3 id="example-1-the-simplest-faust-program">Example 1: The simplest Faust program</h3>
 <p>This is the simplest Faust program imaginable. It contains only one line of code, the definition: <code>process = _;</code>.</p>
@@ -744,6 +745,7 @@ process = multiamp(2); // try multiamp(4)
 <!-- /faust-run -->
 
 <h2 id="part-2-delays-and-feedbacks">Part 2: Delays and Feedbacks</h2>
+<p><img src="img/bande-feedback.png" width="100%" class="mx-auto d-block"></p>
 <p>In this new section we will see two important notions, that of delay with the <code>@</code> primitive, and that of feedback (from a looped circuit) which will require the use of the recursive composition <code>A~B</code> which allows to loop the outputs of A into the inputs of B and the outputs of B into the inputs of A.</p>
 <h3 id="example-1-monophonic-delay-of-1-second">Example 1: Monophonic delay of 1 second</h3>
 <p>Let's start with a very simple example, a monophonic delay of  1 seconds or 44100 samples. We will use the prefix notation :</p>
@@ -845,7 +847,7 @@ process = stereoecho;
 
 <!-- /faust-run -->
 
-<h3 id="example-6-a-stereophonic-echo">Example 6: A stereophonic echo</h3>
+<h3 id="example-6-adding-parameters">Example 6: Adding parameters</h3>
 <p>We will now generalize our echo with parameters to control its duration and feedback level.</p>
 <!-- faust-run -->
 
@@ -914,13 +916,14 @@ process = stereoecho(44100/4, hslider(&quot;feedback&quot;, 0, 0, 1, 0.01));
 <!-- /faust-run -->
 
 <h2 id="part-3-basic-oscillators">Part 3: Basic Oscillators</h2>
+<p><img src="img/bande-basic.png" width="100%" class="mx-auto d-block"></p>
 <p>By convention, in Faust, a full-scale audio signal varies between -1 and +1, but we will first start with a sawtooth signal between 0 and 1 which will then be used as a <em>phase generator</em> to produce different waveforms.</p>
 <h3 id="phase-generator">Phase Generator</h3>
 <p>The first step is to build a <em>phase generator</em> that produces a periodic sawtooth signal between 0 and 1. Here is the signal we want to generate :</p>
-<p><img src="img/phase-sig.png" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/phase-sig.png" width="100%" class="mx-auto d-block"></p>
 <h3 id="example-1-ramp">Example 1: Ramp</h3>
 <p>To do this we will produce an "infinite" ramp, which we will then transform into a periodic signal thanks to a <em>part-decimal</em> operation.</p>
-<p><img src="img/ramp-sig.png" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/ramp-sig.png" width="100%" class="mx-auto d-block"></p>
 <p>The ramp is produced by the following program :</p>
 <!-- faust-run -->
 
@@ -940,7 +943,7 @@ process = 0.125 : + ~ _;
 
 <h3 id="semantics">Semantics</h3>
 <p>To understand the above diagram, we will annotate it with its mathematical semantics.</p>
-<p><img src="img/ramp-diag-math.svg" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/ramp-diag-math.svg" width="100%" class="mx-auto d-block"></p>
 <p>As can be seen in the diagram, the formula for the output signal is: <script type="math/tex">y(t) = y(t-1) + 0.125</script>
 </p>
 <p>We can calculate the first values of <script type="math/tex">y(t)</script>:</p>
@@ -1065,6 +1068,7 @@ process = squarewave(440);
 <!-- /faust-run -->
 
 <h2 id="part-4-additive-synthesis">Part 4: Additive synthesis</h2>
+<p><img src="img/bande-additive.png" width="100%" class="mx-auto d-block"></p>
 <h3 id="example-1-sine-wave-generator">Example 1: sine wave generator</h3>
 <p>The phase generator is also the basis of the sine wave generator:</p>
 <!-- faust-run -->
@@ -1240,6 +1244,7 @@ process = sawtooth(55);
 <!-- /faust-run -->
 
 <h2 id="part-5-subtractive-synthesis">Part 5: Subtractive synthesis</h2>
+<p><img src="img/bande-substractive.png" width="100%" class="mx-auto d-block"></p>
 <p>Subtractive synthesis is the opposite of additive synthesis. It consists in starting from a rich sound, for example white noise, and sculpting its spectrum.</p>
 <h3 id="example-1-a-white-noise">Example 1 : a white noise</h3>
 <p>A white noise generator
@@ -1589,6 +1594,7 @@ string(coef, freq, t60, level, trig) = no.noise*level
 <!-- /faust-run -->
 
 <h2 id="part-6-synthesis-by-frequency-modulation">Part 6: Synthesis by frequency modulation</h2>
+<p><img src="img/bande-fm.png" width="100%" class="mx-auto d-block"></p>
 <h3 id="example-1-frequency-modulation">Example 1 : frequency modulation</h3>
 <!-- faust-run -->
 
