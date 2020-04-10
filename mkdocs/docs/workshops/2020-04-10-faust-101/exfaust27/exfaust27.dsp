@@ -1,11 +1,10 @@
 
 import("stdfaust.lib");
 
-//----------------------------------------------------------------------
-// partial(f,n);
-// f = frequency in Hz
-// n = partial number startibng at 1
-partial(n,f) = os.osc(f*n) * hslider("partial %n", 0.25, 0, 1, 0.01);
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
 
-process 	= sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
+osc(f) = sin(phase(f) * 2 * ma.PI);
+
+process = osc(440);
 

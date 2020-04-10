@@ -1,5 +1,10 @@
 
 import("stdfaust.lib");
 
-process = os.osc(440 /*a remplacer*/) * hslider("gain", 0.1, 0, 1, 0.01);
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+
+sawtooth(f) = phase(f) * 2 - 1;
+
+process = sawtooth(440);
 

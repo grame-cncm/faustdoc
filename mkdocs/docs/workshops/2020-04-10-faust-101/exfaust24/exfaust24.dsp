@@ -1,5 +1,5 @@
 
-import("stdfaust.lib");
-
-process = os.osc(440) * hslider("gain", 0.1, 0, 1, 0.01);
+decimalpart(x) = x-int(x);
+phase = 0.125 : (+ : decimalpart) ~ _ ;
+process = phase;
 

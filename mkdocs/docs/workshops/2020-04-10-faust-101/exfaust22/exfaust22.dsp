@@ -1,10 +1,9 @@
 
-import("stdfaust.lib");
+bounce(d,f) = @(d) : *(f);
 
-decimalpart(x) = x-int(x);
-phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+monoecho(d,f) = *(g) : +~bounce(d,f) with { g = 1 - max(0, f-l)/(1-l); l = 0.95;};
 
-osc(f) = sin(phase(f) * 2 * ma.PI);
+stereoecho(d,f) = monoecho(d,f),monoecho(d,f);
 
-process = osc(440);
+process = stereoecho(44100/4, hslider("feedback", 0, 0, 1, 0.01)); 
 

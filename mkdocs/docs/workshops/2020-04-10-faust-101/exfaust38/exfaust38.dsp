@@ -1,11 +1,8 @@
 
 import("stdfaust.lib");
 
-// Karplus Strong (1/2)
-process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) :
-        + ~ transformation;
-        
-transformation = @(hslider("delay", 0, 0, 200, 1)) : moyenne : *(hslider("gain", 0, -0.98, 0.98, 0.01));
+process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) 
+: fi.highpass(3, hslider("lowfreq", 400, 20, 20000, 1))
+: fi.lowpass(3, hslider("hifreq", 2000, 20, 20000, 1));
 
-moyenne(x) = (x+x')/2;
 

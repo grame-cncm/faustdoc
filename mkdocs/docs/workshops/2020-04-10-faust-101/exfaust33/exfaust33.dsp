@@ -1,8 +1,9 @@
 
 import("stdfaust.lib");
 
-process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) 
-: fi.highpass(3, hslider("lowfreq", 400, 20, 20000, 1))
-: fi.lowpass(3, hslider("hifreq", 2000, 20, 20000, 1));
+// Approximation of a square wave using additive synthesis
 
+squarewave(f) = 4/ma.PI*sum(k, 4, os.osc((2*k+1)*f)/(2*k+1));
+
+process = squarewave(55);
 

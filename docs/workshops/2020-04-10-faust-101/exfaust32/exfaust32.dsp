@@ -1,6 +1,11 @@
 
 import("stdfaust.lib");
 
-process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.highpass(3, hslider("lowfreq", 400, 20, 20000, 1));
+//----------------------------------------------------------------------
+// partial(f,n);
+// f = frequency in Hz
+// n = partial number startibng at 1
+partial(n,f) = os.osc(f*n) * hslider("partial %n", 0.25, 0, 1, 0.01);
 
+process 	= sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
 

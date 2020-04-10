@@ -1,6 +1,8 @@
 
 import("stdfaust.lib");
 
-process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.lowpass(3, hslider("hifreq", 2000, 20, 20000, 1));
+// A frequency aliasing phenomenon if one goes beyond SR/2
+
+process = os.osc(hslider("freq", 440, 20, 20000, 1)) * hslider("gain", 0.1, 0, 1, 0.01);
 
 

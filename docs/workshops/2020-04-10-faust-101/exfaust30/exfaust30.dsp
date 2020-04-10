@@ -1,5 +1,5 @@
 
 import("stdfaust.lib");
 
-process = no.noise * hslider("noise", 0.5, 0, 1, 0.01);
+process = os.osc(440 /*a remplacer*/) * hslider("gain", 0.1, 0, 1, 0.01);
 

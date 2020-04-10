@@ -1,8 +1,10 @@
 
 import("stdfaust.lib");
 
-// A frequency aliasing phenomenon if one goes beyond SR/2
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
 
-process = os.osc(hslider("freq", 440, 20, 20000, 1)) * hslider("gain", 0.1, 0, 1, 0.01);
+squarewave(f) = (phase(f) > 0.5) * 2 - 1;
 
+process = squarewave(440);
 

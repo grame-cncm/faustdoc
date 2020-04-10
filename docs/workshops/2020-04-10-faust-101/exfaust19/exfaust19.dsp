@@ -1,5 +1,7 @@
 
-decimalpart(x) = x-int(x);
-phase = 0.125 : (+ : decimalpart) ~ _ ;
-process = phase;
+bounce = @(44100/4) : *(0.75);
+monoecho = +~bounce;
+stereoecho = monoecho,monoecho;
+
+process = stereoecho; 
 

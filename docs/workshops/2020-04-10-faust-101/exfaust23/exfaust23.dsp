@@ -1,5 +1,3 @@
 
-import("stdfaust.lib");
-
-process = os.osc(440);
+process = 0.125 : + ~ _;
 
