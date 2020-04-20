@@ -59,8 +59,7 @@ help:
 	@echo "  exlist   : list the examples for mkdocs.yml"
 	@echo "  zip      : create a zip file with all examples at the appropriate location"
 	@echo "Making the current version publicly available:"
-	@echo "  publish  : make all + build, switch to gh-pages and copy to root"
-	@echo "             commit and push are still manual operations"
+	@echo "             just commit and push the /docs folder (master branch)"
 
 test: 
 	@echo TOOLS: $(TOOLS)
@@ -87,19 +86,7 @@ clean:
 	rm -f $(MD)
 	rm -rf $(GENERATED)
 	rm -f $(EXOUT)
-	rm -rf $(SVGDIRS)
-
-publish:
-	$(MAKE) clean	# make sure previous svg output is removed
-	$(MAKE) all
-	$(MAKE) build
-	git checkout gh-pages
-	rm -rf examples guide refs	# clean previous folders
-	cp -Rf $(MKDIR)/site/* .
-	rm -rf $(MKDIR) src Makefile
-	@echo "Review the changes, add new files, commit and push manually"
-	@echo "... and switch back to master branch"
-	
+	rm -rf $(SVGDIRS)	
 
 ####################################################################
 # building md and svg files
