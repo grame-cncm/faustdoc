@@ -1480,7 +1480,7 @@ very simply implement a mixer:
 ```
 process = +;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Note that this is equivalent to (see [Identity Function](#identity-function)):
 
@@ -1488,7 +1488,7 @@ Note that this is equivalent to (see [Identity Function](#identity-function)):
 ```
 process = _+_;
 ```
-<!-- /faust-run -->		
+<!-- /faust-run -->
 
 The function `-` has type \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) and 
 transforms a pair of signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) 
@@ -1515,7 +1515,7 @@ and can be described mathematically as \(y(t)=n\).
 ```
 process = 1;
 ```
-<!-- /faust-run -->		
+<!-- /faust-run -->
 
 #### Floating Point Number
 
@@ -1528,7 +1528,7 @@ Faust and can be described as \(y(t)=n.m\).
 ```
 process = 0.5;
 ```
-<!-- /faust-run -->		
+<!-- /faust-run -->
 
 #### Identity Function
 
@@ -1546,7 +1546,7 @@ audio input of a Faust program to its output:
 ```
 process = _;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Cut Primitive
 
@@ -1565,7 +1565,7 @@ signals:
 ```
 process = 1,2 : !,_;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `int` Primitive
 
@@ -1583,7 +1583,7 @@ indices to read in a table, etc.
 ```
 process = 1.5 : int;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `float` Primitive
 
@@ -1598,7 +1598,7 @@ The `float` primitive can be used to force the cast of a signal to float.
 ```
 process = 1.5 : float;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Add Primitive
 
@@ -1613,7 +1613,7 @@ The `+` primitive can be used to add two signals together.
 ```
 process = +;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Subtract Primitive
 
@@ -1628,7 +1628,7 @@ The `-` primitive can be used to subtract two signals.
 ```
 process = -;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Multiply Primitive
 
@@ -1643,7 +1643,7 @@ The `*` primitive can be used to multiply two signals.
 ```
 process = *(0.5);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Divide Primitive
 
@@ -1658,7 +1658,7 @@ The `/` primitive can be used to divide two signals.
 ```
 process = ^(2);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Power Primitive
 
@@ -1673,7 +1673,7 @@ The `^` primitive can be used to raise to the power of `N` a signal.
 ```
 process = ^(2);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Modulo Primitive
 
@@ -1691,7 +1691,7 @@ basic phaser:
 ```
 process = _~+(1) : -(1) : %(10);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 will output a signal: `(0,1,2,3,4,5,6,7,8,9,0,1,2,3,4)`.
 
@@ -1723,7 +1723,7 @@ could be multiplied to another signal to create a condition.
 ```
 process = _ <: <(0.5) | >(0.7);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### XOR Primitive
 
@@ -1738,7 +1738,7 @@ Logical XOR can be expressed in Faust with the `xor` primitive.
 ```
 process = _ <: <(0.5) xor >(0.7);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Left Shift Primitive
 
@@ -1753,7 +1753,7 @@ Left shift can be expressed in Faust with the `<<` primitive.
 ```
 process = 1 << 2;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Right Shift Primitive
 
@@ -1768,7 +1768,7 @@ Right shift can be expressed in Faust with the `>>` primitive.
 ```
 process = 1 >> 2;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Smaller Than Primitive
 
@@ -1786,7 +1786,7 @@ The following code will output 1 if the input signal is smaller than 0.5 and
 ```
 process = <(0.5);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Smaller or Equal Than Primitive
 
@@ -1805,7 +1805,7 @@ The following code will output 1 if the input signal is smaller or equal than
 ```
 process = <=(0.5);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Greater Than Primitive
 
@@ -1823,7 +1823,7 @@ The following code will output 1 if the input signal is greater than 0.5 and
 ```
 process = >(0.5);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Greater or Equal Than Primitive
 
@@ -1842,7 +1842,7 @@ The following code will output 1 if the input signal is greater or equal than
 ```
 process = >=(0.5);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Equal to Primitive
 
@@ -1857,7 +1857,7 @@ The equal to comparison can be expressed in Faust with the `==` primitive.
 ```
 process = 0 == 1;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Different Than Primitive
 
@@ -1872,7 +1872,7 @@ The different than comparison can be expressed in Faust with the `!=` primitive.
 ```
 process = 0 != 1;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 ### `math.h`-Equivalent Primitives
 
@@ -1892,7 +1892,7 @@ Arc cosine can be expressed as `acos` in Faust.
 ```
 process = 0.1 : acos;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `asin` Primitive
 
@@ -1907,7 +1907,7 @@ Arc sine can be expressed as `asin` in Faust.
 ```
 process = 0.1 : asin;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `atan` Primitive
 
@@ -1922,7 +1922,7 @@ Arc tangent can be expressed as `atan` in Faust.
 ```
 process = 0.1 : atan;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `atan2` Primitive
 
@@ -1937,7 +1937,7 @@ The arc tangent of 2 signals can be expressed as `atan2` in Faust.
 ```
 process = 0.1,-0.1 : atan2;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `cos` Primitive
 
@@ -1952,7 +1952,7 @@ Cosine can be expressed as `cos` in Faust.
 ```
 process = 0.1 : cos;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `sin` Primitive
 
@@ -1967,7 +1967,7 @@ Sine can be expressed as `sin` in Faust.
 ```
 process = 0.1 : sin;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `tan` Primitive
 
@@ -1982,7 +1982,7 @@ Tangent can be expressed as `tan` in Faust.
 ```
 process = 0.1 : tan;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `exp` Primitive
 
@@ -1997,7 +1997,7 @@ Base-e exponential can be expressed as `exp` in Faust.
 ```
 process = 0.1 : exp;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `log` Primitive
 
@@ -2012,7 +2012,7 @@ Base-e logarithm can be expressed as `log` in Faust.
 ```
 process = 0.1 : log;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `log10` Primitive
 
@@ -2027,7 +2027,7 @@ Base-10 logarithm can be expressed as `log10` in Faust.
 ```
 process = 0.1 : log10;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `pow` Primitive
 
@@ -2042,7 +2042,7 @@ Power can be expressed as `pow` in Faust.
 ```
 process = 2,4 : pow;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `sqrt` Primitive
 
@@ -2057,7 +2057,7 @@ Square root can be expressed as `sqrt` in Faust.
 ```
 process = 4 : sqrt;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `abs` Primitive
 
@@ -2073,7 +2073,7 @@ Absolute value can be expressed as `abs` in Faust.
 ```
 process = -0.5 : abs;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `min` Primitive
 
@@ -2103,7 +2103,7 @@ process = -0.5,0.2 : min;
 ```
 process = -0.5,0.2 : max;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `fmod` Primitive
 
@@ -2118,7 +2118,7 @@ Float modulo can be expressed as `fmod` in Faust.
 ```
 process = 5.3,2 : fmod;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `remainder` Primitive
 
@@ -2133,7 +2133,7 @@ Float remainder can be expressed as `remainder` in Faust.
 ```
 process = 5.3,2 : remainder;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `floor` Primitive
 
@@ -2148,7 +2148,7 @@ Largest int can be expressed as `floor` in Faust.
 ```
 process = 3.6 : floor;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `ceil` Primitive
 
@@ -2163,7 +2163,7 @@ Smallest int can be expressed as `ceil` in Faust.
 ```
 process = 3.6 : ceil;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `rint` Primitive
 
@@ -2178,7 +2178,7 @@ Closest int can be expressed as `rint` in Faust.
 ```
 process = 3.6 : rint;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 <!-- TODO: say something about the fact that things are expressed in core
 syntax -->
@@ -2201,7 +2201,7 @@ A 1 sample delay can be expressed as `mem` in Faust.
 ```
 process = mem;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Note that this is equivalent to `process = _'` (see [`'` Modifier](#modifier))
 and `process = @(1)` (see [`@` Primitive](TODO))
@@ -2219,7 +2219,7 @@ size of the Faust code.
 ```
 process = _';
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `@` Primitive
 
@@ -2252,7 +2252,7 @@ Where:
 N = 10;
 process = @(N);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 **Example: Dynamic N Samples Delay**
 
@@ -2261,7 +2261,7 @@ process = @(N);
 N = hslider("N",10,1,10,1);
 process = @(N);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 ### Table Primitives
 
@@ -2305,7 +2305,7 @@ triangleOsc(f) = triangleWave,int(os.phasor(8,f)) : rdtable;
 f = hslider("freq",440,50,2000,0.01);
 process = triangleOsc(f);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 **Example: Basic Triangle Wave Oscillator Using the `waveform` Primitive**
 
@@ -2323,7 +2323,7 @@ triangleOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdt
 f = hslider("freq",440,50,2000,0.01);
 process = triangleOsc(f);
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `rwtable` Primitive
 
@@ -2368,7 +2368,7 @@ record = button("[1]Record") : int;
 looper = rwtable(tableSize,0.0,recIndex,_,readIndex);
 process = looper;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 <!-- TODO: we might want to have a better example here -->
 
@@ -2409,7 +2409,7 @@ s = nentry("Selector",0,0,1,1);
 sig = os.osc(440),os.sawtooth(440) : select2(s);
 process = sig;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Note that `select2` could be easily implemented from scratch in Faust using
 Boolean primitives:
@@ -2422,7 +2422,7 @@ mySelect2(s) = *(s==0),*(s==1) :> _;
 sig = os.osc(440),os.sawtooth(440) : mySelect2(s);
 process = sig;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 While the behavior of this last solution is identical to the first one, the
 generated code will be less optimized as the sine and the sawtooth waves
@@ -2459,7 +2459,7 @@ s = nentry("Selector",0,0,1,1);
 sig = os.osc(440),os.sawtooth(440),os.triangle(440) : select3(s);
 process = sig;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Note that `select3` could be easily implemented from scratch in Faust using
 Boolean primitives:
@@ -2472,7 +2472,7 @@ mySelect3(s) = *(s==0),*(s==1),*(s==2) :> _;
 sig = os.osc(440),os.sawtooth(440),os.triangle(440) : mySelect3(s);
 process = sig;
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 While the behavior of this last solution is identical to the first one, the
 generated code will be less optimized as the sine, the sawtooth and the 
@@ -2499,7 +2499,7 @@ following code is perfectly valid and will generate sound:
 ```
 process = button("DC");
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Each primitive implements a specific UI element, but their appearance can
 also be completely modified using [metadata](TODO) (a little bit like HTML and
@@ -2516,7 +2516,7 @@ memory and will impact the generated code. For example, in the case of:
 ```
 process = @(hslider("N",1,1,10,1));
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 a buffer of 10 samples will be allocated for the delay implemented with the 
 [`@` primitive](#primitive) while 20 samples will be allocated in the 
@@ -2526,7 +2526,7 @@ following example:
 ```
 process = @(hslider("N",1,1,20,1));
 ```
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `button` Primitive 
 
