@@ -1423,7 +1423,7 @@ triangleOsc(f) = triangleWave,int(os.phasor(8,f)) : rdtable;
 f = hslider("freq",440,50,2000,0.01);
 process = triangleOsc(f);
 ```
-<!-- /faust-run -->			
+<!-- /faust-run -->
 
 `waveform` is used to define a triangle waveform (in its most primitive form),
 which is then used with a [`rdtable`](TODO) controlled by a phasor to
