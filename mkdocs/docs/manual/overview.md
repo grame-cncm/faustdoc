@@ -15,7 +15,7 @@ as complete as possible. -->
 The Faust distribution hosts the source of the Faust compiler (both in its 
 command line and library version), the source of the Faust *architectures*
 (targets), the various Faust compilation scripts, a wide range of 
-Faust-related-tools, the [Faust DSP Libraries](https://faustlibrairies.grame.fr) (which in practice
+Faust-related-tools, the [Faust DSP Libraries](https://faustlibraries.grame.fr) (which in practice
 are hosted a separate Git submodule), etc.
 
 The latest stable release of the Faust distribution can be found [here](https://github.com/grame-cncm/faust/releases). It is recommended for most Faust users willing to compile the Faust compiler and libfaust from scratch.
