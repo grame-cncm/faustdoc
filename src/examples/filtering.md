@@ -22,102 +22,6 @@ process(x) = APF(x,F,G,Q);
 <!-- /faust-run -->
 
 
-## BPF
-
-<!-- faust-run -->
-
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
-
-declare name "BPF";
-
-import("maxmsp.lib");
-
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
-
-process(x) = BPF(x,F,G,Q);
-
-
-<!-- /faust-run -->
-
-
-## DNN
-
-<!-- faust-run -->
-
-// Forward Deep Neural Net (DNN), any number of layers of any size each
-
-declare name    "DNN";
-declare author  "JOS";
-declare license "STK-4.3";
-
-import("stdfaust.lib");
-
-layerSizes = (8,5,8); // autoencoder with 8 in & out, 5-state hidden layer
-w(m,n,k) = m*100+n*10+k; // placeholder weights: m=layer, n=fromNode, k=destNode
-
-M = ba.count(layerSizes);
-N(l) = ba.take(l+1,layerSizes); // Nodes per layer
-
-process = seq(m, M-1, layer(m))
-// look at weights:
-// process = par(m,M,par(n,N(m),par(k,N(m),w(m,n,k))))
-with {
-  layer(m) = weights(m) :> nonlinearities(m);
-  nonlinearities(m) = bus(N(m)*N(m+1)) :> par(n,N(m+1),nl(n));
-  weights(m) = bus(N(m)) <: par(n,N(m),(bus(N(m+1))<:wts(m,n)));
-  wts(m,n) = bus(N(m+1)) : par(k,N(m+1),*(w(m,n,k)));
-  nl(n,x) = x * (x>0); // ReLU
-  bus(N) = par(k,N,_);
-};
-
-<!-- /faust-run -->
-
-
-## HPF
-
-<!-- faust-run -->
-
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
-
-declare name "HPF";
-
-import("maxmsp.lib");
-
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
-
-process(x) = HPF(x,F,G,Q);
-
-
-<!-- /faust-run -->
-
-
-## LPF
-
-<!-- faust-run -->
-
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
-
-declare name "LPF";
-
-import("maxmsp.lib");
-
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
-
-process(x) = LPF(x,F,G,Q);
-
-
-<!-- /faust-run -->
-
-
 ## bandFilter
 
 <!-- faust-run -->
@@ -170,6 +74,27 @@ process 		= vgroup("Bandfilter", bandfilter(1000));
 <!-- /faust-run -->
 
 
+## BPF
+
+<!-- faust-run -->
+
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
+
+declare name "BPF";
+
+import("maxmsp.lib");
+
+G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = BPF(x,F,G,Q);
+
+
+<!-- /faust-run -->
+
+
 ## cryBaby
 
 <!-- faust-run -->
@@ -198,6 +123,39 @@ switch = checkbox("Saw/Noise");
 inputSignal = (no.noise *switch) , (os.sawtooth(100)*(1-switch)) :> _; 
 
 process = inputSignal : ve.diodeLadder(normFreq,Q) <:_,_;
+<!-- /faust-run -->
+
+
+## DNN
+
+<!-- faust-run -->
+
+// Forward Deep Neural Net (DNN), any number of layers of any size each
+
+declare name    "DNN";
+declare author  "JOS";
+declare license "STK-4.3";
+
+import("stdfaust.lib");
+
+layerSizes = (8,5,8); // autoencoder with 8 in & out, 5-state hidden layer
+w(m,n,k) = m*100+n*10+k; // placeholder weights: m=layer, n=fromNode, k=destNode
+
+M = ba.count(layerSizes);
+N(l) = ba.take(l+1,layerSizes); // Nodes per layer
+
+process = seq(m, M-1, layer(m))
+// look at weights:
+// process = par(m,M,par(n,N(m),par(k,N(m),w(m,n,k))))
+with {
+  layer(m) = weights(m) :> nonlinearities(m);
+  nonlinearities(m) = bus(N(m)*N(m+1)) :> par(n,N(m+1),nl(n));
+  weights(m) = bus(N(m)) <: par(n,N(m),(bus(N(m+1))<:wts(m,n)));
+  wts(m,n) = bus(N(m+1)) : par(k,N(m+1),*(w(m,n,k)));
+  nl(n,x) = x * (x>0); // ReLU
+  bus(N) = par(k,N,_);
+};
+
 <!-- /faust-run -->
 
 
@@ -250,6 +208,27 @@ F = hslider("Freq", 1000, 100, 10000, 1);
 Q = hslider("Q", 1, 0.01, 100, 0.01);
 
 process(x) = highShelf(x,F,G,Q);
+
+
+<!-- /faust-run -->
+
+
+## HPF
+
+<!-- faust-run -->
+
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
+
+declare name "HPF";
+
+import("maxmsp.lib");
+
+G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = HPF(x,F,G,Q);
 
 
 <!-- /faust-run -->
@@ -460,6 +439,27 @@ process(x) = lowShelf(x,F,G,Q);
 <!-- /faust-run -->
 
 
+## LPF
+
+<!-- faust-run -->
+
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
+
+declare name "LPF";
+
+import("maxmsp.lib");
+
+G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = LPF(x,F,G,Q);
+
+
+<!-- /faust-run -->
+
+
 ## moogHalfLadder
 
 <!-- faust-run -->
@@ -533,28 +533,6 @@ process(x) = notch(x,F,G,Q);
 <!-- /faust-run -->
 
 
-## oberheim
-
-<!-- faust-run -->
-
-declare name "oberheimBSF";
-declare description "Demonstration of the Oberheim generic multi-outputs Filter";
-declare author "Eric Tarr, GRAME";
-
-import("stdfaust.lib");
-
-Q = hslider("Q",1,0.5,10,0.01);
-normFreq = hslider("freq",0.5,0,1,0.001):si.smoo;
-switch = checkbox("Saw/Noise");
-
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :> _; 
-
-// The BSF, BPF, HPF and LPF outputs are produced
-process = inputSignal : ve.oberheim(normFreq,Q);
-
-<!-- /faust-run -->
-
-
 ## oberheimBPF
 
 <!-- faust-run -->
@@ -593,6 +571,28 @@ switch = checkbox("Saw/Noise");
 inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :> _; 
 
 process = inputSignal : ve.oberheimBSF(normFreq,Q) <:_,_;
+
+<!-- /faust-run -->
+
+
+## oberheim
+
+<!-- faust-run -->
+
+declare name "oberheimBSF";
+declare description "Demonstration of the Oberheim generic multi-outputs Filter";
+declare author "Eric Tarr, GRAME";
+
+import("stdfaust.lib");
+
+Q = hslider("Q",1,0.5,10,0.01);
+normFreq = hslider("freq",0.5,0,1,0.001):si.smoo;
+switch = checkbox("Saw/Noise");
+
+inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :> _; 
+
+// The BSF, BPF, HPF and LPF outputs are produced
+process = inputSignal : ve.oberheim(normFreq,Q);
 
 <!-- /faust-run -->
 
@@ -673,6 +673,27 @@ process = dm.parametric_eq_demo;
 <!-- /faust-run -->
 
 
+## peakingEQ
+
+<!-- faust-run -->
+
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
+
+declare name "peakingEQ";
+
+import("maxmsp.lib");
+
+G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = peakingEQ(x,F,G,Q);
+
+
+<!-- /faust-run -->
+
+
 ## peakNotch
 
 <!-- faust-run -->
@@ -694,23 +715,23 @@ process(x) = peakNotch(x,F,G,Q);
 <!-- /faust-run -->
 
 
-## peakingEQ
+## sallenKey2ndOrderBPF
 
 <!-- faust-run -->
 
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
+declare name "sallenKey2ndOrderBPF";
+declare description "Demonstration of the Sallen-Key Second Order Band-Pass Filter";
+declare author "Eric Tarr";
 
-declare name "peakingEQ";
+import("stdfaust.lib");
 
-import("maxmsp.lib");
+Q = hslider("Q",1,0.5,10,0.01);
+normFreq = hslider("freq",0.5,0,1,0.001):si.smoo;
+switch = checkbox("Saw/Noise");
 
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
+inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :> _; 
 
-process(x) = peakingEQ(x,F,G,Q);
-
+process = inputSignal : ve.sallenKey2ndOrderBPF(normFreq,Q) <:_,_;
 
 <!-- /faust-run -->
 
@@ -733,27 +754,6 @@ inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :> _ ;
 
 // The LPF and HPF outputs are produced
 process = inputSignal : ve.sallenKey2ndOrder(normFreq,Q);
-
-<!-- /faust-run -->
-
-
-## sallenKey2ndOrderBPF
-
-<!-- faust-run -->
-
-declare name "sallenKey2ndOrderBPF";
-declare description "Demonstration of the Sallen-Key Second Order Band-Pass Filter";
-declare author "Eric Tarr";
-
-import("stdfaust.lib");
-
-Q = hslider("Q",1,0.5,10,0.01);
-normFreq = hslider("freq",0.5,0,1,0.001):si.smoo;
-switch = checkbox("Saw/Noise");
-
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :> _; 
-
-process = inputSignal : ve.sallenKey2ndOrderBPF(normFreq,Q) <:_,_;
 
 <!-- /faust-run -->
 

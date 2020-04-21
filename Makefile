@@ -92,9 +92,9 @@ clean:
 # building md and svg files
 md : $(MD)
 
-options: $(DOCDIR)/refs/options.md
+options: $(DOCDIR)/manual/options.md
 
-$(DOCDIR)/refs/options.md:
+$(DOCDIR)/manual/options.md:
 	@echo "#Faust compiler options\n\n" > $@
 	faust --help | $(AWK) -f scripts/options.awk >> $@
 
@@ -111,15 +111,15 @@ svg : $(SVG)
 
 ####################################################################
 # building tools doc
-tools : $(FAUSTDIR) $(DOCDIR)/refs/tools.md 
+tools : $(FAUSTDIR) $(DOCDIR)/manual/tools.md 
 
-$(DOCDIR)/refs/tools.md: src/refs/tools.md $(TOOLS)
-	cat src/refs/tools.md > $@
+$(DOCDIR)/manual/tools.md: src/manual/tools.md $(TOOLS)
+	cat src/manual/tools.md > $@
 	./scripts/buildtools $(TOOLS) >> $@
 
 ####################################################################
 # building faust examples
-examples : $(FAUSTDIR) src/examples $(EXOUT) $(DOCDIR)/rsrc/examples.zip
+examples : $(FAUSTDIR) src/examples $(EXOUT) zip
 
 src/examples/%.md: $(EXDIR)/%
 	@echo ========= building  $(*F) example

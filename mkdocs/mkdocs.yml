@@ -1,22 +1,21 @@
-site_name: Faust Language
+site_name: Faust Documentation
 site_description: A guide to the Faust Programming Language.
 copyright: Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a>
 nav:
     - Home: index.md
-    - User Guide: 
-        - 'Introduction' : guide/introduction.md
-        - 'Overview' : guide/overview.md
-        - 'Quick start':   guide/quick-start.md
-        - 'Embedding':     guide/embedding.md
-        - 'OSC Support':   guide/osc.md
-        - 'HTTP Support':  guide/http.md
-        - 'MIDI Support':  guide/midi.md
-        - 'Math. Doc':     guide/mathdoc.md
-    - Reference: 
-        - 'Faust Syntax':       refs/syntax.md
-        - 'Compiler Options':   refs/options.md
-        - 'Using the Compiler': refs/compiler.md
-        - 'Using Tools':        refs/tools.md
+    - Faust Manual: 
+        - 'Introduction' : manual/introduction.md
+        - 'Overview of the Faust Universe' : manual/overview.md
+        - 'Quick start':   manual/quick-start.md
+        - 'Faust Syntax':       manual/syntax.md
+        - 'Embedding':     manual/embedding.md
+        - 'OSC Support':   manual/osc.md
+        - 'HTTP Support':  manual/http.md
+        - 'MIDI Support':  manual/midi.md
+        - 'Mathematical Documentation':     manual/mathdoc.md
+        - 'Compiler Options':   manual/options.md
+        - 'Using the Compiler': manual/compiler.md
+        - 'Using Tools':        manual/tools.md
     - Examples: 
          - ' ambisonics ':  examples/ambisonics.md
          - ' analysis ':  examples/analysis.md
@@ -36,6 +35,8 @@ nav:
          - ' smartKeyboard ':  examples/smartKeyboard.md
          - ' spat ':  examples/spat.md
          - ' Download examples ':  rsrc/examples.zip
+    - Tutorials:
+        - 'Test' : manual/introduction.md
     - Workshops:
       - ' 2018-12-01 PAW ' : workshops/2018-12-01-paw.md
       - ' 2020-03-24 CITI ': workshops/2020-03-24-faust-citi.md

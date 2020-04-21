@@ -530,7 +530,7 @@ process = os.sawtooth(freq)*gain*gate : fi.lowpass(3,cutoff) <: _,_;
 </div>
 <!-- /faust-run -->
 
-The package downloadable at the beginning of this tutorial contains a Faust architecture file slightly different from the one used in the previous examples (mono synth and effect): [faustMinimalPoly.h](misc/faustMinialPoly.h). If you open it, you'll see:
+The package downloadable at the beginning of this tutorial contains a Faust architecture file slightly different from the one used in the previous examples (mono synth and effect): [faustMinimalPoly.h](misc/faustMinimalPoly.h). If you open it, you'll see:
 
 ```
 #include <cmath>

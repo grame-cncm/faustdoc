@@ -1,57 +1,6 @@
 # bela
 
 
-## AdditiveSynth
-
-<!-- faust-run -->
-
-import("stdfaust.lib");
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Additive synthesizer, must be used with OSC message to program sound.
-// It as 8 harmonics. Each have it's own volume envelop.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// OSC messages (see BELA console for precise adress)
-// For each harmonics (%rang indicate harmonic number, starting at 0) :
-// vol%rang	: General Volume (vol0 control the volume of the fundamental)
-// A%rang : Attack
-// D%rang : Decay
-// S%rang : Sustain
-// R%rang : Release
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// GENERAL
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 10, 0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-partiel(rang) = os.oscrs(gFreq*(rang+1))*volume
-    with {
-        // UI
-        vol	= hslider("vol%rang", 1, 0, 1, 0.001);
-     
-        a = 0.01 * hslider("A%rang", 1, 0, 400, 0.001);
-        d = 0.01 * hslider("D%rang", 1, 0, 400, 0.001);
-        s = hslider("S%rang", 1, 0, 1, 0.001);
-        r = 0.01 * hslider("R%rang", 1, 0, 800, 0.001);
-
-        volume = ((en.adsr(a,d,s,r,midigate))*vol) : max (0) : min (1);
-    };
-
-process = par(i, 8, partiel(i)) :> / (8);
-
-<!-- /faust-run -->
-
-
 ## AdditiveSynth_Analog
 
 <!-- faust-run -->
@@ -108,69 +57,112 @@ process = par(i, 8, partiel(i)) :> / (8);
 <!-- /faust-run -->
 
 
-## FMSynth2
+## AdditiveSynth
 
 <!-- faust-run -->
 
-import("all.lib");
+import("stdfaust.lib");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Simple FM synthesizer.
-// 2 oscillators and FM feedback on modulant oscillator
+// Additive synthesizer, must be used with OSC message to program sound.
+// It as 8 harmonics. Each have it's own volume envelop.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
 //
-// CC 1 : FM feedback on modulant oscillator.
-// CC 14 : Modulator frequency ratio.
-//
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-// CC 72 : Release
+// OSC messages (see BELA console for precise adress)
+// For each harmonics (%rang indicate harmonic number, starting at 0) :
+// vol%rang	: General Volume (vol0 control the volume of the fundamental)
+// A%rang : Attack
+// D%rang : Decay
+// S%rang : Sustain
+// R%rang : Release
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// GENERAL, Keyboard
+// GENERAL
 midigate = button("gate");
 midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 1, 0, 1, 0.01);
-
-// modwheel:
-feedb = (gFreq-1) * (hslider("feedb[midi:ctrl 1]", 0, 0, 1, 0.001) : si.smoo);
-modFreqRatio = hslider("ratio[midi:ctrl 14]",2,0,20,0.01) : si.smoo;
+midigain = nentry("gain", 0.5, 0, 10, 0.01);
 
 // pitchwheel
 bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
 gFreq = midifreq * bend;
 
-//=================================== Parameters Mapping =================================
-//========================================================================================
-// Same for volum & modulation:
-volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
-volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
-volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
-volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
+partiel(rang) = os.oscrs(gFreq*(rang+1))*volume
+    with {
+        // UI
+        vol	= hslider("vol%rang", 1, 0, 1, 0.001);
+     
+        a = 0.01 * hslider("A%rang", 1, 0, 400, 0.001);
+        d = 0.01 * hslider("D%rang", 1, 0, 400, 0.001);
+        s = hslider("S%rang", 1, 0, 1, 0.001);
+        r = 0.01 * hslider("R%rang", 1, 0, 800, 0.001);
 
-// modulator frequency
-modFreq = gFreq*modFreqRatio;
+        volume = ((en.adsr(a,d,s,r,midigate))*vol) : max (0) : min (1);
+    };
 
-// modulation index
-FMdepth = envelop * 1000 * midigain;
+process = par(i, 8, partiel(i)) :> / (8);
 
-// Out amplitude
-vol = envelop;
+<!-- /faust-run -->
 
-//============================================ DSP =======================================
-//========================================================================================
 
-FMfeedback(frq) = (+(_,frq):os.osci ) ~ (* (feedb));
-FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
+## crossDelay2
 
-process = FMall(gFreq) * vol;
+<!-- faust-run -->
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Stereo Delay with feedback and crossfeedback (L to R and R to L feedback).
+// And pitch shifting on feedback.
+// A pre-delay without feedback is added for a wider stereo effect.
+//
+// Designed to use the Analog Input for parameters controls.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// ANALOG IN:
+// ANALOG 0	: Pre-Delay L
+// ANALOG 1	: Pre-Delay R
+// ANALOG 2	: Delay L
+// ANALOG 3	: Delay R
+// ANALOG 4	: Cross feedback
+// ANALOG 5	: Feedback
+// ANALOG 6	: Pitchshifter L
+// ANALOG 7	: Pitchshifter R
+//
+// Available by OSC : (see BELA console for precise adress)
+// Feedback filter:
+// crossLF : Crossfeedback Lowpass
+// crossHF : Crossfeedback Highpass
+// feedbLF : Feedback Lowpass
+// feedbHF : Feedback Highpass
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+preDelL	= ba.sec2samp(hslider("preDelL[BELA: ANALOG_0]", 1,0,2,0.001)):si.smoo;
+preDelR	= ba.sec2samp(hslider("preDelR[BELA: ANALOG_1]", 1,0,2,0.001)):si.smoo;
+delL	= ba.sec2samp(hslider("delL[BELA: ANALOG_2]", 1,0,2,0.001)):si.smoo;
+delR	= ba.sec2samp(hslider("delR[BELA: ANALOG_3]", 1,0,2,0.001)):si.smoo;
+
+crossLF	= hslider("crossLF", 12000, 20, 20000, 0.001);
+crossHF	= hslider("crossHF", 60, 20, 20000, 0.001);
+feedbLF	= hslider("feedbLF", 12000, 20, 20000, 0.001);
+feedbHF	= hslider("feedbHF", 60, 20, 20000, 0.001);
+
+CrossFeedb = hslider("CrossFeedb[BELA: ANALOG_4]", 0.0, 0., 1, 0.001):si.smoo;
+feedback = hslider("feedback[BELA: ANALOG_5]", 0.0, 0., 1, 0.001):si.smoo;
+
+pitchL = hslider("shiftL[BELA: ANALOG_6]", 0,-12,12,0.001):si.smoo;
+pitchR = hslider("shiftR[BELA: ANALOG_7]", 0,-12,12,0.001):si.smoo;
+
+routeur(a,b,c,d) = ((a*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((b*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+c,
+					((b*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((a*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+d;
+
+process = (de.sdelay(65536, 512,preDelL),de.sdelay(65536, 512,preDelR)):(routeur : de.sdelay(65536, 512,delL), de.sdelay(65536, 512,delR))~(ef.transpose(512, 256, pitchL), ef.transpose(512, 256, pitchR));
 
 <!-- /faust-run -->
 
@@ -240,12 +232,11 @@ process = FMall(gFreq) * vol;
 <!-- /faust-run -->
 
 
-## FMSynth2_FX
+## FMSynth2
 
 <!-- faust-run -->
 
 import("all.lib");
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -255,13 +246,13 @@ import("all.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MIDI IMPLEMENTATION:
 //
-// CC 1		: FM feedback on modulant oscillator.
-// CC 14	: Modulator frequency ratio.
+// CC 1 : FM feedback on modulant oscillator.
+// CC 14 : Modulator frequency ratio.
 //
-// CC 73	: Attack
-// CC 76	: Decay
-// CC 77	: Sustain
-// CC 72	: Release
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+// CC 72 : Release
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -300,86 +291,8 @@ vol = envelop;
 //============================================ DSP =======================================
 //========================================================================================
 
-FMfeedback(frq) = (+(_,frq):os.osci) ~ (* (feedb));
+FMfeedback(frq) = (+(_,frq):os.osci ) ~ (* (feedb));
 FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
-
-//#################################################################################################//
-//##################################### EFFECT SECTION ############################################//
-//#################################################################################################//
-// Simple FX chain build for a mono synthesizer.
-// It control general volume and pan.
-// FX Chaine is:
-//		Drive
-//		Flanger
-//		Reverberation
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-// (All are available by OSC)
-//
-// CC 7	: Volume
-// CC 10 : Pan
-//
-// CC 92 : Distortion Drive
-//
-// CC 13 : Flanger Delay
-// CC 93 : Flanger Dry/Wet
-// CC 94 : Flanger Feedback
-//
-// CC 12 : Reverberation Room size
-// CC 91 : Reverberation Dry/Wet
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);	// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
-
-// Flanger
-curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
-fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
-fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
-flanger = efx
-	with {
-		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-	};
-
-// Pannoramique:
-panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
-	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-	*(1-g), *(1-g) :> _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
 
 process = FMall(gFreq) * vol;
 
@@ -532,6 +445,152 @@ effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
 
 process = FMall(gFreq) * vol;
 
+
+<!-- /faust-run -->
+
+
+## FMSynth2_FX
+
+<!-- faust-run -->
+
+import("all.lib");
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple FM synthesizer.
+// 2 oscillators and FM feedback on modulant oscillator
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 1		: FM feedback on modulant oscillator.
+// CC 14	: Modulator frequency ratio.
+//
+// CC 73	: Attack
+// CC 76	: Decay
+// CC 77	: Sustain
+// CC 72	: Release
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// GENERAL, Keyboard
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 1, 0, 1, 0.01);
+
+// modwheel:
+feedb = (gFreq-1) * (hslider("feedb[midi:ctrl 1]", 0, 0, 1, 0.001) : si.smoo);
+modFreqRatio = hslider("ratio[midi:ctrl 14]",2,0,20,0.01) : si.smoo;
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+//=================================== Parameters Mapping =================================
+//========================================================================================
+// Same for volum & modulation:
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// modulator frequency
+modFreq = gFreq*modFreqRatio;
+
+// modulation index
+FMdepth = envelop * 1000 * midigain;
+
+// Out amplitude
+vol = envelop;
+
+//============================================ DSP =======================================
+//========================================================================================
+
+FMfeedback(frq) = (+(_,frq):os.osci) ~ (* (feedb));
+FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+// Simple FX chain build for a mono synthesizer.
+// It control general volume and pan.
+// FX Chaine is:
+//		Drive
+//		Flanger
+//		Reverberation
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+// (All are available by OSC)
+//
+// CC 7	: Volume
+// CC 10 : Pan
+//
+// CC 92 : Distortion Drive
+//
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);	// Should be 7 according to MIDI CC norm.
+
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
+
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+	with {
+		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+	};
+
+// Pannoramique:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
+
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
+	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+	*(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+process = FMall(gFreq) * vol;
 
 <!-- /faust-run -->
 
@@ -795,529 +854,6 @@ process = _,_: ((+(_,_) :processus) ~ (*(feedback))),((+(_,_) :processus) ~ (*(f
 <!-- /faust-run -->
 
 
-## WaveSynth
-
-<!-- faust-run -->
-
-import("stdfaust.lib");
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-//
-// CC 1 : LFO Depth (wave travel modulation)
-// CC 14 : LFO Frequency
-// CC 70 : Wave travelling
-//
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-// CC 72 : Release
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 1, 0.01);
-
-waveTravel = hslider("waveTravel [midi:ctrl]",0,0,1,0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-// LFO
-lfoDepth = hslider("lfoDepth[midi:ctrl 1]",0,0.,1,0.001):si.smoo;
-lfoFreq  = hslider("lfoFreq[midi:ctrl 14]",0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
-
-volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
-volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
-volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
-volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// Out Amplitude
-vol = envelop * midigain;
-
-WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
-
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-with{
-	coef = 3.14159 * ((nb-1)*0.5);
-	soustraction = select2( position>0, 0, (position/(nb-1)) );
-};
-
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-				+ (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-with {
-	tablesize = 1024;
-	wt1 = WF(tablesize, 16);
-	wt2 = WF(tablesize, 8);
-	wt3 = WF(tablesize, 6);
-	wt4 = WF(tablesize, 4);
-	faze = int(os.phasor(tablesize,freq));
-};
-
-process = wfosc(gFreq) * vol;
-
-<!-- /faust-run -->
-
-
-## WaveSynth_Analog
-
-<!-- faust-run -->
-
-import("stdfaust.lib");
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// ANALOG IMPLEMENTATION:
-//
-// ANALOG_0	: Wave travelling
-// ANALOG_1	: LFO Frequency
-// ANALOG_2	: LFO Depth (wave travel modulation)
-// ANALOG_3	: Release
-//
-// MIDI:
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 1, 0.01);
-
-waveTravel = hslider("waveTravel[BELA: ANALOG_0]",0,0,1,0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-// LFO
-lfoDepth = hslider("lfoDepth[BELA: ANALOG_2]",0,0.,1,0.001):si.smoo;
-lfoFreq = hslider("lfoFreq[BELA: ANALOG_1]",0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
-
-volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
-volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
-volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
-volR = hslider("R[BELA: ANALOG_3]",0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// Out amplitude
-vol = envelop * midigain;
-
-WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
-
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-    with {
-        coef = 3.14159 * ((nb-1)*0.5);
-        soustraction = select2( position>0, 0, (position/(nb-1)) );
-    };
-
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-            + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-    with {
-        tablesize = 1024;
-        wt1 = WF(tablesize, 16);
-        wt2 = WF(tablesize, 8);
-        wt3 = WF(tablesize, 6);
-        wt4 = WF(tablesize, 4);
-        faze = int(os.phasor(tablesize,freq));
-    };
-
-process = wfosc(gFreq) * vol;
-
-
-<!-- /faust-run -->
-
-
-## WaveSynth_FX
-
-<!-- faust-run -->
-
-import("stdfaust.lib");
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-//
-// CC 1     : LFO Depth (wave travel modulation)
-// CC 14	: LFO Frequency
-// CC 70	: Wave travelling
-//
-// CC 73	: Attack
-// CC 76	: Decay
-// CC 77	: Sustain
-// CC 72	: Release
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 1, 0.01);
-
-waveTravel = hslider("waveTravel [midi:ctrl ]",0,0,1,0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-// LFO
-lfoDepth = hslider("lfoDepth[midi:ctrl 1]",0,0.,1,0.001):si.smoo;
-lfoFreq = hslider("lfoFreq[midi:ctrl 14]",0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
-
-volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
-volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
-volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
-volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// Out Amplitude
-vol = envelop * midigain;
-
-WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0 ))-2) -1.;
-
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-    with {
-        coef = 3.14159 * ((nb-1)*0.5);
-        soustraction = select2(position>0, 0, (position/(nb-1)));
-    };
-
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-				+ (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-    with {
-        tablesize = 1024;
-        wt1 = WF(tablesize, 16);
-        wt2 = WF(tablesize, 8);
-        wt3 = WF(tablesize, 6);
-        wt4 = WF(tablesize, 4);
-        faze = int(os.phasor(tablesize,freq));
-    };
-
-//#################################################################################################//
-//##################################### EFFECT SECTION ############################################//
-//#################################################################################################//
-// Simple FX chaine build for a mono synthesizer.
-// It control general volume and pan.
-// FX Chaine is:
-//		Drive
-//		Flanger
-//		Reverberation
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-// (All are available by OSC)
-//
-// CC 7	: Volume
-// CC 10 : Pan
-//
-// CC 92 : Distortion Drive
-//
-// CC 13 : Flanger Delay
-// CC 93 : Flanger Dry/Wet
-// CC 94 : Flanger Feedback
-//
-// CC 12 : Reverberation Room size
-// CC 91 : Reverberation Dry/Wet
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
-
-// Flanger
-curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
-fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
-fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
-flanger = efx
-	with {
-		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-	};
-
-// Pannoramique:
-panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
-	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-	*(1-g), *(1-g) :> _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
-
-process = wfosc(gFreq) * vol;
-
-<!-- /faust-run -->
-
-
-## WaveSynth_FX_Analog
-
-<!-- faust-run -->
-
-import("stdfaust.lib");
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// ANALOG IMPLEMENTATION:
-//
-// ANALOG_0	: Wave travelling
-// ANALOG_1	: LFO Frequency
-// ANALOG_2	: LFO Depth (wave travel modulation)
-// ANALOG_3	: Release
-//
-// MIDI:
-// CC 73	: Attack
-// CC 76	: Decay
-// CC 77	: Sustain
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 1, 0.01);
-
-waveTravel = hslider("waveTravel[BELA: ANALOG_0]",0,0,1,0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-// LFO
-lfoDepth = hslider("lfoDepth[BELA: ANALOG_2]",0,0.,1,0.001):si.smoo;
-lfoFreq = hslider("lfoFreq[BELA: ANALOG_1]",0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
-
-volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
-volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
-volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
-volR = hslider("R[BELA: ANALOG_3]",0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// Out amplitude
-vol = envelop * midigain;
-
-WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0 ))-2) -1.;
-
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-    with {
-        coef = 3.14159 * ((nb-1)*0.5);
-        soustraction = select2( position>0, 0, (position/(nb-1)) );
-    };
-
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-				+ (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-    with {
-        tablesize = 1024;
-        wt1 = WF(tablesize, 16);
-        wt2 = WF(tablesize, 8);
-        wt3 = WF(tablesize, 6);
-        wt4 = WF(tablesize, 4);
-        faze = int(os.phasor(tablesize,freq));
-    };
-
-//#################################################################################################//
-//##################################### EFFECT SECTION ############################################//
-//#################################################################################################//
-//
-// Simple FX chaine build for a mono synthesizer.
-// It control general volume and pan.
-// FX Chaine is:
-//		Drive
-//		Flanger
-//		Reverberation
-//
-// This version use ANALOG IN to controle some of the parameters.
-// Other parameters continue to be available by MIDI or OSC.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// ANALOG IMPLEMENTATION:
-//
-// ANALOG_4	: Distortion Drive
-// ANALOG_5	: Flanger Dry/Wet
-// ANALOG_6	: Reverberation Dry/Wet
-// ANALOG_7	: Reverberation Room size
-//
-// MIDI:
-// CC 7	: Volume
-// CC 10 : Pan
-//
-// CC 13 : Flanger Delay
-// CC 13 : Flanger Delay
-// CC 94 : Flanger Feedback
-//
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-// 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider("drive[BELA: ANALOG_4]",0.3,0,1,0.001);
-
-// Flanger
-curdel	= hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
-fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
-fldw = hslider("dryWetFlang[BELA: ANALOG_5]",0.5,0,1,0.001);
-flanger = efx
-	with {
-		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-	};
-
-// Panoramic:
-panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
-	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-	*(1-g), *(1-g) :> _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
-
-process = wfosc(gFreq) * vol;
-
-<!-- /faust-run -->
-
-
-## crossDelay2
-
-<!-- faust-run -->
-
-import("stdfaust.lib");
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Stereo Delay with feedback and crossfeedback (L to R and R to L feedback).
-// And pitch shifting on feedback.
-// A pre-delay without feedback is added for a wider stereo effect.
-//
-// Designed to use the Analog Input for parameters controls.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// ANALOG IN:
-// ANALOG 0	: Pre-Delay L
-// ANALOG 1	: Pre-Delay R
-// ANALOG 2	: Delay L
-// ANALOG 3	: Delay R
-// ANALOG 4	: Cross feedback
-// ANALOG 5	: Feedback
-// ANALOG 6	: Pitchshifter L
-// ANALOG 7	: Pitchshifter R
-//
-// Available by OSC : (see BELA console for precise adress)
-// Feedback filter:
-// crossLF : Crossfeedback Lowpass
-// crossHF : Crossfeedback Highpass
-// feedbLF : Feedback Lowpass
-// feedbHF : Feedback Highpass
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-preDelL	= ba.sec2samp(hslider("preDelL[BELA: ANALOG_0]", 1,0,2,0.001)):si.smoo;
-preDelR	= ba.sec2samp(hslider("preDelR[BELA: ANALOG_1]", 1,0,2,0.001)):si.smoo;
-delL	= ba.sec2samp(hslider("delL[BELA: ANALOG_2]", 1,0,2,0.001)):si.smoo;
-delR	= ba.sec2samp(hslider("delR[BELA: ANALOG_3]", 1,0,2,0.001)):si.smoo;
-
-crossLF	= hslider("crossLF", 12000, 20, 20000, 0.001);
-crossHF	= hslider("crossHF", 60, 20, 20000, 0.001);
-feedbLF	= hslider("feedbLF", 12000, 20, 20000, 0.001);
-feedbHF	= hslider("feedbHF", 60, 20, 20000, 0.001);
-
-CrossFeedb = hslider("CrossFeedb[BELA: ANALOG_4]", 0.0, 0., 1, 0.001):si.smoo;
-feedback = hslider("feedback[BELA: ANALOG_5]", 0.0, 0., 1, 0.001):si.smoo;
-
-pitchL = hslider("shiftL[BELA: ANALOG_6]", 0,-12,12,0.001):si.smoo;
-pitchR = hslider("shiftR[BELA: ANALOG_7]", 0,-12,12,0.001):si.smoo;
-
-routeur(a,b,c,d) = ((a*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((b*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+c,
-					((b*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((a*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+d;
-
-process = (de.sdelay(65536, 512,preDelL),de.sdelay(65536, 512,preDelR)):(routeur : de.sdelay(65536, 512,delL), de.sdelay(65536, 512,delR))~(ef.transpose(512, 256, pitchL), ef.transpose(512, 256, pitchR));
-
-<!-- /faust-run -->
-
-
 ## granulator
 
 <!-- faust-run -->
@@ -1477,94 +1013,6 @@ rampePlayer(reset) = rampe
 <!-- /faust-run -->
 
 
-## simpleFX
-
-<!-- faust-run -->
-
-import("stdfaust.lib");
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple FX chaine build for a mono synthesizer.
-// It controle general volume and pan.
-// FX Chaine is:
-//		Drive
-//		Flanger
-//		Reverberation
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-// (All are available by OSC)
-//
-// CC 7  : Volume
-// CC 10 : Pan
-//
-// CC 92 : Distortion Drive
-//
-// CC 13 : Flanger Delay
-// CC 93 : Flanger Dry/Wet
-// CC 94 : Flanger Feedback
-//
-// CC 12 : Reverberation Room size
-// CC 91 : Reverberation Dry/Wet
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-vol = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
-
-// Flanger
-curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
-fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
-fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
-flanger = efx
-	with {
-		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-	};
-
-// Panoramique:
-panno = _ : sp.panner(hslider ("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
-	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-	*(1-g), *(1-g) :> _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effets = _ *(vol) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
-
-process = effets;
-
-<!-- /faust-run -->
-
-
 ## simpleFX_Analog
 
 <!-- faust-run -->
@@ -1657,89 +1105,90 @@ process = effets;
 <!-- /faust-run -->
 
 
-## simpleSynth
+## simpleFX
 
 <!-- faust-run -->
 
 import("stdfaust.lib");
-
+//
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// A very simple subtractive synthesizer with 1 VCO 1 VCF.
-// The VCO Waveform is variable between Saw and Square
-// The frequency is modulated by an LFO
-// The envelope control volum and filter frequency
+// Simple FX chaine build for a mono synthesizer.
+// It controle general volume and pan.
+// FX Chaine is:
+//		Drive
+//		Flanger
+//		Reverberation
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MIDI IMPLEMENTATION:
+// (All are available by OSC)
 //
-// CC 70 : waveform (Saw to square)
-// CC 71 : Filter resonance (Q)
-// CC 74 : Filter Cutoff frequency
-// CC 79 : Filter keyboard tracking (0 to X2, default 1)
-// CC 75 : Filter Envelope Modulation
+// CC 7  : Volume
+// CC 10 : Pan
 //
-// Envelope
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-// CC 72 : Release
+// CC 92 : Distortion Drive
 //
-// CC 78 : LFO frequency (0.001Hz to 10Hz)
-// CC 1 : LFO Amplitude (Modulation)
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// HUI //////////////////////////////////////////////////
-// Keyboard
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
 
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+// VOLUME:
+vol = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
 
-// VCO
-wfFade = hslider("waveform[midi:ctrl 70]",0.5,0,1,0.001):si.smoo;
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
 
-// VCF
-res = hslider("resonnance[midi:ctrl 71]",0.5,0,1,0.001):si.smoo;
-fr = hslider("fc[midi:ctrl 74]", 15, 15, 12000, 0.001):si.smoo;
-track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
-envMod = hslider("envMod[midi:ctrl 75]",50,0,100,0.01):si.smoo; 
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+	with {
+		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+	};
 
-// ENV
-att = 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
-dec = 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
-sust = hslider("sustain[midi:ctrl 77]",0.1,0,1,0.001);
-rel = 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
+// Panoramique:
+panno = _ : sp.panner(hslider ("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
 
-// LFO
-lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
-modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
+	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+	*(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
 
-// PROCESS /////////////////////////////////////////////
-allfreq = (midifreq * bend) + LFO;
-// VCF
-cutoff = ((allfreq * track) + fr + (envMod * midigain * env)) : min(ma.SR/8);
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
 
-// VCO
-oscillo(f) = (os.sawtooth(f)*(1-wfFade))+(os.square(f)*wfFade);
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
 
-// VCA
-volume = midigain * env;
+// ALL
+effets = _ *(vol) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
 
-// Enveloppe
-env = en.adsre(att,dec,sust,rel,midigate);
-
-// LFO
-LFO = os.lf_triangle(lfoFreq)*modwheel*10;
-
-// SYNTH ////////////////////////////////////////////////
-synth = (oscillo(allfreq) : ve.moog_vcf(res,cutoff)) * volume;
-
-// PROCESS /////////////////////////////////////////////
-process = synth;
+process = effets;
 
 <!-- /faust-run -->
 
@@ -1833,7 +1282,7 @@ process = synth;
 <!-- /faust-run -->
 
 
-## simpleSynth_FX
+## simpleSynth
 
 <!-- faust-run -->
 
@@ -1862,7 +1311,7 @@ import("stdfaust.lib");
 // CC 72 : Release
 //
 // CC 78 : LFO frequency (0.001Hz to 10Hz)
-// CC 1	: LFO Amplitude (Modulation)
+// CC 1 : LFO Amplitude (Modulation)
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -1885,10 +1334,10 @@ track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
 envMod = hslider("envMod[midi:ctrl 75]",50,0,100,0.01):si.smoo; 
 
 // ENV
-att	= 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
-dec	= 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
+att = 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
+dec = 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
 sust = hslider("sustain[midi:ctrl 77]",0.1,0,1,0.001);
-rel	= 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
+rel = 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
 
 // LFO
 lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
@@ -1896,7 +1345,6 @@ modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
 
 // PROCESS /////////////////////////////////////////////
 allfreq = (midifreq * bend) + LFO;
-
 // VCF
 cutoff = ((allfreq * track) + fr + (envMod * midigain * env)) : min(ma.SR/8);
 
@@ -1907,91 +1355,13 @@ oscillo(f) = (os.sawtooth(f)*(1-wfFade))+(os.square(f)*wfFade);
 volume = midigain * env;
 
 // Enveloppe
-env	= en.adsre(att,dec,sust,rel,midigate);
+env = en.adsre(att,dec,sust,rel,midigate);
 
 // LFO
 LFO = os.lf_triangle(lfoFreq)*modwheel*10;
 
 // SYNTH ////////////////////////////////////////////////
-synth = (oscillo(allfreq) :ve.moog_vcf(res,cutoff)) * volume;
-
-//#################################################################################################//
-//##################################### EFFECT SECTION ############################################//
-//#################################################################################################//
-// Simple FX chaine build for a mono synthesizer.
-// It controle general volume and pan.
-// FX Chaine is:
-//		Drive
-//		Flanger
-//		Reverberation
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-// (All are available by OSC)
-//
-// CC 7	: Volume
-// CC 10 : Pan
-//
-// CC 92 : Distortion Drive
-//
-// CC 13 : Flanger Delay
-// CC 93 : Flanger Dry/Wet
-// CC 94 : Flanger Feedback
-//
-// CC 12 : Reverberation Room size
-// CC 91 : Reverberation Dry/Wet
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
-
-// Flanger
-curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
-fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
-fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
-flanger = efx
-	with {
-		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-	};
-
-// Pannoramique:
-panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
-	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-	*(1-g), *(1-g) :> _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+synth = (oscillo(allfreq) : ve.moog_vcf(res,cutoff)) * volume;
 
 // PROCESS /////////////////////////////////////////////
 process = synth;
@@ -2168,6 +1538,636 @@ effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
 
 // PROCESS /////////////////////////////////////////////
 process = synth;
+
+<!-- /faust-run -->
+
+
+## simpleSynth_FX
+
+<!-- faust-run -->
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// A very simple subtractive synthesizer with 1 VCO 1 VCF.
+// The VCO Waveform is variable between Saw and Square
+// The frequency is modulated by an LFO
+// The envelope control volum and filter frequency
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 70 : waveform (Saw to square)
+// CC 71 : Filter resonance (Q)
+// CC 74 : Filter Cutoff frequency
+// CC 79 : Filter keyboard tracking (0 to X2, default 1)
+// CC 75 : Filter Envelope Modulation
+//
+// Envelope
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+// CC 72 : Release
+//
+// CC 78 : LFO frequency (0.001Hz to 10Hz)
+// CC 1	: LFO Amplitude (Modulation)
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// HUI //////////////////////////////////////////////////
+// Keyboard
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+// VCO
+wfFade = hslider("waveform[midi:ctrl 70]",0.5,0,1,0.001):si.smoo;
+
+// VCF
+res = hslider("resonnance[midi:ctrl 71]",0.5,0,1,0.001):si.smoo;
+fr = hslider("fc[midi:ctrl 74]", 15, 15, 12000, 0.001):si.smoo;
+track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
+envMod = hslider("envMod[midi:ctrl 75]",50,0,100,0.01):si.smoo; 
+
+// ENV
+att	= 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
+dec	= 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
+sust = hslider("sustain[midi:ctrl 77]",0.1,0,1,0.001);
+rel	= 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
+
+// LFO
+lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
+modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
+
+// PROCESS /////////////////////////////////////////////
+allfreq = (midifreq * bend) + LFO;
+
+// VCF
+cutoff = ((allfreq * track) + fr + (envMod * midigain * env)) : min(ma.SR/8);
+
+// VCO
+oscillo(f) = (os.sawtooth(f)*(1-wfFade))+(os.square(f)*wfFade);
+
+// VCA
+volume = midigain * env;
+
+// Enveloppe
+env	= en.adsre(att,dec,sust,rel,midigate);
+
+// LFO
+LFO = os.lf_triangle(lfoFreq)*modwheel*10;
+
+// SYNTH ////////////////////////////////////////////////
+synth = (oscillo(allfreq) :ve.moog_vcf(res,cutoff)) * volume;
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+// Simple FX chaine build for a mono synthesizer.
+// It controle general volume and pan.
+// FX Chaine is:
+//		Drive
+//		Flanger
+//		Reverberation
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+// (All are available by OSC)
+//
+// CC 7	: Volume
+// CC 10 : Pan
+//
+// CC 92 : Distortion Drive
+//
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
+
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
+
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+	with {
+		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+	};
+
+// Pannoramique:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
+
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
+	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+	*(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+// PROCESS /////////////////////////////////////////////
+process = synth;
+
+<!-- /faust-run -->
+
+
+## WaveSynth_Analog
+
+<!-- faust-run -->
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_0	: Wave travelling
+// ANALOG_1	: LFO Frequency
+// ANALOG_2	: LFO Depth (wave travel modulation)
+// ANALOG_3	: Release
+//
+// MIDI:
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
+
+waveTravel = hslider("waveTravel[BELA: ANALOG_0]",0,0,1,0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[BELA: ANALOG_2]",0,0.,1,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[BELA: ANALOG_1]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[BELA: ANALOG_3]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+    with {
+        coef = 3.14159 * ((nb-1)*0.5);
+        soustraction = select2( position>0, 0, (position/(nb-1)) );
+    };
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+            + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+    with {
+        tablesize = 1024;
+        wt1 = WF(tablesize, 16);
+        wt2 = WF(tablesize, 8);
+        wt3 = WF(tablesize, 6);
+        wt4 = WF(tablesize, 4);
+        faze = int(os.phasor(tablesize,freq));
+    };
+
+process = wfosc(gFreq) * vol;
+
+
+<!-- /faust-run -->
+
+
+## WaveSynth
+
+<!-- faust-run -->
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 1 : LFO Depth (wave travel modulation)
+// CC 14 : LFO Frequency
+// CC 70 : Wave travelling
+//
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+// CC 72 : Release
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
+
+waveTravel = hslider("waveTravel [midi:ctrl]",0,0,1,0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[midi:ctrl 1]",0,0.,1,0.001):si.smoo;
+lfoFreq  = hslider("lfoFreq[midi:ctrl 14]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out Amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+with{
+	coef = 3.14159 * ((nb-1)*0.5);
+	soustraction = select2( position>0, 0, (position/(nb-1)) );
+};
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+				+ (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+with {
+	tablesize = 1024;
+	wt1 = WF(tablesize, 16);
+	wt2 = WF(tablesize, 8);
+	wt3 = WF(tablesize, 6);
+	wt4 = WF(tablesize, 4);
+	faze = int(os.phasor(tablesize,freq));
+};
+
+process = wfosc(gFreq) * vol;
+
+<!-- /faust-run -->
+
+
+## WaveSynth_FX_Analog
+
+<!-- faust-run -->
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_0	: Wave travelling
+// ANALOG_1	: LFO Frequency
+// ANALOG_2	: LFO Depth (wave travel modulation)
+// ANALOG_3	: Release
+//
+// MIDI:
+// CC 73	: Attack
+// CC 76	: Decay
+// CC 77	: Sustain
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
+
+waveTravel = hslider("waveTravel[BELA: ANALOG_0]",0,0,1,0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[BELA: ANALOG_2]",0,0.,1,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[BELA: ANALOG_1]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[BELA: ANALOG_3]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0 ))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+    with {
+        coef = 3.14159 * ((nb-1)*0.5);
+        soustraction = select2( position>0, 0, (position/(nb-1)) );
+    };
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+				+ (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+    with {
+        tablesize = 1024;
+        wt1 = WF(tablesize, 16);
+        wt2 = WF(tablesize, 8);
+        wt3 = WF(tablesize, 6);
+        wt4 = WF(tablesize, 4);
+        faze = int(os.phasor(tablesize,freq));
+    };
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+//
+// Simple FX chaine build for a mono synthesizer.
+// It control general volume and pan.
+// FX Chaine is:
+//		Drive
+//		Flanger
+//		Reverberation
+//
+// This version use ANALOG IN to controle some of the parameters.
+// Other parameters continue to be available by MIDI or OSC.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_4	: Distortion Drive
+// ANALOG_5	: Flanger Dry/Wet
+// ANALOG_6	: Reverberation Dry/Wet
+// ANALOG_7	: Reverberation Room size
+//
+// MIDI:
+// CC 7	: Volume
+// CC 10 : Pan
+//
+// CC 13 : Flanger Delay
+// CC 13 : Flanger Delay
+// CC 94 : Flanger Feedback
+//
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+// 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
+
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[BELA: ANALOG_4]",0.3,0,1,0.001);
+
+// Flanger
+curdel	= hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[BELA: ANALOG_5]",0.5,0,1,0.001);
+flanger = efx
+	with {
+		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+	};
+
+// Panoramic:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
+
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
+	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+	*(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+process = wfosc(gFreq) * vol;
+
+<!-- /faust-run -->
+
+
+## WaveSynth_FX
+
+<!-- faust-run -->
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 1     : LFO Depth (wave travel modulation)
+// CC 14	: LFO Frequency
+// CC 70	: Wave travelling
+//
+// CC 73	: Attack
+// CC 76	: Decay
+// CC 77	: Sustain
+// CC 72	: Release
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
+
+waveTravel = hslider("waveTravel [midi:ctrl ]",0,0,1,0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[midi:ctrl 1]",0,0.,1,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[midi:ctrl 14]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out Amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0 ))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+    with {
+        coef = 3.14159 * ((nb-1)*0.5);
+        soustraction = select2(position>0, 0, (position/(nb-1)));
+    };
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+				+ (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+    with {
+        tablesize = 1024;
+        wt1 = WF(tablesize, 16);
+        wt2 = WF(tablesize, 8);
+        wt3 = WF(tablesize, 6);
+        wt4 = WF(tablesize, 4);
+        faze = int(os.phasor(tablesize,freq));
+    };
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+// Simple FX chaine build for a mono synthesizer.
+// It control general volume and pan.
+// FX Chaine is:
+//		Drive
+//		Flanger
+//		Reverberation
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+// (All are available by OSC)
+//
+// CC 7	: Volume
+// CC 10 : Pan
+//
+// CC 92 : Distortion Drive
+//
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
+
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
+
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+	with {
+		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+	};
+
+// Pannoramique:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
+
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
+	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+	*(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+process = wfosc(gFreq) * vol;
 
 <!-- /faust-run -->
 
