@@ -1379,7 +1379,7 @@ process = triangleOsc(f);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust31/exfaust31.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->			
+<!-- /faust-run -->
 
 `waveform` is used to define a triangle waveform (in its most primitive form), which is then used with a [`rdtable`](#rdtable-primitive) controlled by a phaser to implement a triangle wave oscillator. Note that the quality of this oscillator is very low because of the low resolution of the triangle waveform.
 
@@ -1416,7 +1416,7 @@ process = +;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust32/exfaust32.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Note that this is equivalent to (see [Identity Function](#identity-function)):
 
@@ -1431,7 +1431,7 @@ process = _+_;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust33/exfaust33.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->		
+<!-- /faust-run -->
 
 The function `-` has type \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) and transforms a pair of signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) such that \(\forall t\in\mathbb{N}, y(t)=x_{1}(t)-x_{2}(t)\). 
 
@@ -1457,7 +1457,7 @@ process = 1;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust34/exfaust34.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->		
+<!-- /faust-run -->
 
 #### Floating Point Number
 
@@ -1476,7 +1476,7 @@ process = 0.5;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust35/exfaust35.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->		
+<!-- /faust-run -->
 
 #### Identity Function
 
@@ -1500,7 +1500,7 @@ process = _;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust36/exfaust36.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Cut Primitive
 
@@ -1524,7 +1524,7 @@ process = 1,2 : !,_;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust37/exfaust37.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `int` Primitive
 
@@ -1546,7 +1546,7 @@ process = 1.5 : int;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust38/exfaust38.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `float` Primitive
 
@@ -1568,7 +1568,7 @@ process = 1.5 : float;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust39/exfaust39.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Add Primitive
 
@@ -1590,7 +1590,7 @@ process = +;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust40/exfaust40.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Subtract Primitive
 
@@ -1612,7 +1612,7 @@ process = -;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust41/exfaust41.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Multiply Primitive
 
@@ -1634,7 +1634,7 @@ process = *(0.5);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust42/exfaust42.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Divide Primitive
 
@@ -1656,7 +1656,7 @@ process = ^(2);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust43/exfaust43.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Power Primitive
 
@@ -1678,7 +1678,7 @@ process = ^(2);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust44/exfaust44.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Modulo Primitive
 
@@ -1702,7 +1702,7 @@ process = _~+(1) : -(1) : %(10);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust45/exfaust45.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 will output a signal: `(0,1,2,3,4,5,6,7,8,9,0,1,2,3,4)`.
 
@@ -1741,7 +1741,7 @@ process = _ <: <(0.5) | >(0.7);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust46/exfaust46.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### XOR Primitive
 
@@ -1763,7 +1763,7 @@ process = _ <: <(0.5) xor >(0.7);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust47/exfaust47.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Left Shift Primitive
 
@@ -1785,7 +1785,7 @@ process = 1 << 2;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust48/exfaust48.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Right Shift Primitive
 
@@ -1807,7 +1807,7 @@ process = 1 >> 2;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust49/exfaust49.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Smaller Than Primitive
 
@@ -1831,7 +1831,7 @@ process = <(0.5);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust50/exfaust50.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Smaller or Equal Than Primitive
 
@@ -1855,7 +1855,7 @@ process = <=(0.5);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust51/exfaust51.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Greater Than Primitive
 
@@ -1879,7 +1879,7 @@ process = >(0.5);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust52/exfaust52.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Greater or Equal Than Primitive
 
@@ -1903,7 +1903,7 @@ process = >=(0.5);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust53/exfaust53.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Equal to Primitive
 
@@ -1925,7 +1925,7 @@ process = 0 == 1;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust54/exfaust54.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### Different Than Primitive
 
@@ -1947,7 +1947,7 @@ process = 0 != 1;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust55/exfaust55.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 ### `math.h`-Equivalent Primitives
 
@@ -1973,7 +1973,7 @@ process = 0.1 : acos;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust56/exfaust56.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `asin` Primitive
 
@@ -1995,7 +1995,7 @@ process = 0.1 : asin;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust57/exfaust57.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `atan` Primitive
 
@@ -2017,7 +2017,7 @@ process = 0.1 : atan;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust58/exfaust58.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `atan2` Primitive
 
@@ -2039,7 +2039,7 @@ process = 0.1,-0.1 : atan2;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust59/exfaust59.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `cos` Primitive
 
@@ -2061,7 +2061,7 @@ process = 0.1 : cos;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust60/exfaust60.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `sin` Primitive
 
@@ -2083,7 +2083,7 @@ process = 0.1 : sin;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust61/exfaust61.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `tan` Primitive
 
@@ -2105,7 +2105,7 @@ process = 0.1 : tan;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust62/exfaust62.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `exp` Primitive
 
@@ -2127,7 +2127,7 @@ process = 0.1 : exp;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust63/exfaust63.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `log` Primitive
 
@@ -2149,7 +2149,7 @@ process = 0.1 : log;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust64/exfaust64.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `log10` Primitive
 
@@ -2171,7 +2171,7 @@ process = 0.1 : log10;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust65/exfaust65.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `pow` Primitive
 
@@ -2193,7 +2193,7 @@ process = 2,4 : pow;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust66/exfaust66.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `sqrt` Primitive
 
@@ -2215,7 +2215,7 @@ process = 4 : sqrt;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust67/exfaust67.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `abs` Primitive
 
@@ -2238,7 +2238,7 @@ process = -0.5 : abs;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust68/exfaust68.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `min` Primitive
 
@@ -2282,7 +2282,7 @@ process = -0.5,0.2 : max;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust70/exfaust70.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `fmod` Primitive
 
@@ -2304,7 +2304,7 @@ process = 5.3,2 : fmod;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust71/exfaust71.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `remainder` Primitive
 
@@ -2326,7 +2326,7 @@ process = 5.3,2 : remainder;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust72/exfaust72.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `floor` Primitive
 
@@ -2348,7 +2348,7 @@ process = 3.6 : floor;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust73/exfaust73.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `ceil` Primitive
 
@@ -2370,7 +2370,7 @@ process = 3.6 : ceil;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust74/exfaust74.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `rint` Primitive
 
@@ -2392,7 +2392,7 @@ process = 3.6 : rint;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust75/exfaust75.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 <!-- TODO: say something about the fact that things are expressed in core
 syntax -->
@@ -2421,7 +2421,7 @@ process = mem;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust76/exfaust76.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Note that this is equivalent to `process = _'` (see [`'` Modifier](#modifier)) and `process = @(1)` (see [`@` Primitive](#time-expression_1))
 
@@ -2442,7 +2442,7 @@ process = _';
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust77/exfaust77.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `@` Primitive
 
@@ -2477,7 +2477,7 @@ process = @(N);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust78/exfaust78.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 **Example: Dynamic N Samples Delay**
 
@@ -2493,7 +2493,7 @@ process = @(N);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust79/exfaust79.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 ### Table Primitives
 
@@ -2538,7 +2538,7 @@ process = triangleOsc(f);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust80/exfaust80.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 **Example: Basic Triangle Wave Oscillator Using the `waveform` Primitive**
 
@@ -2560,7 +2560,7 @@ process = triangleOsc(f);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust81/exfaust81.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `rwtable` Primitive
 
@@ -2606,7 +2606,7 @@ process = looper;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust82/exfaust82.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 <!-- TODO: we might want to have a better example here -->
 
@@ -2649,7 +2649,7 @@ process = sig;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust83/exfaust83.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Note that `select2` could be easily implemented from scratch in Faust using Boolean primitives:
 
@@ -2668,7 +2668,7 @@ process = sig;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust84/exfaust84.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 While the behavior of this last solution is identical to the first one, the generated code will be less optimized as the sine and the sawtooth waves will both be computed all the time.
 
@@ -2707,7 +2707,7 @@ process = sig;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust85/exfaust85.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Note that `select3` could be easily implemented from scratch in Faust using Boolean primitives:
 
@@ -2726,7 +2726,7 @@ process = sig;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust86/exfaust86.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 While the behavior of this last solution is identical to the first one, the generated code will be less optimized as the sine, the sawtooth and the triangle waves will all be computed all the time.
 
@@ -2754,7 +2754,7 @@ process = button("DC");
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust87/exfaust87.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 Each primitive implements a specific UI element, but their appearance can also be completely modified using [metadata](#metadata) (a little bit like HTML and CSS in the web). Therefore, [`hslider`](#hslider-primitive), [`vslider`](#vslider-primitive), and [`nentry`](#nentry-primitive)) can for example be turned into a knob, a dropdown menu, etc. This concept is further developed in the [section on UI metadata](#metadata).
 
@@ -2771,7 +2771,7 @@ process = @(hslider("N",1,1,10,1));
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust88/exfaust88.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 a buffer of 10 samples will be allocated for the delay implemented with the [`@` primitive](#primitive) while 20 samples will be allocated in the following example:
 
@@ -2786,7 +2786,7 @@ process = @(hslider("N",1,1,20,1));
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust89/exfaust89.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run -->	
+<!-- /faust-run -->
 
 #### `button` Primitive 
 
