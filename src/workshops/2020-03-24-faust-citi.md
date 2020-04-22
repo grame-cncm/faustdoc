@@ -2,7 +2,7 @@
 
 L'objectif de ce workshop est de se familiariser avec le langage Faust à travers des exemples simples de synthèse sonore. Tous les exemples seront executé dans l'IDE Faust en ligne [https://faustide.grame.fr](https://faustide.grame.fr). Si jamais les sons produits avec l'IDE sont de mauvaise qualité, avec des clics, on peut utiliser l'éditeur en ligne, plus rustique, mais aussi plus léger [https://fausteditor.grame.fr](https://fausteditor.grame.fr)
 
-## 1. Signal en dent de scie
+## Signal en dent de scie
 
 Par convention, en Faust, un signal audio à pleine échelle varie entre -1 et +1. Mais dans un premier temps nous allons commencer par un signal en dent de scie entre 0 et 1 qui nous servira par la suite de _générateur de phase_ pour produire différentes formes d'onde.
 
