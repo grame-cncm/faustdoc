@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Using Tools - Faust Documentation</title>
+        <title>faust2[...] Tools - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -58,6 +58,14 @@
 </li>
                                     
 <li>
+    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">faust2[...] Tools</a>
+</li>
+                                    
+<li>
     <a href="../embedding/" class="dropdown-item">Embedding</a>
 </li>
                                     
@@ -75,18 +83,6 @@
                                     
 <li>
     <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
-</li>
-                                    
-<li>
-    <a href="../options/" class="dropdown-item">Compiler Options</a>
-</li>
-                                    
-<li>
-    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
-</li>
-                                    
-<li>
-    <a href="./" class="dropdown-item active">Using Tools</a>
 </li>
                                 </ul>
                             </li>
@@ -214,7 +210,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../../examples/ambisonics/" class="nav-link">
+                                <a rel="next" href="../embedding/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -236,7 +232,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#using-the-faust-tools" class="nav-link">Using the Faust Tools</a>
+            <li class="nav-item" data-level="1"><a href="#faust2-tools" class="nav-link">faust2[...] Tools</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#faust2alqt" class="nav-link">faust2alqt</a>
               <ul class="nav flex-column">
@@ -437,12 +433,8 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="using-the-faust-tools">Using the Faust Tools</h1>
-<p>While in its most <em>primitive</em> form, Faust is distributed as a command-line 
-compiler, a wide range of tools have been developed around it in the course of 
-the past few years. Their variety and their function might be hard to grab at 
-first. This sort chapter provides an overview of their role and will hopefully 
-help you decide which one is better suited for your personal use. </p>
+<h1 id="faust2-tools"><code>faust2[...]</code> Tools</h1>
+<p>While in its most <em>primitive</em> form, Faust is distributed as a command-line compiler, a wide range of tools have been developed around it in the course of the past few years. Their variety and their function might be hard to grab at first. This sort chapter provides an overview of their role and will hopefully help you decide which one is better suited for your personal use. </p>
 <p>The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools names are in the form <code>faust2xxx</code> where <code>xxx</code> is the target architecture.</p>
 <h2 id="faust2alqt">faust2alqt</h2>
 <p><pre class=faust-tools>

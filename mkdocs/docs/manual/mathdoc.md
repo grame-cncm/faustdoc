@@ -1,36 +1,25 @@
 # Mathematical Documentation
 
-The Faust compiler provides a mechanism to produce a self-describing 
-documentation of the mathematical semantic of a Faust program, essentially as a 
-pdf file. The corresponding options are 
-[`-mdoc` (short) or `--mathdoc`](#compilation-options) (long).
+The Faust compiler provides a mechanism to produce a self-describing documentation of the mathematical semantic of a Faust program, essentially as a pdf file. The corresponding options are [`-mdoc` (short) or `--mathdoc`](#compilation-options) (long).
 
 ## Goals of the Mathdoc
 
-There are three main goals, or uses, of the Faust mathematical documentation 
-generator:
+There are three main goals, or uses, of the Faust mathematical documentation generator:
 
-* to preserve signal processors, independently from any computer language but 
-only under a mathematical form;
-* to bring some help for debugging tasks, by showing the formulas as they are 
-really computed after the compilation stage;
-* to give a new teaching support, as a bridge between code and formulas for 
-signal processing.
+* to preserve signal processors, independently from any computer language but only under a mathematical form;
+* to bring some help for debugging tasks, by showing the formulas as they are really computed after the compilation stage;
+* to give a new teaching support, as a bridge between code and formulas for signal processing.
 
 ## Installation Requirements
 
 * `faust`, of course!
-* `svg2pdf` (from the Cairo 2D graphics library), to convert block-diagrams, 
-as Latex doesn't embed SVG directly,
+* `svg2pdf` (from the Cairo 2D graphics library), to convert block-diagrams, as Latex doesn't embed SVG directly,
 * `breqn`, a Latex package to handle automatic breaking of long equations,
 * `pdflatex`, to compile the Latex output file.
 
 ## Generating the Mathdoc
 
-The easiest way to generate the complete mathematical documentation is to call 
-the `faust2mathdoc` script on a Faust file, as the `-mdoc` option leaves the 
-process of generating the documentation unfinished (only the source 
-is produced).
+The easiest way to generate the complete mathematical documentation is to call the `faust2mathdoc` script on a Faust file, as the `-mdoc` option leaves the process of generating the documentation unfinished (only the source is produced).
 
 ### Invoking the `-mdoc` Option
 
@@ -51,21 +40,19 @@ At this stage:
 
 ### Invoking `faust2mathdoc`
 
-The `faust2mathdoc` script calls `faust --mathdoc` first, then it finishes the 
-work:
+The `faust2mathdoc` script calls `faust --mathdoc` first, then it finishes the work:
 
 * moving the output C++ file into `cpp/`,
-* converting all SVG files into pdf files (you must have `svg2pdf` installed, 
-from the Cairo 2D graphics library),
-* launching `pdflatex` on the Latex file (you must have both `pdflatex` and the 
-`breqn` package installed),
+* converting all SVG files into pdf files (you must have `svg2pdf` installed, from the Cairo 2D graphics library),
+* launching `pdflatex` on the Latex file (you must have both `pdflatex` and the `breqn` package installed),
 * moving the resulting pdf file into `pdf/`.
 
+<!-- TODO: these examples don't exist anymore and I (RM) don't have the means to generate them from where I am because of the lockdown so I'm removing them for now. -->
+
+<!--
 ### Online Examples
 
-To get an idea of the results of this mathematical documentation, which 
-captures the mathematical semantic of Faust programs, you can look at two pdf 
-files online:
+To get an idea of the results of this mathematical documentation, which captures the mathematical semantic of Faust programs, you can look at two pdf files online:
 
 * <http://faust.grame.fr/pdf/karplus.pdf> (automatic documentation),
 * <http://faust.grame.fr/pdf/noise.pdf> (manual documentation).
@@ -75,28 +62,20 @@ mathdoc` command inside the `examples/` directory:
 
 * for each `%.dsp` file, a complete `%-mdoc` directory will be generated,
 * a single `allmathpdfs/` directory will gather all the generated pdf files.
+-->
 
 ## Automatic Documentation
 
-By default, when no `<mdoc>` tag can be found in the input Faust file, the 
-`-mdoc` option automatically generates a Latex file with four sections:
+By default, when no `<mdoc>` tag can be found in the input Faust file, the `-mdoc` option automatically generates a Latex file with four sections:
 
 * **Equations of process**, gathering all formulas needed for `process`,
-* **Block-diagram schema of process**, showing the top-level block-diagram of 
-`process`,
-* **Notice of this documentation**, summing up generation and conventions 
-information,
-* **Complete listing of the input code**, listing all needed input files 
-(including libraries).
+* **Block-diagram schema of process**, showing the top-level block-diagram of `process`,
+* **Notice of this documentation**, summing up generation and conventions information,
+* **Complete listing of the input code**, listing all needed input files (including libraries).
 
 ## Manual Documentation
 
-You can specify yourself the documentation instead of using the automatic mode, 
-with five xml-like tags. That allows you to modify the presentation and to 
-add your own comments, not only on `process`, but also about any expression 
-you'd like to. Note that as soon as you declare an `<mdoc>` tag inside your 
-Faust file, the default structure of the automatic mode is ignored, and all the 
-Latex stuff becomes up to you!
+You can specify yourself the documentation instead of using the automatic mode, with five xml-like tags. That allows you to modify the presentation and to add your own comments, not only on `process`, but also about any expression you'd like to. Note that as soon as you declare an `<mdoc>` tag inside your Faust file, the default structure of the automatic mode is ignored, and all the Latex stuff becomes up to you!
 
 ### Six Tags
 
@@ -104,35 +83,24 @@ Here are the six specific tags:
 
 * `<mdoc></mdoc>`, to open a documentation field in the Faust code,
   * `<equation></equation>`, to get equations of a Faust expression,
-  * `<diagram></diagram>`, to get the top-level block-diagram of a Faust 
-  expression,
-  * `<metadata></metadata>`, to reference Faust metadatas (cf. declarations), 
-  calling the corresponding keyword,
-  * `<notice />`, to insert the "adaptive" notice all formulas actually 
-  printed,
+  * `<diagram></diagram>`, to get the top-level block-diagram of a Faust expression,
+  * `<metadata></metadata>`, to reference Faust metadatas (cf. declarations), calling the corresponding keyword,
+  * `<notice />`, to insert the "adaptive" notice all formulas actually printed,
   * `<listing [attributes] />`, to insert the listing of Faust files called.
 
-The `<listing />` tag can have up to three boolean attributes (set to `true` by 
-default):
+The `<listing />` tag can have up to three boolean attributes (set to `true` by default):
 
 * `mdoctags` for `<mdoc>` tags;
 * `dependencies` for other files dependencies;
-* `distributed` for the distribution of interleaved Faust code between `<mdoc>` 
-sections.
+* `distributed` for the distribution of interleaved Faust code between `<mdoc>` sections.
 
 ### The `mdoc` Top-Level Tags
 
-The `<mdoc></mdoc>` tags are the top-level delimiters for Faust mathematical 
-documentation sections. This means that the four other documentation tags can't 
-be used outside these pairs.
+The `<mdoc></mdoc>` tags are the top-level delimiters for Faust mathematical documentation sections. This means that the four other documentation tags can't be used outside these pairs.
 
-In addition of the four inner tags, `<mdoc></mdoc>` tags accept free Latex text, 
-including its standard macros (like `\section`, `\emph`, etc.). This allows to 
-manage the presentation of resulting tex file directly from within the input 
-Faust file. 
+In addition of the four inner tags, `<mdoc></mdoc>` tags accept free Latex text, including its standard macros (like `\section`, `\emph`, etc.). This allows to manage the presentation of resulting tex file directly from within the input Faust file. 
 
-The complete list of the Latex packages included by Faust can be found in the 
-file `architecture/latexheader.tex`.
+The complete list of the Latex packages included by Faust can be found in the file `architecture/latexheader.tex`.
 
 ## An Example of Manual Mathdoc
 
@@ -218,34 +186,22 @@ mathematical documentation.
 
 ### The `-stripmdoc` Option
 
-The listing of the input code contains all the mathdoc text. As it may be 
-useless in certain cases, we provide an option to strip mathdoc contents 
-directly at compilation stage: `-stripmdoc` (short) or `--strip-mdoc-tags` 
-(long).
+The listing of the input code contains all the mathdoc text. As it may be useless in certain cases, we provide an option to strip mathdoc contents directly at compilation stage: `-stripmdoc` (short) or `--strip-mdoc-tags` (long).
 
 ## Localization of Mathdoc Files
 
-By default, texts used by the documentator are in English, but you can specify 
-another language (French, German and Italian at the moment), using the `-mdlang` 
-(or `--mathdoc-lang`) option with a two-letters argument (`en`, `fr`, `it`, 
-etc.).
+By default, texts used by the documentator are in English, but you can specify another language (French, German and Italian at the moment), using the `-mdlang` (or `--mathdoc-lang`) option with a two-letters argument (`en`, `fr`, `it`, etc.).
 
-The `faust2mathdoc` script also supports this option, plus a third short form 
-with `-l`:
+The `faust2mathdoc` script also supports this option, plus a third short form with `-l`:
 
 ```
 faust2mathdoc -l fr myfaustfile.dsp
 ```
 
-If you would like to contribute to the localization effort, feel free to 
-translate the mathdoc texts from any of the `mathdoctexts-*.txt` files, that 
-are in the `architecture` directory (`mathdoctexts-fr.txt`, 
-`mathdoctexts-it.txt`, etc.). As these files are dynamically loaded, just 
-adding a new file with an appropriate name should work.
+If you would like to contribute to the localization effort, feel free to translate the mathdoc texts from any of the `mathdoctexts-*.txt` files, that are in the `architecture` directory (`mathdoctexts-fr.txt`, `mathdoctexts-it.txt`, etc.). As these files are dynamically loaded, just adding a new file with an appropriate name should work.
 
 ## Summary of the Mathdoc Generation Steps
 
-* First, to get the full mathematical documentation done on your Faust file, 
-call `faust2mathdoc myfaustfile.dsp`.
+* First, to get the full mathematical documentation done on your Faust file, call `faust2mathdoc myfaustfile.dsp`.
 * Then, open the pdf file `myfaustfile-mdoc/pdf/myfaustfile.pdf`.
 * That's all !

@@ -298,7 +298,7 @@ This is a very broad introduction to making user interface elements in Faust. Yo
 
 Some Faust functions already contain a built-in UI and are ready-to-be-used. These functions are all placed in [demo.lib](https://faustlibraries.grame.fr/libs/demos/) and are accessible through the `dm.` environment. 
 
-As an example, let's add a reverb to our previous code by calling [`dm.zita_light`](../libraries/index.html#dm.zita_light) (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust wont know how to connect things):
+As an example, let's add a reverb to our previous code by calling [`dm.zita_light`](https://faustlibraries.grame.fr/libs/demos/#dmzita_light) (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust wont know how to connect things):
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">

@@ -1,12 +1,6 @@
 # Using the Faust Compiler
 
-While the Faust compiler is available in different forms (e.g., 
-[Embedded Compiler](TODO), etc.), its most "common" one is the command line
-version, which can be invoked using the `faust` command. It translates 
-a Faust program into code in a wide range of languages (C, O-C++, C++, Rust, 
-JAVA, JavaScript, ASM JavaScript, LLVM, C-LLVM, FIR, and WebAssembly). The 
-generated code can be wrapped into an optional *architecture file* allowing to 
-directly produce a fully operational program.
+While the Faust compiler is available in different forms (e.g., [Embedded Compiler](../embedding), etc.), its most "common" one is the command line version, which can be invoked using the `faust` command. It translates a Faust program into code in a wide range of languages (C, O-C++, C++, Rust, JAVA, JavaScript, ASM JavaScript, LLVM, C-LLVM, FIR, and WebAssembly). The generated code can be wrapped into an optional *architecture file* allowing to directly produce a fully operational program.
 
 A typical call of the Faust command line compiler is:
 
@@ -20,9 +14,7 @@ The Faust compiler outputs C++ code by default therefore running:
 faust noise.dsp 
 ```
 
-will compile `noise.dsp` and output the corresponding C++ 
-code on the standard output. The option `-o` allows to reroute the standard 
-output to a file: 
+will compile `noise.dsp` and output the corresponding C++ code on the standard output. The option `-o` allows to reroute the standard output to a file: 
 
 ```
 faust noise.dsp -o noise.cpp
@@ -34,28 +26,23 @@ The `-a` option allows us to wrap the generated code into an architecture file:
 faust -a alsa-gtk.cpp noise.dsp 
 ```
 
-which can either be placed in the same folder as the current Faust file 
-(`noise.dsp` here) or be one of the standard Faust architectures.
+which can either be placed in the same folder as the current Faust file (`noise.dsp` here) or be one of the standard Faust architectures.
 
 <!-- TODO: we must check if talk about architectures somewhere in greater
 details and put a link to that here -->
 
-To compile a Faust program into an ALSA application on Linux, the following 
-commands can be used: 
+To compile a Faust program into an ALSA application on Linux, the following commands can be used: 
 
 ```
 faust -a alsa-gtk.cpp noise.dsp -o noise.cpp
 g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 ```
 
-Note that a wide range of [`faust2...` compilation scripts](TODO) can be used
-to facilitate this operation by taking a Faust file and returning the
-corresponding binary for your platform.
+Note that a wide range of [`faust2...` compilation scripts](TODO) can be used to facilitate this operation by taking a Faust file and returning the corresponding binary for your platform.
 
 ## Structure of the Generated Code
 
-A Faust DSP C++ class derives from the base `dsp` class defined as below (a
-similar structure is used for languages than C++):
+A Faust DSP C++ class derives from the base `dsp` class defined as below (a similar structure is used for languages than C++):
 
 ```
 class dsp {
@@ -98,8 +85,7 @@ class dsp {
 };
 ```
 
-Methods are filled by the compiler with the actual code. In the case of
-`noise.dsp`:
+Methods are filled by the compiler with the actual code. In the case of `noise.dsp`:
 
 ```
 class mydsp : public dsp {
@@ -185,118 +171,153 @@ class mydsp : public dsp {
 };
 ```  
 
-Several fine-grained initialization methods are available. The `instanceInit` 
-method calls several additional initialization methods. The `instanceConstants`
-method sets the instance constant state. The `instanceClear` method resets the 
-instance dynamic state (delay lines...).  The `instanceResetUserInterface` 
-method resets all control value to their default state. All of those methods 
-can be used individually on an allocated instance to reset part of its state. 
+Several fine-grained initialization methods are available. The `instanceInit` method calls several additional initialization methods. The `instanceConstants` method sets the instance constant state. The `instanceClear` method resets the instance dynamic state (delay lines...).  The `instanceResetUserInterface` method resets all control value to their default state. All of those methods can be used individually on an allocated instance to reset part of its state. 
 
 The `init` method combines class static state and instance initialization.
 
-When using a single instance, calling `init` is the simplest way to do 
-"what is needed." When using several instances, all of them can be 
-initialized using `instanceInit`, with a single call to `classInit` to 
-initialize the static shared state.
+When using a single instance, calling `init` is the simplest way to do "what is needed." When using several instances, all of them can be initialized using `instanceInit`, with a single call to `classInit` to initialize the static shared state.
 
-<!-- 
 ## Compilation Options
 
-| Short | Long | Description |
-| --- | --- | --- |
-| `-h` | `--help` | print the help message |
-| `-v` | `--version` | print the compiler version information |
-| `-d` | `--details` | print the compilation details |
-| `-tg` | `--task-graph` | Draw a graph of all internal computational loops as `.dot` (graphviz) file |
-| `-sg` | `--signal-graph` | Draw a graph of all internal computational loops as `.dot` (graphviz) file |
-| `-ps` | `--postscript` | Generate the block-diagram postscript file |
-| `-svg` | `--svg` | Generate the block-diagram svg file |
-| `-mdoc` | `--mathdoc` | Generate the full mathematical documentation of a Faust program |
-| `-mdlang <l>` | `--mathdoc-lang` | Choose the language of the mathematical description (*l* = en, fr, etc.) |
-| `-stripmdoc` | `--strip-mdoc-tags` | Remove documentation tags when printing Faust listings |
-| `-sd` | `--simplify-diagrams` |  Try to further simplify block diagrams before drawing them |
-| `-f <n>` | `--fold <n>` | Max complexity of svg diagrams before splitting into several files (default 25 elements) |
-| `-mns <n>` | `--max-name-size <n>` | Max character size used in svg diagrams labels |
-| `-sn` | `--simple-names` | Use simple names (without arguments) for block-diagram generation (default max size: 40 chars) |
-| `-xml` | `-xml` | Generate an XML description file |
-| `-exp10` | `--generate-exp10` | Function call instead of pow(10) function |
-| `-json` | `-json` | Generate a JSON description file |
-| `-blur` | `--shadow-blur` | Add a blur to boxes shadows in block diagrams |
-| `-lb` | `--left-balanced` | Generate left-balanced expressions in block diagrams |
-| `-mb` | `--mid-balanced` | Generate mid-balanced expressions in block diagrams |
-| `-rb` | `--right-balanced` | Generate right-balanced expressions in block diagrams |
-| `-lt` | `--less-temporaries` | Generate less temporaries in compiling delays |
-| `-mcd <n>` | `--max-copy-delay <n>` | Threshold between copy and ring buffer delays (default 16 samples) |
-| `-mem` | `--memory` | Allocate static in global state using a custom memory manager |
-| `-a <file>` | `-a` | Specifies a wrapper architecture file |
-| `-i` | `--inline-architecture-files` | Inline architecture files in the generated code | 
-| `-cn <name>` | `--class-name <name>` | Specify the name of the DSP class to be used instead of `mydsp` | 
-| `-scn <name>` | `--super-class-name <name>` | Specify the name of the super class to be used instead of `dsp` | 
-| `-pn <name>` | `--process-name <name>` | Specify the name of the dsp entry-point instead of process |
-| `-t <sec>` | `--timeout <sec>` | Abort compilation after `<sec>` seconds (default 120) |
-| `-time` | `--compilation-time` | Flag to display compilation phases timing information |
-| `-o <file>` | `-o <file>` | C, C++, JAVA, JavaScript, ASM JavaScript, WebAssembly, LLVM IR or FVM (interpreter) output file |
-| `-scal` | `--scalar` | Generate non-vectorized code |
-| `-vec` | `--vectorize` | Generate easier to vectorize code |
-| `-vs <n>` | `--vec-size <n>` | Size of the vector (default 32 samples) |
-| `-lv <n>` | `--loop-variant` | Loop variant when `-vec` [0:fastest (default), 1:simple] |
-| `-omp` | `--openMP` | Generate OpenMP pragmas, activates the `--vectorize` option |
-| `-pl` | `--par-loop` | Generate parallel loops in `--openMP` mode |
-| `-sch` | `--scheduler` | Generate tasks and use a Work Stealing scheduler, activates the `--vectorize` option |
-| `-ocl` | `--openCL` | Generate tasks with OpenCL (experimental) | 
-| `-cuda`| `--cuda` | Generate tasks with CUDA (experimental) | 
-| `-dfs` | `--deepFirstScheduling` | Schedule vector loops in deep first order |
-| `-g` | `--groupTasks` | Group single-threaded sequential tasks together when `-omp` or `-sch` is used |
-| `-fun` | `--funTasks` | Separate tasks code as separated functions (in `-vec`, `-sch`, or `-omp` mode) |
-| `-lang <lang>` | `--language` | Generate various output formats: `c`, `ocpp`, `cpp`, `rust`, `java`, `js`, `ajs`, `llvm`, `cllvm`, `fir`, `wast`/`wasm`, `interp` (default `cpp`) |
-| `-uim` | `--user-interface-macros` | Add user interface macro definitions in the output code |
-| `-single` | `--single-precision-floats` | Use single precision floats for internal computations (default) |
-| `-double` | `--double-precision-floats` | Use `--double-precision-floats` for internal computations |
-| `-quad` | `--quad-precision-floats` | Use quad precision floats for internal computations |
-| `-es 1|0` | `--enable-semantics 1|0` | Use `--enable-semantics 1|0` when 1, and simple multiplication otherwise |
-| `-flist` | `--file-list` | Use --file-list used to eval process |
-| `-norm` | `--normalized-form` | Prints signals in normalized form and exits |
-| `-A <dir>` | `--architecture-dir <dir>` | Add the directory `<dir>` to the architecture search path |
-| `-I <dir>` | `--import-dir <dir>` | Add the directory `<dir>` to the import search path |
-| `-L <file>` | `--library <file>` | Link with the LLVM module `<file>` |
-| `-O <dir>` | `--output-dir <dir>` | Specify the relative directory of the generated output code, and the output directory of additional generated files (SVG, XML, etc.) |
-| `-e` | `--export-dsp` | Export expanded DSP (all included libraries) |
-| `-inpl` | `--in-place generates` | Code working when input and output buffers are the same (in scalar mode only) | 
-| `-inj <f>` | `--inject <f>` | inject source file `<f>` into architecture file instead of compile a dsp file |
-| `-ftz` | `--flush-to-zero` | Flush to zero the code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)] |
-| `-fm <file>` | `--fast-math <file>` | Uses optimized versions of mathematical functions implemented in `<file>`, take the `/faust/dsp/fastmath.cpp` file if 'def' is used |
- -->
+### FAUST compiler version 2.23.2
+
+~~~faust-options
+usage : faust [options] file1 [file2 ...].
+        where options represent zero or more compiler options 
+	and fileN represents a Faust source file (.dsp extension).
+~~~
+
+### Input Options
+
+~~~faust-options
+  -a <file>                               wrapper architecture file.
+  -i        --inline-architecture-files   inline architecture files.
+  -A <dir>  --architecture-dir <dir>      add the directory <dir> to the architecture search path.
+  -I <dir>  --import-dir <dir>            add the directory <dir> to the import search path.
+  -L <file> --library <file>              link with the LLVM module <file>.
+  -t <sec>  --timeout <sec>               abort compilation after <sec> seconds (default 120).
+~~~
+
+### Output Options
+
+~~~faust-options
+  -o <file>                               the output file.
+  -e        --export-dsp                  export expanded DSP (with all included libraries).
+  -uim      --user-interface-macros       add user interface macro definitions to the output code.
+  -xml                                    generate an XML description file.
+  -json                                   generate a JSON description file.
+  -O <dir>  --output-dir <dir>            specify the relative directory of the generated output code and of additional generated files (SVG, XML...).
+~~~
+
+### Code Generation Options
+
+~~~faust-options
+  -lang <lang> --language                 select output language,
+                                          'lang' should be in c, ocpp, cpp (default), rust, java, llvm, cllvm, fir, wast/wasm, soul, interp.
+  -single     --single-precision-floats   use single precision floats for internal computations (default).
+  -double     --double-precision-floats   use double precision floats for internal computations.
+  -quad       --quad-precision-floats     use quad precision floats for internal computations.
+  -es 1|0     --enable-semantics 1|0      use enable semantics when 1 (default), and simple multiplication otherwise.
+  -lcc        --local-causality-check     check causality also at local level.
+  -light      --light-mode                do not generate the entire DSP API.
+  -clang      --clang                     when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
+  -flist      --file-list                 use file list used to eval process.
+  -exp10      --generate-exp10            function call instead of pow(10) function.
+  -os         --one-sample                generate one sample computation.
+  -cn <name>  --class-name <name>         specify the name of the dsp class to be used instead of mydsp.
+  -scn <name> --super-class-name <name>   specify the name of the super class to be used instead of dsp.
+  -pn <name>  --process-name <name>       specify the name of the dsp entry-point instead of process.
+  -lb         --left-balanced             generate left balanced expressions.
+  -mb         --mid-balanced              generate mid balanced expressions (default).
+  -rb         --right-balanced            generate right balanced expressions.
+  -lt         --less-temporaries          generate less temporaries in compiling delays.
+  -mcd <n>    --max-copy-delay <n>        threshold between copy and ring buffer implementation (default 16 samples).
+  -mem        --memory                    allocate static in global state using a custom memory manager.
+  -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
+  -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compile a dsp file.
+  -scal      --scalar                     generate non-vectorized code.
+  -inpl      --in-place                   generates code working when input and output buffers are the same (scalar mode only).
+  -vec       --vectorize                  generate easier to vectorize code.
+  -vs <n>    --vec-size <n>               size of the vector (default 32 samples).
+  -lv <n>    --loop-variant <n>           [0:fastest (default), 1:simple].
+  -omp       --openmp                     generate OpenMP pragmas, activates --vectorize option.
+  -pl        --par-loop                   generate parallel loops in --openmp mode.
+  -sch       --scheduler                  generate tasks and use a Work Stealing scheduler, activates --vectorize option.
+  -ocl       --opencl                     generate tasks with OpenCL (experimental).
+  -cuda      --cuda                       generate tasks with CUDA (experimental).
+  -dfs       --deep-first-scheduling      schedule vector loops in deep first order.
+  -g         --group-tasks                group single-threaded sequential tasks together when -omp or -sch is used.
+  -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
+  -fm <file> --fast-math <file>           use optimized versions of mathematical functions implemented in <file>,
+                                          use 'faust/dsp/fastmath.cpp' when file is 'def'.
+  -ns <name> --namespace <name>           generate C++ code in a namespace <name> 
+~~~
+
+### Block Diagram Options
+
+~~~faust-options
+  -ps        --postscript                 print block-diagram to a postscript file.
+  -svg       --svg                        print block-diagram to a svg file.
+  -sd        --simplify-diagrams          try to further simplify diagrams before drawing.
+  -drf       --draw-route-frame           draw route frames instead of simple cables.
+  -f <n>     --fold <n>                   threshold to activate folding mode during block-diagram generation (default 25 elements).
+  -fc <n>    --fold-complexity <n>        complexity threshold to fold an expression in folding mode (default 2)
+  -mns <n>   --max-name-size <n>          threshold during block-diagram generation (default 40 char).
+  -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
+  -blur      --shadow-blur                add a shadow blur to SVG boxes.
+~~~
+
+### Math Doc Options
+
+~~~faust-options
+  -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
+  -mdlang <l> --mathdoc-lang <l>          if translation file exists (<l> = en, fr, ...).
+  -stripmdoc  --strip-mdoc-tags           strip mdoc tags when printing Faust -mdoc listings.
+~~~
+
+### Debug Options
+
+~~~faust-options
+  -d          --details                   print compilation details.
+  -time       --compilation-time          display compilation phases timing information.
+  -tg         --task-graph                print the internal task graph in dot format.
+  -sg         --signal-graph              print the internal signal graph in dot format.
+  -norm       --normalized-form           print signals in normalized form and exit.
+  -ct         --check-table               check table index range and fails.
+  -cat        --check-all-table           check all table index range.
+~~~
+
+### Information options:
+
+~~~faust-options
+  -h          --help                      print this help message.
+  -v          --version                   print version information and embedded backends list.
+  -libdir     --libdir                    print directory containing the Faust libraries.
+  -includedir --includedir                print directory containing the Faust headers.
+  -archdir    --archdir                   print directory containing the Faust architectures.
+  -dspdir     --dspdir                    print directory containing the Faust dsp libraries.
+  -pathslist  --pathslist                 print the architectures and dsp library paths.
+~~~
+
+### Example
+
+~~~faust-options
+faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
+~~~
 
 ## Controlling Code Generation
 
-Several options of the Faust compiler allow to control the generated C++ code. 
-By default computation is done sample by sample in a single loop. But the 
-compiler can also generate *vector* and *parallel* code.
+Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the compiler can also generate *vector* and *parallel* code.
 
 ### Vector Code Generation
   
-Modern C++ compilers are able to do autovectorization, that is to use SIMD 
-instructions to speedup the code. These instructions can typically operate in 
-parallel on short vectors of 4 simple precision floating point numbers, leading 
-to a theoretical speedup of $\times4$.
+Modern C++ compilers are able to do autovectorization, that is to use SIMD instructions to speedup the code. These instructions can typically operate in parallel on short vectors of 4 simple precision floating point numbers, leading to a theoretical speedup of $\times4$.
  
-Autovectorization of C/C++ programs is a difficult task. Current compilers are 
-very sensitive to the way the code is arranged. In particular, complex loops 
-can prevent autovectorization. The goal of the vector code generation is to 
-rearrange the C++ code in a way that facilitates the autovectorization job of 
-the C++ compiler. Instead of generating a single sample computation loop, it 
-splits the computation into several simpler loops that communicates by vectors.
+Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular, complex loops can prevent autovectorization. The goal of the vector code generation is to rearrange the C++ code in a way that facilitates the autovectorization job of the C++ compiler. Instead of generating a single sample computation loop, it splits the computation into several simpler loops that communicates by vectors.
 
-The vector code generation is activated by passing the 
-[`--vectorize` (or `-vec`)](#compilation-options) option to the Faust compiler. 
-Two additional options are available: `--vec-size <n>` controls the size of the 
-vector (by default 32 samples) and `--loop-variant 0/1` gives some additional 
-control on the loops.  
+The vector code generation is activated by passing the [`--vectorize` (or `-vec`)](#compilation-options) option to the Faust compiler. Two additional options are available: `--vec-size <n>` controls the size of the vector (by default 32 samples) and `--loop-variant 0/1` gives some additional control on the loops.  
 
-To illustrate the difference between scalar code and vector code, let's take 
-the computation of the RMS (Root Mean Square) value of a signal.  Here is the 
-Faust code that computes the Root Mean Square of a sliding window of 1000 
-samples:
+To illustrate the difference between scalar code and vector code, let's take the computation of the RMS (Root Mean Square) value of a signal.  Here is the Faust code that computes the Root Mean Square of a sliding window of 1000 samples:
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -329,8 +350,7 @@ process = RMS(1000);
 </div>
 <!-- /faust-run -->
 
-The [corresponding `compute()` method](#strucutre-of-the-generated-code) 
-generated in scalar mode is the following:
+The [corresponding `compute()` method](#strucutre-of-the-generated-code) generated in scalar mode is the following:
 
 ```
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
@@ -433,46 +453,25 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 }
 ```
 
-While the second version of the code is more complex, it turns out to be much 
-easier to vectorize efficiently by the C++ compiler. With the exact same 
-compilation options: `-O3 -xHost -ftz -fno-alias -fp-model fast=2`, the scalar 
-version leads to a throughput performance of 129.144  MB/s, while the vector 
-version achieves 359.548  MB/s, a speedup of x2.8 ! 
+While the second version of the code is more complex, it turns out to be much easier to vectorize efficiently by the C++ compiler. With the exact same compilation options: `-O3 -xHost -ftz -fno-alias -fp-model fast=2`, the scalar version leads to a throughput performance of 129.144  MB/s, while the vector version achieves 359.548  MB/s, a speedup of x2.8 ! 
 
 <img src="img/compilerStack.svg" class="mx-auto d-block" width="30%">
 
-The vector code generation is built on top of the scalar code generation (see 
-previous figure). Every time an expression needs to be compiled, the compiler 
-checks if it requires a separate loop or not. Expressions that are shared (and 
-are complex enough) are good candidates to be compiled in a separate loop, as 
-well as recursive expressions and expressions used in delay lines. 
+The vector code generation is built on top of the scalar code generation (see previous figure). Every time an expression needs to be compiled, the compiler checks if it requires a separate loop or not. Expressions that are shared (and are complex enough) are good candidates to be compiled in a separate loop, as well as recursive expressions and expressions used in delay lines. 
 
-The result is a directed graph in which each node is a computation loop (see 
-figure below). This graph is stored in the class object and a topological 
-sort is applied to it before printing the code. 
+The result is a directed graph in which each node is a computation loop (see figure below). This graph is stored in the class object and a topological sort is applied to it before printing the code. 
 
 <img src="img/loopgraph2.svg" class="mx-auto d-block" width="30%">
 
 ### Parallel Code Generation
 
-Parallel code generation is activated by passing either the [`--openMP` (or 
-`-omp`) option or the `--scheduler` (or `-sch`) option](#compilation-options). 
-It implies that the `-vec` option as well as the parallel code generation are 
-built on top of the vector code generation.
+Parallel code generation is activated by passing either the [`--openMP` (or `-omp`) option or the `--scheduler` (or `-sch`) option](#compilation-options). It implies that the `-vec` option as well as the parallel code generation are built on top of the vector code generation.
 
 #### The OpenMP Code Generator
 
 <img src="img/openmpModel.svg" class="mx-auto d-block" width="100%">
 
-The [`--openMP` (or `-omp`) option](#compilation-options), when given to the 
-Faust compiler, will insert appropriate [OpenMP](https://www.openmp.org/) 
-directives into the C++ code. OpenMP is a well established API that is used to 
-explicitly define direct multi-threaded, shared memory parallelism. It is based 
-on a fork-join model of parallelism (see figure above). Parallel regions are 
-delimited by `#pragma omp parallel` constructs. At the entrance of a parallel 
-region, a group of parallel threads is activated. The code within a parallel 
-region is executed by each thread of the parallel group until the end of the 
-region. 
+The [`--openMP` (or `-omp`) option](#compilation-options), when given to the Faust compiler, will insert appropriate [OpenMP](https://www.openmp.org/) directives into the C++ code. OpenMP is a well established API that is used to explicitly define direct multi-threaded, shared memory parallelism. It is based on a fork-join model of parallelism (see figure above). Parallel regions are delimited by `#pragma omp parallel` constructs. At the entrance of a parallel region, a group of parallel threads is activated. The code within a parallel region is executed by each thread of the parallel group until the end of the region. 
 
 ```
 #pragma omp parallel
@@ -483,10 +482,7 @@ region.
 }
 ```
 
-In order not to have every thread doing redundantly the exact same work, OpenMP 
-provides specific *work-sharing* directives. For example `#pragma omp sections` 
-allows to break the work into separate, discrete sections, each section being 
-executed by one thread:
+In order not to have every thread doing redundantly the exact same work, OpenMP provides specific *work-sharing* directives. For example `#pragma omp sections` allows to break the work into separate, discrete sections, each section being executed by one thread:
 
 ```
 #pragma omp parallel
@@ -509,15 +505,9 @@ executed by one thread:
 
 #### Adding Open MP Directives
 
-As said before, parallel code generation is built on top of vector code 
-generation. The graph of loops produced by the vector code generator is 
-topologically sorted in order to detect the loops that can be computed in 
-parallel. The first set $S_0$ (loops $L1$, $L2$ and $L3$) contains the loops 
-that don't depend on any other loops, the set $S_1$ contains the loops that 
-only depend on loops of $S_0$, (that is loops $L4$ and $L5$), etc.. 
+As said before, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set $S_0$ (loops $L1$, $L2$ and $L3$) contains the loops that don't depend on any other loops, the set $S_1$ contains the loops that only depend on loops of $S_0$, (that is loops $L4$ and $L5$), etc.. 
 
-As all the loops of a given set $S_n$ can be computed in parallel, the compiler 
-will generate a `sections` construct with a `section` for each loop. 
+As all the loops of a given set $S_n$ can be computed in parallel, the compiler will generate a `sections` construct with a `section` for each loop. 
 
 ```
 #pragma omp sections
@@ -534,9 +524,7 @@ will generate a `sections` construct with a `section` for each loop.
 }
 ```
 
-If a given set contains only one loop, then the compiler checks to see if the 
-loop can be parallelized (no recursive dependencies) or not. If it can be 
-parallelized, it generates:
+If a given set contains only one loop, then the compiler checks to see if the loop can be parallelized (no recursive dependencies) or not. If it can be parallelized, it generates:
 
 ```
 #pragma omp for
@@ -545,8 +533,7 @@ for (...) {
 }
 ```
 
-otherwise it generates a `single` construct so that only one thread will 
-execute the loop:
+otherwise it generates a `single` construct so that only one thread will execute the loop:
 
 ```
 #pragma omp single
@@ -557,8 +544,7 @@ for (...) {
 
 #### Example of Parallel OpenMP Code
 
-To illustrate how Faust uses the OpenMP directives, here is a very simple 
-example, two 1-pole filters in parallel connected to an adder:
+To illustrate how Faust uses the OpenMP directives, here is a very simple example, two 1-pole filters in parallel connected to an adder:
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
@@ -574,8 +560,7 @@ process = filter(0.9), filter(0.9) : +;
 </div>
 <!-- /faust-run -->
 
-The corresponding `compute()` method obtained using the `-omp` option looks
-like this:
+The corresponding `compute()` method obtained using the `-omp` option looks like this:
 
 ```
 virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
@@ -649,65 +634,29 @@ virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 
 This code requires some comments:
 
-* The parallel construct `#pragma omp parallel` is the fundamental construct 
-that starts parallel execution. The number of parallel threads is generally the 
-number of CPU cores but it can be controlled in several ways.
-* Variables external to the parallel region are shared by default. The pragma 
-`firstprivate(fRec0,fRec1)` indicates that each thread should have its private 
-copy of `fRec0` and `fRec1`. The reason is that accessing shared variables 
-requires an indirection and is quite inefficient compared to private copies.
-* The top level loop `for (int index = 0;...)...` is executed by all threads 
-simultaneously. The subsequent work-sharing directives inside the loop will 
-indicate how the work must be shared between threads. 
-* Please note that an implied barrier exists at the end of each work-sharing 
-region. All threads must have executed the barrier before any of them can 
-continue.
-* The work-sharing directive `#pragma omp single` indicates that this first 
-section will be executed by only one thread (any of them).
-* The work-sharing directive `#pragma omp sections` indicates that each 
-corresponding `#pragma omp section`, here our two filters, will be executed in 
+* The parallel construct `#pragma omp parallel` is the fundamental construct that starts parallel execution. The number of parallel threads is generally the number of CPU cores but it can be controlled in several ways.
+* Variables external to the parallel region are shared by default. The pragma `firstprivate(fRec0,fRec1)` indicates that each thread should have its private copy of `fRec0` and `fRec1`. The reason is that accessing shared variables requires an indirection and is quite inefficient compared to private copies.
+* The top level loop `for (int index = 0;...)...` is executed by all threads simultaneously. The subsequent work-sharing directives inside the loop will indicate how the work must be shared between threads. 
+* Please note that an implied barrier exists at the end of each work-sharing region. All threads must have executed the barrier before any of them can continue.
+* The work-sharing directive `#pragma omp single` indicates that this first section will be executed by only one thread (any of them).
+* The work-sharing directive `#pragma omp sections` indicates that each corresponding `#pragma omp section`, here our two filters, will be executed in 
 parallel.
-* The loop construct `#pragma omp for` specifies that the iterations of the 
-associated loop will be executed in parallel. The iterations of the loop are 
-distributed across the parallel threads. For example, if we have two threads, 
-the first one can compute indices between 0 and count/2 and the other one 
-between count/2 and count. 
-* Finally `#pragma omp single` indicates that this section will be executed 
-by only one thread (any of them).
+* The loop construct `#pragma omp for` specifies that the iterations of the associated loop will be executed in parallel. The iterations of the loop are distributed across the parallel threads. For example, if we have two threads, the first one can compute indices between 0 and count/2 and the other one between count/2 and count. 
+* Finally `#pragma omp single` indicates that this section will be executed by only one thread (any of them).
 
 #### The Scheduler Code Generator
 
-With the [`--scheduler` (or `-sch`) option](#compilation-options) given to the 
-Faust compiler, the computation graph is cut into separate computation loops 
-(called "tasks"), and a "Work Stealing Scheduler" is used to activate and 
-execute them following their dependencies. A pool of worked threads is created 
-and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ 
-is a special queue with a Push operation, a "private" LIFO Pop operation and a 
-"public" FIFO Pop operation.
+With the [`--scheduler` (or `-sch`) option](#compilation-options) given to the Faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worked threads is created and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.
 
-Starting from a ready task, each thread follows the dependencies, possibly 
-pushing ready sub-tasks into it's own local WSQ. When no more tasks can be 
-activated on a given computation path, the thread pops a task from it's local 
-WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from 
-other threads WSQ.
+Starting from a ready task, each thread follows the dependencies, possibly pushing ready sub-tasks into it's own local WSQ. When no more tasks can be activated on a given computation path, the thread pops a task from it's local WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from other threads WSQ.
 
-The local LIFO Pop operation allows better cache locality and the FIFO steal 
-Pop "larger chuck" of work to be done. The reason for this is that many work 
-stealing workloads are divide-and-conquer in nature, stealing one of the oldest 
-task implicitly also steals a (potentially) large sub-tree of computations that 
-will unfold once that piece of work is stolen and run.
+The local LIFO Pop operation allows better cache locality and the FIFO steal Pop "larger chuck" of work to be done. The reason for this is that many work stealing workloads are divide-and-conquer in nature, stealing one of the oldest task implicitly also steals a (potentially) large sub-tree of computations that will unfold once that piece of work is stolen and run.
 
-Compared to the OpenMP model (`-omp`) the new model is worse for simple Faust 
-programs and usually starts to behave comparable or sometimes better for 
-"complex enough" Faust programs. In any case, since OpenMP does not behave so 
-well with GCC compilers, and is unusable on OSX in real-time contexts, this 
-new scheduler option has it's own value.  We plan to improve it adding a 
-"pipelining" idea in the future.
+Compared to the OpenMP model (`-omp`) the new model is worse for simple Faust programs and usually starts to behave comparable or sometimes better for "complex enough" Faust programs. In any case, since OpenMP does not behave so well with GCC compilers, and is unusable on OSX in real-time contexts, this new scheduler option has it's own value.  We plan to improve it adding a "pipelining" idea in the future.
 
 #### Example of Parallel Scheduler Code
 
-To illustrate how Faust generates the scheduler code, let's reuse the previous
-example made of two 1-pole filters in parallel connected to an adder:
+To illustrate how Faust generates the scheduler code, let's reuse the previous example made of two 1-pole filters in parallel connected to an adder:
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
@@ -723,10 +672,7 @@ process = filter(0.9), filter(0.9) : +;
 </div>
 <!-- /faust-run -->
 
-When `-sch` option is used, the content of the additional 
-`architecture/scheduler.h` file is inserted in the generated code. It contains 
-code to deal with WSQ and thread management. The `compute()` and 
-`computeThread()` methods are the following:
+When `-sch` option is used, the content of the additional `architecture/scheduler.h` file is inserted in the generated code. It contains code to deal with WSQ and thread management. The `compute()` and `computeThread()` methods are the following:
 
 ```
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {

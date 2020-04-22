@@ -58,6 +58,14 @@
 </li>
                                     
 <li>
+    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
     <a href="../embedding/" class="dropdown-item">Embedding</a>
 </li>
                                     
@@ -75,18 +83,6 @@
                                     
 <li>
     <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
-</li>
-                                    
-<li>
-    <a href="../options/" class="dropdown-item">Compiler Options</a>
-</li>
-                                    
-<li>
-    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
-</li>
-                                    
-<li>
-    <a href="../tools/" class="dropdown-item">Using Tools</a>
 </li>
                                 </ul>
                             </li>
@@ -547,7 +543,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 <p>This is a very broad introduction to making user interface elements in Faust. You can do much more like creating groups, using knobs, different types of menus, etc. but at least you should be able to make Faust programs at this point that are controllable and sound good (or not ;) ).</p>
 <h2 id="final-polishing">Final Polishing</h2>
 <p>Some Faust functions already contain a built-in UI and are ready-to-be-used. These functions are all placed in <a href="https://faustlibraries.grame.fr/libs/demos/">demo.lib</a> and are accessible through the <code>dm.</code> environment. </p>
-<p>As an example, let's add a reverb to our previous code by calling <a href="../libraries/index.html#dm.zita_light"><code>dm.zita_light</code></a> (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust wont know how to connect things):</p>
+<p>As an example, let's add a reverb to our previous code by calling <a href="https://faustlibraries.grame.fr/libs/demos/#dmzita_light"><code>dm.zita_light</code></a> (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust wont know how to connect things):</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
