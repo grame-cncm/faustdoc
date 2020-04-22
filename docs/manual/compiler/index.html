@@ -62,6 +62,10 @@
 </li>
                                     
 <li>
+    <a href="../options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
     <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
 </li>
                                     
@@ -168,7 +172,19 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../introduction/" class="dropdown-item">Test</a>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
                                 </ul>
                             </li>
@@ -210,7 +226,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../tools/" class="nav-link">
+                                <a rel="next" href="../options/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -235,10 +251,6 @@
             <li class="nav-item" data-level="1"><a href="#using-the-faust-compiler" class="nav-link">Using the Faust Compiler</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#structure-of-the-generated-code" class="nav-link">Structure of the Generated Code</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#compilation-options" class="nav-link">Compilation Options</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -410,115 +422,6 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 <p>Several fine-grained initialization methods are available. The <code>instanceInit</code> method calls several additional initialization methods. The <code>instanceConstants</code> method sets the instance constant state. The <code>instanceClear</code> method resets the instance dynamic state (delay lines...).  The <code>instanceResetUserInterface</code> method resets all control value to their default state. All of those methods can be used individually on an allocated instance to reset part of its state. </p>
 <p>The <code>init</code> method combines class static state and instance initialization.</p>
 <p>When using a single instance, calling <code>init</code> is the simplest way to do "what is needed." When using several instances, all of them can be initialized using <code>instanceInit</code>, with a single call to <code>classInit</code> to initialize the static shared state.</p>
-<h2 id="compilation-options">Compilation Options</h2>
-<h3 id="faust-compiler-version-2232">FAUST compiler version 2.23.2</h3>
-<pre><code class="faust-options">usage : faust [options] file1 [file2 ...].
-        where options represent zero or more compiler options 
-    and fileN represents a Faust source file (.dsp extension).
-</code></pre>
-
-<h3 id="input-options">Input Options</h3>
-<pre><code class="faust-options">  -a &lt;file&gt;                               wrapper architecture file.
-  -i        --inline-architecture-files   inline architecture files.
-  -A &lt;dir&gt;  --architecture-dir &lt;dir&gt;      add the directory &lt;dir&gt; to the architecture search path.
-  -I &lt;dir&gt;  --import-dir &lt;dir&gt;            add the directory &lt;dir&gt; to the import search path.
-  -L &lt;file&gt; --library &lt;file&gt;              link with the LLVM module &lt;file&gt;.
-  -t &lt;sec&gt;  --timeout &lt;sec&gt;               abort compilation after &lt;sec&gt; seconds (default 120).
-</code></pre>
-
-<h3 id="output-options">Output Options</h3>
-<pre><code class="faust-options">  -o &lt;file&gt;                               the output file.
-  -e        --export-dsp                  export expanded DSP (with all included libraries).
-  -uim      --user-interface-macros       add user interface macro definitions to the output code.
-  -xml                                    generate an XML description file.
-  -json                                   generate a JSON description file.
-  -O &lt;dir&gt;  --output-dir &lt;dir&gt;            specify the relative directory of the generated output code and of additional generated files (SVG, XML...).
-</code></pre>
-
-<h3 id="code-generation-options">Code Generation Options</h3>
-<pre><code class="faust-options">  -lang &lt;lang&gt; --language                 select output language,
-                                          'lang' should be in c, ocpp, cpp (default), rust, java, llvm, cllvm, fir, wast/wasm, soul, interp.
-  -single     --single-precision-floats   use single precision floats for internal computations (default).
-  -double     --double-precision-floats   use double precision floats for internal computations.
-  -quad       --quad-precision-floats     use quad precision floats for internal computations.
-  -es 1|0     --enable-semantics 1|0      use enable semantics when 1 (default), and simple multiplication otherwise.
-  -lcc        --local-causality-check     check causality also at local level.
-  -light      --light-mode                do not generate the entire DSP API.
-  -clang      --clang                     when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
-  -flist      --file-list                 use file list used to eval process.
-  -exp10      --generate-exp10            function call instead of pow(10) function.
-  -os         --one-sample                generate one sample computation.
-  -cn &lt;name&gt;  --class-name &lt;name&gt;         specify the name of the dsp class to be used instead of mydsp.
-  -scn &lt;name&gt; --super-class-name &lt;name&gt;   specify the name of the super class to be used instead of dsp.
-  -pn &lt;name&gt;  --process-name &lt;name&gt;       specify the name of the dsp entry-point instead of process.
-  -lb         --left-balanced             generate left balanced expressions.
-  -mb         --mid-balanced              generate mid balanced expressions (default).
-  -rb         --right-balanced            generate right balanced expressions.
-  -lt         --less-temporaries          generate less temporaries in compiling delays.
-  -mcd &lt;n&gt;    --max-copy-delay &lt;n&gt;        threshold between copy and ring buffer implementation (default 16 samples).
-  -mem        --memory                    allocate static in global state using a custom memory manager.
-  -ftz &lt;n&gt;    --flush-to-zero &lt;n&gt;         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
-  -inj &lt;f&gt;    --inject &lt;f&gt;                inject source file &lt;f&gt; into architecture file instead of compile a dsp file.
-  -scal      --scalar                     generate non-vectorized code.
-  -inpl      --in-place                   generates code working when input and output buffers are the same (scalar mode only).
-  -vec       --vectorize                  generate easier to vectorize code.
-  -vs &lt;n&gt;    --vec-size &lt;n&gt;               size of the vector (default 32 samples).
-  -lv &lt;n&gt;    --loop-variant &lt;n&gt;           [0:fastest (default), 1:simple].
-  -omp       --openmp                     generate OpenMP pragmas, activates --vectorize option.
-  -pl        --par-loop                   generate parallel loops in --openmp mode.
-  -sch       --scheduler                  generate tasks and use a Work Stealing scheduler, activates --vectorize option.
-  -ocl       --opencl                     generate tasks with OpenCL (experimental).
-  -cuda      --cuda                       generate tasks with CUDA (experimental).
-  -dfs       --deep-first-scheduling      schedule vector loops in deep first order.
-  -g         --group-tasks                group single-threaded sequential tasks together when -omp or -sch is used.
-  -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
-  -fm &lt;file&gt; --fast-math &lt;file&gt;           use optimized versions of mathematical functions implemented in &lt;file&gt;,
-                                          use 'faust/dsp/fastmath.cpp' when file is 'def'.
-  -ns &lt;name&gt; --namespace &lt;name&gt;           generate C++ code in a namespace &lt;name&gt; 
-</code></pre>
-
-<h3 id="block-diagram-options">Block Diagram Options</h3>
-<pre><code class="faust-options">  -ps        --postscript                 print block-diagram to a postscript file.
-  -svg       --svg                        print block-diagram to a svg file.
-  -sd        --simplify-diagrams          try to further simplify diagrams before drawing.
-  -drf       --draw-route-frame           draw route frames instead of simple cables.
-  -f &lt;n&gt;     --fold &lt;n&gt;                   threshold to activate folding mode during block-diagram generation (default 25 elements).
-  -fc &lt;n&gt;    --fold-complexity &lt;n&gt;        complexity threshold to fold an expression in folding mode (default 2)
-  -mns &lt;n&gt;   --max-name-size &lt;n&gt;          threshold during block-diagram generation (default 40 char).
-  -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
-  -blur      --shadow-blur                add a shadow blur to SVG boxes.
-</code></pre>
-
-<h3 id="math-doc-options">Math Doc Options</h3>
-<pre><code class="faust-options">  -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
-  -mdlang &lt;l&gt; --mathdoc-lang &lt;l&gt;          if translation file exists (&lt;l&gt; = en, fr, ...).
-  -stripmdoc  --strip-mdoc-tags           strip mdoc tags when printing Faust -mdoc listings.
-</code></pre>
-
-<h3 id="debug-options">Debug Options</h3>
-<pre><code class="faust-options">  -d          --details                   print compilation details.
-  -time       --compilation-time          display compilation phases timing information.
-  -tg         --task-graph                print the internal task graph in dot format.
-  -sg         --signal-graph              print the internal signal graph in dot format.
-  -norm       --normalized-form           print signals in normalized form and exit.
-  -ct         --check-table               check table index range and fails.
-  -cat        --check-all-table           check all table index range.
-</code></pre>
-
-<h3 id="information-options">Information options:</h3>
-<pre><code class="faust-options">  -h          --help                      print this help message.
-  -v          --version                   print version information and embedded backends list.
-  -libdir     --libdir                    print directory containing the Faust libraries.
-  -includedir --includedir                print directory containing the Faust headers.
-  -archdir    --archdir                   print directory containing the Faust architectures.
-  -dspdir     --dspdir                    print directory containing the Faust dsp libraries.
-  -pathslist  --pathslist                 print the architectures and dsp library paths.
-</code></pre>
-
-<h3 id="example">Example</h3>
-<pre><code class="faust-options">faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
-</code></pre>
-
 <h2 id="controlling-code-generation">Controlling Code Generation</h2>
 <p>Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the compiler can also generate <em>vector</em> and <em>parallel</em> code.</p>
 <h3 id="vector-code-generation">Vector Code Generation</h3>

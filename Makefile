@@ -95,7 +95,7 @@ md : $(MD)
 options: $(DOCDIR)/manual/options.md
 
 $(DOCDIR)/manual/options.md:
-	@echo "#Faust compiler options\n\n" > $@
+	@echo "# Faust Compiler Options" > $@
 	faust --help | $(AWK) -f scripts/options.awk >> $@
 
 $(DOCDIR)/%.md:src/%.md 

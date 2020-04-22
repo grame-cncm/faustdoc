@@ -9,6 +9,7 @@ nav:
         - 'Quick start':   manual/quick-start.md
         - 'Faust Syntax':       manual/syntax.md
         - 'Using the Compiler': manual/compiler.md
+        - 'Compiler Options': manual/options.md
         - 'faust2[...] Tools':        manual/tools.md
         - 'Embedding':     manual/embedding.md
         - 'OSC Support':   manual/osc.md
@@ -35,7 +36,10 @@ nav:
          - ' spat ':  examples/spat.md
          - ' Download examples ':  rsrc/examples.zip
     - Tutorials:
-        - 'Test' : manual/introduction.md
+        - 'Faust & JUCE' : workshops/2020-04-10-faust-juce.md
+        - 'DSP on the Teensy With Faust' : tutorials/teensy.md
+        - 'DSP on the ESP-32 With Faust' : tutorials/esp32.md
+        - 'Making a Sine Oscillator From Scratch' : tutorials/basic-osc.md
     - Workshops:
       - ' 2018-12-01 PAW ' : workshops/2018-12-01-paw.md
       - ' 2020-03-24 CITI ': workshops/2020-03-24-faust-citi.md

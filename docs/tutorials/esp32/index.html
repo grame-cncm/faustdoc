@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>DSP on the ESP-32 With Faust - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Faust Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../teensy/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../basic-osc/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#dsp-on-the-esp32-with-faust" class="nav-link">DSP on the ESP32 With Faust</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#using-the-esp32-c-development-environment" class="nav-link">Using the ESP32 C++ Development Environment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-the-arduino-development-environment" class="nav-link">Using the Arduino Development Environment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="dsp-on-the-esp32-with-faust">DSP on the ESP32 With Faust</h1>
+<p>The <a href="https://www.espressif.com/en/products/hardware/esp32/overview">ESP32</a> is a cheap microcontroller providing built-in Bluetooth and Wifi support, many GPIOs and analog inputs, etc. It's extremely low price (a few dollars) makes it very attractive and it is being used in an increasing number of boards. A wide range of "unknown/secret" development boards targeting audio applications are based on the ESP32 and can be found on Alibaba/AliExpress. While most of them target the development of "intelligent speakers" (e.g., Alexa, etc.), they host all the components to carry out real-time DSP applications and can therefore be used to develop digital musical instruments, effect processors, synthesizer hardware, etc. The <a href="https://github.com/LilyGO/TTGO-TAudio">TTGO T-Audio</a> or the <a href="https://blog.hackster.io/seeed-drops-new-esp32-audio-development-kit-for-audio-related-iot-projects-ad38d1f02637">ESP32 Audio Dev Kit</a> are good examples of such boards.</p>
+<p><img src="img/esp32.jpg" class="mx-auto d-block" width="80%">
+<center><em>The TTGO T-Audio (left) and the ESP32 Audio Dev Kit (right)</em></center></p>
+<p>They both host relatively good quality audio codecs with stereo in and out and built-in amplifier, battery circuit, external RAM, and various motion sensors (only for the TTGO T-Audio), all that for less than $15!! Since these boards don't run any OS, very low audio latency can be achieved (i.e., buffer size of 8 samples, etc.). Compared to the <a href="../teensy">Teensy 3.6/4.0 and their respective audio shields</a>, these boards are MUCH cheaper, they're more powerful than the Teensy 3.6 (dual core with a much higher clock) and most importantly, they have enough RAM to run DSP algorithms with a large memory footprint such as reverbs, echos, etc. (which is relatively limited on the Teensy 3.6 and 4.0). Finally, the ESP32 ecosystem is entirely open source (including its loader)! In many ways, they can compete with much more expensive dedicated audio platforms such as the BELA (&lt;$150), etc. </p>
+<p>The Faust distribution now comes with <code>faust2esp32</code>, a tool to program ESP32-based boards with Faust. <code>faust2esp32</code> is still under development and its current version allows to generate DSP engines that can be used in ESP32 projects to carry out sound synthesis and processing tasks. While the mechanism (<code>i2s</code>) used to communicate between the ESP32 and the audio codec is the same on all boards, the brand and the type of audio codecs used on ESP32-based boards varies quite a lot. <code>faust2esp32</code> supports a few audio codecs which can be listed by running <code>faust2esp32 -h</code> or by looking at the <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/esp32"><code>faust2esp32</code> doc</a>.</p>
+<p>DSP engines produced by <code>faust2esp32</code> are compatible with both the C++ and the Arduino development environment of the ESP32. The two following sections walk you through starting a new ESP32 project and adding Faust audio support to it using both methods.</p>
+<h2 id="using-the-esp32-c-development-environment">Using the ESP32 C++ Development Environment</h2>
+<blockquote>
+<p>The final source code of this tutorial can be found <a href="misc/esp32-c%2B%2B.zip">here</a>.</p>
+</blockquote>
+<p>Programming the ESP32 with its native C++ environment offers many advantages. In particular, it allows for a very fine tuning of the board configuration and compilation options. For example, if your DSP algorithm will have a large memory footprint, you might have no other option since external RAM will have to be activated (see <a href="#using-the-external-ram-of-the-esp32">Using the External RAM of the ESP32</a> section).</p>
+<p>In this short tutorial, we walk you through the steps of making a C++ project from scratch with audio DSP support for the TTGO T-Audio board (the procedure should be more or less the same for similar types of boards).</p>
+<h3 id="starting-a-new-esp32-project">Starting a New ESP32 Project</h3>
+<p>Information on how to configure your ESP32 C++ development environment can be found in <a href="https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html">this tutorial</a> (read it until the end of step 4).  </p>
+<p>Once your environment is up and running, copy the <a href="https://github.com/espressif/esp-idf/tree/138c941fa/examples/get-started/hello_world">ESP32 <code>hello_world</code></a> example project somewhere on your system. Then run <code>make</code>, which should automatically prompt the ESP32 configuration panel. Make some modifications if needed (i.e., serial flasher config as specified in the ESP32 get started tutorial, etc.). Once you exit the menu, compilation should start and complete without any issue. </p>
+<p>Since the DSP engine that we're about to generate with <code>faust2esp32</code> uses C++, the main file of the current project should be modified to use C++ as well. To do so, just rename <code>main/hello_world_main.c</code> to <code>main/main.cpp</code> (or any other name you'd like, of course, as long as you use the cpp extension). Then, make sure the basic structure of your program looks like this:</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &quot;freertos/FreeRTOS.h&quot;
+#include &quot;freertos/task.h&quot;
+#include &quot;esp_system.h&quot;
+#include &quot;esp_spi_flash.h&quot;
+
+extern &quot;C&quot; {
+    void app_main(void);
+}
+
+void app_main(void)
+{
+  while(1) {
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+  }
+}
+</code></pre>
+
+<p>Here, the infinite while loop gets ran in the main thread/task and is updated every second. Update the <code>CMakeLists.txt</code> file at the root of the project to change the project name (e.g., <code>project(FaustTutorial)</code>). Similarly, update the <code>CMakeLists.txt</code> file in <code>main</code> to set the right file for the component source (e.g., <code>set(COMPONENT_SRCS "main.cpp")</code>). Run make again to be sure that your program still compiles and that you didn't break anything.</p>
+<h3 id="making-a-simple-dsp-engine">Making a Simple DSP Engine</h3>
+<p>Let's now write a simple Faust program (the usual one haha) implementing a band limited sawtooth wave with smoothed control:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+
+freq = nentry(&quot;freq&quot;,440,20,20000,0.01) : si.smoo;
+gain = nentry(&quot;gain&quot;,1,0,1,0.01) : si.smoo;
+
+process = os.sawtooth(freq)*gain;
+</code></pre>
+
+<p>Save it in a file called <code>FaustSawtooth.dsp</code> (this will define the name of the corresponding DSP engine) and compile it using <code>faust2esp32</code> by running the following command:</p>
+<pre><code>faust2esp32 -lib FaustSawtooth.dsp
+</code></pre>
+
+<p><code>-lib</code> asks to generate a C++ DSP engine here as opposed to a complete firmware.</p>
+<blockquote>
+<p>Note: the current version of <code>faust2esp32</code> only allows to generate DSP engines (not complete ESP32 programs) so the <code>-lib</code> option is not really necessary here.</p>
+</blockquote>
+<p>Alternatively, this could be done by selecting the ESP32 target in the Faust compilation service in <a href="https://faustide.grame.fr">the online IDE</a>.</p>
+<p>In both cases, a <code>.zip</code> package containing a set of C++ files will be returned. In the current example, <code>FaustSawtooth.[cpp/h]</code> implement the Faust DSP object produced from <code>FaustSawtooth.dsp</code> and <code>WM8978.[cpp/h]</code> is the object corresponding to the audio codec of your board.</p>
+<blockquote>
+<p>Note: in the current version of <code>faust2esp32</code>, the only supported audio codecs are the <a href="https://www.mouser.com/ds/2/76/WM8978_v4.5-1141768.pdf">WM8978</a> (<code>-WM8978</code> option) which is that of the TTGO T-Audio board and the AC101 (<code>-AC101</code> option).</p>
+</blockquote>
+<p>All these files should be placed in the <code>main</code> folder of the project. After that, they should be included to <code>main.cpp</code> as follows:</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &quot;freertos/FreeRTOS.h&quot;
+#include &quot;freertos/task.h&quot;
+#include &quot;esp_system.h&quot;
+#include &quot;esp_spi_flash.h&quot;
+
+#include &quot;WM8978.h&quot;
+#include &quot;FaustSawtooth.h&quot;
+
+extern &quot;C&quot; {
+    void app_main(void);
+}
+</code></pre>
+
+<h3 id="configuring-the-audio-codec">Configuring the Audio Codec</h3>
+<p>Next, the <code>WM8978</code> object (which corresponds to the audio codec, i.e., audio interface on the board) should be instantiated and configured in <code>app_main</code>:</p>
+<pre><code>WM8978 wm8978;
+wm8978.init();
+wm8978.addaCfg(1,1); 
+wm8978.inputCfg(1,0,0);     
+wm8978.outputCfg(1,0); 
+wm8978.micGain(30);
+wm8978.auxGain(0);
+wm8978.lineinGain(0);
+wm8978.spkVolSet(0);
+wm8978.hpVolSet(40,40);
+wm8978.i2sCfg(2,0);
+</code></pre>
+
+<p>Once again, the current version of <code>faust2esp32</code> only provides support for the Wolfson WM8978 present on the TTGO T-Audio and the AC101, but we're working at adding new codecs from other manufacturers, etc. The procedure should be similar with other codecs. </p>
+<p>The present configuration activates the mic input, deactivates the amp for the speaker, sets the headphone gain to 40, etc. Please refer to the <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/esp32/drivers/wm8978">WM8978 object documentation</a> for more information.</p>
+<p>Note that each of these commands will be called "in real-time" at start-up so the configuration of the audio codec is progressively done and should be carried out before sending any audio buffer to it.</p>
+<h3 id="instantiating-the-faust-dsp-engine">Instantiating the Faust DSP Engine</h3>
+<p>After configuring the audio codec, the Faust DSP object produced in the previous step and included in <code>main.cpp</code> should be instantiated in <code>app_main</code> as well:</p>
+<pre><code>int SR = 48000;
+int BS = 8;
+FaustSawtooth faustSawtooth(SR,BS);  
+faustSawtooth.start();
+</code></pre>
+
+<p>The constructor of <code>FaustSawtooth</code> takes two arguments: the sampling rate (48kHz here) and the block size (8 here). Calling the constructor will configure the object, allocate memory for it, etc. but in order to start computation, the <code>start()</code> method needs to be called. Since ESP32 firmwares are based on <a href="https://www.freertos.org/">freertos</a>, audio is computed in its own high priority task and calling <code>start()</code> will launch this task. Note that this task can be removed and audio computation stopped at any time simply by calling <code>stop()</code>.</p>
+<p>Finally, the <code>setParamValue</code> method of the <code>FaustSawtooth</code> object can be called at any point to change the value of one of the parameter of the Faust object (here, two parameters were declared: <code>freq</code> and <code>gain</code>). For example, the frequency of the generated sawtooth could be randomly changed at every sample by calling the following line in the <code>while</code> loop at the bottom of <code>app_main</code>:</p>
+<pre><code>faustSawtooth.setParamValue(&quot;freq&quot;,rand()%(2000-50 + 1) + 50);
+</code></pre>
+
+<p>At this point, <code>main.cpp</code> should look like this:</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &quot;freertos/FreeRTOS.h&quot;
+#include &quot;freertos/task.h&quot;
+#include &quot;esp_system.h&quot;
+#include &quot;esp_spi_flash.h&quot;
+
+#include &quot;WM8978.h&quot;
+#include &quot;FaustSawtooth.h&quot;
+
+extern &quot;C&quot; {
+    void app_main(void);
+}
+
+void app_main(void)
+{
+    WM8978 wm8978;
+    wm8978.init();
+    wm8978.addaCfg(1,1); 
+    wm8978.inputCfg(1,0,0);     
+    wm8978.outputCfg(1,0); 
+    wm8978.micGain(30);
+    wm8978.auxGain(0);
+    wm8978.lineinGain(0);
+    wm8978.spkVolSet(0);
+    wm8978.hpVolSet(40,40);
+    wm8978.i2sCfg(2,0);
+
+    int SR = 48000;
+    int BS = 8;
+    FaustSawtooth faustSawtooth(SR,BS);  
+    faustSawtooth.start();
+
+    while(1) {
+        faustSawtooth.setParamValue(&quot;freq&quot;,rand()%(2000-50 + 1) + 50);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    }
+}
+</code></pre>
+
+<p>Try to recompile the firmware and upload it to your board. If headphones are connected to it, you should hear a sawtooth wave whose frequency changes randomly every second.</p>
+<h3 id="using-the-external-ram-of-the-esp32">Using the External RAM of the ESP32</h3>
+<p>Some DSP algorithms might require a large amount of memory allocation (e.g., wave tables, delays, etc.). In that case, the object generated by Faust might not fit in the built-in RAM of the ESP32 and it might be necessary to use the external RAM module (SRAM) of the board.</p>
+<p>In order to test this, we first need to write a Faust program that will need a large amount of memory. Replacing the sawtooth wave of the previous example by a sine wave should do it since the default sine wave oscillator of Faust (<code>os.osc</code>) is based on a wave table of size 65536:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+
+freq = nentry(&quot;freq&quot;,440,20,20000,0.01) : si.smoo;
+gain = nentry(&quot;gain&quot;,1,0,1,0.01) : si.smoo;
+
+process = os.osc(freq)*gain;
+</code></pre>
+
+<p>You can then follow the same steps as the ones described in the <a href="#making-a-simple-dsp-engine">Making a Simple DSP Engine</a> section to integrate this Faust program to your C++ ESP32 project.</p>
+<p>If you try to compile your firmware again (i.e., <code>make</code>), you should get the following error during linking :</p>
+<pre><code>[...]/xtensa-esp32-elf/bin/ld: hello-world.elf section `.dram0.bss' will not fit in region `dram0_0_seg'
+[...]/xtensa-esp32-elf/bin/ld: DRAM segment data does not fit.
+[...]/xtensa-esp32-elf/bin/ld: region `dram0_0_seg' overflowed by 93408 bytes
+collect2: error: ld returned 1 exit status
+</code></pre>
+
+<p>To solve this problem, the external RAM can be integrated to the memory map of the ESP32. To do so, run <code>make menuconfig</code> and navigate to <code>Component Config/ESP32-specific</code>. Then activate <code>Support for external RAM, SPI-Connected RAM</code> by highlighting this zone and pressing the <code>y</code> key. Enter the <code>SPI RAM config/SPI RAM access method</code> menu and choose <code>Integrate RAM into ESP32 memory map</code>. Then select <code>Allow .bss segment placed in external memory</code> and press the <code>y</code> key to activate this function. Finally, open <code>FaustSawtooth.cpp</code> (even though we're trying to synthesize a sine wave now, i.e., the name of this file might differ in your case) and search for <code>static float ftbl0mydspSIG0</code> which is the static table that will be filled with the sine wave table. This section of the C++ code generated by the Faust compiler will always contain large tables requiring lots of memory. You now want to add the <code>EXT_RAM_ATTR</code> attribute next to the table definition:</p>
+<pre><code>static float ftbl0mydspSIG0[65536] EXT_RAM_ATTR;
+</code></pre>
+
+<p>It indicates the C++ compiler that this static table should be placed in the external memory rather than in the built-in one. In case your Faust program is doing something else than synthesizing a sine wave, you might have to put this attribute in each table definition.</p>
+<blockquote>
+<p>Note: We're currently modifying the Faust compiler to automatize this process when a specific option is given to it.</p>
+</blockquote>
+<p>Finally, try to recompile your firmware and it should all work nicely now!</p>
+<h2 id="using-the-arduino-development-environment">Using the Arduino Development Environment</h2>
+<blockquote>
+<p>The final source code of this tutorial can be found <a href="misc/esp32-arduino.zip">here</a>.</p>
+</blockquote>
+<p>The Arduino development environment can also be used to program the ESP32. The steps to use a Faust-generated DSP engine in that context are quite similar to that of the C++ environment described <a href="#using-the-esp32-c-development-environment">in the previous section</a>.</p>
+<p>First, make sure that the <code>esp32</code> package is installed in the Arduino Boards Manager (<code>Tools/Board/Boards Manager</code>). Next, create a new empty project and save it. You can then follow the same steps as the one described in the <a href="#making-a-simple-dsp-engine">Making a Simple DSP Engine</a> section of the previous tutorial, however you should place the <code>FaustSawtooth.[cpp/h]</code> and <code>WM8978.[cpp/h]</code> files in the same folder as the one containing the <code>.ino</code> file of your project. Hence, the tree of your project folder should now look like this:</p>
+<pre><code>esp32Tuto.ino 
+FaustSawtooth.cpp
+FaustSawtooth.h
+WM8978.cpp
+WM8978.h
+</code></pre>
+
+<p>You can then edit your Arduino program as follows:</p>
+<pre><code>#include &quot;freertos/FreeRTOS.h&quot;
+#include &quot;freertos/task.h&quot;
+
+#include &quot;WM8978.h&quot;
+#include &quot;FaustSawtooth.h&quot;
+
+FaustSawtooth faustSawtooth(48000,8);
+
+void setup() {
+  WM8978 wm8978;
+  wm8978.init();
+  wm8978.addaCfg(1,1); 
+  wm8978.inputCfg(1,0,0);     
+  wm8978.outputCfg(1,0); 
+  wm8978.micGain(30);
+  wm8978.auxGain(0);
+  wm8978.lineinGain(0);
+  wm8978.spkVolSet(0);
+  wm8978.hpVolSet(40,40);
+  wm8978.i2sCfg(2,0);
+
+  faustSawtooth.start();
+}
+
+void loop() {
+  faustSawtooth.setParamValue(&quot;freq&quot;,rand()%(2000-50 + 1) + 50);
+  delay(1000);
+}
+</code></pre>
+
+<p>and the resulting firmware should have the same effect as the one presented in <a href="#using-the-esp32-c-development-environment">the previous C++ tutorial</a>. You can refer to the <a href="#configuring-the-audio-codec">Configuring the Audio Codec</a> section to get more information of what the <code>WM8978</code> lines are doing, etc.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

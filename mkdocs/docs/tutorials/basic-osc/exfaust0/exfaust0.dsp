@@ -1,0 +1,3 @@
+
+process = sin(0);
+
