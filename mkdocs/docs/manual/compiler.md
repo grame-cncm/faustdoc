@@ -1,6 +1,6 @@
 # Using the Faust Compiler
 
-While the Faust compiler is available in different forms (e.g., [Embedded Compiler](../embedding), etc.), its most "common" one is the command line version, which can be invoked using the `faust` command. It translates a Faust program into code in a wide range of languages (C, O-C++, C++, Rust, JAVA, JavaScript, ASM JavaScript, LLVM, C-LLVM, FIR, and WebAssembly). The generated code can be wrapped into an optional *architecture file* allowing to directly produce a fully operational program.
+While the Faust compiler is available in different forms (e.g., [Embedded Compiler](../embedding), etc.), its most "common" one is the command line version, which can be invoked using the `faust` command. It translates a Faust program into code in a wide range of languages (C, O-C++, C++, Rust, JAVA, LLVM, C-LLVM, FIR, and WebAssembly). The generated code can be wrapped into an optional *architecture file* allowing to directly produce a fully operational program.
 
 A typical call of the Faust command line compiler is:
 
