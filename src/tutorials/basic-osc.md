@@ -17,14 +17,14 @@ process = sin(0);
 ```
 <!-- /faust-run -->
 
-will output 0.
+will output `0`.
 
 > To verify this, you could click on the truck (export function) in the [Faust Online IDE](https://faustide.grame.fr) and then choose `misc/csv` to get a table containing the first *n* samples output by the program.
 
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
-process = sin(ma.PI);
+process = sin(ma.PI/2);
 ```
 <!-- /faust-run -->
 
