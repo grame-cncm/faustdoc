@@ -153,7 +153,7 @@ f = hslider("freq",440,50,2000,0.01);
 phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
-process = organ(f)/3;
+process = organ(f);
 ``` 
 <!-- /faust-run -->
 
@@ -172,7 +172,7 @@ t = button("gate");
 phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
-process = organ(f)*g*t/3;
+process = organ(f)*g*t;
 ```
 <!-- /faust-run -->
 
@@ -187,7 +187,7 @@ t = si.smoo(button("gate"));
 phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
-process = organ(f)*g*t/3;
+process = organ(f)*g*t;
 ```
 <!-- /faust-run -->
 
@@ -204,7 +204,7 @@ f = hslider("freq[acc: 0 0 -10 0 10]",1000,50,2000,0.01) : si.smoo;
 phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
-process = organ(f)/3;
+process = organ(f);
 ```
 
 * In that case, export with `android/android`.
