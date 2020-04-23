@@ -20,10 +20,8 @@ are hosted a separate Git submodule), etc.
 
 The latest stable release of the Faust distribution can be found [here](https://github.com/grame-cncm/faust/releases). It is recommended for most Faust users willing to compile the Faust compiler and libfaust from scratch.
 
-To have the latest stable development version, you can use the [master branch](https://github.com/grame-cncm/faust/tree/master>) of the Faust git repository which is hosted on GitHub: 
-
-For something even more bleeding edge (to be used at your own risks), you might
-use the `master-dev` branch of the Faust [git repository](<https://github.com/grame-cncm/faust/tree/master-dev>). 
+To have the latest stable development version, you can use the `master branch` of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master) which is hosted on GitHub. For something even more bleeding edge (to be used at your own risks), you might
+use the `master-dev` branch of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master-dev). 
 `master-dev` is the development sub-branch of `master`. It is used by Faust developers to commit 
 their changes and can be considered as "the main development branch". The goal 
 is to make sure that `master` is always functional. Merges between `master-dev` 

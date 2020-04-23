@@ -6,8 +6,8 @@ The Faust compiler provides a mechanism to produce a self-describing documentati
 
 There are three main goals, or uses, of the Faust mathematical documentation generator:
 
-* to preserve signal processors, independently from any computer language but only under a mathematical form;
-* to bring some help for debugging tasks, by showing the formulas as they are really computed after the compilation stage;
+* to preserve signal processors, independently from any computer language but only under a mathematical form,
+* to bring some help for debugging tasks, by showing the formulas as they are really computed after the compilation stage,
 * to give a new teaching support, as a bridge between code and formulas for signal processing.
 
 ## Installation Requirements

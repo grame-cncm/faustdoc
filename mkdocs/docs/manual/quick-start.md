@@ -324,7 +324,7 @@ That's it folks! At this point you should be able to use [Faust standard functio
 
 ## Some Project Ideas
 
-In this section, we present a couple of project ideas that you could try to implement using [Faust standard functions](https://faustlibraries.grame.fr/standardFunctions/#standard-functions). Also, feel free to check the [`/examples` folder of the Faust repository](https://github.com/grame-cncm/faust/tree/master/examples).
+In this section, we present a couple of project ideas that you could try to implement using [Faust standard functions](https://faustlibraries.grame.fr/standardFunctions/#standard-functions). Also, feel free to check the [/examples folder](https://github.com/grame-cncm/faust/tree/master/examples) of the Faust repository.
 
 ### Additive Synthesizer
 
