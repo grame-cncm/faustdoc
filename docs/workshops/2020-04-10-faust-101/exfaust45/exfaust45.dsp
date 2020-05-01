@@ -14,4 +14,3 @@ envelop = button("gate") : upfront : en.ar(0.002, 0.01);
 
 upfront(x) = x>x';
 
-

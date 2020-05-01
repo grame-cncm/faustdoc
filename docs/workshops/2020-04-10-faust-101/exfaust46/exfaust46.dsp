@@ -105,4 +105,3 @@ string(coef, freq, t60, level, trig) = no.noise*level
 		noise   		= random/2147483647.0;
 	};
 
-

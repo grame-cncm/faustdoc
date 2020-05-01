@@ -9,224 +9,237 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title> 2020-04-10 Faust 101  - Faust Documentation</title>
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <a class="navbar-brand" href="../..">Faust Documentation</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Documentation</a>
+                </div>
 
                 <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../.." class="nav-link">Home</a>
+                            <li >
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+<li >
+    <a href="../../manual/introduction/">Introduction</a>
 </li>
                                     
-<li>
-    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+<li >
+    <a href="../../manual/overview/">Overview of the Faust Universe</a>
 </li>
                                     
-<li>
-    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+<li >
+    <a href="../../manual/quick-start/">Quick start</a>
 </li>
                                     
-<li>
-    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+<li >
+    <a href="../../manual/syntax/">Faust Syntax</a>
 </li>
                                     
-<li>
-    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+<li >
+    <a href="../../manual/compiler/">Using the Compiler</a>
 </li>
                                     
-<li>
-    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+<li >
+    <a href="../../manual/options/">Compiler Options</a>
 </li>
                                     
-<li>
-    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+<li >
+    <a href="../../manual/tools/">faust2[...] Tools</a>
 </li>
                                     
-<li>
-    <a href="../../manual/embedding/" class="dropdown-item">Embedding</a>
+<li >
+    <a href="../../manual/embedding/">Embedding</a>
 </li>
                                     
-<li>
-    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+<li >
+    <a href="../../manual/osc/">OSC Support</a>
 </li>
                                     
-<li>
-    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+<li >
+    <a href="../../manual/http/">HTTP Support</a>
 </li>
                                     
-<li>
-    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+<li >
+    <a href="../../manual/midi/">MIDI Support</a>
 </li>
                                     
-<li>
-    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+<li >
+    <a href="../../manual/mathdoc/">Mathematical Documentation</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
 </li>
                                     
-<li>
-    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
 </li>
                                     
-<li>
-    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+<li >
+    <a href="../../examples/bela/"> bela </a>
 </li>
                                     
-<li>
-    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
 </li>
                                     
-<li>
-    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
 </li>
                                     
-<li>
-    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
 </li>
                                     
-<li>
-    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
 </li>
                                     
-<li>
-    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+<li >
+    <a href="../../examples/generator/"> generator </a>
 </li>
                                     
-<li>
-    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+<li >
+    <a href="../../examples/misc/"> misc </a>
 </li>
                                     
-<li>
-    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
 </li>
                                     
-<li>
-    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
 </li>
                                     
-<li>
-    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
 </li>
                                     
-<li>
-    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
 </li>
                                     
-<li>
-    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
 </li>
                                     
-<li>
-    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
 </li>
                                     
-<li>
-    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
 </li>
                                     
-<li>
-    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+<li >
+    <a href="../../examples/spat/"> spat </a>
 </li>
                                     
-<li>
-    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+<li >
+    <a href="../2020-04-10-faust-juce/">Faust & JUCE</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+<li >
+    <a href="../../tutorials/teensy/">DSP on the Teensy With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+<li >
+    <a href="../../tutorials/esp32/">DSP on the ESP-32 With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+<li >
+    <a href="../../tutorials/basic-osc/">Making a Sine Oscillator From Scratch</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+<li >
+    <a href="../2018-12-01-paw/"> 2018-12-01 PAW </a>
 </li>
                                     
-<li>
-    <a href="../2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+<li >
+    <a href="../2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
 </li>
                                     
-<li>
-    <a href="./" class="dropdown-item active"> 2020-04-10 Faust 101 </a>
+<li class="active">
+    <a href="./"> 2020-04-10 Faust 101 </a>
 </li>
                                     
-<li>
-    <a href="../2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+<li >
+    <a href="../2020-04-10-faust-juce/"> 2020-04-10 Faust & JUCE </a>
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
-                                <a href="../../about/" class="nav-link">About</a>
+                            <li >
+                                <a href="../../about/">About</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../2020-03-24-faust-citi/" class="nav-link">
+                            <li >
+                                <a rel="next" href="../2020-03-24-faust-citi/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../2020-04-10-faust-juce/" class="nav-link">
+                            <li >
+                                <a rel="prev" href="../2020-04-10-faust-juce/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -236,59 +249,20 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#faust-101-for-the-confined" class="nav-link">Faust 101 for the confined</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#faust-in-a-few-words" class="nav-link">Faust in a few words</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#part-1-very-simple-examples" class="nav-link">Part 1: Very simple examples</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#part-2-delays-and-feedbacks" class="nav-link">Part 2: Delays and Feedbacks</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#part-3-basic-oscillators" class="nav-link">Part 3: Basic Oscillators</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#part-4-additive-synthesis" class="nav-link">Part 4: Additive synthesis</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#part-5-subtractive-synthesis" class="nav-link">Part 5: Subtractive synthesis</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#part-6-synthesis-by-frequency-modulation" class="nav-link">Part 6: Synthesis by frequency modulation</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#further-readings" class="nav-link">Further readings</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-        </ul>
-    </div>
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#faust-101-for-the-confined">Faust 101 for the confined</a></li>
+            <li><a href="#faust-in-a-few-words">Faust in a few words</a></li>
+            <li><a href="#part-1-very-simple-examples">Part 1: Very simple examples</a></li>
+            <li><a href="#part-2-delays-and-feedbacks">Part 2: Delays and Feedbacks</a></li>
+            <li><a href="#part-3-basic-oscillators">Part 3: Basic Oscillators</a></li>
+            <li><a href="#part-4-additive-synthesis">Part 4: Additive synthesis</a></li>
+            <li><a href="#part-5-subtractive-synthesis">Part 5: Subtractive synthesis</a></li>
+            <li><a href="#part-6-synthesis-by-frequency-modulation">Part 6: Synthesis by frequency modulation</a></li>
+        <li class="main "><a href="#further-readings">Further readings</a></li>
+    </ul>
 </div></div>
-                    <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <p><img src="img/logo-faust.png" width="100%" class="mx-auto d-block"></p>
 <h1 id="faust-101-for-the-confined">Faust 101 for the confined</h1>
@@ -309,9 +283,9 @@ The documentation and the examples we will use can be found here:</p>
 <h2 id="faust-in-a-few-words">Faust in a few words</h2>
 <ul>
 <li>Faust is a Domain-Specific Language for real-time signal processing and synthesis (like Csound, Max/MSP, Supercollider, Puredata,. . . ).</li>
-<li>Faust is based on purely functional approach</li>
+<li>Faust is based on purely functional approach.</li>
 <li>A Faust program denotes a signal processor : a function that maps input signals to output signals.</li>
-<li>Programming in Faust is essentially combining signal processors using an algebra of 5 composition operations: <code>&lt;: :&gt; : , ~</code></li>
+<li>Programming in Faust is essentially combining signal processors using an algebra of 5 composition operations: <code>&lt;: :&gt; : , ~</code>.</li>
 <li>Faust is a compiled language, the role of the Faust compiler is to synthesize the most efficient implementations.</li>
 <li>Faust offers end-users a high-level alternative to C to develop audio applications for a large variety of platforms.</li>
 </ul>
@@ -344,7 +318,7 @@ process = _;
 </ul>
 <p>Let's try this program using the online Faust IDE...</p>
 <h3 id="example-2-adding-two-signals">Example 2: Adding two signals</h3>
-<p>We saw in the previous example the primitive <code>_</code>. Faust has a large number of primitives, including all mathematical operations (see ).</p>
+<p>We saw in the previous example the primitive <code>_</code>. Faust has a large number of primitives, including all [mathematical operations] (https://faustdoc.grame.fr/manual/syntax/#faust-syntax).</p>
 <p>The <code>+</code> primitive for instance is used to add two signals. It can therefore be used to transform a stereophonic signal (on two channels) into a monophonic signal as in the following example:</p>
 <!-- faust-run -->
 
@@ -363,7 +337,7 @@ process = +;
 <!-- /faust-run -->
 
 <h3 id="example-3-multiplying-two-signals">Example 3: Multiplying two signals</h3>
-<p>The <code>*</code> primitive for instance is used to multiply two signals. </p>
+<p>The <code>*</code> primitive for instance is used to multiply two signals:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
@@ -513,7 +487,7 @@ process = (_, 0.1) : *; // try to replace 0.1 by other values between 0 and 1
 <p>Note that we have used parentheses in this example to clearly mark the order in which things should be done. We start by putting <code>_</code> and <code>0.1</code> in parallel, and then compose them in sequence with <code>*</code>.</p>
 <p>But, just as in <code>(2*3)+7</code> were the parentheses are not really necessary because multiplication takes precedence over addition, one could write directly <code>process = _,0.1 : *;</code> without the parentheses, because parallel composing takes precedence over sequential composing. The priority of the composition operators is shown in the previous table.</p>
 <h3 id="example-6-controlling-the-volume-with-a-slider">Example 6: Controlling the volume with a slider</h3>
-<p>Instead of controlling the volume by editing the code, it is far more convenient to use a graphical slider. For that purpose we can use a <code>hslider(...)</code>, a horizontal slider. It takes five parameters. The first one is the name <code>"volume"</code>, then we have the defaut value <code>0.1</code>, the mimimun value <code>0</code>, the maximum value <code>1</code> and a step value <code>0.1</code>. So here the default value is <code>0.1</code> </p>
+<p>Instead of controlling the volume by editing the code, it is far more convenient to use a graphical slider. For that purpose we can use a <code>hslider(...)</code>, a horizontal slider. It takes five parameters. The first one is the name <code>"volume"</code>, then we have the defaut value <code>0.1</code>, the mimimun value <code>0</code>, the maximum value <code>1</code> and a step value <code>0.1</code>. So here the default value is <code>0.1</code>:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
@@ -531,7 +505,7 @@ process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 <!-- /faust-run -->
 
 <h3 id="example-7-mono-amplifier">Example 7: Mono Amplifier</h3>
-<p>We have written very simple programs so far, that fit into one line of code. We will now introduce additional definitions. A definition should be understood as a way of giving a name to something, which saves us from typing the definition every time and makes the program easier to understand.</p>
+<p>We have written very simple programs so far, that fit into one line of code. We will now introduce additional definitions. A definition should be understood as a way of giving a name to something, which saves us from typing the definition every time and makes the program easier to understand:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
@@ -539,6 +513,7 @@ process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 <pre><code>
 monoamp = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 process = monoamp;
+
 
 </code></pre>
 
@@ -550,7 +525,7 @@ process = monoamp;
 <!-- /faust-run -->
 
 <h3 id="example-8-stereo-amplifier">Example 8: Stereo Amplifier</h3>
-<p>Continuing in the same vein, we will define a stereo amplifier as two mono amplifiers in parallel.</p>
+<p>Continuing in the same vein, we will define a stereo amplifier as two mono amplifiers in parallel:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
@@ -570,9 +545,9 @@ process = stereoamp;
 
 <!-- /faust-run -->
 
-<p>Note that even if the hslider volume appears several times in our code, there will only be one in the user interface.</p>
+<p>Note that even if the hslider volume appears several times in our code, there will only be one in the user interface:</p>
 <h3 id="example-9-vertical-sliders">Example 9: Vertical sliders</h3>
-<p>Instead of horizontal sliders, we could use vertical sliders. Just replace hslider(...) with vslider(...).</p>
+<p>Instead of horizontal sliders, we could use vertical sliders. Just replace <code>hslider(...)</code> with <code>vslider(...)</code>:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
@@ -582,6 +557,7 @@ monoamp = _, vslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 stereoamp = monoamp,monoamp;
 
 process = stereoamp;
+
 
 </code></pre>
 
@@ -594,7 +570,7 @@ process = stereoamp;
 
 <h3 id="example-10-knobs-instead-of-sliders">Example 10: Knobs instead of sliders</h3>
 <p>By default sliders are ... sliders! You can change their appearance by using the metadata mechanism. </p>
-<p>Metadata is information that you put in square brackets in the slider name. For example the metadata "...[style:knob]..." allows you to turn the slider into a rotary knob.</p>
+<p>Metadata is information that you put in square brackets in the slider name. For example the metadata <code>"...[style:knob]..."</code> allows you to turn the slider into a rotary knob:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
@@ -605,6 +581,7 @@ monoamp = _, vslider(&quot;volume[style:knob]&quot;, 0.1, 0, 1, 0.01) : *;
 stereoamp = monoamp,monoamp;
 
 process = stereoamp;
+
 
 </code></pre>
 
@@ -638,8 +615,7 @@ process = stereoamp;
 
 <!-- /faust-run -->
 
-<p>Here is a table of equivalent notations. Keep in mind that infix and prefix expressions are translated to core syntax.</p>
-<p>Here is a table with the same expression in all three syntaxes.</p>
+<p>Here is a table of equivalent notations, with the same expression in all three syntaxes. Keep in mind that infix and prefix expressions are translated to core syntax:</p>
 <table>
 <thead>
 <tr>
@@ -687,7 +663,7 @@ process = stereoamp;
 </table>
 <h3 id="example-12-a-mute-button">Example 12: A <em>mute</em> button</h3>
 <p>We would like to be able to mute the sound completely at the touch of a button, without having to change the volume. </p>
-<p>Let's add a mute stage to our mono amplifier. In order to mute the signal we just have to mutiply it by 0. We will use for that purpose a <code>checkbox(...)</code>, a user interface element that produces a signal which is 0 by default and 1 when it is checked. As we want to multiply the signal by 0 when the checkbox is checked we will use <code>1-checkbox ("mute")</code>.</p>
+<p>Let's add a mute stage to our mono amplifier. In order to mute the signal we just have to mutiply it by 0. We will use for that purpose a <code>checkbox(...)</code>, a user interface element that produces a signal which is 0 by default and 1 when it is checked. As we want to multiply the signal by 0 when the checkbox is checked we will use <code>1-checkbox("mute")</code>:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
@@ -721,7 +697,7 @@ mute = *(1-checkbox(&quot;mute&quot;));
 
 monoamp = *(vslider(&quot;volume[style:knob]&quot;, 0.1, 0, 1, 0.01)) : mute;
 
-stereoamp = hgroup(&quot;Marshall&quot;, monoamp,monoamp);
+stereoamp = hgroup(&quot;Marshall&quot;,monoamp,monoamp);
 
 process = stereoamp;
 
@@ -735,7 +711,7 @@ process = stereoamp;
 <!-- /faust-run -->
 
 <h3 id="example-14-differentiate-the-volume-of-the-two-channels">Example 14: Differentiate the volume of the two channels</h3>
-<p>To differentiate the volume control of our two channels, we will parametrize monoamp with a channel number <code>c</code> which will be used to differentiate the name of each volume control. Note that the name <code>c</code> of the parameter must only have one letter to be well interpreted in the slider name <code>"volume %c[style:knob]"</code>.</p>
+<p>To differentiate the volume control of our two channels, we will parametrize monoamp with a channel number <code>c</code> which will be used to differentiate the name of each volume control. Note that the name <code>c</code> of the parameter must only have one letter to be well interpreted in the slider name <code>"volume %c[style:knob]"</code>:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
@@ -745,7 +721,7 @@ mute = *(1-checkbox(&quot;mute&quot;));
 
 monoamp(c) = *(vslider(&quot;volume %c[style:knob]&quot;, 0.1, 0, 1, 0.01)) : mute;
 
-stereoamp = hgroup(&quot;Marshall&quot;, monoamp(0),monoamp(1));
+stereoamp = hgroup(&quot;Marshall&quot;,monoamp(0),monoamp(1));
 
 process = stereoamp;
 
@@ -760,7 +736,7 @@ process = stereoamp;
 
 <h3 id="example-15-having-many-channels">Example 15: Having many channels</h3>
 <p>We have built a stereo amp, but suppose we wanted to generalize this construction to an arbitrary number of channels. To do so, we will instroduce the <code>par(i, N, ...)</code> construction which allows us to put several times an expression in parallel. It is in a way the equivalent of the for() loop of a classical programming language. </p>
-<p>In our case we want to indicate the number of channels of our amplifier.</p>
+<p>In our case we want to indicate the number of channels of our amplifier:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
@@ -785,9 +761,9 @@ process = multiamp(2); // try multiamp(4)
 
 <h2 id="part-2-delays-and-feedbacks">Part 2: Delays and Feedbacks</h2>
 <p><img src="img/bande-feedback.png" width="100%" class="mx-auto d-block"></p>
-<p>In this new section we will see two important notions, that of delay with the <code>@</code> primitive, and that of feedback (from a looped circuit) which will require the use of the recursive composition <code>A~B</code> which allows to loop the outputs of A into the inputs of B and the outputs of B into the inputs of A.</p>
+<p>In this new section we will see two important notions, that of delay with the <code>@</code> primitive, and that of feedback (from a looped circuit) which will require the use of the recursive composition <code>A~B</code> which allows to loop the outputs of A into the inputs of B, and the outputs of B into the inputs of A.</p>
 <h3 id="example-1-monophonic-delay-of-1-second">Example 1: Monophonic delay of 1 second</h3>
-<p>Let's start with a very simple example, a monophonic delay of  1 seconds or 44100 samples. We will use the prefix notation :</p>
+<p>Let's start with a very simple example, a monophonic delay of  1 seconds or 44100 samples. We will use the prefix notation:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
@@ -808,7 +784,7 @@ process = @(44100);
 <!-- /faust-run -->
 
 <h3 id="example-2-delay-of-01-second-on-the-right-channel">Example 2: Delay of 0.1 second on the right channel</h3>
-<p>To hear the delay better, let's put it only on the right channel and leave the left channel unchanged.</p>
+<p>To hear the delay better, let's put it only on the right channel and leave the left channel unchanged:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
@@ -826,7 +802,7 @@ process = _, @(4410);
 <!-- /faust-run -->
 
 <h3 id="example-3-the-bouncing-of-sound-on-a-wall">Example 3: the bouncing of sound on a wall</h3>
-<p>By combining a delay and an attenuation we can simulate the bouncing of sound on a wall.</p>
+<p>By combining a delay and an attenuation we can simulate the bouncing of sound on a wall:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
@@ -845,7 +821,7 @@ process = _, bounce;
 <!-- /faust-run -->
 
 <h3 id="example-4-a-simple-monophonic-echo">Example 4: A simple monophonic echo</h3>
-<p>To simulate an echo, all we need to do is create a feedback loop. We'll use the recursive composition <code>A~B</code>.</p>
+<p>To simulate an echo, all we need to do is create a feedback loop. We'll use the recursive composition <code>A~B</code>:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
@@ -854,6 +830,7 @@ process = _, bounce;
 bounce = @(4410) : *(0.75);
 monoecho = +~bounce;
 process = _, monoecho; 
+
 
 </code></pre>
 
@@ -865,7 +842,7 @@ process = _, monoecho;
 <!-- /faust-run -->
 
 <h3 id="example-5-a-stereophonic-echo">Example 5: A stereophonic echo</h3>
-<p>Let's make a stereophonic echo with two monophonic echos in parallel</p>
+<p>Let's make a stereophonic echo with two monophonic echos in parallel:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
@@ -877,6 +854,7 @@ stereoecho = monoecho,monoecho;
 
 process = stereoecho; 
 
+
 </code></pre>
 
 
@@ -887,7 +865,7 @@ process = stereoecho;
 <!-- /faust-run -->
 
 <h3 id="example-6-adding-parameters">Example 6: Adding parameters</h3>
-<p>We will now generalize our echo with parameters to control its duration and feedback level.</p>
+<p>We will now generalize our echo with parameters to control its duration and feedback level:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
@@ -899,6 +877,7 @@ stereoecho(d,f) = monoecho(d,f),monoecho(d,f);
 
 process = stereoecho(44100/4,0.75); 
 
+
 </code></pre>
 
 
@@ -909,7 +888,7 @@ process = stereoecho(44100/4,0.75);
 <!-- /faust-run -->
 
 <h3 id="example-7-slider-for-the-feedback-control">Example 7: Slider for the feedback control</h3>
-<p>We can now add a slider to control the level of feedback.</p>
+<p>We can now add a slider to control the level of feedback:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
@@ -921,6 +900,7 @@ stereoecho(d,f) = monoecho(d,f),monoecho(d,f);
 
 process = stereoecho(44100/4, hslider(&quot;feedback&quot;, 0, 0, 1, 0.01)); 
 
+
 </code></pre>
 
 
@@ -931,7 +911,7 @@ process = stereoecho(44100/4, hslider(&quot;feedback&quot;, 0, 0, 1, 0.01));
 <!-- /faust-run -->
 
 <h3 id="example-8-freeze-effect">Example 8: Freeze effect</h3>
-<p>We would now like to prevent the sound level from rising indefinitely when we set the feedback level to 1. The idea is to gradually shut down the input when the feedback level exceeds a certain threshold.</p>
+<p>We would now like to prevent the sound level from rising indefinitely when we set the feedback level to 1. The idea is to gradually shut down the input when the feedback level exceeds a certain threshold:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
@@ -944,6 +924,7 @@ monoecho(d,f) = *(g) : +~bounce(d,f) with { g = 1 - max(0, f-l)/(1-l); l = 0.95;
 stereoecho(d,f) = monoecho(d,f),monoecho(d,f);
 
 process = stereoecho(44100/4, hslider(&quot;feedback&quot;, 0, 0, 1, 0.01)); 
+
 
 </code></pre>
 
@@ -971,6 +952,7 @@ process = stereoecho(44100/4, hslider(&quot;feedback&quot;, 0, 0, 1, 0.01));
 <pre><code>
 process = 0.125 : + ~ _;
 
+
 </code></pre>
 
 
@@ -981,7 +963,7 @@ process = 0.125 : + ~ _;
 <!-- /faust-run -->
 
 <h3 id="semantics">Semantics</h3>
-<p>To understand the above diagram, we will annotate it with its mathematical semantics.</p>
+<p>To understand the above diagram, we will annotate it with its mathematical semantics:</p>
 <p><img src="img/ramp-diag-math.svg" width="100%" class="mx-auto d-block"></p>
 <p>As can be seen in the diagram, the formula for the output signal is: <script type="math/tex">y(t) = y(t-1) + 0.125</script>
 </p>
@@ -1033,6 +1015,7 @@ decimalpart(x) = x-int(x);
 phase = 0.125 : (+ : decimalpart) ~ _;
 process = phase;
 
+
 </code></pre>
 
 
@@ -1044,7 +1027,7 @@ process = phase;
 
 <p>In our definition of <code>phase</code>, the value of the step, here <code>0.125</code>, controls the frequency of the generated signal. We would like to calculate this step value as a function of the desired frequency. In order to do the conversion, we need to know the sampling frequency. It is available in the standard library as <code>ma.SR</code>. To use this standard library we add the following line to the program: <code>import("stdfaust.lib");</code>.</p>
 <p>Suppose we want our phase signal to have a frequency of 1 Hz, then the step should be very small <code>1/ma.SR</code>, so that it takes <code>ma.SR</code> samples (i.e. 1 second) for the phase signal to go from 0 to 1.</p>
-<p>If we want a frequency of 440 Hz, we need a 440 times larger step so that the phase signal goes from 0 to 1440 times faster.</p>
+<p>If we want a frequency of 440 Hz, we need a 440 times larger step so that the phase signal goes from 0 to 1440 times faster:</p>
 <pre><code>phase = 440/ma.SR : (+ : decimalpart) ~ _;
 </code></pre>
 
@@ -1052,7 +1035,7 @@ process = phase;
 <pre><code>phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 </code></pre>
 
-<p>and changing the desired frequency to <code>phase</code>::</p>
+<p>and changing the desired frequency to <code>phase</code>:</p>
 <pre><code>process = phase(440);
 </code></pre>
 
@@ -1133,7 +1116,7 @@ process = osc(440);
 
 <!-- /faust-run -->
 
-<p>But now that we have seen how to create a sinusoidal oscillator from scratch, we will use the one defined in the standard Faust libraries.</p>
+<p>But now that we have seen how to create a sinusoidal oscillator from scratch, we will use the one defined in the standard Faust libraries:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
@@ -1153,7 +1136,7 @@ process = os.osc(440);
 <!-- /faust-run -->
 
 <h3 id="example-2-a-sine-wave-with-volume-control">Example 2: a sine wave with volume control</h3>
-<p>In this second example we used a horizontal slider <code>hslider(...)</code> to control the sound level. </p>
+<p>In this second example we used a horizontal slider <code>hslider(...)</code> to control the sound level:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust29/exfaust29.svg" class="mx-auto d-block">
@@ -1174,9 +1157,11 @@ process = os.osc(440) * hslider(&quot;gain&quot;, 0.1, 0, 1, 0.01);
 
 <p>The first parameter is a string that indicates the name of the slider. It is followed by four numeric parameters. The second parameter <code>0.1</code> indicates the default value of the slider, i.e. the value that the slider will deliver when the program is started. Then we have the minimum value <code>0</code>, the maximum value <code>1</code> and the variation step <code>0.01</code>.</p>
 <h3 id="example-3-exercise-add-a-frequency-control">Example 3: Exercise, add a frequency control</h3>
-<p>As an exercise, replace, in the previous example, the frequency 440 by a horizontal slider whose name will be <code>freq</code>, the default value <code>110</code>, the minimum value <code>40</code>, the maximum value <code>8000</code> and the step <code>1</code>.
+<p>As an exercise, replace, in the previous example, the frequency 440 by a horizontal slider whose name will be <code>freq</code>, the default value <code>110</code>, the minimum value <code>40</code>, the maximum value <code>8000</code> and the step <code>1</code>:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust30/exfaust30.svg" class="mx-auto d-block"></p>
+
+<div class="faust-run"><img src="exfaust30/exfaust30.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 
@@ -1184,12 +1169,15 @@ process = os.osc(440 /*to replace*/) * hslider(&quot;gain&quot;, 0.1, 0, 1, 0.01
 
 </code></pre>
 
-<p><a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust30/exfaust30.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust30/exfaust30.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <h3 id="example-4-frequency-aliasing-phenomenon-beyond-sr2">Example 4: Frequency aliasing phenomenon beyond SR/2</h3>
-<p>A well known problem in the field of digital sound synthesis is frequency aliasing: any frequency beyond half the sampling frequency is <em>folded</em> in the audible spectrum.  </p>
+<p>A well known problem in the field of digital sound synthesis is frequency aliasing: any frequency beyond half the sampling frequency is <em>folded</em> in the audible spectrum:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust31/exfaust31.svg" class="mx-auto d-block">
@@ -1212,9 +1200,11 @@ process = os.osc(hslider(&quot;freq&quot;, 440, 20, 20000, 1)) * hslider(&quot;g
 <!-- /faust-run -->
 
 <h3 id="example-5-additive-synthesis">Example 5: Additive synthesis</h3>
-<p>An example of an additive synthesis, where the level of each partial can be set individually. 
+<p>An example of an additive synthesis, where the level of each partial can be set individually:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust32/exfaust32.svg" class="mx-auto d-block"></p>
+
+<div class="faust-run"><img src="exfaust32/exfaust32.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 
@@ -1226,15 +1216,19 @@ partial(n,f) = os.osc(f*n) * hslider(&quot;partial %n&quot;, 0.25, 0, 1, 0.01);
 
 process = sum(i, 4, partial(i+1,hslider(&quot;freq&quot;, 440, 20, 8000, 0.001)));
 
+
 </code></pre>
 
-<p><a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust32/exfaust32.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust32/exfaust32.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
-Note the use of the <code>sum(i, n, foo(i))</code> construction which is equivalent to <code>foo(0)+foo(1)+...+foo(n-1)</code>.</p>
+
+<p>Note the use of the <code>sum(i, n, foo(i))</code> construction which is equivalent to <code>foo(0)+foo(1)+...+foo(n-1)</code>.</p>
 <h3 id="example-6-approximation-of-a-square-signal-by-additive-synthesis">Example 6: Approximation of a square signal by additive synthesis</h3>
-<p>We saw earlier how to produce a perfect square wave signal. This perfect square signal contains an infinite number of harmonics which, due to sampling, will fold over the audible spectrum, resulting in a less accurate, noisy sound! A square signal can be approximated by additive synthesis, by adding an infinite series of odd harmonics (see <a href="https://en.wikipedia.org/wiki/Square_wave">https://en.wikipedia.org/wiki/Square_wave</a>).</p>
+<p>We saw earlier how to produce a perfect square wave signal. This perfect square signal contains an infinite number of harmonics which, due to sampling, will fold over the audible spectrum, resulting in a less accurate, noisy sound! A square signal can be approximated by additive synthesis, by adding an infinite series of odd harmonics (see <a href="https://en.wikipedia.org/wiki/Square_wave">https://en.wikipedia.org/wiki/Square_wave</a>):</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust33/exfaust33.svg" class="mx-auto d-block">
@@ -1248,6 +1242,7 @@ squarewave(f) = 4/ma.PI*sum(k, 4, os.osc((2*k+1)*f)/(2*k+1));
 
 process = squarewave(55);
 
+
 </code></pre>
 
 
@@ -1259,7 +1254,7 @@ process = squarewave(55);
 
 <p>As an exercise, change the number of harmonics to see the approximation improve (but do not exceed SR/2).</p>
 <h3 id="example-7-approximation-of-a-sawtooth-signal-by-additive-synthesis">Example 7: Approximation of a sawtooth signal by additive synthesis</h3>
-<p>Similarly, a sawtooth signal can be approximated by additive synthesis, by adding an infinite series of harmonics (see <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">https://en.wikipedia.org/wiki/Sawtooth_wave</a>).</p>
+<p>Similarly, a sawtooth signal can be approximated by additive synthesis, by adding an infinite series of harmonics (see <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">https://en.wikipedia.org/wiki/Sawtooth_wave</a>):</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust34/exfaust34.svg" class="mx-auto d-block">
@@ -1273,6 +1268,7 @@ sawtooth(f) = 2/ma.PI*sum(k, 4, (-1)^k * os.osc((k+1)*f)/(k+1));
 
 process = sawtooth(55);
 
+
 </code></pre>
 
 
@@ -1283,7 +1279,7 @@ process = sawtooth(55);
 <!-- /faust-run -->
 
 <h3 id="example-8-band-limited-oscillators">Example 8: Band limited oscillators</h3>
-<p>The problem of aliasing can be solved using band-limited oscillators available in Faust libraries.</p>
+<p>The problem of aliasing can be solved using band-limited oscillators available in Faust libraries:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust35/exfaust35.svg" class="mx-auto d-block">
@@ -1300,6 +1296,7 @@ sawtooth(f) = phase(f) * 2 - 1;
 
 process = os.sawN(3,400);
 
+
 </code></pre>
 
 
@@ -1313,20 +1310,26 @@ process = os.sawN(3,400);
 <p><img src="img/bande-substractive.png" width="100%" class="mx-auto d-block"></p>
 <p>Subtractive synthesis is the opposite of additive synthesis. It consists in starting from a rich sound, for example white noise, and sculpting its spectrum.</p>
 <h3 id="example-1-a-white-noise">Example 1 : a white noise</h3>
-<p>A white noise generator
+<p>A white noise generator:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust36/exfaust36.svg" class="mx-auto d-block"></p>
+
+<div class="faust-run"><img src="exfaust36/exfaust36.svg" class="mx-auto d-block">
+
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 
 process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01);
 
+
 </code></pre>
 
-<p><a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust36/exfaust36.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself &gt;&gt;</button></a>
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/exfaust36/exfaust36.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-<!-- /faust-run --></p>
+
+<!-- /faust-run -->
+
 <h3 id="example-2-lowpass">Example 2 : lowpass</h3>
 <!-- faust-run -->
 
@@ -1358,6 +1361,7 @@ import(&quot;stdfaust.lib&quot;);
 process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) : fi.highpass(3, hslider(&quot;lowfreq&quot;, 400, 20, 20000, 1));
 
 
+
 </code></pre>
 
 
@@ -1378,7 +1382,6 @@ import(&quot;stdfaust.lib&quot;);
 process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) 
 : fi.highpass(3, hslider(&quot;lowfreq&quot;, 400, 20, 20000, 1))
 : fi.lowpass(3, hslider(&quot;hifreq&quot;, 2000, 20, 20000, 1));
-
 
 </code></pre>
 
@@ -1527,7 +1530,6 @@ envelop = button(&quot;gate&quot;) : upfront : en.ar(0.002, 0.01);
 
 upfront(x) = x&gt;x';
 
-
 </code></pre>
 
 
@@ -1649,7 +1651,6 @@ string(coef, freq, t60, level, trig) = no.noise*level
         noise           = random/2147483647.0;
     };
 
-
 </code></pre>
 
 
@@ -1715,7 +1716,6 @@ envelop2 = button(&quot;gate&quot;) : upfront : en.ar(0.5, 0.5);
 
 upfront(x) = x&gt;x';
 
-
 </code></pre>
 
 
@@ -1730,7 +1730,6 @@ upfront(x) = x&gt;x';
 <ul>
 <li><strong><a href="https://faustlibraries.grame.fr/">https://faustlibraries.grame.fr/</a></strong></li>
 </ul></div>
-            </div>
         </div>
 
         <footer class="col-md-12">
@@ -1746,19 +1745,19 @@ upfront(x) = x&gt;x';
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
             <div class="modal-body">
                 <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-                <form>
+                <form role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
@@ -1769,12 +1768,12 @@ upfront(x) = x&gt;x';
             </div>
         </div>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
             </div>
             <div class="modal-body">
               <table class="table">

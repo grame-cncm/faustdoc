@@ -9,224 +9,237 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>faust2[...] Tools - Faust Documentation</title>
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <a class="navbar-brand" href="../..">Faust Documentation</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Documentation</a>
+                </div>
 
                 <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../.." class="nav-link">Home</a>
+                            <li >
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../introduction/" class="dropdown-item">Introduction</a>
+<li >
+    <a href="../introduction/">Introduction</a>
 </li>
                                     
-<li>
-    <a href="../overview/" class="dropdown-item">Overview of the Faust Universe</a>
+<li >
+    <a href="../overview/">Overview of the Faust Universe</a>
 </li>
                                     
-<li>
-    <a href="../quick-start/" class="dropdown-item">Quick start</a>
+<li >
+    <a href="../quick-start/">Quick start</a>
 </li>
                                     
-<li>
-    <a href="../syntax/" class="dropdown-item">Faust Syntax</a>
+<li >
+    <a href="../syntax/">Faust Syntax</a>
 </li>
                                     
-<li>
-    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
+<li >
+    <a href="../compiler/">Using the Compiler</a>
 </li>
                                     
-<li>
-    <a href="../options/" class="dropdown-item">Compiler Options</a>
+<li >
+    <a href="../options/">Compiler Options</a>
 </li>
                                     
-<li>
-    <a href="./" class="dropdown-item active">faust2[...] Tools</a>
+<li class="active">
+    <a href="./">faust2[...] Tools</a>
 </li>
                                     
-<li>
-    <a href="../embedding/" class="dropdown-item">Embedding</a>
+<li >
+    <a href="../embedding/">Embedding</a>
 </li>
                                     
-<li>
-    <a href="../osc/" class="dropdown-item">OSC Support</a>
+<li >
+    <a href="../osc/">OSC Support</a>
 </li>
                                     
-<li>
-    <a href="../http/" class="dropdown-item">HTTP Support</a>
+<li >
+    <a href="../http/">HTTP Support</a>
 </li>
                                     
-<li>
-    <a href="../midi/" class="dropdown-item">MIDI Support</a>
+<li >
+    <a href="../midi/">MIDI Support</a>
 </li>
                                     
-<li>
-    <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+<li >
+    <a href="../mathdoc/">Mathematical Documentation</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
 </li>
                                     
-<li>
-    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
 </li>
                                     
-<li>
-    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+<li >
+    <a href="../../examples/bela/"> bela </a>
 </li>
                                     
-<li>
-    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
 </li>
                                     
-<li>
-    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
 </li>
                                     
-<li>
-    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
 </li>
                                     
-<li>
-    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
 </li>
                                     
-<li>
-    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+<li >
+    <a href="../../examples/generator/"> generator </a>
 </li>
                                     
-<li>
-    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+<li >
+    <a href="../../examples/misc/"> misc </a>
 </li>
                                     
-<li>
-    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
 </li>
                                     
-<li>
-    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
 </li>
                                     
-<li>
-    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
 </li>
                                     
-<li>
-    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
 </li>
                                     
-<li>
-    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
 </li>
                                     
-<li>
-    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
 </li>
                                     
-<li>
-    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
 </li>
                                     
-<li>
-    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+<li >
+    <a href="../../examples/spat/"> spat </a>
 </li>
                                     
-<li>
-    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/">Faust & JUCE</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+<li >
+    <a href="../../tutorials/teensy/">DSP on the Teensy With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+<li >
+    <a href="../../tutorials/esp32/">DSP on the ESP-32 With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+<li >
+    <a href="../../tutorials/basic-osc/">Making a Sine Oscillator From Scratch</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+<li >
+    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+<li >
+    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/"> 2020-04-10 Faust & JUCE </a>
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
-                                <a href="../../about/" class="nav-link">About</a>
+                            <li >
+                                <a href="../../about/">About</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../options/" class="nav-link">
+                            <li >
+                                <a rel="next" href="../options/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../embedding/" class="nav-link">
+                            <li >
+                                <a rel="prev" href="../embedding/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -236,218 +249,60 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#faust2-tools" class="nav-link">faust2[...] Tools</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#faust2alqt" class="nav-link">faust2alqt</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2alsa" class="nav-link">faust2alsa</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2alsaconsole" class="nav-link">faust2alsaconsole</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2android" class="nav-link">faust2android</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2androidunity" class="nav-link">faust2androidunity</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2api" class="nav-link">faust2api</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2au" class="nav-link">faust2au</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2bela" class="nav-link">faust2bela</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2caqt" class="nav-link">faust2caqt</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2caqtios" class="nav-link">faust2caqtios</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2csound" class="nav-link">faust2csound</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2csvplot" class="nav-link">faust2csvplot</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2dssi" class="nav-link">faust2dssi</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2esp32" class="nav-link">faust2esp32</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2faustvst" class="nav-link">faust2faustvst</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2gen" class="nav-link">faust2gen</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2ios" class="nav-link">faust2ios</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2jack" class="nav-link">faust2jack</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2jackconsole" class="nav-link">faust2jackconsole</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2jackrust" class="nav-link">faust2jackrust</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2jackserver" class="nav-link">faust2jackserver</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2jaqt" class="nav-link">faust2jaqt</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2jaqtchain" class="nav-link">faust2jaqtchain</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2juce" class="nav-link">faust2juce</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2ladspa" class="nav-link">faust2ladspa</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2linuxunity" class="nav-link">faust2linuxunity</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2lv2" class="nav-link">faust2lv2</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2mathdoc" class="nav-link">faust2mathdoc</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2max6" class="nav-link">faust2max6</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2msp" class="nav-link">faust2msp</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2netjackconsole" class="nav-link">faust2netjackconsole</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2netjackqt" class="nav-link">faust2netjackqt</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2nodejs" class="nav-link">faust2nodejs</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2osxiosunity" class="nav-link">faust2osxiosunity</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2paqt" class="nav-link">faust2paqt</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2plot" class="nav-link">faust2plot</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2portaudiorust" class="nav-link">faust2portaudiorust</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2raqt" class="nav-link">faust2raqt</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2rpialsaconsole" class="nav-link">faust2rpialsaconsole</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2rpinetjackconsole" class="nav-link">faust2rpinetjackconsole</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2sam" class="nav-link">faust2sam</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2smartkeyb" class="nav-link">faust2smartkeyb</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2sndfile" class="nav-link">faust2sndfile</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2soul" class="nav-link">faust2soul</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2unity" class="nav-link">faust2unity</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2wasm" class="nav-link">faust2wasm</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2webaudiowasm" class="nav-link">faust2webaudiowasm</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2webaudiowast" class="nav-link">faust2webaudiowast</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#faust2-tools">faust2[...] Tools</a></li>
+            <li><a href="#faust2alqt">faust2alqt</a></li>
+            <li><a href="#faust2alsa">faust2alsa</a></li>
+            <li><a href="#faust2alsaconsole">faust2alsaconsole</a></li>
+            <li><a href="#faust2android">faust2android</a></li>
+            <li><a href="#faust2androidunity">faust2androidunity</a></li>
+            <li><a href="#faust2api">faust2api</a></li>
+            <li><a href="#faust2au">faust2au</a></li>
+            <li><a href="#faust2bela">faust2bela</a></li>
+            <li><a href="#faust2caqt">faust2caqt</a></li>
+            <li><a href="#faust2caqtios">faust2caqtios</a></li>
+            <li><a href="#faust2csound">faust2csound</a></li>
+            <li><a href="#faust2csvplot">faust2csvplot</a></li>
+            <li><a href="#faust2dssi">faust2dssi</a></li>
+            <li><a href="#faust2esp32">faust2esp32</a></li>
+            <li><a href="#faust2faustvst">faust2faustvst</a></li>
+            <li><a href="#faust2gen">faust2gen</a></li>
+            <li><a href="#faust2ios">faust2ios</a></li>
+            <li><a href="#faust2jack">faust2jack</a></li>
+            <li><a href="#faust2jackconsole">faust2jackconsole</a></li>
+            <li><a href="#faust2jackrust">faust2jackrust</a></li>
+            <li><a href="#faust2jackserver">faust2jackserver</a></li>
+            <li><a href="#faust2jaqt">faust2jaqt</a></li>
+            <li><a href="#faust2jaqtchain">faust2jaqtchain</a></li>
+            <li><a href="#faust2juce">faust2juce</a></li>
+            <li><a href="#faust2ladspa">faust2ladspa</a></li>
+            <li><a href="#faust2linuxunity">faust2linuxunity</a></li>
+            <li><a href="#faust2lv2">faust2lv2</a></li>
+            <li><a href="#faust2mathdoc">faust2mathdoc</a></li>
+            <li><a href="#faust2max6">faust2max6</a></li>
+            <li><a href="#faust2msp">faust2msp</a></li>
+            <li><a href="#faust2netjackconsole">faust2netjackconsole</a></li>
+            <li><a href="#faust2netjackqt">faust2netjackqt</a></li>
+            <li><a href="#faust2nodejs">faust2nodejs</a></li>
+            <li><a href="#faust2osxiosunity">faust2osxiosunity</a></li>
+            <li><a href="#faust2paqt">faust2paqt</a></li>
+            <li><a href="#faust2plot">faust2plot</a></li>
+            <li><a href="#faust2portaudiorust">faust2portaudiorust</a></li>
+            <li><a href="#faust2raqt">faust2raqt</a></li>
+            <li><a href="#faust2rpialsaconsole">faust2rpialsaconsole</a></li>
+            <li><a href="#faust2rpinetjackconsole">faust2rpinetjackconsole</a></li>
+            <li><a href="#faust2sam">faust2sam</a></li>
+            <li><a href="#faust2smartkeyb">faust2smartkeyb</a></li>
+            <li><a href="#faust2sndfile">faust2sndfile</a></li>
+            <li><a href="#faust2soul">faust2soul</a></li>
+            <li><a href="#faust2unity">faust2unity</a></li>
+            <li><a href="#faust2wasm">faust2wasm</a></li>
+            <li><a href="#faust2webaudiowasm">faust2webaudiowasm</a></li>
+            <li><a href="#faust2webaudiowast">faust2webaudiowast</a></li>
+    </ul>
 </div></div>
-                    <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="faust2-tools"><code>faust2[...]</code> Tools</h1>
 <p>While in its most <em>primitive</em> form, Faust is distributed as a command-line compiler, a wide range of tools have been developed around it in the course of the past few years. Their variety and their function might be hard to grab at first. This sort chapter provides an overview of their role and will hopefully help you decide which one is better suited for your personal use. </p>
@@ -488,7 +343,7 @@ Options:
    -httpd :  activates HTTP control
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -arch32 : compiles a 32 bits binary
    -arch64 : compiles a 64 bits binary
 </pre></p>
@@ -504,7 +359,7 @@ Options:
    -swig : regenerates the C++ and the JAVA interface for the native portion of the app.
    -faust : only carries out the Faust compilation and install the generated C++ file in the JNI folder.
    -reuse : preserves build directory and reuse it to speedup compilation.
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
    -install : once compilation is over, installs the generated apk on the Android device connected to the computer
    -debug : activates verbose output
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
@@ -518,7 +373,7 @@ Creates android libraries (armeabi-v7a and x86) for faust unity plugin.
 If you need other android architectures, open architecture/unity/Android/Application.mk and modify APP_ABI.
 See architecture/unity/README.md for more info (also available from the compile folder)
 Options:
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -android : creates also the c# and JSON files
 </pre></p>
 <h2 id="faust2api">faust2api</h2>
@@ -533,7 +388,7 @@ faust2api can be used to generate Faust based dsp objects for various platforms:
    -jack :      generates a JACK API
    -portaudio : generates a PortAudio API
    -rtaudio :   generates an RTAudio API
-   -of :        generates an openFrameworks API
+   -of :        generates an OpenFrameworks API
    -juce :      generates a JUCE API
    -dummy :     generates a dummy audio API</p>
 <p>Global options:
@@ -547,7 +402,7 @@ faust2api can be used to generate Faust based dsp objects for various platforms:
 <p>Android specific options:
    -package : set the JAVA package name (e.g. '-package mypackage' will change the JAVA package name to 'mypackage.DspFaust'). The default package name is 'com.DspFaust.'
    -soundfile : add built-in Soundfile support to the API.</p>
-<p>Options supported by iOS, CoreAudio, ALSA, JACK, PortAudio, openFrameworks and JUCE
+<p>Options supported by iOS, CoreAudio, ALSA, JACK, PortAudio and JUCE
    -midi : add built-in RtMidi support to the API.
    -osc : add built-in OSC support to the API.
    -soundfile : add built-in Soundfile support to the API.</p>
@@ -573,8 +428,8 @@ Target platform: Bela
 Options:
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
                   Polyphonic mode means MIDI instrument with at least 1 voice. Use no arguments for a simple effect.
    -gui : activates a self-hosted GUI interface. Requires to have libmicrohttpd and libHTTPDFaust installed.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI
@@ -592,10 +447,10 @@ Options:
    -osc :    activates OSC control
    -midi :   activates MIDI control
    -qrcode : activates QR code generation
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
    -opt native' to activate the best compilation options for the native CPU : 
    -opt generic' to activate the best compilation options for a generic CPU : 
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -resample : to resample soundfiles to the audio driver sample rate
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
@@ -607,12 +462,19 @@ Options:
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
 </pre></p>
 <h2 id="faust2caqtios">faust2caqtios</h2>
-<pre class=faust-tools>
-
-<h4 id="qmake-ios-is-not-available">qmake-ios is not available</h4>
-<h4 id="you-must-create-an-alias-named-qmake-ios-that-points-to-the-appropriate-qmake-in-your-qt-ios-dist">you must create an alias named 'qmake-ios' that points to the appropriate qmake in your Qt ios dist</h4>
-</pre>
-
+<p><pre class=faust-tools>
+Usage: faust2caqtios [options] [Faust options] <file.dsp>
+Target platform: iOS
+Require: Qt
+ Compiles Faust programs to CoreAudio and QT for iOS
+Options:
+   -httpd :  activates HTTP control
+   -osc :    activates OSC control
+   -midi :   activates MIDI control
+   -qrcode : activates QR code generation
+   -poly :   produces a polyphonic DSP, ready to be used with MIDI events
+   -debug : print all the build steps
+</pre></p>
 <h2 id="faust2csound">faust2csound</h2>
 <p><pre class=faust-tools>
 Usage: faust2csound [options] [Faust options] <file.dsp>
@@ -632,7 +494,7 @@ Options:
    -arch32 : generates a 32 bit architecture.
    -arch64 : generates a 64 bit architecture.
    -double : generates a 64 bit architecture.
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
 </pre></p>
 <h2 id="faust2dssi">faust2dssi</h2>
@@ -657,7 +519,7 @@ Options:
    -lib :       generates a package containing an object compatible with any ESP32 project
    -midi :   activates MIDI control
    -main :       add a 'main' entry point
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -wm8978 or -ac101 : to choose codec driver
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
 </pre></p>
@@ -680,11 +542,11 @@ Options:
    -style S :   select the stylesheet (arg must be Default, Blue, Grey or Salmon).
 Environment variables:
   FAUSTINC: specify the location of the Faust include directory
-    Default: /usr/local/include
+    Default: /Users/fober/FAUST/current/include
   FAUSTARCH: specify the location of the Faust VST library files
-    Default: /usr/local/share/faust
+    Default: /Users/fober/FAUST/current/share/faust
   QMAKE: specify the location of the qmake binary
-    Default: /usr/bin/qmake-qt5
+    Default: qmake
   SDK: specify the location of the VST SDK
     Default: /usr/local/src/vstsdk
   SDKSRC: specify the location of the VST SDK sources
@@ -696,7 +558,7 @@ Usage: faust2gen [options] <file.dsp>
 Require: Max-MSP SDK
 Compiles Faust programs to fausgen~ patch
 Options:
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
 </pre></p>
 <h2 id="faust2ios">faust2ios</h2>
 <p><pre class=faust-tools>
@@ -706,8 +568,8 @@ Compiles Faust programs to iOS applications.
 Options:
    -midi :   activates MIDI control
    -osc :    activates OSC control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    -xcode :     to compile and keep the intermediate Xcode project
@@ -726,9 +588,9 @@ Options:
    -httpd :  activates HTTP control
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
    -resample : to resample soundfiles to the audio driver sample rate.
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
@@ -742,7 +604,7 @@ Options:
    -httpd :  activates HTTP control
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
 </pre></p>
 <h2 id="faust2jackrust">faust2jackrust</h2>
@@ -774,9 +636,9 @@ Options:
    -httpd :  activates HTTP control
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
    -qrcode : activates QR code generation
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    -resample : to resample soundfiles to the audio driver sample rate.
@@ -800,8 +662,8 @@ Compiles Faust programs to JUCE standalone or plugin.
 Options:
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    -standalone : to produce a standalone project, otherwise a plugin project is generated
@@ -826,7 +688,7 @@ Target platform: Linux
 Require: Jack, Unity
 Compiles Faust programs to Linux x86_64 library suitable for the Unity environment
 Options:
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
 </pre></p>
 <h2 id="faust2lv2">faust2lv2</h2>
@@ -849,11 +711,11 @@ Options:
    -style S :    select the stylesheet (arg must be Default, Blue, Grey or Salmon).
 Environment variables:
   FAUSTINC: specify the location of the Faust include directory
-    Default: /usr/local/include/faust
+    Default: /Users/fober/FAUST/current/include/faust
   FAUSTLIB: specify the location of the Faust LV2 library files
     Default: /usr/local/share/faust
   QMAKE: specify the location of the qmake binary
-    Default: /usr/bin/qmake-qt5
+    Default: qmake
 </pre></p>
 <h2 id="faust2mathdoc">faust2mathdoc</h2>
 <p><pre class=faust-tools>
@@ -872,10 +734,10 @@ Compiles Faust programs to Max6 externals using double precision samples
 Options:
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
    -soundfile-static : similar to -soundfile with resources in statuc mode.
    -opt native|generic : activates the best compilation options for the native or generic CPU.
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -native :    to compile for the native CPU (otherwise the 'generic' mode is used by default)
    -universal : to generate a 64/32 bits external
@@ -890,8 +752,8 @@ Compiles Faust programs to Max6 externals using simple precision samples
 Options:
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -native :    to compile for the native CPU (otherwise the 'generic' mode is used by default)
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
@@ -905,7 +767,7 @@ Options:
    -httpd :  activates HTTP control
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
@@ -919,7 +781,7 @@ Options:
    -httpd :  activates HTTP control
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
@@ -933,8 +795,8 @@ Generate Faust-based nodejs native addons. The generated addons can embed most o
 Options:
    -osc :    activates OSC control
    -midi :   activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources.
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -source : generates the source of the addon without compiling it.
    -electronv <VERSION> : allows to specify the current version of electron if generating an addon for this framework.
@@ -947,7 +809,7 @@ Target platform: MacOSX
 Require: Unity
 Compiles Faust programs to OSX/iOS libraries suitable for the Unity environment
 Options:
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -ios :       create an iOS static library
    -universal : generate a 64/32 bits external
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
@@ -963,7 +825,7 @@ Options:
    -osc :    activates OSC control
    -midi :   activates MIDI control
    -qrcode : activates QR code generation
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    -nodeploy : skip self-contained application generation (using 'macdeployqt')
@@ -1033,7 +895,7 @@ Target platform: ADI SHARC Audio Module board
 Generates inline Faust objects for the ADI SHARC Audio Module board
 Options:
    -midi :   activates MIDI control
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    Faust options : any faust option (e.g. -vec -vs 8...). See the faust compiler documentation.
 </pre></p>
@@ -1068,7 +930,7 @@ Usage: faust2soul [options] [Faust options] <file.dsp>
 Compiles Faust programs to SOUL
 Options:
    -midi :   activates MIDI control
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -effect <effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    -play : to start the 'soul' runtime with the generated SOUL file
@@ -1087,7 +949,7 @@ Options:
    -ios : generates an iOS library
    -android : generates Android libraries (armeabi-v7a and x86).
    -linux : generates a Linux library
-   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events
+   -nvoices <num> : produces a polyphonic DSP with <num> voices, ready to be used with MIDI events.
    -source : generates the source files (uncompressed folder)
    -unpacked : generates an unpacked folder with files organized like the Unity Asset hierarchy. Use this options to add specific files in the unity package (in the Assets folder, then use 'encoderunitypackage <folder>' to compress and pack it.
 See architecture/unity/README.md for more info.
@@ -1129,7 +991,6 @@ Options:
    -links :   add links to source code and SVG diagrams in the generated HTML file
    -emcc :    compile C++ generated code to wasm with Emscripten, otherwise the internal wasm backend is used
 </pre></p></div>
-            </div>
         </div>
 
         <footer class="col-md-12">
@@ -1145,19 +1006,19 @@ Options:
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
             <div class="modal-body">
                 <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-                <form>
+                <form role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
@@ -1168,12 +1029,12 @@ Options:
             </div>
         </div>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
             </div>
             <div class="modal-body">
               <table class="table">

@@ -18,4 +18,3 @@ envelop2 = button("gate") : upfront : en.ar(0.5, 0.5);
 
 upfront(x) = x>x';
 
-
