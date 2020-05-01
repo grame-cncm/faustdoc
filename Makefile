@@ -62,7 +62,7 @@ help:
 	@echo "             just commit and push the /docs folder (master branch)"
 
 test: 
-	@echo TOOLS: $(TOOLS)
+	@echo SVGDIRS: $(SVGDIRS)
 
 ####################################################################
 build:
@@ -155,17 +155,15 @@ $(FAUSTDIR):
 	@echo "   - call $(MAKE) FAUSTDIR=faust_projet_path"
 	@false;
 
+
 ####################################################################
 install:
 	pip install mkdocs
-#	pip install mkdocs-pdf-export-plugin
 	pip install markdown-include
 	pip install mkdocs-bootswatch
 	pip install python-markdown-math
-#	npm i railroad-diagrams
 
 uninstall:
 	pip uninstall -y mkdocs-material
 	pip uninstall -y pymdown-extensions
 	pip uninstall -y markdown-blockdiag
-#	pip uninstall -y mkdocs-pdf-export-plugin

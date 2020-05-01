@@ -2,6 +2,13 @@ mkdocs/docs/examples
 mkdocs/docs/refs/syntax/exfaust*
 mkdocs/docs/refs/compiler/exfaust*
 mkdocs/docs/guide/http/exfaust*
+mkdocs/docs/workshops/*/exfaust*
+mkdocs/docs/manual/*/exfaust*
+mkdocs/docs/tutorials/*/exfaust*
+
+mkdocs/docs/workshops/*.md
+mkdocs/docs/tutorials/*.md
+mkdocs/docs/examples/*.md
 mkdocs/docs/guide/introduction/
 mkdocs/docs/guide/midi/
 mkdocs/docs/guide/osc/
@@ -19,4 +26,3 @@ mkdocs/docs/refs/syntax.md
 mkdocs/docs/refs/tools.md
 
 .vscode
-docs/rsrc
