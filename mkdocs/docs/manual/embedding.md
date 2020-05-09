@@ -64,27 +64,32 @@ The `libfaust` library is fully integrated to the Faust distribution. You'll hav
 More generally, a "typical" use of `libfaust` could look like:
 
 ```
-// the Faust code to compile (could be in a file too)
-string theCode = "import("stdfaust.lib");process = no.noise;";
+// the Faust code to compile as a string (could be in a file too)
+string theCode = "import(\"stdfaust.lib\");process = no.noise;";
+
 // compiling in memory (createDSPFactoryFromFile could be used alternatively)
-llvm_dsp_factory *m_factory = createDSPFactoryFromString( 
-  "faust", theCode, argc, argv, "", m_errorString, optimize );
+llvm_dsp_factory* m_factory = createDSPFactoryFromString( 
+  "faust", theCode, argc, argv, "", m_errorString, optimize);
 // creating the DSP instance for interfacing
-dsp *m_dsp = m_factory->createDSPInstance();
+dsp* m_dsp = m_factory->createDSPInstance();
+
 // creating a generic UI to interact with the DSP
-my_ui m_ui = new MyUI();
+my_ui* m_ui = new MyUI();
 // linking the interface to the DSP instance
-m_dsp->buildUserInterface( m_ui );
+m_dsp->buildUserInterface(m_ui);
+
 // initializing the DSP instance
-m_dsp->init( 44100 );
-// hypothetical audio callback
-while(...){
-  m_dsp->compute( 1, m_input, m_output );
+m_dsp->init(44100);
+
+// hypothetical audio callback, assuming m_input/m_output are previously allocated 
+while (...) {
+  m_dsp->compute(128, m_input, m_output);
 }
+
 // cleaning
 delete m_dsp;
-deleteDSPFactory( m_factory );
-m_factory = NULL;
+delete m_ui;
+deleteDSPFactory(m_factory);
 ```
 
 Thus, very few code is needed to embed Faust to your project!
@@ -94,8 +99,9 @@ Thus, very few code is needed to embed Faust to your project!
 The dynamic compilation chain has been used in several projects:
 
 * [FaustLive](https://github.com/grame-cncm/faustlive): an integrated IDE for Faust development offering on-the-fly compilation and execution features
-* [Faustgen](https://github.com/grame-cncm/faust/tree/master-dev/embedded/faustgen): a generic Faust [Max/MSP](https://cycling74.com/products/max/) object
-* [Faust for CSOUND](#): a [CSOUND](https://csound.com/) opcode running the Faust compiler internally
+* [Faustgen](https://github.com/grame-cncm/faust/tree/master-dev/embedded/faustgen): a generic Faust [Max/MSP](https://cycling74.com/products/max/) programmable external object
+* [Faustgen](https://github.com/CICM/pd-faustgen): a generic Faust [PureData](https://puredata.info) programmable external object
+* [Faust for Csound](#): a [Csound](https://csound.com/) opcode running the Faust compiler internally
 * [LibAudioStream](https://github.com/sletz/libaudiostream): a framework to manipulate audio ressources through the concept of streams
 * [Faust for JUCE](https://github.com/olilarkin/juce_faustllvm): a tool integrating the Faust compiler to [JUCE](https://juce.com/) developed by Oliver Larkin and available as part of the [pMix2 project](https://github.com/olilarkin/pMix2)
 * An experimental integration of Faust in [Antescofo](http://forumnet.ircam.fr/product/antescofo-en/)

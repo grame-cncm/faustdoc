@@ -52,7 +52,7 @@ FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled
 
 ## Faustgen
 
-Faustgen is a Max-MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max-MSP. Faustgen is part of the [Faust](https://github.com/grame-cncm/faust) project. It is part of the [Faust releases](https://github.com/grame-cncm/faust/releases).
+Faustgen is a Max-MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max-MSP. Faustgen is part of the [Faust](https://github.com/grame-cncm/faust) project, and distributed in the [Faust releases](https://github.com/grame-cncm/faust/releases).
 
 
 ## Online Faust Editor

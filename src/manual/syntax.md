@@ -143,7 +143,7 @@ A *definition* associates an identifier with an expression. Definitions are esse
 The syntax of a simple definition is:
 
 ```
-identifier = expression ;
+identifier = expression;
 ```
 
 For example here is the definition of `random`, a simple pseudo-random number generator:
@@ -172,7 +172,7 @@ linear2db = \(x).(20*log10(x));
 
 ## Definitions With Pattern Matching
 
-Moreover, formal parameters can also be full expressions representing patterns. 
+Moreover, formal parameters can also be full expressions representing patterns: 
 
 <img src="img/listing.svg" class="mx-auto d-block">
 
@@ -551,7 +551,6 @@ Xi(expr) = si.bus(n) <: par(i,n,ba.selector(n-i-1,n)) : expr
 with { 
   n = inputs(expr); 
 };
-toto = os.osc(440),os.sawtooth(440), os.triangle(440);
 process = Xi(-);
 ```
 <!-- /faust-run -->
@@ -806,7 +805,7 @@ In the following example :
 pink = f : + ~ g 
 with {
   f(x) = 0.04957526213389*x - 0.06305581334498*x' + 0.01483220320740*x'';
-	g(x) = 1.80116083982126*x - 0.80257737639225*x';
+  g(x) = 1.80116083982126*x - 0.80257737639225*x';
 };
 process = pink;
 ```
@@ -872,7 +871,7 @@ In the following example an `environment` construction is used to group together
 constant = environment {
   pi = 3.14159;
   e = 2,718;
-	...
+  ...
 };
 ```
 
@@ -906,8 +905,8 @@ To avoid name conflicts when importing libraries it is recommended to prefer
 ```
 import("filters.lib");
   ...
-...lowpass....
-	...
+  ...lowpass....
+  ...
 };
 ```
 
@@ -2584,7 +2583,7 @@ will have the corresponding `buildUserInterface` method in C++:
 ```
 virtual void buildUserInterface(UI* ui_interface) {
   ui_interface->openVerticalBox("osc");
-  ui_interface->addHorizontalSlider("freq", &fHslider0, 440.0f, 50.0f, 1000.0f, 0.100000001f);
+  ui_interface->addHorizontalSlider("freq", &fHslider0, 440.0f, 50.0f, 1000.0f, 0.100001f);
   ui_interface->closeBox();
 }
 ```

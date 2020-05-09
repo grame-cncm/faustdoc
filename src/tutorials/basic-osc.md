@@ -51,7 +51,7 @@ will output `0`.
 
 <!-- faust-run -->
 ```
-process = +(1)~_;
+process = +(1) ~ _;
 ``` 
 <!-- /faust-run -->
 
@@ -63,7 +63,7 @@ by 0.01.
 
 <!-- faust-run -->
 ```
-process = +(0.01)~_;
+process = +(0.01) ~ _;
 ```
 
 <!-- /faust-run -->
@@ -122,6 +122,7 @@ f = hslider("freq",440,50,2000,0.01);
 phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
 process = phasor(f);
 ```
+
 <!-- /faust-run -->
 
 ## Generating a Sine Wave
@@ -139,7 +140,7 @@ process = osc(f);
 ```
 <!-- /faust-run -->
 
-> Note that we created an `osc` function in order to have a cleaner code.
+Note that we created an `osc` function in order to have a cleaner code.
 
 ## Additive Synthesis
 

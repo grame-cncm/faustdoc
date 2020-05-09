@@ -26,7 +26,7 @@ All MIDI configuration metadata in Faust follow the following format:
 
 This section provides a list of the most common metadata that can be used to configure of the MIDI behavior of a Faust program.
 
-> Below, when a 7-bit MIDI parameter is used to drive a [button](../syntax/#button-primitive) or a [checkbox](../syntax/#checkbox-primitive), its maximum value (127) maps to 1 ("on") while its minimum value (0) maps to 0 ("off").
+Below, when a 7-bit MIDI parameter is used to drive a [button](../syntax/#button-primitive) or a [checkbox](../syntax/#checkbox-primitive), its maximum value (127) maps to 1 ("on") while its minimum value (0) maps to 0 ("off").
 
 ### `[midi:ctrl num]` Metadata
 
@@ -35,7 +35,7 @@ The `[midi:ctrl num]` metadata assigns MIDI CC (control) to a specific UI elemen
 **Usage**
 
 ```
-toto = hslider("toto[midi:ctrl num]",...);
+foo = hslider("foo[midi:ctrl num]",...);
 ```
 
 Where:
@@ -61,7 +61,7 @@ The `[midi:keyon midikey]` metadata assigns the velocity value of a key-on MIDI 
 **Usage**
 
 ```
-toto = hslider("toto[midi:keyon midikey]",...);
+foo = hslider("foo[midi:keyon midikey]",...);
 ```
 
 Where:
@@ -87,7 +87,7 @@ The `[midi:keyoff midikey]` metadata assigns the velocity value of a key-off MID
 **Usage**
 
 ```
-toto = hslider("toto[midi:keyoff midikey]",...);
+foo = hslider("foo[midi:keyoff midikey]",...);
 ```
 
 Where:
@@ -113,7 +113,7 @@ The `[midi:key midikey]` metadata assigns the velocity value of key-on and key-o
 **Usage**
 
 ```
-toto = hslider("toto[midi:key midikey]",...);
+foo = hslider("foo[midi:key midikey]",...);
 ```
 
 Where:
@@ -139,7 +139,7 @@ The `[midi:keypress midikey]` metadata assigns the pressure (after-touch) value 
 **Usage**
 
 ```
-toto = hslider("toto[midi:keypress midikey]",...);
+foo = hslider("foo[midi:keypress midikey]",...);
 ```
 
 Where:
@@ -172,7 +172,7 @@ The `[midi:pitchwheel]` metadata assigns the pitch-wheel value to a Faust parame
 **Usage**
 
 ```
-toto = hslider("toto[midi:pitchwheel]",...);
+foo = hslider("foo[midi:pitchwheel]",...);
 ```
 
 **Example**
@@ -194,7 +194,7 @@ When used with a button or a checkbox, `[midi:start]` will trigger a value of 1 
 **Usage**
 
 ```
-toto = checkbox("toto[midi:start]");
+foo = checkbox("foo[midi:start]");
 ```
 
 ### `[midi:stop]` Metadata
@@ -204,7 +204,7 @@ When used with a button or a checkbox, `[midi:stop]` will trigger a value of 0 w
 **Usage**
 
 ```
-toto = checkbox("toto[midi:stop]");
+foo = checkbox("foo[midi:stop]");
 ```
 
 ### `[midi:clock]` Metadata
@@ -214,7 +214,7 @@ When used with a button or a checkbox, `[midi:clock]` will deliver a sequence of
 **Usage**
 
 ```
-toto = checkbox("toto[midi:clock]");
+foo = checkbox("foo[midi:clock]");
 ```
 
 ### MIDI Sync

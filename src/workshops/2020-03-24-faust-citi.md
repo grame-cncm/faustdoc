@@ -68,7 +68,7 @@ process = 0.125 : + ~ _ : decimalpart;
 D'un point de vue mathématique, ce serait parfaitement correct, mais nous allons accumuler les erreurs d'arrondi. Pour conserver une précision totale, il est préférable de placer l'opération de la partie décimale à l'intérieur de la boucle comme ceci :
 
 ```
-process = 0.125 : (+ : decimalpart) ~ _ ;
+process = 0.125 : (+ : decimalpart) ~ _;
 ```
 
 On peut maintenant essayer l'ensemble du code (**pensez à baisser le volume**) :
@@ -76,7 +76,7 @@ On peut maintenant essayer l'ensemble du code (**pensez à baisser le volume**) 
 <!-- faust-run -->
 ```
 decimalpart(x) = x-int(x);
-phase = 0.125 : (+ : decimalpart) ~ _ ;
+phase = 0.125 : (+ : decimalpart) ~ _;
 process = phase;
 ```
 <!-- /faust-run -->
@@ -88,13 +88,13 @@ Supposons que nous voulions que notre signal de phase ait une fréquence de 1 Hz
 Si nous voulons une fréquence de 440 Hz, nous avons besoin d'un pas 440 fois plus grand pour que le signal de phase passe de 0 à 1 440 fois plus vite.
 
 ```
-phase = 440/ma.SR : (+ : decimalpart) ~ _ ;
+phase = 440/ma.SR : (+ : decimalpart) ~ _;
 ```
 
 On peut généraliser cette définition en remplaçant `440` par un paramètre `f`:
 
 ```
-phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 ```
 
 et en passant la fréquence souhaitée à `phase`:
@@ -113,7 +113,7 @@ Nous pouvons maintenant nous servir du générateur de phase pour produire un si
 import("stdfaust.lib");
 
 decimalpart(x) = x-int(x);
-phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 
 sawtooth(f) = phase(f) * 2 - 1;
 
@@ -131,7 +131,7 @@ Nous pouvons également nous servir du générateurr de phase pour produire un s
 import("stdfaust.lib");
 
 decimalpart(x) = x-int(x);
-phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 
 squarewave(f) = (phase(f) > 0.5) * 2 - 1;
 
@@ -152,7 +152,7 @@ Le générateur de phase est également à la base de l'oscillateur sinusoidal :
 import("stdfaust.lib");
 
 decimalpart(x) = x-int(x);
-phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 
 osc(f) = sin(phase(f) * 2 * ma.PI);
 

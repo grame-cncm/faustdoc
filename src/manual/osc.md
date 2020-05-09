@@ -119,14 +119,17 @@ The `mixer` application fails to open the default incoming port `5510` because i
 
 The commands `oscsend` and `oscdump` from the liblo package provide a convenient mean to experiment with OSC control and potentially debug applications with OSC support. 
 
-> `oscsend [hostname] [port] [address] [types] [values]`: sends OSC messages 
+```
+`oscsend [hostname] [port] [address] [types] [values]`: sends OSC messages 
 via UDP. `[types]` is a string, the letters indicates the type of the following 
 values: `i=integer`, `f=float`, `s=string`, etc.
+```
 
-> `oscdump [port]`: receives OSC messages via UDP and dump to standard output
+```
+`oscdump [port]`: receives OSC messages via UDP and dump to standard output
+```
 
-> Note that OSC messages can be sent from any OSC-compatible applications
-(e.g., PureData, Max/MSP, etc.).
+Note that OSC messages can be sent from any OSC-compatible applications (e.g., PureData, Max/MSP, etc.).
 
 In the following examples, we'll use two separate terminal windows. The first one will be used to send OSC messages to the `noise` application using `oscsend`. The second terminal will be used to monitor the messages sent by the application using `oscdump`. Commands executed on terminal 1 will be preceded by `T1$`. Messages received on terminal 2 will be preceded by `T2:`. To monitor on terminal T2 the OSC messages received on UDP port 5511, `oscdump` will be used:
 
@@ -170,7 +173,7 @@ The root of the OSC interface is `/noise`. Transmission is OFF, `xmit` is set to
 
 Each widget of an application has a unique OSC address obtained by concatenating the labels of it's surrounding groups with its own label. 
 
-> There are potential conflicts between widget's labels and the OSC address space. An OSC symbolic name is an ASCII string consisting of a restricted set of printable characters. Therefore to ensure compatibility spaces are replaced by underscores and some other characters (asterisk, comma, forward, question mark, open bracket, close bracket, open curly brace, close curly brace) are replaced by hyphens.
+There are potential conflicts between widget's labels and the OSC address space. An OSC symbolic name is an ASCII string consisting of a restricted set of printable characters. Therefore to ensure compatibility spaces are replaced by underscores and some other characters (asterisk, comma, forward, question mark, open bracket, close bracket, open curly brace, close curly brace) are replaced by hyphens.
 
 Here is as an example, a very simplified monophonic audio mixer with 4 inputs and one output. For each input we have a dmute button and a level slider:
 
