@@ -36,7 +36,7 @@ The Faust distribution is organized as follows:
 bin/           : contains the compiler and the [Faust tools](../tools)
 include/       : contains header files required by the Faust tools
 lib/           : contains the Faust libraries
-share/         : conatins documentation, the Faust libraries and architecture files
+share/         : contains documentation, the Faust libraries and architecture files
 ```
 
 **Note**: you can install the Faust distribution anywhere you want, provided that the `faust` command is available from your PATH (requires to update your .profile if not in a standard location). 
