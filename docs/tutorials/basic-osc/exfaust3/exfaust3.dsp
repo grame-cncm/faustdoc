@@ -1,3 +1,3 @@
 
-process = +(1)~_;
+process = +(1) ~ _;
  

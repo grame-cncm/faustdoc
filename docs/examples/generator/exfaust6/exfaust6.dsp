@@ -1,10 +1,10 @@
 
-declare name "sawtoothLab";
+declare name "VirtualAnalog";
 declare version "0.0";
 declare author "JOS, revised by RM";
-declare description "An application demonstrating the different sawtooth oscillators of Faust.";
+declare description "Virtual analog oscillator demo application.";
 
 import("stdfaust.lib");
 
-process = dm.sawtooth_demo;
+process = dm.virtual_analog_oscillator_demo;
 
