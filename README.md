@@ -19,7 +19,7 @@ To install the required components type:
 $ make install
 ~~~~~~~~~~~~~~~~
 
-The documentation embeds a lot of GMN examples that have to be embedded into html files. 
+The documentation embeds a lot of Faust examples that have to be embedded into html files. 
 It also extracts tags documentation from the library source code.
 To generate all these files type:
 ~~~~~~~~~~~~~~~~
