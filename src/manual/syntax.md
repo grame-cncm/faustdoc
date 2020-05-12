@@ -2042,7 +2042,7 @@ The `select2` primitive is a "two-ways selector" that can be used to select betw
 **Usage**
 
 ```
-_,_ : select2(s) : _,_
+_,_ : select2(s) : _
 ```
 
 Where:
@@ -2086,7 +2086,7 @@ The `select3` primitive is a "three-ways selector" that can be used to select be
 **Usage**
 
 ```
-_,_,_ : select3(s) : _,_,_
+_,_,_ : select3(s) : _
 ```
 
 Where:
