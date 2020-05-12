@@ -2034,10 +2034,18 @@ Selector primitives can be used to create conditions in Faust and to implement s
 
 #### `select2` Primitives
 
-The `select2` primitive is a "two-ways selector" that can be used to select between 2 signals. Note that the semantic of Faust is always strict, thus both branches are always evaluated. The resulting selector does not have the usual "lazy" semantic of the C/C++ *if* form, and thus cannot be used to protect against forbidden computations like division-by-zero for instance. See the  `ba.if` definition in the [`basics.lib `](https://faustlibraries.grame.fr/libs/basics/) library written using `select2`.
+The `select2` primitive is a "two-way selector". It has three input signals: \(s\), \(x_0\), \(x_1\) and one output signal \(y\). At each instant the value of the selector signal \(s(t)\) is used to dynamically route samples from the other two inputs \(x_0(t)\) and \(x_1(t)\) to the output \(y(t)\).  
 
-* **Type:** \(\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}\) 
-* **Mathematical Description:** \(T[]=\{x_{0}(t),x_{1}(t)\}; y(t)=T[s(t)]\) 
+!!! Note
+    Please note that `select2` is **not** the equivalent of a traditional _if-then-else_ construction. Like every Faust primitive, it has a _strict_ semantics. All input signals are always computed, even when they are not selected. Therefore you _can't_ use `select2` to _avoid_ computing something. 
+
+The semantics of `select2` is as follows:
+
+* **Type:** \((s,x_0,x_1)\rightarrow y\) 
+* **Mathematical Description:** 
+\[ y(t) = \left\{ \begin{array}{ll}
+         x_0(t) & \mathrm{if\ } s(t) = 0;\\
+         x_1(t) & \mathrm{if\ } s(t) = 1.\end{array} \right. \] 
 
 **Usage**
 
@@ -2056,13 +2064,13 @@ The following example allows the user to choose between a sine and a sawtooth wa
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
-s = nentry("Selector",0,0,1,1);
+s = nentry("Selector",0,0,1,1) : int;
 sig = os.osc(440),os.sawtooth(440) : select2(s);
 process = sig;
 ```
 <!-- /faust-run -->
 
-Note that `select2` could be easily implemented from scratch in Faust using Boolean primitives:
+Note that `select2` could be easily implemented from scratch in Faust:
 
 <!-- faust-run -->
 ```
@@ -2074,14 +2082,18 @@ process = sig;
 ```
 <!-- /faust-run -->
 
-While the behavior of this last solution is identical to the first one, the generated code will be a bit different, and the sine and the sawtooth waves will both be computed all the time.
+While the behavior of this last solution is identical to the first one, the generated code will be a bit more efficient.
 
 #### `select3` Primitives
 
-The `select3` primitive is a "three-ways selector" that can be used to select between 3 signals. Note that the semantic of Faust is always strict, thus all branches are always evaluated. 
+The `select3` primitive is a "three-ways selector". It has four input signals: \(s\), \(x_0\), \(x_1\), \(x_2\) and one output signal \(y\). At each instant the value of the selector signal \(s(t)\) is used to dynamically route samples from the other three inputs \(x_0(t)\), \(x_1(t)\) and \(x_2(t)\) to the output \(y(t)\). 
 
-* **Type:** \(\mathbb{S}^{4}\rightarrow\mathbb{S}^{1}\) 
-* **Mathematical Description:** \(T[]=\{x_{0}(t),x_{1}(t),x_{2}(t)\}; y(t)=T[s(t)]\) 
+* **Type:** \((s,x_0,x_1,x_2)\rightarrow y\) 
+* **Mathematical Description:** 
+\[ y(t) = \left\{ \begin{array}{ll}
+         x_0(t) & \mathrm{if\ } s(t) = 0;\\
+         x_1(t) & \mathrm{if\ } s(t) = 1.\\
+         x_2(t) & \mathrm{if\ } s(t) = 2.\end{array} \right. \] 
 
 **Usage**
 
@@ -2111,14 +2123,14 @@ Note that `select3` could be easily implemented from scratch in Faust using Bool
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
-s = nentry("Selector",0,0,2,1);
+s = nentry("Selector",0,0,2,1) : int;
 mySelect3(s) = *(s==0),*(s==1),*(s==2) :> _;
 sig = os.osc(440),os.sawtooth(440),os.triangle(440) : mySelect3(s);
 process = sig;
 ```
 <!-- /faust-run -->
 
-While the behavior of this last solution is identical to the first one, the generated code will be a bit different, and the sine, sawtooth, and the triangle waves will all be computed all the time.
+While the behavior of this last solution is identical to the first one, the generated code will be a bit different and potentially less efficient.
 
 ### User Interface Primitives and Configuration
 
