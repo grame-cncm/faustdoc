@@ -59,9 +59,9 @@ Some additional functions are available in the `libfaust` API:
 
 ## Using the `libfaust` Library
 
-The `libfaust` library is fully integrated to the Faust distribution. You'll have to compile and install it in order to use it. For an exhaustive documentation/description of the API, we advise you to have a look at the code in the [`faust/dsp/llvm-dsp.h`](#) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
+The `libfaust` library is fully integrated to the Faust distribution. You'll have to compile and install it in order to use it. For an exhaustive documentation/description of the API, we advise you to have a look at the code in the [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
 
-More generally, a "typical" use of `libfaust` could look like:
+More generally, a "typical" use of `libfaust` in C++ could look like:
 
 ```
 // the Faust code to compile as a string (could be in a file too)
@@ -92,7 +92,13 @@ delete m_ui;
 deleteDSPFactory(m_factory);
 ```
 
-Thus, very few code is needed to embed Faust to your project!
+The first step consists in creating a DSP factory from a DSP file (using `createDSPFactoryFromFile`) or string (`createDSPFactoryFromStrng`) with additional parameters given to the compiler. Assuming the compilation works, a factory is returned to create a DSP instance with the factory `createDSPInstance` method. 
+
+Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file) is a subclass of the base `dsp*` class. Thus it can be used with any `UI` type of controller to plug a GUI, MIDI or OSC controller on the DSP object, like it would be done with a DSP program compiled to a C++ class (the generated `mydsp`  class is also a suclass of the base `dsp*` class). This is demonstrated with the `my_ui* m_ui = new MyUI();` and `m_dsp->buildUserInterface(m_ui);` lines where the `buildUserInterface` method is used to connect a controller. 
+
+Then the DSP object has to be connected to an audio driver to be rendered (see the `m_dsp->compute(128, m_input, m_output);` block). A more complete example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp). A example using the pure C API can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c). 
+
+Thus, very few code is needed to embed Faust in your project!
 
 ## Use Case Examples
 
