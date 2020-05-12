@@ -20,7 +20,7 @@ DSP   	 := $(shell find $(DOCDIR) -name "*.dsp" | grep -v mix4.dsp )
 SVGDIRS  := $(shell find $(DOCDIR) -type d -name "exfaust*")
 SVG   	 := $(DSP:%.dsp=%.svg)
 
-EXSRC    := $(shell find $(EXDIR) $(MAXDEPTH) 1 -type d | sort -f | grep -v old)
+EXSRC    := $(shell find $(EXDIR)/* $(MAXDEPTH) 0 -type d | sort -f | grep -v old)
 GEN      := $(EXSRC:$(EXDIR)/%=src/examples/%)
 EXLIST   := $(EXSRC:$(EXDIR)/%=%)
 EXOUT    := $(GEN:%=%.md)
