@@ -65,7 +65,7 @@ More generally, a "typical" use of `libfaust` in C++ could look like:
 
 ```
 // the Faust code to compile as a string (could be in a file too)
-string theCode = "import(\"stdfaust.lib\");process = no.noise;";
+string theCode = "import(\"stdfaust.lib\"); process = no.noise;";
 
 // compiling in memory (createDSPFactoryFromFile could be used alternatively)
 llvm_dsp_factory* m_factory = createDSPFactoryFromString( 
@@ -75,10 +75,10 @@ dsp* m_dsp = m_factory->createDSPInstance();
 
 // creating a generic UI to interact with the DSP
 my_ui* m_ui = new MyUI();
-// linking the interface to the DSP instance
+// linking the interface to the DSP instance 
 m_dsp->buildUserInterface(m_ui);
 
-// initializing the DSP instance
+// initializing the DSP instance with the SR
 m_dsp->init(44100);
 
 // hypothetical audio callback, assuming m_input/m_output are previously allocated 
@@ -92,11 +92,11 @@ delete m_ui;
 deleteDSPFactory(m_factory);
 ```
 
-The first step consists in creating a DSP factory from a DSP file (using `createDSPFactoryFromFile`) or string (`createDSPFactoryFromStrng`) with additional parameters given to the compiler. Assuming the compilation works, a factory is returned to create a DSP instance with the factory `createDSPInstance` method. 
+The first step consists in creating a DSP factory from a DSP file (using `createDSPFactoryFromFile` or string `createDSPFactoryFromStrng`) with additional parameters given to the compiler. Assuming the compilation works, a factory is returned, to create a DSP instance with the factory `createDSPInstance` method. 
 
-Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file) is a subclass of the base `dsp*` class. Thus it can be used with any `UI` type of controller to plug a GUI, MIDI or OSC controller on the DSP object, like it would be done with a DSP program compiled to a C++ class (the generated `mydsp`  class is also a suclass of the base `dsp*` class). This is demonstrated with the `my_ui* m_ui = new MyUI();` and `m_dsp->buildUserInterface(m_ui);` lines where the `buildUserInterface` method is used to connect a controller. 
+Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file) is a subclass of the base `dsp*` class (see [`faust/dsp/dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h) header file). Thus it can be used with any `UI` type to plug a GUI, MIDI or OSC controller on the DSP object, like it would be done with a DSP program compiled to a C++ class (the generated `mydsp`  class is also a subclass of the base `dsp*` class). This is demonstrated with the `my_ui* m_ui = new MyUI();` and `m_dsp->buildUserInterface(m_ui);` lines where the `buildUserInterface` method is used to connect a controller. 
 
-Then the DSP object has to be connected to an audio driver to be rendered (see the `m_dsp->compute(128, m_input, m_output);` block). A more complete example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp). A example using the pure C API can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c). 
+Then the DSP object has to be connected to an audio driver to be rendered (see the `m_dsp->compute(128, m_input, m_output);` block). A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp). A example using the pure C API can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c). 
 
 Thus, very few code is needed to embed Faust in your project!
 
@@ -107,7 +107,7 @@ The dynamic compilation chain has been used in several projects:
 * [FaustLive](https://github.com/grame-cncm/faustlive): an integrated IDE for Faust development offering on-the-fly compilation and execution features
 * [Faustgen](https://github.com/grame-cncm/faust/tree/master-dev/embedded/faustgen): a generic Faust [Max/MSP](https://cycling74.com/products/max/) programmable external object
 * [Faustgen](https://github.com/CICM/pd-faustgen): a generic Faust [PureData](https://puredata.info) programmable external object
-* [Faust for Csound](#): a [Csound](https://csound.com/) opcode running the Faust compiler internally
+* [Faust for Csound](https://github.com/csound/csound/blob/develop/Opcodes/faustgen.cpp): a [Csound](https://csound.com/) opcode running the Faust compiler internally
 * [LibAudioStream](https://github.com/sletz/libaudiostream): a framework to manipulate audio ressources through the concept of streams
 * [Faust for JUCE](https://github.com/olilarkin/juce_faustllvm): a tool integrating the Faust compiler to [JUCE](https://juce.com/) developed by Oliver Larkin and available as part of the [pMix2 project](https://github.com/olilarkin/pMix2)
 * An experimental integration of Faust in [Antescofo](http://forumnet.ircam.fr/product/antescofo-en/)
