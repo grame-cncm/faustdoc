@@ -2955,7 +2955,7 @@ process = looper;
 
 <h3 id="selector-primitives">Selector Primitives</h3>
 <p>Selector primitives can be used to create conditions in Faust and to implement switches to choose between several signals. </p>
-<h4 id="select2-primitives"><code>select2</code> Primitives</h4>
+<h4 id="select2-primitive"><code>select2</code> Primitive</h4>
 <p>The <code>select2</code> primitive is a "two-way selector". It has three input signals: <script type="math/tex">s</script>, <script type="math/tex">x_0</script>, <script type="math/tex">x_1</script> and one output signal <script type="math/tex">y</script>. At each instant the value of the selector signal <script type="math/tex">s(t)</script> is used to dynamically route samples from the other two inputs <script type="math/tex">x_0(t)</script> and <script type="math/tex">x_1(t)</script> to the output <script type="math/tex">y(t)</script>.  </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3021,8 +3021,8 @@ process = sig;
 
 <!-- /faust-run -->
 
-<p>While the behavior of this last solution is identical to the first one, the generated code will be a bit more efficient.</p>
-<h4 id="select3-primitives"><code>select3</code> Primitives</h4>
+<p>While the behavior of this last solution is identical to the first one, the generated code will be a bit different and potentially less efficient.</p>
+<h4 id="select3-primitive"><code>select3</code> Primitive</h4>
 <p>The <code>select3</code> primitive is a "three-ways selector". It has four input signals: <script type="math/tex">s</script>, <script type="math/tex">x_0</script>, <script type="math/tex">x_1</script>, <script type="math/tex">x_2</script> and one output signal <script type="math/tex">y</script>. At each instant the value of the selector signal <script type="math/tex">s(t)</script> is used to dynamically route samples from the other three inputs <script type="math/tex">x_0(t)</script>, <script type="math/tex">x_1(t)</script> and <script type="math/tex">x_2(t)</script> to the output <script type="math/tex">y(t)</script>. </p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">(s,x_0,x_1,x_2)\rightarrow y</script>
