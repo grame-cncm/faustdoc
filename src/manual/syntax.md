@@ -2032,7 +2032,7 @@ process = looper;
 
 Selector primitives can be used to create conditions in Faust and to implement switches to choose between several signals. 
 
-#### `select2` Primitives
+#### `select2` Primitive
 
 The `select2` primitive is a "two-way selector". It has three input signals: \(s\), \(x_0\), \(x_1\) and one output signal \(y\). At each instant the value of the selector signal \(s(t)\) is used to dynamically route samples from the other two inputs \(x_0(t)\) and \(x_1(t)\) to the output \(y(t)\).  
 
@@ -2082,9 +2082,9 @@ process = sig;
 ```
 <!-- /faust-run -->
 
-While the behavior of this last solution is identical to the first one, the generated code will be a bit more efficient.
+While the behavior of this last solution is identical to the first one, the generated code will be a bit different and potentially less efficient.
 
-#### `select3` Primitives
+#### `select3` Primitive
 
 The `select3` primitive is a "three-ways selector". It has four input signals: \(s\), \(x_0\), \(x_1\), \(x_2\) and one output signal \(y\). At each instant the value of the selector signal \(s(t)\) is used to dynamically route samples from the other three inputs \(x_0(t)\), \(x_1(t)\) and \(x_2(t)\) to the output \(y(t)\). 
 
