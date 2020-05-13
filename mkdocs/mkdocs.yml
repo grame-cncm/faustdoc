@@ -1,6 +1,6 @@
 site_name: Faust Documentation
 site_description: A guide to the Faust Programming Language.
-copyright: Copyright &copy; 2020 <a href="http://www.grame.fr">Grame-CNCM</a>
+copyright: Copyright &copy; 2020 <a href="https://www.grame.fr">Grame-CNCM</a>
 nav:
     - Home: index.md
     - Faust Manual: 
@@ -12,6 +12,7 @@ nav:
         - 'Compiler Options': manual/options.md
         - 'faust2[...] Tools':        manual/tools.md
         - 'Embedding':     manual/embedding.md
+        - 'Optimizing':     manual/optimizing.md
         - 'OSC Support':   manual/osc.md
         - 'HTTP Support':  manual/http.md
         - 'MIDI Support':  manual/midi.md
