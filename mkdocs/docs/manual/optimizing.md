@@ -4,7 +4,7 @@ To create native executables, the Faust compiler produces very efficient C++ or 
 
 ## Debugging the DSP Code 
 
-The Faust compiler gives error messages when the written code is not syntactically or semantically correct. When a correct program is finally generated, it may still have numerical or precision issues only appearing at runtime. One way to detect and understand them is by running the code in a controlled and instrumented environment. A special version of the `interpreter` backend can be used for that purpose and is embedded in a dedicated testing tool. 
+The Faust compiler gives error messages when the written code is not syntactically or semantically correct. When a correct program is finally generated, it may still have numerical or precision issues only appearing at runtime. This typically happens when using mathematical functions outside of their definition domain, like calling `log(0)` or `sqrt(-1)` at some point in the signal path. Those errors have to be then fixed by carefully checking signal range, like verifying the min/max values in `vslider/hslider/nentry` user-interface items. One way to detect and understand them is by running the code in a controlled and instrumented environment. A special version of the `interpreter` backend can be used for that purpose and is embedded in a dedicated testing tool. 
 
 ### interp-tracer
 
@@ -14,7 +14,7 @@ The `interp-tracer` tool runs and instruments the compiled program using the Int
 
 But default the Faust compiler produces a big scalar loop in the generated `mydsp::compute` method. Compiler options allow to generate other code "shape", like for instance separated simpler loops connected with buffers in the so-called vectorized mode (obtained using  the `-vec` option). The assumption is that auto-vectorizer passes in modern compilers will be able to better generate efficient SIMD code for them. In this vec option, the size of the internal buffer can be changed using the `-vs value` option. Moreover the computation graph can be organized in deep-first order using `-dfs`.  A lot of other compilation choice are fully controllable with options. Note that the C/C++ and LLVM backends are the one with the maximum of possible compilation options. 
 
-Manually testing each of them and their combination is out of reach. So several tools have been developed to automatize that process.
+Manually testing each of them and their combination is out of reach. So several tools have been developed to automatize that process and help search the configuration space to discover the bet set of compilation options. 
 
 ### faustbench
 
