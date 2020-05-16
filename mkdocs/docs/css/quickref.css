@@ -1,0 +1,90 @@
+
+/* 
+h1 {
+    color: #444;
+    font-weight: 400;
+    font-size: 42px;
+}
+ */
+
+/* 
+hr {
+    border-top: 1px solid #aaa;
+}
+*/
+
+pre, .rst-content tt {
+	margin-left: 20px;
+    max-width: 100%;
+    background: #fff;
+    padding: 3px;
+    border: solid 1px darkgrey;
+    color: #333;
+	overflow-x: auto;
+	font-size: 90%;
+}
+
+h4 {
+	margin-top: 20px;
+	font-size: 140%;
+}
+
+.col-md-9 img {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 0px;
+} 
+
+/*
+h2 {
+    color: #444;
+    font-weight: 300;
+    background: rgb(54, 171, 232);
+	padding: 2px 5px 5px 15px;
+	margin-top: 25px;
+} 
+*/
+
+.caption {
+	display: block;
+	color: darkblue;
+	font-style: italic;
+	text-align: center;
+    /* background: #36ABE8; */
+	padding: 0px 0px 20px 40px;
+}
+
+.paragraph {
+	color: darkblue;
+	font-style: italic;
+	font-size: 110%;
+	padding: 10px 0px 10px 0px;
+}
+
+.smallcaps {
+	font-variant: small-caps;
+}
+
+.marginpar {
+	font-size: 90%;
+	margin-left: 10%;
+	margin-bottom: 10px;
+	text-align: justify;
+	color: rgb(138, 58, 12)
+}
+
+.lstinline {
+	font-family: monospace;
+	color: darkblue;
+}
+
+.railtitle {
+	font-style: italic;
+}
+
+.rail {
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+

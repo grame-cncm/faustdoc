@@ -68,6 +68,8 @@ plugins:
 
 extra_css:
    - '/css/faust.css'
+   - '/css/quickref.css'
+   - '/rail/railroad-diagrams.css'
 
 extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
