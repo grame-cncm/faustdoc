@@ -177,6 +177,10 @@ The `init` method combines class static state and instance initialization.
 
 When using a single instance, calling `init` is the simplest way to do "what is needed." When using several instances, all of them can be initialized using `instanceInit`, with a single call to `classInit` to initialize the static shared state.
 
+The `compute`  method takes the number of frames to process, and `inputs` and `outputs` buffers as interleaved arrays. 
+
+By default the generated code process `float` type samples. This can be changed using the `-double` option (or even `-quad` in some backends). The `FAUSTFLOAT` type used in the `compute` method is defined in architecture files, and can be `float` or `double`, depending of the audio driver layer. Sample adaptation may have to be used between the DSP sample type and the audio driver sample type.
+
 ## Controlling Code Generation
 
 Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the compiler can also generate *vector* and *parallel* code.
