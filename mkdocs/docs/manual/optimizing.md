@@ -12,9 +12,9 @@ The `interp-tracer` tool runs and instruments the compiled program using the Int
 
 ## Optimizing the C++ or LLVM Code
 
-But default the Faust compiler produces a big scalar loop in the generated `mydsp::compute` method. Compiler options allow to generate other code "shape", like for instance separated simpler loops connected with buffers in the so-called vectorized mode (obtained using  the `-vec` option). The assumption is that auto-vectorizer passes in modern compilers will be able to better generate efficient SIMD code for them. In this vec option, the size of the internal buffer can be changed using the `-vs value` option. Moreover the computation graph can be organized in deep-first order using `-dfs`.  A lot of other compilation choice are fully controllable with options. Note that the C/C++ and LLVM backends are the one with the maximum of possible compilation options. 
+By default the Faust compiler produces a big scalar loop in the generated `mydsp::compute` method. Compiler options allow to generate other code "shape", like for instance separated simpler loops connected with buffers in the so-called vectorized mode (obtained using  the `-vec` option). The assumption is that auto-vectorizer passes in modern compilers will be able to better generate efficient SIMD code for them. In this vec option, the size of the internal buffer can be changed using the `-vs value` option. Moreover the computation graph can be organized in deep-first order using `-dfs`.  A lot of other compilation choices are fully controllable with options. Note that the C/C++ and LLVM backends are the one with the maximum of possible compilation options. 
 
-Manually testing each of them and their combination is out of reach. So several tools have been developed to automatize that process and help search the configuration space to discover the bet set of compilation options. 
+Manually testing each of them and their combination is out of reach. So several tools have been developed to automatize that process and help search the configuration space to discover the best set of compilation options: 
 
 ### faustbench
 

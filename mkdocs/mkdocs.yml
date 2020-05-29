@@ -6,36 +6,36 @@ nav:
     - Faust Manual: 
         - 'Introduction' : manual/introduction.md
         - 'Overview of the Faust Universe' : manual/overview.md
-        - 'Quick start':   manual/quick-start.md
-        - 'Faust Syntax':       manual/syntax.md
+        - 'Quick start': manual/quick-start.md
+        - 'Faust Syntax': manual/syntax.md
         - 'Using the Compiler': manual/compiler.md
         - 'Compiler Options': manual/options.md
-        - 'faust2[...] Tools':        manual/tools.md
-        - 'Embedding':     manual/embedding.md
-        - 'Optimizing':     manual/optimizing.md
-        - 'OSC Support':   manual/osc.md
-        - 'HTTP Support':  manual/http.md
-        - 'MIDI Support':  manual/midi.md
-        - 'Mathematical Documentation':     manual/mathdoc.md
+        - 'faust2[...] Tools': manual/tools.md
+        - 'Embedding': manual/embedding.md
+        - 'Optimizing': manual/optimizing.md
+        - 'OSC Support': manual/osc.md
+        - 'HTTP Support': manual/http.md
+        - 'MIDI Support': manual/midi.md
+        - 'Mathematical Documentation': manual/mathdoc.md
     - Examples: 
-         - ' ambisonics ':  examples/ambisonics.md
-         - ' analysis ':  examples/analysis.md
-         - ' bela ':  examples/bela.md
-         - ' delayEcho ':  examples/delayEcho.md
-         - ' dynamic ':  examples/dynamic.md
-         - ' filtering ':  examples/filtering.md
-         - ' gameaudio ':  examples/gameaudio.md
-         - ' generator ':  examples/generator.md
-         - ' misc ':  examples/misc.md
-         - ' phasing ':  examples/phasing.md
-         - ' physicalModeling ':  examples/physicalModeling.md
-         - ' pitchShifting ':  examples/pitchShifting.md
-         - ' psychoacoustic ':  examples/psychoacoustic.md
-         - ' reverb ':  examples/reverb.md
-         - ' SAM ':  examples/SAM.md
-         - ' smartKeyboard ':  examples/smartKeyboard.md
-         - ' spat ':  examples/spat.md
-         - ' Download examples ':  rsrc/examples.zip
+         - ' ambisonics ': examples/ambisonics.md
+         - ' analysis ': examples/analysis.md
+         - ' bela ': examples/bela.md
+         - ' delayEcho ': examples/delayEcho.md
+         - ' dynamic ': examples/dynamic.md
+         - ' filtering ': examples/filtering.md
+         - ' gameaudio ': examples/gameaudio.md
+         - ' generator ': examples/generator.md
+         - ' misc ': examples/misc.md
+         - ' phasing ': examples/phasing.md
+         - ' physicalModeling ': examples/physicalModeling.md
+         - ' pitchShifting ': examples/pitchShifting.md
+         - ' psychoacoustic ': examples/psychoacoustic.md
+         - ' reverb ': examples/reverb.md
+         - ' SAM ': examples/SAM.md
+         - ' smartKeyboard ': examples/smartKeyboard.md
+         - ' spat ': examples/spat.md
+         - ' Download examples ': rsrc/examples.zip
     - Tutorials:
         - 'Faust & JUCE' : workshops/2020-04-10-faust-juce.md
         - 'DSP on the Teensy With Faust' : tutorials/teensy.md

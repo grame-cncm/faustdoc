@@ -1163,14 +1163,22 @@ process = triangleOsc(f);
 The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. The `soundfile("label[url:path]", n)` simplified syntax allows to use a single file. A `soundfile` has: 
 
 * two inputs: the sound number (as a integer between 0 and 255 checked at compilation time), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)
-* two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate in frames
+* two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
 * several more outputs for the sound channels themselves
 
 If more outputs than the actual number of channels in the sound file are used, the audio channels will be automatically duplicated up to the wanted number of outputs (so for instance, if a stereo file is used with four output channels, the same group of two channels will be duplicated).
 
 If the soundfile cannot be loaded for whatever reason, a default sound with one channel, a length of 1024 frames and null outputs (with samples of value 0) will be used. Note also that soundfiles are entirely loaded in memory by the architecture file, so that the read index signal can access any sample.
 
-Architecture files are responsible to load the actual soundfile. The `SoundUI` C++ class located in the `faust/gui/SoundUI.h` file in the [Faust repository](https://github.com/grame-cncm/faust) implements the `void  addSoundfile(label, path, sf_zone)` method, which loads the actual soundfiles using the `libsndfile` library, or possibly specific audio file loading code (in the case of the JUCE framework for instance), and set up the `sf_zone` sound memory pointers. If *label* is used without any *url* metadata, it will be considered as the soundfile pathname. 
+A minimal example to play a stereo soundfile until it's end can be written with:
+
+```
+process = 0,_~+(1):soundfile("son[url:{'foo.wav'}]",2):!,!,_,_;
+```
+
+The 0 first parameter selects the first sound in the soundfile list (which only contains one file in this example), then uses an incrementing read index signal to play the soundfile, cuts the unneeded *sound length in frames* and *sample rate* ouputs, and keeps the two actual sound outputs. Having the *sound length in frames* first output allows to implement sound looping, or any kind of more sophisticated read index signal. Having the *sound sample rate* second output allows to possibly adapt or change the reading speed. 
+
+Specialized architecture files are responsible to load the actual soundfile. The `SoundUI` C++ class located in the `faust/gui/SoundUI.h` file in the [Faust repository](https://github.com/grame-cncm/faust) implements the `void addSoundfile(label, path, sf_zone)` method, which loads the actual soundfiles using the `libsndfile` library, or possibly specific audio file loading code (in the case of the JUCE framework for instance), and set up the `sf_zone` sound memory pointers. If *label* is used without any *url* metadata, it will be considered as the soundfile pathname. Note that the complete sounfile content is preloaded in memory at initialisation time when the compiled program starts.
 
 Note that a special architecture file can well decide to access and use sound resources created by another means (that is, not directly loaded from a sound file). For instance a mapping between labels and sound resources defined in memory could be used, with some additional code in charge of actually setting up all sound memory pointers when `void  addSoundfile(label, path, sf_zone)` is called by the `buidUserInterface` mechanism.
 
