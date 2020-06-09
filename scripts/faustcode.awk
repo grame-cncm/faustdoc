@@ -7,7 +7,8 @@ function makeFaust(code, i) {
 	svg = current"/"current".svg";
 	cmd = "[ -d " DOCROOT"/"folder " ] || mkdir -p " DOCROOT"/"folder;
 	system (cmd);
-	print code > DOCROOT"/"dsp;
+	out = DOCROOT"/"dsp;
+	print code > out;
 	print "<div class=\"faust-run\"><img src=\""svg"\" class=\"mx-auto d-block\">"
 	print "~~~";
 	print code;
@@ -15,6 +16,7 @@ function makeFaust(code, i) {
 	print "<a href=\"https://faustide.grame.fr/?code="FAUSTDOC"/"dsp"\" target=\"editor\">";
 	print "<button type=\"button\" class=\"btn btn-primary\">Try it Yourself >></button></a>";
 	print "</div>";
+	close(out);
 }
 
 BEGIN {
