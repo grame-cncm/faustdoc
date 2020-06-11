@@ -28,19 +28,20 @@ This section provides a list of the most common metadata that can be used to con
 
 Below, when a 7-bit MIDI parameter is used to drive a [button](../syntax/#button-primitive) or a [checkbox](../syntax/#checkbox-primitive), its maximum value (127) maps to 1 ("on") while its minimum value (0) maps to 0 ("off").
 
-### `[midi:ctrl num]` Metadata
+### `[midi:ctrl num]` or `[midi:ctrl num chan]` Metadata
 
-The `[midi:ctrl num]` metadata assigns MIDI CC (control) to a specific UI element. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.
+The `[midi:ctrl num]` metadata assigns MIDI CC (control) to a specific UI element. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first `[midi:ctrl num]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:ctrl num chan]` version can receive messages on `chan` only and will send on the `chan` channel.
 
 **Usage**
 
 ```
-foo = hslider("foo[midi:ctrl num]",...);
+foo = hslider("foo[midi:ctrl num chan]",...);
 ```
 
 Where:
 
 * `num`: the MIDI CC number
+* `chan`: optional, the MIDI channel number
 
 **Example**
 
@@ -54,19 +55,20 @@ process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
 
-### `[midi:keyon midikey]` Metadata
+### `[midi:keyon midikey]` or `[midi:keyon midikey chan]` Metadata
 
-The `[midi:keyon midikey]` metadata assigns the velocity value of a key-on MIDI message received on a specific `midikey` to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.
+The `[midi:keyon midikey]` metadata assigns the velocity value of a key-on MIDI message received on a specific `midikey` to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first `[midi:keyon midikey]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:keyon midikey chan]` version can receive messages on `chan` only and will send on the `chan` channel.
 
 **Usage**
 
 ```
-foo = hslider("foo[midi:keyon midikey]",...);
+foo = hslider("foo[midi:keyon midikey chan]",...);
 ```
 
 Where:
 
 * `midikey`: the MIDI key number
+* `chan`: optional, the MIDI channel number
 
 **Example**
 
@@ -80,19 +82,20 @@ process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
 
-### `[midi:keyoff midikey]` Metadata
+### `[midi:keyoff midikey]` or `[midi:keyoff midikey chan]` Metadata
 
-The `[midi:keyoff midikey]` metadata assigns the velocity value of a key-off MIDI message received on a specific `midikey` to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.
+The `[midi:keyoff midikey]` metadata assigns the velocity value of a key-off MIDI message received on a specific `midikey` to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first `[midi:keyoff midikey]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:keyoff midikey chan]` version can receive messages on `chan` only and will send on the `chan` channel.
 
 **Usage**
 
 ```
-foo = hslider("foo[midi:keyoff midikey]",...);
+foo = hslider("foo[midi:keyoff midikey chan]",...);
 ```
 
 Where:
 
 * `midikey`: the MIDI key number
+* `chan`: optional, the MIDI channel number
 
 **Example**
 
@@ -106,19 +109,20 @@ process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
 
-### `[midi:key midikey]` Metadata
+### `[midi:key midikey]` or `[midi:key midikey chan]` Metadata
 
-The `[midi:key midikey]` metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific `midikey` to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.
+The `[midi:key midikey]` metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific `midikey` to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first `[midi:midikey midikey]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:midikey midikey chan]` version can receive messages on `chan` only and will send on the `chan` channel.
 
 **Usage**
 
 ```
-foo = hslider("foo[midi:key midikey]",...);
+foo = hslider("foo[midi:key midikey chan]",...);
 ```
 
 Where:
 
 * `midikey`: the MIDI key number
+* `chan`: optional, the MIDI channel number
 
 **Example**
 
@@ -132,19 +136,20 @@ process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
 
-### `[midi:keypress midikey]` Metadata
+### `[midi:keypress midikey]` or `[midi:keypress midikey chan]` Metadata
 
-The `[midi:keypress midikey]` metadata assigns the pressure (after-touch) value of a specific `midikey` to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.
+The `[midi:keypress midikey]` metadata assigns the pressure (after-touch) value of a specific `midikey` to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first `[midi:keypress midikey]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:keypress midikey chan]` version can receive messages on `chan` only and will send on the `chan` channel.
 
 **Usage**
 
 ```
-foo = hslider("foo[midi:keypress midikey]",...);
+foo = hslider("foo[midi:keypress midikey chan]",...);
 ```
 
 Where:
 
 * `midikey`: the MIDI key number
+* `chan`: optional, the MIDI channel number
 
 **Example**
 
@@ -158,31 +163,54 @@ process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
 
-<!-- TODO: don't understand what those means: check with Stéphane  -->
-<!-- 
-- \lstinline'[midi:pgm num]' in a slider or bargraph will map the UI element value to the progchange value, so \emph{progchange} message with the same \emph{num} value will be sent. When used with a button or checkbox, 1 will send the \emph{progchange} message with \emph{num} value, 0 will send nothing,
+### `[midi:pgm]` or `[midi:pgm chan]` Metadata
 
-- \lstinline'[midi:chanpress num]' in a slider or bargraph will map the UI element value to the chanpress value, so \emph{chanpress} message with the same \emph{num} value will be sent. When used with a button or checkbox, 1 will send the \emph{chanpress} message with \emph{num} value, 0 will send nothing,
--->
-
-### `[midi:pitchwheel]` Metadata
-
-The `[midi:pitchwheel]` metadata assigns the pitch-wheel value to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 16383} range. When used with a button or a checkbox, 1 will be mapped to 16383, 0 will be mapped to 0.
+The `[midi:pgm]` metadata assigns the program-change to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will use the UI element range. Only the values descrived in the UI element range will be used at reception, and can be sent. The first `[midi:pgm]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:pgm chan]` version can receive messages on `chan` only and will send on the `chan` channel.
 
 **Usage**
 
 ```
-foo = hslider("foo[midi:pitchwheel]",...);
+foo = nentry("foo[midi:pgm chan]",...);
 ```
+
+Where:
+
+* `chan`: optional, the MIDI channel number
+
 
 **Example**
 
-In the following example, the frequency of a sawtooth wave oscillator is controlled by the pitch-wheel.
+In the following example, the instrument will be choosen in the {0,3} range.
 
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
-freq = hslider("frequency[midi:pitchwheel]",200,50,1000,0.01) : si.smoo;
+inst = nentry("Instrument[midi:pgm]",0,0,3,1) : int;
+process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selectn(4,inst);
+```
+
+### `[midi:pitchwheel]` or `[midi:pitchwheel chan]` Metadata
+
+The `[midi:pitchwheel]` metadata assigns the pitch-wheel value to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 16383} range. When used with a button or a checkbox, 1 will be mapped to 16383, 0 will be mapped to 0. Pitch-wheel values are typically used to control tuning, mapping the {0, 16383} MIDI range to a {-semitone, semitone} range. The `ba.semi2ratio` function must be used to convert semitones in a frequency multiplicative ratio. The first `[midi:pitchwheel]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:pitchwheel chan]` version can receive messages on `chan` only and will send on the `chan` channel.
+
+**Usage**
+
+```
+foo = hslider("foo[midi:pitchwheel chan]",...);
+```
+
+Where:
+
+* `chan`: optional, the MIDI channel number
+
+**Example**
+
+In the following example, the frequency of a sawtooth wave oscillator is controlled by the pitch-wheel in the {-2, 2} semitone range, then converted as a frequency multiplicative ratio.
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+freq = ba.semi2ratio(hslider("frequency[midi:pitchwheel]",0,-2,2,0.01)) : si.smoo;
 process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
