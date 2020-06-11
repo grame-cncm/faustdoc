@@ -353,7 +353,6 @@ which when compiled running (for example):
 ```
 faust2jaqt faustProgram.dsp
 ```
-
 will generate a MIDI-controllable polyphonic synthesizer.
 
 ### Audio Effects and Polyphonic Synthesizer
@@ -395,11 +394,11 @@ Key-on and key-off MIDI messages only send the "base pitch" of the instance of a
 
 ```
 f = hslider("freq",300,50,2000,0.01);
-bend = hslider("bend[midi:pitchwheel]",1,0,10,0.01);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.01));
 freq = f*bend; // the "final" freq parameter to be used
 ```
 
-The `bend` variable is controlled by the pitch-wheel thanks to [`[midi:pitchwheel]` metadata](#midipitchwheel-metadata). `bend` is used as a factor multiplied to the base frequency retrieved from `freq`. Therefore, the default value of `bend` should always be 1 which corresponds to the central position of the pitch wheel (MIDI value 64). A value smaller than 1 will decrease the pitch and a value greater than 1 will increase it. 
+The `bend` variable is controlled by the pitch-wheel thanks to [`[midi:pitchwheel]` metadata](#midipitchwheel-metadata), then converted in a frequency ratio using the `ba.semi2ratio` function. `bend` is used as a factor multiplied to the base frequency retrieved from `freq`. Therefore, the default value of `bend`  is 0 in semitones, which corresponds to the central position of the pitch wheel, and will correspond  to a multiplicative ratio of 1. A value smaller than 0 will decrease the pitch and a value greater than 0 will increase it. 
 
 While the above example will have the expected behavior, it is likely that clicking will happen when changing the value of `bend` since this parameter is not smoothed. Unfortunately, regular smoothing (through the use of [`si.smoo`](https://faustlibraries.grame.fr/libs/signals/#sismoo), for example) is not a good option here. This is due to the fact that instances of polyphonic voices are frozen when a voice is not being used. Since the value of `bend` might jump from one value to another when a voice is being reactivated/reused, continuous smoothing would probably create an "ugly sweep" in that case. Hence, [`si.polySmooth`](https://faustlibraries.grame.fr/libs/signals/#sipolysmooth) should be used in this context instead of [`si.smoo`](https://faustlibraries.grame.fr/libs/signals/#sismoo). This function shuts down smoothing for a given number of samples when a trigger is activated.
 
@@ -410,7 +409,7 @@ Reusing the example from the previous section, we can implement a click-free pol
 declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 f = hslider("freq",300,50,2000,0.01);
-bend = hslider("bend[midi:pitchwheel]",1,0,10,0.01) : si.polySmooth(gate,0.999,1);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
 gain = hslider("gain",0.5,0,1,0.01);
 gate = button("gate");
 freq = f*bend; 
@@ -443,7 +442,7 @@ The simple synthesizer from the previous section (which is literally just a sawt
 declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 f = hslider("freq",300,50,2000,0.01);
-bend = hslider("bend[midi:pitchwheel]",1,0,10,0.01) : si.polySmooth(gate,0.999,1);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
 gain = hslider("gain",0.5,0,1,0.01);
 s = hslider("sustain[midi:ctrl 64]",0,0,1,1);
 cutoff = hslider("cutoff[midi:ctrl 1]",1000,50,4000,0.01) : si.smoo;
@@ -457,5 +456,26 @@ effect = dm.zita_light;
 <!-- /faust-run -->
 
 MIDI CC 1 corresponds to the modulation wheel which is used here to control the cut-off frequency of the lowpass filter.
+
+Next we can add a global master, using the MIDI CC 7 standard volume control to change its level:
+
+<!-- faust-run -->
+```
+declare options "[midi:on][nvoices:12]";
+import("stdfaust.lib");
+f = hslider("freq",300,50,2000,0.01);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
+gain = hslider("gain",0.5,0,1,0.01);
+master = hslider("master[midi:ctrl 7]",0.5,0,1,0.01);
+s = hslider("sustain[midi:ctrl 64]",0,0,1,1);
+cutoff = hslider("cutoff[midi:ctrl 1]",1000,50,4000,0.01) : si.smoo;
+t = button("gate");
+freq = f*bend; 
+gate = t+s : min(1);
+envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
+process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) * master <: _,_;
+effect = dm.zita_light;
+```
+<!-- /faust-run -->
 
 <!-- Note: the original documentation of polyphony support from the quick reference hasn't been integrated to this new doc. We believe that it scares people more than it helps them. We do think that it would be nice to have a proper description of the C++ implementation of poly-dsp, but this is the wrong place for it. -->
