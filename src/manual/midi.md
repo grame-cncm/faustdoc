@@ -165,7 +165,7 @@ process = os.sawtooth(freq);
 
 ### `[midi:pgm]` or `[midi:pgm chan]` Metadata
 
-The `[midi:pgm]` metadata assigns the program-change to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will use the UI element range. Only the values descrived in the UI element range will be used at reception, and can be sent. The first `[midi:pgm]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:pgm chan]` version can receive messages on `chan` only and will send on the `chan` channel.
+The `[midi:pgm]` metadata assigns the program-change to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will use the UI element range. Only the values described in the UI element range will be used at reception, and can be sent. The first `[midi:pgm]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:pgm chan]` version can receive messages on `chan` only and will send on the `chan` channel.
 
 **Usage**
 
@@ -205,13 +205,13 @@ Where:
 
 **Example**
 
-In the following example, the frequency of a sawtooth wave oscillator is controlled by the pitch-wheel in the {-2, 2} semitone range, then converted as a frequency multiplicative ratio.
+In the following example, the bend of a sawtooth wave oscillator is controlled by the pitch-wheel in the {-2, 2} semitone range, then converted as a frequency multiplicative ratio and multiplied by a given frequency.
 
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
-freq = ba.semi2ratio(hslider("frequency[midi:pitchwheel]",0,-2,2,0.01)) : si.smoo;
-process = os.sawtooth(freq);
+bend = ba.semi2ratio(hslider("frequency[midi:pitchwheel]",0,-2,2,0.01)) : si.smoo;
+process = os.sawtooth(440*bend);
 ```
 <!-- /faust-run -->
 
