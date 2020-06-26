@@ -9,228 +9,247 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>MIDI Support - Faust Documentation</title>
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <a class="navbar-brand" href="../..">Faust Documentation</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Documentation</a>
+                </div>
 
                 <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../.." class="nav-link">Home</a>
+                            <li >
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../introduction/" class="dropdown-item">Introduction</a>
+<li >
+    <a href="../introduction/">Introduction</a>
 </li>
                                     
-<li>
-    <a href="../overview/" class="dropdown-item">Overview of the Faust Universe</a>
+<li >
+    <a href="../overview/">Overview of the Faust Universe</a>
 </li>
                                     
-<li>
-    <a href="../quick-start/" class="dropdown-item">Quick start</a>
+<li >
+    <a href="../quick-start/">Quick start</a>
 </li>
                                     
-<li>
-    <a href="../syntax/" class="dropdown-item">Faust Syntax</a>
+<li >
+    <a href="../syntax/">Faust Syntax</a>
 </li>
                                     
-<li>
-    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
+<li >
+    <a href="../compiler/">Using the Compiler</a>
 </li>
                                     
-<li>
-    <a href="../options/" class="dropdown-item">Compiler Options</a>
+<li >
+    <a href="../options/">Compiler Options</a>
 </li>
                                     
-<li>
-    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+<li >
+    <a href="../tools/">faust2[...] Tools</a>
 </li>
                                     
-<li>
-    <a href="../embedding/" class="dropdown-item">Embedding</a>
+<li >
+    <a href="../embedding/">Embedding</a>
 </li>
                                     
-<li>
-    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
+<li >
+    <a href="../optimizing/">Optimizing</a>
 </li>
                                     
-<li>
-    <a href="../osc/" class="dropdown-item">OSC Support</a>
+<li >
+    <a href="../osc/">OSC Support</a>
 </li>
                                     
-<li>
-    <a href="../http/" class="dropdown-item">HTTP Support</a>
+<li >
+    <a href="../http/">HTTP Support</a>
 </li>
                                     
-<li>
-    <a href="./" class="dropdown-item active">MIDI Support</a>
+<li class="active">
+    <a href="./">MIDI Support</a>
 </li>
                                     
-<li>
-    <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+<li >
+    <a href="../soundfiles/">Soundfiles Support</a>
+</li>
+                                    
+<li >
+    <a href="../mathdoc/">Mathematical Documentation</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
 </li>
                                     
-<li>
-    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
 </li>
                                     
-<li>
-    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+<li >
+    <a href="../../examples/bela/"> bela </a>
 </li>
                                     
-<li>
-    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
 </li>
                                     
-<li>
-    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
 </li>
                                     
-<li>
-    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
 </li>
                                     
-<li>
-    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
 </li>
                                     
-<li>
-    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+<li >
+    <a href="../../examples/generator/"> generator </a>
 </li>
                                     
-<li>
-    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+<li >
+    <a href="../../examples/misc/"> misc </a>
 </li>
                                     
-<li>
-    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
 </li>
                                     
-<li>
-    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
 </li>
                                     
-<li>
-    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
 </li>
                                     
-<li>
-    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
 </li>
                                     
-<li>
-    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
 </li>
                                     
-<li>
-    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
 </li>
                                     
-<li>
-    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
 </li>
                                     
-<li>
-    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+<li >
+    <a href="../../examples/spat/"> spat </a>
 </li>
                                     
-<li>
-    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/">Faust & JUCE</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+<li >
+    <a href="../../tutorials/teensy/">DSP on the Teensy With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+<li >
+    <a href="../../tutorials/esp32/">DSP on the ESP-32 With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+<li >
+    <a href="../../tutorials/basic-osc/">Making a Sine Oscillator From Scratch</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+<li >
+    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+<li >
+    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/"> 2020-04-10 Faust & JUCE </a>
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
-                                <a href="../../about/" class="nav-link">About</a>
+                            <li >
+                                <a href="../../about/">About</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../http/" class="nav-link">
+                            <li >
+                                <a rel="next" href="../http/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../mathdoc/" class="nav-link">
+                            <li >
+                                <a rel="prev" href="../soundfiles/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -240,34 +259,14 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#midi-and-polyphony-support" class="nav-link">MIDI and Polyphony Support</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#configuring-midi-in-faust" class="nav-link">Configuring MIDI in Faust</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#midi-polyphony-support" class="nav-link">MIDI Polyphony Support</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#midi-and-polyphony-support">MIDI and Polyphony Support</a></li>
+            <li><a href="#configuring-midi-in-faust">Configuring MIDI in Faust</a></li>
+            <li><a href="#midi-polyphony-support">MIDI Polyphony Support</a></li>
+    </ul>
 </div></div>
-                    <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="midi-and-polyphony-support">MIDI and Polyphony Support</h1>
 <!-- TODO: something should be said about MIDI channels -->
@@ -289,15 +288,16 @@
 
 <p>This section provides a list of the most common metadata that can be used to configure of the MIDI behavior of a Faust program.</p>
 <p>Below, when a 7-bit MIDI parameter is used to drive a <a href="../syntax/#button-primitive">button</a> or a <a href="../syntax/#checkbox-primitive">checkbox</a>, its maximum value (127) maps to 1 ("on") while its minimum value (0) maps to 0 ("off").</p>
-<h3 id="midictrl-num-metadata"><code>[midi:ctrl num]</code> Metadata</h3>
-<p>The <code>[midi:ctrl num]</code> metadata assigns MIDI CC (control) to a specific UI element. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.</p>
+<h3 id="midictrl-num-or-midictrl-num-chan-metadata"><code>[midi:ctrl num]</code> or <code>[midi:ctrl num chan]</code> Metadata</h3>
+<p>The <code>[midi:ctrl num]</code> metadata assigns MIDI CC (control) to a specific UI element. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:ctrl num]</code> version can receive messages on all channels, and will send on the channel 0. The second  <code>[midi:ctrl num chan]</code> version can receive messages on <code>chan</code> only and will send on the <code>chan</code> channel.</p>
 <p><strong>Usage</strong></p>
-<pre><code>foo = hslider(&quot;foo[midi:ctrl num]&quot;,...);
+<pre><code>foo = hslider(&quot;foo[midi:ctrl num chan]&quot;,...);
 </code></pre>
 
 <p>Where:</p>
 <ul>
 <li><code>num</code>: the MIDI CC number</li>
+<li><code>chan</code>: optional, the MIDI channel number</li>
 </ul>
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by MIDI CC 11. When CC11=0, then the frequency is 200Hz, when CC11=127, then the frequency is 1000Hz.</p>
@@ -319,15 +319,16 @@ process = os.sawtooth(freq);
 
 <!-- /faust-run -->
 
-<h3 id="midikeyon-midikey-metadata"><code>[midi:keyon midikey]</code> Metadata</h3>
-<p>The <code>[midi:keyon midikey]</code> metadata assigns the velocity value of a key-on MIDI message received on a specific <code>midikey</code> to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.</p>
+<h3 id="midikeyon-midikey-or-midikeyon-midikey-chan-metadata"><code>[midi:keyon midikey]</code> or <code>[midi:keyon midikey chan]</code> Metadata</h3>
+<p>The <code>[midi:keyon midikey]</code> metadata assigns the velocity value of a key-on MIDI message received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keyon midikey]</code> version can receive messages on all channels, and will send on the channel 0. The second  <code>[midi:keyon midikey chan]</code> version can receive messages on <code>chan</code> only and will send on the <code>chan</code> channel.</p>
 <p><strong>Usage</strong></p>
-<pre><code>foo = hslider(&quot;foo[midi:keyon midikey]&quot;,...);
+<pre><code>foo = hslider(&quot;foo[midi:keyon midikey chan]&quot;,...);
 </code></pre>
 
 <p>Where:</p>
 <ul>
 <li><code>midikey</code>: the MIDI key number</li>
+<li><code>chan</code>: optional, the MIDI channel number</li>
 </ul>
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when a key-on message issent. Therefore, the frequency will only be updated when MIDI key 62 is pressed.</p>
@@ -349,15 +350,16 @@ process = os.sawtooth(freq);
 
 <!-- /faust-run -->
 
-<h3 id="midikeyoff-midikey-metadata"><code>[midi:keyoff midikey]</code> Metadata</h3>
-<p>The <code>[midi:keyoff midikey]</code> metadata assigns the velocity value of a key-off MIDI message received on a specific <code>midikey</code> to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.</p>
+<h3 id="midikeyoff-midikey-or-midikeyoff-midikey-chan-metadata"><code>[midi:keyoff midikey]</code> or <code>[midi:keyoff midikey chan]</code> Metadata</h3>
+<p>The <code>[midi:keyoff midikey]</code> metadata assigns the velocity value of a key-off MIDI message received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keyoff midikey]</code> version can receive messages on all channels, and will send on the channel 0. The second  <code>[midi:keyoff midikey chan]</code> version can receive messages on <code>chan</code> only and will send on the <code>chan</code> channel.</p>
 <p><strong>Usage</strong></p>
-<pre><code>foo = hslider(&quot;foo[midi:keyoff midikey]&quot;,...);
+<pre><code>foo = hslider(&quot;foo[midi:keyoff midikey chan]&quot;,...);
 </code></pre>
 
 <p>Where:</p>
 <ul>
 <li><code>midikey</code>: the MIDI key number</li>
+<li><code>chan</code>: optional, the MIDI channel number</li>
 </ul>
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when a key-off message is sent. Therefore, the frequency will only be updated when MIDI key 62 is released.</p>
@@ -379,15 +381,16 @@ process = os.sawtooth(freq);
 
 <!-- /faust-run -->
 
-<h3 id="midikey-midikey-metadata"><code>[midi:key midikey]</code> Metadata</h3>
-<p>The <code>[midi:key midikey]</code> metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific <code>midikey</code> to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.</p>
+<h3 id="midikey-midikey-or-midikey-midikey-chan-metadata"><code>[midi:key midikey]</code> or <code>[midi:key midikey chan]</code> Metadata</h3>
+<p>The <code>[midi:key midikey]</code> metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:midikey midikey]</code> version can receive messages on all channels, and will send on the channel 0. The second  <code>[midi:midikey midikey chan]</code> version can receive messages on <code>chan</code> only and will send on the <code>chan</code> channel.</p>
 <p><strong>Usage</strong></p>
-<pre><code>foo = hslider(&quot;foo[midi:key midikey]&quot;,...);
+<pre><code>foo = hslider(&quot;foo[midi:key midikey chan]&quot;,...);
 </code></pre>
 
 <p>Where:</p>
 <ul>
 <li><code>midikey</code>: the MIDI key number</li>
+<li><code>chan</code>: optional, the MIDI channel number</li>
 </ul>
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when key-on and key-off messages are sent. Therefore, the frequency will only be updated when MIDI key 62 is pressed and released.</p>
@@ -409,15 +412,16 @@ process = os.sawtooth(freq);
 
 <!-- /faust-run -->
 
-<h3 id="midikeypress-midikey-metadata"><code>[midi:keypress midikey]</code> Metadata</h3>
-<p>The <code>[midi:keypress midikey]</code> metadata assigns the pressure (after-touch) value of a specific <code>midikey</code> to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0.</p>
+<h3 id="midikeypress-midikey-or-midikeypress-midikey-chan-metadata"><code>[midi:keypress midikey]</code> or <code>[midi:keypress midikey chan]</code> Metadata</h3>
+<p>The <code>[midi:keypress midikey]</code> metadata assigns the pressure (after-touch) value of a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keypress midikey]</code> version can receive messages on all channels, and will send on the channel 0. The second  <code>[midi:keypress midikey chan]</code> version can receive messages on <code>chan</code> only and will send on the <code>chan</code> channel.</p>
 <p><strong>Usage</strong></p>
-<pre><code>foo = hslider(&quot;foo[midi:keypress midikey]&quot;,...);
+<pre><code>foo = hslider(&quot;foo[midi:keypress midikey chan]&quot;,...);
 </code></pre>
 
 <p>Where:</p>
 <ul>
 <li><code>midikey</code>: the MIDI key number</li>
+<li><code>chan</code>: optional, the MIDI channel number</li>
 </ul>
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the pressure (after-touch) values received on key 62.</p>
@@ -439,35 +443,61 @@ process = os.sawtooth(freq);
 
 <!-- /faust-run -->
 
-<!-- TODO: don't understand what those means: check with Stéphane  -->
-
-<!-- 
-- \lstinline'[midi:pgm num]' in a slider or bargraph will map the UI element value to the progchange value, so \emph{progchange} message with the same \emph{num} value will be sent. When used with a button or checkbox, 1 will send the \emph{progchange} message with \emph{num} value, 0 will send nothing,
-
-- \lstinline'[midi:chanpress num]' in a slider or bargraph will map the UI element value to the chanpress value, so \emph{chanpress} message with the same \emph{num} value will be sent. When used with a button or checkbox, 1 will send the \emph{chanpress} message with \emph{num} value, 0 will send nothing,
--->
-
-<h3 id="midipitchwheel-metadata"><code>[midi:pitchwheel]</code> Metadata</h3>
-<p>The <code>[midi:pitchwheel]</code> metadata assigns the pitch-wheel value to a Faust parameter. When used in a slider or a bargraph, this metadata will map the UI element value to the {0, 16383} range. When used with a button or a checkbox, 1 will be mapped to 16383, 0 will be mapped to 0.</p>
+<h3 id="midipgm-or-midipgm-chan-metadata"><code>[midi:pgm]</code> or <code>[midi:pgm chan]</code> Metadata</h3>
+<p>The <code>[midi:pgm]</code> metadata assigns the program-change to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will use the UI element range. Only the values described in the UI element range will be used at reception, and can be sent. The first <code>[midi:pgm]</code> version can receive messages on all channels, and will send on the channel 0. The second  <code>[midi:pgm chan]</code> version can receive messages on <code>chan</code> only and will send on the <code>chan</code> channel.</p>
 <p><strong>Usage</strong></p>
-<pre><code>foo = hslider(&quot;foo[midi:pitchwheel]&quot;,...);
+<pre><code>foo = nentry(&quot;foo[midi:pgm chan]&quot;,...);
 </code></pre>
 
+<p>Where:</p>
+<ul>
+<li><code>chan</code>: optional, the MIDI channel number</li>
+</ul>
 <p><strong>Example</strong></p>
-<p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the pitch-wheel.</p>
+<p>In the following example, the instrument will be choosen in the {0,3} range.</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;frequency[midi:pitchwheel]&quot;,200,50,1000,0.01) : si.smoo;
-process = os.sawtooth(freq);
+inst = nentry(&quot;Instrument[midi:pgm]&quot;,0,0,3,1) : int;
+process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selectn(4,inst);
 
 </code></pre>
 
 
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h3 id="midipitchwheel-or-midipitchwheel-chan-metadata"><code>[midi:pitchwheel]</code> or <code>[midi:pitchwheel chan]</code> Metadata</h3>
+<p>The <code>[midi:pitchwheel]</code> metadata assigns the pitch-wheel value to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 16383} range. When used with a button or a checkbox, 1 will be mapped to 16383, 0 will be mapped to 0. Pitch-wheel values are typically used to control tuning, mapping the {0, 16383} MIDI range to a {-semitone, semitone} range. The <code>ba.semi2ratio</code> function must be used to convert semitones in a frequency multiplicative ratio. The first <code>[midi:pitchwheel]</code> version can receive messages on all channels, and will send on the channel 0. The second  <code>[midi:pitchwheel chan]</code> version can receive messages on <code>chan</code> only and will send on the <code>chan</code> channel.</p>
+<p><strong>Usage</strong></p>
+<pre><code>foo = hslider(&quot;foo[midi:pitchwheel chan]&quot;,...);
+</code></pre>
+
+<p>Where:</p>
+<ul>
+<li><code>chan</code>: optional, the MIDI channel number</li>
+</ul>
+<p><strong>Example</strong></p>
+<p>In the following example, the bend of a sawtooth wave oscillator is controlled by the pitch-wheel in the {-2, 2} semitone range, then converted as a frequency multiplicative ratio and multiplied by a given frequency.</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+bend = ba.semi2ratio(hslider(&quot;frequency[midi:pitchwheel]&quot;,0,-2,2,0.01)) : si.smoo;
+process = os.sawtooth(440*bend);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -496,7 +526,7 @@ process = os.sawtooth(freq);
 <p>A typical Faust program will then use the MIDI clock stream to possibly compute the BPM information, or for any synchronization need it may have.  Here is a simple example of a sinus generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -518,7 +548,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust6/exfaust6.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -541,7 +571,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 <p>In the following example, the standard <code>freq</code>, <code>gain</code>, and <code>gate</code> parameters are used to implement a simple polyphonic synth.</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -553,7 +583,7 @@ process = os.sawtooth(freq)*gain*gate;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust7/exfaust7.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -565,7 +595,7 @@ process = os.sawtooth(freq)*gain*gate;
 <p>The previous example can be slightly improved by adding an envelope generator and controlling it with <code>gain</code> and <code>gate</code>: </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -578,7 +608,7 @@ process = os.sawtooth(freq)*envelope;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust8/exfaust8.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -594,7 +624,7 @@ process = os.sawtooth(freq)*envelope;
 <p>For example, the Faust program from the previous section could be modified such that: </p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 
 <pre><code>
 declare options &quot;[midi:on][nvoices:12]&quot;;
@@ -608,7 +638,7 @@ process = os.sawtooth(freq)*envelope;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust9/exfaust9.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust10/exfaust10.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -633,7 +663,7 @@ process = os.sawtooth(freq)*envelope;
 <p>For example, a simple reverb can be added to the previous example simply by writing:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 
 <pre><code>
 declare options &quot;[midi:on][nvoices:12]&quot;;
@@ -648,7 +678,7 @@ effect = dm.zita_light;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust10/exfaust10.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust11/exfaust11.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -661,22 +691,22 @@ effect = dm.zita_light;
 <h3 id="polyphony-and-continuous-pitch">Polyphony and Continuous Pitch</h3>
 <p>Key-on and key-off MIDI messages only send the "base pitch" of the instance of a note. Hence, if only the <code>freq</code> standard parameter is used to control the frequency of the synthesizer, its pitch will always be "quantized" to the nearest semitone. In order to be able to do glissandi, vibrato, etc., a variable associated to the pitch-wheel needs to be declared and must interact with the "base frequency" value retrieved from <code>freq</code> as such:</p>
 <pre><code>f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = hslider(&quot;bend[midi:pitchwheel]&quot;,1,0,10,0.01);
+bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.01));
 freq = f*bend; // the &quot;final&quot; freq parameter to be used
 </code></pre>
 
-<p>The <code>bend</code> variable is controlled by the pitch-wheel thanks to <a href="#midipitchwheel-metadata"><code>[midi:pitchwheel]</code> metadata</a>. <code>bend</code> is used as a factor multiplied to the base frequency retrieved from <code>freq</code>. Therefore, the default value of <code>bend</code> should always be 1 which corresponds to the central position of the pitch wheel (MIDI value 64). A value smaller than 1 will decrease the pitch and a value greater than 1 will increase it. </p>
+<p>The <code>bend</code> variable is controlled by the pitch-wheel thanks to <a href="#midipitchwheel-metadata"><code>[midi:pitchwheel]</code> metadata</a>, then converted in a frequency ratio using the <code>ba.semi2ratio</code> function. <code>bend</code> is used as a factor multiplied to the base frequency retrieved from <code>freq</code>. Therefore, the default value of <code>bend</code>  is 0 in semitones, which corresponds to the central position of the pitch wheel, and will correspond  to a multiplicative ratio of 1. A value smaller than 0 will decrease the pitch and a value greater than 0 will increase it. </p>
 <p>While the above example will have the expected behavior, it is likely that clicking will happen when changing the value of <code>bend</code> since this parameter is not smoothed. Unfortunately, regular smoothing (through the use of <a href="https://faustlibraries.grame.fr/libs/signals/#sismoo"><code>si.smoo</code></a>, for example) is not a good option here. This is due to the fact that instances of polyphonic voices are frozen when a voice is not being used. Since the value of <code>bend</code> might jump from one value to another when a voice is being reactivated/reused, continuous smoothing would probably create an "ugly sweep" in that case. Hence, <a href="https://faustlibraries.grame.fr/libs/signals/#sipolysmooth"><code>si.polySmooth</code></a> should be used in this context instead of <a href="https://faustlibraries.grame.fr/libs/signals/#sismoo"><code>si.smoo</code></a>. This function shuts down smoothing for a given number of samples when a trigger is activated.</p>
 <p>Reusing the example from the previous section, we can implement a click-free polyphonic synthesizer with continuous pitch control:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
 <pre><code>
 declare options &quot;[midi:on][nvoices:12]&quot;;
 import(&quot;stdfaust.lib&quot;);
 f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = hslider(&quot;bend[midi:pitchwheel]&quot;,1,0,10,0.01) : si.polySmooth(gate,0.999,1);
+bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
 gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
 gate = button(&quot;gate&quot;);
 freq = f*bend; 
@@ -687,7 +717,7 @@ effect = dm.zita_light;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust11/exfaust11.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust12/exfaust12.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -706,13 +736,13 @@ gate = t+s : min(1);
 <p>The simple synthesizer from the previous section (which is literally just a sawtooth oscillator) can be slightly improved by processing it with a dynamically-controlled lowpass filter:</p>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
 
 <pre><code>
 declare options &quot;[midi:on][nvoices:12]&quot;;
 import(&quot;stdfaust.lib&quot;);
 f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = hslider(&quot;bend[midi:pitchwheel]&quot;,1,0,10,0.01) : si.polySmooth(gate,0.999,1);
+bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
 gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
 s = hslider(&quot;sustain[midi:ctrl 64]&quot;,0,0,1,1);
 cutoff = hslider(&quot;cutoff[midi:ctrl 1]&quot;,1000,50,4000,0.01) : si.smoo;
@@ -726,15 +756,44 @@ effect = dm.zita_light;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust12/exfaust12.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust13/exfaust13.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
 <!-- /faust-run -->
 
 <p>MIDI CC 1 corresponds to the modulation wheel which is used here to control the cut-off frequency of the lowpass filter.</p>
+<p>Next we can add a global master, using the MIDI CC 7 standard volume control to change its level:</p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+
+<pre><code>
+declare options &quot;[midi:on][nvoices:12]&quot;;
+import(&quot;stdfaust.lib&quot;);
+f = hslider(&quot;freq&quot;,300,50,2000,0.01);
+bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
+gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
+master = hslider(&quot;master[midi:ctrl 7]&quot;,0.5,0,1,0.01);
+s = hslider(&quot;sustain[midi:ctrl 64]&quot;,0,0,1,1);
+cutoff = hslider(&quot;cutoff[midi:ctrl 1]&quot;,1000,50,4000,0.01) : si.smoo;
+t = button(&quot;gate&quot;);
+freq = f*bend; 
+gate = t+s : min(1);
+envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
+process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) * master &lt;: _,_;
+effect = dm.zita_light;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust14/exfaust14.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
 <!-- Note: the original documentation of polyphony support from the quick reference hasn't been integrated to this new doc. We believe that it scares people more than it helps them. We do think that it would be nice to have a proper description of the C++ implementation of poly-dsp, but this is the wrong place for it. --></div>
-            </div>
         </div>
 
         <footer class="col-md-12">
@@ -750,19 +809,19 @@ effect = dm.zita_light;
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
             <div class="modal-body">
                 <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-                <form>
+                <form role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
@@ -773,12 +832,12 @@ effect = dm.zita_light;
             </div>
         </div>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
             </div>
             <div class="modal-body">
               <table class="table">

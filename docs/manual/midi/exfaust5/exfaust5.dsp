@@ -1,5 +1,5 @@
 
 import("stdfaust.lib");
-freq = hslider("frequency[midi:pitchwheel]",200,50,1000,0.01) : si.smoo;
-process = os.sawtooth(freq);
+inst = nentry("Instrument[midi:pgm]",0,0,3,1) : int;
+process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selectn(4,inst);
 

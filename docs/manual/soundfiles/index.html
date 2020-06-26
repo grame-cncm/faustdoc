@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Soundfiles Support - Faust Documentation</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
+        <link href="/css/faust.css" rel="stylesheet">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Documentation</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../introduction/">Introduction</a>
+</li>
+                                    
+<li >
+    <a href="../overview/">Overview of the Faust Universe</a>
+</li>
+                                    
+<li >
+    <a href="../quick-start/">Quick start</a>
+</li>
+                                    
+<li >
+    <a href="../syntax/">Faust Syntax</a>
+</li>
+                                    
+<li >
+    <a href="../compiler/">Using the Compiler</a>
+</li>
+                                    
+<li >
+    <a href="../options/">Compiler Options</a>
+</li>
+                                    
+<li >
+    <a href="../tools/">faust2[...] Tools</a>
+</li>
+                                    
+<li >
+    <a href="../embedding/">Embedding</a>
+</li>
+                                    
+<li >
+    <a href="../optimizing/">Optimizing</a>
+</li>
+                                    
+<li >
+    <a href="../osc/">OSC Support</a>
+</li>
+                                    
+<li >
+    <a href="../http/">HTTP Support</a>
+</li>
+                                    
+<li >
+    <a href="../midi/">MIDI Support</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Soundfiles Support</a>
+</li>
+                                    
+<li >
+    <a href="../mathdoc/">Mathematical Documentation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/bela/"> bela </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/generator/"> generator </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/misc/"> misc </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+</li>
+                                    
+<li >
+    <a href="../../examples/spat/"> spat </a>
+</li>
+                                    
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/">Faust & JUCE</a>
+</li>
+                                    
+<li >
+    <a href="../../tutorials/teensy/">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li >
+    <a href="../../tutorials/esp32/">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li >
+    <a href="../../tutorials/basic-osc/">Making a Sine Oscillator From Scratch</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li >
+    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li >
+    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../midi/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../mathdoc/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#sound-files-support">Sound files Support</a></li>
+            <li><a href="#using-sound-files-with-the-faust2xx-scripts">Using sound files with the faust2xx scripts</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="sound-files-support">Sound files Support</h1>
+<p>Sound files can be used with the <code>soundfile</code> language primitive. Sound files will be fully loaded in memory at runtime and will be accessed with an input read index. The length and sample rate of the sound files can be accessed to implement more sophisticated playing schemes. A more complete description of the <code>soundfile</code> primitive can be <a href="https://faustdoc.grame.fr/manual/syntax/">found here</a>.</p>
+<h2 id="using-sound-files-with-the-faust2xx-scripts">Using sound files with the faust2xx scripts</h2>
+<p>Since using sound files (actually all formats that can be read by the <a href="http://www.mega-nerd.com/libsndfile/">libsndfile library</a>, or by JUCE if you use the <em>faust2juce</em> tool), have to be <em>embedded with the generated binary</em> (application or plugin), we added a <em>-soundfile</em> option in some of the <em>faust2xx</em> scripts to deal with that. Assuming a DSP program using the  <code>soundfile</code> primitive is written, the following commands can be used to generate binaries:</p>
+<ul>
+<li>
+<p><code>faust2caqt -soundfile foo.dsp</code> to embed the needed sound files in the application bundle on OSX</p>
+</li>
+<li>
+<p><code>faust2max6 -soundfile foo.dsp</code> to embed the needed sound files in the Max/MSP external bundle on OSX</p>
+</li>
+</ul>
+<p>Check the <a href="https://faustdoc.grame.fr/manual/tools/">faust2xx</a> script description page to know which one currently support the <em>-soundfile</em> option.</p>
+<h3 id="the-soundfile-library">The Soundfile Library</h3>
+<p>They are some additional functions in the <a href="https://faustlibraries.grame.fr/libs/soundfiles/">soundfiles.lib</a> library. Three basic functions are fully documented for now. There is more code already written in the <a href="https://github.com/grame-cncm/faustlibraries/blob/master/soundfiles.lib">library source</a> that allows to read sound files with different kind of interpolation.</p>
+<p>Note that the <em>soundfile</em> primitive is not yet managed in the <a href="https://faustide.grame.fr">Faust Web IDE</a>.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
