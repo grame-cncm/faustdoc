@@ -1,6 +1,7 @@
 # Tools to Help Debug and Optimize the Generated Code
 
-To create native executables, the Faust compiler produces very efficient C++ or LLVM IR. The generated code can have different "shapes" depending of compilation options, and can run faster of slower. Several programs and tools are available to help Faust programmers to test (for possible numerical or precision issues), optimize their programs by discovering the best set of options for a given DSP code, and finally compile them into native code for the target CPUs. 
+From a given DSP program, the Faust compiler tries to generate the most efficient implementation. Optimizations can be done at DSP writing time, or later on when the target langage is generated (like  C++ or LLVM IR).
+The generated code can have different "shapes" depending of compilation options, and can run faster of slower. Several programs and tools are available to help Faust programmers to test (for possible numerical or precision issues), optimize their programs by discovering the best set of options for a given DSP code, and finally compile them into native code for the target CPUs. 
 
 ## Debugging the DSP Code 
 
@@ -12,7 +13,17 @@ The `interp-tracer` tool runs and instruments the compiled program using the Int
 
 ### Debugging at runtime
 
-On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime.  Developers can possibly use the [dsp_me_checker](me-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP objet with the math computation exception handling code. 
+On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the [dsp_me_checker](me-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP objet with the math computation exception handling code. 
+
+
+## Optimizing the DSP Code 
+
+### Writing efficient DSP code
+TODO
+
+### Specializing the DSP code
+
+The Faust compiler can possibly do a lot of optimizations at compile time. The DSP code can for instance be compiled for a fixed sample rate, thus doing at compile time all computation that depends of it. Since the Faust compiler will look for librairies starting from the local folder, a simple way is to locally copy the `libraries/platform.lib` file (which contains the `SR` definition), and change its definition for a fixed value like 48000 Hz. Then the DSP code has to be recompiled. Note that `libraries/platform.lib` also contains the definition of  the `tablesize` constant which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust services scripts which add the `-I /usr/local/share/faust/embedded/` parameter to the faust command line to use a special version of the platform.lib file.
 
 ## Optimizing the C++ or LLVM Code
 
