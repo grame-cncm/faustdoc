@@ -13,7 +13,7 @@ The `interp-tracer` tool runs and instruments the compiled program using the Int
 
 ### Debugging at runtime
 
-On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the [dsp_me_checker](me-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP objet with the math computation exception handling code. 
+On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the [dsp_me_checker](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP objet with the math computation exception handling code. 
 
 
 ## Optimizing the DSP Code 
