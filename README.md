@@ -3,7 +3,7 @@
 
 [Faust](https://faust.grame.fr) is a Functional Programming Language for sound synthesis and audio processing with a strong focus on the design of synthesizers, musical instruments, audio effects, etc. Faust targets high-performance signal processing applications and audio plug-ins for a variety of platforms and standards.
 
-This repository is intended to build the documentation of the Faust environment, and to provide the corresponding examples. 
+This repository is intended to build the documentation of the Faust environment, and to provide the corresponding examples.
 
 ### Prerequisites
 - you must have python and pip installed.
