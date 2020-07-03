@@ -1948,8 +1948,7 @@ process = @(N);
 
 #### `rdtable` Primitive
 
-The `rdtable` primitive can be used to read through a read-only (pre-defined before compilation) table. The table can either be implemented using a function controlled by a timer (such as [`ba.time`](https://faustlibraries.grame.fr/libs/basics/#batime)) as demonstrated in the first example, or by using the `waveform` primitive (as shown in the second example). The idea is that the table is parsed during the initialization
-step and before audio computation begins. 
+The `rdtable` primitive can be used to read through a read-only (pre-defined at initialisation time) table. The table can either be implemented by using the `waveform` primitive (as shown in the first example) or using a function controlled by a timer (such as [`ba.time`](https://faustlibraries.grame.fr/libs/basics/#batime)) as demonstrated in the second example. The idea is that the table is created during the initialization step and before audio computation begins. 
 
 * **Type:** \(\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=T[r(t)]\)
@@ -1968,7 +1967,7 @@ Where:
 
 **Example: Basic Triangle Wave Oscillator Using the `waveform` Primitive**
 
-In this example, a basic (and dirty) triangle wave-table is defined using the [`waveform`](#waveform-primitive). It is then used with the `rdtable` primitive and a phasor to implement a triangle wave oscillator. Note that the output of
+In this example, a basic (and dirty) triangle wave-table is defined using the [`waveform`](#waveform-primitive). It is then used with the `rdtable` primitive and a phasor to implement a triangle wave oscillator:
 
 <!-- faust-run -->
 ```
@@ -1980,15 +1979,15 @@ process = triangleOsc(f);
 ```
 <!-- /faust-run -->
 
-**Example: Basic Triangle Wave Oscillator Using the `waveform` Primitive**
+**Example: Basic Triangle Wave Oscillator Using the `sin` Primitive and a Timer**
 
-In this example, a sine table is implemented using the [`sin` primitive](#sin-primitive) and a timer ([`ba.time`](https://faustlibraries.grame.fr/libs/basics/#batime)). The timer parses the `sin` function during the initialization step of the Faust program. It is then used with `rdtable` to implement a sine wave oscillator. 
+In this example, a sine table is implemented using the [`sin`](#sin-primitive) primitive and a timer ([`ba.time`](https://faustlibraries.grame.fr/libs/basics/#batime)). The timer calls the `sin` function during the initialization step of the Faust program. It is then used with `rdtable` to implement a sine wave oscillator. 
 
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
-sineWave(tablesize) = float(ba.time)*(2.0*ma.PI)/float(tablesize) : sin;
 tableSize = 1 << 16;
+sineWave(tablesize) = float(ba.time)*(2.0*ma.PI)/float(tablesize) : sin;
 triangleOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdtable;
 f = hslider("freq",440,50,2000,0.01);
 process = triangleOsc(f);
@@ -1997,7 +1996,7 @@ process = triangleOsc(f);
 
 #### `rwtable` Primitive
 
-The `rwtable` primitive can be used to implement a read/write table. It takes an audio input that can be written in the table using a *record index* (i.e., `w` below) and read using a read index (i.e., `r` below).
+The `rwtable` primitive can be used to implement a read/write table. It takes an audio input that can be written in the table using a *write index* (i.e., `w` below) and read using a *read index* (i.e., `r` below).
 
 * **Type:** \(\mathbb{S}^{5}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(T[w(t)]=c(t); y(t)=T[r(t)]\)
