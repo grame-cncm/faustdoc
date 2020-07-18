@@ -284,11 +284,12 @@ declare options "[nvoices:12]";
 
 ### Standard Polyphony Parameters
 
-Most Faust architectures allow for the implementation of polyphonic instruments simply by using a set of "standard user interface names." Hence, any Faust program declaring the `freq`, `gain`, and `gate` parameter is polyphony-compatible. These 3 parameters are directly associated to key-on and key-off events and have the following behavior: 
+Most Faust architectures allow for the implementation of polyphonic instruments simply by using a set of "standard user interface names." Hence, any Faust program declaring the `freq (or key)`, `gain (or vel or velocity)`, and `gate` parameter is polyphony-compatible. These 3 parameters are directly associated to key-on and key-off events and have the following behavior: 
 
 * When a key-on event is received, `gate` will be set to 1. Inversely, when a key-off event is received, `gate` will be set to 0. Therefore, `gate` is typically used to trigger an envelope, etc.
-* `freq` is a frequency in Hz computed automatically in function of the value of the pitch contained in a key-on or a key-off message. 
-* `gain` is a linear gain (value between 0-1) computed in function of the velocity value contained in a key-on or a key-off message.
+* `freq` is a frequency in Hz computed automatically in function of the value of the pitch contained in a key-on or a key-off message. Alternatively `key` can be used to get the raw MIDI pitch and describe the pitch to Hz  conversion in the DSP code itself (for instance to implement alternative tunings). 
+* `gain` is a linear gain (value between 0-1) computed in function of the velocity value contained in a key-on or a key-off message. Alternatively `vel` or `velocity` can be used to get the raw MIDI velocity and describe the velocity to gain conversion in the DSP code itself (for instance to implement alternative velocity curves). 
+
 
 **Example: Simple Polyphonic Synthesizer**
 
@@ -305,6 +306,25 @@ process = os.sawtooth(freq)*gain*gate;
 <!-- /faust-run -->
 
 > Note that if you execute this code in the [Faust Online IDE](https://faustide.grame.fr) with polyphony mode activated, you should be able to control this simple synth with any MIDI keyboard connected to your computer. This will only work if you're using Google Chrome (most other browsers are not MIDI-compatible).
+
+In the next example, the standard `key`, `gain`, and `gate` parameters are used to implement a simple polyphonic synth with alternate tuning.
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+freq = hslider("key",60,36,96,1) : midikey2hz 
+with {
+    // quarter tone tuning
+    midikey2hz(mk) = 440.0*pow(2.0, (mk-69.0)/48.0)); 
+}; 
+gain = hslider("gain",0.5,0,1,0.01);
+gate = button("gate");
+process = os.sawtooth(freq)*gain*gate;
+```
+<!-- /faust-run -->
+
+> Note that if you execute this code in the [Faust Online IDE](https://faustide.grame.fr) with polyphony mode activated, you should be able to control this simple synth with any MIDI keyboard connected to your computer. This will only work if you're using Google Chrome (most other browsers are not MIDI-compatible).
+
 
 The previous example can be slightly improved by adding an envelope generator and controlling it with `gain` and `gate`: 
 
@@ -327,7 +347,7 @@ process = os.sawtooth(freq)*envelope : /(4);
 
 ### Configuring and Activating Polyphony
 
-Polyphony can be activated "manually" in some Faust architectures using an option/flag during compilation (e.g., typically `-poly` or `-nvoices` in the [faust2...](TODO) scripts). That's also how the [Faust Online IDE](https://faustide.grame.fr) works where a button can be used to turn polyphony on or off.
+Polyphony can be activated "manually" in some Faust architectures using an option/flag during compilation (e.g., typically `-poly` or `-nvoices` in the [faust2xx](TODO) scripts). That's also how the [Faust Online IDE](https://faustide.grame.fr) works where a button can be used to turn polyphony on or off.
 
 However, the most standard way to activate polyphony in Faust is to declare the `[nvoices:n]` metadata which allows us to specify the maximum number of voices of polyphony (`n`) that will be allocated in the generated program.
 
