@@ -163,6 +163,32 @@ process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
 
+### `[midi:chanpress]` or `[midi:chanpress chan]` Metadata
+
+The `[midi:chanpress]` metadata assigns the channel pressure value to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first `[midi:chanpress]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:chanpress chan]` version can receive messages on `chan` only and will send on the `chan` channel.
+
+**Usage**
+
+```
+foo = hslider("foo[midi:chanpress chan]",...);
+```
+
+Where:
+
+* `chan`: optional, the MIDI channel number
+
+**Example**
+
+In the following example, the volume of a sawtooth wave oscillator is controlled by the channel pressure values.
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+vol = hslider("volume[midi:chanpress]",0.5,0,1,0.01) : si.smoo;
+process = os.sawtooth(440) * vol;
+```
+<!-- /faust-run -->
+
 ### `[midi:pgm]` or `[midi:pgm chan]` Metadata
 
 The `[midi:pgm]` metadata assigns the program-change to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will use the UI element range. Only the values described in the UI element range will be used at reception, and can be sent. The first `[midi:pgm]` version can receive messages on all channels, and will send on the channel 0. The second  `[midi:pgm chan]` version can receive messages on `chan` only and will send on the `chan` channel.
@@ -287,7 +313,7 @@ declare options "[nvoices:12]";
 Most Faust architectures allow for the implementation of polyphonic instruments simply by using a set of "standard user interface names." Hence, any Faust program declaring the `freq (or key)`, `gain (or vel or velocity)`, and `gate` parameter is polyphony-compatible. These 3 parameters are directly associated to key-on and key-off events and have the following behavior: 
 
 * When a key-on event is received, `gate` will be set to 1. Inversely, when a key-off event is received, `gate` will be set to 0. Therefore, `gate` is typically used to trigger an envelope, etc.
-* `freq` is a frequency in Hz computed automatically in function of the value of the pitch contained in a key-on or a key-off message. Alternatively `key` can be used to get the raw MIDI pitch and describe the pitch to Hz  conversion in the DSP code itself (for instance to implement alternative tunings). 
+* `freq` is a frequency in Hz computed automatically in function of the value of the pitch contained in a key-on or a key-off message. Alternatively `key` can be used to get the raw MIDI pitch and describe the pitch to Hz conversion in the DSP code itself (for instance to implement alternative tunings). 
 * `gain` is a linear gain (value between 0-1) computed in function of the velocity value contained in a key-on or a key-off message. Alternatively `vel` or `velocity` can be used to get the raw MIDI velocity and describe the velocity to gain conversion in the DSP code itself (for instance to implement alternative velocity curves). 
 
 
