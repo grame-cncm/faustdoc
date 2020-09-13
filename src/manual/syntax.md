@@ -1353,7 +1353,7 @@ The `/` primitive can be used to divide two signals.
 
 <!-- faust-run -->
 ```
-process = ^(2);
+process = /(2);
 ```
 <!-- /faust-run -->
 
