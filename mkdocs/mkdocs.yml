@@ -49,7 +49,10 @@ nav:
       - ' 2020-04-10 Faust & JUCE ': workshops/2020-04-10-faust-juce.md
     - About: about.md
 
-theme: flatly
+theme:
+  name: yeti
+  custom_dir: custom_theme
+  nav_style: primary
 #The available installed themes are: mkdocs, readthedocs, cinder, cosmo, flatly, spacelab, united, yeti
 
 site_dir: ../docs
