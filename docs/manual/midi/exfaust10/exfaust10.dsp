@@ -1,9 +1,11 @@
 
-declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
-freq = hslider("freq",200,50,1000,0.01);
+freq = hslider("key",60,36,96,1) : midikey2hz 
+with {
+    // quarter tone tuning
+    midikey2hz(mk) = 440.0*pow(2.0, (mk-69.0)/48.0); 
+}; 
 gain = hslider("gain",0.5,0,1,0.01);
 gate = button("gate");
-envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
-process = os.sawtooth(freq)*envelope;
+process = os.sawtooth(freq)*gain*gate;
 

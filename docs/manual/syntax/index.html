@@ -9,247 +9,234 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>Faust Syntax - Faust Documentation</title>
-        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
 
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
-
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-
-                <!-- Collapsed navigation -->
-                <div class="navbar-header">
-                    <!-- Expander button -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="../..">Faust Documentation</a>
-                </div>
+                <a class="navbar-brand" href="../..">Faust Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <!-- Expanded navigation -->
-                <div class="navbar-collapse collapse">
+                <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li >
-                                <a href="../..">Home</a>
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li >
-    <a href="../introduction/">Introduction</a>
+<li>
+    <a href="../introduction/" class="dropdown-item">Introduction</a>
 </li>
                                     
-<li >
-    <a href="../overview/">Overview of the Faust Universe</a>
+<li>
+    <a href="../overview/" class="dropdown-item">Overview of the Faust Universe</a>
 </li>
                                     
-<li >
-    <a href="../quick-start/">Quick start</a>
+<li>
+    <a href="../quick-start/" class="dropdown-item">Quick start</a>
 </li>
                                     
-<li class="active">
-    <a href="./">Faust Syntax</a>
+<li>
+    <a href="./" class="dropdown-item active">Faust Syntax</a>
 </li>
                                     
-<li >
-    <a href="../compiler/">Using the Compiler</a>
+<li>
+    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
 </li>
                                     
-<li >
-    <a href="../options/">Compiler Options</a>
+<li>
+    <a href="../options/" class="dropdown-item">Compiler Options</a>
 </li>
                                     
-<li >
-    <a href="../tools/">faust2[...] Tools</a>
+<li>
+    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
 </li>
                                     
-<li >
-    <a href="../embedding/">Embedding</a>
+<li>
+    <a href="../embedding/" class="dropdown-item">Embedding</a>
 </li>
                                     
-<li >
-    <a href="../optimizing/">Optimizing</a>
+<li>
+    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
 </li>
                                     
-<li >
-    <a href="../osc/">OSC Support</a>
+<li>
+    <a href="../osc/" class="dropdown-item">OSC Support</a>
 </li>
                                     
-<li >
-    <a href="../http/">HTTP Support</a>
+<li>
+    <a href="../http/" class="dropdown-item">HTTP Support</a>
 </li>
                                     
-<li >
-    <a href="../midi/">MIDI Support</a>
+<li>
+    <a href="../midi/" class="dropdown-item">MIDI Support</a>
 </li>
                                     
-<li >
-    <a href="../soundfiles/">Soundfiles Support</a>
+<li>
+    <a href="../soundfiles/" class="dropdown-item">Soundfiles Support</a>
 </li>
                                     
-<li >
-    <a href="../mathdoc/">Mathematical Documentation</a>
+<li>
+    <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li >
-    <a href="../../examples/ambisonics/"> ambisonics </a>
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
 </li>
                                     
-<li >
-    <a href="../../examples/analysis/"> analysis </a>
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
 </li>
                                     
-<li >
-    <a href="../../examples/bela/"> bela </a>
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
 </li>
                                     
-<li >
-    <a href="../../examples/delayEcho/"> delayEcho </a>
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
 </li>
                                     
-<li >
-    <a href="../../examples/dynamic/"> dynamic </a>
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
 </li>
                                     
-<li >
-    <a href="../../examples/filtering/"> filtering </a>
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
 </li>
                                     
-<li >
-    <a href="../../examples/gameaudio/"> gameaudio </a>
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
 </li>
                                     
-<li >
-    <a href="../../examples/generator/"> generator </a>
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
 </li>
                                     
-<li >
-    <a href="../../examples/misc/"> misc </a>
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
 </li>
                                     
-<li >
-    <a href="../../examples/phasing/"> phasing </a>
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
 </li>
                                     
-<li >
-    <a href="../../examples/physicalModeling/"> physicalModeling </a>
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
 </li>
                                     
-<li >
-    <a href="../../examples/pitchShifting/"> pitchShifting </a>
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
 </li>
                                     
-<li >
-    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
 </li>
                                     
-<li >
-    <a href="../../examples/reverb/"> reverb </a>
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
 </li>
                                     
-<li >
-    <a href="../../examples/SAM/"> SAM </a>
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
 </li>
                                     
-<li >
-    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
 </li>
                                     
-<li >
-    <a href="../../examples/spat/"> spat </a>
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
 </li>
                                     
-<li >
-    <a href="../../rsrc/examples.zip"> Download examples </a>
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li >
-    <a href="../../workshops/2020-04-10-faust-juce/">Faust & JUCE</a>
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
 </li>
                                     
-<li >
-    <a href="../../tutorials/teensy/">DSP on the Teensy With Faust</a>
+<li>
+    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
 </li>
                                     
-<li >
-    <a href="../../tutorials/esp32/">DSP on the ESP-32 With Faust</a>
+<li>
+    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
 </li>
                                     
-<li >
-    <a href="../../tutorials/basic-osc/">Making a Sine Oscillator From Scratch</a>
+<li>
+    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li >
-    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
 </li>
                                     
-<li >
-    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
 </li>
                                     
-<li >
-    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
 </li>
                                     
-<li >
-    <a href="../../workshops/2020-04-10-faust-juce/"> 2020-04-10 Faust & JUCE </a>
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
 </li>
                                 </ul>
                             </li>
-                            <li >
-                                <a href="../../about/">About</a>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li >
-                                <a rel="next" href="../quick-start/">
+                            <li class="nav-item">
+                                <a rel="prev" href="../quick-start/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li >
-                                <a rel="prev" href="../compiler/">
+                            <li class="nav-item">
+                                <a rel="next" href="../compiler/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -259,19 +246,54 @@
         </div>
 
         <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#faust-syntax">Faust Syntax</a></li>
-            <li><a href="#faust-program">Faust Program</a></li>
-            <li><a href="#statements">Statements</a></li>
-            <li><a href="#definitions">Definitions</a></li>
-            <li><a href="#function-definitions">Function Definitions</a></li>
-            <li><a href="#definitions-with-pattern-matching">Definitions With Pattern Matching</a></li>
-            <li><a href="#expressions">Expressions</a></li>
-            <li><a href="#primitives">Primitives</a></li>
-    </ul>
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#faust-syntax" class="nav-link">Faust Syntax</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#faust-program" class="nav-link">Faust Program</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#statements" class="nav-link">Statements</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#definitions" class="nav-link">Definitions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#function-definitions" class="nav-link">Function Definitions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#definitions-with-pattern-matching" class="nav-link">Definitions With Pattern Matching</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#expressions" class="nav-link">Expressions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#primitives" class="nav-link">Primitives</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </div></div>
-                <div class="col-md-9" role="main">
+                    <div class="col-md-9" role="main">
 
 <h1 id="faust-syntax">Faust Syntax</h1>
 <!-- TODO we should make a new introductory figure here and add some comments
@@ -1295,7 +1317,7 @@ process = @(10);
 <!-- /faust-run -->
 
 <p>will delay the incoming signal by 10 samples. </p>
-<p>A delay expressed with <code>@</code> doesn't have to be fixed but it must be positive and bounded. Therefore, the values of a slider are perfectly acceptable:</p>
+<p>A delay expressed with <code>@</code> doesn't have to be fixed but it must be bounded and cannot be negative. Therefore, the values of a slider are perfectly acceptable:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust27/exfaust27.svg" class="mx-auto d-block">
@@ -1895,7 +1917,7 @@ process = *(0.5);
 <div class="faust-run"><img src="exfaust43/exfaust43.svg" class="mx-auto d-block">
 
 <pre><code>
-process = ^(2);
+process = /(2);
 
 </code></pre>
 
@@ -2836,8 +2858,7 @@ process = @(N);
 <!-- TODO: intro here -->
 
 <h4 id="rdtable-primitive"><code>rdtable</code> Primitive</h4>
-<p>The <code>rdtable</code> primitive can be used to read through a read-only (pre-defined before compilation) table. The table can either be implemented using a function controlled by a timer (such as <a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>) as demonstrated in the first example, or by using the <code>waveform</code> primitive (as shown in the second example). The idea is that the table is parsed during the initialization
-step and before audio computation begins. </p>
+<p>The <code>rdtable</code> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The table can either be implemented by using the <code>waveform</code> primitive (as shown in the first example) or using a function controlled by a timer (such as <a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>) as demonstrated in the second example. The idea is that the table is created during the initialization step and before audio computation begins. </p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2855,7 +2876,7 @@ step and before audio computation begins. </p>
 <li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>)</li>
 </ul>
 <p><strong>Example: Basic Triangle Wave Oscillator Using the <code>waveform</code> Primitive</strong></p>
-<p>In this example, a basic (and dirty) triangle wave-table is defined using the <a href="#waveform-primitive"><code>waveform</code></a>. It is then used with the <code>rdtable</code> primitive and a phasor to implement a triangle wave oscillator. Note that the output of</p>
+<p>In this example, a basic (and dirty) triangle wave-table is defined using the <a href="#waveform-primitive"><code>waveform</code></a>. It is then used with the <code>rdtable</code> primitive and a phasor to implement a triangle wave oscillator:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust80/exfaust80.svg" class="mx-auto d-block">
@@ -2876,16 +2897,16 @@ process = triangleOsc(f);
 
 <!-- /faust-run -->
 
-<p><strong>Example: Basic Triangle Wave Oscillator Using the <code>waveform</code> Primitive</strong></p>
-<p>In this example, a sine table is implemented using the <a href="#sin-primitive"><code>sin</code> primitive</a> and a timer (<a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>). The timer parses the <code>sin</code> function during the initialization step of the Faust program. It is then used with <code>rdtable</code> to implement a sine wave oscillator. </p>
+<p><strong>Example: Basic Triangle Wave Oscillator Using the <code>sin</code> Primitive and a Timer</strong></p>
+<p>In this example, a sine table is implemented using the <a href="#sin-primitive"><code>sin</code></a> primitive and a timer (<a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>). The timer calls the <code>sin</code> function during the initialization step of the Faust program. It is then used with <code>rdtable</code> to implement a sine wave oscillator. </p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust81/exfaust81.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
-sineWave(tablesize) = float(ba.time)*(2.0*ma.PI)/float(tablesize) : sin;
 tableSize = 1 &lt;&lt; 16;
+sineWave(tablesize) = float(ba.time)*(2.0*ma.PI)/float(tablesize) : sin;
 triangleOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdtable;
 f = hslider(&quot;freq&quot;,440,50,2000,0.01);
 process = triangleOsc(f);
@@ -2900,7 +2921,7 @@ process = triangleOsc(f);
 <!-- /faust-run -->
 
 <h4 id="rwtable-primitive"><code>rwtable</code> Primitive</h4>
-<p>The <code>rwtable</code> primitive can be used to implement a read/write table. It takes an audio input that can be written in the table using a <em>record index</em> (i.e., <code>w</code> below) and read using a read index (i.e., <code>r</code> below).</p>
+<p>The <code>rwtable</code> primitive can be used to implement a read/write table. It takes an audio input that can be written in the table using a <em>write index</em> (i.e., <code>w</code> below) and read using a <em>read index</em> (i.e., <code>r</code> below).</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{5}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3995,6 +4016,7 @@ process = os.sawtooth(freq);
 </code></pre>
 
 <p>Complex nonlinear mappings can be implemented using this system.</p></div>
+            </div>
         </div>
 
         <footer class="col-md-12">
@@ -4010,19 +4032,19 @@ process = os.sawtooth(freq);
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
             <div class="modal-body">
                 <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-                <form role="form">
+                <form>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
@@ -4033,12 +4055,12 @@ process = os.sawtooth(freq);
             </div>
         </div>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
             </div>
             <div class="modal-body">
               <table class="table">
