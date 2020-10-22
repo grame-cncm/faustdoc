@@ -9,234 +9,247 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>Mathematical Documentation - Faust Documentation</title>
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <a class="navbar-brand" href="../..">Faust Documentation</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Documentation</a>
+                </div>
 
                 <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../.." class="nav-link">Home</a>
+                            <li >
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../introduction/" class="dropdown-item">Introduction</a>
+<li >
+    <a href="../introduction/">Introduction</a>
 </li>
                                     
-<li>
-    <a href="../overview/" class="dropdown-item">Overview of the Faust Universe</a>
+<li >
+    <a href="../overview/">Overview of the Faust Universe</a>
 </li>
                                     
-<li>
-    <a href="../quick-start/" class="dropdown-item">Quick start</a>
+<li >
+    <a href="../quick-start/">Quick start</a>
 </li>
                                     
-<li>
-    <a href="../syntax/" class="dropdown-item">Faust Syntax</a>
+<li >
+    <a href="../syntax/">Faust Syntax</a>
 </li>
                                     
-<li>
-    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
+<li >
+    <a href="../compiler/">Using the Compiler</a>
 </li>
                                     
-<li>
-    <a href="../options/" class="dropdown-item">Compiler Options</a>
+<li >
+    <a href="../options/">Compiler Options</a>
 </li>
                                     
-<li>
-    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+<li >
+    <a href="../tools/">faust2[...] Tools</a>
 </li>
                                     
-<li>
-    <a href="../embedding/" class="dropdown-item">Embedding</a>
+<li >
+    <a href="../embedding/">Embedding</a>
 </li>
                                     
-<li>
-    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
+<li >
+    <a href="../optimizing/">Optimizing</a>
 </li>
                                     
-<li>
-    <a href="../osc/" class="dropdown-item">OSC Support</a>
+<li >
+    <a href="../osc/">OSC Support</a>
 </li>
                                     
-<li>
-    <a href="../http/" class="dropdown-item">HTTP Support</a>
+<li >
+    <a href="../http/">HTTP Support</a>
 </li>
                                     
-<li>
-    <a href="../midi/" class="dropdown-item">MIDI Support</a>
+<li >
+    <a href="../midi/">MIDI Support</a>
 </li>
                                     
-<li>
-    <a href="../soundfiles/" class="dropdown-item">Soundfiles Support</a>
+<li >
+    <a href="../soundfiles/">Soundfiles Support</a>
 </li>
                                     
-<li>
-    <a href="./" class="dropdown-item active">Mathematical Documentation</a>
+<li class="active">
+    <a href="./">Mathematical Documentation</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+<li >
+    <a href="../../examples/ambisonics/"> ambisonics </a>
 </li>
                                     
-<li>
-    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+<li >
+    <a href="../../examples/analysis/"> analysis </a>
 </li>
                                     
-<li>
-    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+<li >
+    <a href="../../examples/bela/"> bela </a>
 </li>
                                     
-<li>
-    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+<li >
+    <a href="../../examples/delayEcho/"> delayEcho </a>
 </li>
                                     
-<li>
-    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+<li >
+    <a href="../../examples/dynamic/"> dynamic </a>
 </li>
                                     
-<li>
-    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+<li >
+    <a href="../../examples/filtering/"> filtering </a>
 </li>
                                     
-<li>
-    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+<li >
+    <a href="../../examples/gameaudio/"> gameaudio </a>
 </li>
                                     
-<li>
-    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+<li >
+    <a href="../../examples/generator/"> generator </a>
 </li>
                                     
-<li>
-    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+<li >
+    <a href="../../examples/misc/"> misc </a>
 </li>
                                     
-<li>
-    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+<li >
+    <a href="../../examples/phasing/"> phasing </a>
 </li>
                                     
-<li>
-    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+<li >
+    <a href="../../examples/physicalModeling/"> physicalModeling </a>
 </li>
                                     
-<li>
-    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+<li >
+    <a href="../../examples/pitchShifting/"> pitchShifting </a>
 </li>
                                     
-<li>
-    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+<li >
+    <a href="../../examples/psychoacoustic/"> psychoacoustic </a>
 </li>
                                     
-<li>
-    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+<li >
+    <a href="../../examples/reverb/"> reverb </a>
 </li>
                                     
-<li>
-    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+<li >
+    <a href="../../examples/SAM/"> SAM </a>
 </li>
                                     
-<li>
-    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+<li >
+    <a href="../../examples/smartKeyboard/"> smartKeyboard </a>
 </li>
                                     
-<li>
-    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+<li >
+    <a href="../../examples/spat/"> spat </a>
 </li>
                                     
-<li>
-    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/">Faust & JUCE</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+<li >
+    <a href="../../tutorials/teensy/">DSP on the Teensy With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+<li >
+    <a href="../../tutorials/esp32/">DSP on the ESP-32 With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+<li >
+    <a href="../../tutorials/basic-osc/">Making a Sine Oscillator From Scratch</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+<li >
+    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+<li >
+    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/"> 2020-04-10 Faust & JUCE </a>
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
-                                <a href="../../about/" class="nav-link">About</a>
+                            <li >
+                                <a href="../../about/">About</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../soundfiles/" class="nav-link">
+                            <li >
+                                <a rel="next" href="../soundfiles/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../../examples/ambisonics/" class="nav-link">
+                            <li >
+                                <a rel="prev" href="../../examples/ambisonics/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -246,58 +259,20 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#mathematical-documentation" class="nav-link">Mathematical Documentation</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#goals-of-the-mathdoc" class="nav-link">Goals of the Mathdoc</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#installation-requirements" class="nav-link">Installation Requirements</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#generating-the-mathdoc" class="nav-link">Generating the Mathdoc</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#automatic-documentation" class="nav-link">Automatic Documentation</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#manual-documentation" class="nav-link">Manual Documentation</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#an-example-of-manual-mathdoc" class="nav-link">An Example of Manual Mathdoc</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#localization-of-mathdoc-files" class="nav-link">Localization of Mathdoc Files</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#summary-of-the-mathdoc-generation-steps" class="nav-link">Summary of the Mathdoc Generation Steps</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#mathematical-documentation">Mathematical Documentation</a></li>
+            <li><a href="#goals-of-the-mathdoc">Goals of the Mathdoc</a></li>
+            <li><a href="#installation-requirements">Installation Requirements</a></li>
+            <li><a href="#generating-the-mathdoc">Generating the Mathdoc</a></li>
+            <li><a href="#automatic-documentation">Automatic Documentation</a></li>
+            <li><a href="#manual-documentation">Manual Documentation</a></li>
+            <li><a href="#an-example-of-manual-mathdoc">An Example of Manual Mathdoc</a></li>
+            <li><a href="#localization-of-mathdoc-files">Localization of Mathdoc Files</a></li>
+            <li><a href="#summary-of-the-mathdoc-generation-steps">Summary of the Mathdoc Generation Steps</a></li>
+    </ul>
 </div></div>
-                    <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="mathematical-documentation">Mathematical Documentation</h1>
 <p>The Faust compiler provides a mechanism to produce a self-describing documentation of the mathematical semantic of a Faust program, essentially as a pdf file. The corresponding options are <a href="#compilation-options"><code>-mdoc</code> (short) or <code>--mathdoc</code></a> (long).</p>
@@ -483,7 +458,6 @@ mathematical documentation.
 <li>Then, open the pdf file <code>myfaustfile-mdoc/pdf/myfaustfile.pdf</code>.</li>
 <li>That's all !</li>
 </ul></div>
-            </div>
         </div>
 
         <footer class="col-md-12">
@@ -499,19 +473,19 @@ mathematical documentation.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
             <div class="modal-body">
                 <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-                <form>
+                <form role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
@@ -522,12 +496,12 @@ mathematical documentation.
             </div>
         </div>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
             </div>
             <div class="modal-body">
               <table class="table">

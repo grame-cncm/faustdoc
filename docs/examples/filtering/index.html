@@ -9,234 +9,247 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title> filtering  - Faust Documentation</title>
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/docco.min.css">
         <link href="/css/faust.css" rel="stylesheet">
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <a class="navbar-brand" href="../..">Faust Documentation</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Faust Documentation</a>
+                </div>
 
                 <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../.." class="nav-link">Home</a>
+                            <li >
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+<li >
+    <a href="../../manual/introduction/">Introduction</a>
 </li>
                                     
-<li>
-    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+<li >
+    <a href="../../manual/overview/">Overview of the Faust Universe</a>
 </li>
                                     
-<li>
-    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+<li >
+    <a href="../../manual/quick-start/">Quick start</a>
 </li>
                                     
-<li>
-    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+<li >
+    <a href="../../manual/syntax/">Faust Syntax</a>
 </li>
                                     
-<li>
-    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+<li >
+    <a href="../../manual/compiler/">Using the Compiler</a>
 </li>
                                     
-<li>
-    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+<li >
+    <a href="../../manual/options/">Compiler Options</a>
 </li>
                                     
-<li>
-    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+<li >
+    <a href="../../manual/tools/">faust2[...] Tools</a>
 </li>
                                     
-<li>
-    <a href="../../manual/embedding/" class="dropdown-item">Embedding</a>
+<li >
+    <a href="../../manual/embedding/">Embedding</a>
 </li>
                                     
-<li>
-    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing</a>
+<li >
+    <a href="../../manual/optimizing/">Optimizing</a>
 </li>
                                     
-<li>
-    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+<li >
+    <a href="../../manual/osc/">OSC Support</a>
 </li>
                                     
-<li>
-    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+<li >
+    <a href="../../manual/http/">HTTP Support</a>
 </li>
                                     
-<li>
-    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+<li >
+    <a href="../../manual/midi/">MIDI Support</a>
 </li>
                                     
-<li>
-    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+<li >
+    <a href="../../manual/soundfiles/">Soundfiles Support</a>
 </li>
                                     
-<li>
-    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+<li >
+    <a href="../../manual/mathdoc/">Mathematical Documentation</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../ambisonics/" class="dropdown-item"> ambisonics </a>
+<li >
+    <a href="../ambisonics/"> ambisonics </a>
 </li>
                                     
-<li>
-    <a href="../analysis/" class="dropdown-item"> analysis </a>
+<li >
+    <a href="../analysis/"> analysis </a>
 </li>
                                     
-<li>
-    <a href="../bela/" class="dropdown-item"> bela </a>
+<li >
+    <a href="../bela/"> bela </a>
 </li>
                                     
-<li>
-    <a href="../delayEcho/" class="dropdown-item"> delayEcho </a>
+<li >
+    <a href="../delayEcho/"> delayEcho </a>
 </li>
                                     
-<li>
-    <a href="../dynamic/" class="dropdown-item"> dynamic </a>
+<li >
+    <a href="../dynamic/"> dynamic </a>
 </li>
                                     
-<li>
-    <a href="./" class="dropdown-item active"> filtering </a>
+<li class="active">
+    <a href="./"> filtering </a>
 </li>
                                     
-<li>
-    <a href="../gameaudio/" class="dropdown-item"> gameaudio </a>
+<li >
+    <a href="../gameaudio/"> gameaudio </a>
 </li>
                                     
-<li>
-    <a href="../generator/" class="dropdown-item"> generator </a>
+<li >
+    <a href="../generator/"> generator </a>
 </li>
                                     
-<li>
-    <a href="../misc/" class="dropdown-item"> misc </a>
+<li >
+    <a href="../misc/"> misc </a>
 </li>
                                     
-<li>
-    <a href="../phasing/" class="dropdown-item"> phasing </a>
+<li >
+    <a href="../phasing/"> phasing </a>
 </li>
                                     
-<li>
-    <a href="../physicalModeling/" class="dropdown-item"> physicalModeling </a>
+<li >
+    <a href="../physicalModeling/"> physicalModeling </a>
 </li>
                                     
-<li>
-    <a href="../pitchShifting/" class="dropdown-item"> pitchShifting </a>
+<li >
+    <a href="../pitchShifting/"> pitchShifting </a>
 </li>
                                     
-<li>
-    <a href="../psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+<li >
+    <a href="../psychoacoustic/"> psychoacoustic </a>
 </li>
                                     
-<li>
-    <a href="../reverb/" class="dropdown-item"> reverb </a>
+<li >
+    <a href="../reverb/"> reverb </a>
 </li>
                                     
-<li>
-    <a href="../SAM/" class="dropdown-item"> SAM </a>
+<li >
+    <a href="../SAM/"> SAM </a>
 </li>
                                     
-<li>
-    <a href="../smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+<li >
+    <a href="../smartKeyboard/"> smartKeyboard </a>
 </li>
                                     
-<li>
-    <a href="../spat/" class="dropdown-item"> spat </a>
+<li >
+    <a href="../spat/"> spat </a>
 </li>
                                     
-<li>
-    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+<li >
+    <a href="../../rsrc/examples.zip"> Download examples </a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/">Faust & JUCE</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+<li >
+    <a href="../../tutorials/teensy/">DSP on the Teensy With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+<li >
+    <a href="../../tutorials/esp32/">DSP on the ESP-32 With Faust</a>
 </li>
                                     
-<li>
-    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+<li >
+    <a href="../../tutorials/basic-osc/">Making a Sine Oscillator From Scratch</a>
 </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li>
-    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+<li >
+    <a href="../../workshops/2018-12-01-paw/"> 2018-12-01 PAW </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+<li >
+    <a href="../../workshops/2020-03-24-faust-citi/"> 2020-03-24 CITI </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-101/"> 2020-04-10 Faust 101 </a>
 </li>
                                     
-<li>
-    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+<li >
+    <a href="../../workshops/2020-04-10-faust-juce/"> 2020-04-10 Faust & JUCE </a>
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
-                                <a href="../../about/" class="nav-link">About</a>
+                            <li >
+                                <a href="../../about/">About</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../dynamic/" class="nav-link">
+                            <li >
+                                <a rel="next" href="../dynamic/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../gameaudio/" class="nav-link">
+                            <li >
+                                <a rel="prev" href="../gameaudio/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -246,190 +259,53 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#filtering" class="nav-link">filtering</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#apf" class="nav-link">APF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#bandfilter" class="nav-link">bandFilter</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#bpf" class="nav-link">BPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#crybaby" class="nav-link">cryBaby</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#diodeladder" class="nav-link">diodeLadder</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#dnn" class="nav-link">DNN</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#filterbank" class="nav-link">filterBank</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#graphiceqlab" class="nav-link">graphicEqLab</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#highshelf" class="nav-link">highShelf</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#hpf" class="nav-link">HPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#korg35hpf" class="nav-link">korg35HPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#korg35lpf" class="nav-link">korg35LPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#lfboost" class="nav-link">lfBoost</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#lowboost" class="nav-link">lowBoost</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#lowcut" class="nav-link">lowCut</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#lowshelf" class="nav-link">lowShelf</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#lpf" class="nav-link">LPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#mooghalfladder" class="nav-link">moogHalfLadder</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#moogladder" class="nav-link">moogLadder</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#moogvcf" class="nav-link">moogVCF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#notch" class="nav-link">notch</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#oberheimbpf" class="nav-link">oberheimBPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#oberheimbsf" class="nav-link">oberheimBSF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#oberheim" class="nav-link">oberheim</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#oberheimhpf" class="nav-link">oberheimHPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#oberheimlpf" class="nav-link">oberheimLPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#parametriceqlab" class="nav-link">parametricEqLab</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#parametricequalizer" class="nav-link">parametricEqualizer</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#peakingeq" class="nav-link">peakingEQ</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#peaknotch" class="nav-link">peakNotch</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#sallenkey2ndorderbpf" class="nav-link">sallenKey2ndOrderBPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#sallenkey2ndorder" class="nav-link">sallenKey2ndOrder</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#sallenkey2ndorderhpf" class="nav-link">sallenKey2ndOrderHPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#sallenkey2ndorderlpf" class="nav-link">sallenKey2ndOrderLPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#sallenkeyonepole" class="nav-link">sallenKeyOnePole</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#sallenkeyonepolehpf" class="nav-link">sallenKeyOnePoleHPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#sallenkeyonepolelpf" class="nav-link">sallenKeyOnePoleLPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#spectraltilt" class="nav-link">spectralTilt</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#vcfwahlab" class="nav-link">vcfWahLab</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#vocoder" class="nav-link">vocoder</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#wahpedal" class="nav-link">wahPedal</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#filtering">filtering</a></li>
+            <li><a href="#apf">APF</a></li>
+            <li><a href="#bpf">BPF</a></li>
+            <li><a href="#dnn">DNN</a></li>
+            <li><a href="#hpf">HPF</a></li>
+            <li><a href="#lpf">LPF</a></li>
+            <li><a href="#bandfilter">bandFilter</a></li>
+            <li><a href="#crybaby">cryBaby</a></li>
+            <li><a href="#diodeladder">diodeLadder</a></li>
+            <li><a href="#filterbank">filterBank</a></li>
+            <li><a href="#graphiceqlab">graphicEqLab</a></li>
+            <li><a href="#highshelf">highShelf</a></li>
+            <li><a href="#korg35hpf">korg35HPF</a></li>
+            <li><a href="#korg35lpf">korg35LPF</a></li>
+            <li><a href="#lfboost">lfBoost</a></li>
+            <li><a href="#lowboost">lowBoost</a></li>
+            <li><a href="#lowcut">lowCut</a></li>
+            <li><a href="#lowshelf">lowShelf</a></li>
+            <li><a href="#mooghalfladder">moogHalfLadder</a></li>
+            <li><a href="#moogladder">moogLadder</a></li>
+            <li><a href="#moogvcf">moogVCF</a></li>
+            <li><a href="#notch">notch</a></li>
+            <li><a href="#oberheim">oberheim</a></li>
+            <li><a href="#oberheimbpf">oberheimBPF</a></li>
+            <li><a href="#oberheimbsf">oberheimBSF</a></li>
+            <li><a href="#oberheimhpf">oberheimHPF</a></li>
+            <li><a href="#oberheimlpf">oberheimLPF</a></li>
+            <li><a href="#parametriceqlab">parametricEqLab</a></li>
+            <li><a href="#parametricequalizer">parametricEqualizer</a></li>
+            <li><a href="#peaknotch">peakNotch</a></li>
+            <li><a href="#peakingeq">peakingEQ</a></li>
+            <li><a href="#sallenkey2ndorder">sallenKey2ndOrder</a></li>
+            <li><a href="#sallenkey2ndorderbpf">sallenKey2ndOrderBPF</a></li>
+            <li><a href="#sallenkey2ndorderhpf">sallenKey2ndOrderHPF</a></li>
+            <li><a href="#sallenkey2ndorderlpf">sallenKey2ndOrderLPF</a></li>
+            <li><a href="#sallenkeyonepole">sallenKeyOnePole</a></li>
+            <li><a href="#sallenkeyonepolehpf">sallenKeyOnePoleHPF</a></li>
+            <li><a href="#sallenkeyonepolelpf">sallenKeyOnePoleLPF</a></li>
+            <li><a href="#spectraltilt">spectralTilt</a></li>
+            <li><a href="#vcfwahlab">vcfWahLab</a></li>
+            <li><a href="#vocoder">vocoder</a></li>
+            <li><a href="#wahpedal">wahPedal</a></li>
+    </ul>
 </div></div>
-                    <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="filtering">filtering</h1>
 <h2 id="apf">APF</h2>
@@ -461,10 +337,138 @@ process(x) = APF(x,F,G,Q);
 
 <!-- /faust-run -->
 
-<h2 id="bandfilter">bandFilter</h2>
+<h2 id="bpf">BPF</h2>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
+// for more accurate examples of filter functions
+
+declare name &quot;BPF&quot;;
+
+import(&quot;maxmsp.lib&quot;);
+
+G = hslider(&quot;Gain [unit:dB]&quot;, 0, -10, 10, 0.1);
+F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
+Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
+
+process(x) = BPF(x,F,G,Q);
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="dnn">DNN</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+// Forward Deep Neural Net (DNN), any number of layers of any size each
+
+declare name    &quot;DNN&quot;;
+declare author  &quot;JOS&quot;;
+declare license &quot;STK-4.3&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+layerSizes = (8,5,8); // autoencoder with 8 in &amp; out, 5-state hidden layer
+w(m,n,k) = m*100+n*10+k; // placeholder weights: m=layer, n=fromNode, k=destNode
+
+M = ba.count(layerSizes);
+N(l) = ba.take(l+1,layerSizes); // Nodes per layer
+
+process = seq(m, M-1, layer(m))
+// look at weights:
+// process = par(m,M,par(n,N(m),par(k,N(m),w(m,n,k))))
+with {
+  layer(m) = weights(m) :&gt; nonlinearities(m);
+  nonlinearities(m) = bus(N(m)*N(m+1)) :&gt; par(n,N(m+1),nl(n));
+  weights(m) = bus(N(m)) &lt;: par(n,N(m),(bus(N(m+1))&lt;:wts(m,n)));
+  wts(m,n) = bus(N(m+1)) : par(k,N(m+1),*(w(m,n,k)));
+  nl(n,x) = x * (x&gt;0); // ReLU
+  bus(N) = par(k,N,_);
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="hpf">HPF</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
+// for more accurate examples of filter functions
+
+declare name &quot;HPF&quot;;
+
+import(&quot;maxmsp.lib&quot;);
+
+G = hslider(&quot;Gain [unit:dB]&quot;, 0, -10, 10, 0.1);
+F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
+Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
+
+process(x) = HPF(x,F,G,Q);
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="lpf">LPF</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
+// for more accurate examples of filter functions
+
+declare name &quot;LPF&quot;;
+
+import(&quot;maxmsp.lib&quot;);
+
+G = hslider(&quot;Gain [unit:dB]&quot;, 0, -10, 10, 0.1);
+F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
+Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
+
+process(x) = LPF(x,F,G,Q);
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="bandfilter">bandFilter</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
@@ -515,36 +519,7 @@ process         = vgroup(&quot;Bandfilter&quot;, bandfilter(1000));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-
-<!-- /faust-run -->
-
-<h2 id="bpf">BPF</h2>
-<!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
-
-<pre><code>
-// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
-// for more accurate examples of filter functions
-
-declare name &quot;BPF&quot;;
-
-import(&quot;maxmsp.lib&quot;);
-
-G = hslider(&quot;Gain [unit:dB]&quot;, 0, -10, 10, 0.1);
-F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
-Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
-
-process(x) = BPF(x,F,G,Q);
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -553,7 +528,7 @@ process(x) = BPF(x,F,G,Q);
 <h2 id="crybaby">cryBaby</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;cryBaby&quot;;
@@ -564,7 +539,7 @@ process = dm.crybaby_demo;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -573,7 +548,7 @@ process = dm.crybaby_demo;
 <h2 id="diodeladder">diodeLadder</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;diodeLadder&quot;;
@@ -591,48 +566,7 @@ process = inputSignal : ve.diodeLadder(normFreq,Q) &lt;:_,_;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-
-<!-- /faust-run -->
-
-<h2 id="dnn">DNN</h2>
-<!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
-
-<pre><code>
-// Forward Deep Neural Net (DNN), any number of layers of any size each
-
-declare name    &quot;DNN&quot;;
-declare author  &quot;JOS&quot;;
-declare license &quot;STK-4.3&quot;;
-
-import(&quot;stdfaust.lib&quot;);
-
-layerSizes = (8,5,8); // autoencoder with 8 in &amp; out, 5-state hidden layer
-w(m,n,k) = m*100+n*10+k; // placeholder weights: m=layer, n=fromNode, k=destNode
-
-M = ba.count(layerSizes);
-N(l) = ba.take(l+1,layerSizes); // Nodes per layer
-
-process = seq(m, M-1, layer(m))
-// look at weights:
-// process = par(m,M,par(n,N(m),par(k,N(m),w(m,n,k))))
-with {
-  layer(m) = weights(m) :&gt; nonlinearities(m);
-  nonlinearities(m) = bus(N(m)*N(m+1)) :&gt; par(n,N(m+1),nl(n));
-  weights(m) = bus(N(m)) &lt;: par(n,N(m),(bus(N(m+1))&lt;:wts(m,n)));
-  wts(m,n) = bus(N(m+1)) : par(k,N(m+1),*(w(m,n,k)));
-  nl(n,x) = x * (x&gt;0); // ReLU
-  bus(N) = par(k,N,_);
-};
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust5/exfaust5.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -641,7 +575,7 @@ with {
 <h2 id="filterbank">filterBank</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;filterBank&quot;;
@@ -654,7 +588,7 @@ process = dm.filterbank_demo;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust6/exfaust6.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -663,7 +597,7 @@ process = dm.filterbank_demo;
 <h2 id="graphiceqlab">graphicEqLab</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;graphicEqLab&quot;;
@@ -681,7 +615,7 @@ process =
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust7/exfaust7.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -690,7 +624,7 @@ process =
 <h2 id="highshelf">highShelf</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
@@ -710,36 +644,7 @@ process(x) = highShelf(x,F,G,Q);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-
-<!-- /faust-run -->
-
-<h2 id="hpf">HPF</h2>
-<!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
-
-<pre><code>
-// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
-// for more accurate examples of filter functions
-
-declare name &quot;HPF&quot;;
-
-import(&quot;maxmsp.lib&quot;);
-
-G = hslider(&quot;Gain [unit:dB]&quot;, 0, -10, 10, 0.1);
-F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
-Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
-
-process(x) = HPF(x,F,G,Q);
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust9/exfaust9.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust10/exfaust10.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -748,7 +653,7 @@ process(x) = HPF(x,F,G,Q);
 <h2 id="korg35hpf">korg35HPF</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;korg35HPF&quot;;
@@ -767,7 +672,7 @@ process = inputSignal : ve.korg35HPF(normFreq,Q) &lt;:_,_;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust10/exfaust10.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust11/exfaust11.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -776,7 +681,7 @@ process = inputSignal : ve.korg35HPF(normFreq,Q) &lt;:_,_;
 <h2 id="korg35lpf">korg35LPF</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;korg35LPF&quot;;
@@ -795,7 +700,7 @@ process = inputSignal : ve.korg35LPF(normFreq,Q) &lt;:_,_;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust11/exfaust11.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust12/exfaust12.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -804,7 +709,7 @@ process = inputSignal : ve.korg35LPF(normFreq,Q) &lt;:_,_;
 <h2 id="lfboost">lfBoost</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
@@ -851,7 +756,7 @@ process = vgroup(&quot;lowboost&quot;, lfboost(nentry(&quot;freq [unit:Hz][style
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust12/exfaust12.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust13/exfaust13.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -860,7 +765,7 @@ process = vgroup(&quot;lowboost&quot;, lfboost(nentry(&quot;freq [unit:Hz][style
 <h2 id="lowboost">lowBoost</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
@@ -907,7 +812,7 @@ process             = vgroup(&quot;low-freq shelving boost&quot;, lfboost(freq,g
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust13/exfaust13.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust14/exfaust14.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -916,7 +821,7 @@ process             = vgroup(&quot;low-freq shelving boost&quot;, lfboost(freq,g
 <h2 id="lowcut">lowCut</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
@@ -963,7 +868,7 @@ process         = vgroup(&quot;low-freq shelving cut&quot;, lfcut(freq,att));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust14/exfaust14.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust15/exfaust15.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -972,7 +877,7 @@ process         = vgroup(&quot;low-freq shelving cut&quot;, lfcut(freq,att));
 <h2 id="lowshelf">lowShelf</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
@@ -987,35 +892,6 @@ F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
 Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
 
 process(x) = lowShelf(x,F,G,Q);
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust15/exfaust15.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-
-<!-- /faust-run -->
-
-<h2 id="lpf">LPF</h2>
-<!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
-
-<pre><code>
-// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
-// for more accurate examples of filter functions
-
-declare name &quot;LPF&quot;;
-
-import(&quot;maxmsp.lib&quot;);
-
-G = hslider(&quot;Gain [unit:dB]&quot;, 0, -10, 10, 0.1);
-F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
-Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
-
-process(x) = LPF(x,F,G,Q);
 
 
 </code></pre>
@@ -1132,10 +1008,40 @@ process(x) = notch(x,F,G,Q);
 
 <!-- /faust-run -->
 
-<h2 id="oberheimbpf">oberheimBPF</h2>
+<h2 id="oberheim">oberheim</h2>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;oberheimBSF&quot;;
+declare description &quot;Demonstration of the Oberheim generic multi-outputs Filter&quot;;
+declare author &quot;Eric Tarr, GRAME&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
+normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
+switch = checkbox(&quot;Saw/Noise&quot;);
+
+inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+
+// The BSF, BPF, HPF and LPF outputs are produced
+process = inputSignal : ve.oberheim(normFreq,Q);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust21/exfaust21.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="oberheimbpf">oberheimBPF</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;oberheimBPF&quot;;
@@ -1155,7 +1061,7 @@ process = inputSignal : ve.oberheimBPF(normFreq,Q) &lt;:_,_;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust21/exfaust21.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust22/exfaust22.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -1164,7 +1070,7 @@ process = inputSignal : ve.oberheimBPF(normFreq,Q) &lt;:_,_;
 <h2 id="oberheimbsf">oberheimBSF</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust23/exfaust23.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;oberheimBSF&quot;;
@@ -1180,36 +1086,6 @@ switch = checkbox(&quot;Saw/Noise&quot;);
 inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.oberheimBSF(normFreq,Q) &lt;:_,_;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust22/exfaust22.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-
-<!-- /faust-run -->
-
-<h2 id="oberheim">oberheim</h2>
-<!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust23/exfaust23.svg" class="mx-auto d-block">
-
-<pre><code>
-declare name &quot;oberheimBSF&quot;;
-declare description &quot;Demonstration of the Oberheim generic multi-outputs Filter&quot;;
-declare author &quot;Eric Tarr, GRAME&quot;;
-
-import(&quot;stdfaust.lib&quot;);
-
-Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
-normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
-switch = checkbox(&quot;Saw/Noise&quot;);
-
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
-
-// The BSF, BPF, HPF and LPF outputs are produced
-process = inputSignal : ve.oberheim(normFreq,Q);
 
 </code></pre>
 
@@ -1328,39 +1204,10 @@ process = dm.parametric_eq_demo;
 
 <!-- /faust-run -->
 
-<h2 id="peakingeq">peakingEQ</h2>
-<!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
-
-<pre><code>
-// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
-// for more accurate examples of filter functions
-
-declare name &quot;peakingEQ&quot;;
-
-import(&quot;maxmsp.lib&quot;);
-
-G = hslider(&quot;Gain [unit:dB]&quot;, 0, -10, 10, 0.1);
-F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
-Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
-
-process(x) = peakingEQ(x,F,G,Q);
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust28/exfaust28.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-
-<!-- /faust-run -->
-
 <h2 id="peaknotch">peakNotch</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust29/exfaust29.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
@@ -1380,36 +1227,36 @@ process(x) = peakNotch(x,F,G,Q);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust29/exfaust29.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust28/exfaust28.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
 <!-- /faust-run -->
 
-<h2 id="sallenkey2ndorderbpf">sallenKey2ndOrderBPF</h2>
+<h2 id="peakingeq">peakingEQ</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust30/exfaust30.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust29/exfaust29.svg" class="mx-auto d-block">
 
 <pre><code>
-declare name &quot;sallenKey2ndOrderBPF&quot;;
-declare description &quot;Demonstration of the Sallen-Key Second Order Band-Pass Filter&quot;;
-declare author &quot;Eric Tarr&quot;;
+// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check filters.lib
+// for more accurate examples of filter functions
 
-import(&quot;stdfaust.lib&quot;);
+declare name &quot;peakingEQ&quot;;
 
-Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
-normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
-switch = checkbox(&quot;Saw/Noise&quot;);
+import(&quot;maxmsp.lib&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+G = hslider(&quot;Gain [unit:dB]&quot;, 0, -10, 10, 0.1);
+F = hslider(&quot;Freq&quot;, 1000, 100, 10000, 1);
+Q = hslider(&quot;Q&quot;, 1, 0.01, 100, 0.01);
 
-process = inputSignal : ve.sallenKey2ndOrderBPF(normFreq,Q) &lt;:_,_;
+process(x) = peakingEQ(x,F,G,Q);
+
 
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust30/exfaust30.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust29/exfaust29.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 
@@ -1418,7 +1265,7 @@ process = inputSignal : ve.sallenKey2ndOrderBPF(normFreq,Q) &lt;:_,_;
 <h2 id="sallenkey2ndorder">sallenKey2ndOrder</h2>
 <!-- faust-run -->
 
-<div class="faust-run"><img src="exfaust31/exfaust31.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust30/exfaust30.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;sallenKey2ndOrderBPF&quot;;
@@ -1435,6 +1282,35 @@ inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _ ;
 
 // The LPF and HPF outputs are produced
 process = inputSignal : ve.sallenKey2ndOrder(normFreq,Q);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/filtering/exfaust30/exfaust30.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<h2 id="sallenkey2ndorderbpf">sallenKey2ndOrderBPF</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust31/exfaust31.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;sallenKey2ndOrderBPF&quot;;
+declare description &quot;Demonstration of the Sallen-Key Second Order Band-Pass Filter&quot;;
+declare author &quot;Eric Tarr&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
+normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
+switch = checkbox(&quot;Saw/Noise&quot;);
+
+inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+
+process = inputSignal : ve.sallenKey2ndOrderBPF(normFreq,Q) &lt;:_,_;
 
 </code></pre>
 
@@ -1688,7 +1564,6 @@ process = dm.wah4_demo;
 </div>
 
 <!-- /faust-run --></div>
-            </div>
         </div>
 
         <footer class="col-md-12">
@@ -1704,19 +1579,19 @@ process = dm.wah4_demo;
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
         <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
             <div class="modal-body">
                 <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-                <form>
+                <form role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
@@ -1727,12 +1602,12 @@ process = dm.wah4_demo;
             </div>
         </div>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
             </div>
             <div class="modal-body">
               <table class="table">
