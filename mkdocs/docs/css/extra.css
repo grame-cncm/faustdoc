@@ -1,3 +1,4 @@
+/* intended to fix side bar navigation issue (no scroll bar) */
 .bs-sidebar {
   overflow-y: auto;
   max-height: 90%;
