@@ -1,100 +1,147 @@
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+import("stdfaust.lib");
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Grain Generator.
-// Another granular synthesis example.
-// This one is not finished, but ready for more features and improvements...
+// A complete Stereo FX chain with:
+//		CHORUS
+//		PHASER
+//		DELAY
+//		REVERB
 //
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// Designed to use the Analog Input for parameters controls.
+//
+// CONTROLES ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // ANALOG IN:
-// ANALOG 0	: Population: 0 = almost nothing. 1 = Full grain
-// ANALOG 1	: Depth of each grain, in ms.
-// ANALOG 2	: Position in the table = delay 
-// ANALOG 3	: Speed = pitch change of the grains
-// ANALOG 4	: Feedback
+// ANALOG 0	: Chorus Depth
+// ANALOG 1	: Chorus Delay
+// ANALOG 2	: Phaser Dry/Wet
+// ANALOG 3	: Phaser Frequency ratio
+// ANALOG 4	: Delay Dry/Wet
+// ANALOG 5	: Delay Time
+// ANALOG 6	: Reverberation Dry/Wet
+// ANALOG 7	: Reverberation Room size
 //
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// Available by OSC : (see BELA console for precise adress)
+// Rate			: Chorus LFO modulation rate (Hz)
+// Deviation	: Chorus delay time deviation.
+//
+// InvertSum	: Phaser inversion of phaser in sum. (On/Off)
+// VibratoMode	: Phaser vibrato Mode. (On/Off)
+// Speed		: Phaser LFO frequency
+// NotchDepth	: Phaser LFO depth
+// Feedback		: Phaser Feedback
+// NotchWidth	: Phaser Notch Width
+// MinNotch1	: Phaser Minimal frequency
+// MaxNotch1	: Phaser Maximal Frequency
+//
+// Damp			: Reverberation Damp
+// Stereo		: Reverberation Stereo Width
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import("all.lib");
+process = chorus_stereo(dmax,curdel,rate,sigma,do2,voices) : phaserSt : xdelay : reverb;
 
-// FOR 4 grains - MONO
+// CHORUS (from SAM demo lib) //////////////////////////////////////////////////////////////////////////////////////////////////////////
+voices = 8; // MUST BE EVEN
 
-// UI //////////////////////////////////////////
-popul = 1 - hslider("population[BELA: ANALOG_0]", 1, 0, 1, 0.001);	// Coef 1 = maximum; 0 = almost nothing (0.95)
-taille = hslider("taille[BELA: ANALOG_1]", 100, 4, 200, 0.001 );	// Size in milliseconds
-decal = 1 - hslider("decal[BELA: ANALOG_2]",0,0,1,0.001);			// Read position compared to table write position
+pi = 4.0*atan(1.0);
+periodic  = 1;
 
-speed = hslider("speed[BELA: ANALOG_3]", 1, 0.125, 4, 0.001);
+dmax = 8192;
+curdel = dmax * vslider("Delay[BELA: ANALOG_1]", 0.5, 0, 1, 1) : si.smooth(0.999);
+rateMax = 7.0; // Hz
+rateMin = 0.01;
+rateT60 = 0.15661;
 
-feedback = hslider("feedback[BELA: ANALOG_4]",0,0,2,0.001);	
+rate = vslider("Rate", 0.5, rateMin, rateMax, 0.0001): si.smooth(ba.tau2pole(rateT60/6.91));
+depth = vslider("Depth [BELA: ANALOG_0]", 0.5, 0, 1, 0.001) : si.smooth(ba.tau2pole(depthT60/6.91));
+// (dept = dry/wet)
 
-freq = 1000/taille;
-tmpTaille = taille*ma.SR/ 1000;
-clocSize = int(tmpTaille + (tmpTaille*popul*10)); // duration between 2 clicks
+depthT60 = 0.15661;
+delayPerVoice = 0.5*curdel/voices;
+sigma = delayPerVoice * vslider("Deviation",0.5,0,1,0.001) : si.smooth(0.999);
 
-// CLK GENERAL /////////////////////////////////
-// 4 clicks for 4 grains generators.
-// (idem clk freq/4 and a counter...)
-detect1(x) = select2 (x < 10, 0, 1);
-detect2(x) = select2 (x > clocSize*1/3, 0, 1) : select2 (x < (clocSize*1/3)+10, 0, _);
-detect3(x) = select2 (x > clocSize*2/3, 0, 1) : select2 (x < (clocSize*2/3)+10, 0, _);
-detect4(x) = select2 (x > clocSize-10, 0, 1);
-cloc = (%(_,clocSize))~(+(1)) <: (detect1: trig),(detect2: trig),(detect3: trig),(detect4: trig);
+do2 = depth;   // use when depth=1 means "multivibrato" effect (no original => all are modulated)
 
-// SIGNAUX Ctrls Player ////////////////////////
-trig = _<:_,mem: >;
-envelop = *(2*PI):+(PI):cos:*(0.5):+(0.5);
-
-rampe(f, t) = delta : (+ : select2(t,_,delta<0) : max(0)) ~ _ : raz
-	with {
-		raz(x) = select2 (x > 1, x, 0);
-		delta = sh(f,t)/ma.SR;
-		sh(x,t) = ba.sAndH(t,x);
-	};
-
-rampe2(speed, t) = delta : (+ : select2(t,_,delta<0) : max(0)) ~ _ 
-	with {
-		delta = sh(speed,t);
-		sh(x,t) = ba.sAndH(t,x);
-	};
-
-// RWTable //////////////////////////////////////
-unGrain(input, clk) = (linrwtable(wf, rindex) : *(0.2 * EnvGrain))
-	with {
-        SR = 44100;
-        buffer_sec = 1;
-        size = int(SR * buffer_sec);
-        init = 0.;
-
-        EnvGrain = clk : (rampe(freq) : envelop);	
-
-        windex = (%(_,size) ) ~ (+(1));
-        posTabl = int(ba.sAndH(clk, windex));
-        rindex = %(int(rampe2(speed, clk)) + posTabl + int(size * decal), size);
-
-        wf = size, init, int(windex), input;
-    };
-
-// LINEAR_INTERPOLATION_RWTABLE //////////////////////////////////
-// read rwtable with linear interpolation
-// wf : waveform to read (wf is defined by (size_buffer, init, windex, input))
-// x  : position to read (0 <= x < size(wf)) and float
-// nota: rwtable(size, init, windex, input, rindex)
-
-linrwtable(wf,x) = linterpolation(y0,y1,d)
+chorus_stereo(dmax,curdel,rate,sigma,do2,voices) =
+      _,_ <: *(1-do2),*(1-do2),(*(do2),*(do2) <: par(i,voices,voice(i)):>_,_) : ro.interleave(2,2) : +,+;
+      voice(i) = de.fdelay(dmax,min(dmax,del(i)))/(i+1)
     with {
-        x0 = int(x);                //
-        x1 = int(x+1);				//
-        d  = x-x0;
-        y0 = rwtable(wf,x0);		//
-        y1 = rwtable(wf,x1);		//
-        linterpolation(v0,v1,c) = v0*(1-c)+v1*c;
+       angle(i) = 2*pi*(i/2)/voices + (i%2)*pi/2;
+       voice(i) = de.fdelay(dmax,min(dmax,del(i))) * cos(angle(i));
+
+         del(i) = curdel*(i+1)/voices + dev(i);
+         rates(i) = rate/float(i+1);
+         dev(i) = sigma *
+             os.oscp(rates(i),i*2*pi/voices);
     };
 
-// FINALISATION /////////////////////////////////////////////////////////////////////////////////////
-routeur(a, b, c, d, e) = a, b, a, c, a, d, a, e;
+// PHASER (from demo lib.) /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+phaserSt = _,_ <: _, _, phaser2_stereo : dry_wetST(dwPhaz)
+    with {
 
-processus = _, cloc : routeur : (unGrain, unGrain, unGrain, unGrain) :> fi.dcblockerat(20);
-process = _,_: ((+(_,_) :processus) ~ (*(feedback))),((+(_,_) :processus) ~ (*(feedback)));
+        invert = checkbox("InvertSum");
+        vibr = checkbox("VibratoMode"); // In this mode you can hear any "Doppler"
+
+        phaser2_stereo = pf.phaser2_stereo(Notches,width,frqmin,fratio,frqmax,speed,mdepth,fb,invert);
+
+        Notches = 4; // Compile-time parameter: 2 is typical for analog phaser stomp-boxes
+
+        speed  = hslider("Speed", 0.5, 0, 10, 0.001);
+        depth  = hslider("NotchDepth", 1, 0, 1, 0.001);
+        fb     = hslider("Feedback", 0.7, -0.999, 0.999, 0.001);
+
+        width  = hslider("NotchWidth",1000, 10, 5000, 1);
+        frqmin = hslider("MinNotch1",100, 20, 5000, 1);
+        frqmax = hslider("MaxNotch1",800, 20, 10000, 1) : max(frqmin);
+        fratio = hslider("NotchFreqRatio[BELA: ANALOG_3]",1.5, 1.1, 4, 0.001);
+        dwPhaz = vslider("dryWetPhaser[BELA: ANALOG_2]", 0.5, 0, 1, 0.001); 
+
+        mdepth = select2(vibr,depth,2); // Improve "ease of use"
+    };
+
+// DELAY (with feedback and crossfeeback) //////////////////////////////////////////////////////////////////////////////////////////////
+delay = ba.sec2samp(hslider("delay[BELA: ANALOG_5]", 1,0,2,0.001));
+preDelL	= delay/2;
+delL	= delay;
+delR	= delay;
+
+crossLF	= 1200;
+
+CrossFeedb = 0.6;
+dwDel = vslider("dryWetDelay[BELA: ANALOG_4]", 0.5, 0, 1, 0.001);
+
+routeur(a,b,c,d) = ((a*CrossFeedb):fi.lowpass(2,crossLF))+c,
+					((b*CrossFeedb):fi.lowpass(2,crossLF))+d;
+
+xdelay = _,_ <: _,_,((de.sdelay(65536, 512,preDelL),_):
+		(routeur : de.sdelay(65536, 512,delL) ,de.sdelay(65536, 512,delR)) ~ (_,_)) : dry_wetST(dwDel);
+
+// REVERB (from freeverb_demo) /////////////////////////////////////////////////////////////////////////////////////////////////////////
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
+	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+	*(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.5, 0, 1, 0.001)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo",0.5,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.2, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wetST(dw,x1,x2,y1,y2) = (wet*y1 + dry*x1),(wet*y2 + dry*x2)
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
 

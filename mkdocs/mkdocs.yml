@@ -1,8 +1,9 @@
 site_name: Faust Documentation
+title_brand: Documentation
 site_description: A guide to the Faust Programming Language.
 copyright: Copyright &copy; 2020 <a href="https://www.grame.fr">Grame-CNCM</a>
 nav:
-    - Home: index.md
+    - Home: index.md  
     - Faust Manual: 
         - 'Introduction' : manual/introduction.md
         - 'Overview of the Faust Universe' : manual/overview.md
@@ -49,8 +50,10 @@ nav:
       - ' 2020-04-10 Faust & JUCE ': workshops/2020-04-10-faust-juce.md
     - About: about.md
 
-theme: flatly
-#The available installed themes are: mkdocs, readthedocs, cinder, cosmo, flatly, spacelab, united, yeti
+theme: 
+  name: mkdocs
+  custom_dir: 'theme'
+  navigation_depth: 4
 
 site_dir: ../docs
 
@@ -68,9 +71,7 @@ plugins:
     - search
 
 extra_css:
-   - '/css/faust.css'
    - '/css/quickref.css'
-   - '/css/extra.css'
    - '/rail/railroad-diagrams.css'
 
 extra_javascript:
