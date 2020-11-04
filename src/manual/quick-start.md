@@ -120,8 +120,8 @@ process = no.noise <: filter,filter;
 ```
 <!-- /faust-run -->
 
-> Note that this example allows us to have 2 separate filters for each channel. Since both filters currently have the same parameters, another way of writing this could be: `process = no.noise : filter <: _,_;`.  
-You could think of the first form as a same noise signal splitted and then filtered on left and right channels, and the second form as the filtered noise then splitted on left and right channels. But the compiler understand that the same filtered noise will be produced on left and right channels in both cases. So the filtered noise signal can be computed only once and used on left and right channels. For the two progams, the compiler will actually generate the exact same optimized code ! This is a very powerful property of its semantically driven compilation model. 
+Note that this example allows us to have 2 separate filters for each channel. Since both filters currently have the same parameters, another way of writing this could be: `process = no.noise : filter <: _,_;`.  
+You could think of the first form as a same noise signal splitted and then filtered on left and right channels, and the second form as the filtered noise then splitted on left and right channels. But the compiler understand that the same filtered noise will be produced on left and right channels in both cases. So the filtered noise signal can be computed only once and used on left and right channels. For the two progams, the compiler will actually generate the exact same optimized code ! This is **a very powerful property of its semantically driven compilation model**. 
 
 Since `filter,filter` is considered here as a full expression, we cannot use the `:` operator to connect `no.noise` to the two filters in parallel because `filter,filter` has two inputs (`_,_ : filter,filter : _,_`) and `no.noise` only has one output. 
 
