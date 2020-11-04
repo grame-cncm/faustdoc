@@ -82,8 +82,8 @@ process = +(0.01) ~ ma.decimal;
 
 * Try to run the program (play button in the editor) and it should make sound! What are we generating here?
     * -> A [sawtooth wave](https://en.wikipedia.org/wiki/Sawtooth_wave). 
-* How do we change the pitch of the sawtooth wave? -
-    * > We should increment the counter faster or slower. Try different values (e.g., 0.001, 0.1, etc.).
+* How do we change the pitch of the sawtooth wave? 
+    * -> We should increment the counter faster or slower. Try different values (e.g., 0.001, 0.1, etc.).
 
 * Instead of controlling the increment of the counter, we'd like to control the
 frequency of the sawtooth wave.  <!-- What's a frequency? Show how it impacts the generated wave.-->
