@@ -445,10 +445,8 @@ process = no.noise &lt;: filter,filter;
 
 <!-- /faust-run -->
 
-<blockquote>
 <p>Note that this example allows us to have 2 separate filters for each channel. Since both filters currently have the same parameters, another way of writing this could be: <code>process = no.noise : filter &lt;: _,_;</code>.<br />
-You could think of the first form as a same noise signal splitted and then filtered on left and right channels, and the second form as the filtered noise then splitted on left and right channels. But the compiler understand that the same filtered noise will be produced on left and right channels in both cases. So the filtered noise signal can be computed only once and used on left and right channels. For the two progams, the compiler will actually generate the exact same optimized code ! This is a very powerful property of its semantically driven compilation model. </p>
-</blockquote>
+You could think of the first form as a same noise signal splitted and then filtered on left and right channels, and the second form as the filtered noise then splitted on left and right channels. But the compiler understand that the same filtered noise will be produced on left and right channels in both cases. So the filtered noise signal can be computed only once and used on left and right channels. For the two progams, the compiler will actually generate the exact same optimized code ! This is <strong>a very powerful property of its semantically driven compilation model</strong>. </p>
 <p>Since <code>filter,filter</code> is considered here as a full expression, we cannot use the <code>:</code> operator to connect <code>no.noise</code> to the two filters in parallel because <code>filter,filter</code> has two inputs (<code>_,_ : filter,filter : _,_</code>) and <code>no.noise</code> only has one output. </p>
 <p>The <code>&lt;:</code> <a href="../syntax/#split-composition">split composition operator</a> used here takes <code>n</code> signals and splits them into <code>m</code> signals. The only rule is that <code>m</code> has to be a multiple of <code>n</code>.</p>
 <p>The <a href="../syntax/#merge-composition">merge <code>:&gt;</code> composition operator</a> can be used exactly the same way:</p>
