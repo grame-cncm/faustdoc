@@ -35,9 +35,9 @@ Pour comprendre le diagramme ci-dessus, nous allons l'annoter avec sa sémantiqu
 
 <img src="img/ramp-diag-math.svg" width="80%" class="mx-auto d-block">
 
-Comme on peut le voir dans le diagramme, la formule du signal de sortie est : $y(t) = y(t-1) + 0,125$
+Comme on peut le voir dans le diagramme, la formule du signal de sortie est : \(y(t) = y(t-1) + 0.125\)
 
-On peut calculer les premières valeurs de $y(t)$:
+On peut calculer les premières valeurs de \(y(t)\) :
 
 - \(y(t<0)=0\)
 - \(y(0) = y(-1) + 0.125 = 0.125\)
