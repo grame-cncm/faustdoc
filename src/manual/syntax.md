@@ -1131,9 +1131,36 @@ Faust considers two types of numbers: *integers* and *floats*. Integers are impl
 
 Like any other Faust expression, numbers are signal processors. For example the number 0.95 is a signal processor of type \(\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}\) that transforms an empty tuple of signals \(()\) into a 1-tuple of signals \((y)\) such that \(\forall t\in\mathbb{N}, y(t)=0.95\).
 
+### `route` Primitive
+
+The `route` primitive facilitates the routing of signals in Faust. It has the following syntax:
+
+```
+route(A,B,{a.b},...)
+```
+
+where:
+
+* `A` is the number of input signals
+* `B` is the number of output signals
+* `{a,b}` is an input/output pair
+
+Inputs are numbered from 1 to `A` and outputs are numbered from 1 to `B`. There can be any number of input/output pairs after the declaration of `A` and `B`.
+
+For example, crossing two signals can be carried out with:
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+process = route(2,2,1,2,2,1);
+```
+<!-- /faust-run -->
+
+In that case, `route` has 2 inputs and 2 outputs. The first input (1) is connected to the second output (2) and the second input (2) is connected to the first output (1).
+
 ### `waveform` Primitive
 
-The waveform primitive was designed to facilitate the use of [`rdtable`](#rdtable) (read table). It allows us to specify a fixed periodic signal as a list of samples. 
+The `waveform` primitive was designed to facilitate the use of [`rdtable`](#rdtable) (read table). It allows us to specify a fixed periodic signal as a list of samples. 
 
 `waveform` has two outputs:
 
