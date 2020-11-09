@@ -1139,7 +1139,6 @@ The `route` primitive facilitates the routing of signals in Faust. It has the fo
 route(A,B,a,b,c,d,...)
 route(A,B,(a,b),(c,d),...)
 ```
-
 where:
 
 * `A` is the number of input signals
@@ -1163,6 +1162,23 @@ Note that parenthesis can be optionally used to define a pair, so the previous e
 <!-- faust-run -->
 ```
 process = route(2,2,(1,2),(2,1));
+```
+<!-- /faust-run -->
+
+More complex expressions can be written using algorithmic constructions, like the following one to cross N signals:
+
+<!-- faust-run -->
+```
+// cross 10 signals: 
+// input 0 -> output 10, 
+// input 1 -> output 9, 
+// ..., 
+// input 9 -> output 0
+
+N = 10;
+r = route(N, N, par(i, N, (i+1,N-i)));
+
+process = r;
 ```
 <!-- /faust-run -->
 
