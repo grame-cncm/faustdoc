@@ -1144,7 +1144,7 @@ where:
 
 * `A` is the number of input signals
 * `B` is the number of output signals
-* `a,b / (a.b)` is an input/output pair
+* `a,b / (a,b)` is an input/output pair
 
 Inputs are numbered from 1 to `A` and outputs are numbered from 1 to `B`. There can be any number of input/output pairs after the declaration of `A` and `B`.
 
