@@ -1,6 +1,3 @@
 
-import("stdfaust.lib");
-freq = vslider("h:Oscillator/freq",440,50,1000,0.1);
-gain = vslider("h:Oscillator/gain",0,0,1,0.01);
-process = os.sawtooth(freq)*gain;
+process = par(i,8,hslider("Voice %i", 0.9, 0, 1, 0.01));
 

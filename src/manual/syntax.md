@@ -1136,14 +1136,15 @@ Like any other Faust expression, numbers are signal processors. For example the 
 The `route` primitive facilitates the routing of signals in Faust. It has the following syntax:
 
 ```
-route(A,B,{a.b},...)
+route(A,B,a,b,c,d,...)
+route(A,B,(a,b),(c,d),...)
 ```
 
 where:
 
 * `A` is the number of input signals
 * `B` is the number of output signals
-* `{a,b}` is an input/output pair
+* `a,b / (a.b)` is an input/output pair
 
 Inputs are numbered from 1 to `A` and outputs are numbered from 1 to `B`. There can be any number of input/output pairs after the declaration of `A` and `B`.
 
@@ -1151,12 +1152,19 @@ For example, crossing two signals can be carried out with:
 
 <!-- faust-run -->
 ```
-import("stdfaust.lib");
 process = route(2,2,1,2,2,1);
 ```
 <!-- /faust-run -->
 
 In that case, `route` has 2 inputs and 2 outputs. The first input (1) is connected to the second output (2) and the second input (2) is connected to the first output (1).
+
+Note that parenthesis can be optionally used to define a pair, so the previous example can also be written as:
+
+<!-- faust-run -->
+```
+process = route(2,2,(1,2),(2,1));
+```
+<!-- /faust-run -->
 
 ### `waveform` Primitive
 
