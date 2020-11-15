@@ -10,8 +10,6 @@ In this tutorial, we'll show how to use the [Faust](https://faust.grame.fr) lang
 - or using the [faust2vcvrack](https://github.com/grame-cncm/faust/tree/master-dev/architecture/vcvrack) tool with allows to generate standalone modules 
 - to introduce module development, a quick introduction on **using C++ to develop modules** will be done first.
 
-
-
 ### Install the VCV Rack application
 
 Get the [binary version](https://vcvrack.com/Rack) for your OS here: https://vcvrack.com/Rack.
@@ -30,9 +28,6 @@ You'll have to clone and compile the [GitHub project](https://github.com/VCVRack
 
 **Then you should be ready for this workshop !** 
 
-
-
-
 ### The modular principle
 
 VCV Rack follows  the **Modular synthesizers** principe explained on this [Wikipedia article](https://en.wikipedia.org/wiki/Modular_synthesizer):
@@ -46,8 +41,6 @@ Since software modules mimic real physical ones, they somewhat follow the same c
 Control parameters can also be changed from the module GUI using switches, knobs.etc...
 
 Modules **can be monophonic or polyphonic (up to 16 channels)**, where each cable actually transport several (usually related) signals. The polyhonic model is obviously used for instruments, but can also be used for effects.  Polyhonic modules have **thicker cables** in the GUI. 
-
-
 
 ### Developing C++ Modules
 
@@ -118,19 +111,13 @@ And compilation and installation of the module has to be done again:
 make && make install
 ```
 
-
-
 ### Programming using the Faust aware VCV Prototype module
 
 The [VCV Prototype module](https://github.com/VCVRack/VCV-Prototype) run scripting languages for prototyping, learning, and live coding. It can currently be programmed using  JavaScript, [Lua](https://www.lua.org), [Vult](https://github.com/modlfo/vult), or [PureData](https://puredata.info). A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (withRGB LEDs) is defined. 
 
 Note that **only monophonic examples** can be coded with the propotype. 
 
-
-
 <img src="img/VCV_Prototype.png" width="30%" class="mx-auto d-block">
-
-
 
 Faust support thanks to **libfaust** embedding the **Interpreter** backend has been added. It allows to **edit/compile/execute** DSP programs on the fly, with acceptable peformances (even if using the [LLVM JIT](https://llvm.org) would allow to generate faster code, but as the expense of a much more complicated installation procedure).
 
@@ -228,24 +215,19 @@ Some additional examples:
 
 - [physicalmodel.dsp](https://github.com/VCVRack/VCV-Prototype/blob/faust/examples/physicalmodel.dsp) demonstrates a modal synthesis based bell connected to a reverb
 
-  
-
 ### Using faust2vcvrack 
 
 The **faust2vcvrack** tool compiles a Faust DSP program in a folder containing the [VCV Rack](https://vcvrack.com) plugin C++ source code and a Makefile to compile it. By default the resulting C++ code is compiled and installed in the VCV Rack application:
 
-`faust2vcvrack [-source] [-nvoices <num>] [additional Faust options (-vec -vs 8...)] <file.dsp>`
+`faust2vcvrack [-soundfile] [-source] [-nvoices <num>] [additional Faust options (-vec -vs 8...)] <file.dsp>`
 
 The tool is now part of the [master-dev branch](https://github.com/grame-cncm/faust) on GitHub, or can be used with [Faust IDE](https://faustide.grame.fr), and by selecting the appropriate export targets (*vcvrack*, *vcvrack-poly8*, or *vcvrack-poly16*).
 
-
-
 <img src="img/faust2vcvrack.png" width="60%" class="mx-auto d-block">
-
-
 
 Here are the available options:
 
+- `soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources`
 - `-source to only create the source folder`
 - `-nvoices <num> to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI`
 
@@ -260,7 +242,6 @@ Note that **creating polyphonic effects** also make sense in VCV Rack. For insta
 #### Metadata
 
 - `[CV:N]` can be used in input (typically *sliders* or *nentry*) or output (typically *bargraph*) controllers to connect them to CV instead of regular GUI parameters.
-
 
 #### DSP examples
 
