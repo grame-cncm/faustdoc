@@ -14,7 +14,7 @@ La première étape consiste à construire un _générateur de phase_ qui produi
 
 ### Rampe
 
-Pour cela nous allons produire une rampe "infinie", que nous transformerons ensuite en un signal périodique grâce à une opération _partie-decimale_.
+Pour cela nous allons produire une rampe "infinie", que nous transformerons ensuite en un signal périodique grâce à une opération _partie-decimale_ :
 
 <img src="img/ramp-sig.png" width="80%" class="mx-auto d-block">
 
@@ -29,9 +29,9 @@ process = 0.125 : + ~ _;
 
 ### Sémantique
 
-Dans l'exemple précédent, `0,125`, `+` et `_` sont des *primitives* du langage. Les deux autres signes : `:` et `~` sont des opérateurs de cablage. Ils sont utilisés pour relier entre elles les expressions du langages.
+Dans l'exemple précédent, `0,125`, `+` et `_` sont des *primitives* du langage. Les deux autres signes : `:` et `~` sont des opérateurs de cablage. Ils sont utilisés pour relier entre elles les expressions du langage.
 
-Pour comprendre le diagramme ci-dessus, nous allons l'annoter avec sa sémantique mathématique.
+Pour comprendre le diagramme ci-dessus, nous allons l'annoter avec sa sémantique mathématique :
 
 <img src="img/ramp-diag-math.svg" width="80%" class="mx-auto d-block">
 
@@ -85,7 +85,7 @@ Dans notre définition de la `phase`, la valeur du pas, ici `0,125`, contrôle l
 
 Supposons que nous voulions que notre signal de phase ait une fréquence de 1 Hz, alors le pas devrait être très petit `1/ma.SR`, afin qu'il faille  `ma.SR` échantillons (c'est à dire 1 seconde) pour que le signal de phase passe de 0 à 1.
 
-Si nous voulons une fréquence de 440 Hz, nous avons besoin d'un pas 440 fois plus grand pour que le signal de phase passe de 0 à 1 440 fois plus vite.
+Si nous voulons une fréquence de 440 Hz, nous avons besoin d'un pas 440 fois plus grand pour que le signal de phase passe de 0 à 1 440 fois plus vite :
 
 ```
 phase = 440/ma.SR : (+ : decimalpart) ~ _;
@@ -161,7 +161,7 @@ process = osc(440);
 <!-- /faust-run -->
 
 
-Mais maintenant que nous avons vu comment créer de toutes pièces un oscillateur sinusoidal, nous allons utiliser celui qui est défini dans la libraries standard de Faust.
+Mais maintenant que nous avons vu comment créer de toutes pièces un oscillateur sinusoidal, nous allons utiliser celui qui est défini dans la libraries standard de Faust :
 
 <!-- faust-run -->
 ```
@@ -173,7 +173,7 @@ process = os.osc(440);
 
 ### Exemple 2 : une onde sinusoidale avec controle de volume
 
-Dans ce deuxième exemple on a utilisé un slider horizontal `hslider(...)` pour régler le niveau sonore. 
+Dans ce deuxième exemple on a utilisé un slider horizontal `hslider(...)` pour régler le niveau sonore :
 
 <!-- faust-run -->
 ```
@@ -201,7 +201,7 @@ process = os.osc(440 /*a remplacer*/) * hslider("gain", 0.1, 0, 1, 0.01);
 
 ### Exemple 4 : Phénomène de repliement de fréquence au-delà de SR/2
 
-Un problème bien connu dans le domaine de la synthèse numérique du son est celui du repliement de fréquence : toute fréquence au dela de la moitié de la fréquence d'échatillonnage se retrouve _repliée_ dans le spectre audible. 
+Un problème bien connu dans le domaine de la synthèse numérique du son est celui du repliement de fréquence : toute fréquence au dela de la moitié de la fréquence d'échatillonnage se retrouve _repliée_ dans le spectre audible : 
 
 <!-- faust-run -->
 ```
@@ -217,7 +217,7 @@ process = os.osc(hslider("freq", 440, 20, 20000, 1)) * hslider("gain", 0.1, 0, 1
 
 ### Exemple 5 : Synthèse additive
 
-Un exemple de synthèse additive ou le niveau de chaque partiel peut être réglé individuellement. 
+Un exemple de synthèse additive ou le niveau de chaque partiel peut être réglé individuellement : 
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
@@ -228,14 +228,14 @@ import("stdfaust.lib");
 // n = numero du partiel en partant de 1
 partial(n,f) = os.osc(f*n) * hslider("partial %n", 0.25, 0, 1, 0.01);
 
-process 	= sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
+process = sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
 ```
 <!-- /faust-run -->
  A noter l'utilisation de la construction `sum(i, n, foo(i))` qui est equivalente à `foo(0)+foo(1)+...+foo(n-1)`.
 
 
 ### Exemple 6 : Approximation d'un signal carré par synthèse additive
-Nous avons vu précédemment comment produire une signal carré parfait. Ce signal carré parfait comporte une infinité d'harmoniques qui, du fait de l'échantillonnage, vont se replier sur le spectre audible, ce qui va donner un son bruité moins fidèle ! On peut approximer un signal carré par synthèse additive, en additionnant une serie infinie d'harmoniques impaires (voir [https://fr.wikipedia.org/wiki/Signal_carré](https://fr.wikipedia.org/wiki/Signal_carré)).
+Nous avons vu précédemment comment produire une signal carré parfait. Ce signal carré parfait comporte une infinité d'harmoniques qui, du fait de l'échantillonnage, vont se replier sur le spectre audible, ce qui va donner un son bruité moins fidèle ! On peut approximer un signal carré par synthèse additive, en additionnant une serie infinie d'harmoniques impaires (voir [https://fr.wikipedia.org/wiki/Signal_carré](https://fr.wikipedia.org/wiki/Signal_carré)) :
 
 <!-- faust-run -->
 ```
@@ -253,7 +253,7 @@ A titre d'excercice, faire varier le nombre d'harmoniques pour voir l'approximat
 
 ### Exemple 7 : Approximation d'un signal en dent de scie par synthèse additive
 
-De même on peut approximer un signal en dent de scie par synthèse additive, en additionnant une serie infinie d'harmoniques (voir [https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie](https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie)).
+De même on peut approximer un signal en dent de scie par synthèse additive, en additionnant une serie infinie d'harmoniques (voir [https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie](https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie)) :
 
 <!-- faust-run -->
 ```
@@ -273,7 +273,8 @@ La synthèse soustractive procède à l'inverse de la synthèse additive. Elle c
 
 ### Exemple 1 : un bruit blanc
 
-Un bruit blan
+Un bruit blanc : 
+
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
@@ -328,10 +329,9 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 import("stdfaust.lib");
 
 process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) 
-        : fi.resonlp(
-                hslider("hifreq", 400, 20, 20000, 1),
-                hslider("Q", 1, 1, 100, 0.01),
-                hslider("gain", 1, 0, 2, 0.01));
+        : fi.resonlp(hslider("hifreq", 400, 20, 20000, 1),
+                    hslider("Q", 1, 1, 100, 0.01),
+                    hslider("gain", 1, 0, 2, 0.01));
 ```
 <!-- /faust-run -->
 
@@ -345,7 +345,7 @@ import("stdfaust.lib");
 
 // FIR
 process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) 
-        <: _ , transformation :> _;
+        <: _,transformation :> _;
 
 transformation = @(1) : *(hslider("gain", 0, -1, 1, 0.1));
 ```

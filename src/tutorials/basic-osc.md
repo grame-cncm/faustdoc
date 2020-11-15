@@ -84,7 +84,6 @@ process = +(0.01) ~ ma.decimal;
     * -> A [sawtooth wave](https://en.wikipedia.org/wiki/Sawtooth_wave). 
 * How do we change the pitch of the sawtooth wave? 
     * -> We should increment the counter faster or slower. Try different values (e.g., 0.001, 0.1, etc.).
-
 * Instead of controlling the increment of the counter, we'd like to control the
 frequency of the sawtooth wave.  <!-- What's a frequency? Show how it impacts the generated wave.-->
 * To do that, we need to know the number of values of the wave processed by the
@@ -192,7 +191,7 @@ process = organ(f)*g*t;
 ```
 <!-- /faust-run -->
 
-* This synth can be controlled with a midi keyboard.
+* This synth can be controlled with a MIDI keyboard.
 
 ## Turn it Into an Android App
 

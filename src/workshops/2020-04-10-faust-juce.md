@@ -115,14 +115,14 @@ In `PluginProcessor.cpp`, include `FaustSynth.h` at the beginning of the file in
 Write the following in the `prepareToPlay` method:
 
 ```
-void MonoSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void MonoSynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     fDSP = new mydsp();
     fDSP->init(sampleRate);
     fUI = new MapUI();
     fDSP->buildUserInterface(fUI);
     outputs = new float*[2];
-    for (int channel = 0; channel < 2; ++channel){
+    for (int channel = 0; channel < 2; ++channel) {
         outputs[channel] = new float[samplesPerBlock];
     }
 }
@@ -157,8 +157,8 @@ void MonoSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuff
 
     fDSP->compute(buffer.getNumSamples(),NULL,outputs);
     
-    for (int channel = 0; channel < totalNumOutputChannels; ++channel){
-      for(int i=0; i<buffer.getNumSamples(); i++){
+    for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
+      for (int i = 0; i < buffer.getNumSamples(); i++) {
         *buffer.getWritePointer(channel,i) = outputs[channel][i];
       }
     }
@@ -192,36 +192,33 @@ and the corresponding implementation in `PluginProcessor.cpp` will be:
 ```
 void MonoSynthAudioProcessor::setFreq(float freq)
 {
-  fUI->setParamValue("freq",freq);
+    fUI->setParamValue("freq",freq);
 }
 
 void MonoSynthAudioProcessor::setGain(float gain)
 {
-  fUI->setParamValue("gain",gain);
+    fUI->setParamValue("gain",gain);
 }
 
 void MonoSynthAudioProcessor::setGate(bool gate)
 {
-  if(gate){
-    fUI->setParamValue("gate",1);
-  }
-  else{
-    fUI->setParamValue("gate",0);
-  }
+    if(gate) {
+        fUI->setParamValue("gate",1);
+    } else {
+        fUI->setParamValue("gate",0);
+    }
 }
 
 void MonoSynthAudioProcessor::setCutoff(float cutoff)
 {
-  fUI->setParamValue("cutoff",cutoff);
+    fUI->setParamValue("cutoff",cutoff);
 }
 ```
 
 
-That's it for the `PluginProcessor`! Easy isn't it ;)? Now, let's add a basic
-interface to control this synth.
+That's it for the `PluginProcessor`! Easy isn't it ;)? Now, let's add a basic interface to control this synth.
 
-We add a series of sliders, button, and labels to the private section of
-`MonoSynthAudioProcessorEditor` in `PluginEditor.h`:
+We add a series of sliders, button, and labels to the private section of `MonoSynthAudioProcessorEditor` in `PluginEditor.h`:
 
 ```
 private:
@@ -239,81 +236,77 @@ private:
 and their corresponding implementation in `PluginEditor.cpp`:
 
 ```
-MonoSynthAudioProcessorEditor::MonoSynthAudioProcessorEditor (MonoSynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+MonoSynthAudioProcessorEditor::MonoSynthAudioProcessorEditor(MonoSynthAudioProcessor& p)
+    : AudioProcessorEditor(&p), processor(p)
 {
-  setSize (800, 130);
-  
-  addAndMakeVisible (frequencySlider);
-  frequencySlider.setRange (50.0, 5000.0);
-  frequencySlider.setSkewFactorFromMidPoint (500.0);
-  frequencySlider.setValue(300);
-  frequencySlider.onValueChange = [this] {
-    processor.setFreq(frequencySlider.getValue());  
-  };
+    setSize (800, 130);
 
-  addAndMakeVisible(frequencyLabel);
-  frequencyLabel.setText ("Frequency", dontSendNotification);
-  frequencyLabel.attachToComponent (&frequencySlider, true);
-    
-  addAndMakeVisible (gainSlider);
-  gainSlider.setRange (0.0, 1.0);
-  gainSlider.setValue(0.5);
-  gainSlider.onValueChange = [this] { 
+    addAndMakeVisible(frequencySlider);
+    frequencySlider.setRange(50.0, 5000.0);
+    frequencySlider.setSkewFactorFromMidPoint(500.0);
+    frequencySlider.setValue(300);
+    frequencySlider.onValueChange = [this] {
+    processor.setFreq(frequencySlider.getValue());  
+    };
+
+    addAndMakeVisible(frequencyLabel);
+    frequencyLabel.setText("Frequency", dontSendNotification);
+    frequencyLabel.attachToComponent(&frequencySlider, true);
+
+    addAndMakeVisible(gainSlider);
+    gainSlider.setRange(0.0, 1.0);
+    gainSlider.setValue(0.5);
+    gainSlider.onValueChange = [this] { 
     processor.setGain(gainSlider.getValue()); 
-  };
-    
-  addAndMakeVisible(gainLabel);
-  gainLabel.setText ("Gain", dontSendNotification);
-  gainLabel.attachToComponent (&gainSlider, true);
-    
-  addAndMakeVisible (cutoffSlider);
-  cutoffSlider.setRange (50.0, 10000.0);
-  cutoffSlider.setValue(5000.0);
-  cutoffSlider.onValueChange = [this] { 
+    };
+
+    addAndMakeVisible(gainLabel);
+    gainLabel.setText("Gain", dontSendNotification);
+    gainLabel.attachToComponent (&gainSlider, true);
+
+    addAndMakeVisible(cutoffSlider);
+    cutoffSlider.setRange(50.0, 10000.0);
+    cutoffSlider.setValue(5000.0);
+    cutoffSlider.onValueChange = [this] { 
     processor.setCutoff(cutoffSlider.getValue()); 
-  };
-    
-  addAndMakeVisible(cutoffLabel);
-  cutoffLabel.setText ("Cutoff", dontSendNotification);
-  cutoffLabel.attachToComponent (&cutoffSlider, true);
-  
-  addAndMakeVisible(onOffButton);
-  onOffButton.onClick = [this] { 
+    };
+
+    addAndMakeVisible(cutoffLabel);
+    cutoffLabel.setText("Cutoff", dontSendNotification);
+    cutoffLabel.attachToComponent(&cutoffSlider, true);
+
+    addAndMakeVisible(onOffButton);
+    onOffButton.onClick = [this] { 
     processor.setGate(onOffButton.getToggleState());
-  };
-    
-  addAndMakeVisible(onOffLabel);
-  onOffLabel.setText ("On/Off", dontSendNotification);
-  onOffLabel.attachToComponent (&onOffButton, true);
+    };
+
+    addAndMakeVisible(onOffLabel);
+    onOffLabel.setText("On/Off", dontSendNotification);
+    onOffLabel.attachToComponent (&onOffButton, true);
 }
 ```
 
-The methods that we declared in the previous step are basically called to set
-the value of the parameters of our DSP engine thanks to the `processor`
-object.
+The methods that we declared in the previous step are basically called to set the value of the parameters of our DSP engine thanks to the `processor` object.
 
-The `resized` method must be implemented so that the various UI elements that 
-we created actually have a size:
+The `resized` method must be implemented so that the various UI elements that we created actually have a size:
 
 ```
 void MonoSynthAudioProcessorEditor::resized()
 {
-  const int sliderLeft = 80;
-  frequencySlider.setBounds (sliderLeft, 10, getWidth() - sliderLeft - 20, 20);
-  gainSlider.setBounds (sliderLeft, 40, getWidth() - sliderLeft - 20, 20);
-  cutoffSlider.setBounds (sliderLeft, 70, getWidth() - sliderLeft - 20, 20);
-  onOffButton.setBounds (sliderLeft, 100, getWidth() - sliderLeft - 20, 20);
+    const int sliderLeft = 80;
+    frequencySlider.setBounds(sliderLeft, 10, getWidth() - sliderLeft - 20, 20);
+    gainSlider.setBounds(sliderLeft, 40, getWidth() - sliderLeft - 20, 20);
+    cutoffSlider.setBounds(sliderLeft, 70, getWidth() - sliderLeft - 20, 20);
+    onOffButton.setBounds(sliderLeft, 100, getWidth() - sliderLeft - 20, 20);
 }
 ``` 
 
-Finally, make sure that you clean the implementation of the `paint` method
-to get rid of the default ugly "Hello World:"
+Finally, make sure that you clean the implementation of the `paint` method to get rid of the default ugly "Hello World:"
 
 ```
 void MonoSynthAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    g.fillAll(getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 }
 ```
 
@@ -321,11 +314,8 @@ Compile your plug-in and run it, it should look like this:
 
 <img src="img/plugin.jpg" class="mx-auto d-block" width="60%">
 
-The goal of this section was just to show you how to integrate a Faust DSP
-object into a JUCE plug-in project and how to control it with a simple UI. 
-Once again, JUCE is a powerful tool to implement sophisticated UI in a very
-simple way. You'll find all the documentation you need on 
-[their website](https://juce.com/) to start making beautiful plug-ins!
+The goal of this section was just to show you how to integrate a Faust DSP object into a JUCE plug-in project and how to control it with a simple UI. 
+Once again, JUCE is a powerful tool to implement sophisticated UI in a very simple way. You'll find all the documentation you need on their website](https://juce.com/) to start making beautiful plug-ins!
 
 ## Simple Audio Effect Plug-In
 
@@ -343,7 +333,7 @@ For this example, we'll be using a stereo echo:
 ```
 import("stdfaust.lib");
 echo(d,f) = +~de.delay(48000,del)*f
-with{
+with {
   del = d*ma.SR;
 };
 delay = nentry("delay",0.25,0,1,0.01) : si.smoo;
@@ -381,23 +371,23 @@ In `PluginProcessor.cpp`, for the `prepareToPlay` and `releaseResources` methods
 ```
 void EffectAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-  fDSP = new mydsp();
-  fDSP->init(sampleRate);
-  fUI = new MapUI();
-  fDSP->buildUserInterface(fUI);
-  inputs = new float*[2];
-  outputs = new float*[2];
-  for (int channel = 0; channel < 2; ++channel){
-    inputs[channel] = new float[samplesPerBlock];
-    outputs[channel] = new float[samplesPerBlock];
-  }
+    fDSP = new mydsp();
+    fDSP->init(sampleRate);
+    fUI = new MapUI();
+    fDSP->buildUserInterface(fUI);
+    inputs = new float*[2];
+    outputs = new float*[2];
+    for (int channel = 0; channel < 2; ++channel) {
+        inputs[channel] = new float[samplesPerBlock];
+        outputs[channel] = new float[samplesPerBlock];
+    }
 }
 
 void EffectAudioProcessor::releaseResources()
 {
     delete fDSP;
     delete fUI;
-    for (int channel = 0; channel < 2; ++channel){
+    for (int channel = 0; channel < 2; ++channel) {
         delete[] inputs[channel];
         delete[] outputs[channel];
     }
@@ -405,7 +395,6 @@ void EffectAudioProcessor::releaseResources()
     delete [] outputs;
 }
 ```
-
 and the audio callback:
 
 ```
@@ -415,18 +404,18 @@ void EffectAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer&
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    for (int channel = 0; channel < totalNumInputChannels; ++channel){
-      for(int i=0; i<buffer.getNumSamples(); i++){
-        inputs[channel][i] = *buffer.getWritePointer(channel,i);
-      }
+    for (int channel = 0; channel < totalNumInputChannels; ++channel) {
+        for (int i = 0; i < buffer.getNumSamples(); i++) {
+            inputs[channel][i] = *buffer.getWritePointer(channel,i);
+        }
     }
 
     fDSP->compute(buffer.getNumSamples(),inputs,outputs);
     
-    for (int channel = 0; channel < totalNumOutputChannels; ++channel){
-      for(int i=0; i<buffer.getNumSamples(); i++){
-        *buffer.getWritePointer(channel,i) = outputs[channel][i];
-      }
+    for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
+        for (int i = 0; i < buffer.getNumSamples(); i++){
+            *buffer.getWritePointer(channel,i) = outputs[channel][i];
+        }
     }
 }
 ```
@@ -438,12 +427,12 @@ Of course, the corresponding control methods should be created as well, etc.:
 ```
 void EffectAudioProcessor::setDelay(float delay)
 {
-  fUI->setParamValue("delay",delay);
+    fUI->setParamValue("delay",delay);
 }
 
 void EffectAudioProcessor::setFeedback(float feedback)
 {
-  fUI->setParamValue("feedback",feedback);
+    fUI->setParamValue("feedback",feedback);
 }
 ``` 
 
@@ -458,33 +447,33 @@ EffectAudioProcessorEditor::EffectAudioProcessorEditor (EffectAudioProcessor& p)
     setSize (800, 100);
     
     addAndMakeVisible (delaySlider);
-    delaySlider.setRange (0.0, 1.0);
+    delaySlider.setRange(0.0, 1.0);
     delaySlider.setValue(0.5);
     delaySlider.onValueChange = [this] {
       processor.setDelay(delaySlider.getValue());  
     };
     
     addAndMakeVisible(delayLabel);
-    delayLabel.setText ("Delay (s)", dontSendNotification);
+    delayLabel.setText("Delay (s)", dontSendNotification);
     delayLabel.attachToComponent (&delaySlider, true);
     
-    addAndMakeVisible (feedbackSlider);
-    feedbackSlider.setRange (0.0, 1.0);
+    addAndMakeVisible(feedbackSlider);
+    feedbackSlider.setRange(0.0, 1.0);
     feedbackSlider.setValue(0.5);
     feedbackSlider.onValueChange = [this] {
       processor.setFeedback(feedbackSlider.getValue());  
     };
     
     addAndMakeVisible(feedbackLabel);
-    feedbackLabel.setText ("Feedback", dontSendNotification);
-    feedbackLabel.attachToComponent (&feedbackSlider, true);    
+    feedbackLabel.setText("Feedback", dontSendNotification);
+    feedbackLabel.attachToComponent(&feedbackSlider, true);    
 }
 
 void EffectAudioProcessorEditor::resized()
 {
-  const int sliderLeft = 80;
-  delaySlider.setBounds (sliderLeft, 10, getWidth() - sliderLeft - 20, 20);
-  feedbackSlider.setBounds (sliderLeft, 40, getWidth() - sliderLeft - 20, 20);
+    const int sliderLeft = 80;
+    delaySlider.setBounds(sliderLeft, 10, getWidth() - sliderLeft - 20, 20);
+    feedbackSlider.setBounds(sliderLeft, 40, getWidth() - sliderLeft - 20, 20);
 }
 ```
 
@@ -606,13 +595,13 @@ The `processBlock` method works the same way as for the [mono synth tutorial](#s
 void PolySynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     faustObject->compute(buffer.getNumSamples(),NULL,outputs);
     
-    for (int channel = 0; channel < totalNumOutputChannels; ++channel){
-      for(int i=0; i<buffer.getNumSamples(); i++){
+    for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
+      for (int i = 0; i < buffer.getNumSamples(); i++) {
         *buffer.getWritePointer(channel,i) = outputs[channel][i];
       }
     }
@@ -630,17 +619,17 @@ Hence, the Faust DSP object should be controlled with a polyphonic keyboard. New
 ```
 void PolySynthAudioProcessor::keyOn(int pitch, int velocity)
 {
-  faustObject->keyOn(pitch,velocity);
+    faustObject->keyOn(pitch,velocity);
 }
 
 void PolySynthAudioProcessor::keyOff(int pitch)
 {
-  faustObject->keyOff(pitch);
+    faustObject->keyOff(pitch);
 }
 
 void PolySynthAudioProcessor::setCutoff(float cutoff)
 {
-  faustObject->setParamValue("cutoff",cutoff);
+    faustObject->setParamValue("cutoff",cutoff);
 }
 ``` 
 
@@ -668,11 +657,10 @@ Using `setParamValue` as we're doing in the current example, we can set the valu
 
 The following implementation is extremely primitive and only the messages from the UI keyboard are processed: we're just doing this for the sake of the example. If you've never worked with keyboards and MIDI in JUCE, we strongly recommend you to read [this tutorial](https://docs.juce.com/master/tutorial_handling_midi_events.html).
 
-In `PluginEditor.h`, let's first add the following inheritance to the 
-`PolySynthAudioProcessorEditor` class:
+In `PluginEditor.h`, let's first add the following inheritance to the `PolySynthAudioProcessorEditor` class:
 
 ```
-class PolySynthAudioProcessorEditor  : 
+class PolySynthAudioProcessorEditor : 
   public AudioProcessorEditor, 
   private MidiInputCallback, 
   private MidiKeyboardStateListener
@@ -687,9 +675,9 @@ cutoff frequency of the lowpass:
 
 ```
 private:
-  void handleNoteOn (MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;
-  void handleNoteOff (MidiKeyboardState*, int midiChannel, int midiNoteNumber, float /*velocity*/) override;
-  void handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message) override;
+  void handleNoteOn(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;
+  void handleNoteOff(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float /*velocity*/) override;
+  void handleIncomingMidiMessage(MidiInput* source, const MidiMessage& message) override;
   
   MidiKeyboardState keyboardState;   
   MidiKeyboardComponent keyboardComponent; 
@@ -702,23 +690,23 @@ In `PluginEditor.cpp`, we can add the keyboard and the slider to the constructor
 
 ```
 PolySynthAudioProcessorEditor::PolySynthAudioProcessorEditor (PolySynthAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), keyboardComponent (keyboardState, MidiKeyboardComponent::horizontalKeyboard)
+    : AudioProcessorEditor(&p), processor(p), keyboardComponent (keyboardState, MidiKeyboardComponent::horizontalKeyboard)
 {
-  setSize (800, 150);
-    
-  addAndMakeVisible (keyboardComponent);
-  keyboardState.addListener (this);
-    
-  addAndMakeVisible (cutoffSlider);
-  cutoffSlider.setRange (50.0, 10000.0);
-  cutoffSlider.setValue(5000.0);
-  cutoffSlider.onValueChange = [this] { 
-    processor.setCutoff(cutoffSlider.getValue()); 
-  };
-    
-  addAndMakeVisible(cutoffLabel);
-  cutoffLabel.setText ("Cutoff", dontSendNotification);
-  cutoffLabel.attachToComponent (&cutoffSlider, true);
+    setSize (800, 150);
+
+    addAndMakeVisible(keyboardComponent);
+    keyboardState.addListener(this);
+
+    addAndMakeVisible(cutoffSlider);
+    cutoffSlider.setRange(50.0, 10000.0);
+    cutoffSlider.setValue(5000.0);
+    cutoffSlider.onValueChange = [this] { 
+        processor.setCutoff(cutoffSlider.getValue()); 
+    };
+
+    addAndMakeVisible(cutoffLabel);
+    cutoffLabel.setText("Cutoff", dontSendNotification);
+    cutoffLabel.attachToComponent(&cutoffSlider, true);
 }
 ```
 
@@ -727,42 +715,37 @@ and we must de-allocate the keyboard state listener in the destructor:
 ```
 PolySynthAudioProcessorEditor::~PolySynthAudioProcessorEditor()
 {
-  keyboardState.removeListener(this);
+    keyboardState.removeListener(this);
 }
 ``` 
 
-The implementation of the `setCutoff` method is detailed later in this tutorial
-and is very similar to the one described in the previous section.
+The implementation of the `setCutoff` method is detailed later in this tutorial and is very similar to the one described in the previous section.
 
-We also need to define the size of the various elements in the interface
-(as we did before):
+We also need to define the size of the various elements in the interface (as we did before):
 
 ```
 void PolySynthAudioProcessorEditor::resized()
 {
-  const int sliderLeft = 80;
-  keyboardComponent.setBounds (10,10,getWidth()-30,100);
-  cutoffSlider.setBounds (sliderLeft, 120, getWidth() - sliderLeft - 20, 20);
+    const int sliderLeft = 80;
+    keyboardComponent.setBounds (10,10,getWidth()-30,100);
+    cutoffSlider.setBounds(sliderLeft, 120, getWidth() - sliderLeft - 20, 20);
 }
 ```
 
-MIDI messages are retrieved from the keyboard simply by implementing the
-following inherited methods:
+MIDI messages are retrieved from the keyboard simply by implementing the following inherited methods:
 
 ```
 void PolySynthAudioProcessorEditor::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message) {}
 
-void PolySynthAudioProcessorEditor::handleNoteOn (MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity)
+void PolySynthAudioProcessorEditor::handleNoteOn(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity)
 {
-  processor.keyOn(midiNoteNumber,int(127*velocity));
+    processor.keyOn(midiNoteNumber,int(127*velocity));
 }
 
-void PolySynthAudioProcessorEditor::handleNoteOff (MidiKeyboardState*, int midiChannel, int midiNoteNumber, float /*velocity*/)
+void PolySynthAudioProcessorEditor::handleNoteOff(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float /*velocity*/)
 {
-  processor.keyOff(midiNoteNumber);
+    processor.keyOff(midiNoteNumber);
 }
 ```
 
-That's it folks! Try to compile and run your plug-in, it should just work. Of
-course, things could be significantly improved here but at this point, you
-should be able to sail on your own.  
+That's it folks! Try to compile and run your plug-in, it should just work. Of course, things could be significantly improved here but at this point, you should be able to sail on your own.  
