@@ -90,7 +90,7 @@ Let's now integrate our Faust-generated DSP object to the `PluginProcessor`. Dec
 private:
     MapUI* fUI;
     dsp* fDSP;
-    float **outputs;
+    float** outputs;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MonoSynthAudioProcessor)
 ```
@@ -101,7 +101,7 @@ private:
 class dsp;
 class MapUI;
 
-class MonoSynthAudioProcessor  : public AudioProcessor
+class MonoSynthAudioProcessor : public AudioProcessor
 ``` 
 
 In `PluginProcessor.cpp`, include `FaustSynth.h` at the beginning of the file in the includes section:
@@ -137,7 +137,7 @@ void MonoSynthAudioProcessor::releaseResources()
 {
     delete fDSP;
     delete fUI;
-    for (int channel = 0; channel < 2; ++channel){
+    for (int channel = 0; channel < 2; ++channel) {
         delete[] outputs[channel];
     }
     delete [] outputs;
@@ -152,7 +152,7 @@ Let's now get into the heart of the matter: the audio callback which is implemen
 void MonoSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     fDSP->compute(buffer.getNumSamples(),NULL,outputs);
@@ -246,7 +246,7 @@ MonoSynthAudioProcessorEditor::MonoSynthAudioProcessorEditor(MonoSynthAudioProce
     frequencySlider.setSkewFactorFromMidPoint(500.0);
     frequencySlider.setValue(300);
     frequencySlider.onValueChange = [this] {
-    processor.setFreq(frequencySlider.getValue());  
+        processor.setFreq(frequencySlider.getValue());  
     };
 
     addAndMakeVisible(frequencyLabel);
@@ -257,7 +257,7 @@ MonoSynthAudioProcessorEditor::MonoSynthAudioProcessorEditor(MonoSynthAudioProce
     gainSlider.setRange(0.0, 1.0);
     gainSlider.setValue(0.5);
     gainSlider.onValueChange = [this] { 
-    processor.setGain(gainSlider.getValue()); 
+        processor.setGain(gainSlider.getValue()); 
     };
 
     addAndMakeVisible(gainLabel);
@@ -268,7 +268,7 @@ MonoSynthAudioProcessorEditor::MonoSynthAudioProcessorEditor(MonoSynthAudioProce
     cutoffSlider.setRange(50.0, 10000.0);
     cutoffSlider.setValue(5000.0);
     cutoffSlider.onValueChange = [this] { 
-    processor.setCutoff(cutoffSlider.getValue()); 
+        processor.setCutoff(cutoffSlider.getValue()); 
     };
 
     addAndMakeVisible(cutoffLabel);
@@ -277,7 +277,7 @@ MonoSynthAudioProcessorEditor::MonoSynthAudioProcessorEditor(MonoSynthAudioProce
 
     addAndMakeVisible(onOffButton);
     onOffButton.onClick = [this] { 
-    processor.setGate(onOffButton.getToggleState());
+        processor.setGate(onOffButton.getToggleState());
     };
 
     addAndMakeVisible(onOffLabel);
@@ -440,17 +440,17 @@ On the interface side, things can be easily adapted to match this new configurat
 
 ```
 EffectAudioProcessorEditor::EffectAudioProcessorEditor (EffectAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p)
+    : AudioProcessorEditor(&p), processor(p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (800, 100);
+    setSize(800, 100);
     
     addAndMakeVisible (delaySlider);
     delaySlider.setRange(0.0, 1.0);
     delaySlider.setValue(0.5);
     delaySlider.onValueChange = [this] {
-      processor.setDelay(delaySlider.getValue());  
+        processor.setDelay(delaySlider.getValue());  
     };
     
     addAndMakeVisible(delayLabel);
@@ -461,7 +461,7 @@ EffectAudioProcessorEditor::EffectAudioProcessorEditor (EffectAudioProcessor& p)
     feedbackSlider.setRange(0.0, 1.0);
     feedbackSlider.setValue(0.5);
     feedbackSlider.onValueChange = [this] {
-      processor.setFeedback(feedbackSlider.getValue());  
+        processor.setFeedback(feedbackSlider.getValue());  
     };
     
     addAndMakeVisible(feedbackLabel);
@@ -555,14 +555,14 @@ Don't forget the declare the corresponding empty classes at the beginning of the
 class FaustPolyEngine;
 class audio;
 
-class PolySynthAudioProcessor  : public AudioProcessor
+class PolySynthAudioProcessor : public AudioProcessor
 {
 ```
 
 In `PluginProcessor.cpp`, first don't forget to include `FaustSynth.h`. Then fill `prepareToPlay` with the following code:
 
 ```
-void PolySynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void PolySynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     driver =  new dummyaudio(sampleRate,samplesPerBlock);
     faustObject = new FaustPolyEngine(NULL,driver,NULL);
@@ -582,7 +582,7 @@ void PolySynthAudioProcessor::releaseResources()
 {
     //delete faustObject;
     delete driver;
-    for (int channel = 0; channel < 2; ++channel){
+    for (int channel = 0; channel < 2; ++channel) {
         delete[] outputs[channel];
     }
     delete [] outputs;
@@ -599,11 +599,11 @@ void PolySynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuff
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     faustObject->compute(buffer.getNumSamples(),NULL,outputs);
-    
+
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
-      for (int i = 0; i < buffer.getNumSamples(); i++) {
-        *buffer.getWritePointer(channel,i) = outputs[channel][i];
-      }
+        for (int i = 0; i < buffer.getNumSamples(); i++) {
+            *buffer.getWritePointer(channel,i) = outputs[channel][i];
+        }
     }
 }
 ```

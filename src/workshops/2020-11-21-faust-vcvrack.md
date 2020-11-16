@@ -10,17 +10,17 @@ In this tutorial, we'll show how to use the [Faust](https://faust.grame.fr) lang
 - or using the [faust2vcvrack](https://github.com/grame-cncm/faust/tree/master-dev/architecture/vcvrack) tool with allows to generate standalone modules 
 - to introduce module development, a quick introduction on **using C++ to develop modules** will be done first.
 
-### Install the VCV Rack application
+#### Install the VCV Rack application
 
 Get the [binary version](https://vcvrack.com/Rack) for your OS here: https://vcvrack.com/Rack.
 
-### Install the VCV Rack SDK
+#### Install the VCV Rack SDK
 
 From  [Plugin Development Tutorial page](https://vcvrack.com/manual/PluginDevelopmentTutorial) here: https://vcvrack.com/manual/ and the [SDK itself](https://vcvrack.com/downloads/) for your OS: https://vcvrack.com/downloads/.
 
 Don't forget to setup the **RACK_DIR** variable: `export RACK_DIR=<Rack SDK folder>`. 
 
-### Compiling the VCV Prototype module Faust version
+#### Compiling the VCV Prototype module Faust version
 
 The Faust compiler can be embedded in applications or plugins using [libfaust](https://faustdoc.grame.fr/manual/embedding/), and DSP code can be edited and JIT compiled on the fly.
 
@@ -46,7 +46,7 @@ Modules **can be monophonic or polyphonic (up to 16 channels)**, where each cabl
 
 Before using Faust to develop modules, let's have a look at the standard procedure. Modules are usually created with C++ using the VCV Rack SDK that gives developers several tools to start with. Following the [tutorial here](https://vcvrack.com/manual/PluginDevelopmentTutorial), a template project can be created:
 
-###### Generating a template:
+#### Generating a template:
 
 ```
 ./helper.py createplugin MyPlugin
@@ -58,7 +58,7 @@ The created folder contains a Makefile that can be used to compile and install t
 make && make install
 ```
 
-###### GUI description using SVG: 
+#### GUI description using SVG: 
 
 The module GUI is done using SVG. Developers will classically prepare the background layer with [Inkscape](https://inkscape.org/) or a similar tool, with special conventions to describe audio or CV inputs/outputs, UI items (knobs, lights, custom widgets... ). Here a example of a basic SVG template with a *light*, a *param* (like knob), an *audio or CV input*, and an *audio or CV output*:
 
@@ -70,7 +70,7 @@ Inside the module project, the following command will decode the SVG file and ge
 ../helper.py createmodule MyModule res/MyModule.svg src/MyModule.cpp
 ```
 
-###### Adding DSP code: 
+#### Adding DSP code: 
 
 Then C++ code will be added to implement as simple oscillator in the `process` function:
 
