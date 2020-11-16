@@ -216,6 +216,10 @@
 <li>
     <a href="../2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
 </li>
+                                    
+<li>
+    <a href="../2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
                                 </ul>
                             </li>
                             <li class="navitem">
@@ -520,7 +524,7 @@ The documentation and the examples we will use can be found here:</p>
 <p>Let's start with some simple examples of Faust programs.</p>
 <h3 id="example-1-the-simplest-faust-program">Example 1: The simplest Faust program</h3>
 <p>This is the simplest Faust program imaginable. It contains only one line of code, the definition: <code>process = _;</code>. This program copies the audio input to the audio output. </p>
-<p>Let's try this program using the online Faust IDE.</p>
+<p>Let's try this program using the online Faust IDE:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -740,7 +744,6 @@ process = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 monoamp = _, hslider(&quot;volume&quot;, 0.1, 0, 1, 0.01) : *;
 process = monoamp;
 
-
 </code></pre>
 
 
@@ -784,7 +787,6 @@ stereoamp = monoamp, monoamp;
 
 process = stereoamp;
 
-
 </code></pre>
 
 
@@ -807,7 +809,6 @@ stereoamp = monoamp, monoamp;
 
 process = stereoamp;
 
-
 </code></pre>
 
 
@@ -818,7 +819,7 @@ process = stereoamp;
 <!-- /faust-run -->
 
 <h3 id="example-11-syntactic-sugar">Example 11: Syntactic sugar</h3>
-<p>We have used the core syntax of Faust so far. For example to multiply the incoming signal by <code>0.1</code> we wrote <code>_,0.1:*</code>. For numerical expressions this notation is not always the most convenient and sometimes we would prefer to use the more traditional infix notation and write instead <code>_*0.1</code>. We can also use the prefixed notation and write <code>*(0.1)</code>. </p>
+<p>We have used the core syntax of Faust so far. For example to multiply the incoming signal by <code>0.1</code>, we wrote <code>_,0.1:*</code>. For numerical expressions this notation is not always the most convenient and sometimes we would prefer to use the more traditional infix notation and write instead <code>_*0.1</code>. We can also use the prefixed notation and write <code>*(0.1)</code>. </p>
 <p>Let's rewrite the definition of the <code>monoamp</code> using the prefix notation:</p>
 <!-- faust-run -->
 
@@ -1047,7 +1048,6 @@ bounce = @(4410) : *(0.75);
 monoecho = +~bounce;
 process = _, monoecho; 
 
-
 </code></pre>
 
 
@@ -1069,7 +1069,6 @@ monoecho = +~bounce;
 stereoecho = monoecho, monoecho;
 
 process = stereoecho; 
-
 
 </code></pre>
 
@@ -1093,7 +1092,6 @@ stereoecho(d,f) = monoecho(d,f), monoecho(d,f);
 
 process = stereoecho(44100/4,0.75); 
 
-
 </code></pre>
 
 
@@ -1115,7 +1113,6 @@ monoecho(d,f) = +~bounce(d,f);
 stereoecho(d,f) = monoecho(d,f), monoecho(d,f);
 
 process = stereoecho(44100/4, hslider(&quot;feedback&quot;, 0, 0, 1, 0.01)); 
-
 
 </code></pre>
 
@@ -1139,7 +1136,6 @@ stereoecho(d,f) = monoecho(d,f), monoecho(d,f);
 
 process = stereoecho(44100/4, hslider(&quot;feedback&quot;, 0, 0, 1, 0.01)); 
 
-
 </code></pre>
 
 
@@ -1156,16 +1152,15 @@ process = stereoecho(44100/4, hslider(&quot;feedback&quot;, 0, 0, 1, 0.01));
 <p>The first step is to build a <em>phase generator</em> that produces a periodic sawtooth signal between 0 and 1. Here is the signal we want to generate :</p>
 <p><img src="img/phase-sig.png" width="100%" class="mx-auto d-block"></p>
 <h3 id="example-1-ramp">Example 1: Ramp</h3>
-<p>To do this we will produce an "infinite" ramp, which we will then transform into a periodic signal thanks to a <em>part-decimal</em> operation.</p>
+<p>To do this we will produce an "infinite" ramp, which we will then transform into a periodic signal thanks to a <em>part-decimal</em> operation:</p>
 <p><img src="img/ramp-sig.png" width="100%" class="mx-auto d-block"></p>
-<p>The ramp is produced by the following program :</p>
+<p>The ramp is produced by the following program:</p>
 <!-- faust-run -->
 
 <div class="faust-run"><img src="exfaust23/exfaust23.svg" class="mx-auto d-block">
 
 <pre><code>
 process = 0.125 : + ~ _;
-
 
 </code></pre>
 
@@ -1228,7 +1223,6 @@ process = 0.125 : + ~ _;
 decimalpart(x) = x-int(x);
 phase = 0.125 : (+ : decimalpart) ~ _;
 process = phase;
-
 
 </code></pre>
 
@@ -1428,7 +1422,6 @@ partial(n,f) = os.osc(f*n) * hslider(&quot;partial %n&quot;, 0.25, 0, 1, 0.01);
 
 process = sum(i, 4, partial(i+1, hslider(&quot;freq&quot;, 440, 20, 8000, 0.001)));
 
-
 </code></pre>
 
 
@@ -1453,7 +1446,6 @@ import(&quot;stdfaust.lib&quot;);
 squarewave(f) = 4/ma.PI*sum(k, 4, os.osc((2*k+1)*f)/(2*k+1));
 
 process = squarewave(55);
-
 
 </code></pre>
 
@@ -1480,7 +1472,6 @@ sawtooth(f) = 2/ma.PI*sum(k, 4, (-1)^k * os.osc((k+1)*f)/(k+1));
 
 process = sawtooth(55);
 
-
 </code></pre>
 
 
@@ -1506,7 +1497,6 @@ sawtooth(f) = phase(f) * 2 - 1;
 //process = sawtooth(440);
 
 process = os.sawN(3,400);
-
 
 </code></pre>
 
@@ -1551,7 +1541,6 @@ import(&quot;stdfaust.lib&quot;);
 
 process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) : fi.lowpass(3, hslider(&quot;hifreq&quot;, 2000, 20, 20000, 1));
 
-
 </code></pre>
 
 
@@ -1570,8 +1559,6 @@ process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) : fi.lowpass(3,
 import(&quot;stdfaust.lib&quot;);
 
 process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) : fi.highpass(3, hslider(&quot;lowfreq&quot;, 400, 20, 20000, 1));
-
-
 
 </code></pre>
 
@@ -1612,10 +1599,9 @@ process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01)
 import(&quot;stdfaust.lib&quot;);
 
 process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01) 
-        : fi.resonlp(
-                hslider(&quot;hifreq&quot;, 400, 20, 20000, 1),
-                hslider(&quot;Q&quot;, 1, 1, 100, 0.01),
-                hslider(&quot;gain&quot;, 1, 0, 2, 0.01));
+        : fi.resonlp(hslider(&quot;hifreq&quot;, 400, 20, 20000, 1),
+                    hslider(&quot;Q&quot;, 1, 1, 100, 0.01),
+                    hslider(&quot;gain&quot;, 1, 0, 2, 0.01));
 
 </code></pre>
 
@@ -1891,7 +1877,6 @@ process = FM(
             hslider(&quot;amp modulation&quot;, 0, 0, 1, 0.01)
             ) 
         &lt;: _,_;
-
 
 </code></pre>
 

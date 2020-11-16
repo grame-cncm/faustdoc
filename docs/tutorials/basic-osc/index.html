@@ -216,6 +216,10 @@
 <li>
     <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
 </li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
                                 </ul>
                             </li>
                             <li class="navitem">
@@ -435,16 +439,12 @@ process = +(0.01) ~ ma.decimal;
 <li>-&gt; A <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a>. </li>
 </ul>
 </li>
-<li>
-<p>How do we change the pitch of the sawtooth wave? </p>
-<ul>
+<li>How do we change the pitch of the sawtooth wave? <ul>
 <li>-&gt; We should increment the counter faster or slower. Try different values (e.g., 0.001, 0.1, etc.).</li>
 </ul>
 </li>
-<li>
-<p>Instead of controlling the increment of the counter, we'd like to control the
-frequency of the sawtooth wave.  <!-- What's a frequency? Show how it impacts the generated wave.--></p>
-</li>
+<li>Instead of controlling the increment of the counter, we'd like to control the
+frequency of the sawtooth wave.  <!-- What's a frequency? Show how it impacts the generated wave.--></li>
 <li>To do that, we need to know the number of values of the wave processed by the
 computer in one second. That's what we call the <a href="https://en.wikipedia.org/wiki/Sampling_(signal_processing)">sampling rate</a>. <!-- INSIST ON WHAT IT IS.--> This value changes in function of the context of the program so it can be retrieved with <code>ma.SR</code>. </li>
 <li>A sampling rate of 44100 corresponds to a frequency of 44100Hz. If we want a
@@ -626,7 +626,7 @@ process = organ(f)*g*t;
 <!-- /faust-run -->
 
 <ul>
-<li>This synth can be controlled with a midi keyboard.</li>
+<li>This synth can be controlled with a MIDI keyboard.</li>
 </ul>
 <h2 id="turn-it-into-an-android-app">Turn it Into an Android App</h2>
 <ul>

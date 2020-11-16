@@ -4,4 +4,3 @@ stereoamp = monoamp, monoamp;
 
 process = stereoamp;
 
-

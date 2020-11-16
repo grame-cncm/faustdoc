@@ -1,4 +1,4 @@
 
-N = hslider("N",10,1,10,1);
+N = 10;
 process = @(N);
 

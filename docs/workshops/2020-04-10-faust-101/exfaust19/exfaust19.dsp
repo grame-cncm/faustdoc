@@ -5,4 +5,3 @@ stereoecho = monoecho, monoecho;
 
 process = stereoecho; 
 
-

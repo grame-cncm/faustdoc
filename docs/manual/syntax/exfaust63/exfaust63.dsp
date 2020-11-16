@@ -1,3 +1,3 @@
 
-process = 0.1 : sin;
+process = 0.1 : cos;
 
