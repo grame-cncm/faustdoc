@@ -159,7 +159,7 @@ gate = button("gate [switch:1]");
 // DSP processor
 process = os.osc(freq) * gain * 5, os.sawtooth(freq) * gain * gate * 5;
 ```
-<!-- faust-run -->
+<!-- /faust-run -->
 
 Following the VCV Prototype model, note that audio outputs **are multipled by 5** to follow the [-5v..5v] range convention. 
 
@@ -182,7 +182,7 @@ gain(i) = hslider("gain%i [knob:%i]", 0.1, 0, 1, 0.01) : hbargraph("[light_red:%
 
 process(x) = par(i, 6, x * gain(i+1) * (1-switch(i+1)));
 ```
-<!-- faust-run -->
+<!-- /faust-run -->
 
 - **vco.dsp**  shows an oscillator with frequency controlled by a knob and a CV pich signal (following the 1V/octave convention):
 
@@ -203,7 +203,7 @@ pitch(x) = x + gain;
 
 process(x) = sin(2 * ma.PI * phasor(cv_pitch2freq(pitch(x)))) * 5;
 ```
-<!-- faust-run -->
+<!-- /faust-run -->
 
 - [rainbow.dsp](https://github.com/VCVRack/VCV-Prototype/blob/faust/examples/rainbow.dsp) 
 
@@ -260,7 +260,7 @@ check = checkbox("check");
 // DSP processor
 process = os.osc(freq) * gain * gate, os.sawtooth(freq) * gain * check;
 ```
-<!-- faust-run -->
+<!-- /faust-run -->
 
 A polyphonic instrument with `freq/gate/gain` controllers associated with VC MIDI inputs, using the `[CV:N]` metadata, to be compiled with the `-nvoices <num>` option:
 
@@ -291,7 +291,7 @@ process = sum(i, 3, partial(i))
 * (gate : vgroup("1-adsr", en.adsr(0.05, 0.1, 0.1, 0.1)))
 * gain : vgroup("2-master", *(master) : panner(pan));
 ```
-<!-- faust-run -->
+<!-- /faust-run -->
 
 This polyphonic instrument can then be connected to a polyphonic reverb, to be also compiled with the `-nvoices <num>` option:
 
@@ -300,4 +300,4 @@ This polyphonic instrument can then be connected to a polyphonic reverb, to be a
 import("stdfaust.lib");
 process = dm.freeverb_demo;
 ```
-<!-- faust-run -->
+<!-- /faust-run -->
