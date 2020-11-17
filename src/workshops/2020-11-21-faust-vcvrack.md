@@ -10,17 +10,17 @@ In this tutorial, we'll show how to use the [Faust](https://faust.grame.fr) lang
 - or using the [faust2vcvrack](https://github.com/grame-cncm/faust/tree/master-dev/architecture/vcvrack) tool with allows to generate standalone modules 
 - to introduce module development, a quick introduction on **using C++ to develop modules** will be done first.
 
-#### Install the VCV Rack application
+### Install the VCV Rack application
 
 Get the [binary version](https://vcvrack.com/Rack) for your OS here: https://vcvrack.com/Rack.
 
-#### Install the VCV Rack SDK
+### Install the VCV Rack SDK
 
 From  [Plugin Development Tutorial page](https://vcvrack.com/manual/PluginDevelopmentTutorial) here: https://vcvrack.com/manual/ and the [SDK itself](https://vcvrack.com/downloads/) for your OS: https://vcvrack.com/downloads/.
 
 Don't forget to setup the **RACK_DIR** variable: `export RACK_DIR=<Rack SDK folder>`. 
 
-#### Compiling the VCV Prototype module Faust version
+### Compiling the VCV Prototype module Faust version
 
 The Faust compiler can be embedded in applications or plugins using [libfaust](https://faustdoc.grame.fr/manual/embedding/), and DSP code can be edited and JIT compiled on the fly.
 
@@ -28,7 +28,7 @@ You'll have to clone and compile the [GitHub project](https://github.com/VCVRack
 
 **Then you should be ready for this workshop !** 
 
-### The modular principle
+## The modular principle
 
 VCV Rack follows  the **Modular synthesizers** principe explained on this [Wikipedia article](https://en.wikipedia.org/wiki/Modular_synthesizer):
 
@@ -42,11 +42,11 @@ Control parameters can also be changed from the module GUI using switches, knobs
 
 Modules **can be monophonic or polyphonic (up to 16 channels)**, where each cable actually transport several (usually related) signals. The polyhonic model is obviously used for instruments, but can also be used for effects.  Polyhonic modules have **thicker cables** in the GUI. 
 
-### Developing C++ Modules
+## Developing C++ Modules
 
 Before using Faust to develop modules, let's have a look at the standard procedure. Modules are usually created with C++ using the VCV Rack SDK that gives developers several tools to start with. Following the [tutorial here](https://vcvrack.com/manual/PluginDevelopmentTutorial), a template project can be created:
 
-#### Generating a template:
+### Generating a template
 
 ```
 ./helper.py createplugin MyPlugin
@@ -58,7 +58,7 @@ The created folder contains a Makefile that can be used to compile and install t
 make && make install
 ```
 
-#### GUI description using SVG: 
+### GUI description using SVG 
 
 The module GUI is done using SVG. Developers will classically prepare the background layer with [Inkscape](https://inkscape.org/) or a similar tool, with special conventions to describe audio or CV inputs/outputs, UI items (knobs, lights, custom widgets... ). Here a example of a basic SVG template with a *light*, a *param* (like knob), an *audio or CV input*, and an *audio or CV output*:
 
@@ -70,7 +70,7 @@ Inside the module project, the following command will decode the SVG file and ge
 ../helper.py createmodule MyModule res/MyModule.svg src/MyModule.cpp
 ```
 
-#### Adding DSP code: 
+### Adding DSP code 
 
 Then C++ code will be added to implement as simple oscillator in the `process` function:
 
@@ -93,25 +93,23 @@ Then C++ code will be added to implement as simple oscillator in the `process` f
  }
 ```
 
-The following line in plugin.cpp has to be uncommented;
+The following line in plugin.cpp has to be uncommented:
 
 ```C++
 p->addModel(modelMyModule);
 ```
-
- and well as in plugin.hpp:
+and well as in plugin.hpp:
 
 ```C++
 extern Model* modelMyModule;
 ```
-
 And compilation and installation of the module has to be done again:
 
 ```
 make && make install
 ```
 
-### Programming using the Faust aware VCV Prototype module
+## Programming using the Faust aware VCV Prototype module
 
 The [VCV Prototype module](https://github.com/VCVRack/VCV-Prototype) run scripting languages for prototyping, learning, and live coding. It can currently be programmed using  JavaScript, [Lua](https://www.lua.org), [Vult](https://github.com/modlfo/vult), or [PureData](https://puredata.info). A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (withRGB LEDs) is defined. 
 
@@ -123,7 +121,7 @@ Faust support thanks to **libfaust** embedding the **Interpreter** backend has b
 
 The VCV Prototype module [faust branch](https://github.com/VCVRack/VCV-Prototype/tree/faust) has to be used for now. 
 
-#### Loading/editing/compiling DSP files
+### Loading/editing/compiling DSP files
 
 Faust DSP files have to be loaded in VCV Prototype and edited in a external editor (Visual Studio Code, Atom...). Each time the file is saved, it will be recompiled and executed. To possibly save compilation time, the DSP machine code is saved in a cache, and possibly restored the next time the session will be loaded.
 
@@ -145,7 +143,7 @@ Other metadata:
 
 The [rack.lib](https://github.com/VCVRack/VCV-Prototype/blob/faust/res/faust/rack.lib) Faust library contains usefull functions to convert CV signals, and can be enriched if needed. 
 
-#### DSP examples
+### DSP examples
 
 Here is a simple example showing how oscillators can be controlled by GUI items, associated with metadata in the DSP code:
 
@@ -217,7 +215,7 @@ Some additional examples:
 
 - [physicalmodel.dsp](https://github.com/VCVRack/VCV-Prototype/blob/faust/examples/physicalmodel.dsp) demonstrates a modal synthesis based bell connected to a reverb
 
-### Using faust2vcvrack 
+## Using faust2vcvrack 
 
 The **faust2vcvrack** tool compiles a Faust DSP program in a folder containing the [VCV Rack](https://vcvrack.com) plugin C++ source code and a Makefile to compile it. By default the resulting C++ code is compiled and installed in the VCV Rack application:
 
@@ -235,17 +233,17 @@ Here are the available options:
 
 Faust DSP code classically produces audio signals in the [-1..1] range. Since VCV expects audio signals in the [-5v..5v] range, they are **automatically converted in the architecture file**. CV control in the [0v..10v] volts range will be mapped to the controllers [min..max] range.
 
-#### Polyphony support
+### Polyphony support
 
 Polyphonic modules can be created using the  `-nvoices <num>` parameter up to 16 voices. The  `freq/gate/gain` convention can be used in the DSP code. VCV Rack follows the 1V/octave convention for MIDI pitch values, so the MIDI signals are automatically converted to `freq` using this convention. Gain and gates signals (using the [0v..10v] range) are converted to [0..1] values.
 
 Note that **creating polyphonic effects** also make sense in VCV Rack. For instance a reverb connected to a polyphonic instrument would need to be polyphonic. Thus the  `-nvoices <num>` parameter can also be used in this case.
 
-#### Metadata
+### Metadata
 
 - `[CV:N]` can be used in input (typically *sliders* or *nentry*) or output (typically *bargraph*) controllers to connect them to CV instead of regular GUI parameters.
 
-#### DSP examples
+### DSP examples
 
 Here is a simple example showing how oscillators can be controlled by UI items. One switch, one button and two knobs will be created in the GUI:
 
