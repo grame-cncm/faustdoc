@@ -159,9 +159,10 @@ gate = button("gate [switch:1]");
 // DSP processor
 process = os.osc(freq) * gain * 5, os.sawtooth(freq) * gain * gate * 5;
 ```
+<!-- faust-run -->
+
 Following the VCV Prototype model, note that audio outputs **are multipled by 5** to follow the [-5v..5v] range convention. 
 
-<!-- faust-run -->
 
 The VCV Prototype standard examples ported to Faust can be seen in the examples folder:
 
