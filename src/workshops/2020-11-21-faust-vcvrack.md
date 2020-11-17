@@ -76,7 +76,6 @@ Then C++ code will be added to implement as simple oscillator in the `process` f
 
 ```C++
  float phase = 0.f;
- float blinkPhase = 0.f;
  float freq = 440.f;
  
  void process(const ProcessArgs &args) override {
