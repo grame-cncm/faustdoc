@@ -296,7 +296,7 @@ process = sum(i, 3, partial(i))
 This polyphonic instrument can then be connected to a polyphonic reverb, to be also compiled with the `-nvoices <num>` option:
 
 <!-- faust-run -->
-```faust
+```
 import("stdfaust.lib");
 process = dm.freeverb_demo;
 ```
