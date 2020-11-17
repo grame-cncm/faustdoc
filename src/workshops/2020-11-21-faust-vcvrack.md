@@ -10,7 +10,7 @@ In this tutorial, we'll show how to use the [Faust](https://faust.grame.fr) lang
 - or using the [faust2vcvrack](https://github.com/grame-cncm/faust/tree/master-dev/architecture/vcvrack) tool with allows to generate standalone modules 
 - to introduce module development, a quick introduction on **using C++ to develop modules** will be done first.
 
-### Install the VCV Rack application
+## Installation
 
 Get the [binary version](https://vcvrack.com/Rack) for your OS here: https://vcvrack.com/Rack.
 
