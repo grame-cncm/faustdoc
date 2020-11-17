@@ -1181,7 +1181,7 @@ process = 0.125 : + ~ _;
 <li>
 <script type="math/tex">y(t<0)=0</script>.</li>
 <li>
-<script type="math/tex">y(0) = y(-1) + 0.125 = 0.125$</script>.</li>
+<script type="math/tex">y(0) = y(-1) + 0.125 = 0.125</script>.</li>
 <li>
 <script type="math/tex">y(1) = y(0) + 0.125 = 2*0.125 = 0.250</script>
 </li>
@@ -1395,7 +1395,6 @@ import(&quot;stdfaust.lib&quot;);
 
 process = os.osc(hslider(&quot;freq&quot;, 440, 20, 20000, 1)) * hslider(&quot;gain&quot;, 0.1, 0, 1, 0.01);
 
-
 </code></pre>
 
 
@@ -1495,7 +1494,6 @@ phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 sawtooth(f) = phase(f) * 2 - 1;
 
 //process = sawtooth(440);
-
 process = os.sawN(3,400);
 
 </code></pre>
@@ -1520,7 +1518,6 @@ process = os.sawN(3,400);
 import(&quot;stdfaust.lib&quot;);
 
 process = no.noise * hslider(&quot;noise&quot;, 0.5, 0, 1, 0.01);
-
 
 </code></pre>
 
