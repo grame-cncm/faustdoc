@@ -1,6 +1,6 @@
 # Faust For the Confined: Adding Faust DSP Support to Your JUCE Plug-ins
 
-[JUCE](https:/juce.com/) is a well-known framework for creating audio plug-ins (i.e., VST, AU, AAX, etc.) and applications for a wide range of platforms. Faust can be used to generate ready-to-use JUCE applications and plug-ins implementing the standard user interface (UI) described in the Faust code using [faust2juce](TODO). However, it is sooo easy to make professional looking UIs from scratch in JUCE that you might want to use Faust to implement the DSP portion of your plug-in and build your own UI.
+[JUCE](https:/juce.com/) is a well-known framework for creating audio plug-ins (i.e., VST, AU, AAX, etc.) and applications for a wide range of platforms. Faust can be used to generate ready-to-use JUCE applications and plug-ins implementing the standard user interface (UI) described in the Faust code using [faust2juce](https://github.com/grame-cncm/faust/tree/master-dev/architecture/juce). However, it is sooo easy to make professional looking UIs from scratch in JUCE that you might want to use Faust to implement the DSP portion of your plug-in and build your own UI.
 
 In this tutorial, we demonstrate how to use the Faust compiler to generate a C++ DSP object and how to interface it with your JUCE plug-in/UI. We'll cover basic examples (monophonic synth, polyphonic synth, and audio effect) as well as more advanced applications involving polyphony, etc.
 
@@ -158,9 +158,9 @@ void MonoSynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuff
     fDSP->compute(buffer.getNumSamples(),NULL,outputs);
     
     for (int channel = 0; channel < totalNumOutputChannels; ++channel) {
-      for (int i = 0; i < buffer.getNumSamples(); i++) {
-        *buffer.getWritePointer(channel,i) = outputs[channel][i];
-      }
+        for (int i = 0; i < buffer.getNumSamples(); i++) {
+            *buffer.getWritePointer(channel,i) = outputs[channel][i];
+        }
     }
 }
 ```
