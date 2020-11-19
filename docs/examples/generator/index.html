@@ -258,6 +258,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#kisana" class="nav-link">kisana</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#noise" class="nav-link">noise</a>
               <ul class="nav flex-column">
               </ul>
@@ -296,7 +300,6 @@
 <h1 id="generator">generator</h1>
 <h2 id="filterosc">filterOsc</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -315,13 +318,132 @@ process = dm.oscrs_demo;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+<!-- /faust-run -->
 
+<h2 id="kisana">kisana</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+process = vgroup(&quot;Kisana&quot;,environment{declare name      &quot;Kisana&quot;;
+declare author  &quot;Yann Orlarey&quot;;
+
+//Modifications GRAME July 2015
+
+/* ========= DESCRITPION =============
+
+- Kisana : 3-loops string instrument (based on Karplus-Strong)
+- Head = Silence
+- Tilt = High frequencies 
+- Front = High + Medium frequencies
+- Bottom = High + Medium + Low frequencies
+- Left = Minimum brightness
+- Right = Maximum birghtness
+- Front = Long notes
+- Back = Short notes
+
+*/
+
+import(&quot;stdfaust.lib&quot;);
+
+KEY = 60;   // basic midi key
+NCY = 15;   // note cycle length
+CCY = 15;   // control cycle length
+BPS = 360;  // general tempo (ba.beat per sec)
+
+process = kisana;    
+
+//-------------------------------kisana----------------------------------
+// USAGE:  kisana : _,_;
+//      3-loops string instrument
+//-----------------------------------------------------------------------
+
+kisana = vgroup(&quot;Kisana&quot;, harpe(C,11,48), harpe(C,11,60), (harpe(C,11,72) : *(1.5), *(1.5)) 
+    :&gt;*(l))
+    with {
+        l = -20 : ba.db2linear;//hslider(&quot;[1]Volume&quot;,-20, -60, 0, 0.01) : ba.db2linear;
+        C = hslider(&quot;[2]Brightness[acc:0 1 -10 0 10]&quot;, 0.2, 0, 1, 0.01) : ba.automat(BPS, CCY, 0.0);
+    };
+
+//----------------------------------Harpe--------------------------------
+// USAGE:  harpe(C,10,60) : _,_;
+//      C is the filter coefficient 0..1
+//      Build a N (10) strings harpe using a pentatonic scale 
+//      based on midi key b (60)
+//      Each string is triggered by a specific
+//      position of the &quot;hand&quot;
+//-----------------------------------------------------------------------
+harpe(C,N,b) =  hand(b) &lt;: par(i, N, position(i+1)
+                            : string(C,Penta(b).degree2Hz(i), att, lvl)
+                            : pan((i+0.5)/N) )
+                    :&gt; _,_
+    with {
+        att  = hslider(&quot;[3]Resonance[acc:2 1 -10 0 12]&quot;, 4, 0.1, 10, 0.01); 
+        hand(48) = vslider(&quot;h:[1]Instrument Hands/1 (Note %b)[unit:pk][acc:1 0 -10 0 14]&quot;, 0, 0, N, 1) : int : ba.automat(120, CCY, 0.0);
+        hand(60) = vslider(&quot;h:[1]Instrument Hands/2 (Note %b)[unit:pk][acc:1 0 -10 0 14]&quot;, 2, 0, N, 1) : int : ba.automat(240, CCY, 0.0);
+        hand(72) = vslider(&quot;h:[1]Instrument Hands/3 (Note %b)[unit:pk][acc:1 0 -10 0 10]&quot;, 4, 0, N, 1) : int : ba.automat(480, CCY, 0.0);
+        //lvl  = vslider(&quot;h:loop/level&quot;, 0, 0, 6, 1) : int : ba.automat(BPS, CCY, 0.0) : -(6) : ba.db2linear; 
+        lvl = 1;
+        pan(p) = _ &lt;: *(sqrt(1-p)), *(sqrt(p));
+        position(a,x) = abs(x - a) &lt; 0.5;
+    };
+
+//----------------------------------Penta-------------------------------
+// Pentatonic scale with degree to midi and degree to Hz conversion
+// USAGE: Penta(60).degree2midi(3) ==&gt; 67 midikey
+//        Penta(60).degree2Hz(4)   ==&gt; 440 Hz
+//-----------------------------------------------------------------------
+
+Penta(key) = environment {
+
+    A4Hz = 440; 
+
+    degree2midi(0) = key+0;
+    degree2midi(1) = key+2;
+    degree2midi(2) = key+4;
+    degree2midi(3) = key+7;
+    degree2midi(4) = key+9;
+    degree2midi(d) = degree2midi(d-5)+12;
+
+    degree2Hz(d) = A4Hz*semiton(degree2midi(d)-69) with { semiton(n) = 2.0^(n/12.0); };
+
+}; 
+
+//----------------------------------String-------------------------------
+// A karplus-strong string.
+//
+// USAGE: string(440Hz, 4s, 1.0, button(&quot;play&quot;))
+// or     button(&quot;play&quot;) : string(440Hz, 4s, 1.0)
+//-----------------------------------------------------------------------
+
+string(coef, freq, t60, level, trig) = no.noise*level
+                            : *(trig : trigger(freq2samples(freq)))
+                            : resonator(freq2samples(freq), att)
+    with {
+        resonator(d,a)  = (+ : @(d-1)) ~ (average : *(a));
+        average(x)      = (x*(1+coef)+x'*(1-coef))/2;
+        trigger(n)      = upfront : + ~ decay(n) : &gt;(0.0);
+        upfront(x)      = (x-x') &gt; 0.0;
+        decay(n,x)      = x - (x&gt;0.0)/n;
+        freq2samples(f) = 44100.0/f;
+        att             = pow(0.001,1.0/(freq*t60)); // attenuation coefficient
+        random          = +(12345)~*(1103515245);
+        noise           = random/2147483647.0;
+    };
+
+
+}.process);
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
 <!-- /faust-run -->
 
 <h2 id="noise">noise</h2>
 <!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check noises.lib
@@ -380,16 +502,14 @@ The following listing shows the input Faust code, parsed to compile this mathema
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="noisemetadata">noiseMetadata</h2>
 <!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
 // WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check noises.lib
@@ -470,16 +590,14 @@ The following listing shows the input Faust code, parsed to compile this mathema
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="osc">osc</h2>
 <!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;osc&quot;;
@@ -503,16 +621,14 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="osci">osci</h2>
 <!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;osci&quot;;
@@ -536,16 +652,14 @@ process = vgroup(&quot;Oscillator&quot;, os.osci(freq) * vol);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust4/exfaust4.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="sawtoothlab">sawtoothLab</h2>
 <!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;sawtoothLab&quot;;
@@ -560,16 +674,14 @@ process = dm.sawtooth_demo;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust5/exfaust5.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="virtualanalog">virtualAnalog</h2>
 <!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;VirtualAnalog&quot;;
@@ -584,16 +696,14 @@ process = dm.virtual_analog_oscillator_demo;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust6/exfaust6.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="virtualanaloglab">virtualAnalogLab</h2>
 <!-- faust-run -->
-
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;virtualAnalogLab&quot;;
@@ -610,10 +720,9 @@ process =
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust7/exfaust7.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run --></div>
             </div>
         </div>
@@ -644,7 +753,7 @@ process =
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>

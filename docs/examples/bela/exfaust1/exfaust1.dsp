@@ -4,13 +4,18 @@ import("stdfaust.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Additive synthesizer, must be used with OSC message to program sound.
-// It as 8 harmonics. Each have it's own volume envelop.
+// It as 8 harmonics. Each have it's own volume envelope.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_0	: vol0 (volum of fundamental)
+// ANALOG_1	: vol1
+// ...
+// ANALOG_7	: vol7
 //
 // OSC messages (see BELA console for precise adress)
 // For each harmonics (%rang indicate harmonic number, starting at 0) :
-// vol%rang	: General Volume (vol0 control the volume of the fundamental)
 // A%rang : Attack
 // D%rang : Decay
 // S%rang : Sustain
@@ -31,7 +36,7 @@ gFreq = midifreq * bend;
 partiel(rang) = os.oscrs(gFreq*(rang+1))*volume
     with {
         // UI
-        vol	= hslider("vol%rang", 1, 0, 1, 0.001);
+        vol	= hslider("vol%rang[BELA: ANALOG_%rang]", 1, 0, 1, 0.001);
      
         a = 0.01 * hslider("A%rang", 1, 0, 400, 0.001);
         d = 0.01 * hslider("D%rang", 1, 0, 400, 0.001);

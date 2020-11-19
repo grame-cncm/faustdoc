@@ -307,7 +307,6 @@
 <h2 id="making-sound">Making Sound</h2>
 <p>Write the following code in the <a href="https://faustide.grame.fr">Faust Online IDE</a>:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -320,7 +319,6 @@ process = no.noise;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>and then click on the "run" button on the top left corner. Alternatively, you can also click on the "Try it Yourself" button of the window above if you're reading the online version of this documentation. You should now hear white noise, of course... ;)</p>
@@ -329,11 +327,9 @@ process = no.noise;
 <p>Let's statically change the gain of the output of <code>no.noise</code> simply by multiplying it by a number between 0 and 1:</p>
 <pre><code>process = no.noise*0.5;
 </code></pre>
-
 <p>Thus, standard mathematical operations can be used in Faust just like in any other language. </p>
 <p>We'll now connect the noise generator to a resonant lowpass filter (<a href="https://faustlibraries.grame.fr/libs/filters/#firesonlp"><code>fi.resonlp</code></a>) by using the Faust <a href="../syntax/#sequential-composition">sequential composition operator</a>: <code>:</code></p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -349,13 +345,11 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p><a href="https://faustlibraries.grame.fr/libs/filters/#firesonlp"><code>fi.resonlp</code></a> has four arguments (in order): <em>cut-off frequency</em>, <em>q</em>, <em>gain</em> and its <em>input</em>. Note that you can have a quick look of what the arguments of a function are simply by hovering it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables don't have a type in Faust and everything is considered as a signal. The Faust compiler takes care of making the right optimizations by choosing which variable is ran at audio rate, what their types are, etc. Thus, <code>ctFreq</code>, <code>q</code> and <code>gain</code> could well be controlled by oscillators (i.e., signals running at audio rate) here. </p>
 <p>Since the input of the filter is not specified as an argument here (but it could, of course), it automatically becomes an "implicit" input/argument of <code>fi.resonlp</code>. The <code>:</code> <a href="../syntax/#sequential-composition">sequential composition operator</a> can be used to connect two elements that have the same number of outputs and inputs. Since <code>no.noise</code> has one output and <code>fi.resonlp(ctFreq,q,gain)</code> has one implicit input, we can connect them together. This is essentially the same as writing something like:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -371,22 +365,18 @@ process = fi.resonlp(ctFreq,q,gain,no.noise);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>While this would work, it's kind of ugly and not very "Faustian", so we don't do it... ;)</p>
 <p>At this point, you should be able to use and plug various elements of the Faust libraries together. The Faust libraries implement hundreds of functions and some of them have a very specialized use. Fortunately, the Faust libraries documentation contains a section on <a href="https://faustlibraries.grame.fr">Standard Faust Libraries</a> listing all the high level "standard" Faust functions organized by types. <strong>We recommend you to have a look at it now</strong>. As you do this, be aware that implicit signals in Faust can be explicitly represented with the <code>_</code> character. Thus, when you see something like this in the libraries documentation:</p>
 <pre><code>_ : aFunction(a,b) : _
 </code></pre>
-
 <p>it means that this function has one implicit input, one implicit output and two parameters (<code>a</code> and <code>b</code>). On the other hand:</p>
 <pre><code>anotherFunction(a,b,c) : _,_
 </code></pre>
-
 <p>is a function that has three parameters, no implicit input and two outputs.</p>
 <p>Just for "fun," try to rewrite the previous example running in the Faust online editor so that the <code>process</code> line looks like this:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -402,13 +392,11 @@ process = no.noise : _ : fi.resonlp(ctFreq,q,gain) : _;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>Of course, this should not affect the result.</p>
 <p>You probably noticed that we used the <a href="../syntax/#parallel-composition"><code>,</code> Faust composition operator to express two signals in parallel</a>. We can easily turn our filtered noise example into a stereo object using it:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -424,12 +412,10 @@ process = no.noise : _ &lt;: fi.resonlp(ctFreq,q,gain),fi.resonlp(ctFreq,q,gain)
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>or we could even write this in a cleaner way:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -446,7 +432,6 @@ process = no.noise &lt;: filter,filter;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>Note that this example allows us to have 2 separate filters for each channel. Since both filters currently have the same parameters, another way of writing this could be: <code>process = no.noise : filter &lt;: _,_;</code>.<br />
@@ -457,15 +442,12 @@ You could think of the first form as a same noise signal splitted and then filte
 <pre><code>import(&quot;stdfaust.lib&quot;);
 process = no.noise &lt;: filter,filter :&gt; _;
 </code></pre>
-
 <p>Here we split the signal of <code>no.noise</code> into two signals that are connected to two filters in parallel. Finally, we merge the outputs of the filters into one signal. Note, that the previous expression could have been written as such too:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 process = no.noise &lt;: filter+filter;
 </code></pre>
-
 <p>Keep in mind that splitting a signal doesn't mean that its energy get spread in each copy, for example, in the expression:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -477,7 +459,6 @@ process = 1 &lt;: _,_;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>the two <code>_</code> both contain 1...</p>
@@ -486,7 +467,6 @@ process = 1 &lt;: _,_;
 <p>In this section, we'll add a simple user interface to the code that we wrote in 
 the previous section:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -502,14 +482,12 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>Faust allows us to declare basic <a href="../syntax/#user-interface-primitives-and-configuration">user interface (UI) elements</a> to control the parameters of a Faust object. Since Faust can be used to make a wide range of elements ranging from standalone applications to audio plug-ins or API, the role of UI declarations differs a little in function of the target. For example, in the Faust Online Editor, a UI is a window with various kind of controllers (sliders, buttons, etc.). On the other hand, if you're using Faust to generate an audio engine using <code>faust2api</code>, then UI elements declared in your Faust code will be the parameters visible to "the rest of the world" and controllable through the API.</p>
 <p>An exhaustive list of the standard Faust UI elements is given in the <a href="../syntax/#user-interface-primitives-and-configuration">corresponding section</a>. Be aware that they not all supported by all the Faust targets. For example, you wont be able to declare vertical sliders if you're using the <a href="https://faustplayground.grame.fr">Faust Playground</a>, etc. </p>
 <p>In the current case, we'd like to control the <code>ctFreq</code>, <code>q</code> and <code>gain</code> parameters of the previous program with horizontal sliders. To do this, we can write something like:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -525,13 +503,11 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>The first argument of <a href="../syntax/#hslider-primitive"><code>hslider</code></a> is the <em>name of the parameter</em> as it will be displayed in the interface or used in the API (it can be different from the name of the variable associated with the UI element), the next one is the <em>default value</em>, then the <em>min</em> and <em>max</em> values and finally the <em>step</em>. To summarize: <code>hslider("paramName",default,min,max,step)</code>.</p>
 <p>Let's now add a "gate" <a href="#button-primitive"><code>button</code></a> to start and stop the sound (where <code>gate</code> is just the name of the button):</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -548,13 +524,11 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>Note that we were able to <a href="../syntax/#ordering-ui-elements">order parameters in the interface</a> by numbering them in the parameter name field using squared brackets. </p>
 <p>Faust user interface elements run at control rate. Thus, you might have noticed that clicks are produced when moving sliders quickly. This problem can be easily solved by "smoothing" down the output of the sliders using the <a href="https://faustlibraries.grame.fr/libs/signals/#sismoo"><code>si.smoo</code></a> function:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -571,7 +545,6 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust10/exfaust10.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>Note that we're also using <code>si.smoo</code> on the output of the <code>gate</code> button to apply a exponential envelope on its signal. </p>
@@ -580,7 +553,6 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 <p>Some Faust functions already contain a built-in UI and are ready-to-be-used. These functions are all placed in <a href="https://faustlibraries.grame.fr/libs/demos/">demo.lib</a> and are accessible through the <code>dm.</code> environment. </p>
 <p>As an example, let's add a reverb to our previous code by calling <a href="https://faustlibraries.grame.fr/libs/demos/#dmzita_light"><code>dm.zita_light</code></a> (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust wont know how to connect things):</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -597,7 +569,6 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t &lt;: dm.zita_light;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust11/exfaust11.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>Hopefully, you should see many more UI elements in your interface. </p>
@@ -614,7 +585,6 @@ process =
     :&gt; _ // merging signals here
     &lt;: dm.zita_light; // and then splitting them for stereo in
 </code></pre>
-
 <h3 id="fm-synthesizer">FM Synthesizer</h3>
 <p>Make a frequency modulation (FM) synthesizer using <a href="https://faustlibraries.grame.fr/libs/oscillators/#ososc"><code>os.osc</code></a> (sine wave oscillator):</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
@@ -623,11 +593,9 @@ process =
     os.osc(carrierFreq+os.osc(modulatorFreq)*index)
     &lt;: dm.zita_light; // splitting signals for stereo in
 </code></pre>
-
 <h3 id="guitar-effect-chain">Guitar Effect Chain</h3>
 <p>Make a guitar effect chain:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -645,7 +613,6 @@ process =
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/quick-start/exfaust12/exfaust12.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>Since we're only using functions from <a href="https://faustlibraries.grame.fr/libs/demos/"><code>demo.lib</code></a> here, there's no need to define any UI since it is built-in in the functions that we're calling. Note that the mono output of <code>dm.wah4_demo</code> is split to fit the stereo input of <code>dm.phaser2_demo</code>. The last three effects have the same number of inputs and outputs (2x2) so no need to split or merge them.</p>
@@ -659,7 +626,6 @@ with {
 };
 process = string(freq,res,gate);
 </code></pre>
-
 <p>Sampling rate is defined in <a href="https://faustlibraries.grame.fr/libs/maths/"><code>maths.lib</code></a> as <a href="https://faustlibraries.grame.fr/libs/maths/#masr"><code>SR</code></a>. We're using it here to compute the length of the delay of the comb filter. <a href="../syntax/#witht-expression"><code>with{}</code></a> is a Faust primitive to attach local variables to a function. So in the current case, <code>del</code> is a local variable of <code>string</code>.</p></div>
             </div>
         </div>
@@ -690,7 +656,7 @@ process = string(freq,res,gate);
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>

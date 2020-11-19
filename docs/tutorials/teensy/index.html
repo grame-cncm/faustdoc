@@ -311,7 +311,6 @@
 <p>The Teensy Audio Library doesn't come with any band-limited sawtooth wave oscillator (which are crucial to the implementation of good quality virtual analog synthesizer). The Faust libraries come with a wide range of band-limited oscillators that can be easily ported to the Teensy. </p>
 <p>The following program (<code>FaustSawtooth.dsp</code>) implements a sawtooth wave oscillator with controllable gain and frequency:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -326,14 +325,12 @@ process = os.sawtooth(freq)*gain;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/teensy/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p><code>si.smoo</code> is used to interpolate the values of the <code>freq</code> and <code>gain</code> parameters to prevent clicks and abrupt changes. </p>
 <p>This Faust program can be turned into an object for the Teensy Audio Library simply by running the following command in a terminal:</p>
 <pre><code>faust2teensy -lib FaustSawtooth.dsp
 </code></pre>
-
 <p>which will generate a zip file containing a <code>.cpp</code> and a <code>.h</code> file in return. Alternatively, the Faust online compilation service can be used through the <a href="https://faust.grame.fr/tools/editor/index.html">Faust Online Editor</a> to carry out this task (Export(Truck)/source/teensy). The generated package should contain a file called <code>FaustSawtooth.cpp</code> and <code>FaustSawtooth.h</code>. </p>
 <p>Create a new project in the Arduino/Teensyduino software (e.g., call it <code>faustSawtooth</code>) and place <code>FaustSawtooth.cpp</code> and <code>FaustSawtooth.h</code> in the same folder (whose name should probably be <code>/faustSawtooth</code>) than <code>faustSawtooth.ino</code>.</p>
 <p>Replace the content of the Arduino program with the following:</p>
@@ -357,12 +354,10 @@ void loop() {
   delay(50);
 }
 </code></pre>
-
 <p>First, the header file (<code>.h</code>) of the object generated with <code>faust2teensy</code> is included. An instance of <code>FaustSawtooth</code> is then created. Since the Teensy (3.6/4.0) that we're using for this tutorial is equipped with a Teensy Audio Shied, we also create an instance of <code>AudioOutputI2S</code> and <code>AudioControlSGTL5000</code>. We then connect the Faust object to the 2 outputs of the audio shield using <code>AudioConnection</code>s. Note that if the Faust object had a stereo output (i.e., <code>process = os.sawtooth(freq)*gain &lt;: _,_</code>), the following should have been written instead:</p>
 <pre><code>AudioConnection patchCord0(faustSawtooth,0,out,0);
 AudioConnection patchCord1(faustSawtooth,1,out,1);
 </code></pre>
-
 <p>The number of inputs and outputs of objects generated with <code>faust2teensy</code> corresponds to the number inputs and outputs of the Faust program.</p>
 <p>2 bytes of memory are allocated in <code>setup()</code>. Note that if the Faust object had audio inputs, this number should probably be greater (i.e., typically 6 for stereo in and stereo out).</p>
 <p><code>audioShield.enable()</code> activates the audio shield and <code>audioShield.volume(0.1)</code> sets the gain of the headphone output (this step is optional).</p>
@@ -372,11 +367,9 @@ AudioConnection patchCord1(faustSawtooth,1,out,1);
 <p>Before this program can be compiled and uploaded to the Teensy 3.6, some modifications need to be made to the configuration file used by the compilation script used by Teensyduino (<code>boards.txt</code>). You should be able to find it in <code>hardware/teensy/avr</code> in the source of the Arduino software (its location will vary depending on the platform your using). The most important thing to do here is to use <code>g++</code> instead of <code>gcc</code> for linking, so: </p>
 <pre><code>teensy36.build.command.linker=arm-none-eabi-gcc
 </code></pre>
-
 <p>should become: </p>
 <pre><code>teensy36.build.command.linker=arm-none-eabi-g++
 </code></pre>
-
 <p>in <code>boards.txt</code>. Beware that on older versions of Teensyduino, these changes should be made directly to <code>platform.txt</code>.</p>
 <p>After making these changes, you should be able to compile and upload your sketch to the Teensy 3.6.</p>
 <h2 id="audio-effect">Audio Effect</h2>
@@ -386,7 +379,6 @@ AudioConnection patchCord1(faustSawtooth,1,out,1);
 <p>The same procedure as the one described in the previous section can be followed to generate audio effects for the Teensy Audio Library. <a href="https://faust.grame.fr/doc/libraries/index.html#dm.zita_light"><code>dm.zita_light</code></a> implements a high quality stereo feedback delay network reverb. It hosts its own user interface elements/parameters to control its dry/wet mix (<code>Dry/Wet Mix</code>) and its level in dB (<code>Level</code>).</p>
 <p>A simple Faust program (<code>FaustZita.dsp</code>) calling this effect could look like that:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -399,13 +391,11 @@ process = dm.zita_light;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/teensy/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>The corresponding Teensy Audio Library object can be generated by running:</p>
 <pre><code>faust2teensy -lib FaustZita.dsp
 </code></pre>
-
 <p>and finally called in a Teensy program: </p>
 <pre><code>#include &lt;Audio.h&gt;
 #include &quot;FaustZita.h&quot;
@@ -431,25 +421,20 @@ void loop() {
   delay(10);
 }
 </code></pre>
-
 <p>Note that in this example, a potentiometer connected to the Analog Input 0 of the Teensy is used to control the dry/wet mix of the reverb.</p>
 <h2 id="additional-configuration-for-low-audio-latency">Additional Configuration for Low Audio Latency</h2>
 <p>Thanks to its bare-metal architecture, the Teensy allows for extremely low audio latency which would be more or less impossible to achieve if an operating system was used. Audio latency is mostly determined by the block size of the system. The default block size of the Teensy Audio Library is 128 samples but it can be cranked down to 8 samples (only if Faust DSP objects are used exclusively) without impacting performances too much (see the <a href="https://zenodo.org/record/3249282#.XRxurXVfhjE">corresponding SMC paper</a>). Block size is set by a C++ macro (<code>AUDIO_BLOCK_SAMPLES</code>) that can be overridden before compilation by passing it as an argument to the C++ compiler by substituting the following line in <code>boards.txt</code> (see previous section):</p>
 <pre><code>teensy36.build.flags.defs=-D__MK66FX1M0__ -DTEENSYDUINO=146
 </code></pre>
-
 <p>with:</p>
 <pre><code>teensy36.build.flags.defs=-D__MK66FX1M0__ -DTEENSYDUINO=146 -DAUDIO_BLOCK_SAMPLES=8
 </code></pre>
-
 <p>on the Teensy 3.6, and:</p>
 <pre><code>teensy40.build.flags.defs=-D__MK66FX1M0__ -DTEENSYDUINO=146
 </code></pre>
-
 <p>with:</p>
 <pre><code>teensy40.build.flags.defs=-D__MK66FX1M0__ -DTEENSYDUINO=146 -DAUDIO_BLOCK_SAMPLES=8
 </code></pre>
-
 <p>on the Teensy 4.0.</p>
 <p>Similarly, the sampling rate (44100KHz by default) can be set using the <code>AUDIO_SAMPLE_RATE_EXACT</code> macro. Note that computing the "exact" sampling rate compatible with the clock of your Teensy might be a bit tricky. For example, <code>AUDIO_SAMPLE_RATE_EXACT</code> is 44117.64706 by default and not 44100, etc.</p>
 <h3 id="warning">Warning!!!</h3>
@@ -463,7 +448,6 @@ void loop() {
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 #endif
 </code></pre>
-
 <h2 id="notes-about-computational-power-and-memory-footprint">Notes About Computational Power and Memory Footprint</h2>
 <p>While the Teensy 3.6 is relatively powerful and can be used to run complex DSP algorithm (up to 90 Faust sine waves in parallel), it doesn't have a lot of RAM. For that reason, algorithms with a large memory footprint (e.g., anything using delay a lot such a reverbs, wave table oscillators, etc.) might have to be adapted to be run on the Teensy. For example, the default Faust sine wave oscillator uses a table of 65536 samples which is to big to be loaded in the Teensy RAM. Hence, its definition should be adapted, e.g.:</p>
 <pre><code>osc(freq) = rdtable(tablesize, os.sinwaveform(tablesize), int(os.phasor(tablesize,freq)))
@@ -471,7 +455,6 @@ with{
     tablesize = 1 &lt;&lt; 15; // instead of 1 &lt;&lt; 16
 };
 </code></pre>
-
 <p>Similarly, the maximum size of the delay lines of some reverb algorithms might be too big and should be adjusted, etc.</p></div>
             </div>
         </div>
@@ -502,7 +485,7 @@ with{
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>

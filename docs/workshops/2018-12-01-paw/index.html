@@ -319,7 +319,6 @@
 <img src="img/ramp-sig.png" width="80%" class="mx-auto d-block"></p>
 <p>using the following Faust program:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -331,7 +330,6 @@ process = 0.125 : + ~ _;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>You can think of a Faust program as a description of an audio circuit
@@ -372,20 +370,16 @@ where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</
 <p>Let's define a function to do that:</p>
 <pre><code>decimalpart(x) = x - int(x);
 </code></pre>
-
 <p>We can now use that function to transform our ramp into a sawtooth It is then tempting to write:</p>
 <pre><code>process = 0.125 : + ~ _ : decimalpart;
 </code></pre>
-
 <p>From a mathematical point of view that would be perfectly correct, but we will accumulate rounding errors. To keep full precision it is better to place the decimal part operation inside the loop:</p>
 <pre><code>process = 0.125 : (+ : decimalpart) ~ _;
 </code></pre>
-
 <p>We can now listen the produced signal. Just copy and past <code>decimalpart</code> and <code>process</code> definitions into the <a href="https://fausteditor.grame.fr">Faust editor</a></p>
 <h2 id="controlling-the-frequency-of-the-phase-signal">Controlling the Frequency of the Phase Signal</h2>
 <p>Let's first rearrange our code</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -399,7 +393,6 @@ process = phase;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>In our <code>phase</code> definition the step value, here <code>0.125</code> controls the frequency of the generated signal. We would like to compute this step value according to the desired frequency. In order to do the conversion we need to know the sampling rate. It is available from the standard library as <code>ma.SR</code>. </p>
@@ -407,19 +400,15 @@ process = phase;
 <p>If we want a frequency of 440 Hz, we need a step 440 times bigger for the phase signal to reach 1 440 times faster. </p>
 <pre><code>phase = 440/ma.SR : (+ : decimalpart) ~ _;
 </code></pre>
-
 <p>We can generalize this definition by replacing <code>440</code> by a parameter <code>f</code>:</p>
 <pre><code>phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 </code></pre>
-
 <p>and by indicating the desired frequency when we use <code>phase</code>:</p>
 <pre><code>process = phase(440);
 </code></pre>
-
 <h2 id="creating-a-sine-wave-oscillator">Creating a Sine Wave Oscillator</h2>
 <p>The next step is to transform above phase generator into a sine wave generator. We will use the <code>sin</code> primitive that computes the sine of x (measured in radians). Therefore we start for the phase signal, we multiply it by $2\pi$ to obtain radiants, and compute the sine. The full program is the following:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -435,27 +424,22 @@ process = osc(440);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="controlling-the-frequency-and-gain-of-the-oscillator">Controlling the Frequency and Gain of the Oscillator</h2>
 <p>The next step is to add some controls on the frequency and gain of the oscillator. We can replace the fixed frequency <code>440</code> by a user interface slider:</p>
 <pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1));
 </code></pre>
-
 <p>and add a gain to control the output level of the oscillator:</p>
 <pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
 </code></pre>
-
 <h2 id="adding-a-gate-button">Adding a Gate Button</h2>
 <p>In order to prepare our MIDI synthesizer we need to add a gate button so that the sound is only when we press it:</p>
 <pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) * button(&quot;gate&quot;);
 </code></pre>
-
 <h2 id="adding-an-envelope-generator">Adding an Envelope Generator</h2>
 <p>It is a good idea to also add an envelop generator. Here we will use a predefined ADSR in the Standard Faust library.</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -473,7 +457,6 @@ process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1))
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="improving-the-timbre">Improving the Timbre</h2>
@@ -483,7 +466,6 @@ process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1))
         * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
         * (button(&quot;gate&quot;) : en.adsr(0.1,0.1,0.98,0.1));
 </code></pre>
-
 <h2 id="running-as-a-polyphonic-midi-synth">Running as a Polyphonic MIDI Synth</h2>
 <p>To control the synthesizer using MIDI you need to use Chrome. The polyphonic MIDI mode is activated using the drop down menu <em>Poly Voices</em> on the left side of the editor. Choose <em>Computer Keyboard</em> as MIDI input to play notes with the computer keyboard, or plug a MIDI keyboard.</p>
 <h2 id="adding-a-global-effect">Adding a Global Effect</h2>
@@ -491,9 +473,7 @@ process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1))
 <pre><code>// Common effect
 effect = dm.zita_light;
 </code></pre>
-
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -514,7 +494,6 @@ effect = dm.zita_light;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run --></div>
             </div>
         </div>
@@ -545,7 +524,7 @@ effect = dm.zita_light;
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>
