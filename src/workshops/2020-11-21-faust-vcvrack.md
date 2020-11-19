@@ -40,7 +40,7 @@ Since software modules mimic real physical ones, they somewhat follow the same c
 
 Control parameters can also be changed from the module GUI using switches, knobs.etc...
 
-Modules **can be monophonic or polyphonic (up to 16 channels)**, where each cable actually transport several (usually related) signals. The polyhonic model is obviously used for instruments, but can also be used for effects.  Polyhonic modules have **thicker cables** in the GUI. 
+Modules **can be monophonic or polyphonic (up to 16 channels)**, where each cable actually transport several (usually related) signals. The polyphonic model is obviously used for instruments, but can also be used for effects. Polyhonic modules have **thicker cables** in the GUI. 
 
 ## Developing C++ Modules
 
@@ -144,6 +144,8 @@ Other metadata:
 
 The [rack.lib](https://github.com/VCVRack/VCV-Prototype/blob/faust/res/faust/rack.lib) Faust library contains usefull functions to convert CV signals, and can be enriched if needed. 
 
+Note that **only monophonic DSP programs** can be described. 
+
 ### DSP examples
 
 Here is a simple example showing how oscillators can be controlled by GUI items, associated with metadata in the DSP code:
@@ -181,7 +183,7 @@ switch(i) = button("switch%i [switch:%i]") : hbargraph("[switchlight_red:%i]", 0
 // Gain slider, highlight in red
 gain(i) = hslider("gain%i [knob:%i]", 0.1, 0, 1, 0.01) : hbargraph("[light_red:%i]", 0, 1);
 
-process(x) = par(i, 6, x * gain(i+1) * (1-switch(i+1)));
+process = si.bus(6) : par(i, 6, *(gain(i+1)) * (1-switch(i+1)));
 ```
 <!-- /faust-run -->
 
@@ -274,9 +276,9 @@ master = hslider("master", 0.3, 0, 2, 0.01);
 pan = hslider("pan", 0.5, 0, 1, 0.01);    
 
 freq = nentry("freq [CV:1]", 440, 20, 20000, 1);    
+gate = button("gate [CV:2]");      
 gain = nentry("gain [CV:3]", 0.3, 0, 10, 0.01);    
-gate = button("gate [CV:2]");            
-
+      
 // relative amplitudes of the different partials
 amp(1) = hslider("amp1", 1.0, 0, 3, 0.01);
 amp(2) = hslider("amp2", 0.5, 0, 3, 0.01);
@@ -289,8 +291,8 @@ panner(pan, x) = x*sqrt(1-pan), x*sqrt(pan);
 partial(i) = amp(i+1)*os.osc((i+1)*freq);
 
 process = sum(i, 3, partial(i))
-* (gate : vgroup("1-adsr", en.adsr(0.05, 0.1, 0.1, 0.1)))
-* gain : vgroup("2-master", *(master) : panner(pan));
+            * (gate : vgroup("1-adsr", en.adsr(0.05, 0.1, 0.1, 0.1)))
+            * gain : vgroup("2-master", *(master) : panner(pan));
 ```
 <!-- /faust-run -->
 
