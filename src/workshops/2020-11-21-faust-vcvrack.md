@@ -120,7 +120,7 @@ Faust support thanks to **libfaust** embedding the **Interpreter** backend has b
 
 The VCV Prototype module [faust branch](https://github.com/VCVRack/VCV-Prototype/tree/faust) has to be used for now. 
 
-### Loading/editing/compiling DSP files
+### Editing/compiling/executing DSP files
 
 Faust DSP files have to be loaded in VCV Prototype and edited in a external editor (Visual Studio Code, Atom...). Each time the file is saved, it will be recompiled and executed. To possibly save compilation time, the DSP machine code is saved in a cache, and possibly restored the next time the session will be loaded.
 
