@@ -254,11 +254,11 @@
             
             <li class="nav-item" data-level="1"><a href="#analysis" class="nav-link">analysis</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#fft" class="nav-link">FFT</a>
+            <li class="nav-item" data-level="2"><a href="#dbmeter" class="nav-link">dbmeter</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#dbmeter" class="nav-link">dbmeter</a>
+            <li class="nav-item" data-level="2"><a href="#fft" class="nav-link">FFT</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -282,9 +282,45 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="analysis">analysis</h1>
+<h2 id="dbmeter">dbmeter</h2>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name        &quot;dbmeter&quot;;
+declare version     &quot;1.0&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2006&quot;;
+
+//-------------------------------------------------
+// A dB Vumeter
+//-------------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+process = hgroup(&quot;8 channels dB meter&quot;, par(i,8, vgroup(&quot;%i&quot;, vmeter(i) : null)))
+with {
+    null(x) = attach(0,x);
+    envelop = abs : max(ba.db2linear(-70)) : ba.linear2db : min(10)  : max ~ -(80.0/ma.SR);
+    vmeter(i, x) = attach(x, envelop(x) : vbargraph(&quot;chan %i[unit:dB]&quot;, -70, 10));
+    hmeter(i, x) = attach(x, envelop(x) : hbargraph(&quot;chan %i[unit:dB]&quot;, -70, 10));
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
 <h2 id="fft">FFT</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
 // Radix 2 FFT, decimation in time, real and imag parts interleaved
@@ -317,46 +353,15 @@ process = signal : dm.fft_spectral_level_demo(N) &lt;: _,_;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="dbmeter">dbmeter</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
-
-<pre><code>
-declare name        &quot;dbmeter&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2006&quot;;
-
-//-------------------------------------------------
-// A dB Vumeter
-//-------------------------------------------------
-
-import(&quot;stdfaust.lib&quot;);
-
-process = hgroup(&quot;8 channels dB meter&quot;, par(i,8, vgroup(&quot;%i&quot;, vmeter(i) : null)))
-with {
-    null(x) = attach(0,x);
-    envelop = abs : max(ba.db2linear(-70)) : ba.linear2db : min(10)  : max ~ -(80.0/ma.SR);
-    vmeter(i, x) = attach(x, envelop(x) : vbargraph(&quot;chan %i[unit:dB]&quot;, -70, 10));
-    hmeter(i, x) = attach(x, envelop(x) : hbargraph(&quot;chan %i[unit:dB]&quot;, -70, 10));
-};
-
-</code></pre>
-
-
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="spectrallevel">spectralLevel</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -375,10 +380,12 @@ process = dm.spectral_level_demo;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="spectraltiltlab">spectralTiltLab</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -409,10 +416,12 @@ with {
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="vumeter">vumeter</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -441,6 +450,7 @@ with {
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run --></div>
             </div>
         </div>
@@ -471,7 +481,7 @@ with {
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>

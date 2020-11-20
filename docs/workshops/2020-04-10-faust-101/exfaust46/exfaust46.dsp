@@ -4,7 +4,7 @@ declare author  "Yann Orlarey";
 
 //Modifications GRAME July 2015
 
-/* ========= DESCRITPION =============
+/* ========= DESCRIPTION =============
 
 - Kisana : 3-loops string instrument (based on Karplus-Strong)
 - Head = Silence
@@ -47,10 +47,10 @@ kisana = vgroup("MyKisana", harpe(C,11,48), harpe(C,11,60), (harpe(C,11,72) : *(
 //		Each string is triggered by a specific
 //		position of the "hand"
 //-----------------------------------------------------------------------
-harpe(C,N,b) = 	hand(b) <: par(i, N, position(i+1)
-							: string(C,Penta(b).degree2Hz(i), att, lvl)
-							: pan((i+0.5)/N) )
-				 	:> _,_
+harpe(C,N,b) = hand(b) <: par(i, N, position(i+1)
+                        : string(C,Penta(b).degree2Hz(i), att, lvl)
+                        : pan((i+0.5)/N) )
+                        :> _,_
 	with {
 		att  = hslider("[3]Resonance[acc:2 1 -10 0 12]", 4, 0.1, 10, 0.01); 
 		hand(48) = vslider("h:[1]Instrument Hands/1 (Note %b)[unit:pk]", 0, 0, N, 1) : int : ba.automat(120, CCY, 0.0);

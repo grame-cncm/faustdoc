@@ -1,69 +1,100 @@
 
-import("stdfaust.lib");
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
+// Grain Generator.
+// Another granular synthesis example.
+// This one is not finished, but ready for more features and improvements...
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
 //
-// CC 1 : LFO Depth (wave travel modulation)
-// CC 14 : LFO Frequency
-// CC 70 : Wave travelling
-//
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-// CC 72 : Release
+// ANALOG IN:
+// ANALOG 0	: Population: 0 = almost nothing. 1 = Full grain
+// ANALOG 1	: Depth of each grain, in ms.
+// ANALOG 2	: Position in the table = delay 
+// ANALOG 3	: Speed = pitch change of the grains
+// ANALOG 4	: Feedback
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 1, 0.01);
 
-waveTravel = hslider("waveTravel [midi:ctrl]",0,0,1,0.01);
+import("all.lib");
 
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+// FOR 4 grains - MONO
 
-gFreq = midifreq * bend;
+// UI //////////////////////////////////////////
+popul = 1 - hslider("population[BELA: ANALOG_0]", 1, 0, 1, 0.001);	// Coef 1 = maximum; 0 = almost nothing (0.95)
+taille = hslider("taille[BELA: ANALOG_1]", 100, 4, 200, 0.001 );	// Size in milliseconds
+decal = 1 - hslider("decal[BELA: ANALOG_2]",0,0,1,0.001);			// Read position compared to table write position
 
-// LFO
-lfoDepth = hslider("lfoDepth[midi:ctrl 1]",0,0.,1,0.001):si.smoo;
-lfoFreq = hslider("lfoFreq[midi:ctrl 14]",0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+speed = hslider("speed[BELA: ANALOG_3]", 1, 0.125, 4, 0.001);
 
-volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
-volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
-volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
-volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
+feedback = hslider("feedback[BELA: ANALOG_4]",0,0,2,0.001);	
 
-// Out Amplitude
-vol = envelop * midigain;
+freq = 1000/taille;
+tmpTaille = taille*ma.SR/ 1000;
+clocSize = int(tmpTaille + (tmpTaille*popul*10)); // duration between 2 clicks
 
-WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
+// CLK GENERAL /////////////////////////////////
+// 4 clicks for 4 grains generators.
+// (idem clk freq/4 and a counter...)
+detect1(x) = select2 (x < 10, 0, 1);
+detect2(x) = select2 (x > clocSize*1/3, 0, 1) : select2 (x < (clocSize*1/3)+10, 0, _);
+detect3(x) = select2 (x > clocSize*2/3, 0, 1) : select2 (x < (clocSize*2/3)+10, 0, _);
+detect4(x) = select2 (x > clocSize-10, 0, 1);
+cloc = (%(_,clocSize))~(+(1)) <: (detect1: trig),(detect2: trig),(detect3: trig),(detect4: trig);
 
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-with {
-	coef = 3.14159 * ((nb-1)*0.5);
-	soustraction = select2(position>0, 0, (position/(nb-1)));
-};
+// SIGNAUX Ctrls Player ////////////////////////
+trig = _<:_,mem: >;
+envelop = *(2*PI):+(PI):cos:*(0.5):+(0.5);
 
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-				+ (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-with {
-	tablesize = 1024;
-	wt1 = WF(tablesize, 16);
-	wt2 = WF(tablesize, 8);
-	wt3 = WF(tablesize, 6);
-	wt4 = WF(tablesize, 4);
-	faze = int(os.phasor(tablesize,freq));
-};
+rampe(f, t) = delta : (+ : select2(t,_,delta<0) : max(0)) ~ _ : raz
+	with {
+		raz(x) = select2 (x > 1, x, 0);
+		delta = sh(f,t)/ma.SR;
+		sh(x,t) = ba.sAndH(t,x);
+	};
 
-process = wfosc(gFreq) * vol;
+rampe2(speed, t) = delta : (+ : select2(t,_,delta<0) : max(0)) ~ _ 
+	with {
+		delta = sh(speed,t);
+		sh(x,t) = ba.sAndH(t,x);
+	};
+
+// RWTable //////////////////////////////////////
+unGrain(input, clk) = (linrwtable(wf, rindex) : *(0.2 * EnvGrain))
+	with {
+        SR = 44100;
+        buffer_sec = 1;
+        size = int(SR * buffer_sec);
+        init = 0.;
+
+        EnvGrain = clk : (rampe(freq) : envelop);	
+
+        windex = (%(_,size) ) ~ (+(1));
+        posTabl = int(ba.sAndH(clk, windex));
+        rindex = %(int(rampe2(speed, clk)) + posTabl + int(size * decal), size);
+
+        wf = size, init, int(windex), input;
+    };
+
+// LINEAR_INTERPOLATION_RWTABLE //////////////////////////////////
+// read rwtable with linear interpolation
+// wf : waveform to read (wf is defined by (size_buffer, init, windex, input))
+// x  : position to read (0 <= x < size(wf)) and float
+// nota: rwtable(size, init, windex, input, rindex)
+
+linrwtable(wf,x) = linterpolation(y0,y1,d)
+    with {
+        x0 = int(x);                //
+        x1 = int(x+1);				//
+        d  = x-x0;
+        y0 = rwtable(wf,x0);		//
+        y1 = rwtable(wf,x1);		//
+        linterpolation(v0,v1,c) = v0*(1-c)+v1*c;
+    };
+
+// FINALISATION /////////////////////////////////////////////////////////////////////////////////////
+routeur(a, b, c, d, e) = a, b, a, c, a, d, a, e;
+
+processus = _, cloc : routeur : (unGrain, unGrain, unGrain, unGrain) :> fi.dcblockerat(20);
+process = _,_: ((+(_,_) :processus) ~ (*(feedback))),((+(_,_) :processus) ~ (*(feedback)));
 
