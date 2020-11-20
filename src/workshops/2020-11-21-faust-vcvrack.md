@@ -231,7 +231,7 @@ The tool is now part of the [master-dev branch](https://github.com/grame-cncm/fa
 
 Here are the available options:
 
-- `soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources`
+- `-soundfile when compiling a DSP using the 'soundfile' primitive, add required resources`
 - `-source to only create the source folder`
 - `-nvoices <num> to produce a polyphonic self-contained DSP with <num> voices, ready to be used with MIDI`
 
