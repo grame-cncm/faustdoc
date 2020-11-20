@@ -110,7 +110,7 @@ make && make install
 
 ## Programming using the Faust aware VCV Prototype module
 
-The [VCV Prototype module](https://github.com/VCVRack/VCV-Prototype) run scripting languages for prototyping, learning, and live coding. It can currently be programmed using  JavaScript, [Lua](https://www.lua.org), [Vult](https://github.com/modlfo/vult), or [PureData](https://puredata.info). A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (withRGB LEDs) is defined. 
+The [VCV Prototype module](https://github.com/VCVRack/VCV-Prototype) run scripting languages for prototyping, learning, and live coding. It can currently be programmed using  JavaScript, [Lua](https://www.lua.org), [Vult](https://github.com/modlfo/vult), or [PureData](https://puredata.info). A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (with RGB LEDs) is defined. 
 
 Note that **only monophonic examples** can be coded with the propotype. 
 
@@ -244,6 +244,8 @@ Polyphonic modules can be created using the  `-nvoices <num>` parameter up to 16
 Note that **creating polyphonic effects** also make sense in VCV Rack. For instance a reverb connected to a polyphonic instrument would need to be polyphonic. Thus the  `-nvoices <num>` parameter can also be used in this case.
 
 ### Metadata
+
+Controllers (typically *buttons*, *sliders*, *nentry* or *bargraph*) will be automatically transformed in GUI items (like switches, knobs or lights). But they can alternatively be connected to CV inputs/outputs using a metadata:
 
 - `[CV:N]` can be used in input (typically *sliders* or *nentry*) or output (typically *bargraph*) controllers to connect them to CV instead of regular GUI parameters.
 
