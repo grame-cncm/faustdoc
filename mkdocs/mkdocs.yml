@@ -11,14 +11,15 @@ nav:
         - 'Faust Syntax': manual/syntax.md
         - 'Using the Compiler': manual/compiler.md
         - 'Compiler Options': manual/options.md
-        - 'faust2[...] Tools': manual/tools.md
         - 'Embedding': manual/embedding.md
         - 'Optimizing': manual/optimizing.md
         - 'OSC Support': manual/osc.md
         - 'HTTP Support': manual/http.md
         - 'MIDI Support': manual/midi.md
         - 'Soundfiles Support': manual/soundfiles.md
+        - 'faust2[...] Tools': manual/tools.md
         - 'Mathematical Documentation': manual/mathdoc.md
+        - 'Frequently Asked Questions': manual/faq.md
     - Examples: 
          - ' ambisonics ': examples/ambisonics.md
          - ' analysis ': examples/analysis.md
