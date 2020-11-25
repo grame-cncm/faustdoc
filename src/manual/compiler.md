@@ -187,7 +187,7 @@ Several options of the Faust compiler allow to control the generated C++ code. B
 
 ### Vector Code Generation
   
-Modern C++ compilers are able to do autovectorization, that is to use SIMD instructions to speedup the code. These instructions can typically operate in parallel on short vectors of 4 simple precision floating point numbers, leading to a theoretical speedup of $\times4$.
+Modern C++ compilers are able to do autovectorization, that is to use SIMD instructions to speedup the code. These instructions can typically operate in parallel on short vectors of 4 or 8 simple precision floating point numbers, leading to a theoretical speedup of 4 or 8.
  
 Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular, complex loops can prevent autovectorization. The goal of the vector code generation is to rearrange the C++ code in a way that facilitates the autovectorization job of the C++ compiler. Instead of generating a single sample computation loop, it splits the computation into several simpler loops that communicates by vectors.
 
