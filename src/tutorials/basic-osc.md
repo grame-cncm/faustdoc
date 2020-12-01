@@ -69,16 +69,16 @@ process = +(0.01) ~ _;
 <!-- /faust-run -->
 
 * Now, we want to reset the counter back to 0 when it reaches 1. This can be
-done easily using the `ma.decimal` function:
+done easily using the `ma.frac` function:
 
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
-process = +(0.01) ~ ma.decimal;
+process = +(0.01) ~ ma.frac;
 ```
 <!-- /faust-run -->
 
-> Note the use of `ma.decimal` in the loop here to prevent numerical errors.
+> Note the use of `ma.frac` in the loop here to prevent numerical errors.
 
 * Try to run the program (play button in the editor) and it should make sound! What are we generating here?
     * -> A [sawtooth wave](https://en.wikipedia.org/wiki/Sawtooth_wave). 
@@ -97,7 +97,7 @@ frequency of 440, what increment do we need to put in our counter?
 ```
 import("stdfaust.lib");
 freq = 440;
-process = (+(freq/ma.SR) ~ ma.decimal);
+process = (+(freq/ma.SR) ~ ma.frac);
 ```
 <!-- /faust-run -->
 
@@ -108,7 +108,7 @@ process = (+(freq/ma.SR) ~ ma.decimal);
 ```
 import("stdfaust.lib");
 freq = hslider("freq",440,50,2000,0.01);
-process = (+(freq/ma.SR) ~ ma.decimal);
+process = (+(freq/ma.SR) ~ ma.frac);
 ```
 <!-- /faust-run -->
 
@@ -118,7 +118,7 @@ process = (+(freq/ma.SR) ~ ma.decimal);
 ```
 import("stdfaust.lib");
 f = hslider("freq",440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 process = phasor(f);
 ```
 
@@ -133,7 +133,7 @@ it to the `sin` function:
 ```
 import("stdfaust.lib");
 f = hslider("freq",440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 process = osc(f);
 ```
@@ -150,7 +150,7 @@ Note that we created an `osc` function in order to have a cleaner code.
 ```
 import("stdfaust.lib");
 f = hslider("freq",440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
 process = organ(f);
@@ -169,7 +169,7 @@ import("stdfaust.lib");
 f = hslider("freq",440,50,2000,0.01);
 g = hslider("gain",1,0,1,0.01);
 t = button("gate");
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
 process = organ(f)*g*t;
@@ -184,7 +184,7 @@ import("stdfaust.lib");
 f = hslider("freq",440,50,2000,0.01);
 g = hslider("gain",1,0,1,0.01);
 t = si.smoo(button("gate"));
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
 process = organ(f)*g*t;
@@ -201,7 +201,7 @@ process = organ(f)*g*t;
 ```
 import("stdfaust.lib");
 f = hslider("freq[acc: 0 0 -10 0 10]",1000,50,2000,0.01) : si.smoo;
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
 process = organ(f);
