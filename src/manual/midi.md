@@ -16,7 +16,7 @@ declare options "[midi:on]";
 
 <!-- TODO: the tables indicating which architectures implement MIDI support should be placed here. -->
 
-MIDI control is configured in Faust using [metadata](../syntax/#metadata) in [UI elements](../syntax/#user-interface-primitives-and-configuration). MIDI channels from 1 to 16 can be used at reception or sending time. **By convention using the channel = 0 value (or no channel setting) means "all channels".** That is, at reception time, MIDI messages received on all channels can be used to control a given parameter, and at sending time, the MIDI message associated to a parameter will be sent on all channels.
+MIDI control is configured in Faust using [metadata](../syntax/#metadata) in [UI elements](../syntax/#user-interface-primitives-and-configuration). MIDI channels from 1 to 16 can be used at reception or sending time. **By convention, using the channel = 0 value (or no channel setting) means "all channels".** That is, at reception time, MIDI messages received on all channels can be used to control a given parameter, and at sending time, the MIDI message associated to a parameter will be sent on all channels.
 
 MIDI metadata are decoded by a special architecture that parses incoming MIDI messages and updates the appropriate control parameters, or send MIDI messages when the UI elements (i.e., sliders, buttons, etc.) are moved. 
 
