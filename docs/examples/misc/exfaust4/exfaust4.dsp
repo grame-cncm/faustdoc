@@ -1,36 +1,41 @@
 
-declare name 		"tester2";
+declare name 		"statespace";
 declare version 	"1.0";
-declare author 		"Grame";
-declare license 	"BSD";
-declare copyright 	"(c)GRAME 2014";
+declare author 		"JOS";
+declare license 	"MIT";
+declare copyright 	"(c) Julius O. Smith III, 2020";
 
 //-----------------------------------------------
-// Stereo Audio Tester : send a test signal (sine, 
-// noise, pink) on a stereo channel
+// General Linear State-Space Model Example
 //-----------------------------------------------
 
 import("stdfaust.lib");
 
-pink	= f : (+ ~ g) with {
-	f(x) = 0.04957526213389*x - 0.06305581334498*x' + 0.01483220320740*x'';
-	g(x) = 1.80116083982126*x - 0.80257737639225*x';
+p = 2; // number of inputs
+q = 3; // number of outputs
+N = 5; // number of states
+
+A = matrix(N,N); // state transition matrix
+B = matrix(N,p); // input-to-states matrix
+C = matrix(q,N); // states-to-output matrix
+D = matrix(q,p); // direct-term matrix, bypassing state
+
+// ./matrix.dsp with M and N transposed to follow convention:
+matrix(M,N) = tgroup("Matrix: %M x %N", par(in, N, _)
+              <: par(out, M, mixer(N, out))) with {
+  fader(in) = ba.db2linear(vslider("Input %in", -10, -96, 4, 0.1));
+  mixer(N,out) = hgroup("Output %out", par(in, N, *(fader(in)) ) :> _ );
 };
 
-// User interface
-//----------------
-transition(n) = \(old,new).(ba.if(old<new, min(old+1.0/n,new), max(old-1.0/n,new))) ~ _;
+Bd = par(i,p,mem) : B; // input delay needed for conventional definition
+vsum(N) = si.bus(2*N) :> si.bus(N); // vector sum of two N-vectors
 
-vol  = hslider("[2] volume [unit:dB]", -96, -96, 0, 1): ba.db2linear : si.smoo;
-freq = hslider("[1] freq [unit:Hz][scale:log]", 440, 40, 20000, 1);
-wave = nentry("[3] signal [style:menu{'white noise':0;'pink noise':1;'sine':2}]", 0, 0, 2, 1) : int;
-dest = nentry("[4] channel [style:radio{'none':0;'left':1;'right':2;'both':3}]", 0, 0, 3, 1) : int;
+// Illustrate nonzero initial state, following conventional definition:
+impulse = 1-1'; // For zero initial state, set impulse = 0 or simplify code
+x0 = par(i,N,i*impulse); // initial state = (0,1,2,3,...,N-1)
 
-testsignal	= no.noise, pink(no.noise), os.osci(freq): select3(wave);
+system = si.bus(p) <: D, (Bd : vsum(N)~(A), x0 : vsum(N) : C) :> si.bus(q);
 
-process 	= vgroup("Stereo Audio Tester",
-				testsignal*vol 
-				<: par(i, 2, *((dest & (i+1)) != 0 : transition(4410))) 
-            );
+process = system;
 
 

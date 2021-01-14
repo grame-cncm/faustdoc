@@ -25,7 +25,7 @@
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> Documentation</a>
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -67,10 +67,6 @@
 </li>
                                     
 <li>
-    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
-</li>
-                                    
-<li>
     <a href="../../manual/embedding/" class="dropdown-item">Embedding</a>
 </li>
                                     
@@ -95,7 +91,15 @@
 </li>
                                     
 <li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
     <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
 </li>
                                 </ul>
                             </li>
@@ -276,7 +280,6 @@
 <h1 id="phasing">phasing</h1>
 <h2 id="flanger">flanger</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -295,12 +298,10 @@ process = dm.flanger_demo;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/phasing/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="phaser">phaser</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -319,12 +320,10 @@ process = dm.phaser2_demo;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/phasing/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="phaserflangerlab">phaserFlangerLab</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -350,7 +349,6 @@ process = fx_stack : level_viewer;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/phasing/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run --></div>
             </div>
         </div>
@@ -381,7 +379,7 @@ process = fx_stack : level_viewer;
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>

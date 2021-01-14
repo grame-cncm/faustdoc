@@ -25,7 +25,7 @@
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> Documentation</a>
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -67,10 +67,6 @@
 </li>
                                     
 <li>
-    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
-</li>
-                                    
-<li>
     <a href="../../manual/embedding/" class="dropdown-item">Embedding</a>
 </li>
                                     
@@ -95,7 +91,15 @@
 </li>
                                     
 <li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
     <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
 </li>
                                 </ul>
                             </li>
@@ -288,7 +292,6 @@
 <h1 id="reverb">reverb</h1>
 <h2 id="fdnrev">fdnRev</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -307,12 +310,10 @@ process = dm.fdnrev0_demo(16,5,3);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="freeverb">freeverb</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -331,12 +332,10 @@ process = dm.freeverb_demo;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="reverbdesigner">reverbDesigner</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -356,12 +355,10 @@ process = dm.fdnrev0_demo(N,NB,BSO);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="reverbtester">reverbTester</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -380,12 +377,10 @@ process = dm.stereo_reverb_tester;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="zitarev">zitaRev</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -404,12 +399,10 @@ process = dm.zita_rev1;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="zitarevfdn">zitaRevFDN</h2>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -428,7 +421,6 @@ process = dm.zita_rev_fdn_demo;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run --></div>
             </div>
         </div>
@@ -459,7 +451,7 @@ process = dm.zita_rev_fdn_demo;
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>

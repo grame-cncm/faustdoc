@@ -1,13 +1,15 @@
 
-declare name "diodeLadder";
-declare description "Demonstration of diodeLadder";
-declare author "Eric Tarr";
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
 
-import("stdfaust.lib");
+declare name "LPF";
 
-Q = hslider("Q",1,0.7072,25,0.01);
-normFreq = hslider("freq",0.1,0,1,0.001):si.smoo;
-switch = checkbox("Saw/Noise");
-inputSignal = (no.noise *switch) , (os.sawtooth(100)*(1-switch)) :> _; 
+import("maxmsp.lib");
 
-process = inputSignal : ve.diodeLadder(normFreq,Q) <:_,_;
+G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = LPF(x,F,G,Q);
+
+

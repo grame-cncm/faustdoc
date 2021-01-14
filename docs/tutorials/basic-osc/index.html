@@ -25,7 +25,7 @@
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> Documentation</a>
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -67,10 +67,6 @@
 </li>
                                     
 <li>
-    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
-</li>
-                                    
-<li>
     <a href="../../manual/embedding/" class="dropdown-item">Embedding</a>
 </li>
                                     
@@ -95,7 +91,15 @@
 </li>
                                     
 <li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
     <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
 </li>
                                 </ul>
                             </li>
@@ -302,7 +306,6 @@
 <li>The sine function in Faust works like on a calculator:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -314,7 +317,6 @@ process = sin(0);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>will output <code>0</code>.</p>
@@ -322,7 +324,6 @@ process = sin(0);
 <p>To verify this, you could click on the truck (export function) in the <a href="https://faustide.grame.fr">Faust Online IDE</a> and then choose <code>misc/csv</code> to get a table containing the first <em>n</em> samples output by the program.</p>
 </blockquote>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -335,7 +336,6 @@ process = sin(ma.PI/2);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>will output <code>1</code>.</p>
@@ -343,7 +343,6 @@ process = sin(ma.PI/2);
 <p>Note that <code>stdfaust.lib</code> is imported here in order to use <code>ma.pi</code>. </p>
 </blockquote>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -356,7 +355,6 @@ process = sin(2*ma.PI);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>will output <code>0</code>.</p>
@@ -371,7 +369,6 @@ process = sin(2*ma.PI);
 <li>First let's create a "counter" in Faust:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -383,7 +380,6 @@ process = +(1) ~ _;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <blockquote>
@@ -394,7 +390,6 @@ process = +(1) ~ _;
 by 0.01.</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -407,20 +402,18 @@ process = +(0.01) ~ _;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <ul>
 <li>Now, we want to reset the counter back to 0 when it reaches 1. This can be
-done easily using the <code>ma.decimal</code> function:</li>
+done easily using the <code>ma.frac</code> function:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
-process = +(0.01) ~ ma.decimal;
+process = +(0.01) ~ ma.frac;
 
 </code></pre>
 
@@ -428,11 +421,10 @@ process = +(0.01) ~ ma.decimal;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <blockquote>
-<p>Note the use of <code>ma.decimal</code> in the loop here to prevent numerical errors.</p>
+<p>Note the use of <code>ma.frac</code> in the loop here to prevent numerical errors.</p>
 </blockquote>
 <ul>
 <li>Try to run the program (play button in the editor) and it should make sound! What are we generating here?<ul>
@@ -455,13 +447,12 @@ frequency of 440, what increment do we need to put in our counter?<ul>
 <li>In the end, we get:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = 440;
-process = (+(freq/ma.SR) ~ ma.decimal);
+process = (+(freq/ma.SR) ~ ma.frac);
 
 </code></pre>
 
@@ -469,7 +460,6 @@ process = (+(freq/ma.SR) ~ ma.decimal);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <ul>
@@ -477,13 +467,12 @@ process = (+(freq/ma.SR) ~ ma.decimal);
 <li>The <code>freq</code> parameter can be controlled dynamically:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 freq = hslider(&quot;freq&quot;,440,50,2000,0.01);
-process = (+(freq/ma.SR) ~ ma.decimal);
+process = (+(freq/ma.SR) ~ ma.frac);
 
 </code></pre>
 
@@ -491,20 +480,18 @@ process = (+(freq/ma.SR) ~ ma.decimal);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <ul>
 <li>The code can be cleaned up by placing our phasor in a function:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 f = hslider(&quot;freq&quot;,440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 process = phasor(f);
 
 
@@ -514,7 +501,6 @@ process = phasor(f);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <h2 id="generating-a-sine-wave">Generating a Sine Wave</h2>
@@ -523,13 +509,12 @@ process = phasor(f);
 it to the <code>sin</code> function:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 f = hslider(&quot;freq&quot;,440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 process = osc(f);
 
@@ -539,7 +524,6 @@ process = osc(f);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>Note that we created an <code>osc</code> function in order to have a cleaner code.</p>
@@ -549,13 +533,12 @@ process = osc(f);
 <li>A simple organ synthesizer can be implemented using additive synthesis:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 f = hslider(&quot;freq&quot;,440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
 process = organ(f);
@@ -566,7 +549,6 @@ process = organ(f);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust10/exfaust10.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <ul>
@@ -577,7 +559,6 @@ process = organ(f);
 <li>In order to use this synthesizer with a keyboard, we need to be able to turn the sound on and off and also to control its volume:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -585,7 +566,7 @@ import(&quot;stdfaust.lib&quot;);
 f = hslider(&quot;freq&quot;,440,50,2000,0.01);
 g = hslider(&quot;gain&quot;,1,0,1,0.01);
 t = button(&quot;gate&quot;);
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
 process = organ(f)*g*t;
@@ -596,14 +577,12 @@ process = organ(f)*g*t;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust11/exfaust11.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <ul>
 <li>An envelope could be added to make it sound more natural:</li>
 </ul>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -611,7 +590,7 @@ import(&quot;stdfaust.lib&quot;);
 f = hslider(&quot;freq&quot;,440,50,2000,0.01);
 g = hslider(&quot;gain&quot;,1,0,1,0.01);
 t = si.smoo(button(&quot;gate&quot;));
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
 process = organ(f)*g*t;
@@ -622,7 +601,6 @@ process = organ(f)*g*t;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust12/exfaust12.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <ul>
@@ -635,12 +613,11 @@ process = organ(f)*g*t;
 </ul>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 f = hslider(&quot;freq[acc: 0 0 -10 0 10]&quot;,1000,50,2000,0.01) : si.smoo;
-phasor(freq) = (+(freq/ma.SR) ~ ma.decimal);
+phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
 osc(freq) = sin(phasor(freq)*2*ma.PI);
 organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
 process = organ(f);
 </code></pre>
-
 <ul>
 <li>In that case, export with <code>android/android</code>.</li>
 </ul></div>
@@ -673,7 +650,7 @@ process = organ(f);
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>

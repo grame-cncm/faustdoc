@@ -7,7 +7,7 @@ This repository is intended to build the documentation of the Faust environment,
 
 ### Prerequisites
 - you must have python and pip installed.
-- you must have the Faust source code installed. You can get it from [github](https://github.com/grame-cncm/faust)
+- you must have the Faust source code installed. You can get it from [github](https://github.com/grame-cncm/faust). **Be sure to use a fresh cloned repository and to correcly install submodules with `git submodule update --init`**
 - you must have openssl installed for base64 conversion.
 
 
@@ -46,3 +46,15 @@ More details on the build process:
 $ make help
 ~~~~~~~~~~~~~~~~
 
+### Publishing 
+
+The docs folder at rool level contains all files that will be published. To make the current version publicly available:
+- add all the new files using `git add docs`
+- commit using `git commit message`  (so new files and deleted files will be commited, except docs/CNAME file) 
+- and push the commit
+
+
+### WARNING
+
+- never delete the **docs/CNAME file**
+- in case it has been removed, restore it using `git checkout docs/CNAME`

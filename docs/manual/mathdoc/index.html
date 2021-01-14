@@ -25,7 +25,7 @@
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> Documentation</a>
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -67,10 +67,6 @@
 </li>
                                     
 <li>
-    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
-</li>
-                                    
-<li>
     <a href="../embedding/" class="dropdown-item">Embedding</a>
 </li>
                                     
@@ -95,7 +91,15 @@
 </li>
                                     
 <li>
+    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
     <a href="./" class="dropdown-item active">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../faq/" class="dropdown-item">Frequently Asked Questions</a>
 </li>
                                 </ul>
                             </li>
@@ -481,7 +485,6 @@ mathematical documentation.
 &lt;listing mdoctags=&quot;false&quot; dependencies=&quot;false&quot; distributed=&quot;true&quot; /&gt;
 &lt;/mdoc&gt;
 </code></pre>
-
 <h3 id="the-stripmdoc-option">The <code>-stripmdoc</code> Option</h3>
 <p>The listing of the input code contains all the mathdoc text. As it may be useless in certain cases, we provide an option to strip mathdoc contents directly at compilation stage: <code>-stripmdoc</code> (short) or <code>--strip-mdoc-tags</code> (long).</p>
 <h2 id="localization-of-mathdoc-files">Localization of Mathdoc Files</h2>
@@ -489,7 +492,6 @@ mathematical documentation.
 <p>The <code>faust2mathdoc</code> script also supports this option, plus a third short form with <code>-l</code>:</p>
 <pre><code>faust2mathdoc -l fr myfaustfile.dsp
 </code></pre>
-
 <p>If you would like to contribute to the localization effort, feel free to translate the mathdoc texts from any of the <code>mathdoctexts-*.txt</code> files, that are in the <code>architecture</code> directory (<code>mathdoctexts-fr.txt</code>, <code>mathdoctexts-it.txt</code>, etc.). As these files are dynamically loaded, just adding a new file with an appropriate name should work.</p>
 <h2 id="summary-of-the-mathdoc-generation-steps">Summary of the Mathdoc Generation Steps</h2>
 <ul>
@@ -526,7 +528,7 @@ mathematical documentation.
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>

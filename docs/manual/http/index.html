@@ -25,7 +25,7 @@
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> Documentation</a>
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -67,10 +67,6 @@
 </li>
                                     
 <li>
-    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
-</li>
-                                    
-<li>
     <a href="../embedding/" class="dropdown-item">Embedding</a>
 </li>
                                     
@@ -95,7 +91,15 @@
 </li>
                                     
 <li>
+    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
     <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../faq/" class="dropdown-item">Frequently Asked Questions</a>
 </li>
                                 </ul>
                             </li>
@@ -320,12 +324,10 @@
 make
 sudo make install
 </code></pre>
-
 <p>Note that <code>make httpd</code> will fail if <em>libmicrohttpd</em> is not available on the system.</p>
 <p>HTTP support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the <code>[http:on]</code> metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a>:</p>
 <pre><code>declare options &quot;[http:on]&quot;;
 </code></pre>
-
 <p>The following tables lists Faust's architectures providing HTTP support: </p>
 <h3 id="linux-faust-architectures-with-http-support">Linux Faust Architectures with HTTP Support</h3>
 <table>
@@ -403,7 +405,6 @@ sudo make install
 <h2 id="a-simple-example">A Simple Example</h2>
 <p>To illustrate how HTTP support works, let's reuse our previous example, a simple monophonic audio mixer with 4 inputs and one output. For each input we have a mute button and a level slider:</p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -416,22 +417,18 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/http/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>This example can be compiled as a standalone Jack QT application with HTTP support using the command:</p>
 <pre><code>faust2jaqt -httpd mix4.dsp
 </code></pre>
-
 <p>The <code>-httpd</code> option embeds a small Web server into the generated application. Its purpose is to serve an HTML page implementing the interface of the app. This page makes use of JavaScript and SVG, and is quite similar to the native QT interface.</p>
 <p>When the application is started from the command line:</p>
 <pre><code>./mix4 
 </code></pre>
-
 <p>various information are printed on the standard output, including:</p>
 <pre><code>Faust httpd server version 0.73 is running on TCP port 5510
 </code></pre>
-
 <p>As we can see, the embedded Web server is running by default on TCP port 5510. The entry point is <a href="http://localhost:5510">http://localhost:5510</a>. It can be open from any recent browser and it produces the page presented in the figure below:</p>
 <p><img src="img/mix4-http.png" class="mx-auto d-block" width="70%"></p>
 <h2 id="json-description-of-the-user-interface">JSON Description of the User Interface</h2>
@@ -473,17 +470,14 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
   ]
 }
 </code></pre>
-
 <h2 id="querying-the-state-of-the-application">Querying the State of the Application</h2>
 <p>Each widget has a unique "address" field that can be used to query its value. In our example here the level of the input 0 has the address <code>/mixer/input_0/level</code>. The address can be used to forge a URL to get the value of the widget: <a href="http://localhost:5510/mixer/input_0/level">http://localhost:5510/mixer/input_0/level</a>, resulting in:</p>
 <pre><code>/mixer/input_0/level 0.00000  
 </code></pre>
-
 <p>Multiple widgets can be queried at once by using an address higher in the hierarchy. For example to get the values of the level and the mute state of input 0 we use <a href="http://localhost:5510/mixer/input_0">http://localhost:5510/mixer/input_0</a>, resulting in:</p>
 <pre><code>/mixer/input_0/level 0.00000 
 /mixer/input_0/mute  0.00000 
 </code></pre>
-
 <p>To get the all the values at once we simply use <a href="http://localhost:5510/mixer">http://localhost:5510/mixer</a>, resulting in:</p>
 <pre><code>/mixer/input_0/level 0.00000 
 /mixer/input_0/mute  0.00000 
@@ -494,7 +488,6 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
 /mixer/input_3/level 0.00000 
 /mixer/input_3/mute  0.00000 
 </code></pre>
-
 <h2 id="changing-the-value-of-a-widget">Changing the Value of a Widget</h2>
 <p><img src="img/mix4-http-mute.png" class="mx-auto d-block" width="70%"></p>
 <p>Let's say that we want to mute input 1 of our mixer. For that purpose, we can use the URL <a href="http://localhost:5510/mixer/input_1/mute?value=1">http://localhost:5510/mixer/input_1/mute?value=1</a> obtained by concatenating <code>?value=1</code> at the end of the widget URL. </p>
@@ -579,7 +572,6 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
   &quot;ui&quot;: [ &lt;item&gt; ]
 }
 </code></pre>
-
 <p>An <code>&lt;item&gt;</code> is either a group (of items) or a widget.</p>
 <p><strong>Groups</strong></p>
 <p>A group is essentially a list of items with a specific layout: </p>
@@ -589,7 +581,6 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
     &quot;items&quot;: [ &lt;item&gt;, &lt;item&gt;,...]
 }
 </code></pre>
-
 <p>The <code>&lt;type&gt;</code> defines the layout. It can be either <code>"vgroup"</code>, <code>"hgroup"</code> or <code>"tgroup"</code></p>
 <p><strong>Widgets</strong></p>
 <pre><code>{
@@ -603,7 +594,6 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
     &quot;step&quot;: &lt;num&gt;
 },
 </code></pre>
-
 <p>Widgets are the basic items of the user interface. They can be of different <code>&lt;type&gt;</code>: <code>"button"</code>,  <code>"checkbox"</code>, <code>"nentry"</code>, <code>"vslider"</code>, <code>"hslider"</code>, <code>"vbargraph"</code> or <code>"hbargraph"</code>.</p></div>
             </div>
         </div>
@@ -634,7 +624,7 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
                 </p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>
