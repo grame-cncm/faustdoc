@@ -21,6 +21,15 @@ On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) s
 ### Writing efficient DSP code
 TODO
 
+### Managing DSP memory size
+
+The Faust compiler automatically allocates memory for delay-lines, represented as buffers with *wrapping* read/write indexes that continously loop inside the buffer. Several strategies can be used to implement the wrapping indexes:  
+
+- arrays of power-of-two sizes can be accessed using mask based index computation which is the fastest method, but consumes more memory since a *delay-line of a given size will be extended to the next power-of-two size* 
+- otherwise the *wrapping* index can be implemented with a *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. 
+
+The `-dlt <n>`  (`--delay-line-threshold`) option allows to choose between the two available stategies. By default its value is INT_MAX thus all delay-lines are allocated using the first method. By choising a given value (in frames) for `-dlt` , all delay-lines with size bellow this value will be allocated using the first method (faster but consuming more memory), and other ones with the second method (slower but consuming less memory). Thus by gradually changing this `-dlt`  value in this continuum *faster/more memory up to slower/less memory*, the optimal choice can be done. **This option can be especially useful in embedded devices context.**
+
 ### Specializing the DSP code
 
 The Faust compiler can possibly do a lot of optimizations at compile time. The DSP code can for instance be compiled for a fixed sample rate, thus doing at compile time all computation that depends of it. Since the Faust compiler will look for librairies starting from the local folder, a simple way is to locally copy the `libraries/platform.lib` file (which contains the `SR` definition), and change its definition for a fixed value like 48000 Hz. Then the DSP code has to be recompiled. Note that `libraries/platform.lib` also contains the definition of  the `tablesize` constant which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust services scripts which add the `-I /usr/local/share/faust/embedded/` parameter to the Faust command line to use a special version of the platform.lib file.
