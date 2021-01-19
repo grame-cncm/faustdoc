@@ -42,3 +42,34 @@ Several strategies have been developed to help programmers better understand the
 - at runtime, the [inter-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark) tool runs and instruments the compiled program using the Interpreter backend, and can give various informations like the production *NaN* or *INFINITY* values, and using the `-me` with the `faust2caqt` script to catch math computation exceptions (see the [Debugging the DSP Code](https://faustdoc.grame.fr/manual/optimizing/) section in the documentation).
 
 Note that the Faust [math library](https://faustlibraries.grame.fr/libs/maths/) contains the implementation of the`INFINITY` value (depending of the choosen type like `float`, `double` or `quad`), and `isnan` and `isinf`  functions that may help during development.
+
+
+## Pattern matching and lists
+
+Strictly speaking, there are no lists in Faust. For example the expression `()` or `NIL` in Lisp, which indicates an empty list, does not exist in Faust. Similarly, the distinction in Lisp between the number `3` and the list with only one element `(3)` does not exist in Faust. 
+
+However, list operations can be simulated (in part) using the parallel binary composition operation `,` and pattern matching. The parallel composition operation is right-associative. This means that the expression `(1,2,3,4)` is just a simplified form of the fully parenthesized expression `(1,(2,(3,4)))`. The same is true for `(1,2,(3,4))` which is also a simplified form of the same fully parenthesized expression `(1,(2,(3,4)))`. 
+
+You can think of pattern-matching as always being done on fully parenthesized expressions. Therefore no Faust function can ever distinguish `(1,2,3,4)` from `(1,2,(3,4))`, because they represent the same fully parenthesized expression `(1,(2,(3,4)))`. 
+
+This is why `ba.count( ((1,2), (3,4), (5,6)) )` is not 3 but 4, and also why `ba.count( ((1,2), ((3,4),5,6)) )` is not 2 but 4. 
+
+Explanation:
+
+In both cases the fully parenthesized expression is `( (1,2),((3,4),(5,6)) )`. The definition of  `ba.count ` being:
+
+```
+count((x,y)) = 1 + count(y);  // rule R1
+count(x)     = 1;             // rule R2 
+```
+we have:
+
+```
+ba.count( ((1,2),((3,4),(5,6))) ) 
+-R1->   1 + ba.count( ((3,4),(5,6)) ) 
+-R1->   1 + 1 +  ba.count( (5,6) ) 
+-R1->   1 + 1 + 1 + ba.count( 6 )
+-R2->   1 + 1 + 1 + 1 
+```
+Please note that pattern matching is not limited to parallel composition, the other composition operators (<:  : :> ~) can be used too.
+

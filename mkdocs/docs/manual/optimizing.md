@@ -13,7 +13,7 @@ The `interp-tracer` tool runs and instruments the compiled program using the Int
 
 ### Debugging at runtime
 
-On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the [dsp_me_checker](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP objet with the math computation exception handling code. 
+On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the [dsp_me_checker](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP object with the math computation exception handling code. 
 
 
 ## Optimizing the DSP Code 
@@ -28,7 +28,7 @@ The Faust compiler automatically allocates memory for delay-lines, represented a
 - arrays of power-of-two sizes can be accessed using mask based index computation which is the fastest method, but consumes more memory since a delay-line of a given size will be extended to the next power-of-two size
 - otherwise the *wrapping* index can be implemented with a *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. 
 
-The `-dlt <n>`  (`--delay-line-threshold`) option allows to choose between the two available stategies. By default its value is INT_MAX thus all delay-lines are allocated using the first method. By choising a given value (in frames) for `-dlt` , all delay-lines with size bellow this value will be allocated using the first method (faster but consuming more memory), and other ones with the second method (slower but consuming less memory). Thus by gradually changing this `-dlt`  value in this continuum *faster/more memory up to slower/less memory*, the optimal choice can be done. **This option can be especially useful in embedded devices context.**
+The `-dlt <n>`  (`--delay-line-threshold`) option allows to choose between the two available stategies. By default its value is INT_MAX thus all delay-lines are allocated using the first method. By choising a given value (in frames) for `-dlt`, all delay-lines with size bellow this value will be allocated using the first method (faster but consuming more memory), and other ones with the second method (slower but consuming less memory). Thus by gradually changing this `-dlt`  value in this continuum *faster/more memory up to slower/less memory*, the optimal choice can be done. **This option can be especially useful in embedded devices context.**
 
 ### Specializing the DSP code
 
