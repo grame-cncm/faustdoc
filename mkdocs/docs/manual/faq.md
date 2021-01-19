@@ -54,9 +54,7 @@ You can think of pattern-matching as always being done on fully parenthesized ex
 
 This is why `ba.count( ((1,2), (3,4), (5,6)) )` is not 3 but 4, and also why `ba.count( ((1,2), ((3,4),5,6)) )` is not 2 but 4. 
 
-Explanation:
-
-In both cases the fully parenthesized expression is `( (1,2),((3,4),(5,6)) )`. The definition of  `ba.count ` being:
+Explanation: in both cases the fully parenthesized expression is `( (1,2),((3,4),(5,6)) )`. The definition of  `ba.count ` being:
 
 ```
 count((x,y)) = 1 + count(y);  // rule R1
