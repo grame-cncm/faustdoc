@@ -71,5 +71,5 @@ ba.count( ((1,2),((3,4),(5,6))) )
 -R1->   1 + 1 + 1 + ba.count( 6 )
 -R2->   1 + 1 + 1 + 1 
 ```
-Please note that pattern matching is not limited to parallel composition, the other composition operators (<:  : :> ~) can be used too.
+Please note that pattern matching is not limited to parallel composition, the other composition operators `(<: : :> ~)` can be used too.
 
