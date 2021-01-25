@@ -4,19 +4,20 @@ copyright: Copyright &copy; 2020 <a href="https://www.grame.fr">Grame-CNCM</a>
 nav:
     - Home: index.md  
     - Faust Manual: 
-        - 'Introduction' : manual/introduction.md
-        - 'Overview of the Faust Universe' : manual/overview.md
+        - 'Introduction': manual/introduction.md
+        - 'Overview of the Faust Universe': manual/overview.md
         - 'Quick start': manual/quick-start.md
         - 'Faust Syntax': manual/syntax.md
         - 'Using the Compiler': manual/compiler.md
         - 'Compiler Options': manual/options.md
-        - 'Embedding': manual/embedding.md
-        - 'Optimizing': manual/optimizing.md
+        - 'Architecture Files': manual/architectures.md
         - 'OSC Support': manual/osc.md
         - 'HTTP Support': manual/http.md
         - 'MIDI Support': manual/midi.md
         - 'Soundfiles Support': manual/soundfiles.md
         - 'faust2[...] Tools': manual/tools.md
+        - 'Embedding': manual/embedding.md
+        - 'Optimizing': manual/optimizing.md
         - 'Mathematical Documentation': manual/mathdoc.md
         - 'Frequently Asked Questions': manual/faq.md
     - Examples: 
@@ -39,8 +40,8 @@ nav:
          - ' spat ': examples/spat.md
          - ' Download examples ': rsrc/examples.zip
     - Tutorials:
-        - 'Faust & JUCE' : workshops/2020-04-10-faust-juce.md
-        - 'DSP on the Teensy With Faust' : tutorials/teensy.md
+        - 'Faust & JUCE': workshops/2020-04-10-faust-juce.md
+        - 'DSP on the Teensy With Faust': tutorials/teensy.md
         - 'DSP on the ESP-32 With Faust' : tutorials/esp32.md
         - 'Making a Sine Oscillator From Scratch' : tutorials/basic-osc.md
     - Workshops:
@@ -66,7 +67,7 @@ extra:
         - type: home
           link: https://faust.grame.fr
         - type: envelope
-          link: mailto:orlarey@grame.fr
+          link: mailto:research@grame.fr
 
 plugins:
     - search
