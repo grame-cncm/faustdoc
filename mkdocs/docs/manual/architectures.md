@@ -201,7 +201,32 @@ public:
     };
 };
 ```
-A [midi_hander](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261) subclass implements actual decoding. Several concrete implementations based on native API have been written and can be found in the [faust/midi](https://github.com/grame-cncm/faust/tree/master-dev/architecture/faust/midi) folder.
+A [midi_hander](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261) subclass implements actual MIDI decoding and maintains a list of MIDI aware components (ready to send or receive MIDI events):
+
+
+```c++
+class midi_handler : public midi {
+
+    protected:
+
+        std::vector<midi*> fMidiInputs;
+        std::string fName;
+        MidiNRPN fNRPN;
+
+    public:
+
+        midi_handler(const std::string& name = "MIDIHandler"):fName(name) {}
+        virtual ~midi_handler() {}
+
+        void addMidiIn(midi* midi_dsp) {...}
+        void removeMidiIn(midi* midi_dsp) {...}
+        ...
+        ...
+};
+```
+
+
+Several concrete implementations subclassing `midi_handler` and using native APIs have been written and can be found in the [faust/midi](https://github.com/grame-cncm/faust/tree/master-dev/architecture/faust/midi) folder.
 
 **TODO: Schéma de la hiéarchie MIDI.**
 
@@ -664,17 +689,21 @@ dsp* poly = new mydsp_poly(dsp, 8, false, true);
 
 Polyphonic instruments may be used with an output effect. Putting that effect in the main Faust code is not a good idea since it would be instantiated for each voice which would be very inefficient. 
 
-A convention is to use the `effect = some effect;` in the DSP source code. Then the actual effect definition has to be separated, compiled separately, and then combined using `dsp_sequencer` class previously presented to connect the polyphonic DSP in sequence with a unique global effect, with something like:
+A convention has been defined to use the `effect = some effect;` line in the DSP source code. The actual effect definition has to be extracted from the DSP code, compiled separately, and then combined using the `dsp_sequencer` class previously presented to connect the polyphonic DSP in sequence with a unique global effect, with something like:
 
 ```c++
 dsp* poly = new dsp_sequencer(new mydsp_poly(dsp, 2, true, true), new effect());
 ```
 
-Some helper classes like the base [dsp_poly_factory](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-dsp.h#L897) class, and concrete implementations  [llvm_dsp_poly_factory](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-llvm-dsp.h) when using the LLVM backend or [interpreter_dsp_poly_factory](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-interpreter-dsp.h) when using the Interpreter backend can be used.
+Some helper classes like the base [dsp_poly_factory](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-dsp.h#L897) class, and concrete implementations  [llvm_dsp_poly_factory](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-llvm-dsp.h) when using the LLVM backend or [interpreter_dsp_poly_factory](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-interpreter-dsp.h) when using the Interpreter backend can also be used.
 
 #### Controlling the Polyphonic Instrument
 
-The `mydsp_poly` class is also ready for MIDI control and can react to `keyon/keyoff` and `pitch-wheel` messages. Other MIDI control parameters can directly be added in the DSP source code as MIDI metadata.
+The `mydsp_poly` class is also ready for MIDI control and can react to `keyOn/keyOff` and `pitchWheel` events. Other MIDI control parameters can directly be added in the DSP source code as MIDI metadata.  To receive MIDI events, the created polyhonic DSP has to be explicitly added in a MIDI handler with the following line:
+
+```c++
+midi_handler.addMidiIn(dsp_poly);
+```
 
 #### Deploying the Polyphonic Instrument
 
