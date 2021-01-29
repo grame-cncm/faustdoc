@@ -110,7 +110,7 @@ public:
         return keyOn(channel, pitch, velocity);
     }
     
-    virtual void keyOff(double, int channel, int pitch, int velocity = 127)
+    virtual void keyOff(double, int channel, int pitch, int velocity = 0)
     {
         keyOff(channel, pitch, velocity);
     }
@@ -199,7 +199,7 @@ public:
     };
 };
 ```
-A [midi_hander](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261) subclass implements actual MIDI decoding and maintains a list of MIDI aware components (ready to send or receive MIDI events):
+A [midi_hander](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261) subclass implements actual MIDI decoding and *maintains a list of MIDI aware components* (classes that inherit from `midi` and ready to send and/or receive MIDI events) using the `addMidiIn/removeMidiIn` methods:
 
 
 ```c++
@@ -232,7 +232,7 @@ Depending on the used native MIDI API, event time-stamps are either expressed in
 
 Connected with the `MidiUI` class, subclass of `UI`, they allow a given DSP to be controlled with incoming MIDI messages or possibly send MIDI messages when its internal control state changes.
 
-In the following piece of code, a `MidiUI` object is created and connected to a `rt_midi` MIDI message handler, then given as parameter to the standard `buildUserInterface` to control the DSP parameters:
+In the following piece of code, a `MidiUI` object is created and connected to a `rt_midi` MIDI messages handler (using the [RTMidi](http://www.music.mcgill.ca/~gary/rtmidi/) library) , then given as parameter to the standard `buildUserInterface` to control the DSP parameters:
 
 ```c++
 ...
@@ -736,7 +736,7 @@ Some helper classes like the base [dsp_poly_factory](https://github.com/grame-cn
 
 #### Controlling the Polyphonic Instrument
 
-The `mydsp_poly` class is also ready for MIDI control and can react to `keyOn/keyOff` and `pitchWheel` events. Other MIDI control parameters can directly be added in the DSP source code as MIDI metadata.  To receive MIDI events, the created polyhonic DSP has to be explicitly added in a MIDI handler with the following line:
+The `mydsp_poly` class is also ready for MIDI control and can react to `keyOn/keyOff` and `pitchWheel` events. Other MIDI control parameters can directly be added in the DSP source code as MIDI metadata. To receive MIDI events, the created polyphonic DSP has to be explicitly added in a MIDI handler with the following line:
 
 ```c++
 midi_handler.addMidiIn(dsp_poly);
