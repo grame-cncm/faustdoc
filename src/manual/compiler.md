@@ -169,7 +169,7 @@ class mydsp : public dsp {
     }
   }
 };
-```  
+```
 
 Several fine-grained initialization methods are available. The `instanceInit` method calls several additional initialization methods. The `instanceConstants` method sets the instance constant state. The `instanceClear` method resets the instance dynamic state (delay lines...).  The `instanceResetUserInterface` method resets all control value to their default state. All of those methods can be used individually on an allocated instance to reset part of its state. 
 
@@ -186,9 +186,9 @@ By default the generated code process `float` type samples. This can be changed 
 Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the compiler can also generate *vector* and *parallel* code.
 
 ### Vector Code Generation
-  
+
 Modern C++ compilers are able to do autovectorization, that is to use SIMD instructions to speedup the code. These instructions can typically operate in parallel on short vectors of 4 or 8 simple precision floating point numbers, leading to a theoretical speedup of 4 or 8.
- 
+
 Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular, complex loops can prevent autovectorization. The goal of the vector code generation is to rearrange the C++ code in a way that facilitates the autovectorization job of the C++ compiler. Instead of generating a single sample computation loop, it splits the computation into several simpler loops that communicates by vectors.
 
 The vector code generation is activated by passing the [`--vectorize` (or `-vec`)](#compilation-options) option to the Faust compiler. Two additional options are available: `--vec-size <n>` controls the size of the vector (by default 32 samples) and `--loop-variant 0/1` gives some additional control on the loops.  
@@ -221,7 +221,7 @@ process = RMS(1000);
 
 The [corresponding `compute()` method](#strucutre-of-the-generated-code) generated in scalar mode is the following:
 
-```
+```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
@@ -238,7 +238,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 
 The `-vec` option leads to the following reorganization of the code:
 
-```
+```c++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   fInput0_ptr = inputs[0];
   FAUSTFLOAT* fInput0 = 0;
@@ -424,7 +424,7 @@ process = filter(0.9), filter(0.9) : +;
 
 The corresponding `compute()` method obtained using the `-omp` option looks like this:
 
-```
+```c++
 virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   float fRec0_tmp[36];
   float fRec1_tmp[36];
@@ -529,7 +529,7 @@ process = filter(0.9), filter(0.9) : +;
 
 When `-sch` option is used, the content of the additional `architecture/scheduler.h` file is inserted in the generated code. It contains code to deal with WSQ and thread management. The `compute()` and `computeThread()` methods are the following:
 
-```
+```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   fInput0_ptr = inputs[0];
   fInput1_ptr = inputs[1];
@@ -626,3 +626,4 @@ void computeThread(int num_thread) {
   }
 }
 ```
+
