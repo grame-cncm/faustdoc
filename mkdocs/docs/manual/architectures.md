@@ -412,7 +412,7 @@ Here is the table of currently supported general medatada:
 | gyr | *axe curve amin amid amax*       |
 | screencolor    | *red* or *green* or *blue* or *white* |
 
-
+Here `acc` means *accelerometer* and `gyr` mean *gyroscope*, both use the same parameters (a mapping description) but are linked to different sensors.
 
 Some typical example where several metadata are defined could be:
 
