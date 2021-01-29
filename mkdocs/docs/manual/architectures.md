@@ -1,4 +1,4 @@
-
+## 
 
 # Architecture files
 
@@ -86,7 +86,7 @@ The API is simple enough to give a great flexibility to audio architectures impl
 
 An *MIDI architecture module* typically connects a Faust program to the MIDI drivers. MIDI control connects DSP parameters with MIDI messages (in both directions), and can be used to trigger polyphonic instruments.
 
-#### MIDI Messages Description in the DSP Source Code
+#### MIDI Messages in the DSP Source Code
 
 MIDI control messages are described as metadata in UI elements. They are decoded by a `MidiUI` class, subclass of `UI`, which parses incoming MIDI messages and updates the appropriate priate control parameters, or sends MIDI messages when the UI elements (sliders, buttons...) are moved.
 
@@ -723,33 +723,13 @@ with `inst.dsp` and `effect.ds`p in the same folder, and the number of outputs o
 
 Polyphonic ready `faust2xx` scripts will then compile the polyphonic instrument and the effect, combine them in sequence, and create a ready to use DSP.
 
-#### The Proxy DSP class
+### The Proxy DSP class
 
 In some cases, a DSP may run outside of the application or plugin context, like on another machine. The [proxy_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-dsp.h) class allows to create a proxy DSP that will be finally connected to the real one (using an OSC or HTTP based machinery for instance), and will reflect its behaviour. An additional [JSONUIDecoder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h) class is used to decode the DSP JSON description and implement its `buildUserInterface` and  `metadata` methods. Then the `proxy_dsp` can be used in place of the real DSP, and connect with `UI` controllers using the standard `buildUserInterface` to control it.  
 
 The [faust-osc-controller](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark) tool demonstrates this capability using an OSC connection between the real DSP and its proxy. The [proxy_osc_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-osc-dsp.h) class implements a specialized `proxy_dsp` using the [liblo](http://liblo.sourceforge.net) OSC library to connect to a OSC controllable DSP (which is using the `OSCUI` class and running in another context or machine). Then the `faust-osc-controller` program [creates a real GUI](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/faust-osc-controller.cpp) (using `GTKUI` in this example) and have it control the remote DSP and reflect its dynamic state (like vumeter values coming back from the real DSP). 
 
 **TODO : schéma de faust-osc-controller**
-
-#### Other languages than C++
-
-Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, SOUL and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:
-
-- the C backend needs the `CGlue` file, the `CInterface` file, and the [minimal-c](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.c) file is a simple example
-- the experimental Rust backend can be used with the [minimal-rs](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs) architecture, or the more complex JACK `minimal-jack.rs`used in `faust2jackrust` script, or PortAudio `minimal-portaudio.rs` used in `faust2jackportaudio` script
-- the experimental Dlang backend can be used with the [minimal.d](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.d) or the [minimal-dplug](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-dplug.d) to be used to generate [DPlug](https://dplug.org) plugins with the `faust2dplug` tool
-
-### Using faust2xx scripts
-
-Different `faust2xx` scripts finally combine several architecture files to generate a ready-to-use applications or plugins from a Faust DSP program. They typically combine the *generated DSP* with an *UI architecture* file and an *audio architecture* file. Most of the also have addition options like `-midi`, `-nvoices <num>`, `-effect <auto|effect.dsp>` or `-soundfile` to generate polyphonic instruments with or without effects, or audio file support. Look at the [following page](https://faustdoc.grame.fr/manual/tools/) for a more complete description.  
-
-### The faust2api model
-
-This model combining the generated DSP the audio and UI architecture components is very convenient to automatically produce ready-to-use standalone application or plugins, since the controller part (GUI,  MIDI or OSC...) is directly compiled and deployed. 
-
-In some cases, the developer prefer to  control the DSP himself, by program or by any other means. A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed. It then provides a `setParamValue/getParamValue` kind of API to access all parameters, and let the developer adds his own GUI or any kind of controller. Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, wich goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. 
-
-
 
 ## Embedded platforms 
 
@@ -800,8 +780,6 @@ process = _*hslider("Gain", 0, 0, 1, 0.01) : hbargraph("Vol", 0, 1);
 The `FAUST_ADDHORIZONTALSLIDER` or `FAUST_ADDHORIZONTALBARGRAPH` can the be implemented to do whatever is needed with the `Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f` and `"Vol", fHbargraph0, 0.0f, 1.0f` parameters respectively. 
 
 The more sophisticated `FAUST_LIST_ACTIVES` and `FAUST_LIST_PASSIVES` macros can possibly be used to call any `p` function (defined elsewhere in the architecture file) on each item. The [minimal-static.cpp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-static.cpp) file demonstrates this feature.
-
-
 
 ## Developing a new architecture file
 
@@ -1035,9 +1013,7 @@ class my_class : public mydsp  {
 
         // Do something specific
 
-        void my_compute(int count, 
-            FAUSTFLOAT** inputs, 
-            FAUSTFLOAT** outputs)
+        void my_compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
         {
             // Do something specific
             compute(count,  inputs,  outputs);
@@ -1049,11 +1025,29 @@ class my_class : public mydsp  {
 
 #### Developing new UI architectures
 
-For really new architectures, the `UI` base class,  the [GenericUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h) helper class (which provides defaut empty implementations and allows only part of the API to be implemented) or the `GUI` class (describe before), have to be subclassed. Note that a lot of classes described in S*ome useful UI classes for developers* section can also be subclassed or possibly enriched with additional code. 
+For really new architectures, the `UI` base class,  the [GenericUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h) helper class or the `GUI` class (describe before), have to be subclassed. Note that a lot of classes described in *Some useful UI classes for developers* section can also be subclassed or possibly enriched with additional code. 
 
 #### Developing new audio architectures
 
 The `audio` base class has to be subclassed and each method implemented for the given audio hardware. In some cases the audio driver can adapt to the required number of DSP inputs/outputs (like the [JACK](https://jackaudio.org) audio system for instance which can open any number of virtual audio ports). But in general, the number of hardware audio inputs/outputs may not exactly match the DSP ones. This is the responsability of the audio driver to adapt to this situation. The [dsp_adapter](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h) `dsp` decorator can help in this situation.
+
+## Other languages than C++
+
+Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, SOUL and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:
+
+- the C backend needs the `CGlue` file, the `CInterface` file, and the [minimal-c](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.c) file is a simple example
+- the experimental Rust backend can be used with the [minimal-rs](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs) architecture, or the more complex JACK `minimal-jack.rs`used in `faust2jackrust` script, or PortAudio `minimal-portaudio.rs` used in `faust2jackportaudio` script
+- the experimental Dlang backend can be used with the [minimal.d](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.d) or the [minimal-dplug](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-dplug.d) to be used to generate [DPlug](https://dplug.org) plugins with the `faust2dplug` tool
+
+## Using faust2xx scripts
+
+Different `faust2xx` scripts finally combine several architecture files to generate a ready-to-use applications or plugins from a Faust DSP program. They typically combine the *generated DSP* with an *UI architecture* file and an *audio architecture* file. Most of the also have addition options like `-midi`, `-nvoices <num>`, `-effect <auto|effect.dsp>` or `-soundfile` to generate polyphonic instruments with or without effects, or audio file support. Look at the [following page](https://faustdoc.grame.fr/manual/tools/) for a more complete description.  
+
+## The faust2api model
+
+This model combining the generated DSP the audio and UI architecture components is very convenient to automatically produce ready-to-use standalone application or plugins, since the controller part (GUI,  MIDI or OSC...) is directly compiled and deployed. 
+
+In some cases, the developer prefer to  control the DSP himself, by program or by any other means. A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed. It then provides a `setParamValue/getParamValue` kind of API to access all parameters, and let the developer adds his own GUI or any kind of controller. Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, wich goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. 
 
 
 
