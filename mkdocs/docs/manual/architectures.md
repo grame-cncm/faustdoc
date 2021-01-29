@@ -6,7 +6,7 @@ A Faust program describes a *signal processor*, a pure DSP computation that maps
 
 An *architecture file* describes how to relate a Faust program to the external world, in particular the audio drivers and the controllers interfaces to be used. This approach allows a single Faust program to be easily deployed to a large variety of audio standards (Max/MSP externals, PD externals, VST plugins, CoreAudio applications, JACK applications, iPhone/Android etc.):
 
-<img src="architectures/img/Architectures.png" class="mx-auto d-block" width="100%">
+<img src="architectures/img/Architectures.png" class="mx-auto d-block" width="90%">
 
 The architecture to be used is specified at compile time with the `-a` option. For example `faust -a jack-gtk.cpp foo.dsp` indicates to use the JACK GTK architecture when compiling `foo.dsp`.
 
@@ -226,7 +226,7 @@ class midi_handler : public midi {
 
 Several concrete implementations subclassing `midi_handler` and using native APIs have been written and can be found in the [faust/midi](https://github.com/grame-cncm/faust/tree/master-dev/architecture/faust/midi) folder:
 
-<img src="architectures/img/MIDIHierarchy.jpg" class="mx-auto d-block" width="90%">Depending on the used native MIDI API, event time-stamps are either expressed in absolute time or in frames. They are converted to offsets expressed in samples relative to the beginning of the audio buffer.
+<img src="architectures/img/MIDIHierarchy.jpg" class="mx-auto d-block" width="80%">Depending on the used native MIDI API, event time-stamps are either expressed in absolute time or in frames. They are converted to offsets expressed in samples relative to the beginning of the audio buffer.
 
 Connected with the `MidiUI` class, subclass of `UI`, they allow a given DSP to be controlled with incoming MIDI messages or possibly send MIDI messages when its internal control state changes.
 
@@ -298,7 +298,7 @@ struct UI : public UIReal<FAUSTFLOAT>
 
 Here is part of the UI classes hierarchy:
 
-**<img src="architectures/img/GUIHierarchy.png" class="mx-auto d-block" width="90%">**
+**<img src="architectures/img/GUIHierarchy.png" class="mx-auto d-block" width="80%">**
 
 #### Active widgets
 
@@ -592,7 +592,7 @@ public:
 
 For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or C++ class, or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `soulpatch_dsp`  typed object (defined in the [soulpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio`  C++ classes (like the C++ generated class). See the following class diagram:
 
-<img src="architectures/img/DSPHierarchy.png" class="mx-auto d-block" width="95%">
+<img src="architectures/img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
 
 ### Macro construction of DSP components
 
