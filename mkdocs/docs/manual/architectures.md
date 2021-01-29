@@ -21,54 +21,56 @@ This `nullarch.cpp` architecture has the property that `faust foo.dsp` and `faus
 
 Here is `miniarch.cpp`, a minimal architecture file that contains enough information to produce a `cpp` file that be successfully compiled :
 
-    <<includeIntrinsic>>
+```c++
+<<includeIntrinsic>>
 
-    #define FAUSTFLOAT float
+#define FAUSTFLOAT float
 
-    class dsp {};
+class dsp {};
 
-    struct Meta
-    {
-        virtual void declare(const char* key, const char* value) {};
-        
-    };
+struct Meta
+{
+    virtual void declare(const char* key, const char* value) {};
+    
+};
 
-    struct Soundfile {
-        FAUSTFLOAT** fBuffers;
-        int* fLength;   // length of each part
-        int* fSR;       // sample rate of each part
-        int* fOffset;   // offset of each part in the global buffer
-        int fChannels;  // max number of channels of all concatenated files
-    };
+struct Soundfile {
+    FAUSTFLOAT** fBuffers;
+    int* fLength;   // length of each part
+    int* fSR;       // sample rate of each part
+    int* fOffset;   // offset of each part in the global buffer
+    int fChannels;  // max number of channels of all concatenated files
+};
 
-    struct UI
-    {
-        // -- widget's layouts
-        virtual void openTabBox(const char* label) {}
-        virtual void openHorizontalBox(const char* label) {}
-        virtual void openVerticalBox(const char* label) {}
-        virtual void closeBox() {}
-        
-        // -- active widgets
-        virtual void addButton(const char* label, FAUSTFLOAT* zone) {}
-        virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) {}
-        virtual void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
-        virtual void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
-        virtual void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
-        
-        // -- passive widgets
-        virtual void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) {}
-        virtual void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) {}
-        
-        // -- soundfiles
-        virtual void addSoundfile(const char* label, const char* filename, Soundfile** sf_zone) {}
-        
-        // -- metadata declarations
-        virtual void declare(FAUSTFLOAT* zone, const char* key, const char* val) {}
-    };
+struct UI
+{
+    // -- widget's layouts
+    virtual void openTabBox(const char* label) {}
+    virtual void openHorizontalBox(const char* label) {}
+    virtual void openVerticalBox(const char* label) {}
+    virtual void closeBox() {}
+    
+    // -- active widgets
+    virtual void addButton(const char* label, FAUSTFLOAT* zone) {}
+    virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) {}
+    virtual void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
+    virtual void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
+    virtual void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
+    
+    // -- passive widgets
+    virtual void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) {}
+    virtual void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) {}
+    
+    // -- soundfiles
+    virtual void addSoundfile(const char* label, const char* filename, Soundfile** sf_zone) {}
+    
+    // -- metadata declarations
+    virtual void declare(FAUSTFLOAT* zone, const char* key, const char* val) {}
+};
 
 
-    <<includeclass>>
+<<includeclass>>
+```
 
 This architecture is still not very useful, but it gives an idea of what a real-life architecture file has to implement, in addition to the audio part itself. As we will see in the next section, FAUST architectures are implemented using a modular approach to avoid code duplication and favor code maintenance and reuse.
 
