@@ -412,7 +412,7 @@ Here is the table of currently supported general medatada:
 | gyr | *axe curve amin amid amax*       |
 | screencolor    | *red* or *green* or *blue* or *white* |
 
-Here `acc` means *accelerometer* and `gyr` mean *gyroscope*, both use the same parameters (a mapping description) but are linked to different sensors.
+Here `acc` means *accelerometer* and `gyr` means *gyroscope*, both use the same parameters (a mapping description) but are linked to different sensors.
 
 Some typical example where several metadata are defined could be:
 
@@ -426,7 +426,7 @@ or:
 vslider("freq [unit:dB][style:knob][gyr:0 0 -30 0 30]", 0, 20, 100, 1)
 ```
 
-When one or several metadata are added in same item label, then will appear in the generated code as one or successives `declare(FAUSTFLOAT* zone, const char* key, const char* value);` lines *before* the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the [MetaDataUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h) class for an example of this technique.
+When one or several metadata are added in the same item label, then will appear in the generated code as one or successives `declare(FAUSTFLOAT* zone, const char* key, const char* value);` lines *before* the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the [MetaDataUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h) class for an example of this technique.
 
 Note that medatada are not supported in all architecture files. Some of them like (`acc` or `gyr` for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and can possibly be adapted for a specific project. They can be decoded using the `MetaDataUI`class.
 
@@ -494,7 +494,7 @@ The generated JSON file is then:
 }
 ```
 
-The JSON file can be generated with `faust -json foo.dsp` command, or by program using the `JSONUI` UI architecture (see next *Some useful UI classes* section).
+The JSON file can be generated with `faust -json foo.dsp` command, or by program using the `JSONUI` UI architecture (see next *Some Useful UI Classes* section).
 
 Here is the description of ready-to-use UI classes, followed by classes to be used in developer code:
 
@@ -514,7 +514,7 @@ Here is the description of the main non-GUI controller classes:
 - the [httpUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpUI.h) class implement HTTP remote control using the [libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/) library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant appliction or plugin. The connection works in both directions
 - the [MIDIUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h) class implement MIDI  control in both directions, and it explained more deeply later on
 
-#### Some Sseful UI Classes for Developers 
+#### Some Useful UI Classes for Developers 
 
 Some useful UI classes can possibly be reused in developer code:
 
