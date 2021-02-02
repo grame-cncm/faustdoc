@@ -28,8 +28,7 @@ Here is `miniarch.cpp`, a minimal architecture file that contains enough informa
 
 class dsp {};
 
-struct Meta
-{
+struct Meta {
     virtual void declare(const char* key, const char* value) {};
 };
 
@@ -41,8 +40,7 @@ struct Soundfile {
     int fChannels;  // max number of channels of all concatenated files
 };
 
-struct UI
-{
+struct UI {
     // -- widget's layouts
     virtual void openTabBox(const char* label) {}
     virtual void openHorizontalBox(const char* label) {}
@@ -66,7 +64,6 @@ struct UI
     // -- metadata declarations
     virtual void declare(FAUSTFLOAT* zone, const char* key, const char* val) {}
 };
-
 
 <<includeclass>>
 ```
@@ -311,7 +308,6 @@ MidiUI midiinterface(&midi_handler);
 DSP->buildUserInterface(&midiinterface);
 ...
 ```
-
 
 
 ## UI Architecture Modules
@@ -906,12 +902,16 @@ static void dynamic_bench(const string& dsp_source)
     pair<double, vector<string>> res = optimizer.findOptimizedParameters();
     cout << "Best value for '" << in_filename << "' is : " 
          << res.first << " MBytes/sec with ";
-    for (int i = 0; i < res.second.size(); i++) {
+    for (size_t i = 0; i < res.second.size(); i++) {
         cout << res.second[i] << " ";
     }
     cout << endl;
 }
 ```
+
+This class can typically be used in tools that help developers discover the best Faust compilation parameters for a given DSP program, like the [faustbench](https://faustdoc.grame.fr/manual/optimizing/#faustbench) and [faustbench-llvm](https://faustdoc.grame.fr/manual/optimizing/#faustbench-llvm) tools.
+
+
 
 ### The Proxy DSP Class
 
@@ -1241,6 +1241,125 @@ A model that only combines the *generated DSP* with an *audio architecture* file
 
 <img src="architectures/img/FaustArchitecture5.jpg" class="mx-auto d-block" width="40%">
 
-## Using the `-inj` Option With faust2xx Scripts
+## Using the -inj Option With faust2xx Scripts
 
-**TODO**
+The compiler `-inj <f>`  option allows to inject a pre-existing C++ architecture file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base `dsp` class,  the `faust2xx` scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing architectures.
+
+Here is a typical use case where some external C++ code is used to compute the *spectrogram of a set of audio files* (which is something that cannot be simply done with the current version fo the Faust language) and output the spectrogram as an audio signal. A `nentry` controller will be used to select the currently playing spectrogram. The Faust compiler will be used to generate a C++ class which is going to be manually edited and enriched with additional code. 
+
+### Writting the DSP code
+
+First a fake DSP program `spectral.dsp`  using the `soundfile` primitive loading two audio files and a `nentry` control is written: 
+```
+sf = soundfile("sound[url:{'sound1.wav';'sound2.wav'}]",2);
+process(left,right) = (hslider("Spectro", 0, 0, 1, 1),0) : sf : !,!,*(left),*(right);
+```
+The point of explicitly using `soundfile` primitive and a `nentry` control is to generate a C++ file with a prefilled DSP structure (containing the `fSoundfile0` and `fHslider0` fields) and code inside the `buildUserInterface` method. Compiling it manually with the following command: 
+
+
+```
+faust spectral.dsp -cn spectral -o spectral.c++
+```
+
+produces the following C++ code containing the `spectral` class:
+
+
+```c++
+class spectral : public dsp {
+	
+ private:
+	
+	Soundfile* fSoundfile0;
+	FAUSTFLOAT fHslider0;
+	int fSampleRate;
+
+ public:
+	
+  ...	
+ 
+	virtual int getNumInputs() {
+		return 2;
+	}
+	virtual int getNumOutputs() {
+		return 2;
+	}
+  
+	...
+	
+	virtual void buildUserInterface(UI* ui_interface) {
+		ui_interface->openVerticalBox("spectral");
+		ui_interface->addHorizontalSlider("Spectrogram", &fHslider0, 0.0f, 0.0f, 1.0f, 1.0f);
+		ui_interface->addSoundfile("sound", "{'sound1.wav';'sound2.wav';}", &fSoundfile0);
+		ui_interface->closeBox();
+	}
+	
+	virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    int iSlow0 = int(float(fHslider0));
+		....
+	}
+
+};
+```
+### Writting the C++ code
+
+Now the `spectral` class can be manually edited and completed with additional code, to compute the two audio files spectrograms in `buildUserInterface`, and play them in `compute`. 
+
+- a new line `Spectrogram fSpectro[2];` is added in the DSP structure
+- a `createSpectrogram(fSoundfile0, fSpectro);` function is added in `buildUserInterface` and used to compute and fill the two spectrograms, by reading the two loaded audio files in `fSoundfile0`
+- and finally play one of them (selected with the `fHslider0` control in the GUI) using a `playSpectrogram(fSpectro, count, iSlow0, outputs);` function called in `compute`
+
+
+```c++
+class spectral : public dsp {
+
+  private:
+
+    Soundfile* fSoundfile0;
+    FAUSTFLOAT fHslider0;
+    int fSampleRate;
+  	Spectrogram fSpectro[2];
+
+  public:
+
+    ...
+      
+    virtual int getNumInputs() {
+        return 2;
+    }
+    virtual int getNumOutputs() {
+        return 2;
+    }
+  
+    ...
+
+    virtual void buildUserInterface(UI* ui_interface) {
+      ui_interface->openVerticalBox("spectral");
+      ui_interface->addHorizontalSlider("Spectro", &fHslider0, 0.0f, 0.0f, 1.0f, 1.0f);
+      ui_interface->addSoundfile("sound", "{'sound1.wav';'sound2.wav';}", &fSoundfile0);
+      // Read 'fSoundfile0' and fill 'fSpectro'
+      createSpectrogram(fSoundfile0, fSpectro);
+      ui_interface->closeBox();
+    }
+
+    virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+      int iSlow0 = int(float(fHslider0));
+      // Play 'fSpectro' indexed by 'iSlow0' by writting 'count' samples in 'outputs'
+      playSpectrogram(fSpectro, count, iSlow0, outputs);
+    }
+
+};
+```
+
+Here we assume that `createSpectrogram` and `playSpectrogram` functions are defined elsewhere and ready to be compiled.
+
+### Deploying it as a Max/MSP External Using the faust2max6 Tool
+
+The completed `spectral.cpp` file is now ready to be deployed as a Max/MSP external using the `faust2max6` tool with:
+
+
+```
+faust2max6 -inj spectral.cpp -soundfile spectral.dsp
+```
+
+The two neeeded sound1.wav and sound2.wav audio files are embedded in the generated external, loaded at init time (the`buildUserInterface` method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them.
+
