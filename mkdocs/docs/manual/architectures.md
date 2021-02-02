@@ -1252,7 +1252,7 @@ Here is a typical use case where some external C++ code is used to compute the *
 First a fake DSP program `spectral.dsp`  using the `soundfile` primitive loading two audio files and a `nentry` control is written: 
 ```
 sf = soundfile("sound[url:{'sound1.wav';'sound2.wav'}]",2);
-process(left,right) = (hslider("Spectro", 0, 0, 1, 1),0) : sf : !,!,*(left),*(right);
+process = (hslider("Spectro", 0, 0, 1, 1),0) : sf : !,!,_,_;
 ```
 The point of explicitly using `soundfile` primitive and a `nentry` control is to generate a C++ file with a prefilled DSP structure (containing the `fSoundfile0` and `fHslider0` fields) and code inside the `buildUserInterface` method. Compiling it manually with the following command: 
 
@@ -1277,7 +1277,7 @@ class spectral : public dsp {
   ...	
  
   virtual int getNumInputs() {
-    return 2;
+    return 0;
   }
   virtual int getNumOutputs() {
     return 2;
@@ -1323,7 +1323,7 @@ class spectral : public dsp {
     ...
       
     virtual int getNumInputs() {
-      return 2;
+      return 0;
     }
     virtual int getNumOutputs() {
       return 2;
