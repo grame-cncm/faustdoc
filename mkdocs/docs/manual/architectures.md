@@ -258,7 +258,7 @@ public:
 };
 ```
 
-A pure interface for MIDI handlers that can send/receive MIDI messages to/from 'midi' objects is defined:
+A pure interface for MIDI handlers that can send/receive MIDI messages to/from `midi`objects is defined:
 ```c++
 struct midi_interface {
     virtual void addMidiIn(midi* midi_dsp)      = 0;
@@ -873,7 +873,7 @@ Polyphonic-ready `faust2xx` scripts will then compile the polyphonic instrument 
 
 ### Mesuring the DSP CPU
 
-The `measure_dsp` class defined in the `faust/dsp/dsp-bench.h` file allows to decorate a given DSP object and measure its `compute` method CPU consumption. Results are given in Megabytes/seconds (higher is better) and DSP CPU at 44,1 KHz. Here is a C++ code example of its use: 
+The `measure_dsp` class defined in the `faust/dsp/dsp-bench.h` file allows to decorate a given DSP object and measure its `compute` method CPU consumption. Results are given in Megabytes/seconds (higher is better) and DSP CPU at 44,1 kHz. Here is a C++ code example of its use: 
 
 ```c++
 static void bench(dsp* dsp, const string& name)
@@ -1243,7 +1243,7 @@ A model that only combines the *generated DSP* with an *audio architecture* file
 
 ## Using the -inj Option With faust2xx Scripts
 
-The compiler `-inj <f>`  option allows to inject a pre-existing C++ architecture file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base `dsp` class,  the `faust2xx` scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing architectures.
+The compiler `-inj <f>`  option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base `dsp` class,  the `faust2xx` scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures.
 
 Here is a typical use case where some external C++ code is used to compute the *spectrogram of a set of audio files* (which is something that cannot be simply done with the current version fo the Faust language) and output the spectrogram as an audio signal. A `nentry` controller will be used to select the currently playing spectrogram. The Faust compiler will be used to generate a C++ class which is going to be manually edited and enriched with additional code. 
 
@@ -1305,7 +1305,7 @@ Now the `spectral` class can be manually edited and completed with additional co
 
 - a new line `Spectrogram fSpectro[2];` is added in the DSP structure
 - a `createSpectrogram(fSoundfile0, fSpectro);` function is added in `buildUserInterface` and used to compute and fill the two spectrograms, by reading the two loaded audio files in `fSoundfile0`
-- and finally play one of them (selected with the `fHslider0` control in the GUI) using a `playSpectrogram(fSpectro, count, iSlow0, outputs);` function called in `compute`
+- part of the generated code in `compute` is removed and replaced by new code to play one of spectrograms (selected with the `fHslider0` control in the GUI) using a `playSpectrogram(fSpectro, count, iSlow0, outputs);` function
 
 
 ```c++
@@ -1353,7 +1353,7 @@ Here we assume that `createSpectrogram` and `playSpectrogram` functions are defi
 
 ### Deploying it as a Max/MSP External Using the faust2max6 Tool
 
-The completed `spectral.cpp` file is now ready to be deployed as a Max/MSP external using the `faust2max6` tool with:
+The completed `spectral.cpp` file is now ready to be deployed as a Max/MSP external using the `faust2max6` tool and the `-inj` option with the following line:
 
 ```
 faust2max6 -inj spectral.cpp -soundfile spectral.dsp
