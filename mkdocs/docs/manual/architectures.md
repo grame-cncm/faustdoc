@@ -31,7 +31,6 @@ class dsp {};
 struct Meta
 {
     virtual void declare(const char* key, const char* value) {};
-    
 };
 
 struct Soundfile {
@@ -261,11 +260,20 @@ public:
     };
 };
 ```
+
+A pure interface for MIDI handlers that can send/receive MIDI messages to/from 'midi' objects is defined:
+```c++
+struct midi_interface {
+    virtual void addMidiIn(midi* midi_dsp)      = 0;
+    virtual void removeMidiIn(midi* midi_dsp)   = 0;
+    virtual ~midi_interface() {}
+};
+```
 A [midi_hander](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261) subclass implements actual MIDI decoding and *maintains a list of MIDI aware components* (classes inheriting from `midi` and ready to send and/or receive MIDI events) using the `addMidiIn/removeMidiIn` methods:
 
 
 ```c++
-class midi_handler : public midi {
+class midi_handler : public midi, public midi_interface {
 
     protected:
 
@@ -359,6 +367,10 @@ struct UI : public UIReal<FAUSTFLOAT>
     virtual ~UI() {}
 };
 ```
+
+The `FAUSTFLOAT* zone` element is the *primary connection point between the control interface and the dsp code.* The compiled dsp Faust code will give access to all internal control value addresses used by the dsp code by calling the approriate `addButton`, `addVerticalSlider`, `addNumEntry` etc. methods (depending of what is described in the original Faust DSP source code). 
+
+The control/UI code keeps those addresses, and will typically change their pointed values each time a control value in the dsp code has to be changed. On the dsp side, all control values are *sampled* once at the beginning of the `dsp::compute` method, so that to *keep the same value during the entire audio buffer.* Since writing/reading the `FAUSTFLOAT* zone` element is atomic, there is no need (in general) of complex synchronization mechanism between the writer (controller) and the reader (the Faust `dsp` object). 
 
 Here is part of the UI classes hierarchy:
 
@@ -654,6 +666,15 @@ public:
 };
 ```
 
+The dsp object is central to the Faust architecture design:
+
++ `getNumInputs`, `getNumOutputs` provides information about the signal processor,
++ `buildUserInterface` creates the user interface using a given UI class object (see later),
++ `init` (aned some more specialized methods like `instanceInit`, `instanceConstants`, etc.) is called to initialize the dsp object with a given sampling rate, typically obtained from the audio architecture,
++ `compute` is called by the audio architecture to execute the actual audio processing. It takes as a `count` number of samples to process, `inputs` and `outputs` arrays of non-interleaved float/double samples, to be allocated and handled by the audio driver with the required dsp input and ouputs channels (as given by  `getNumInputs` and `getNumOutputs`).
+
+(note that `FAUSTFLOAT` label is typically defined to be the actual type of sample: either float or double using `#define FAUSTFLOAT float` in the code for instance).
+
 For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or C++ class, or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `soulpatch_dsp`  typed object (defined in the [soulpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio`  C++ classes (like the C++ generated class). See the following class diagram:
 
 <img src="architectures/img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
@@ -674,13 +695,12 @@ As an example of the decorator pattern, the `timed_dsp` class allows to decorate
 
 ##### Combining DSP Components
 
-A few additional macro construction classes, subclasses of the root dsp class have been defined in the [dsp-combiner.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-combiner.h) header file:
+A few additional macro construction classes, subclasses of the root dsp class have been defined in the [dsp-combiner.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-combiner.h)  header file with a five operators construction API:
 
-- the `dsp_sequencer` class combines two DSP in sequence, assuming that the number of outputs of the first DSP equals the number of input of the second one. Its `buildUserInterface` method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSPs can be individually controlled. Its `compute` method is overloaded to call each DSP `compute` in sequence, using an intermediate output buffer produced by first DSP as the input one given to the second DSP.
-<!-- TODORM: la fin de cette dernière phrase est pas claire, on a du mal à comprendre quoi est quoi -->
-- the `dsp_parallelizer`  class combines two DSP in parallel. Its `getNumInputs/getNumOutputs` methods are overloaded by correctly reflecting the input/output of the resulting DSP as the sum of the two combined ones. Its `buildUserInterface` method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSP can be individually controlled. Its `compute` method is overloaded to call each DSP compute, where each DSP consuming and producing its own number of input/output audio buffers taken from the method parameters.
+- the `dsp_sequencer` class combines two DSP in sequence, assuming that the number of outputs of the first DSP equals the number of input of the second one. It somewhat mimics the  *sequence* (that is`:` ) operator of the language by combining two separated C++ objects. Its `buildUserInterface` method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSPs can be individually controlled. Its `compute` method is overloaded to call each DSP `compute` in sequence, using an intermediate output buffer produced by first DSP as the input one given to the second DSP.
+- the `dsp_parallelizer`  class combines two DSP in parallel. It somewhat mimics the  *parallel* (that is`,` ) operator of the language by combining two separated C++ objects. Its `getNumInputs/getNumOutputs` methods are overloaded by correctly reflecting the input/output of the resulting DSP as the sum of the two combined ones. Its `buildUserInterface` method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSP can be individually controlled. Its `compute` method is overloaded to call each DSP compute, where each DSP consuming and producing its own number of input/output audio buffers taken from the method parameters.
 
-And so on for other DSP algebraic operators. This end up with a C++ API to combine DSPs with the usual 5 operators: `createDSPSequencer`, `createDSPParallelizer`, `createDSPSplitter`, `createDSPMerger`, `createDSPRecursiver` that can possibly be used at C++ level to dynamically combine DSPs (defined in the [dsp-combiner.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-combiner.h) header). 
+This methology is followed to implemented the three remaining composition operators (*split*, *merge*, *recussion*), which ends up with a C++ API to combine DSPs with the usual five operators: `createDSPSequencer`, `createDSPParallelizer`, `createDSPSplitter`, `createDSPMerger`, `createDSPRecursiver` to be used at C++ level to dynamically combine DSPs.
 
 ### Sample Accurate Control
 
@@ -724,6 +744,43 @@ Since control values can change several times inside the same audio block, the D
 
 Since time-stamped control messages from the previous audio block are used in the current block, control messages are aways handled with one audio buffer latency.
 
+##### Typical Use-Case
+
+A typical Faust program can use the *MIDI clock* command signal to possibly compute the Beat Per Minutes (BPM) information for any synchronization need it may have. 
+
+Here is a simple example of a sinusoid generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:
+
+ ```
+import("stdfaust.lib");
+
+// square signal (1/0), changing state
+// at each received clock
+clocker = checkbox("MIDI clock[midi:clock]");
+
+// ON/OFF button controlled
+// with MIDI start/stop messages
+play = checkbox("On/Off [midi:start][midi:stop]");
+
+// detect front
+front(x) = (x-x’) != 0.0;
+
+// count number of peaks during one second
+freq(x) = (x-x@ma.SR) : + ~ _;
+
+process = os.osc(8*freq(front(clocker))) * play;
+
+ ```
+
+Each received group of 24 clocks will move the time position by exactly one beat. Then it is *absolutely mandatory to never loose any MIDI clock message* and the standard memory zone based model with the *use the last received control value semantic* is not adapted. 
+
+The DSP object that needs to be controlled using the sample-accurate machinery can then simply be decorated using the`timed_dsp` class with the following kind of code:
+
+```c++
+dsp* sample_accurate_dsp = new timed_dsp(DSP);
+```
+
+Note that the described sample accurate MIDI clock synchronization model can currently only be used at input level. Because of the simple memory zone based connection point between the control interface and the DSP code, output controls (like bargraph) cannot generate a stream of control values. *Thus a reliable MIDI clock generator cannot be implemented with the current approach.*
+
 ### Polyphonic Instruments
 
 Directly programing polyphonic instruments in Faust is perfectly possible. It is also needed if very complex signal interaction between the different voices have to be described.
@@ -736,7 +793,7 @@ By convention Faust architecture files with polyphonic capabilities expect to fi
 
 In the case of MIDI control, the freq parameter (which should be a frequency) will be automatically computed from MIDI note numbers, gain (which should be a value between 0 and 1) from velocity and gate from keyon/keyoff events. Thus, gate can be used as a trigger signal for any envelope generator, etc.
 
-#### Using the `mydsp_poly` Class
+#### Using the mydsp_poly Class
 
 The single voice has to be described by a Faust DSP program, the `mydsp_poly` class is then used to combine several voices and create a polyphonic ready DSP:
 
@@ -799,11 +856,8 @@ Some helper classes like the base [dsp_poly_factory](https://github.com/grame-cn
 
 #### Controlling the Polyphonic Instrument
 
-The `mydsp_poly` class is also ready for MIDI control and can react to `keyOn/keyOff` and `pitchWheel` events. Other MIDI control parameters can directly be added in the DSP source code as MIDI metadata. To receive MIDI events, the created polyphonic DSP has to be explicitly added in a MIDI handler with the following line:
+The `mydsp_poly` class is also ready for MIDI control (as a class implementing the `midi` interface) and can react to `keyOn/keyOff` and `pitchWheel` events. Other MIDI control parameters can directly be added in the DSP source code as MIDI metadata. To receive MIDI events, the created polyphonic DSP will be automatically added to the `midi_handler` object when calling `buildUserInterface` on a `MidiUI` object.
 
-```c++
-midi_handler.addMidiIn(dsp_poly);
-```
 
 #### Deploying the Polyphonic Instrument
 
@@ -820,6 +874,44 @@ faustcaqt -midi -noices 12 inst.dsp -effect effect.dsp
 with `inst.dsp` and `effect.dsp` in the same folder, and the number of outputs of the instrument matching the number of inputs of the effect, has to be used. 
 
 Polyphonic-ready `faust2xx` scripts will then compile the polyphonic instrument and the effect, combine them in sequence, and create a ready-to-use DSP.
+
+### Mesuring the DSP CPU
+
+The `measure_dsp` class defined in the `faust/dsp/dsp-bench.h` file allows to decorate a given DSP object and measure its `compute` method CPU consumption. Results are given in Megabytes/seconds (higher is better) and DSP CPU at 44,1 KHz. Here is a C++ code example of its use: 
+
+```c++
+static void bench(dsp* dsp, const string& name)
+{
+    // Init the DSP
+    dsp->init(48000);
+    // Wraps it with a 'measure_dsp' decorator
+    measure_dsp mes(dsp, 1024, 5);
+    // Measure the CPU use
+    mes.measure();
+    // Print the stats
+    cout << name << " CPU use : " << mes.getStats() 
+         << " " << "(DSP CPU % : " << (mes.getCPULoad() * 100) << ")" << endl;
+}
+```
+
+Defined in the `faust/dsp/dsp-optimizer.h` file, the `dsp_optimizer` class uses the libfaust library and its LLVM backend to dynamically compile DSP objects produced with different Faust compiler options, and then measure their DSP CPU. Here is a C++ code example of its use: 
+
+```c++
+static void dynamic_bench(const string& dsp_source)
+{
+    // Init the DSP optimizer with the dsp_source to compile 
+    // (either the filename or source code string)
+    dsp_optimizer optimizer<FAUSTFLOAT>(dsp_source, "/usr/local/share/faust", "", 1024);
+    // Discover the best set of parameters
+    pair<double, vector<string>> res = optimizer.findOptimizedParameters();
+    cout << "Best value for '" << in_filename << "' is : " 
+         << res.first << " MBytes/sec with ";
+    for (int i = 0; i < res.second.size(); i++) {
+        cout << res.second[i] << " ";
+    }
+    cout << endl;
+}
+```
 
 ### The Proxy DSP Class
 
@@ -1135,16 +1227,17 @@ Most of the architecture files have been developed in C++ over the years. Thus t
 - the experimental Rust backend can be used with the [minimal-rs](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs) architecture, or the more complex JACK `minimal-jack.rs`used in `faust2jackrust` script, or PortAudio `minimal-portaudio.rs` used in `faust2jackportaudio` script
 - the experimental Dlang backend can be used with the [minimal.d](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.d) or the [minimal-dplug](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-dplug.d) to generate [DPlug](https://dplug.org) plugins with the `faust2dplug` tool
 
-## Using `faust2xx` Scripts
+## Using faust2xx Scripts
 
 Different `faust2xx` scripts finally combine several architecture files to generate a ready-to-use applications or plugins from a Faust DSP program. They typically combine the *generated DSP* with an *UI architecture* file and an *audio architecture* file. Most of the also have addition options like `-midi`, `-nvoices <num>`, `-effect <auto|effect.dsp>` or `-soundfile` to generate polyphonic instruments with or without effects, or audio file support. Look at the [following page](https://faustdoc.grame.fr/manual/tools/) for a more complete description.  
 
-## The `faust2api` Model
+## The faust2api Model
 
 This model combining the generated DSP the audio and UI architecture components is very convenient to automatically produce ready-to-use standalone application or plugins, since the controller part (GUI,  MIDI or OSC...) is directly compiled and deployed. 
 
-In some cases, developers prefer to  control the DSP itself, by program <!-- TODORM: pas sûr de comprendre ce que tu veux dire là -->
-or by any other means. A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed. It then provides a `setParamValue/getParamValue` kind of API to access all parameters, and let the developer adds his own GUI or any kind of controller. Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, wich goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. 
+In some cases, developers prefer to control the DSP by developing a completely new GUI (using a toolkit not supported in the standard architecture files), or even without any GUI and using another control layer. 
+
+A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed. It then provides a `setParamValue/getParamValue` kind of API to access all parameters, and let the developer adds his own GUI or any kind of controller. Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, wich goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. 
 
 <img src="architectures/img/FaustArchitecture5.jpg" class="mx-auto d-block" width="40%">
 
