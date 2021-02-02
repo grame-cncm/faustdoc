@@ -1263,40 +1263,39 @@ faust spectral.dsp -cn spectral -o spectral.c++
 
 produces the following C++ code containing the `spectral` class:
 
-
 ```c++
 class spectral : public dsp {
 	
  private:
 	
-	Soundfile* fSoundfile0;
-	FAUSTFLOAT fHslider0;
-	int fSampleRate;
+  Soundfile* fSoundfile0;
+  FAUSTFLOAT fHslider0;
+  int fSampleRate;
 
  public:
 	
   ...	
  
-	virtual int getNumInputs() {
-		return 2;
-	}
-	virtual int getNumOutputs() {
-		return 2;
-	}
+  virtual int getNumInputs() {
+    return 2;
+  }
+  virtual int getNumOutputs() {
+    return 2;
+  }
   
-	...
+  ...
 	
-	virtual void buildUserInterface(UI* ui_interface) {
-		ui_interface->openVerticalBox("spectral");
-		ui_interface->addHorizontalSlider("Spectrogram", &fHslider0, 0.0f, 0.0f, 1.0f, 1.0f);
-		ui_interface->addSoundfile("sound", "{'sound1.wav';'sound2.wav';}", &fSoundfile0);
-		ui_interface->closeBox();
-	}
+  virtual void buildUserInterface(UI* ui_interface) {
+    ui_interface->openVerticalBox("spectral");
+    ui_interface->addHorizontalSlider("Spectrogram", &fHslider0, 0.0f, 0.0f, 1.0f, 1.0f);
+    ui_interface->addSoundfile("sound", "{'sound1.wav';'sound2.wav';}", &fSoundfile0);
+    ui_interface->closeBox();
+  }
 	
-	virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+  virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
     int iSlow0 = int(float(fHslider0));
-		....
-	}
+    ....
+  }
 
 };
 ```
@@ -1317,17 +1316,17 @@ class spectral : public dsp {
     Soundfile* fSoundfile0;
     FAUSTFLOAT fHslider0;
     int fSampleRate;
-  	Spectrogram fSpectro[2];
+    Spectrogram fSpectro[2];
 
   public:
 
     ...
       
     virtual int getNumInputs() {
-        return 2;
+      return 2;
     }
     virtual int getNumOutputs() {
-        return 2;
+      return 2;
     }
   
     ...
@@ -1355,7 +1354,6 @@ Here we assume that `createSpectrogram` and `playSpectrogram` functions are defi
 ### Deploying it as a Max/MSP External Using the faust2max6 Tool
 
 The completed `spectral.cpp` file is now ready to be deployed as a Max/MSP external using the `faust2max6` tool with:
-
 
 ```
 faust2max6 -inj spectral.cpp -soundfile spectral.dsp
