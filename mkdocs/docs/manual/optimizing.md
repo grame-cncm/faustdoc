@@ -18,7 +18,7 @@ One can think of these four categories as *different computation rates*. The pro
 
 #### Using Pattern Matching 
 
-**TODO**: explain how pattern-matching can be used to algorithmically describe signal processors, explain the idea of defining a new DSL inside the Faust DSL (with [fds.lib](https://faustlibraries.grame.fr/libs/fds/), [physmodels.lib](https://faustlibraries.grame.fr/libs/physmodels/), [wdmodels.lib](https://faustlibraries.grame.fr/libs/wavedigitalfilters/) as examples).
+**TODO**: explain how pattern-matching can be used to algorithmically describe signal processors, explain the principle of defining a new DSL inside the Faust DSL (with [fds.lib](https://faustlibraries.grame.fr/libs/fds/), [physmodels.lib](https://faustlibraries.grame.fr/libs/physmodels/), [wdmodels.lib](https://faustlibraries.grame.fr/libs/wavedigitalfilters/) as examples).
 
 #### Specializing the DSP Code
 
@@ -63,7 +63,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 }
 ```
 
-But it the order between `ba.linear2db` and  `si.smoo` is reversed like in the following code:
+But if the order between `ba.linear2db` and  `si.smoo` is reversed like in the following code:
 
 ```
 import("stdfaust.lib");
@@ -93,7 +93,7 @@ So to obtain the best performances in the generated code, all costly computation
 
 #### Using Function Tabulation
 
-The use of `rdtable` kind of compilation done at init time can be simplified using the `ba.tabulate` function to *tabulate* a given unary function `fun` on a given range. A table is created and filled with precomputed values, and can be used to compute `fun(x)` in a more efficient way, just by reading the table precomputed value (at the cost of additional  static memory needeed for the table).
+The use of `rdtable` kind of compilation done at init time can be simplified using the `ba.tabulate` function to *tabulate* a given unary function `fun` on a given range. A table is created and filled with precomputed values, and can be used to compute `fun(x)` in a more efficient way (at the cost of additional  static memory needeed for the table).
 
 #### Using Fast Math Functions
 
