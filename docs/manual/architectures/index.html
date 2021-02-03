@@ -1079,20 +1079,24 @@ public:
 <h5 id="typical-use-case">Typical Use-Case</h5>
 <p>A typical Faust program can use the <em>MIDI clock</em> command signal to possibly compute the Beat Per Minutes (BPM) information for any synchronization need it may have. </p>
 <p>Here is a simple example of a sinusoid generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:</p>
-<p>```
-import("stdfaust.lib");</p>
-<p>// square signal (1/0), changing state
+<pre><code>import(&quot;stdfaust.lib&quot;);
+
+// square signal (1/0), changing state
 // at each received clock
-clocker = checkbox("MIDI clock[midi:clock]");</p>
-<p>// ON/OFF button controlled
+clocker = checkbox(&quot;MIDI clock[midi:clock]&quot;);
+
+// ON/OFF button controlled
 // with MIDI start/stop messages
-play = checkbox("On/Off [midi:start][midi:stop]");</p>
-<p>// detect front
-front(x) = (x-x’) != 0.0;</p>
-<p>// count number of peaks during one second
-freq(x) = (x-x@ma.SR) : + ~ _;</p>
-<p>process = os.osc(8*freq(front(clocker))) * play;</p>
-<p>```</p>
+play = checkbox(&quot;On/Off [midi:start][midi:stop]&quot;);
+
+// detect front
+front(x) = (x-x’) != 0.0;
+
+// count number of peaks during one second
+freq(x) = (x-x@ma.SR) : + ~ _;
+
+process = os.osc(8*freq(front(clocker))) * play;
+</code></pre>
 <p>Each received group of 24 clocks will move the time position by exactly one beat. Then it is <em>absolutely mandatory to never loose any MIDI clock message</em> and the standard memory zone based model with the <em>use the last received control value semantic</em> is not adapted. </p>
 <p>The DSP object that needs to be controlled using the sample-accurate machinery can then simply be decorated using the<code>timed_dsp</code> class with the following kind of code:</p>
 <pre><code class="language-c++">dsp* sample_accurate_dsp = new timed_dsp(DSP);

@@ -746,7 +746,7 @@ A typical Faust program can use the *MIDI clock* command signal to possibly comp
 
 Here is a simple example of a sinusoid generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:
 
- ```
+```
 import("stdfaust.lib");
 
 // square signal (1/0), changing state
@@ -764,8 +764,7 @@ front(x) = (x-x’) != 0.0;
 freq(x) = (x-x@ma.SR) : + ~ _;
 
 process = os.osc(8*freq(front(clocker))) * play;
-
- ```
+```
 
 Each received group of 24 clocks will move the time position by exactly one beat. Then it is *absolutely mandatory to never loose any MIDI clock message* and the standard memory zone based model with the *use the last received control value semantic* is not adapted. 
 
