@@ -67,11 +67,7 @@
 </li>
                                     
 <li>
-    <a href="../embedding/" class="dropdown-item">Embedding</a>
-</li>
-                                    
-<li>
-    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
+    <a href="../architectures/" class="dropdown-item">Architecture Files</a>
 </li>
                                     
 <li>
@@ -92,6 +88,14 @@
                                     
 <li>
     <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../embedding/" class="dropdown-item">Embedding</a>
+</li>
+                                    
+<li>
+    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
 </li>
                                     
 <li>
@@ -266,6 +270,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#pattern-matching-and-lists" class="nav-link">Pattern matching and lists</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -301,7 +309,24 @@
 <li>at compile time, using the <code>-ct</code> and  <code>-cat</code> compilation options allows to check table index range, by verifying that the actual signal range is compatible with the actual table size. Note that since the interval calculation is currently imperfect, you may see <em>false positive</em> especially when using recursive signals where the interval calculation system will typically produce <em>[-INFINITY, INFINITY]</em> range, which is not precise enough to correctly describe the real signal range. </li>
 <li>at runtime, the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark">inter-tracer</a> tool runs and instruments the compiled program using the Interpreter backend, and can give various informations like the production <em>NaN</em> or <em>INFINITY</em> values, and using the <code>-me</code> with the <code>faust2caqt</code> script to catch math computation exceptions (see the <a href="https://faustdoc.grame.fr/manual/optimizing/">Debugging the DSP Code</a> section in the documentation).</li>
 </ul>
-<p>Note that the Faust <a href="https://faustlibraries.grame.fr/libs/maths/">math library</a> contains the implementation of the<code>INFINITY</code> value (depending of the choosen type like <code>float</code>, <code>double</code> or <code>quad</code>), and <code>isnan</code> and <code>isinf</code>  functions that may help during development.</p></div>
+<p>Note that the Faust <a href="https://faustlibraries.grame.fr/libs/maths/">math library</a> contains the implementation of the<code>INFINITY</code> value (depending of the choosen type like <code>float</code>, <code>double</code> or <code>quad</code>), and <code>isnan</code> and <code>isinf</code>  functions that may help during development.</p>
+<h2 id="pattern-matching-and-lists">Pattern matching and lists</h2>
+<p>Strictly speaking, there are no lists in Faust. For example the expression <code>()</code> or <code>NIL</code> in Lisp, which indicates an empty list, does not exist in Faust. Similarly, the distinction in Lisp between the number <code>3</code> and the list with only one element <code>(3)</code> does not exist in Faust. </p>
+<p>However, list operations can be simulated (in part) using the parallel binary composition operation <code>,</code> and pattern matching. The parallel composition operation is right-associative. This means that the expression <code>(1,2,3,4)</code> is just a simplified form of the fully parenthesized expression <code>(1,(2,(3,4)))</code>. The same is true for <code>(1,2,(3,4))</code> which is also a simplified form of the same fully parenthesized expression <code>(1,(2,(3,4)))</code>. </p>
+<p>You can think of pattern-matching as always being done on fully parenthesized expressions. Therefore no Faust function can ever distinguish <code>(1,2,3,4)</code> from <code>(1,2,(3,4))</code>, because they represent the same fully parenthesized expression <code>(1,(2,(3,4)))</code>. </p>
+<p>This is why <code>ba.count( ((1,2), (3,4), (5,6)) )</code> is not 3 but 4, and also why <code>ba.count( ((1,2), ((3,4),5,6)) )</code> is not 2 but 4. </p>
+<p>Explanation: in both cases the fully parenthesized expression is <code>( (1,2),((3,4),(5,6)) )</code>. The definition of  <code>ba.count</code> being:</p>
+<pre><code>count((x,y)) = 1 + count(y);  // rule R1
+count(x)     = 1;             // rule R2 
+</code></pre>
+<p>we have:</p>
+<pre><code>ba.count( ((1,2),((3,4),(5,6))) ) 
+-R1-&gt;   1 + ba.count( ((3,4),(5,6)) ) 
+-R1-&gt;   1 + 1 +  ba.count( (5,6) ) 
+-R1-&gt;   1 + 1 + 1 + ba.count( 6 )
+-R2-&gt;   1 + 1 + 1 + 1 
+</code></pre>
+<p>Please note that pattern matching is not limited to parallel composition, the other composition operators <code>(&lt;: : :&gt; ~)</code> can be used too.</p></div>
             </div>
         </div>
 

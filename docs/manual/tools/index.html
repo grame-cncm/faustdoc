@@ -67,11 +67,7 @@
 </li>
                                     
 <li>
-    <a href="../embedding/" class="dropdown-item">Embedding</a>
-</li>
-                                    
-<li>
-    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
+    <a href="../architectures/" class="dropdown-item">Architecture Files</a>
 </li>
                                     
 <li>
@@ -92,6 +88,14 @@
                                     
 <li>
     <a href="./" class="dropdown-item active">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../embedding/" class="dropdown-item">Embedding</a>
+</li>
+                                    
+<li>
+    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
 </li>
                                     
 <li>
@@ -299,6 +303,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#faust2csvplot" class="nav-link">faust2csvplot</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#faust2daisy" class="nav-link">faust2daisy</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -653,6 +661,16 @@ Options:
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
+<h2 id="faust2daisy">faust2daisy</h2>
+<pre class=faust-tools>
+faust2daisy [-patch] [-midi] [-nvoices &lt;num>] [additional Faust options (-vec -vs 8...)] &lt;file.dsp>
+Options:
+   -patch : to compile for 4 ins/outs Patch
+   -midi : activates MIDI control
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+
+</pre>
+
 <h2 id="faust2dplug">faust2dplug</h2>
 <pre class=faust-tools>
 Usage: faust2dplug [options] [Faust options] &lt;file.dsp>
@@ -927,7 +945,7 @@ Options:
    -osc : activates OSC control
    -midi : activates MIDI control
    -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -soundfile-static : similar to -soundfile with resources in statuc mode.
+   -soundfile-static : similar to -soundfile with resources in static mode.
    -opt native|generic : activates the best compilation options for the native or generic CPU.
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
    -us &lt;factor> : upsample the DSP by a factor

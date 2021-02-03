@@ -67,11 +67,7 @@
 </li>
                                     
 <li>
-    <a href="../embedding/" class="dropdown-item">Embedding</a>
-</li>
-                                    
-<li>
-    <a href="./" class="dropdown-item active">Optimizing</a>
+    <a href="../architectures/" class="dropdown-item">Architecture Files</a>
 </li>
                                     
 <li>
@@ -92,6 +88,14 @@
                                     
 <li>
     <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../embedding/" class="dropdown-item">Embedding</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Optimizing</a>
 </li>
                                     
 <li>
@@ -321,7 +325,7 @@ The generated code can have different "shapes" depending of compilation options,
 <h3 id="interp-tracer">interp-tracer</h3>
 <p>The <code>interp-tracer</code> tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically <code>FP_SUBNORMAL</code>, <code>FP_INFINITE</code> and <code>FP_NAN</code> values, or <code>INTEGER_OVERFLOW</code> and <code>DIV_BY_ZERO</code> operations. Mode 4 and 5 allow to display the stack trace of the running code when <code>FP_INFINITE</code>, <code>FP_NAN</code> or <code>INTEGER_OVERFLOW</code> values are produced. The <em>-control</em> mode allows to check control parameters, by explicitly setting their <em>min</em> and <em>max</em> values, then running the DSP and setting all controllers (inside their range) in a random way. Mode 4 up to 7 also check LOAD/STORE errors, and are typically used by the Faust compiler developers to check the generated code. A more complete documentation is available on the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">this page</a>.</p>
 <h3 id="debugging-at-runtime">Debugging at runtime</h3>
-<p>On macOS, the <a href="https://faustdoc.grame.fr/manual/tools/#faust2caqt">faust2caqt</a> script has a <code>-me</code> option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42">dsp_me_checker</a> class to decorate a given DSP objet with the math computation exception handling code. </p>
+<p>On macOS, the <a href="https://faustdoc.grame.fr/manual/tools/#faust2caqt">faust2caqt</a> script has a <code>-me</code> option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42">dsp_me_checker</a> class to decorate a given DSP object with the math computation exception handling code. </p>
 <h2 id="optimizing-the-dsp-code">Optimizing the DSP Code</h2>
 <h3 id="writing-efficient-dsp-code">Writing efficient DSP code</h3>
 <p>TODO</p>
@@ -331,7 +335,7 @@ The generated code can have different "shapes" depending of compilation options,
 <li>arrays of power-of-two sizes can be accessed using mask based index computation which is the fastest method, but consumes more memory since a delay-line of a given size will be extended to the next power-of-two size</li>
 <li>otherwise the <em>wrapping</em> index can be implemented with a <em>if</em> based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. </li>
 </ul>
-<p>The <code>-dlt &lt;n&gt;</code>  (<code>--delay-line-threshold</code>) option allows to choose between the two available stategies. By default its value is INT_MAX thus all delay-lines are allocated using the first method. By choising a given value (in frames) for <code>-dlt</code> , all delay-lines with size bellow this value will be allocated using the first method (faster but consuming more memory), and other ones with the second method (slower but consuming less memory). Thus by gradually changing this <code>-dlt</code>  value in this continuum <em>faster/more memory up to slower/less memory</em>, the optimal choice can be done. <strong>This option can be especially useful in embedded devices context.</strong></p>
+<p>The <code>-dlt &lt;n&gt;</code>  (<code>--delay-line-threshold</code>) option allows to choose between the two available stategies. By default its value is INT_MAX thus all delay-lines are allocated using the first method. By choising a given value (in frames) for <code>-dlt</code>, all delay-lines with size bellow this value will be allocated using the first method (faster but consuming more memory), and other ones with the second method (slower but consuming less memory). Thus by gradually changing this <code>-dlt</code>  value in this continuum <em>faster/more memory up to slower/less memory</em>, the optimal choice can be done. <strong>This option can be especially useful in embedded devices context.</strong></p>
 <h3 id="specializing-the-dsp-code">Specializing the DSP code</h3>
 <p>The Faust compiler can possibly do a lot of optimizations at compile time. The DSP code can for instance be compiled for a fixed sample rate, thus doing at compile time all computation that depends of it. Since the Faust compiler will look for librairies starting from the local folder, a simple way is to locally copy the <code>libraries/platform.lib</code> file (which contains the <code>SR</code> definition), and change its definition for a fixed value like 48000 Hz. Then the DSP code has to be recompiled. Note that <code>libraries/platform.lib</code> also contains the definition of  the <code>tablesize</code> constant which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust services scripts which add the <code>-I /usr/local/share/faust/embedded/</code> parameter to the Faust command line to use a special version of the platform.lib file.</p>
 <h2 id="optimizing-the-c-or-llvm-code">Optimizing the C++ or LLVM Code</h2>

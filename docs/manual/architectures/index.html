@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Architecture Files - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../embedding/" class="dropdown-item">Embedding</a>
+</li>
+                                    
+<li>
+    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
+</li>
+                                    
+<li>
+    <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#architecture-files" class="nav-link">Architecture Files</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#minimal-structure-of-an-architecture-file" class="nav-link">Minimal Structure of an Architecture File</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#audio-architecture-modules" class="nav-link">Audio Architecture Modules</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#midi-architecture-modules" class="nav-link">MIDI Architecture Modules</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#midi-messages-in-the-dsp-source-code" class="nav-link">MIDI Messages in the DSP Source Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#defined-standard-midi-messages" class="nav-link">Defined Standard MIDI Messages</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#midi-classes" class="nav-link">MIDI Classes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ui-architecture-modules" class="nav-link">UI Architecture Modules</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#active-widgets" class="nav-link">Active Widgets</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#passive-widgets" class="nav-link">Passive Widgets</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#widgets-layout" class="nav-link">Widgets Layout</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#metadata" class="nav-link">Metadata</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#dsp-json-description" class="nav-link">DSP JSON Description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#gui-builders" class="nav-link">GUI Builders</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#non-gui-controllers" class="nav-link">Non-GUI Controllers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#some-useful-ui-classes-for-developers" class="nav-link">Some Useful UI Classes for Developers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#multi-controller-and-synchronization" class="nav-link">Multi-Controller and Synchronization</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#dsp-architecture-modules" class="nav-link">DSP Architecture Modules</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#the-base-dsp-class" class="nav-link">The Base dsp Class</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#macro-construction-of-dsp-components" class="nav-link">Macro Construction of DSP Components</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#combining-dsp" class="nav-link">Combining DSP</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#sample-accurate-control" class="nav-link">Sample Accurate Control</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#polyphonic-instruments" class="nav-link">Polyphonic Instruments</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#polyphonic-ready-dsp-code" class="nav-link">Polyphonic-Ready DSP Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-mydsp_poly-class" class="nav-link">Using the mydsp_poly Class</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#polyphonic-instrument-with-a-global-output-effect" class="nav-link">Polyphonic Instrument With a Global Output Effect</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#controlling-the-polyphonic-instrument" class="nav-link">Controlling the Polyphonic Instrument</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#deploying-the-polyphonic-instrument" class="nav-link">Deploying the Polyphonic Instrument</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#mesuring-the-dsp-cpu" class="nav-link">Mesuring the DSP CPU</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#the-proxy-dsp-class" class="nav-link">The Proxy DSP Class</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#embedded-platforms" class="nav-link">Embedded Platforms</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#metadata-naming-convention" class="nav-link">Metadata Naming Convention</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-uim-compiler-option" class="nav-link">Using the -uim Compiler Option</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#developing-a-new-architecture-file" class="nav-link">Developing a New Architecture File</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#adapting-the-generated-dsp" class="nav-link">Adapting the Generated DSP</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#developing-new-ui-architectures" class="nav-link">Developing New UI Architectures</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#developing-new-audio-architectures" class="nav-link">Developing New Audio Architectures</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#other-languages-than-c" class="nav-link">Other Languages Than C++</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-faust2xx-scripts" class="nav-link">Using faust2xx Scripts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#the-faust2api-model" class="nav-link">The faust2api Model</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-the-inj-option-with-faust2xx-scripts" class="nav-link">Using the -inj Option With faust2xx Scripts</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#writting-the-dsp-code" class="nav-link">Writting the DSP code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#writting-the-c-code" class="nav-link">Writting the C++ code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#deploying-it-as-a-maxmsp-external-using-the-faust2max6-tool" class="nav-link">Deploying it as a Max/MSP External Using the faust2max6 Tool</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<h1 id="architecture-files">Architecture Files</h1>
+<p>A Faust program describes a <em>signal processor</em>, a pure DSP computation that maps <em>input signals</em> to <em>output signals</em>. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by <em>architecture files</em>.</p>
+<p>An <em>architecture file</em> describes how to relate a Faust program to the external world, in particular the audio drivers and the controllers interfaces to be used. This approach allows a single Faust program to be easily deployed to a large variety of audio standards (e.g., Max/MSP externals, PD externals, VST plugins, CoreAudio applications, JACK applications, iPhone/Android, etc.):</p>
+<p><img src="img/Architectures.png" class="mx-auto d-block" width="90%"></p>
+<p>The architecture to be used is specified at compile time with the <code>-a</code> option. For example <code>faust -a jack-gtk.cpp foo.dsp</code> indicates to use the JACK GTK architecture when compiling <code>foo.dsp</code>.</p>
+<h2 id="minimal-structure-of-an-architecture-file">Minimal Structure of an Architecture File</h2>
+<p>Before going into the details of the architecture files provided with FAUST distribution, it is important to have an idea of the essential parts that compose an architecture file. Technically, an architecture file is any text file with two placeholders <code>&lt;&lt;includeIntrinsic&gt;&gt;</code> and <code>&lt;&lt;includeclass&gt;&gt;</code>. The first placeholder is currently not used, and the second one is replaced by the code generated by the FAUST compiler. </p>
+<p>Therefore, the <em>really minimal</em> architecture file, let's call it <code>nullarch.cpp</code>, is the following:</p>
+<pre><code>&lt;&lt;includeIntrinsic&gt;&gt;
+&lt;&lt;includeclass&gt;&gt;
+</code></pre>
+<p>This <code>nullarch.cpp</code> architecture has the property that <code>faust foo.dsp</code> and <code>faust -a nullarch.cpp foo.dsp</code> produce the same result. Obviously, this is not very useful, moreover the resulting <code>cpp</code> file doesn't compile. </p>
+<p>Here is <code>miniarch.cpp</code>, a minimal architecture file that contains enough information to produce a <code>cpp</code> file that can be successfully compiled:</p>
+<pre><code class="language-c++">&lt;&lt;includeIntrinsic&gt;&gt;
+
+#define FAUSTFLOAT float
+
+class dsp {};
+
+struct Meta {
+    virtual void declare(const char* key, const char* value) {};
+};
+
+struct Soundfile {
+    FAUSTFLOAT** fBuffers;
+    int* fLength;   // length of each part
+    int* fSR;       // sample rate of each part
+    int* fOffset;   // offset of each part in the global buffer
+    int fChannels;  // max number of channels of all concatenated files
+};
+
+struct UI {
+    // -- widget's layouts
+    virtual void openTabBox(const char* label) {}
+    virtual void openHorizontalBox(const char* label) {}
+    virtual void openVerticalBox(const char* label) {}
+    virtual void closeBox() {}
+
+    // -- active widgets
+    virtual void addButton(const char* label, FAUSTFLOAT* zone) {}
+    virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) {}
+    virtual void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
+    virtual void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
+    virtual void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) {}
+
+    // -- passive widgets
+    virtual void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) {}
+    virtual void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) {}
+
+    // -- soundfiles
+    virtual void addSoundfile(const char* label, const char* filename, Soundfile** sf_zone) {}
+
+    // -- metadata declarations
+    virtual void declare(FAUSTFLOAT* zone, const char* key, const char* val) {}
+};
+
+&lt;&lt;includeclass&gt;&gt;
+</code></pre>
+<p>This architecture is still not very useful, but it gives an idea of what a real-life architecture file has to implement, in addition to the audio part itself. As we will see in the next section, Faust architectures are implemented using a modular approach to avoid code duplication and favor code maintenance and reuse.</p>
+<h2 id="audio-architecture-modules">Audio Architecture Modules</h2>
+<p>Some of these architectures are a modular combination of an <em>audio module</em> and one or more <em>controller modules</em>. Among these user interface modules <code>OSCUI</code> provides supports for Open Sound Control allowing Faust programs to be controlled by OSC messages. </p>
+<p>Some architecture only combine an <em>audio module</em> with the generated DSP to create an <em>audio engine</em> to be controlled with an additional <code>setParamValue/getParamValue</code> kind of API, so that the controller part can be completeley defined externally. This is the purpose of the <code>faust2api</code> script explained later on.  </p>
+<p>An <em>audio architecture module</em> typically connects a Faust program to the audio drivers. It is responsible for allocating and releasing the audio channels and for calling the Faust <code>dsp::compute</code> method to handle incoming audio buffers and/or to produce audio output. It is also responsible for presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0. </p>
+<p>The default compilation model uses separated audio input and output buffers not referring to the same memory locations. The <code>-inpl (--in-place)</code> code generation model allows us to generate code working when <em>input and output buffers are the same</em> (which is typically needed in some embedded devices). This option currently only works in scalar (= default) code generation mode.</p>
+<p>A Faust audio architecture module derives from an <em>audio</em> class can be defined as below (simplified version, see the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/audio.h">real version here)</a>:</p>
+<pre><code class="language-c++">class audio {
+
+    public:
+
+        audio() {}
+        virtual ~audio() {}
+
+        /**
+         * Init the DSP.
+         * @param name - the DSP name to be given to the audio driven 
+         * (could appear as a JACK client for instance)
+         * @param dsp - the dsp that will be initialized with the driver sample rate
+         *
+         * @return true is sucessful, false if case of driver failure.
+         **/
+        virtual bool init(const char* name, dsp* dsp) = 0;
+
+        /**
+         * Start audio processing.
+         * @return true is sucessfull, false if case of driver failure.
+         **/
+        virtual bool start() = 0;
+
+        /**
+         * Stop audio processing.
+         **/
+        virtual void stop() = 0;
+
+        void setShutdownCallback(shutdown_callback cb, void* arg) = 0;
+
+         // Return buffer size in frames.
+        virtual int getBufferSize() = 0;
+
+        // Return the driver sample rate in Hz.
+        virtual int getSampleRate() = 0;
+
+        // Return the driver hardware inputs number.
+        virtual int getNumInputs() = 0;
+
+        // Return the driver hardware outputs number.
+        virtual int getNumOutputs() = 0;
+
+        /**
+        * @return Returns the average proportion of available CPU 
+        * being spent inside the audio callbacks (between 0.0 and 1.0).
+        **/
+        virtual float getCPULoad() = 0;
+};
+</code></pre>
+<p>The API is simple enough to give a great flexibility to audio architectures implementations. The  <code>init</code> method should initialize the audio. At  <code>init</code> exit, the system should be in a safe state to recall the  <code>dsp</code> object state. Here is the hierarchy of some of the supported audio drivers:</p>
+<p><img src="img/AudioHierarchy.jpg" class="mx-auto d-block" width="70%"></p>
+<h2 id="midi-architecture-modules">MIDI Architecture Modules</h2>
+<p>A <em>MIDI architecture module</em> typically connects a Faust program to the MIDI drivers. MIDI control connects DSP parameters with MIDI messages (in both directions), and can be used to trigger polyphonic instruments.</p>
+<h4 id="midi-messages-in-the-dsp-source-code">MIDI Messages in the DSP Source Code</h4>
+<p>MIDI control messages are described as metadata in UI elements. They are decoded by a <code>MidiUI</code> class, subclass of <code>UI</code>, which parses incoming MIDI messages and updates the appropriate control parameters, or sends MIDI messages when the UI elements (sliders, buttons...) are moved.</p>
+<h4 id="defined-standard-midi-messages">Defined Standard MIDI Messages</h4>
+<p>A special <code>[midi:xxx yyy...]</code> metadata needs to be added to the UI element. The full description of supported MIDI messages is now part of the <a href="https://faustdoc.grame.fr/manual/midi/">Faust documentation</a>.</p>
+<h4 id="midi-classes">MIDI Classes</h4>
+<p>A <code>midi</code> base class defining MIDI messages decoding/encoding methods has been developed. It will be used to receive and transmit MIDI messages:</p>
+<pre><code class="language-c++">class midi {
+
+public:
+
+    midi() {}
+    virtual ~midi() {}
+
+    // Additional time-stamped API for MIDI input
+    virtual MapUI* keyOn(double, int channel, int pitch, int velocity)
+    {
+        return keyOn(channel, pitch, velocity);
+    }
+
+    virtual void keyOff(double, int channel, int pitch, int velocity = 0)
+    {
+        keyOff(channel, pitch, velocity);
+    }
+
+    virtual void keyPress(double, int channel, int pitch, int press)
+    {
+        keyPress(channel, pitch, press);
+    }
+
+    virtual void chanPress(double date, int channel, int press)
+    {
+        chanPress(channel, press);
+    }
+
+    virtual void pitchWheel(double, int channel, int wheel)
+    {
+        pitchWheel(channel, wheel);
+    }
+
+    virtual void ctrlChange(double, int channel, int ctrl, int value)
+    {
+        ctrlChange(channel, ctrl, value);
+    }
+
+    virtual void ctrlChange14bits(double, int channel, int ctrl, int value)
+    {
+        ctrlChange14bits(channel, ctrl, value);
+    }
+
+    virtual void rpn(double, int channel, int ctrl, int value)
+    {
+        rpn(channel, ctrl, value);
+    }
+
+    virtual void progChange(double, int channel, int pgm)
+    {
+        progChange(channel, pgm);
+    }
+
+    virtual void sysEx(double, std::vector&lt;unsigned char&gt;&amp; message)
+    {
+        sysEx(message);
+    }
+
+    // MIDI sync
+    virtual void startSync(double date)  {}
+    virtual void stopSync(double date)   {}
+    virtual void clock(double date)  {}
+
+    // Standard MIDI API
+    virtual MapUI* keyOn(int channel, int pitch, int velocity)      { return nullptr; }
+    virtual void keyOff(int channel, int pitch, int velocity)       {}
+    virtual void keyPress(int channel, int pitch, int press)        {}
+    virtual void chanPress(int channel, int press)                  {}
+    virtual void ctrlChange(int channel, int ctrl, int value)       {}
+    virtual void ctrlChange14bits(int channel, int ctrl, int value) {}
+    virtual void rpn(int channel, int ctrl, int value)              {}
+    virtual void pitchWheel(int channel, int wheel)                 {}
+    virtual void progChange(int channel, int pgm)                   {}
+    virtual void sysEx(std::vector&lt;unsigned char&gt;&amp; message)         {}
+
+    enum MidiStatus {
+        // channel voice messages
+        MIDI_NOTE_OFF = 0x80,
+        MIDI_NOTE_ON = 0x90,
+        MIDI_CONTROL_CHANGE = 0xB0,
+        MIDI_PROGRAM_CHANGE = 0xC0,
+        MIDI_PITCH_BEND = 0xE0,
+        MIDI_AFTERTOUCH = 0xD0,         // aka channel pressure
+        MIDI_POLY_AFTERTOUCH = 0xA0,    // aka key pressure
+        MIDI_CLOCK = 0xF8,
+        MIDI_START = 0xFA,
+        MIDI_CONT = 0xFB,
+        MIDI_STOP = 0xFC,
+        MIDI_SYSEX_START = 0xF0,
+        MIDI_SYSEX_STOP = 0xF7
+    };
+
+    enum MidiCtrl {
+        ALL_NOTES_OFF = 123,
+        ALL_SOUND_OFF = 120
+    };
+
+    enum MidiNPN {
+        PITCH_BEND_RANGE = 0
+    };
+};
+</code></pre>
+<p>A pure interface for MIDI handlers that can send/receive MIDI messages to/from <code>midi</code>objects is defined:</p>
+<pre><code class="language-c++">struct midi_interface {
+    virtual void addMidiIn(midi* midi_dsp)      = 0;
+    virtual void removeMidiIn(midi* midi_dsp)   = 0;
+    virtual ~midi_interface() {}
+};
+</code></pre>
+<p>A <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261">midi_hander</a> subclass implements actual MIDI decoding and <em>maintains a list of MIDI aware components</em> (classes inheriting from <code>midi</code> and ready to send and/or receive MIDI events) using the <code>addMidiIn/removeMidiIn</code> methods:</p>
+<pre><code class="language-c++">class midi_handler : public midi, public midi_interface {
+
+    protected:
+
+        std::vector&lt;midi*&gt; fMidiInputs;
+        std::string fName;
+        MidiNRPN fNRPN;
+
+    public:
+
+        midi_handler(const std::string&amp; name = &quot;MIDIHandler&quot;):fName(name) {}
+        virtual ~midi_handler() {}
+
+        void addMidiIn(midi* midi_dsp) {...}
+        void removeMidiIn(midi* midi_dsp) {...}
+        ...
+        ...
+};
+</code></pre>
+<p>Several concrete implementations subclassing <code>midi_handler</code> using native APIs have been written and can be found in the <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/faust/midi">faust/midi</a> folder:</p>
+<p><img src="img/MIDIHierarchy.jpg" class="mx-auto d-block" width="80%"></p>
+<p>Depending on the native MIDI API being used, event time-stamps are either expressed in absolute time or in frames. They are converted to offsets expressed in samples relative to the beginning of the audio buffer.</p>
+<p>Connected with the <code>MidiUI</code> class (a subclass of <code>UI</code>), they allow a given DSP to be controlled with incoming MIDI messages or possibly send MIDI messages when its internal control state changes.</p>
+<p>In the following piece of code, a <code>MidiUI</code> object is created and connected to a <code>rt_midi</code> MIDI messages handler (using the <a href="http://www.music.mcgill.ca/~gary/rtmidi/">RTMidi</a> library), then given as a parameter to the standard <code>buildUserInterface</code> to control DSP parameters:</p>
+<pre><code class="language-c++">...
+rt_midi midi_handler(&quot;MIDI&quot;);
+MidiUI midiinterface(&amp;midi_handler);
+DSP-&gt;buildUserInterface(&amp;midiinterface);
+...
+</code></pre>
+<h2 id="ui-architecture-modules">UI Architecture Modules</h2>
+<p>A UI architecture module links user actions (i.e., via graphic widgets, command line parameters, OSC messages, etc.) with the Faust program to control. It is responsible for associating program parameters to user interface elements and to update parameter’s values according to user actions. This association is triggered by the <code>dsp::buildUserInterface</code> call, where the <code>dsp</code> asks a UI object to build the DSP module controllers.</p>
+<p>Since the interface is basically graphic-oriented, the main concepts are <em>widget</em> based: a UI architecture module is semantically oriented to handle active widgets, passive widgets and widgets layout.</p>
+<p>A Faust UI architecture module derives the <code>UI</code> base class: </p>
+<pre><code class="language-c++">template &lt;typename REAL&gt;
+struct UIReal {
+
+    UIReal() {}
+    virtual ~UIReal() {}
+
+    // -- widget's layouts
+
+    virtual void openTabBox(const char* label) = 0;
+    virtual void openHorizontalBox(const char* label) = 0;
+    virtual void openVerticalBox(const char* label) = 0;
+    virtual void closeBox() = 0;
+
+    // -- active widgets
+
+    virtual void addButton(const char* label, REAL* zone) = 0;
+    virtual void addCheckButton(const char* label, REAL* zone) = 0;
+    virtual void addVerticalSlider(const char* label, REAL* zone, REAL init, 
+                                   REAL min, REAL max, REAL step) = 0;
+    virtual void addHorizontalSlider(const char* label, REAL* zone, REAL init, 
+                                     REAL min, REAL max, REAL step) = 0;
+    virtual void addNumEntry(const char* label, REAL* zone, REAL init, 
+                             REAL min, REAL max, REAL step) = 0;
+
+    // -- passive widgets
+
+    virtual void addHorizontalBargraph(const char* label, REAL* zone, REAL min, REAL max) = 0;
+    virtual void addVerticalBargraph(const char* label, REAL* zone, REAL min, REAL max) = 0;
+
+    // -- soundfiles
+
+    virtual void addSoundfile(const char* label, const char* filename, Soundfile** sf_zone) = 0;
+
+    // -- metadata declarations
+
+    virtual void declare(REAL* zone, const char* key, const char* val) {}
+};
+
+struct UI : public UIReal&lt;FAUSTFLOAT&gt;
+{
+    UI() {}
+    virtual ~UI() {}
+};
+</code></pre>
+<p>The <code>FAUSTFLOAT* zone</code> element is the <em>primary connection point between the control interface and the dsp code.</em> The compiled dsp Faust code will give access to all internal control value addresses used by the dsp code by calling the approriate <code>addButton</code>, <code>addVerticalSlider</code>, <code>addNumEntry</code> etc. methods (depending of what is described in the original Faust DSP source code). </p>
+<p>The control/UI code keeps those addresses, and will typically change their pointed values each time a control value in the dsp code has to be changed. On the dsp side, all control values are <em>sampled</em> once at the beginning of the <code>dsp::compute</code> method, so that to <em>keep the same value during the entire audio buffer.</em> Since writing/reading the <code>FAUSTFLOAT* zone</code> element is atomic, there is no need (in general) of complex synchronization mechanism between the writer (controller) and the reader (the Faust <code>dsp</code> object). </p>
+<p>Here is part of the UI classes hierarchy:</p>
+<p><img src="img/GUIHierarchy.png" class="mx-auto d-block" width="80%"></p>
+<h4 id="active-widgets">Active Widgets</h4>
+<p>Active widgets are graphical elements controlling a parameter value. They are initialized with the widget name and a pointer to the linked value, using the <code>FAUSTFLOAT</code> macro type (defined at compile time as either <code>float</code> or <code>double</code>). Active widgets in Faust are <code>Button</code>, <code>CheckButton</code>, <code>VerticalSlider</code>, <code>HorizontalSlider</code> and <code>NumEntry</code>.</p>
+<p>A GUI architecture must implement a method <code>addXxx(const char* name, FAUSTFLOAT* zone, ...)</code> for each active widget. Additional parameters are available for <code>Slider</code> and <code>NumEntry</code>: the <code>init</code>, <code>min</code>, <code>max</code> and <code>step</code> values.</p>
+<h4 id="passive-widgets">Passive Widgets</h4>
+<p>Passive widgets are graphical elements reflecting values. Similarly to active widgets, they are initialized with the widget name and a pointer to the linked value. Passive widgets in Faust are <code>HorizontalBarGraph</code> and <code>VerticalBarGraph</code>.</p>
+<p>A UI architecture must implement a method <code>addXxx(const char* name, FAUSTFLOAT* zone, ...)</code> for each passive widget. Additional parameters are available, depending on the passive widget type.</p>
+<h4 id="widgets-layout">Widgets Layout</h4>
+<p>Generally, a GUI is hierarchically organized into boxes and/or tab boxes. A UI architecture must support the following methods to setup this hierarchy:</p>
+<pre><code class="language-c++">  openTabBox(const char* label);
+  openHorizontalBox(const char* label);
+  openVerticalBox(const char* label);
+  closeBox(const char* label);
+</code></pre>
+<p>Note that all the widgets are added to the current box.</p>
+<h4 id="metadata">Metadata</h4>
+<p>The Faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a declare method taking as argument, a pointer to the widget associated zone, the metadata key and value:</p>
+<pre><code class="language-c++">declare(FAUSTFLOAT* zone, const char* key, const char* value);
+</code></pre>
+<p>Here is the table of currently supported general medatada:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tooltip</td>
+<td>actual string content</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>0 or 1</td>
+</tr>
+<tr>
+<td>unit</td>
+<td><em>Hz</em> or <em>dB</em></td>
+</tr>
+<tr>
+<td>scale</td>
+<td><em>log</em> or <em>exp</em></td>
+</tr>
+<tr>
+<td>style</td>
+<td><em>knob</em> or <em>led</em> or <em>numerical</em></td>
+</tr>
+<tr>
+<td>style</td>
+<td><em>radio{’label1’:v1;’label2’:v2...}</em></td>
+</tr>
+<tr>
+<td>style</td>
+<td><em>menu{’label1’:v1;’label2’:v2...}</em></td>
+</tr>
+<tr>
+<td>acc</td>
+<td><em>axe curve amin amid amax</em></td>
+</tr>
+<tr>
+<td>gyr</td>
+<td><em>axe curve amin amid amax</em></td>
+</tr>
+<tr>
+<td>screencolor</td>
+<td><em>red</em> or <em>green</em> or <em>blue</em> or <em>white</em></td>
+</tr>
+</tbody>
+</table>
+<p>Here <code>acc</code> means <em>accelerometer</em> and <code>gyr</code> means <em>gyroscope</em>, both use the same parameters (a mapping description) but are linked to different sensors.</p>
+<p>Some typical example where several metadata are defined could be:</p>
+<pre><code>nentry(&quot;freq [unit:Hz][scale:log][acc:0 0 -30 0 30][style:menu{’white noise’:0;’pink noise’:1;’sine’:2}][hidden:0]&quot;, 0, 20, 100, 1)
+</code></pre>
+<p>or:</p>
+<pre><code>vslider(&quot;freq [unit:dB][style:knob][gyr:0 0 -30 0 30]&quot;, 0, 20, 100, 1)
+</code></pre>
+<p>When one or several metadata are added in the same item label, then will appear in the generated code as one or successives <code>declare(FAUSTFLOAT* zone, const char* key, const char* value);</code> lines <em>before</em> the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> class for an example of this technique.</p>
+<p>Note that medatada are not supported in all architecture files. Some of them like (<code>acc</code> or <code>gyr</code> for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and <em>can possibly be adapted for a specific project.</em> They can be decoded using the <code>MetaDataUI</code>class.</p>
+<h4 id="dsp-json-description">DSP JSON Description</h4>
+<p>The full description of a given compiled DSP can be generated as a JSON file, to be used at several places in the architecture system. This JSON describes the DSP with its inputs/outputs number, some metadata (filename, name, used compilation parameters, used libraries etc.) as well as its UI with a hierarchy of groups up to terminal items (buttons, sliders, nentries, bargraphs) with all their parameters (label, metadata, init, min, max and step values). For the following DSP program:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq = hslider(&quot;freq [unit:Hz]&quot;, 600, 20, 2000, 1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
+</code></pre>
+<p>The generated JSON file is then:</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;osc&quot;,
+    &quot;filename&quot;: &quot;osc.dsp&quot;,
+    &quot;version&quot;: &quot;2.28.0&quot;,
+    &quot;compile_options&quot;: &quot;-lang cpp -scal -ftz 0&quot;,
+    &quot;library_list&quot;: [],
+    &quot;include_pathnames&quot;: [],
+    &quot;inputs&quot;: 0,
+    &quot;outputs&quot;: 2,
+    &quot;meta&quot;: [
+    ],
+    &quot;ui&quot;: [ 
+        {
+            &quot;type&quot;: &quot;vgroup&quot;,
+            &quot;label&quot;: &quot;Oscillator&quot;,
+            &quot;items&quot;: [ 
+                {
+                    &quot;type&quot;: &quot;hslider&quot;,
+                    &quot;label&quot;: &quot;freq&quot;,
+                    &quot;address&quot;: &quot;/Oscillator/freq&quot;,
+                    &quot;meta&quot;: [
+                        { &quot;unit&quot;: &quot;Hz&quot; }
+                    ],
+                    &quot;init&quot;: 600,
+                    &quot;min&quot;: 20,
+                    &quot;max&quot;: 2000,
+                    &quot;step&quot;: 1
+                },
+                {
+                    &quot;type&quot;: &quot;hslider&quot;,
+                    &quot;label&quot;: &quot;volume&quot;,
+                    &quot;address&quot;: &quot;/Oscillator/volume&quot;,
+                    &quot;meta&quot;: [
+                        { &quot;unit&quot;: &quot;dB&quot; }
+                    ],
+                    &quot;init&quot;: 0,
+                    &quot;min&quot;: -96,
+                    &quot;max&quot;: 0,
+                    &quot;step&quot;: 0.1
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+<p>The JSON file can be generated with <code>faust -json foo.dsp</code> command, or by programs using the <code>JSONUI</code> UI architecture (see next <em>Some Useful UI Classes</em> section).</p>
+<p>Here is the description of ready-to-use UI classes, followed by classes to be used in developer code:</p>
+<h4 id="gui-builders">GUI Builders</h4>
+<p>Here is the description of the main GUI classes:</p>
+<ul>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GTKUI.h">GTKUI</a> class uses the <a href="https://www.gtk.org">GTK</a> toolkit to create a Graphical User Interface with a proper group-based layout</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/QTUI.h">QTUI</a> class uses the <a href="https://www.qt.io">QT</a> toolkit to create a Graphical User interface with a proper group based layout</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceUI.h">JuceUI</a> class uses the <a href="https://juce.com">JUCE</a> framework to create a Graphical User interface with a proper group based layout</li>
+</ul>
+<h4 id="non-gui-controllers">Non-GUI Controllers</h4>
+<p>Here is the description of the main non-GUI controller classes:</p>
+<ul>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/OSCUI.h">OSCUI</a> class implement OSC remote control in both directions</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpUI.h">httpUI</a> class implement HTTP remote control using the <a href="https://www.gnu.org/software/libmicrohttpd/">libmicrohttpd</a> library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant appliction or plugin. The connection works in both directions</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h">MIDIUI</a> class implement MIDI  control in both directions, and it explained more deeply later on</li>
+</ul>
+<h4 id="some-useful-ui-classes-for-developers">Some Useful UI Classes for Developers</h4>
+<p>Some useful UI classes can possibly be reused in developer code:</p>
+<ul>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> class establishes a mapping beween UI items and their labels or paths, and offers a <code>setParamValue/getParamValue</code> API to set and get their values. It uses an helper <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h">PathBuilder</a> class to create complete pathnames to the final items in the UI hierarchy </li>
+<li>the extended <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h">APIUI</a> offers <code>setParamValue/getParamValue</code> API similar to <code>MapUI</code>, with additional methods to deal with accelerometer/gyroscope kind of metadata</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> class decodes all currently supported metadata and can be used to retrieve their values </li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUI.h">JSONUI</a> class allows us to generate the JSON description of a given DSP </li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/FUI.h">FUI</a> class allows us to save and restore the parameters state as a text file</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h">SoundUI</a> class with the associated <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h">Soundfile</a> class is used to implement the <code>soundfile</code> primitive, and load the described audio resources (typically audio files), by using different concrete implementations, either using <a href="http://www.mega-nerd.com/libsndfile/">libsndfile</a> (with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h">LibsndfileReader.h</a> file), or <a href="https://juce.com">JUCE</a> (with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h">JuceReader</a> file). A new audio file loader can possibly be written by subclassing the <code>SoundfileReader</code> class. A pure memory reader could be implemented for instance to load wavetables to be used as the<code>soundfile</code> URL list. Look at the template <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MemoryReader.h">MemoryReader</a> class, as an example to be completed. </li>
+</ul>
+<h4 id="multi-controller-and-synchronization">Multi-Controller and Synchronization</h4>
+<p>A given DSP can perfectly be controlled by  several UI classes at the same time, and they will all read and write the same DSP control memory zones. Here is an example of code using a GUI using <code>GTKUI</code> architecture, as well as OSC control using <code>OSCUI</code>:</p>
+<pre><code class="language-c++">...
+GTKUI interface(name, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(&amp;interface);
+OSCUI oscinterface(name, argc, argv);
+DSP-&gt;buildUserInterface(&amp;oscinterface);
+...
+</code></pre>
+<p>Since several controller <em>access</em> the same values, you may have to synchronize them, in order for instance to have the GUI sliders or buttons <em>reflect the state</em> that would have been changed by the <code>OSCUI</code> controller at reception time, of have OSC messages <em>been sent</em> each time UI items like sliders or buttons are moved.   </p>
+<p>This synchronization mecanism is implemented in a generic way in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h">GUI</a> class, which defines  the <code>uiItem</code> class as the basic synchronizable memory zone, then grouped in a list controlling the same zone from different GUI instances. The <code>uiItem::modifyZone</code> method is used to change the <code>uiItem</code> state at reception time, and <code>uiItem::reflectZone</code>will be called to refect a new value, and can change the Widget layout for instance, or send a message (OSC, MIDI...).</p>
+<p>All classes needing to use this synchronization mechanism will have to subclass the <code>GUI</code> class, which keeps all of them at runtime in a global <code>GUI::fGuiList</code> variable.</p>
+<p>Finally the static <code>GUI::updateAllGuis()</code> synchronization method will have to be called regularly, in the application or plugin event management loop, or in a periodic timer for instance.</p>
+<h2 id="dsp-architecture-modules">DSP Architecture Modules</h2>
+<p>The Faust compiler produces a DSP module whose format will depend of the chosen backend: a C++ class with the <code>-lang cpp</code> option, a data structure with associated functions with the <code>-lang c</code> option, an LLVM IR module  with the <code>-lang llvm</code> option, a WebAssembly binary module with the <code>-lang wasm</code> option, a bytecode stream with the <code>-lang interp</code> option... and so on.</p>
+<h3 id="the-base-dsp-class">The Base <code>dsp</code> Class</h3>
+<p>In C++, the generated class derives from a base <code>dsp</code> class:</p>
+<pre><code class="language-c++">class dsp {
+
+public:
+
+    dsp() {}
+    virtual ~dsp() {}
+
+    /* Return instance number of audio inputs */
+    virtual int getNumInputs() = 0;
+
+    /* Return instance number of audio outputs */
+    virtual int getNumOutputs() = 0;
+
+    /**
+     * Trigger the ui_interface parameter with instance specific calls
+     * to 'openTabBox', 'addButton', 'addVerticalSlider'... in order to build the UI.
+     *
+     * @param ui_interface - the user interface builder
+     */
+    virtual void buildUserInterface(UI* ui_interface) = 0;
+
+    /* Return the sample rate currently used by the instance */
+    virtual int getSampleRate() = 0;
+
+    /**
+     * Global init, calls the following methods:
+     * - static class 'classInit': static tables initialization
+     * - 'instanceInit': constants and instance state initialization
+     *
+     * @param sample_rate - the sampling rate in Hz
+     */
+    virtual void init(int sample_rate) = 0;
+
+    /**
+     * Init instance state
+     *
+     * @param sample_rate - the sampling rate in Hz
+     */
+    virtual void instanceInit(int sample_rate) = 0;
+
+    /**
+     * Init instance constant state
+     *
+     * @param sample_rate - the sampling rate in HZ
+     */
+    virtual void instanceConstants(int sample_rate) = 0;
+
+    /* Init default control parameters values */
+    virtual void instanceResetUserInterface() = 0;
+
+    /* Init instance state (like delay lines..) but keep the control parameter values */
+    virtual void instanceClear() = 0;
+
+    /**
+     * Return a clone of the instance.
+     *
+     * @return a copy of the instance on success, otherwise a null pointer.
+     */
+    virtual dsp* clone() = 0;
+
+    /**
+     * Trigger the Meta* parameter with instance specific calls to 'declare' 
+     * (key, value) metadata.
+     *
+     * @param m - the Meta* meta user
+     */
+    virtual void metadata(Meta* m) = 0;
+
+    /**
+     * DSP instance computation, to be called with successive in/out audio buffers.
+     *
+     * @param count - the number of frames to compute
+     * @param inputs - the input audio buffers as an array of non-interleaved 
+     * FAUSTFLOAT samples (eiher float, double or quad)
+     * @param outputs - the output audio buffers as an array of non-interleaved 
+     * FAUSTFLOAT samples (eiher float, double or quad)
+     *
+     */
+    virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) = 0;
+
+    /**
+     * DSP instance computation: alternative method to be used by subclasses.
+     *
+     * @param date_usec - the timestamp in microsec given by audio driver.
+     * @param count - the number of frames to compute
+     * @param inputs - the input audio buffers as an array of non-interleaved 
+     * FAUSTFLOAT samples (either float, double or quad)
+     * @param outputs - the output audio buffers as an array of non-interleaved 
+     * FAUSTFLOAT samples (either float, double or quad)
+     *
+     */
+    virtual void compute(double date_usec, int count, 
+                         FAUSTFLOAT** inputs, 
+                         FAUSTFLOAT** outputs) = 0;
+};
+</code></pre>
+<p>The dsp object is central to the Faust architecture design:</p>
+<ul>
+<li><code>getNumInputs</code>, <code>getNumOutputs</code> provides information about the signal processor,</li>
+<li><code>buildUserInterface</code> creates the user interface using a given UI class object (see later),</li>
+<li><code>init</code> (aned some more specialized methods like <code>instanceInit</code>, <code>instanceConstants</code>, etc.) is called to initialize the dsp object with a given sampling rate, typically obtained from the audio architecture,</li>
+<li><code>compute</code> is called by the audio architecture to execute the actual audio processing. It takes as a <code>count</code> number of samples to process, <code>inputs</code> and <code>outputs</code> arrays of non-interleaved float/double samples, to be allocated and handled by the audio driver with the required dsp input and ouputs channels (as given by  <code>getNumInputs</code> and <code>getNumOutputs</code>).</li>
+</ul>
+<p>(note that <code>FAUSTFLOAT</code> label is typically defined to be the actual type of sample: either float or double using <code>#define FAUSTFLOAT float</code> in the code for instance).</p>
+<p>For a given compiled DSP program, the compiler will generate a <code>mydsp</code> subclass of <code>dsp</code> and fill the different methods (the actual name can be changed using the <code>-cn</code> option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or C++ class, or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a <code>llvm_dsp</code> typed object (defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h">llvm-dsp.h</a> file), a <code>soulpatch_dsp</code>  typed object (defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h">soulpatch-dsp.h</a> file) or an <code>interpreter_dsp</code> typed object (defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h">interpreter-dsp.h</a> file), ready to be used  with the <code>UI</code> and <code>audio</code>  C++ classes (like the C++ generated class). See the following class diagram:</p>
+<p><img src="img/DSPHierarchy.png" class="mx-auto d-block" width="85%"></p>
+<h3 id="macro-construction-of-dsp-components">Macro Construction of DSP Components</h3>
+<p>The Faust program specification is usually entirely done in the language itself. But in some specific cases it may be useful to develop <em>separated DSP components</em> and <em>combine</em> them in a more complex setup.</p>
+<p>Since taking advantage of the huge number of already available UI and audio architecture files is important, keeping the same <code>dsp</code> API is preferable, so that more complex DSP can be controlled and audio rendered the usual way. Extended DSP classes will typically subclass the <code>dsp</code> base class and override or complete part of its API. </p>
+<h4 id="combining-dsp">Combining DSP</h4>
+<h5 id="dsp-decorator-pattern">Dsp Decorator Pattern</h5>
+<p>A <code>dsp_decorator</code> class, subclass of the root <code>dsp</code> class has first been defined. Following the decorator design pattern, it allows behavior to be added to an individual object, either statically or dynamically.</p>
+<p>As an example of the decorator pattern, the <code>timed_dsp</code> class allows to decorate a given DSP with sample accurate control capability or  the <code>mydsp_poly</code> class for polyphonic DSPs, explained in the next sections.</p>
+<h5 id="combining-dsp-components">Combining DSP Components</h5>
+<p>A few additional macro construction classes, subclasses of the root dsp class have been defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-combiner.h">dsp-combiner.h</a>  header file with a five operators construction API:</p>
+<ul>
+<li>the <code>dsp_sequencer</code> class combines two DSP in sequence, assuming that the number of outputs of the first DSP equals the number of input of the second one. It somewhat mimics the  <em>sequence</em> (that is<code>:</code> ) operator of the language by combining two separated C++ objects. Its <code>buildUserInterface</code> method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSPs can be individually controlled. Its <code>compute</code> method is overloaded to call each DSP <code>compute</code> in sequence, using an intermediate output buffer produced by first DSP as the input one given to the second DSP.</li>
+<li>the <code>dsp_parallelizer</code>  class combines two DSP in parallel. It somewhat mimics the  <em>parallel</em> (that is<code>,</code> ) operator of the language by combining two separated C++ objects. Its <code>getNumInputs/getNumOutputs</code> methods are overloaded by correctly reflecting the input/output of the resulting DSP as the sum of the two combined ones. Its <code>buildUserInterface</code> method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSP can be individually controlled. Its <code>compute</code> method is overloaded to call each DSP compute, where each DSP consuming and producing its own number of input/output audio buffers taken from the method parameters.</li>
+</ul>
+<p>This methology is followed to implemented the three remaining composition operators (<em>split</em>, <em>merge</em>, <em>recussion</em>), which ends up with a C++ API to combine DSPs with the usual five operators: <code>createDSPSequencer</code>, <code>createDSPParallelizer</code>, <code>createDSPSplitter</code>, <code>createDSPMerger</code>, <code>createDSPRecursiver</code> to be used at C++ level to dynamically combine DSPs.</p>
+<h3 id="sample-accurate-control">Sample Accurate Control</h3>
+<p>DSP audio languages usually deal with several timing dimensions when treating control events and generating audio samples. For performance reasons, systems maintain separated audio rate for samples generation and control rate for asynchronous messages handling.</p>
+<p>The audio stream is most often computed by blocks, and control is updated between blocks. To smooth control parameter changes, some languages chose to interpolate parameter values between blocks.</p>
+<p>In some cases control may be more finely interleaved with audio rendering, and some languages simply choose to interleave control and sample computation at sample level.</p>
+<p>Although the Faust language permits the description of sample level algorithms (i.e., like recursive filters, etc.), Faust generated DSP are usually computed by blocks. Underlying audio architectures give a fixed size buffer over and over to the DSP <code>compute</code> method which consumes and produces audio samples.</p>
+<h5 id="control-to-dsp-link">Control to DSP Link</h5>
+<p>In the current version of the Faust generated code, the primary connection point between the control interface and the DSP code is simply a memory zone. For control inputs, the architecture layer continuously write values in this zone, which is then <em>sampled</em> by the DSP code at the beginning of the compute method, and used with the same values during the entire call. Because of this simple control/DSP connexion mechanism, the <em>most recent value</em> is seen by the DSP code.</p>
+<p>Similarly for control outputs , the DSP code inside the <code>compute</code> method possibly writes several values at the same memory zone, and the <em>last value</em> only will be seen by the control architecture layer when the method finishes.</p>
+<p>Although this behaviour is satisfactory for most use-cases, some specific usages need to handle the complete stream of control values with sample accurate timing. For instance keeping all control messages and handling them at their exact position in time is critical for proper MIDI clock synchronisation.</p>
+<h5 id="time-stamped-control">Time-Stamped Control</h5>
+<p>The first step consists in extending the architecture control mechanism to deal with <em>time-stamped</em> control events. Note that this requires the underlying event control layer to support this capability. The native MIDI API for instance is usually able to deliver time-stamped MIDI messages.</p>
+<p>The next step is to keep all time-stamped events in a <em>time ordered</em> data structure to be continuously written by the control side, and read by the audio side.</p>
+<p>Finally the sample computation has to take account of all queued control events, and correctly change the DSP control state at successive points in time.</p>
+<h5 id="slices-based-dsp-computation">Slices Based DSP Computation</h5>
+<p>With time-stamped control messages, changing control values at precise sample indexes on the audio stream becomes possible. A generic <em>slices based</em> DSP rendering strategy has been implemented in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/timed-dsp.h">timed_dsp</a> class.</p>
+<p>A ring-buffer is used to transmit the stream of time-stamped events from the control layer to the DSP one. In the case of MIDI control for instance, the ring-buffer is written with a pair containing the time-stamp expressed in samples and the actual MIDI message each time one is received. In the DSP compute method, the ring-buffer will be read to handle all messages received during the previous audio block.</p>
+<p>Since control values can change several times inside the same audio block, the DSP compute cannot be called only once with the total number of frames and the complete inputs/outputs audio buffers. The following strategy has to be used:</p>
+<ul>
+<li>several slices are defined with control values changing between consecutive slices</li>
+<li>all control values having the same time-stamp are handled together, and change the DSP control internal state. The slice is computed up to the next control parameters time-stamp until the end of the given audio block is reached</li>
+<li>in the next figure, four slices with the sequence of c1, c2, c3, c4 frames are successively given to the DSP compute method, with the appropriate part of the audio input/output buffers. Control values (appearing here as <em>[v1,v2,v3]</em>, then <em>[v1,v3]</em>, then <em>[v1]</em>, then <em>[v1,v2,v3]</em> sets) are changed between slices</li>
+</ul>
+<p><img src="img/compute_slices.png" class="mx-auto d-block" width="60%"></p>
+<p>Since time-stamped control messages from the previous audio block are used in the current block, control messages are aways handled with one audio buffer latency.</p>
+<h5 id="typical-use-case">Typical Use-Case</h5>
+<p>A typical Faust program can use the <em>MIDI clock</em> command signal to possibly compute the Beat Per Minutes (BPM) information for any synchronization need it may have. </p>
+<p>Here is a simple example of a sinusoid generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:</p>
+<p>```
+import("stdfaust.lib");</p>
+<p>// square signal (1/0), changing state
+// at each received clock
+clocker = checkbox("MIDI clock[midi:clock]");</p>
+<p>// ON/OFF button controlled
+// with MIDI start/stop messages
+play = checkbox("On/Off [midi:start][midi:stop]");</p>
+<p>// detect front
+front(x) = (x-x’) != 0.0;</p>
+<p>// count number of peaks during one second
+freq(x) = (x-x@ma.SR) : + ~ _;</p>
+<p>process = os.osc(8*freq(front(clocker))) * play;</p>
+<p>```</p>
+<p>Each received group of 24 clocks will move the time position by exactly one beat. Then it is <em>absolutely mandatory to never loose any MIDI clock message</em> and the standard memory zone based model with the <em>use the last received control value semantic</em> is not adapted. </p>
+<p>The DSP object that needs to be controlled using the sample-accurate machinery can then simply be decorated using the<code>timed_dsp</code> class with the following kind of code:</p>
+<pre><code class="language-c++">dsp* sample_accurate_dsp = new timed_dsp(DSP);
+</code></pre>
+<p>Note that the described sample accurate MIDI clock synchronization model can currently only be used at input level. Because of the simple memory zone based connection point between the control interface and the DSP code, output controls (like bargraph) cannot generate a stream of control values. <em>Thus a reliable MIDI clock generator cannot be implemented with the current approach.</em></p>
+<h3 id="polyphonic-instruments">Polyphonic Instruments</h3>
+<p>Directly programing polyphonic instruments in Faust is perfectly possible. It is also needed if very complex signal interaction between the different voices have to be described.</p>
+<p>But since all voices would always be computed, this approach could be too CPU costly for simpler or more limited needs. In this case describing a single voice in a Faust DSP program and externally combining several of them with a special polyphonic instrument aware architecture file is a better solution. Moreover, this special architecture file takes care of dynamic voice allocations and control MIDI messages decoding and mapping.</p>
+<h4 id="polyphonic-ready-dsp-code">Polyphonic-Ready DSP Code</h4>
+<p>By convention Faust architecture files with polyphonic capabilities expect to find control parameters named <code>freq</code>, <code>gain</code>, and <code>gate</code>. The metadata <code>declare nvoices "8";</code> kind of line with a desired value of voices can be added in the source code.</p>
+<p>In the case of MIDI control, the freq parameter (which should be a frequency) will be automatically computed from MIDI note numbers, gain (which should be a value between 0 and 1) from velocity and gate from keyon/keyoff events. Thus, gate can be used as a trigger signal for any envelope generator, etc.</p>
+<h4 id="using-the-mydsp_poly-class">Using the mydsp_poly Class</h4>
+<p>The single voice has to be described by a Faust DSP program, the <code>mydsp_poly</code> class is then used to combine several voices and create a polyphonic ready DSP:</p>
+<ul>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-dsp.h">poly-dsp.h</a> file contains the definition of the <code>mydsp_poly</code> class used to wrap the DSP voice into the polyphonic architecture. This class maintains an array of <code>dsp*</code>objects, manage dynamic voice allocation, control MIDI messages decoding and mapping, mixing of all running voices, and stopping a voice when its output level decreases below a given threshold</li>
+<li>as a subclass of DSP, the <code>mydsp_poly</code> class redefines the <code>buildUserInterface</code> method. By convention all allocated voices are grouped in a global  <em>Polyphonic</em> tabgroup. The first tab contains a <em>Voices</em> group, a master like component used to change parameters on all voices at the same time, with a <em>Panic</em> button to be used to stop running voices, followed by one tab for each voice. Graphical User Interface components will then reflect the multi-voices structure of the new polyphonic DSP </li>
+</ul>
+<p><img src="img/poly_ui.png" class="mx-auto d-block" width="35%"></p>
+<p>The resulting polyphonic DSP object can be used as usual, connected with the needed audio driver, and possibly other <code>UI</code> control objects like <code>OSCUI</code>, <code>httpdUI</code>, etc. Having this new UI hierarchical view allows complete OSC control of each single voice and their control parameters, but also all voices using the master component.</p>
+<p>The following OSC messages reflect the same DSP code either compiled normally, or in polyphonic mode (only part of the OSC hierarchies are displayed here):</p>
+<pre><code>// Mono mode
+
+/Organ/vol f -10.0
+/Organ/pan f 0.0
+</code></pre>
+<pre><code>// Polyphonic mode
+
+/Polyphonic/Voices/Organ/pan f 0.0
+/Polyphonic/Voices/Organ/vol f -10.0
+...
+/Polyphonic/Voice1/Organ/vol f -10.0
+/Polyphonic/Voice1/Organ/pan f 0.0
+...
+/Polyphonic/Voice2/Organ/vol f -10.0
+/Polyphonic/Voice2/Organ/pan f 0.0
+</code></pre>
+<p>The polyphonic instrument allocation takes the DSP to be used for one voice, the desired number of voices, the dynamic voice allocation state, and the group state which controls if separated voices are displayed or not:</p>
+<pre><code class="language-c++">dsp* poly = new mydsp_poly(dsp, 2, true, true);
+</code></pre>
+<p>With the following code, note that a polyphonic instrument may be used outside of a MIDI control context, so that all voices will be always running and possibly controlled with OSC messages for instance:</p>
+<pre><code class="language-c++">dsp* poly = new mydsp_poly(dsp, 8, false, true);
+</code></pre>
+<h4 id="polyphonic-instrument-with-a-global-output-effect">Polyphonic Instrument With a Global Output Effect</h4>
+<p>Polyphonic instruments may be used with an output effect. Putting that effect in the main Faust code is generally not a good idea since it would be instantiated for each voice which would be very inefficient. </p>
+<p>A convention has been defined to use the <code>effect = some effect;</code> line in the DSP source code. The actual effect definition has to be extracted from the DSP code, compiled separately, and then combined using the <code>dsp_sequencer</code> class previously presented to connect the polyphonic DSP in sequence with a unique global effect, with something like:</p>
+<pre><code class="language-c++">dsp* poly = new dsp_sequencer(new mydsp_poly(dsp, 2, true, true), new effect());
+</code></pre>
+<p><img src="img/poly_ui_effect1.png" class="mx-auto d-block" width="30%">| <img src="img/poly_ui_effect2.png" class="mx-auto d-block" width="30%"></p>
+<p>Some helper classes like the base <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-dsp.h#L897">dsp_poly_factory</a> class, and concrete implementations  <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-llvm-dsp.h">llvm_dsp_poly_factory</a> when using the LLVM backend or <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-interpreter-dsp.h">interpreter_dsp_poly_factory</a> when using the Interpreter backend can also be used to automatically handle the voice and effect part of the DSP.</p>
+<h4 id="controlling-the-polyphonic-instrument">Controlling the Polyphonic Instrument</h4>
+<p>The <code>mydsp_poly</code> class is also ready for MIDI control (as a class implementing the <code>midi</code> interface) and can react to <code>keyOn/keyOff</code> and <code>pitchWheel</code> events. Other MIDI control parameters can directly be added in the DSP source code as MIDI metadata. To receive MIDI events, the created polyphonic DSP will be automatically added to the <code>midi_handler</code> object when calling <code>buildUserInterface</code> on a <code>MidiUI</code> object.</p>
+<h4 id="deploying-the-polyphonic-instrument">Deploying the Polyphonic Instrument</h4>
+<p>Several architecture files and associated scripts have been updated to handle polyphonic instruments:</p>
+<p>As an example on OSX, the script <code>faust2caqt foo.dsp</code> can be used to create a polyphonic CoreAudio/QT application. The desired number of voices is either declared in a <code>nvoices</code> metadata or changed with the <code>-nvoices num</code> additional parameter. MIDI control is activated using the <code>-midi</code> parameter.</p>
+<p>The number of allocated voices can possibly be changed at runtime using the<code>-nvoices</code> parameter to change the default value (so using <code>./foo -nvoices 16</code> for instance). Several other scripts have been adapted using the same conventions.</p>
+<pre><code>faustcaqt -midi -noices 12 inst.dsp -effect effect.dsp
+</code></pre>
+<p>with <code>inst.dsp</code> and <code>effect.dsp</code> in the same folder, and the number of outputs of the instrument matching the number of inputs of the effect, has to be used. </p>
+<p>Polyphonic-ready <code>faust2xx</code> scripts will then compile the polyphonic instrument and the effect, combine them in sequence, and create a ready-to-use DSP.</p>
+<h3 id="mesuring-the-dsp-cpu">Mesuring the DSP CPU</h3>
+<p>The <code>measure_dsp</code> class defined in the <code>faust/dsp/dsp-bench.h</code> file allows to decorate a given DSP object and measure its <code>compute</code> method CPU consumption. Results are given in Megabytes/seconds (higher is better) and DSP CPU at 44,1 kHz. Here is a C++ code example of its use: </p>
+<pre><code class="language-c++">static void bench(dsp* dsp, const string&amp; name)
+{
+    // Init the DSP
+    dsp-&gt;init(48000);
+    // Wraps it with a 'measure_dsp' decorator
+    measure_dsp mes(dsp, 1024, 5);
+    // Measure the CPU use
+    mes.measure();
+    // Print the stats
+    cout &lt;&lt; name &lt;&lt; &quot; CPU use : &quot; &lt;&lt; mes.getStats() 
+         &lt;&lt; &quot; &quot; &lt;&lt; &quot;(DSP CPU % : &quot; &lt;&lt; (mes.getCPULoad() * 100) &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+}
+</code></pre>
+<p>Defined in the <code>faust/dsp/dsp-optimizer.h</code> file, the <code>dsp_optimizer</code> class uses the libfaust library and its LLVM backend to dynamically compile DSP objects produced with different Faust compiler options, and then measure their DSP CPU. Here is a C++ code example of its use: </p>
+<pre><code class="language-c++">static void dynamic_bench(const string&amp; dsp_source)
+{
+    // Init the DSP optimizer with the dsp_source to compile 
+    // (either the filename or source code string)
+    dsp_optimizer optimizer&lt;FAUSTFLOAT&gt;(dsp_source, &quot;/usr/local/share/faust&quot;, &quot;&quot;, 1024);
+    // Discover the best set of parameters
+    pair&lt;double, vector&lt;string&gt;&gt; res = optimizer.findOptimizedParameters();
+    cout &lt;&lt; &quot;Best value for '&quot; &lt;&lt; in_filename &lt;&lt; &quot;' is : &quot; 
+         &lt;&lt; res.first &lt;&lt; &quot; MBytes/sec with &quot;;
+    for (size_t i = 0; i &lt; res.second.size(); i++) {
+        cout &lt;&lt; res.second[i] &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+}
+</code></pre>
+<p>This class can typically be used in tools that help developers discover the best Faust compilation parameters for a given DSP program, like the <a href="https://faustdoc.grame.fr/manual/optimizing/#faustbench">faustbench</a> and <a href="https://faustdoc.grame.fr/manual/optimizing/#faustbench-llvm">faustbench-llvm</a> tools.</p>
+<h3 id="the-proxy-dsp-class">The Proxy DSP Class</h3>
+<p>In some cases, a DSP may run outside of the application or plugin context, like on another machine. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-dsp.h">proxy_dsp</a> class allows to create a proxy DSP that will be finally connected to the real one (using an OSC or HTTP based machinery for instance), and will reflect its behaviour. An additional <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h">JSONUIDecoder</a> class is used to decode the DSP JSON description and implement its <code>buildUserInterface</code> and  <code>metadata</code> methods. Then the <code>proxy_dsp</code> can be used in place of the real DSP, and connect with <code>UI</code> controllers using the standard <code>buildUserInterface</code> to control it.  </p>
+<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark">faust-osc-controller</a> tool demonstrates this capability using an OSC connection between the real DSP and its proxy. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-osc-dsp.h">proxy_osc_dsp</a> class implements a specialized <code>proxy_dsp</code> using the <a href="http://liblo.sourceforge.net">liblo</a> OSC library to connect to a OSC controllable DSP (which is using the <code>OSCUI</code> class and running in another context or machine). Then the <code>faust-osc-controller</code> program <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/faust-osc-controller.cpp">creates a real GUI</a> (using <code>GTKUI</code> in this example) and have it control the remote DSP and reflect its dynamic state (like vumeter values coming back from the real DSP). </p>
+<h2 id="embedded-platforms">Embedded Platforms</h2>
+<p>Faust has been targeting an increasing number of embedded platforms for real-time audio signal processing applications in recent years. It can now be used to program microcontrollers (i.e., <a href="https://www.espressif.com/en">ESP32</a>, <a href="https://www.pjrc.com/teensy/">Teensy</a>, and <a href="https://www.electro-smith.com/daisy">Daisy</a>), mobile platforms, embedded Linux systems (i.e., <a href="https://bela.io">Bela</a> and <a href="elk audio dsp">Elk</a>),  Digital Signal Processors (DSPs), and more. Specialized <a href="https://ifc20.sciencesconf.org/321070">architecture files and faust2xx scripts</a> have been developed. </p>
+<h4 id="metadata-naming-convention">Metadata Naming Convention</h4>
+<p>A specific question arises when dealing with devices without or limited screen to display any GUI, and a set of physical knobs or buttons to be connected to control parameters. The standard way is then to use metadata in control labels. Since beeing able to <em>use the same DSP file on all devices</em> is always desirable, a common set of metadata has been defined:</p>
+<ul>
+<li><strong>[switch:N]</strong> is used to connect to switch buttons </li>
+<li><strong>[knob:N]</strong> is used to connect to knobs </li>
+</ul>
+<h4 id="using-the-uim-compiler-option">Using the <code>-uim</code> Compiler Option</h4>
+<p>On embedded platforms with limited capabilities, the use of the <code>-uim</code> option can be interesting. It allows the C/C++ generated code to contain a static description of several caracteristics of the  generated code, like the number of audio inputs/outputs, number of controls inputs/outputs, and macros feed with the controls parameters (label, DSP filed name, init, min, max, step) that can be implemented in the architecture file for various needs. </p>
+<p>For example the following DSP program:</p>
+<pre><code>process = _*hslider(&quot;Gain&quot;, 0, 0, 1, 0.01) : hbargraph(&quot;Vol&quot;, 0, 1);
+</code></pre>
+<p>compiled with <code>faust -uim foo.dsp</code> gives this additional section:</p>
+<pre><code>#ifdef FAUST_UIMACROS
+
+#define FAUST_FILE_NAME "foo.dsp"
+#define FAUST_CLASS_NAME "mydsp"
+#define FAUST_INPUTS 1
+#define FAUST_OUTPUTS 1
+#define FAUST_ACTIVES 1
+#define FAUST_PASSIVES 1
+
+FAUST_ADDHORIZONTALSLIDER("Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f);
+FAUST_ADDHORIZONTALBARGRAPH("Vol", fHbargraph0, 0.0f, 1.0f);
+
+#define FAUST_LIST_ACTIVES(p) \
+    p(HORIZONTALSLIDER, Gain, "Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f) \
+
+#define FAUST_LIST_PASSIVES(p) \
+    p(HORIZONTALBARGRAPH, Vol, "Vol", fHbargraph0, 0.0, 0.0f, 1.0f, 0.0) \
+
+#endif
+</code></pre>
+<p>The <code>FAUST_ADDHORIZONTALSLIDER</code> or <code>FAUST_ADDHORIZONTALBARGRAPH</code> can the be implemented to do whatever is needed with the <code>Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f</code> and <code>"Vol", fHbargraph0, 0.0f, 1.0f</code> parameters respectively. </p>
+<p>The more sophisticated <code>FAUST_LIST_ACTIVES</code> and <code>FAUST_LIST_PASSIVES</code> macros can possibly be used to call any <code>p</code> function (defined elsewhere in the architecture file) on each item. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-static.cpp">minimal-static.cpp</a> file demonstrates this feature.</p>
+<h2 id="developing-a-new-architecture-file">Developing a New Architecture File</h2>
+<p>Developing a new architecture file typically means writing a generic file, that will be populated with the actual output of the Faust compiler, in order to produce a complete file, ready-to-be-compiled as a standalone application or plugin.</p>
+<p>The architecture to be used is specified at compile time with the <code>-a</code> option. It must contain the &lt;<includeIntrinsic>&gt;  and &lt;<includeclass>&gt; lines that will be recognized by the Faust compiler, and replaced by the generated code. Here is an example in C++, but the same logic can be used with other languages producing textual ouputs, like C, SOUL, Rust or Dlang.</p>
+<p>Look at the <code>minimal.cpp</code> example located in the architecture folder:</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+
+#include &quot;faust/gui/PrintUI.h&quot;
+#include &quot;faust/gui/meta.h&quot;
+#include &quot;faust/audio/dummy-audio.h&quot;
+#include &quot;faust/dsp/one-sample-dsp.h&quot;
+
+// To be replaced by the compiler generated C++ class 
+
+&lt;&lt;includeIntrinsic&gt;&gt;
+
+&lt;&lt;includeclass&gt;&gt;
+
+int main(int argc, char* argv[])
+{
+    mydsp DSP;
+    std::cout &lt;&lt; &quot;DSP size: &quot; &lt;&lt; sizeof(DSP) &lt;&lt; &quot; bytes\n&quot;;
+
+    // Activate the UI, here that only print the control paths
+    PrintUI ui;
+    DSP.buildUserInterface(&amp;ui);
+
+    // Allocate the audio driver to render 5 buffers of 512 frames
+    dummyaudio audio(5);
+    audio.init(&quot;Test&quot;, static_cast&lt;dsp*&gt;(&amp;DSP));
+
+    // Render buffers...
+    audio.start();
+    audio.stop();
+}
+</code></pre>
+<p>Calling <code>faust -a minimal.cpp noise.dsp -o noise.cpp</code> will produce a ready to compile <code>noise.cpp</code> file:</p>
+<pre><code class="language-c++">/* ------------------------------------------------------------
+name: &quot;noise&quot;
+Code generated with Faust 2.28.0 (https://faust.grame.fr)
+Compilation options: -lang cpp -scal -ftz 0
+------------------------------------------------------------ */
+
+#ifndef  __mydsp_H__
+#define  __mydsp_H__
+
+#include &lt;iostream&gt;
+
+#include &quot;faust/gui/PrintUI.h&quot;
+#include &quot;faust/gui/meta.h&quot;
+#include &quot;faust/audio/dummy-audio.h&quot;
+
+#ifndef FAUSTFLOAT
+#define FAUSTFLOAT float
+#endif 
+
+#include &lt;algorithm&gt;
+#include &lt;cmath&gt;
+
+#ifndef FAUSTCLASS 
+#define FAUSTCLASS mydsp
+#endif
+
+#ifdef __APPLE__ 
+#define exp10f __exp10f
+#define exp10 __exp10
+#endif
+
+class mydsp : public dsp {
+
+    private:
+
+        FAUSTFLOAT fHslider0;
+        int iRec0[2];
+        int fSampleRate;
+
+    public:
+
+        void metadata(Meta* m) { 
+            m-&gt;declare(&quot;filename&quot;, &quot;noise.dsp&quot;);
+            m-&gt;declare(&quot;name&quot;, &quot;noise&quot;);
+            m-&gt;declare(&quot;noises.lib/name&quot;, &quot;Faust Noise Generator Library&quot;);
+            m-&gt;declare(&quot;noises.lib/version&quot;, &quot;0.0&quot;);
+        }
+
+        virtual int getNumInputs() {
+            return 0;
+        }
+        virtual int getNumOutputs() {
+            return 1;
+        }
+
+        static void classInit(int sample_rate) {
+        }
+
+        virtual void instanceConstants(int sample_rate) {
+            fSampleRate = sample_rate;
+        }
+
+        virtual void instanceResetUserInterface() {
+            fHslider0 = FAUSTFLOAT(0.5f);
+        }
+
+        virtual void instanceClear() {
+            for (int l0 = 0; (l0 &lt; 2); l0 = (l0 + 1)) {
+                iRec0[l0] = 0;
+            }
+        }
+
+        virtual void init(int sample_rate) {
+            classInit(sample_rate);
+            instanceInit(sample_rate);
+        }
+        virtual void instanceInit(int sample_rate) {
+            instanceConstants(sample_rate);
+            instanceResetUserInterface();
+            instanceClear();
+        }
+
+        virtual mydsp* clone() {
+            return new mydsp();
+        }
+
+        virtual int getSampleRate() {
+            return fSampleRate;
+        }
+
+        virtual void buildUserInterface(UI* ui_interface) {
+            ui_interface-&gt;openVerticalBox(&quot;noise&quot;);
+            ui_interface-&gt;addHorizontalSlider(&quot;Volume&quot;, &amp;fHslider0, 0.5, 0.0, 1.0, 0.001);
+            ui_interface-&gt;closeBox();
+        }
+
+        virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+            FAUSTFLOAT* output0 = outputs[0];
+            float fSlow0 = (4.65661287e-10f * float(fHslider0));
+            for (int i = 0; (i &lt; count); i = (i + 1)) {
+                iRec0[0] = ((1103515245 * iRec0[1]) + 12345);
+                output0[i] = FAUSTFLOAT((fSlow0 * float(iRec0[0])));
+                iRec0[1] = iRec0[0];
+            }
+        }
+
+};
+
+int main(int argc, char* argv[])
+{
+    mydsp DSP;
+    std::cout &lt;&lt; &quot;DSP size: &quot; &lt;&lt; sizeof(DSP) &lt;&lt; &quot; bytes\n&quot;;
+
+    // Activate the UI, here that only print the control paths
+    PrintUI ui;
+    DSP.buildUserInterface(&amp;ui);
+
+    // Allocate the audio driver to render 5 buffers of 512 frames
+    dummyaudio audio(5);
+    audio.init(&quot;Test&quot;, &amp;DSP);
+
+    // Render buffers...
+    audio.start();
+    audio.stop();
+}
+
+</code></pre>
+<p>The <code>-i</code> option can possibly be added to actually inline all <code>#include "faust/xxx/yyy"</code> headers (all files starting with <code>faust</code>). Then a <code>faust2xxx</code> script has to be written to chain the Faust compilation step and the C++ compilation one (and possibly others). Look at scripts in the <a href="">tools/faust2appls </a>folder for real examples.</p>
+<h4 id="adapting-the-generated-dsp">Adapting the Generated DSP</h4>
+<p>Developing the adapted C++ file may require <em>aggregating</em> the generated <code>mydsp</code> class (subclass of dsp base class defined in <code>faust/dsp/dsp.h</code> header) in the specific class, so something like the following would have to be written:</p>
+<pre><code class="language-c++">class my_class : public base_interface {
+
+    private:
+
+        mydsp fDSP;
+
+    public:
+
+        my_class()
+        {
+            // Do something specific
+        }
+
+        virtual ~my_class()
+        {
+            // Do something specific
+        }
+
+        // Do something specific
+
+        void my_compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+        {
+            // Do something specific
+            fDSP.compute(count,  inputs,  outputs);
+        }
+
+        // Do something specific
+};
+</code></pre>
+<p>or <em>subclassing</em> and extend it, so writing something like:</p>
+<pre><code class="language-c++">class my_class : public mydsp  {
+
+    private:
+
+        // Do something specific
+
+    public:
+
+        my_class()
+        {
+            // Do something specific
+        }
+
+        virtual ~my_class()
+        {
+            // Do something specific
+        }
+
+        // Do something specific
+
+        void my_compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+        {
+            // Do something specific
+            compute(count,  inputs,  outputs);
+        }
+
+        // Do something specific
+};
+</code></pre>
+<h4 id="developing-new-ui-architectures">Developing New UI Architectures</h4>
+<p>For really new architectures, the <code>UI</code> base class,  the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h">GenericUI</a> helper class or the <code>GUI</code> class (describe before), have to be subclassed. Note that a lot of classes described in <em>Some useful UI classes for developers</em> section can also be subclassed or possibly enriched with additional code. </p>
+<h4 id="developing-new-audio-architectures">Developing New Audio Architectures</h4>
+<p>The <code>audio</code> base class has to be subclassed and each method implemented for the given audio hardware. In some cases the audio driver can adapt to the required number of DSP inputs/outputs (like the <a href="https://jackaudio.org">JACK</a> audio system for instance which can open any number of virtual audio ports). But in general, the number of hardware audio inputs/outputs may not exactly match the DSP ones. This is the responsability of the audio driver to adapt to this situation. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h">dsp_adapter</a> <code>dsp</code> decorator can help in this situation.</p>
+<h2 id="other-languages-than-c">Other Languages Than C++</h2>
+<p>Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, SOUL and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:</p>
+<ul>
+<li>the C backend needs additional <code>CGlue</code>and <code>CInterface</code> files, with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.c">minimal-c</a> file a simple console mode example using them</li>
+<li>the experimental Rust backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs">minimal-rs</a> architecture, or the more complex JACK <code>minimal-jack.rs</code>used in <code>faust2jackrust</code> script, or PortAudio <code>minimal-portaudio.rs</code> used in <code>faust2jackportaudio</code> script</li>
+<li>the experimental Dlang backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.d">minimal.d</a> or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-dplug.d">minimal-dplug</a> to generate <a href="https://dplug.org">DPlug</a> plugins with the <code>faust2dplug</code> tool</li>
+</ul>
+<h2 id="using-faust2xx-scripts">Using faust2xx Scripts</h2>
+<p>Different <code>faust2xx</code> scripts finally combine several architecture files to generate a ready-to-use applications or plugins from a Faust DSP program. They typically combine the <em>generated DSP</em> with an <em>UI architecture</em> file and an <em>audio architecture</em> file. Most of the also have addition options like <code>-midi</code>, <code>-nvoices &lt;num&gt;</code>, <code>-effect &lt;auto|effect.dsp&gt;</code> or <code>-soundfile</code> to generate polyphonic instruments with or without effects, or audio file support. Look at the <a href="https://faustdoc.grame.fr/manual/tools/">following page</a> for a more complete description.  </p>
+<h2 id="the-faust2api-model">The faust2api Model</h2>
+<p>This model combining the generated DSP the audio and UI architecture components is very convenient to automatically produce ready-to-use standalone application or plugins, since the controller part (GUI,  MIDI or OSC...) is directly compiled and deployed. </p>
+<p>In some cases, developers prefer to control the DSP by developing a completely new GUI (using a toolkit not supported in the standard architecture files), or even without any GUI and using another control layer. </p>
+<p>A model that only combines the <em>generated DSP</em> with an <em>audio architecture</em> file to produce an <em>audio engine</em> has been developed. It then provides a <code>setParamValue/getParamValue</code> kind of API to access all parameters, and let the developer adds his own GUI or any kind of controller. Look at the <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/api">faust2api</a> script, wich goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. </p>
+<p><img src="img/FaustArchitecture5.jpg" class="mx-auto d-block" width="40%"></p>
+<h2 id="using-the-inj-option-with-faust2xx-scripts">Using the -inj Option With faust2xx Scripts</h2>
+<p>The compiler <code>-inj &lt;f&gt;</code>  option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base <code>dsp</code> class,  the <code>faust2xx</code> scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures.</p>
+<p>Here is a typical use case where some external C++ code is used to compute the <em>spectrogram of a set of audio files</em> (which is something that cannot be simply done with the current version fo the Faust language) and output the spectrogram as an audio signal. A <code>nentry</code> controller will be used to select the currently playing spectrogram. The Faust compiler will be used to generate a C++ class which is going to be manually edited and enriched with additional code. </p>
+<h3 id="writting-the-dsp-code">Writting the DSP code</h3>
+<p>First a fake DSP program <code>spectral.dsp</code>  using the <code>soundfile</code> primitive loading two audio files and a <code>nentry</code> control is written: </p>
+<pre><code>sf = soundfile(&quot;sound[url:{'sound1.wav';'sound2.wav'}]&quot;,2);
+process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
+</code></pre>
+<p>The point of explicitly using <code>soundfile</code> primitive and a <code>nentry</code> control is to generate a C++ file with a prefilled DSP structure (containing the <code>fSoundfile0</code> and <code>fHslider0</code> fields) and code inside the <code>buildUserInterface</code> method. Compiling it manually with the following command: </p>
+<pre><code>faust spectral.dsp -cn spectral -o spectral.c++
+</code></pre>
+<p>produces the following C++ code containing the <code>spectral</code> class:</p>
+<pre><code class="language-c++">class spectral : public dsp {
+
+ private:
+
+  Soundfile* fSoundfile0;
+  FAUSTFLOAT fHslider0;
+  int fSampleRate;
+
+ public:
+
+  ...   
+
+  virtual int getNumInputs() {
+    return 0;
+  }
+  virtual int getNumOutputs() {
+    return 2;
+  }
+
+  ...
+
+  virtual void buildUserInterface(UI* ui_interface) {
+    ui_interface-&gt;openVerticalBox(&quot;spectral&quot;);
+    ui_interface-&gt;addHorizontalSlider(&quot;Spectrogram&quot;, &amp;fHslider0, 0.0f, 0.0f, 1.0f, 1.0f);
+    ui_interface-&gt;addSoundfile(&quot;sound&quot;, &quot;{'sound1.wav';'sound2.wav';}&quot;, &amp;fSoundfile0);
+    ui_interface-&gt;closeBox();
+  }
+
+  virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    int iSlow0 = int(float(fHslider0));
+    ....
+  }
+
+};
+</code></pre>
+<h3 id="writting-the-c-code">Writting the C++ code</h3>
+<p>Now the <code>spectral</code> class can be manually edited and completed with additional code, to compute the two audio files spectrograms in <code>buildUserInterface</code>, and play them in <code>compute</code>. </p>
+<ul>
+<li>a new line <code>Spectrogram fSpectro[2];</code> is added in the DSP structure</li>
+<li>a <code>createSpectrogram(fSoundfile0, fSpectro);</code> function is added in <code>buildUserInterface</code> and used to compute and fill the two spectrograms, by reading the two loaded audio files in <code>fSoundfile0</code></li>
+<li>part of the generated code in <code>compute</code> is removed and replaced by new code to play one of spectrograms (selected with the <code>fHslider0</code> control in the GUI) using a <code>playSpectrogram(fSpectro, count, iSlow0, outputs);</code> function</li>
+</ul>
+<pre><code class="language-c++">class spectral : public dsp {
+
+  private:
+
+    Soundfile* fSoundfile0;
+    FAUSTFLOAT fHslider0;
+    int fSampleRate;
+    Spectrogram fSpectro[2];
+
+  public:
+
+    ...
+
+    virtual int getNumInputs() {
+      return 0;
+    }
+    virtual int getNumOutputs() {
+      return 2;
+    }
+
+    ...
+
+    virtual void buildUserInterface(UI* ui_interface) {
+      ui_interface-&gt;openVerticalBox(&quot;spectral&quot;);
+      ui_interface-&gt;addHorizontalSlider(&quot;Spectro&quot;, &amp;fHslider0, 0.0f, 0.0f, 1.0f, 1.0f);
+      ui_interface-&gt;addSoundfile(&quot;sound&quot;, &quot;{'sound1.wav';'sound2.wav';}&quot;, &amp;fSoundfile0);
+      // Read 'fSoundfile0' and fill 'fSpectro'
+      createSpectrogram(fSoundfile0, fSpectro);
+      ui_interface-&gt;closeBox();
+    }
+
+    virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+      int iSlow0 = int(float(fHslider0));
+      // Play 'fSpectro' indexed by 'iSlow0' by writting 'count' samples in 'outputs'
+      playSpectrogram(fSpectro, count, iSlow0, outputs);
+    }
+
+};
+</code></pre>
+<p>Here we assume that <code>createSpectrogram</code> and <code>playSpectrogram</code> functions are defined elsewhere and ready to be compiled.</p>
+<h3 id="deploying-it-as-a-maxmsp-external-using-the-faust2max6-tool">Deploying it as a Max/MSP External Using the faust2max6 Tool</h3>
+<p>The completed <code>spectral.cpp</code> file is now ready to be deployed as a Max/MSP external using the <code>faust2max6</code> tool and the <code>-inj</code> option with the following line:</p>
+<pre><code>faust2max6 -inj spectral.cpp -soundfile spectral.dsp
+</code></pre>
+<p>The two neeeded sound1.wav and sound2.wav audio files are embedded in the generated external, loaded at init time (the<code>buildUserInterface</code> method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake <code>spectral.dsp</code> DSP program, the generated <code>spectral.cpp</code> C++ file, the automatically generated <code>spectral.maxpat</code> Max/MSP patch will be able to build the GUI with a ready-to-use slider.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -67,11 +67,7 @@
 </li>
                                     
 <li>
-    <a href="../embedding/" class="dropdown-item">Embedding</a>
-</li>
-                                    
-<li>
-    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
+    <a href="../architectures/" class="dropdown-item">Architecture Files</a>
 </li>
                                     
 <li>
@@ -92,6 +88,14 @@
                                     
 <li>
     <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../embedding/" class="dropdown-item">Embedding</a>
+</li>
+                                    
+<li>
+    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
 </li>
                                     
 <li>
@@ -493,7 +497,7 @@ process = RMS(1000);
 <!-- /faust-run -->
 
 <p>The <a href="#strucutre-of-the-generated-code">corresponding <code>compute()</code> method</a> generated in scalar mode is the following:</p>
-<pre><code>virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
   for (int i = 0; (i &lt; count); i = (i + 1)) {
@@ -507,7 +511,7 @@ process = RMS(1000);
 }
 </code></pre>
 <p>The <code>-vec</code> option leads to the following reorganization of the code:</p>
-<pre><code>virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   fInput0_ptr = inputs[0];
   FAUSTFLOAT* fInput0 = 0;
   fOutput0_ptr = outputs[0];
@@ -670,7 +674,7 @@ process = filter(0.9), filter(0.9) : +;
 <!-- /faust-run -->
 
 <p>The corresponding <code>compute()</code> method obtained using the <code>-omp</code> option looks like this:</p>
-<pre><code>virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="language-c++">virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   float fRec0_tmp[36];
   float fRec1_tmp[36];
   FAUSTFLOAT* fInput0 = 0;
@@ -773,7 +777,7 @@ process = filter(0.9), filter(0.9) : +;
 <!-- /faust-run -->
 
 <p>When <code>-sch</code> option is used, the content of the additional <code>architecture/scheduler.h</code> file is inserted in the generated code. It contains code to deal with WSQ and thread management. The <code>compute()</code> and <code>computeThread()</code> methods are the following:</p>
-<pre><code>virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   fInput0_ptr = inputs[0];
   fInput1_ptr = inputs[1];
   fOutput0_ptr = outputs[0];

@@ -4,7 +4,7 @@ A Faust program describes a *signal processor*, a pure DSP computation that maps
 
 An *architecture file* describes how to relate a Faust program to the external world, in particular the audio drivers and the controllers interfaces to be used. This approach allows a single Faust program to be easily deployed to a large variety of audio standards (e.g., Max/MSP externals, PD externals, VST plugins, CoreAudio applications, JACK applications, iPhone/Android, etc.):
 
-<img src="architectures/img/Architectures.png" class="mx-auto d-block" width="90%">
+<img src="img/Architectures.png" class="mx-auto d-block" width="90%">
 
 The architecture to be used is specified at compile time with the `-a` option. For example `faust -a jack-gtk.cpp foo.dsp` indicates to use the JACK GTK architecture when compiling `foo.dsp`.
 
@@ -136,7 +136,7 @@ class audio {
 
 The API is simple enough to give a great flexibility to audio architectures implementations. The  `init` method should initialize the audio. At  `init` exit, the system should be in a safe state to recall the  `dsp` object state. Here is the hierarchy of some of the supported audio drivers:
 
-<img src="architectures/img/AudioHierarchy.jpg" class="mx-auto d-block" width="70%">
+<img src="img/AudioHierarchy.jpg" class="mx-auto d-block" width="70%">
 
 ## MIDI Architecture Modules
 
@@ -293,7 +293,7 @@ class midi_handler : public midi, public midi_interface {
 
 Several concrete implementations subclassing `midi_handler` using native APIs have been written and can be found in the [faust/midi](https://github.com/grame-cncm/faust/tree/master-dev/architecture/faust/midi) folder:
 
-<img src="architectures/img/MIDIHierarchy.jpg" class="mx-auto d-block" width="80%">
+<img src="img/MIDIHierarchy.jpg" class="mx-auto d-block" width="80%">
 
 Depending on the native MIDI API being used, event time-stamps are either expressed in absolute time or in frames. They are converted to offsets expressed in samples relative to the beginning of the audio buffer.
 
@@ -370,7 +370,7 @@ The control/UI code keeps those addresses, and will typically change their point
 
 Here is part of the UI classes hierarchy:
 
-<img src="architectures/img/GUIHierarchy.png" class="mx-auto d-block" width="80%">
+<img src="img/GUIHierarchy.png" class="mx-auto d-block" width="80%">
 
 #### Active Widgets
 
@@ -673,7 +673,7 @@ The dsp object is central to the Faust architecture design:
 
 For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or C++ class, or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `soulpatch_dsp`  typed object (defined in the [soulpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio`  C++ classes (like the C++ generated class). See the following class diagram:
 
-<img src="architectures/img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
+<img src="img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
 
 ### Macro Construction of DSP Components
 
@@ -736,7 +736,7 @@ Since control values can change several times inside the same audio block, the D
 - all control values having the same time-stamp are handled together, and change the DSP control internal state. The slice is computed up to the next control parameters time-stamp until the end of the given audio block is reached
 - in the next figure, four slices with the sequence of c1, c2, c3, c4 frames are successively given to the DSP compute method, with the appropriate part of the audio input/output buffers. Control values (appearing here as *[v1,v2,v3]*, then *[v1,v3]*, then *[v1]*, then *[v1,v2,v3]* sets) are changed between slices
 
-<img src="architectures/img/compute_slices.png" class="mx-auto d-block" width="60%">
+<img src="img/compute_slices.png" class="mx-auto d-block" width="60%">
 
 Since time-stamped control messages from the previous audio block are used in the current block, control messages are aways handled with one audio buffer latency.
 
@@ -796,7 +796,7 @@ The single voice has to be described by a Faust DSP program, the `mydsp_poly` cl
 - the [poly-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/poly-dsp.h) file contains the definition of the `mydsp_poly` class used to wrap the DSP voice into the polyphonic architecture. This class maintains an array of `dsp*`objects, manage dynamic voice allocation, control MIDI messages decoding and mapping, mixing of all running voices, and stopping a voice when its output level decreases below a given threshold
 - as a subclass of DSP, the `mydsp_poly` class redefines the `buildUserInterface` method. By convention all allocated voices are grouped in a global  *Polyphonic* tabgroup. The first tab contains a *Voices* group, a master like component used to change parameters on all voices at the same time, with a *Panic* button to be used to stop running voices, followed by one tab for each voice. Graphical User Interface components will then reflect the multi-voices structure of the new polyphonic DSP 
 
-<img src="architectures/img/poly_ui.png" class="mx-auto d-block" width="35%">
+<img src="img/poly_ui.png" class="mx-auto d-block" width="35%">
 
 The resulting polyphonic DSP object can be used as usual, connected with the needed audio driver, and possibly other `UI` control objects like `OSCUI`, `httpdUI`, etc. Having this new UI hierarchical view allows complete OSC control of each single voice and their control parameters, but also all voices using the master component.
 
@@ -844,7 +844,7 @@ A convention has been defined to use the `effect = some effect;` line in the DSP
 dsp* poly = new dsp_sequencer(new mydsp_poly(dsp, 2, true, true), new effect());
 ```
 
-<img src="architectures/img/poly_ui_effect1.png" class="mx-auto d-block" width="30%">| <img src="architectures/img/poly_ui_effect2.png" class="mx-auto d-block" width="30%">
+<img src="img/poly_ui_effect1.png" class="mx-auto d-block" width="30%">| <img src="img/poly_ui_effect2.png" class="mx-auto d-block" width="30%">
 
 
 
@@ -1239,7 +1239,7 @@ In some cases, developers prefer to control the DSP by developing a completely n
 
 A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed. It then provides a `setParamValue/getParamValue` kind of API to access all parameters, and let the developer adds his own GUI or any kind of controller. Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, wich goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. 
 
-<img src="architectures/img/FaustArchitecture5.jpg" class="mx-auto d-block" width="40%">
+<img src="img/FaustArchitecture5.jpg" class="mx-auto d-block" width="40%">
 
 ## Using the -inj Option With faust2xx Scripts
 
