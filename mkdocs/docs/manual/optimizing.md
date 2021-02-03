@@ -149,5 +149,5 @@ On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) s
 
 ### Additional Resources 
 
-Hanling infinity and not-a-number the *right way* still remains a tricky problem that is poorly handled in the current version of the compiler. Dario Sanfilippo [blog post](https://www.dariosanfilippo.com/blog/2020/handling_inf_nan_values_in_faust_and_cpp/) is a very helpful summary of the situation with a lot of practical solutions to write safer DSP code.  
+Handling infinity and not-a-number (NaN) the right way still remains a tricky problem that is not completely handled in the current version of the compiler. Dario Sanfilippo [blog post](https://www.dariosanfilippo.com/blog/2020/handling_inf_nan_values_in_faust_and_cpp/) is a very helpful summary of the situation with a lot of practical solutions to write safer DSP code.  
 
