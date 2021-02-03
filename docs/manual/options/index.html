@@ -91,11 +91,11 @@
 </li>
                                     
 <li>
-    <a href="../embedding/" class="dropdown-item">Embedding</a>
+    <a href="../embedding/" class="dropdown-item">Embedding the Compiler</a>
 </li>
                                     
 <li>
-    <a href="../optimizing/" class="dropdown-item">Optimizing</a>
+    <a href="../optimizing/" class="dropdown-item">Optimizing the Code</a>
 </li>
                                     
 <li>
@@ -262,7 +262,7 @@
             
             <li class="nav-item" data-level="1"><a href="#faust-compiler-options" class="nav-link">Faust Compiler Options</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2271" class="nav-link">FAUST compiler version 2.27.1</a>
+            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2305" class="nav-link">FAUST compiler version 2.30.5</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -306,7 +306,7 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="faust-compiler-options">Faust Compiler Options</h1>
-<h2 id="faust-compiler-version-2271">FAUST compiler version 2.27.1</h2>
+<h2 id="faust-compiler-version-2305">FAUST compiler version 2.30.5</h2>
 <pre><code class="language-faust-options">usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
     and fileN represents a Faust source file (.dsp extension).
@@ -353,6 +353,7 @@
   -dlt &lt;n&gt;    --delay-line-threshold &lt;n&gt;  threshold between 'mask' and 'select' ring buffer implementation (default INT_MAX samples).
   -mem        --memory                    allocate static in global state using a custom memory manager.
   -ftz &lt;n&gt;    --flush-to-zero &lt;n&gt;         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
+  -rui        --range-ui                  whether to generate code to limit vslider/hslider/nentry values in [min..max] range.
   -inj &lt;f&gt;    --inject &lt;f&gt;                inject source file &lt;f&gt; into architecture file instead of compile a dsp file.
   -scal      --scalar                     generate non-vectorized code.
   -inpl      --in-place                   generates code working when input and output buffers are the same (scalar mode only).
@@ -371,6 +372,7 @@
                                           use 'faust/dsp/fastmath.cpp' when file is 'def'.
   -ns &lt;name&gt; --namespace &lt;name&gt;           generate C++ code in a namespace &lt;name&gt;.
   -mapp      --math-approximation         simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
+  -ns &lt;name&gt; --namespace &lt;name&gt;           generate C++ or D code in a namespace &lt;name&gt;.
 </code></pre>
 <h2 id="block-diagram-options">Block diagram options:</h2>
 <hr />
@@ -412,7 +414,7 @@
 </code></pre>
 <h2 id="example">Example:</h2>
 <hr />
-<pre><code class="language-faust-options">faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
+<pre><code class="language-faust-options">faust -a jack-gtk.cpp myfx.dsp -o myfx.cpp 
 </code></pre></div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.27.1
+## FAUST compiler version 2.30.5
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -50,6 +50,7 @@ usage : faust [options] file1 [file2 ...].
   -dlt <n>    --delay-line-threshold <n>  threshold between 'mask' and 'select' ring buffer implementation (default INT_MAX samples).
   -mem        --memory                    allocate static in global state using a custom memory manager.
   -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
+  -rui        --range-ui                  whether to generate code to limit vslider/hslider/nentry values in [min..max] range.
   -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compile a dsp file.
   -scal      --scalar                     generate non-vectorized code.
   -inpl      --in-place                   generates code working when input and output buffers are the same (scalar mode only).
@@ -68,6 +69,7 @@ usage : faust [options] file1 [file2 ...].
                                           use 'faust/dsp/fastmath.cpp' when file is 'def'.
   -ns <name> --namespace <name>           generate C++ code in a namespace <name>.
   -mapp      --math-approximation         simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
+  -ns <name> --namespace <name>           generate C++ or D code in a namespace <name>.
 ~~~
 ## Block diagram options:
 ---------------------------------------
@@ -114,5 +116,6 @@ usage : faust [options] file1 [file2 ...].
 ## Example:
 ---------------------------------------
 ~~~faust-options
-faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
+faust -a jack-gtk.cpp myfx.dsp -o myfx.cpp 
 ~~~
+
