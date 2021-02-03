@@ -146,3 +146,8 @@ The `interp-tracer` tool runs and instruments the compiled program using the Int
 ### Debugging at Runtime
 
 On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the [dsp_me_checker](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP object with the math computation exception handling code. 
+
+### Additional Resources 
+
+Hanling infinity and not-a-number the *right way* still remains a tricky problem that is poorly handled in the current version of the compiler. Dario Sanfilippo [blog post](https://www.dariosanfilippo.com/blog/2020/handling_inf_nan_values_in_faust_and_cpp/) is a very helpful summary of the situation with a lot of practical solutions to write safer DSP code.  
+
