@@ -1,4 +1,4 @@
-# Tools to Help Optimize and Debug the Generated Code
+# Optimize and Debug the Code
 
 
 
@@ -7,44 +7,97 @@
 
 Faust is a Domain Specific Language helping the programmer to write very high-level and concise DSP code, while letting the compiler do the hard work of producing the best and most efficient implementation of the specification. By analysing the DSP source, the compiler typing system is able to discover how the described computations are effectively separated in four main categories: 
 
-- computations done *at compilation/specialisation time*: this is the place for algorithmic signal processors definition heavily based on the lambda-calculus constitute of the language, together with its pattern-matching capabilities (**TODO**: explain the idea of defining a new DSL inside the Faust DSL)
+- computations done *at compilation/specialisation time*: this is the place for algorithmic signal processors definition heavily based on the lambda-calculus constitute of the language, together with its pattern-matching capabilities
 - computations done *at init time*: for instance all the code that depends of the actual sample-rate, or filling of some internal tables (coded with the `rdtable` or `rwtable` language primitives) 
 - computations done *at control rate*: typically all code that read the current values of controllers (buttons, sliders, nentries) and update the internal state which depends of them
 - computations done *at sample rate*: all remaining code that process and produce the samples 
 
-One can think of these four categories as *different computation rates*. The programmer can possibly split its DSP algorithm to distribute the needed computation in the most appropriate domain (slower-rate domain better than faster-rate domain) and possibly rewrite some parts of its DSP algorithm from one domain to a slower-rate one to finally write the most efficient code.
+One can think of these four categories as *different computation rates*. The programmer can possibly split its DSP algorithm to distribute the needed computation in the most appropriate domain (*slower rate* domain better than *faster rate* domain) and possibly rewrite some parts of its DSP algorithm from one domain to a slower rate one to finally obtain the most efficient code.
 
 ### Computations Done *at Compilation/Specialisation Time*
 
 #### Using Pattern Matching 
 
-**TODO**: explain how PM can be used to algorithmically describe signal processors, explain the idea of defining a new DSL inside the Faust DSL (with fds.lib, physmodels.lib, wdmodels.lib as examples)
+**TODO**: explain how pattern-matching can be used to algorithmically describe signal processors, explain the idea of defining a new DSL inside the Faust DSL (with [fds.lib](https://faustlibraries.grame.fr/libs/fds/), [physmodels.lib](https://faustlibraries.grame.fr/libs/physmodels/), [wdmodels.lib](https://faustlibraries.grame.fr/libs/wavedigitalfilters/) as examples).
 
 #### Specializing the DSP Code
 
-The Faust compiler can possibly do a lot of optimizations at compile time. The DSP code can for instance be compiled for a fixed sample rate, thus doing at compile time all computation that depends of it. Since the Faust compiler will look for librairies starting from the local folder, a simple way is to locally copy the `libraries/platform.lib` file (which contains the `SR` definition), and change its definition for a fixed value like 48000 Hz. Then the DSP code has to be recompiled. Note that `libraries/platform.lib` also contains the definition of  the `tablesize` constant which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust services scripts which add the `-I /usr/local/share/faust/embedded/` parameter to the Faust command line to use a special version of the platform.lib file.
+The Faust compiler can possibly do a lot of optimizations at compile time. The DSP code can for instance be compiled for a fixed sample rate, thus doing at compile time all computation that depends of it. Since the Faust compiler will look for librairies starting from the local folder, a simple way is to locally copy the `libraries/platform.lib` file (which contains the `SR` definition), and change its definition for a fixed value like 48000 Hz. Then the DSP code has to be recompiled for the specialisation to take effect. Note that `libraries/platform.lib` also contains the definition of  the `tablesize` constant which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust services scripts which add the `-I /usr/local/share/faust/embedded/` parameter to the Faust command line to use a special version of the platform.lib file.
 
 ### Computations Done *at Init time*
 
+If not specialized with a constant value at compilation time, all computations that use the sample rate (which is accessed with the `ma.SR` in the DSP source code and given as parameter in the DSP `init` function) will be done at init time, and possibly again each time the same DSP is initialized with another sample rate.  
+
 #### Using rdtable or rwtable
 
-**TODO**: explain how computations can be done at that time and how to use rdtable or rwtable to store pre-computed values
+**TODO**: explain how computations can be done at init time and how to use rdtable or rwtable to store pre-computed values.
 
 ### Computations Done *at Control Rate*
 
 #### Parameter Smoothing
 
-**TODO**:  explain how parameter smoothing can be done to minimize was is done at sample rate 
+Control parameters are sampled once per block, their values are considered constant during the block, and the internal state depending of them is updated and appears at the beginning of the `compute` method, before the sample rate DSP loop. 
+
+If a control parameter needs to be smoothed (like to avoid clicks or too abrupt changes), with the `control : si.smoo` kind of code, the computation rate moves from *control rate* to *sample rate*, and will be more costly. It means that the need for parameter smoothing *should be carefully studied*. 
+
+Another point to consider is the *order of computation* when smoothing control. Here slider value is *first* converted first to a dB value, *then* smoothed:
+
+```
+import("stdfaust.lib");
+smoother_vol = hslider("Volume", 0.5, 0, 1, 0.01) : ba.linear2db : si.smoo;
+process = *(smoother_vol);
+```
+
+And the generated C++ code for `compute` has the costly `log10` math function used in `ba.linear2db` evaluted at control rate, so once before the DSP loop:
+
+```c++
+virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+  FAUSTFLOAT* input0 = inputs[0];
+  FAUSTFLOAT* output0 = outputs[0];
+  float fSlow0 = (0.0199999996f * std::log10(float(fHslider0)));
+  for (int i = 0; (i < count); i = (i + 1)) {
+    fRec0[0] = (fSlow0 + (0.999000013f * fRec0[1]));
+    output0[i] = FAUSTFLOAT((float(input0[i]) * fRec0[0]));
+    fRec0[1] = fRec0[0];
+  }
+}
+```
+
+But it the order between `ba.linear2db` and  `si.smoo` is reversed like in the following code:
+
+```
+import("stdfaust.lib");
+smoother_vol = hslider("Volume", 0.5, 0, 1, 0.01) : si.smoo: ba.linear2db;
+process = *(smoother_vol);
+```
+
+The generated C++ code for `compute` now has the `log10` math function used in `ba.linear2db` evaluted at sample rate in the DSP loop, which is obviously much more costly:
+
+
+```c++
+virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+  FAUSTFLOAT* input0 = inputs[0];
+  FAUSTFLOAT* output0 = outputs[0];
+  float fSlow0 = (0.00100000005f * float(fHslider0));
+  for (int i = 0; (i < count); i = (i + 1)) {
+    fRec0[0] = (fSlow0 + (0.999000013f * fRec0[1]));
+    output0[i] = FAUSTFLOAT((20.0f * (float(input0[i]) * std::log10(fRec0[0]))));
+    fRec0[1] = fRec0[0];
+  }
+}
+```
+
+So to obtain the best performances in the generated code, all costly computations have to be done on the control value (as much as possible, this may not always be the desirable behaviour), and `si.smoo` (or any function that moves the computation from control rate to sample rate) as the last operation. 
 
 ### Computations Done *at Sample Rate* 
 
 #### Using Function Tabulation
 
-**TODO**:  explain use of the `ba.tabulate` function 
+The use of `rdtable` kind of compilation done at init time can be simplified using the `ba.tabulate` function to *tabulate* a given unary function `fun` on a given range. A table is created and filled with precomputed values, and can be used to compute `fun(x)` in a more efficient way, just by reading the table precomputed value (at the cost of additional  static memory needeed for the table).
 
 #### Using Fast Math Functions
 
-When costly math functions still appear in the sample rate code, the `-fm` [compilation option](https://faustdoc.grame.fr/manual/options/) can possibly be used to replace the standard versions provided by the underlying OS (like `std::cos`, `std::tan`... in C++ for instance) with user defined ones. 
+When costly math functions still appear in the sample rate code, the `-fm` [compilation option](https://faustdoc.grame.fr/manual/options/) can possibly be used to replace the standard versions provided by the underlying OS (like `std::cos`, `std::tan`... in C++ for instance) with user defined ones (hopefully faster, but possibly less precise).
 
 ### Managing DSP Memory Size
 
