@@ -5,11 +5,11 @@
 
 ## Optimizing the DSP Code 
 
-Faust is a Domain Specific Language helping the programmer to write very high-level and concise DSP code, while letting the compiler do the hard work of producing the best and most efficient implementation of the specification. By analysing the DSP source, the compiler typing system is able to discover how the described computations are effectively separated in four main categories: 
+Faust is a Domain Specific Language helping the programmer to write very high-level and concise DSP code, while letting the compiler do the hard work of producing the best and most efficient implementation of the specification. When processing the DSP source, the compiler typing system is able to discover how the described computations are effectively separated in four main categories: 
 
 - computations done *at compilation/specialisation time*: this is the place for algorithmic signal processors definition heavily based on the lambda-calculus constitute of the language, together with its pattern-matching capabilities
 - computations done *at init time*: for instance all the code that depends of the actual sample-rate, or filling of some internal tables (coded with the `rdtable` or `rwtable` language primitives) 
-- computations done *at control rate*: typically all code that read the current values of controllers (buttons, sliders, nentries) and update the internal state which depends of them
+- computations done *at control rate*: typically all code that read the current values of controllers (buttons, sliders, nentries) and update the DSP internal state which depends of them
 - computations done *at sample rate*: all remaining code that process and produce the samples 
 
 One can think of these four categories as *different computation rates*. The programmer can possibly split its DSP algorithm to distribute the needed computation in the most appropriate domain (*slower rate* domain better than *faster rate* domain) and possibly rewrite some parts of its DSP algorithm from one domain to a slower rate one to finally obtain the most efficient code.
