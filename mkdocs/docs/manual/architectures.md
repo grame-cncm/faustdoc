@@ -870,6 +870,192 @@ with `inst.dsp` and `effect.dsp` in the same folder, and the number of outputs o
 
 Polyphonic-ready `faust2xx` scripts will then compile the polyphonic instrument and the effect, combine them in sequence, and create a ready-to-use DSP.
 
+### Custom Memory Manager
+
+From a DSP source file, the Faust compiler typically generates a C++ class. When a `rdtable` item is used on the source code, the C++ class will contain a table shared by all instances of the class. By default, this table is generated as a static class array, and so allocated in the application global static memory. 
+
+In some specific case (usually in more constrained deployment cases), managing where this data is allocated is crucial. Having a custom memory allocator to precisely control the DSP memory allocation becomes important.
+
+#### The -mem Option
+
+A `-mem`compiler parameter changes the way static shared tables are generated. The table is allocated as a class static pointer allocated using a *custom memory allocator*, which has the following propotype: 
+
+```c++
+struct dsp_memory_manager {
+
+    virtual ~dsp_memory_manager() {}
+
+    virtual void* allocate(size_t size) = 0;
+    virtual void destroy(void* ptr) = 0;
+};
+```
+
+Taking the following Faust DSP example:
+
+```
+process = (waveform {10,20,30,40,50,60,70}, %(7)~+(3) : rdtable), 
+          (waveform {1.1,2.2,3.3,4.4,5.5,6.6,7.7}, %(7)~+(3) : rdtable);
+```
+
+Here is the generated code in default mode:
+
+```c++
+...
+int mydsp::itbl0[7];
+float mydsp::ftbl0[7];
+
+static void classInit(int samplingFreq) {
+    SIG0 sig0;
+    sig0.init(samplingFreq);
+    sig0.fill(7,itbl0);
+    SIG1 sig1;
+    sig1.init(samplingFreq);
+    sig1.fill(7,ftbl0);
+}
+
+virtual void init(int samplingFreq) {
+    classInit(samplingFreq);
+    instanceInit(samplingFreq);
+}
+
+virtual void instanceInit(int samplingFreq) {
+    instanceConstants(samplingFreq);
+    instanceResetUserInterface();
+    instanceClear();
+}
+...
+```
+
+The two *itbl0* and *ftbl0* tables are static class arrays. They are filled in the `classInit` method. The architecture code will typically call the `init` method (which calls `classInit`) on a given DSP, to allocate class related arrays and the DSP itself. If several DSP are going to be allocated, calling `classInit` only once then the `instanceInit` method on each allocated DSP is the way to go.
+
+In the `-mem` mode, the generated C++ code is now:
+
+```c++
+...
+int* mydsp::itbl0 = 0;
+float* mydsp::ftbl0 = 0;
+dsp_memory_manager* mydsp::fManager = 0;
+
+static void classInit(int samplingFreq) {
+    SIG0 sig0;
+    itbl0 = static_cast<int*>(fManager->allocate(sizeof(int) * 7));
+    sig0.init(samplingFreq);
+    sig0.fill(7,itbl0);
+    SIG1 sig1;
+    ftbl0 = static_cast<float*>(fManager->allocate(sizeof(float) * 7));
+    sig1.init(samplingFreq);
+    sig1.fill(7,ftbl0);
+}
+
+static void classDestroy() {
+    fManager->destroy(itbl0);
+    fManager->destroy(ftbl0);
+}
+
+virtual void init(int samplingFreq) {}
+
+virtual void instanceInit(int samplingFreq) {
+    instanceConstants(samplingFreq);
+    instanceResetUserInterface();
+    instanceClear();
+}
+...
+```
+
+The two *itbl0* and *ftbl0* tables are generated a class static pointers. The`classInit`  method takes the additional `dsp_memory_manager` object used to allocate tables. A new `classDestroy` method is available to deallocate the tables. Finally the `init` method is now empty, since the architecure file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
+
+#### Control of the DSP memory allocation
+
+An architecture file can now define its custom memory manager by subclassing the `dsp_memory_manager`  abstract base class, and implement the two required `allocate` and `destroy` methods. Here is an example of a simple heap allocating manager:
+
+```c++
+struct malloc_memory_manager : public dsp_memory_manager {
+
+    virtual void* allocate(size_t size)
+    {
+        void* res = malloc(size);
+        cout << "malloc_manager: " << size << endl;
+        return res;
+    }
+
+    virtual void destroy(void* ptr)
+    {
+        cout << "free_manager" << endl;
+        free(ptr);
+    }
+
+};
+```
+
+#### Controlling the table memory allocation
+
+To control table memory allocation, the architecture file will have to do:
+
+```c++
+// Allocate a custom memory allocator
+malloc_memory_manager manager; 
+
+// Setup manager for the class
+mydsp::fManager = &manager;
+
+// Allocate the dsp instance using regular C++ new
+mydsp* dsp = new mydsp();
+
+// Allocate static tables (using the custom memory allocator)
+mydsp::classInit(48000);
+
+// Initialise the given instance
+dsp->instanceInit(48000);
+
+...
+...
+
+// Deallocate the dsp instance using regular C++ delete
+delete dsp;
+
+// Deallocate static tables (using the custom memory allocator)
+mydsp::classDestroy();
+```
+
+#### Controlling the complete DSP memory allocation
+
+Full control the DSP memory allocation can be done using [C++ placement new](https://en.wikipedia.org/wiki/Placement_syntax):
+
+```c++
+#include <new>
+
+// Allocate a custom memory allocator
+malloc_memory_manager manager; 
+
+// Setup manager for the class
+mydsp::fManager = &manager;
+
+// Placement new using the custom allocator
+mydsp* dsp = new(manager.allocate(sizeof(mydsp))) mydsp();
+
+// Allocate static tables (using the custom memory allocator)
+mydsp::classInit(48000);
+
+// Initialise the given instance
+dsp->instanceInit(48000);
+
+...
+...
+
+// Calling the destructor
+dsp->~mydsp();
+
+// Deallocate the pointer itself using the custom memory allocator
+manager.destroy(dsp);
+
+// Deallocate static tables (using the custom memory allocator)
+mydsp::classDestroy();
+```
+
+More complex custom memory allocators can be developed by refining this `malloc_memory_manager`example, possibly defining real-time memory allocators...etc... The [OWL](https://www.rebeltech.org) architecture file uses this [custom memory allocator model](https://github.com/pingdynasty/OwlProgram/blob/master/FaustCode/owl.cpp).
+
+**Note of february 2021**: this custom memory mode is currently only available with the C++ backend. Since Faust is now used in embedded devices, a new flexible will have to be designed in the coming months to answer to more advanced memory layout requirements.
+
 ### Mesuring the DSP CPU
 
 The `measure_dsp` class defined in the `faust/dsp/dsp-bench.h` file allows to decorate a given DSP object and measure its `compute` method CPU consumption. Results are given in Megabytes/seconds (higher is better) and DSP CPU at 44,1 kHz. Here is a C++ code example of its use: 
