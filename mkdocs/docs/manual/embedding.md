@@ -114,3 +114,4 @@ The dynamic compilation chain has been used in several projects:
 * An experimental integration of Faust in [Antescofo](http://forumnet.ircam.fr/product/antescofo-en/).
 * [FaucK](https://github.com/ccrma/chugins/tree/main/Faust): the combination of the [ChucK Programming Language](http://chuck.cs.princeton.edu/) and Faust.
 * [libossia](https://github.com/ossia/libossia) is a modern C++, cross-environment distributed object model for creative coding. It is used in in [Ossia score](https://github.com/ossia/score) project.
+* [Mephisto LV2](https://open-music-kontrollers.ch/lv2/mephisto/) is a Just-in-Time Faust compiler embedded in an LV2 plugin, using the C API. 
