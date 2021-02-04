@@ -1195,63 +1195,79 @@ process = os.osc(8*freq(front(clocker))) * play;
 </code></pre>
 <p>Here is the generated code in default mode:</p>
 <pre><code class="language-c++">...
-int mydsp::itbl0[7];
-float mydsp::ftbl0[7];
+static int itbl0mydspSIG0[7];
+static float ftbl1mydspSIG1[7];
 
-static void classInit(int samplingFreq) {
-    SIG0 sig0;
-    sig0.init(samplingFreq);
-    sig0.fill(7,itbl0);
-    SIG1 sig1;
-    sig1.init(samplingFreq);
-    sig1.fill(7,ftbl0);
-}
+class mydsp : public dsp {
+  ...  
+  public:
+    ...
+    static void classInit(int samplingFreq) {
+        mydspSIG0* sig0 = newmydspSIG0();
+        sig0-&gt;instanceInitmydspSIG0(sample_rate);
+        sig0-&gt;fillmydspSIG0(7, itbl0mydspSIG0);
+        mydspSIG1* sig1 = newmydspSIG1();
+        sig1-&gt;instanceInitmydspSIG1(sample_rate);
+        sig1-&gt;fillmydspSIG1(7, ftbl1mydspSIG1);
+        deletemydspSIG0(sig0);
+        deletemydspSIG1(sig1);
+    }
 
-virtual void init(int samplingFreq) {
-    classInit(samplingFreq);
-    instanceInit(samplingFreq);
-}
+    virtual void init(int samplingFreq) {
+        classInit(samplingFreq);
+        instanceInit(samplingFreq);
+    }
 
-virtual void instanceInit(int samplingFreq) {
-    instanceConstants(samplingFreq);
-    instanceResetUserInterface();
-    instanceClear();
+    virtual void instanceInit(int samplingFreq) {
+        instanceConstants(samplingFreq);
+        instanceResetUserInterface();
+        instanceClear();
+    }
+    ...
 }
-...
 </code></pre>
-<p>The two <em>itbl0</em> and <em>ftbl0</em> tables are static class arrays. They are filled in the <code>classInit</code> method. The architecture code will typically call the <code>init</code> method (which calls <code>classInit</code>) on a given DSP, to allocate class related arrays and the DSP itself. If several DSP are going to be allocated, calling <code>classInit</code> only once then the <code>instanceInit</code> method on each allocated DSP is the way to go.</p>
+<p>The two <em>itbl0mydspSIG0</em> and <em>ftbl1mydspSIG1</em> tables are static global arrays. They are filled in the <code>classInit</code> method. The architecture code will typically call the <code>init</code> method (which calls <code>classInit</code>) on a given DSP, to allocate class related arrays and the DSP itself. If several DSP are going to be allocated, calling <code>classInit</code> only once then the <code>instanceInit</code> method on each allocated DSP is the way to go.</p>
 <p>In the <code>-mem</code> mode, the generated C++ code is now:</p>
 <pre><code class="language-c++">...
-int* mydsp::itbl0 = 0;
-float* mydsp::ftbl0 = 0;
-dsp_memory_manager* mydsp::fManager = 0;
+static int* itbl0mydspSIG0 = 0;
+static float* ftbl1mydspSIG1 = 0;
 
-static void classInit(int samplingFreq) {
-    SIG0 sig0;
-    itbl0 = static_cast&lt;int*&gt;(fManager-&gt;allocate(sizeof(int) * 7));
-    sig0.init(samplingFreq);
-    sig0.fill(7,itbl0);
-    SIG1 sig1;
-    ftbl0 = static_cast&lt;float*&gt;(fManager-&gt;allocate(sizeof(float) * 7));
-    sig1.init(samplingFreq);
-    sig1.fill(7,ftbl0);
+class mydsp : public dsp {
+  ...  
+  public:
+    ...
+    static dsp_memory_manager* fManager;
+
+    static void classInit(int samplingFreq) {
+        mydspSIG0* sig0 = newmydspSIG0(fManager);
+        sig0-&gt;instanceInitmydspSIG0(sample_rate);
+        itbl0mydspSIG0 = static_cast&lt;int*&gt;(fManager-&gt;allocate(28));
+        sig0-&gt;fillmydspSIG0(7, itbl0mydspSIG0);
+        mydspSIG1* sig1 = newmydspSIG1(fManager);
+        sig1-&gt;instanceInitmydspSIG1(sample_rate);
+        ftbl1mydspSIG1 = static_cast&lt;float*&gt;(fManager-&gt;allocate(28));
+        sig1-&gt;fillmydspSIG1(7, ftbl1mydspSIG1);
+        deletemydspSIG0(sig0, fManager);
+        deletemydspSIG1(sig1, fManager);
+
+    }
+
+    static void classDestroy() {
+        fManager-&gt;destroy(itbl0mydspSIG0);
+        fManager-&gt;destroy(ftbl1mydspSIG1);
+    }
+
+    virtual void init(int samplingFreq) {}
+
+    virtual void instanceInit(int samplingFreq) {
+        instanceConstants(samplingFreq);
+        instanceResetUserInterface();
+        instanceClear();
+    }
+    ...
 }
-
-static void classDestroy() {
-    fManager-&gt;destroy(itbl0);
-    fManager-&gt;destroy(ftbl0);
-}
-
-virtual void init(int samplingFreq) {}
-
-virtual void instanceInit(int samplingFreq) {
-    instanceConstants(samplingFreq);
-    instanceResetUserInterface();
-    instanceClear();
-}
-...
 </code></pre>
-<p>The two <em>itbl0</em> and <em>ftbl0</em> tables are generated a class static pointers. The<code>classInit</code>  method takes the additional <code>dsp_memory_manager</code> object used to allocate tables. A new <code>classDestroy</code> method is available to deallocate the tables. Finally the <code>init</code> method is now empty, since the architecure file is supposed to use the <code>classInit/classDestroy</code> method once to allocate and deallocate static tables, and the <code>instanceInit</code> method on each allocated DSP.</p>
+<p>The two <em>itbl0mydspSIG0</em> and <em>ftbl1mydspSIG1</em> tables are generated as static global pointers. The<code>classInit</code>  method uses the <code>fManager</code> object used to allocate tables. A new <code>classDestroy</code> method is generated to deallocate the tables. Finally the <code>init</code> method is now empty, since the architecure file is supposed to use the <code>classInit/classDestroy</code> method once to allocate and deallocate static tables, and the <code>instanceInit</code> method on each allocated DSP.</p>
 <h4 id="control-of-the-dsp-memory-allocation">Control of the DSP memory allocation</h4>
 <p>An architecture file can now define its custom memory manager by subclassing the <code>dsp_memory_manager</code>  abstract base class, and implement the two required <code>allocate</code> and <code>destroy</code> methods. Here is an example of a simple heap allocating manager:</p>
 <pre><code class="language-c++">struct malloc_memory_manager : public dsp_memory_manager {

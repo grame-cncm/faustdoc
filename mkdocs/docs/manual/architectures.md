@@ -901,68 +901,84 @@ Here is the generated code in default mode:
 
 ```c++
 ...
-int mydsp::itbl0[7];
-float mydsp::ftbl0[7];
+static int itbl0mydspSIG0[7];
+static float ftbl1mydspSIG1[7];
 
-static void classInit(int samplingFreq) {
-    SIG0 sig0;
-    sig0.init(samplingFreq);
-    sig0.fill(7,itbl0);
-    SIG1 sig1;
-    sig1.init(samplingFreq);
-    sig1.fill(7,ftbl0);
-}
+class mydsp : public dsp {
+  ...  
+  public:
+    ...
+    static void classInit(int samplingFreq) {
+        mydspSIG0* sig0 = newmydspSIG0();
+        sig0->instanceInitmydspSIG0(sample_rate);
+        sig0->fillmydspSIG0(7, itbl0mydspSIG0);
+        mydspSIG1* sig1 = newmydspSIG1();
+        sig1->instanceInitmydspSIG1(sample_rate);
+        sig1->fillmydspSIG1(7, ftbl1mydspSIG1);
+        deletemydspSIG0(sig0);
+        deletemydspSIG1(sig1);
+    }
 
-virtual void init(int samplingFreq) {
-    classInit(samplingFreq);
-    instanceInit(samplingFreq);
-}
+    virtual void init(int samplingFreq) {
+        classInit(samplingFreq);
+        instanceInit(samplingFreq);
+    }
 
-virtual void instanceInit(int samplingFreq) {
-    instanceConstants(samplingFreq);
-    instanceResetUserInterface();
-    instanceClear();
+    virtual void instanceInit(int samplingFreq) {
+        instanceConstants(samplingFreq);
+        instanceResetUserInterface();
+        instanceClear();
+    }
+    ...
 }
-...
 ```
 
-The two *itbl0* and *ftbl0* tables are static class arrays. They are filled in the `classInit` method. The architecture code will typically call the `init` method (which calls `classInit`) on a given DSP, to allocate class related arrays and the DSP itself. If several DSP are going to be allocated, calling `classInit` only once then the `instanceInit` method on each allocated DSP is the way to go.
+The two *itbl0mydspSIG0* and *ftbl1mydspSIG1* tables are static global arrays. They are filled in the `classInit` method. The architecture code will typically call the `init` method (which calls `classInit`) on a given DSP, to allocate class related arrays and the DSP itself. If several DSP are going to be allocated, calling `classInit` only once then the `instanceInit` method on each allocated DSP is the way to go.
 
 In the `-mem` mode, the generated C++ code is now:
 
 ```c++
 ...
-int* mydsp::itbl0 = 0;
-float* mydsp::ftbl0 = 0;
-dsp_memory_manager* mydsp::fManager = 0;
+static int* itbl0mydspSIG0 = 0;
+static float* ftbl1mydspSIG1 = 0;
 
-static void classInit(int samplingFreq) {
-    SIG0 sig0;
-    itbl0 = static_cast<int*>(fManager->allocate(sizeof(int) * 7));
-    sig0.init(samplingFreq);
-    sig0.fill(7,itbl0);
-    SIG1 sig1;
-    ftbl0 = static_cast<float*>(fManager->allocate(sizeof(float) * 7));
-    sig1.init(samplingFreq);
-    sig1.fill(7,ftbl0);
+class mydsp : public dsp {
+  ...  
+  public:
+    ...
+    static dsp_memory_manager* fManager;
+
+    static void classInit(int samplingFreq) {
+        mydspSIG0* sig0 = newmydspSIG0(fManager);
+        sig0->instanceInitmydspSIG0(sample_rate);
+        itbl0mydspSIG0 = static_cast<int*>(fManager->allocate(28));
+        sig0->fillmydspSIG0(7, itbl0mydspSIG0);
+        mydspSIG1* sig1 = newmydspSIG1(fManager);
+        sig1->instanceInitmydspSIG1(sample_rate);
+        ftbl1mydspSIG1 = static_cast<float*>(fManager->allocate(28));
+        sig1->fillmydspSIG1(7, ftbl1mydspSIG1);
+        deletemydspSIG0(sig0, fManager);
+        deletemydspSIG1(sig1, fManager);
+
+    }
+
+    static void classDestroy() {
+        fManager->destroy(itbl0mydspSIG0);
+        fManager->destroy(ftbl1mydspSIG1);
+    }
+
+    virtual void init(int samplingFreq) {}
+
+    virtual void instanceInit(int samplingFreq) {
+        instanceConstants(samplingFreq);
+        instanceResetUserInterface();
+        instanceClear();
+    }
+    ...
 }
-
-static void classDestroy() {
-    fManager->destroy(itbl0);
-    fManager->destroy(ftbl0);
-}
-
-virtual void init(int samplingFreq) {}
-
-virtual void instanceInit(int samplingFreq) {
-    instanceConstants(samplingFreq);
-    instanceResetUserInterface();
-    instanceClear();
-}
-...
 ```
 
-The two *itbl0* and *ftbl0* tables are generated a class static pointers. The`classInit`  method takes the additional `dsp_memory_manager` object used to allocate tables. A new `classDestroy` method is available to deallocate the tables. Finally the `init` method is now empty, since the architecure file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
+The two *itbl0mydspSIG0* and *ftbl1mydspSIG1* tables are generated as static global pointers. The`classInit`  method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. Finally the `init` method is now empty, since the architecure file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
 
 #### Control of the DSP memory allocation
 
