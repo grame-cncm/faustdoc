@@ -1,8 +1,8 @@
-# Embedding the Faust Compiler Using `libfaust`
+# Embedding the Faust Compiler Using libfaust
 
-<!-- TODO: this section could be further developed and better documented -->
+The combination of the awesome [LLVM technology](https://llvm.org/) and `libfaust` (the library version of the Faust compiler) allows developers to compile and execute Faust DSP programs on the fly at full speed and without making compromises. It also contains an Interpreter backend to be used on OS not supporting dynamic compilation (like Apple iOS), or in testing tools.
 
-The combination of the awesome [LLVM technology](https://llvm.org/) and `libfaust` (the library version of the Faust compiler) allows developers to compile and execute Faust DSP programs on the fly at full speed and without making compromises. In this section, we demonstrate how the Faust dynamic compilation chain can be used to embed the Faust compiler technology directly in applications or plug-ins.
+In this section, we demonstrate how the Faust dynamic compilation chain can be used to embed the Faust compiler technology directly in applications or plug-ins.
 
 ## Dynamic Compilation Chain
 
@@ -10,60 +10,31 @@ The Faust compiler uses an intermediate FIR representation (Faust Imperative Rep
 
 To generate various output languages, several backends have been developed: for C, C++, Java, LLVM IR, WebAssembly, etc. The native LLVM based compilation chain is particularly interesting: it provides direct compilation of a DSP source into executable code in memory, bypassing the external compiler requirement.
 
-## LLVM
+### Low Level Virtual Machine (LLVM)
 
-[LLVM (formerly Low Level Virtual Machine)](https://llvm.org/) is a compiler infrastructure, designed for compile-time, link-time, and run-time optimization of programs written in arbitrary programming languages. Executable code is produced dynamically using a *Just In Time* compiler from a specific code representation, called LLVM IR. Clang, the LLVM native C/C++/Objective-C compiler is a front-end for the LLVM Compiler. It can, for instance, convert a C or C++ source file into LLVM IR code. Domain-specific languages like Faust can easily target the LLVM IR. This has been done by developing an LLVM IR backend in the Faust compiler.
+[LLVM](https://llvm.org/) is a compiler infrastructure, designed for compile-time, link-time, and run-time optimization of programs written in arbitrary programming languages. Executable code is produced dynamically using a *Just In Time* compiler from a specific code representation, called LLVM IR. Clang, the LLVM native C/C++/Objective-C compiler is a front-end for the LLVM Compiler. It can, for instance, convert a C or C++ source file into LLVM IR code. Domain-specific languages like Faust can easily target the LLVM IR. This has been done by developing an LLVM IR backend in the Faust compiler.
 
-## Compiling in Memory
+### Compiling in Memory
 
 The complete chain goes from the Faust DSP source code, compiled in LLVM IR using the LLVM backend, to finally produce the executable code using the LLVM JIT. All steps take place in memory, getting rid of the classical file-based approaches. Pointers to executable functions can be retrieved from the resulting LLVM module and the code directly called with the appropriate parameters.
 
-The Faust compiler has been packaged as an embeddable library called `libfaust`, published with an associated API. Given a Faust source code (as a file or a string), calling the `createDSPFactoryXXX` function runs the compilation chain (Faust + LLVM JIT) and generates the *prototype* of the class, as a `llvm_dsp_factory` pointer.
+The Faust compiler has been packaged as an embeddable library called `libfaust`, published with an associated API: 
 
-Note that the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer. 
+- given a Faust source code (as a file or a string), calling the `createDSPFactoryXXX` function runs the compilation chain (Faust + LLVM JIT) and generates the *prototype* of the class, as a `llvm_dsp_factory` pointer
+- the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
+- `deleteDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. You can get a unique SHA1 key of the created factory using its `getSHAKey` method
+- next, the `createDSPInstance` function (corresponding to the `new className` of C++) instantiates a `llvm_dsp` pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, `delete` can be used to destroy the dsp instance
+- since `llvm_dsp` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
 
-`deleteDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. You can get a unique SHA1 key of the created factory using its `getSHAKey` method.
-
-Next, the `createDSPInstance` function (corresponding to the `new className` of C++) instantiates a `llvm_dsp` pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, `delete` can be used to destroy the dsp instance.
-
-Since `llvm_dsp` is a subclass of the dsp base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing all architecture files already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
-
-<!-- TODO: we need an example here -->
-
-## Saving/Restoring the Factory
-
-After the DSP factory has been compiled, the application or the plug-in running it might need to save it and then restore it. To get the internal factory compiled code, several functions are available:
-
-* `writeDSPFactoryToIR`: get the DSP factory LLVM IR (in textual format) as a string, 
-* `writeDSPFactoryToIRFile`: get the DSP factory LLVM IR (in textual format) and write it to a file,
-* `writeDSPFactoryToBitcode`: get the DSP factory LLVM IR (in binary format) as a string 
-* `writeDSPFactoryToBitcodeFile`: save the DSP factory LLVM IR (in binary format) in a file,
-* `writeDSPFactoryToMachine`: get the DSP factory executable machine code as a string,
-* `writeDSPFactoryToMachineFile`: save the DSP factory executable machine code in a file.
-
-To re-create a DSP factory from a previously saved code, several functions are available:
-
-* `readDSPFactoryFromIR`: create a DSP factory from a string containing the LLVM IR (in textual format), 
-* `readDSPFactoryFromIRFile`: create a DSP factory from a file containing the LLVM IR (in textual format),
-* `readDSPFactoryFromBitcode`: create a DSP factory from a string containing the LLVM IR (in binary format), 
-* `readDSPFactoryFromBitcodeFile`: create a DSP factory from a file containing the LLVM IR (in binary format),
-* `readDSPFactoryFromMachine`: create a DSP factory from a string containing the executable machine code,
-* `readDSPFactoryFromMachineFile`: create a DSP factory from a file containing the executable machine code.
-
-## Additional Functions
-
-Some additional functions are available in the `libfaust` API:
-
-* `expandDSPFromString`/`expandDSPFromFile`: creates a self-contained DSP source string where all needed librairies have been included. All compilations options are normalized and included as a comment in the expanded string,
-* `generateAuxFilesFromString`/`generateAuxFilesFromFile`: from a DSP source string or file, generates auxiliary files: SVG, XML, ps, etc. depending of the `argv` parameters.
-
-## Using the `libfaust` Library
+## Using libfaust with the LLVM backend
 
 The `libfaust` library is fully integrated to the Faust distribution. You'll have to compile and install it in order to use it. For an exhaustive documentation/description of the API, we advise you to have a look at the code in the [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
 
-More generally, a "typical" use of `libfaust` in C++ could look like:
+### Typical code example
 
-```
+More generally, a typical use of `libfaust` in C++ could look like:
+
+```c++
 // the Faust code to compile as a string (could be in a file too)
 string theCode = "import(\"stdfaust.lib\"); process = no.noise;";
 
@@ -94,24 +65,97 @@ deleteDSPFactory(m_factory);
 
 The first step consists in creating a DSP factory from a DSP file (using `createDSPFactoryFromFile`) or string  (using `createDSPFactoryFromString`) with additional parameters given to the compiler. Assuming the compilation works, a factory is returned, to create a DSP instance with the factory `createDSPInstance` method. 
 
-Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file) is a subclass of the base `dsp*` class (see [`faust/dsp/dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h) header file). Thus it can be used with any `UI` type to plug a GUI, MIDI or OSC controller on the DSP object, like it would be done with a DSP program compiled to a C++ class (the generated `mydsp`  class is also a subclass of the base `dsp*` class). This is demonstrated with the `my_ui* m_ui = new MyUI();` and `m_dsp->buildUserInterface(m_ui);` lines where the `buildUserInterface` method is used to connect a controller. 
+Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file) is a subclass of the base `dsp` class (see [`faust/dsp/dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h) header file). Thus it can be used with any `UI` type to plug a GUI, MIDI or OSC controller on the DSP object, like it would be done with a DSP program compiled to a C++ class (the generated `mydsp`  class is also a subclass of the base `dsp` class). This is demonstrated with the `my_ui* m_ui = new MyUI();` and `m_dsp->buildUserInterface(m_ui);` lines where the `buildUserInterface` method is used to connect a controller. 
 
 Then the DSP object has to be connected to an audio driver to be rendered (see the `m_dsp->compute(128, m_input, m_output);` block). A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp). A example using the pure C API can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c). 
 
-Thus, very few code is needed to embed Faust in your project!
+### Saving/Restoring the Factory
+
+After the DSP factory has been compiled, the application or the plug-in running it might need to save it and then restore it. To get the internal factory compiled code, several functions are available:
+
+* `writeDSPFactoryToIR`: get the DSP factory LLVM IR (in textual format) as a string 
+* `writeDSPFactoryToIRFile`: get the DSP factory LLVM IR (in textual format) and write it to a file
+* `writeDSPFactoryToBitcode`: get the DSP factory LLVM IR (in binary format) as a string 
+* `writeDSPFactoryToBitcodeFile`: save the DSP factory LLVM IR (in binary format) in a file
+* `writeDSPFactoryToMachine`: get the DSP factory executable machine code as a string
+* `writeDSPFactoryToMachineFile`: save the DSP factory executable machine code in a file.
+
+To re-create a DSP factory from a previously saved code, several functions are available:
+
+* `readDSPFactoryFromIR`: create a DSP factory from a string containing the LLVM IR (in textual format) 
+* `readDSPFactoryFromIRFile`: create a DSP factory from a file containing the LLVM IR (in textual format)
+* `readDSPFactoryFromBitcode`: create a DSP factory from a string containing the LLVM IR (in binary format)
+* `readDSPFactoryFromBitcodeFile`: create a DSP factory from a file containing the LLVM IR (in binary format)
+* `readDSPFactoryFromMachine`: create a DSP factory from a string containing the executable machine code
+* `readDSPFactoryFromMachineFile`: create a DSP factory from a file containing the executable machine code.
+
+## Using libfaust with the Interpreter backend
+
+When compiled to embed the [Interpreter backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/interpreter), `libfaust` can also be used to generate the Faust Bytes Code (FBC) format and interpret it in memory.
+
+The interpreter backend has been first written to allow dynamical compilation on iOS, where Apple does not allow LLVM based JIT compilation to be deployed, but can also be used to [develop testing tools](https://faustdoc.grame.fr/manual/optimizing/#debugging-the-dsp-code). It has been defined as a typed language and a virtual machine to execute it.
+
+The FIR language is simple enough to be easily translated in the typed bytecode for an interpreter, generated by a FIR to bytecode compilation pass. The virtual machine then executes the bytecode on a stack based machine.
+
+### The interpreter API
+The interpreter backend API is similar to the LLVM backend API: 
+
+- the compilation step is done through the `createInterpreterDSPFactory` function 
+
+- given a FAUST source code (as a file or a string), the compilation chain (Faust + interpreter backend) generates the *prototype* of the class, as an `interpreter_dsp_factory` pointer. This factory actually contains the compiled bytecode for the given DSP
+- next, the `createDSPInstance` method of the factory class, corresponding to the `new className` of C++, instantiates an `interpreter_dsp` pointer, to be used as any regular Faust compiled DSP object, run and controlled through its interface. The instance contains the interpreter virtual machine loaded with the compiled bytecode, to be executed for each method
+- after the DSP factory has been compiled, the application or plugin may want to save/restore it in order to save Faust to interpreter bytecode compilation at next use. To get the internal factory bytecode and save it, two functions are available:
+  • `writeInterpreterDSPFactoryToMachine` allows to get the interpreter bytecode as a string
+  • `writeInterpreterDSPFactoryToMachineFile` allows to save the interpreter bytecode in a file
+- To re-create a DSP factory from a previously saved code, two functions are available:
+  • `readInterpreterDSPFactoryFromMachine`allows to create a DSP factory from a string containing the interpreter bytecode
+  • `readInterpreterDSPFactoryFromMachineFile` allows to create a DSP factory from a file containing the
+  interpreter bytecode
+
+The complete API is available and documented in the installed [faust/dsp/interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) header. Note that only the scalar compilation mode is supported. A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/interp-tests/interp-test.cpp). 
+
+### Performances
+
+The generated code is obviously much slower than LLVM generated native code. Measurements on various DSPs examples have been done, and the code is between 3 and more than 10 times slower than the LLVM native code.
+
+## Additional Functions
+
+Some additional functions are available in the `libfaust` API:
+
+* `expandDSPFromString`/`expandDSPFromFile`: creates a self-contained DSP source string where all needed librairies have been included. All compilations options are normalized and included as a comment in the expanded string
+* `generateAuxFilesFromString`/`generateAuxFilesFromFile`: from a DSP source string or file, generates auxiliary files: SVG, XML, ps, etc. depending of the `argv` parameters.
+
+## Additional Resources 
+
+Some papers:
+
+- [Comment Embarquer le Compilateur Faust dans Vos Applications ?](https://hal.archives-ouvertes.fr/hal-00832224)
+- [An Overview of the FAUST Developer Ecosystem](https://hal.archives-ouvertes.fr/hal-02158929)
 
 ## Use Case Examples
 
 The dynamic compilation chain has been used in several projects:
 
-* [FaustLive](https://github.com/grame-cncm/faustlive): an integrated IDE for Faust development offering on-the-fly compilation and execution features.
-* [Faustgen](https://github.com/grame-cncm/faust/tree/master-dev/embedded/faustgen): a generic Faust [Max/MSP](https://cycling74.com/products/max/) programmable external object.
-* [Faustgen](https://github.com/CICM/pd-faustgen): a generic Faust [PureData](https://puredata.info) programmable external object.
-* The [faustgen2~](https://github.com/agraef/pd-faustgen) object is a Faust external for Pd a.k.a. Pure Data, Miller Puckette's interactive multimedia programming environment.
-* [Faust for Csound](https://github.com/csound/csound/blob/develop/Opcodes/faustgen.cpp): a [Csound](https://csound.com/) opcode running the Faust compiler internally.
-* [LibAudioStream](https://github.com/sletz/libaudiostream): a framework to manipulate audio ressources through the concept of streams.
-* [Faust for JUCE](https://github.com/olilarkin/juce_faustllvm): a tool integrating the Faust compiler to [JUCE](https://juce.com/) developed by Oliver Larkin and available as part of the [pMix2 project](https://github.com/olilarkin/pMix2).
-* An experimental integration of Faust in [Antescofo](http://forumnet.ircam.fr/product/antescofo-en/).
-* [FaucK](https://github.com/ccrma/chugins/tree/main/Faust): the combination of the [ChucK Programming Language](http://chuck.cs.princeton.edu/) and Faust.
-* [libossia](https://github.com/ossia/libossia) is a modern C++, cross-environment distributed object model for creative coding. It is used in in [Ossia score](https://github.com/ossia/score) project.
-* [Mephisto LV2](https://open-music-kontrollers.ch/lv2/mephisto/) is a Just-in-Time Faust compiler embedded in an LV2 plugin, using the C API. 
+* [FaustLive](https://github.com/grame-cncm/faustlive): an integrated IDE for Faust development offering on-the-fly compilation and execution features
+
+* [Faustgen](https://github.com/grame-cncm/faust/tree/master-dev/embedded/faustgen): a generic Faust [Max/MSP](https://cycling74.com/products/max/) programmable external object
+
+* [Faustgen](https://github.com/CICM/pd-faustgen): a generic Faust [PureData](https://puredata.info) programmable external object
+
+* The [faustgen2~](https://github.com/agraef/pd-faustgen) object is a Faust external for Pd a.k.a. Pure Data, Miller Puckette's interactive multimedia programming environment
+
+* [Faust for Csound](https://github.com/csound/csound/blob/develop/Opcodes/faustgen.cpp): a [Csound](https://csound.com/) opcode running the Faust compiler internally
+
+* [LibAudioStream](https://github.com/sletz/libaudiostream): a framework to manipulate audio ressources through the concept of streams
+
+* [Faust for JUCE](https://github.com/olilarkin/juce_faustllvm): a tool integrating the Faust compiler to [JUCE](https://juce.com/) developed by Oliver Larkin and available as part of the [pMix2 project](https://github.com/olilarkin/pMix2)
+
+* An experimental integration of Faust in [Antescofo](http://forumnet.ircam.fr/product/antescofo-en/)
+
+* [FaucK](https://github.com/ccrma/chugins/tree/main/Faust): the combination of the [ChucK Programming Language](http://chuck.cs.princeton.edu/) and Faust
+
+* [libossia](https://github.com/ossia/libossia) is a modern C++, cross-environment distributed object model for creative coding. It is used in in [Ossia score](https://github.com/ossia/score) project
+
+* [Radium](https://users.notam02.no/~kjetism/radium/) is a music editor with a new type of interface, including a Faust audio DSP development environment using libfaust with the LLVM and Interpreter backends
+
+* [Mephisto LV2](https://open-music-kontrollers.ch/lv2/mephisto/) is a Just-in-Time Faust compiler embedded in an LV2 plugin, using the C API.
