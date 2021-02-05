@@ -289,8 +289,8 @@
 <li>create DSP program with some controllers</li>
 <li>write a simple <code>PrintUI</code> architecture that prints each control, explain <code>buildUserInterface</code> method, plug it on the DSP </li>
 <li>use a ready-to-use GUI architecture:  <code>GTKUI</code> using GTK framework</li>
-<li>explain and demonstrate <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a>  (with <code>setParamValue/getParamValue</code> model)</li>
-<li>use  <code>OSCUI</code>  as a first example of remote control, explain how several UIs can be combined and synchronized</li>
+<li>explain and demonstrate <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a>  (with <code>setParamValue/getParamValue</code> model), explain the label and path distinction</li>
+<li>use  <code>OSCUI</code> as a first example of remote control, explain how several UIs can be combined and synchronized (using the GUI class)</li>
 <li>use <code>httpUI</code>, as a second example of remote control</li>
 <li>explain the concept of metadata, take MIDI as an example, add some in the DSP program, use <code>MIDIUI</code>, demonstrate MIDI control  in both directions</li>
 <li>sample-accurate control: used of <code>time_dsp</code> decorator, example of MIDI clock base synchro </li>
@@ -299,13 +299,17 @@
 <li>moving to dynamic compilation using libfaust: the factory/instance concept, show how what was previously explained can simply be reused with a dynamically created <code>llvm_dsp</code> object, saving/restoring DSP factories</li>
 <li>Tour of the main ready-to-use architecture files: </li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/QTUI.h">QTUI</a> class uses the <a href="https://www.qt.io/">QT</a> toolkit</li>
-<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceUI.h">JuceUI</a> class uses the <a href="https://juce.com/">JUCE</a> framework</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceUI.h">JuceUI</a> class uses the <a href="https://juce.com/">JUCE</a> framework: <code>faust2juce</code> tool</li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> (déjà vu) </li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h">APIUI</a> </li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> </li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h">SoundUI</a> </li>
-<li>...</li>
-<li>Developing a new UI architecture file:</li>
+<li>
+<p>...</p>
+</li>
+<li>
+<p>Developing a new UI architecture file:</p>
+</li>
 <li>from scratch </li>
 <li>subclassing existing ones</li>
 <li>aggregating existing ones</li>
@@ -315,13 +319,21 @@
 <li>
 <p>list of shared metadata : <strong>discussion to have</strong> ? </p>
 </li>
-<li>memory layout issue: (idea of a improved <em>custom_memory_manager</em>)</li>
-<li>Other target languages:</li>
+<li>
+<p>memory layout issue: (idea of a improved <em>custom_memory_manager</em>)</p>
+</li>
+<li>
+<p>Developing a <em>faust2xx</em> script:</p>
+</li>
+<li>
+<p>Other target languages:</p>
+</li>
 <li>C interface</li>
 <li>Rust interface</li>
-<li>Other tools</li>
+<li>Advanced, other tools</li>
 <li>measuring DSP CPU with the <code>measure_dsp</code> decorator</li>
 <li>proxy DSP model with <code>proxy_dsp</code></li>
+<li>using a custom_memory_manager</li>
 </ul></div>
             </div>
         </div>

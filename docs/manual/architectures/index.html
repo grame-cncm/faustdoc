@@ -430,8 +430,16 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#using-faust2xx-scripts" class="nav-link">Using faust2xx Scripts</a>
+            <li class="nav-item" data-level="2"><a href="#the-faust2xx-scripts" class="nav-link">The faust2xx Scripts</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#using-faust2xx-scripts" class="nav-link">Using faust2xx Scripts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#developing-a-faust2xx-script" class="nav-link">Developing a faust2xx Script</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#the-faust2api-model" class="nav-link">The faust2api Model</a>
@@ -923,12 +931,12 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
 <ul>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/OSCUI.h">OSCUI</a> class implement OSC remote control in both directions</li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpUI.h">httpUI</a> class implement HTTP remote control using the <a href="https://www.gnu.org/software/libmicrohttpd/">libmicrohttpd</a> library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant appliction or plugin. The connection works in both directions</li>
-<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h">MIDIUI</a> class implement MIDI  control in both directions, and it explained more deeply later on</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h">MIDIUI</a> class implement MIDI control in both directions, and it explained more deeply later on</li>
 </ul>
 <h4 id="some-useful-ui-classes-for-developers">Some Useful UI Classes for Developers</h4>
 <p>Some useful UI classes can possibly be reused in developer code:</p>
 <ul>
-<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> class establishes a mapping beween UI items and their labels or paths, and offers a <code>setParamValue/getParamValue</code> API to set and get their values. It uses an helper <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h">PathBuilder</a> class to create complete pathnames to the final items in the UI hierarchy </li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> class establishes a mapping beween UI items and their labels or paths, and offers a <code>setParamValue/getParamValue</code> API to set and get their values. It uses an helper <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h">PathBuilder</a> class to create complete pathnames to the leaves in the UI hierarchy. Note that the item path encodes the UI hierarchy in the form of a <em>/group1/group2/.../label</em> string and is the way to distinguish control that may have the same label, but different localisation in the UI tree. The<code>setParamValue/getParamValue</code> API takes either <em>labels</em> or <em>paths</em> as the way to describe the control, but using path is the safer way to use it</li>
 <li>the extended <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h">APIUI</a> offers <code>setParamValue/getParamValue</code> API similar to <code>MapUI</code>, with additional methods to deal with accelerometer/gyroscope kind of metadata</li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> class decodes all currently supported metadata and can be used to retrieve their values </li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUI.h">JSONUI</a> class allows us to generate the JSON description of a given DSP </li>
@@ -1653,8 +1661,85 @@ int main(int argc, char* argv[])
 <li>the experimental Rust backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs">minimal-rs</a> architecture, or the more complex JACK <code>minimal-jack.rs</code>used in <code>faust2jackrust</code> script, or PortAudio <code>minimal-portaudio.rs</code> used in <code>faust2jackportaudio</code> script</li>
 <li>the experimental Dlang backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.d">minimal.d</a> or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-dplug.d">minimal-dplug</a> to generate <a href="https://dplug.org">DPlug</a> plugins with the <code>faust2dplug</code> tool</li>
 </ul>
-<h2 id="using-faust2xx-scripts">Using faust2xx Scripts</h2>
-<p>Different <code>faust2xx</code> scripts finally combine several architecture files to generate a ready-to-use applications or plugins from a Faust DSP program. They typically combine the <em>generated DSP</em> with an <em>UI architecture</em> file and an <em>audio architecture</em> file. Most of the also have addition options like <code>-midi</code>, <code>-nvoices &lt;num&gt;</code>, <code>-effect &lt;auto|effect.dsp&gt;</code> or <code>-soundfile</code> to generate polyphonic instruments with or without effects, or audio file support. Look at the <a href="https://faustdoc.grame.fr/manual/tools/">following page</a> for a more complete description.  </p>
+<h2 id="the-faust2xx-scripts">The faust2xx Scripts</h2>
+<h3 id="using-faust2xx-scripts">Using faust2xx Scripts</h3>
+<p>The <code>faust2xx</code> scripts finally combine different architecture files to generate a ready-to-use application or plugin, etc... from a Faust DSP program. They typically combine the <em>generated DSP</em> with an <em>UI architecture</em> file and an <em>audio architecture</em> file. Most of the also have addition options like <code>-midi</code>, <code>-nvoices &lt;num&gt;</code>, <code>-effect &lt;auto|effect.dsp&gt;</code> or <code>-soundfile</code> to generate polyphonic instruments with or without effects, or audio file support. Look at the <a href="https://faustdoc.grame.fr/manual/tools/">following page</a> for a more complete description.  </p>
+<h3 id="developing-a-faust2xx-script">Developing a faust2xx Script</h3>
+<p>The <code>faust2xx</code> script are mostly written in <a href="https://fr.wikipedia.org/wiki/Bourne-Again_shell">bash</a> (but any scripting language can be used) and aims to produce a ready-to-use application, plugin, etc... from a DSP program. A <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faust2minimal">faust2minimal</a> template script using the C++ backend, can be used to start the process.</p>
+<p>The  helper scripts, <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustpath">faustpath</a>,  <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustoptflags">faustoptflags</a>, and <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/usage.sh">usage.sh</a> can be used to setup common variables: </p>
+<pre><code class="language-bash"># Define some common paths
+. faustpath
+
+# Define compilation flags
+. faustoptflags
+
+# Helper file to build the 'help' option
+. usage.sh
+
+CXXFLAGS+=&quot; $MYGCCFLAGS&quot;  # So that additional CXXFLAGS can be used
+
+# The architecture file name
+ARCHFILE=$FAUSTARCH/minimal.cpp
+
+# Global variables
+OPTIONS=&quot;&quot;
+FILES=&quot;&quot;
+</code></pre>
+<p>The script arguments then have to be analysed, compiler options are kept in the <code>OPTIONS</code> variable and all DSP files in the <code>FILES</code> one:</p>
+<pre><code class="language-bash">#-------------------------------------------------------------------
+# dispatch command arguments
+#-------------------------------------------------------------------
+
+while [ $1 ]
+do
+  p=$1
+
+  if [ $p = &quot;-help&quot; ] || [ $p = &quot;-h&quot; ]; then
+     usage faust2minimal &quot;[options] [Faust options] &lt;file.dsp&gt;&quot;
+     exit
+  fi
+
+  echo &quot;dispatch command arguments&quot;
+
+  if [ ${p:0:1} = &quot;-&quot; ]; then
+       OPTIONS=&quot;$OPTIONS $p&quot;
+    elif [[ -f &quot;$p&quot; ]] &amp;&amp; [ ${p: -4} == &quot;.dsp&quot; ]; then
+       FILES=&quot;$FILES $p&quot;
+    else
+       OPTIONS=&quot;$OPTIONS $p&quot;        
+    fi
+
+shift
+
+done
+</code></pre>
+<p>Each DSP file is first compiled to C++ using the  <code>faust -a</code> command and the appropriate architecture file, then to the final executable program, here using the C++ compiler:</p>
+<pre><code class="language-bash">#-------------------------------------------------------------------
+# compile the *.dsp files 
+#-------------------------------------------------------------------
+
+for f in $FILES; do
+
+    # compile the DSP to c++ using the architecture file
+    echo &quot;compile the DSP to c++ using the architecture file&quot;
+  faust -i -a $ARCHFILE $OPTIONS &quot;$f&quot; -o &quot;${f%.dsp}.cpp&quot;|| exit
+
+    # compile c++ to binary
+    echo &quot;compile c++ to binary&quot;
+    (
+        $CXX $CXXFLAGS &quot;${f%.dsp}.cpp&quot; -o &quot;${f%.dsp}&quot;
+    ) &gt; /dev/null || exit
+
+  # remove tempory files
+    rm -f &quot;${f%.dsp}.cpp&quot;
+
+    # collect binary file name for FaustWorks
+    BINARIES=&quot;$BINARIES${f%.dsp};&quot;
+done
+
+echo $BINARIES
+</code></pre>
+<p>The existing <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/faust2appls">faust2xx scripts</a> can be used as examples.</p>
 <h2 id="the-faust2api-model">The faust2api Model</h2>
 <p>This model combining the generated DSP the audio and UI architecture components is very convenient to automatically produce ready-to-use standalone application or plugins, since the controller part (GUI,  MIDI or OSC...) is directly compiled and deployed. </p>
 <p>In some cases, developers prefer to control the DSP by developing a completely new GUI (using a toolkit not supported in the standard architecture files), or even without any GUI and using another control layer. </p>
