@@ -14,21 +14,41 @@ To generate various output languages, several backends have been developed: for 
 
 [LLVM](https://llvm.org/) is a compiler infrastructure, designed for compile-time, link-time, and run-time optimization of programs written in arbitrary programming languages. Executable code is produced dynamically using a *Just In Time* compiler from a specific code representation, called LLVM IR. Clang, the LLVM native C/C++/Objective-C compiler is a front-end for the LLVM Compiler. It can, for instance, convert a C or C++ source file into LLVM IR code. Domain-specific languages like Faust can easily target the LLVM IR. This has been done by developing an LLVM IR backend in the Faust compiler.
 
-### Compiling in Memory
+
+
+## Using libfaust with the LLVM backend
+
+The `libfaust` library is fully integrated to the Faust distribution. You'll have to compile and install it in order to use it. For an exhaustive documentation/description of the API, we advise you to have a look at the code in the [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
+
+### Libfaust with LLVM backend API
 
 The complete chain goes from the Faust DSP source code, compiled in LLVM IR using the LLVM backend, to finally produce the executable code using the LLVM JIT. All steps take place in memory, getting rid of the classical file-based approaches. Pointers to executable functions can be retrieved from the resulting LLVM module and the code directly called with the appropriate parameters.
 
 The Faust compiler has been packaged as an embeddable library called `libfaust`, published with an associated API: 
 
-- given a Faust source code (as a file or a string), calling the `createDSPFactoryXXX` function runs the compilation chain (Faust + LLVM JIT) and generates the *prototype* of the class, as a `llvm_dsp_factory` pointer
+- given a Faust source code (as a file or a string), calling the `createDSPFactoryXXX` function runs the compilation chain (Faust + LLVM JIT) and generates the *prototype* of the class, as a `llvm_dsp_factory` pointer. This factory actually contains the compiled LLVM IR for the given DSP
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
 - `deleteDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. You can get a unique SHA1 key of the created factory using its `getSHAKey` method
 - next, the `createDSPInstance` function (corresponding to the `new className` of C++) instantiates a `llvm_dsp` pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, `delete` can be used to destroy the dsp instance
 - since `llvm_dsp` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
 
-## Using libfaust with the LLVM backend
+After the DSP factory has been compiled, the application or the plug-in running it might need to save it and then restore it. To get the internal factory compiled code, several functions are available:
 
-The `libfaust` library is fully integrated to the Faust distribution. You'll have to compile and install it in order to use it. For an exhaustive documentation/description of the API, we advise you to have a look at the code in the [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
+- `writeDSPFactoryToIR`: get the DSP factory LLVM IR (in textual format) as a string 
+-  `writeDSPFactoryToIRFile`: get the DSP factory LLVM IR (in textual format) and write it to a file
+-  `writeDSPFactoryToBitcode`: get the DSP factory LLVM IR (in binary format) as a string 
+-  `writeDSPFactoryToBitcodeFile`: save the DSP factory LLVM IR (in binary format) in a file
+-  `writeDSPFactoryToMachine`: get the DSP factory executable machine code as a string
+-  `writeDSPFactoryToMachineFile`: save the DSP factory executable machine code in a file
+
+To re-create a DSP factory from a previously saved code, several functions are available:
+
+ - `readDSPFactoryFromIR`: create a DSP factory from a string containing the LLVM IR (in textual format) 
+ - `readDSPFactoryFromIRFile`: create a DSP factory from a file containing the LLVM IR (in textual format)
+ -  `readDSPFactoryFromBitcode`: create a DSP factory from a string containing the LLVM IR (in binary format)
+ -  `readDSPFactoryFromBitcodeFile`: create a DSP factory from a file containing the LLVM IR (in binary format)
+ -  `readDSPFactoryFromMachine`: create a DSP factory from a string containing the executable machine code
+ -  `readDSPFactoryFromMachineFile`: create a DSP factory from a file containing the executable machine code.
 
 ### Typical code example
 
@@ -69,26 +89,6 @@ Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](h
 
 Then the DSP object has to be connected to an audio driver to be rendered (see the `m_dsp->compute(128, m_input, m_output);` block). A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp). A example using the pure C API can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c). 
 
-### Saving/Restoring the Factory
-
-After the DSP factory has been compiled, the application or the plug-in running it might need to save it and then restore it. To get the internal factory compiled code, several functions are available:
-
-* `writeDSPFactoryToIR`: get the DSP factory LLVM IR (in textual format) as a string 
-* `writeDSPFactoryToIRFile`: get the DSP factory LLVM IR (in textual format) and write it to a file
-* `writeDSPFactoryToBitcode`: get the DSP factory LLVM IR (in binary format) as a string 
-* `writeDSPFactoryToBitcodeFile`: save the DSP factory LLVM IR (in binary format) in a file
-* `writeDSPFactoryToMachine`: get the DSP factory executable machine code as a string
-* `writeDSPFactoryToMachineFile`: save the DSP factory executable machine code in a file.
-
-To re-create a DSP factory from a previously saved code, several functions are available:
-
-* `readDSPFactoryFromIR`: create a DSP factory from a string containing the LLVM IR (in textual format) 
-* `readDSPFactoryFromIRFile`: create a DSP factory from a file containing the LLVM IR (in textual format)
-* `readDSPFactoryFromBitcode`: create a DSP factory from a string containing the LLVM IR (in binary format)
-* `readDSPFactoryFromBitcodeFile`: create a DSP factory from a file containing the LLVM IR (in binary format)
-* `readDSPFactoryFromMachine`: create a DSP factory from a string containing the executable machine code
-* `readDSPFactoryFromMachineFile`: create a DSP factory from a file containing the executable machine code.
-
 ## Using libfaust with the Interpreter backend
 
 When compiled to embed the [Interpreter backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/interpreter), `libfaust` can also be used to generate the Faust Bytes Code (FBC) format and interpret it in memory.
@@ -97,20 +97,25 @@ The interpreter backend has been first written to allow dynamical compilation on
 
 The FIR language is simple enough to be easily translated in the typed bytecode for an interpreter, generated by a FIR to bytecode compilation pass. The virtual machine then executes the bytecode on a stack based machine.
 
-### The interpreter API
+### Libfaust with Interpreter backend API
 The interpreter backend API is similar to the LLVM backend API: 
 
-- the compilation step is done through the `createInterpreterDSPFactory` function 
-
-- given a FAUST source code (as a file or a string), the compilation chain (Faust + interpreter backend) generates the *prototype* of the class, as an `interpreter_dsp_factory` pointer. This factory actually contains the compiled bytecode for the given DSP
+- given a FAUST source code (as a file or a string),  calling the `createInterpreterDSPFactory`  function runs the compilation chain (Faust + interpreter backend) and generates the *prototype* of the class, as an `interpreter_dsp_factory` pointer. This factory actually contains the compiled bytecode for the given DSP
+- the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
+- `deleteInterpreterDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. You can get a unique SHA1 key of the created factory using its `getSHAKey` method
 - next, the `createDSPInstance` method of the factory class, corresponding to the `new className` of C++, instantiates an `interpreter_dsp` pointer, to be used as any regular Faust compiled DSP object, run and controlled through its interface. The instance contains the interpreter virtual machine loaded with the compiled bytecode, to be executed for each method
-- after the DSP factory has been compiled, the application or plugin may want to save/restore it in order to save Faust to interpreter bytecode compilation at next use. To get the internal factory bytecode and save it, two functions are available:
-  • `writeInterpreterDSPFactoryToMachine` allows to get the interpreter bytecode as a string
-  • `writeInterpreterDSPFactoryToMachineFile` allows to save the interpreter bytecode in a file
-- To re-create a DSP factory from a previously saved code, two functions are available:
-  • `readInterpreterDSPFactoryFromMachine`allows to create a DSP factory from a string containing the interpreter bytecode
-  • `readInterpreterDSPFactoryFromMachineFile` allows to create a DSP factory from a file containing the
-  interpreter bytecode
+- since ``interpreter_dsp`` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
+
+After the DSP factory has been compiled, the application or plugin may want to save/restore it in order to save Faust to interpreter bytecode compilation at next use. To get the internal factory bytecode and save it, two functions are available:
+
+  -  `writeInterpreterDSPFactoryToMachine` allows to get the interpreter bytecode as a string
+  -  `writeInterpreterDSPFactoryToMachineFile` allows to save the interpreter bytecode in a file
+  
+To re-create a DSP factory from a previously saved code, two functions are available:
+
+  -  `readInterpreterDSPFactoryFromMachine`allows to create a DSP factory from a string containing the interpreter bytecode
+  - `readInterpreterDSPFactoryFromMachineFile` allows to create a DSP factory from a file containing the
+    interpreter bytecode
 
 The complete API is available and documented in the installed [faust/dsp/interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) header. Note that only the scalar compilation mode is supported. A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/interp-tests/interp-test.cpp). 
 
