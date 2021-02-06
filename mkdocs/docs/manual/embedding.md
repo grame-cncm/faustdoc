@@ -2,8 +2,6 @@
 
 The combination of the awesome [LLVM technology](https://llvm.org/) and `libfaust` (the library version of the Faust compiler) allows developers to compile and execute Faust DSP programs on the fly at full speed and without making compromises. It also contains an Interpreter backend to be used on OS not supporting dynamic compilation (like Apple iOS), or in testing tools.
 
-In this section, we demonstrate how the Faust dynamic compilation chain can be used to embed the Faust compiler technology directly in applications or plug-ins.
-
 ## Dynamic Compilation Chain
 
 The Faust compiler uses an intermediate FIR representation (Faust Imperative Representation), which can be translated to several output languages. The FIR language describes the computation performed on the samples in a generic manner. It contains primitives to read and write variables and arrays, do arithmetic operations, and define the necessary control structures (`for` and `while` loops, `if` structure, etc.). 
@@ -18,21 +16,21 @@ To generate various output languages, several backends have been developed: for 
 
 ## Using libfaust with the LLVM backend
 
-The `libfaust` library is fully integrated to the Faust distribution. You'll have to compile and install it in order to use it. For an exhaustive documentation/description of the API, we advise you to have a look at the code in the [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
+The `libfaust` library is fully integrated to the Faust distribution which has to be compiled and installed to make it available. For an exhaustive documentation/description of the API, the code in the [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
 
 ### Libfaust with LLVM backend API
 
 The complete chain goes from the Faust DSP source code, compiled in LLVM IR using the LLVM backend, to finally produce the executable code using the LLVM JIT. All steps take place in memory, getting rid of the classical file-based approaches. Pointers to executable functions can be retrieved from the resulting LLVM module and the code directly called with the appropriate parameters.
 
-The Faust compiler has been packaged as an embeddable library called `libfaust`, published with an associated API: 
+The  `libfaust` library exports the following API: 
 
 - given a Faust source code (as a file or a string), calling the `createDSPFactoryXXX` function runs the compilation chain (Faust + LLVM JIT) and generates the *prototype* of the class, as a `llvm_dsp_factory` pointer. This factory actually contains the compiled LLVM IR for the given DSP
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
-- `deleteDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. You can get a unique SHA1 key of the created factory using its `getSHAKey` method
+- `deleteDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. A unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
 - next, the `createDSPInstance` function (corresponding to the `new className` of C++) instantiates a `llvm_dsp` pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, `delete` can be used to destroy the dsp instance
 - since `llvm_dsp` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
 
-After the DSP factory has been compiled, the application or the plug-in running it might need to save it and then restore it. To get the internal factory compiled code, several functions are available:
+After the DSP factory has been compiled, the application or the plugin running it might need to save it and then restore it. To get the internal factory compiled code, several functions are available:
 
 - `writeDSPFactoryToIR`: get the DSP factory LLVM IR (in textual format) as a string 
 -  `writeDSPFactoryToIRFile`: get the DSP factory LLVM IR (in textual format) and write it to a file
@@ -102,7 +100,7 @@ The interpreter backend API is similar to the LLVM backend API:
 
 - given a FAUST source code (as a file or a string),  calling the `createInterpreterDSPFactory`  function runs the compilation chain (Faust + interpreter backend) and generates the *prototype* of the class, as an `interpreter_dsp_factory` pointer. This factory actually contains the compiled bytecode for the given DSP
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
-- `deleteInterpreterDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. You can get a unique SHA1 key of the created factory using its `getSHAKey` method
+- `deleteInterpreterDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. A unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
 - next, the `createDSPInstance` method of the factory class, corresponding to the `new className` of C++, instantiates an `interpreter_dsp` pointer, to be used as any regular Faust compiled DSP object, run and controlled through its interface. The instance contains the interpreter virtual machine loaded with the compiled bytecode, to be executed for each method
 - since ``interpreter_dsp`` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
 
@@ -110,7 +108,7 @@ After the DSP factory has been compiled, the application or plugin may want to s
 
   -  `writeInterpreterDSPFactoryToMachine` allows to get the interpreter bytecode as a string
   -  `writeInterpreterDSPFactoryToMachineFile` allows to save the interpreter bytecode in a file
-  
+
 To re-create a DSP factory from a previously saved code, two functions are available:
 
   -  `readInterpreterDSPFactoryFromMachine`allows to create a DSP factory from a string containing the interpreter bytecode
