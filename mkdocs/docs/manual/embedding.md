@@ -125,8 +125,16 @@ The generated code is obviously much slower than LLVM generated native code. Mea
 
 Some additional functions are available in the `libfaust` API:
 
-* `expandDSPFromString`/`expandDSPFromFile`: creates a self-contained DSP source string where all needed librairies have been included. All compilations options are normalized and included as a comment in the expanded string
-* `generateAuxFilesFromString`/`generateAuxFilesFromFile`: from a DSP source string or file, generates auxiliary files: SVG, XML, ps, etc. depending of the `argv` parameters.
+### Expanding the DSP code 
+
+The`expandDSPFromString`/`expandDSPFromFile` functions can be used to generate a self-contained DSP source string where all needed librairies have been included. All compilations options are normalized and included as a comment in the expanded string. This is a way to create self-contained version of DSP programs.
+
+### Using other backends or generating auxiliary files
+
+The`generateAuxFilesFromString`/`generateAuxFilesFromFile` functions taking a DSP source string or file, can be used:
+
+- to activate and use other backends (depending of which ones have been compiled in libfaust) to generate like C, C++, or SOUL code, etc. The `argv` parameter has to mimic the command line like: `-lang cpp -vec -lv 1` to generate a C++ file in vector mode for instance
+- to generate auxiliary files which can be text files SVG, XML, ps, etc. The `argv` parameter has to mimic the command line like: `-json` to generate a JSON file
 
 ## Additional Resources 
 
