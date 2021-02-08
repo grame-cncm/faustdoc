@@ -1125,11 +1125,13 @@ The primitive signal processing operations represent the built-in functionalitie
 
 ### Numbers
 
-Faust considers two types of numbers: *integers* and *floats*. Integers are implemented as 32-bits integers, and floats are implemented either with a simple, double, or extended precision depending of the compiler options. Floats are available in decimal or scientific notation. 
+Faust considers two types of numbers: *integers* and *floats*. Integers are implemented as signed 32-bits integers, and floats are implemented either with a simple, double, or extended precision depending of the compiler options. Floats are available in decimal or scientific notation. 
 
 <img src="img/numbers.svg" class="mx-auto d-block">
 
 Like any other Faust expression, numbers are signal processors. For example the number 0.95 is a signal processor of type \(\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}\) that transforms an empty tuple of signals \(()\) into a 1-tuple of signals \((y)\) such that \(\forall t\in\mathbb{N}, y(t)=0.95\).
+
+Operations on *integer* numbers follow the standard C semantic for `+, -, *` operations and can possibly overflow if the result cannot be represented as a  32-bits integer. The `/` operation is treated separately and cast both of its arguments to floats before doing the division, and thus the result takes the float type.
 
 ### `route` Primitive
 
