@@ -75,7 +75,14 @@ This architecture is still not very useful, but it gives an idea of what a real-
 
 ## Audio Architecture Modules
 
-An *audio architecture module* typically connects a Faust program to the audio drivers. It is responsible for allocating and releasing the audio channels and for calling the Faust `compute` method to handle incoming audio buffers and/or to produce audio output. It is also responsible for presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0. 
+A Faust generated program has to connect to a underlying audio layer. Depending if the final program is a application or plugin, the way to connect to this audio layer will differ:
+
+- applications typically use the OS audio driver API, which will be CoreAudio on macOS, ALSA on Linux, WASAPI on Windows for instance, or any kind of multi-platforms API like [PortAudio](http://portaudio.com) or [JACK](https://jackaudio.org). In this case a subclass of the base class `audio` (see later) has to be written
+- plugins (like [VST3](https://www.steinberg.net/en/company/technologies/vst3.html), [Audio Unit](https://developer.apple.com/documentation/audiounit) or [JUCE](https://juce.com) for instance) usually have to follow a more constrained API which imposes a *life cyle*, something like *loading/initializing/starting/running/stopping/unloading* sequence of operations. In this case the best way to plug the Faust generated module with its *new/init/compute/delete* methods in the plugin own API has to be found, by calling each module function at the appropriate place
+
+### Connection to an audio driver API
+
+An *audio driver architecture* typically connects a Faust program to the audio drivers. It is responsible for allocating and releasing the audio channels and for calling the Faust `compute` method to handle incoming audio buffers and/or to produce audio output. It is also responsible for presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0. 
 
 The default compilation model uses separated audio input and output buffers not referring to the same memory locations. The `-inpl (--in-place)` code generation model allows us to generate code working when *input and output buffers are the same* (which is typically needed in some embedded devices). This option currently only works in scalar (= default) code generation mode.
 
@@ -135,6 +142,23 @@ class audio {
 The API is simple enough to give a great flexibility to audio architectures implementations. The  `init` method should initialize the audio. At  `init` exit, the system should be in a safe state to recall the  `dsp` object state. Here is the hierarchy of some of the supported audio drivers:
 
 <img src="img/AudioHierarchy.jpg" class="mx-auto d-block" width="70%">
+
+
+
+### Connection to a plugin audio API
+
+In the case of plugin, an *audio plugin architecture* has to be developed, by integrating the Faust DSP *new/init/compute/delete* methods in the plugin API. Here is a concrete example using the JUCE framework:
+
+- a [FaustPlugInAudioProcessor](https://github.com/grame-cncm/faust/blob/master-dev/architecture/juce/juce-plugin.cpp#L221) class, subclass of the `juce::AudioProcessor` has to be defined. The Faust generated C++ instance will be created in its constructor, either in monophonic of polyphonic mode (see later sections)
+
+- the Faust DSP instance is initialized in the JUCE `prepareToPlay` method using the current sample rate value
+
+- the Faust dsp `compute` is called in the JUCE `process` which receives the audio inputs/outputs buffers to be processed
+
+- additional methods can possibly be implemented to handle MIDI messages or save/restore the plugin parameters state for instance. 
+
+
+This methodology obviously has to be adapted for each supported plugin API.
 
 ## MIDI Architecture Modules
 

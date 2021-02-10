@@ -268,6 +268,14 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#audio-architecture-modules" class="nav-link">Audio Architecture Modules</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#connection-to-an-audio-driver-api" class="nav-link">Connection to an audio driver API</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#connection-to-a-plugin-audio-api" class="nav-link">Connection to a plugin audio API</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#midi-architecture-modules" class="nav-link">MIDI Architecture Modules</a>
@@ -530,7 +538,13 @@ struct UI {
 </code></pre>
 <p>This architecture is still not very useful, but it gives an idea of what a real-life architecture file has to implement, in addition to the audio part itself. As we will see in the next section, Faust architectures are implemented using a modular approach to avoid code duplication and favor code maintenance and reuse.</p>
 <h2 id="audio-architecture-modules">Audio Architecture Modules</h2>
-<p>An <em>audio architecture module</em> typically connects a Faust program to the audio drivers. It is responsible for allocating and releasing the audio channels and for calling the Faust <code>compute</code> method to handle incoming audio buffers and/or to produce audio output. It is also responsible for presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0. </p>
+<p>A Faust generated program has to connect to a underlying audio layer. Depending if the final program is a application or plugin, the way to connect to this audio layer will differ:</p>
+<ul>
+<li>applications typically use the OS audio driver API, which will be CoreAudio on macOS, ALSA on Linux, WASAPI on Windows for instance, or any kind of multi-platforms API like <a href="http://portaudio.com">PortAudio</a> or <a href="https://jackaudio.org">JACK</a>. In this case a subclass of the base class <code>audio</code> (see later) has to be written</li>
+<li>plugins (like <a href="https://www.steinberg.net/en/company/technologies/vst3.html">VST3</a> , <a href="https://developer.apple.com/documentation/audiounit">Audio Unit</a> or <a href="https://juce.com">JUCE</a> for instance) usually have to follow a more constrained API which imposes a <em>life cyle</em>, something like <em>loading/initializing/starting/running/stopping/unloading</em> sequence of operations. In this case the best way to plug the Faust generated module with its <em>new/init/compute/delete</em> methods in the plugin own API has to be found, by calling each module function at the appropriate place</li>
+</ul>
+<h3 id="connection-to-an-audio-driver-api">Connection to an audio driver API</h3>
+<p>An <em>audio driver architecture</em> typically connects a Faust program to the audio drivers. It is responsible for allocating and releasing the audio channels and for calling the Faust <code>compute</code> method to handle incoming audio buffers and/or to produce audio output. It is also responsible for presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0. </p>
 <p>The default compilation model uses separated audio input and output buffers not referring to the same memory locations. The <code>-inpl (--in-place)</code> code generation model allows us to generate code working when <em>input and output buffers are the same</em> (which is typically needed in some embedded devices). This option currently only works in scalar (= default) code generation mode.</p>
 <p>A Faust audio architecture module derives from an <em>audio</em> class can be defined as below (simplified version, see the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/audio.h">real version here)</a>:</p>
 <pre><code class="language-c++">class audio {
@@ -584,6 +598,23 @@ struct UI {
 </code></pre>
 <p>The API is simple enough to give a great flexibility to audio architectures implementations. The  <code>init</code> method should initialize the audio. At  <code>init</code> exit, the system should be in a safe state to recall the  <code>dsp</code> object state. Here is the hierarchy of some of the supported audio drivers:</p>
 <p><img src="img/AudioHierarchy.jpg" class="mx-auto d-block" width="70%"></p>
+<h3 id="connection-to-a-plugin-audio-api">Connection to a plugin audio API</h3>
+<p>In the case of plugin, an <em>audio plugin architecture</em> has to be developed, by integrating the Faust DSP <em>new/init/compute/delete</em> methods in the plugin API. Here is a concrete example using the JUCE framework:</p>
+<ul>
+<li>
+<p>a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/juce/juce-plugin.cpp#L221">FaustPlugInAudioProcessor</a> class, subclass of the <code>juce::AudioProcessor</code> has to be defined. The Faust generated C++ instance will be created in its constructor, either in monophonic of polyphonic mode (see later sections)</p>
+</li>
+<li>
+<p>the Faust DSP instance is initialized in the JUCE <code>prepareToPlay</code> method using the current sample rate value</p>
+</li>
+<li>
+<p>the Faust dsp <code>compute</code> is called in the JUCE <code>process</code> which receives the audio inputs/outputs buffers to be processed</p>
+</li>
+<li>
+<p>additional methods can possibly be implemented to handle MIDI messages or save/restore the plugin parameters state for instance. </p>
+</li>
+</ul>
+<p>This methodology obviously has to be adapted for each supported plugin API.</p>
 <h2 id="midi-architecture-modules">MIDI Architecture Modules</h2>
 <p>A <em>MIDI architecture module</em> typically connects a Faust program to the MIDI drivers. MIDI control connects DSP parameters with MIDI messages (in both directions), and can be used to trigger polyphonic instruments.</p>
 <h4 id="midi-messages-in-the-dsp-source-code">MIDI Messages in the DSP Source Code</h4>

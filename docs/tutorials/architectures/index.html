@@ -280,9 +280,18 @@
 <h1 id="using-and-developing-architectures-files">Using and Developing Architectures Files</h1>
 <h2 id="introduction">Introduction</h2>
 <p>A Faust program describes a <em>signal processor</em>, a pure DSP computation that maps <em>input signals</em> to <em>output signals</em>. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by <a href="https://faustdoc.grame.fr/manual/architectures/"><em>architecture files</em></a>.
-We assume here a general understanding of the architecture files model. In this tutorial, we'll explain how the machinery works, starting with a simple example, and gradually enriching it to show how multiple controllers can be used (OSC, http, MIDI etc.). The tutorial also shows how the architectures files can be used with statically generated C++ files, or dynamically generated dsp using the LLVM or Interpreter backends. And finally we'll demonstatre how to write simple architecture files or combine, extend and use existing ones. </p>
+We assume here a general understanding of the architecture files model. In this tutorial, we'll explain how the machinery works:</p>
+<ul>
+<li>starting with a simple example</li>
+<li>gradually enriching it to show how multiple controllers can be used (OSC, http, MIDI etc.) </li>
+<li>showing how the architectures files can be used with statically generated C++ files, or dynamically generated dsp using the LLVM or Interpreter backends </li>
+<li>finally demonstrating how to write simple architecture files or combine, extend and use existing ones. </li>
+</ul>
 <h2 id="plan">Plan</h2>
-<p>The Faust compiler </p>
+<p>The Faust compiler generates the DSP code as a C++ class, an LLVM module, a wasm module etc with a fixed API shared among the</p>
+<p>Let's use the simple following DSP program:</p>
+<p>Compiling it with the command <code>faust test1.dsp -o test.cpp</code> produces the following C++ class:</p>
+<p>which does not directly compile since it refers to a base <code>dsp</code> class, and additional <code>UI</code> and <code>meta</code> definitions. </p>
 <ul>
 <li>starting from a C++ generated class in a minimal architecture file</li>
 <li>adding a dummy audio driver, explain DSP itinialisation with SR with <code>init(SR)</code>, </li>
