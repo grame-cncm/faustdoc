@@ -87,6 +87,10 @@ Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](h
 
 Then the DSP object has to be connected to an audio driver to be rendered (see the `m_dsp->compute(128, m_input, m_output);` block). A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp). A example using the pure C API can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c). 
 
+### Deployment
+
+The application or plugin using `libfaust` can embed the library either as a statically linked component (to get a self-contained binary) or provided as a separate component and load it dynamically at runtime. The Faust libraries themselves usually have to be bundled separately and can be accessed at runtime using the compiler `-I /path/to/libraries` option in `createDSPFactoryFromString/createDSPFactoryFromFile` functions.
+
 ## Using libfaust with the Interpreter backend
 
 When compiled to embed the [Interpreter backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/interpreter), `libfaust` can also be used to generate the Faust Bytes Code (FBC) format and interpret it in memory.
