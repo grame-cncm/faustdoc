@@ -78,7 +78,7 @@ This architecture is still not very useful, but it gives an idea of what a real-
 A Faust generated program has to connect to a underlying audio layer. Depending if the final program is a application or plugin, the way to connect to this audio layer will differ:
 
 - applications typically use the OS audio driver API, which will be CoreAudio on macOS, ALSA on Linux, WASAPI on Windows for instance, or any kind of multi-platforms API like [PortAudio](http://portaudio.com) or [JACK](https://jackaudio.org). In this case a subclass of the base class `audio` (see later) has to be written
-- plugins (like [VST3](https://www.steinberg.net/en/company/technologies/vst3.html), [Audio Unit](https://developer.apple.com/documentation/audiounit) or [JUCE](https://juce.com) for instance) usually have to follow a more constrained API which imposes a *life cyle*, something like *loading/initializing/starting/running/stopping/unloading* sequence of operations. In this case the best way to plug the Faust generated module with its *new/init/compute/delete* methods in the plugin own API has to be found, by calling each module function at the appropriate place
+- plugins (like [VST3](https://www.steinberg.net/en/company/technologies/vst3.html), [Audio Unit](https://developer.apple.com/documentation/audiounit) or [JUCE](https://juce.com) for instance) usually have to follow a more constrained API which imposes a *life cyle*, something like *loading/initializing/starting/running/stopping/unloading* sequence of operations. In this case the Faust generated module *new/init/compute/delete* methods have to be inserted in the plugin API, by calling each module function at the appropriate place.
 
 ### Connection to an audio driver API
 
