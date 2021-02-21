@@ -82,7 +82,11 @@ A Faust generated program has to connect to a underlying audio layer. Depending 
 
 ### Connection to an audio driver API
 
-An *audio driver architecture* typically connects a Faust program to the audio drivers. It is responsible for allocating and releasing the audio channels and for calling the Faust `compute` method to handle incoming audio buffers and/or to produce audio output. It is also responsible for presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0. 
+An *audio driver architecture* typically connects a Faust program to the audio drivers. It is responsible for:
+
+- allocating and releasing the audio channels and presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0
+- calling the DSP `init` method at init time, to setup the `ma.SR` variable possibly used in the DSP code
+- calling the DSP `compute` method to handle incoming audio buffers and/or to produce audio outputs. 
 
 The default compilation model uses separated audio input and output buffers not referring to the same memory locations. The `-inpl (--in-place)` code generation model allows us to generate code working when *input and output buffers are the same* (which is typically needed in some embedded devices). This option currently only works in scalar (= default) code generation mode.
 
@@ -142,7 +146,6 @@ class audio {
 The API is simple enough to give a great flexibility to audio architectures implementations. The  `init` method should initialize the audio. At  `init` exit, the system should be in a safe state to recall the  `dsp` object state. Here is the hierarchy of some of the supported audio drivers:
 
 <img src="img/AudioHierarchy.jpg" class="mx-auto d-block" width="70%">
-
 
 
 ### Connection to a plugin audio API
@@ -541,7 +544,7 @@ Here is the description of the main GUI classes:
 Here is the description of the main non-GUI controller classes:
 
 - the [OSCUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/OSCUI.h) class implement OSC remote control in both directions
-- the [httpUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpUI.h) class implement HTTP remote control using the [libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/) library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant appliction or plugin. The connection works in both directions
+- the [httpdUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpdUI.h) class implement HTTP remote control using the [libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/) library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant appliction or plugin. The connection works in both directions
 - the [MIDIUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h) class implement MIDI control in both directions, and it explained more deeply later on
 
 #### Some Useful UI Classes for Developers 
@@ -688,8 +691,8 @@ The dsp object is central to the Faust architecture design:
 
 + `getNumInputs`, `getNumOutputs` provides information about the signal processor,
 + `buildUserInterface` creates the user interface using a given UI class object (see later),
-+ `init` (aned some more specialized methods like `instanceInit`, `instanceConstants`, etc.) is called to initialize the dsp object with a given sampling rate, typically obtained from the audio architecture,
-+ `compute` is called by the audio architecture to execute the actual audio processing. It takes as a `count` number of samples to process, `inputs` and `outputs` arrays of non-interleaved float/double samples, to be allocated and handled by the audio driver with the required dsp input and ouputs channels (as given by  `getNumInputs` and `getNumOutputs`).
++ `init` (and some more specialized methods like `instanceInit`, `instanceConstants`, etc.) is called to initialize the dsp object with a given sampling rate, typically obtained from the audio architecture,
++ `compute` is called by the audio architecture to execute the actual audio processing. It takes a `count` number of samples to process, and `inputs` and `outputs` arrays of non-interleaved float/double samples, to be allocated and handled by the audio driver with the required dsp input and ouputs channels (as given by  `getNumInputs` and `getNumOutputs`).
 
 (note that `FAUSTFLOAT` label is typically defined to be the actual type of sample: either float or double using `#define FAUSTFLOAT float` in the code for instance).
 

@@ -268,6 +268,38 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#plan" class="nav-link">Plan</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#the-simplest-c-file" class="nav-link">The simplest C++ file</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#adding-an-audio-driver" class="nav-link">Adding an audio driver</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-a-real-audio-driver-jack" class="nav-link">Using a real audio driver JACK</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#create-dsp-program-with-some-controllers" class="nav-link">Create DSP program with some controllers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#the-builduserinterface-method" class="nav-link">The buildUserInterface method</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-gtkui-controller" class="nav-link">Using the GTKUI controller</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-oscui-controller" class="nav-link">Using the OSCUI controller</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-httpdui-controller" class="nav-link">Using the httpdUI controller</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -284,25 +316,153 @@ We assume here a general understanding of the architecture files model. In this 
 <ul>
 <li>starting with a simple example</li>
 <li>gradually enriching it to show how multiple controllers can be used (OSC, http, MIDI etc.) </li>
-<li>showing how the architectures files can be used with statically generated C++ files, or dynamically generated dsp using the LLVM or Interpreter backends </li>
-<li>finally demonstrating how to write simple architecture files or combine, extend and use existing ones. </li>
+<li>showing how the architectures files can be used with statically generated C++ files, or dynamically generated DSP using the LLVM or Interpreter backends </li>
+<li>demonstrate how to create polyphonic instruments, add a global effects using the DSP C++ algebra, setup sample accurate controllable DSP</li>
+<li>finally demonstrating how to write simple architecture files, or combine extend and use existing ones. </li>
 </ul>
 <h2 id="plan">Plan</h2>
-<p>The Faust compiler generates the DSP code as a C++ class, an LLVM module, a wasm module etc with a fixed API shared among the</p>
-<p>Let's use the simple following DSP program:</p>
+<p>The Faust compiler generates the DSP code as a C++ class, a C structure and associated functions, a LLVM module or a wasm module.etc. with a fixed API shared among the backends.</p>
+<h4 id="the-simplest-c-file">The simplest C++ file</h4>
+<p>Let's start with the simple following DSP program:</p>
 <p>Compiling it with the command <code>faust test1.dsp -o test.cpp</code> produces the following C++ class:</p>
-<p>which does not directly compile since it refers to a base <code>dsp</code> class, and additional <code>UI</code> and <code>meta</code> definitions. </p>
+<p>which does not directly compile since it refers to a base <code>dsp</code> class, and additional <code>UI</code> and <code>meta</code> definitions which are not available in the generated code. </p>
+<p>The purpose of the architecture file is first to fill all the <em>holes</em>, so that the C++ class can be compiled and used in a real program. The following <code>nullarch.cpp</code>  wich contains 2 special lines:</p>
+<pre><code>&lt;&lt;includeIntrinsic&gt;&gt;
+&lt;&lt;includeclass&gt;&gt;
+</code></pre>
+<p>can be used to generate the C++ file:</p>
+<pre><code class="language-c++">&lt;&lt;includeIntrinsic&gt;&gt;
+
+#define FAUSTFLOAT float
+
+class dsp {};
+
+struct Meta {
+    virtual void declare(const char* key, const char* value) {};
+};
+
+struct Soundfile {
+    FAUSTFLOAT** fBuffers;
+    int* fLength;   // length of each part
+    int* fSR;       // sample rate of each part
+    int* fOffset;   // offset of each part in the global buffer
+    int fChannels;  // max number of channels of all concatenated files
+};
+
+struct UI {
+    // -- widget's layouts
+    virtual void openTabBox(const char* label) {}
+    virtual void openHorizontalBox(const char* label) {}
+    virtual void openVerticalBox(const char* label) {}
+    virtual void closeBox() {}
+
+    // -- active widgets
+    virtual void addButton(const char* label, FAUSTFLOAT* zone) {}
+    virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) {}
+    virtual void addVerticalSlider(const char* label, 
+                                   FAUSTFLOAT* zone, 
+                                   FAUSTFLOAT init,
+                                   FAUSTFLOAT min, 
+                                   FAUSTFLOAT max, 
+                                   FAUSTFLOAT step) {}
+    virtual void addHorizontalSlider(const char* label, 
+                                   FAUSTFLOAT* zone, 
+                                   FAUSTFLOAT init,
+                                   FAUSTFLOAT min, 
+                                   FAUSTFLOAT max, 
+                                   FAUSTFLOAT step) {}
+    virtual void addNumEntry(const char* label, 
+                                   FAUSTFLOAT* zone, 
+                                   FAUSTFLOAT init,
+                                   FAUSTFLOAT min, 
+                                   FAUSTFLOAT max, 
+                                   FAUSTFLOAT step) {}
+
+    // -- passive widgets
+    virtual void addHorizontalBargraph(const char* label, 
+                                       FAUSTFLOAT* zone, 
+                                       FAUSTFLOAT min,
+                                       FAUSTFLOAT max) {}
+    virtual void addVerticalBargraph(const char* label, 
+                                       FAUSTFLOAT* zone, 
+                                       FAUSTFLOAT min,
+                                       FAUSTFLOAT max) {}
+
+    // -- soundfiles
+    virtual void addSoundfile(const char* label, 
+                              const char* filename, 
+                              Soundfile** sf_zone) {}
+
+    // -- metadata declarations
+    virtual void declare(FAUSTFLOAT* zone, const char* key, const char* val) {}
+};
+
+&lt;&lt;includeclass&gt;&gt;
+</code></pre>
+<p>When used whith the <code>-a</code> option, the compiler will simply replace them with the C++ class (or C code when sued wiht the C backend etc.). Type the following command to generate a ready to compile C++ file:</p>
+<pre><code>faust -a nullarch.cpp test1.dsp -o test1.cpp
+</code></pre>
+<p>And compile it with (using the -S option since the file does not even contain a <code>main</code>:</p>
+<pre><code>c++ -S test1.cpp
+</code></pre>
 <ul>
 <li>starting from a C++ generated class in a minimal architecture file</li>
+</ul>
+<h4 id="adding-an-audio-driver">Adding an audio driver</h4>
+<ul>
 <li>adding a dummy audio driver, explain DSP itinialisation with SR with <code>init(SR)</code>, </li>
+</ul>
+<p>A Faust generated program has to connect to a underlying audio layer, either an audio driver or an audio plugin API, which will call the DSP <code>init</code> method at init time to setup the <code>ma.SR</code> variable, and the DSP <code>compute</code> to handle incoming audio buffers and/or to produce audio outputs. </p>
+<p>The audio driver base class has an <code>init(const char* name, dsp* dsp)</code>  that will be called first</p>
+<h4 id="using-a-real-audio-driver-jack">Using a real audio driver JACK</h4>
+<ul>
 <li>switching to a real audio driver using <a href="https://jackaudio.org">JACK</a> =&gt; using a DSP that always generates sound (osc.osc(440), we hear sound</li>
+</ul>
+<h4 id="create-dsp-program-with-some-controllers">Create DSP program with some controllers</h4>
+<ul>
 <li>create DSP program with some controllers</li>
-<li>write a simple <code>PrintUI</code> architecture that prints each control, explain <code>buildUserInterface</code> method, plug it on the DSP </li>
+</ul>
+<h4 id="the-builduserinterface-method">The buildUserInterface method</h4>
+<ul>
+<li>explain <code>buildUserInterface</code> method, write a simple <code>PrintUI</code> architecture that prints each control, plug it on the DSP </li>
+</ul>
+<h4 id="using-the-gtkui-controller">Using the GTKUI controller</h4>
+<p>The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GTKUI.h">GTKUI</a> class uses the <a href="https://www.gtk.org">GTK</a> toolkit to create a Graphical User Interface with a proper group-based layout.  It can simply be plugged on the DSP using <code>buildUserInterface</code> a second time on the DSP:</p>
+<pre><code class="language-c++">#include &quot;faust/gui/GTKUI.h&quot;
+
+// Create and plug the GTK interface
+GTKUI gtk_interface(name, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(&amp;gtk_interface);
+
+// Start gtk_interface (layout and event handing)
+gtk_interface-&gt;run();
+</code></pre>
+<ul>
 <li>use a ready-to-use GUI architecture:  <code>GTKUI</code> using GTK framework</li>
-<li>explain and demonstrate <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a>  (with <code>setParamValue/getParamValue</code> model), explain the label and path distinction</li>
+<li>explain and demonstrate <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a>  (with <code>setParamValue/getParamValue</code> model), explain the label and path distinction, shoudl the <code>PathBuilder</code> helper. </li>
+</ul>
+<h4 id="using-the-oscui-controller">Using the OSCUI controller</h4>
+<p>The <a href="https://faustdoc.grame.fr/manual/osc/">OSCUI controller</a> can be used to control parameters with incoming OSC messages, or emit OSC messages when parameters are moved.  It can simply be plugged on the DSP using <code>buildUserInterface</code> a second time</p>
+<pre><code class="language-c++">#include &quot;faust/gui/OSCUI.h&quot;
+
+// Create and plug the OSC interface
+OSCUI osc_interface(name, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(&amp;osc_interface);
+
+// Start osc_interface
+osc_interface-&gt;run();
+</code></pre>
+<ul>
 <li>use  <code>OSCUI</code> as a first example of remote control, explain how several UIs can be combined and synchronized (using the GUI class)</li>
-<li>use <code>httpUI</code>, as a second example of remote control</li>
-<li>explain the concept of metadata, take MIDI as an example, add some in the DSP program, use <code>MIDIUI</code>, demonstrate MIDI control  in both directions</li>
+</ul>
+<h4 id="using-the-httpdui-controller">Using the httpdUI controller</h4>
+<ul>
+<li>
+<p>use <code>httpdUI</code>, as a second example of remote control</p>
+</li>
+<li>
+<p>explain the concept of metadata, take MIDI as an example, add some in the DSP program, use <code>MIDIUI</code>, demonstrate MIDI control  in both directions</p>
+</li>
 <li>sample-accurate control: used of <code>time_dsp</code> decorator, example of MIDI clock base synchro </li>
 <li>explain polyphony implementation: explain how we can <em>aggregate</em> several C++ dsp, subclassing the base <code>dsp</code> class to keep the same interface, show control with MIDI</li>
 <li>explains the <em>global effect</em> model, show control with MIDI</li>
@@ -315,12 +475,8 @@ We assume here a general understanding of the architecture files model. In this 
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h">APIUI</a> </li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> </li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h">SoundUI</a> </li>
-<li>
-<p>...</p>
-</li>
-<li>
-<p>Developing a new UI architecture file:</p>
-</li>
+<li>...</li>
+<li>Developing a new UI architecture file:</li>
 <li>from scratch </li>
 <li>subclassing existing ones</li>
 <li>aggregating existing ones</li>
@@ -330,21 +486,15 @@ We assume here a general understanding of the architecture files model. In this 
 <li>
 <p>list of shared metadata : <strong>discussion to have</strong> ? </p>
 </li>
-<li>
-<p>memory layout issue: (idea of a improved <em>custom_memory_manager</em>)</p>
-</li>
-<li>
-<p>Developing a <em>faust2xx</em> script:</p>
-</li>
-<li>
-<p>Other target languages:</p>
-</li>
+<li>memory layout issue: (idea of a improved <em>custom_memory_manager</em>)</li>
+<li>Developing a <em>faust2xx</em> script:</li>
+<li>Other target languages:</li>
 <li>C interface</li>
 <li>Rust interface</li>
 <li>Advanced, other tools</li>
 <li>measuring DSP CPU with the <code>measure_dsp</code> decorator</li>
 <li>proxy DSP model with <code>proxy_dsp</code></li>
-<li>using a custom_memory_manager</li>
+<li>using a <code>custom_memory_manager</code></li>
 </ul></div>
             </div>
         </div>
