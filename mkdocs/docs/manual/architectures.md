@@ -169,7 +169,7 @@ A *MIDI architecture module* typically connects a Faust program to the MIDI driv
 
 #### MIDI Messages in the DSP Source Code
 
-MIDI control messages are described as metadata in UI elements. They are decoded by a `MidiUI` class, subclass of `UI`, which parses incoming MIDI messages and updates the appropriate control parameters, or sends MIDI messages when the UI elements (sliders, buttons...) are moved.
+MIDI control messages are described as metadata in UI elements. They are decoded by a [MidiUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MidiUI.h) class, subclass of `UI`, which parses incoming MIDI messages and updates the appropriate control parameters, or sends MIDI messages when the UI elements (sliders, buttons...) are moved.
 
 #### Defined Standard MIDI Messages
 
@@ -430,7 +430,7 @@ The Faust language allows widget labels to contain metadata enclosed in square b
 declare(FAUSTFLOAT* zone, const char* key, const char* value);
 ```
 
-Here is the table of currently supported general medatada:
+Here is the table of currently supported general medadata:
 
 | Key     | Value                 |
 | ------- | --------------------- |
@@ -461,9 +461,11 @@ vslider("freq [unit:dB][style:knob][gyr:0 0 -30 0 30]", 0, 20, 100, 1)
 
 When one or several metadata are added in the same item label, then will appear in the generated code as one or successives `declare(FAUSTFLOAT* zone, const char* key, const char* value);` lines *before* the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the [MetaDataUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h) class for an example of this technique.
 
+MIDI specific metadata are [decribed here](https://faustdoc.grame.fr/manual/midi/) and are decoded the `MidiUI` class.
+
 Note that medatada are not supported in all architecture files. Some of them like (`acc` or `gyr` for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and *can possibly be adapted for a specific project.* They can be decoded using the `MetaDataUI`class.
 
-Note also that even if the UI architecture module is graphic-oriented, a given implementation can *perfectly choose to ignore all layout information* and *only keep the controller ones, like the buttons, sliders, nentries, bargraphs*. This is typically what is done in the`MidiUI` or `OSCUI` architectures.
+Note also that even if the UI architecture module is graphic-oriented, a given implementation can *perfectly choose to ignore all layout information* and *only keep the controller ones, like the buttons, sliders, nentries, bargraphs*. This is typically what is done in the `MidiUI` or `OSCUI` architectures.
 
 #### DSP JSON Description 
 
@@ -536,16 +538,16 @@ Here is the description of ready-to-use UI classes, followed by classes to be us
 Here is the description of the main GUI classes:
 
 - the [GTKUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GTKUI.h) class uses the [GTK](https://www.gtk.org) toolkit to create a Graphical User Interface with a proper group-based layout
-- the [QTUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/QTUI.h) class uses the [QT](https://www.qt.io) toolkit to create a Graphical User interface with a proper group based layout
-- the [JuceUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceUI.h) class uses the [JUCE](https://juce.com) framework to create a Graphical User interface with a proper group based layout
+- the [QTUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/QTUI.h) class uses the [QT](https://www.qt.io) toolkit to create a Graphical User Interface with a proper group based layout
+- the [JuceUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceUI.h) class uses the [JUCE](https://juce.com) framework to create a Graphical User Interface with a proper group based layout
 
 #### Non-GUI Controllers
 
 Here is the description of the main non-GUI controller classes:
 
-- the [OSCUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/OSCUI.h) class implement OSC remote control in both directions
-- the [httpdUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpdUI.h) class implement HTTP remote control using the [libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/) library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant appliction or plugin. The connection works in both directions
-- the [MIDIUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h) class implement MIDI control in both directions, and it explained more deeply later on
+- the [OSCUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/OSCUI.h) class implements OSC remote control in both directions
+- the [httpdUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpdUI.h) class implements HTTP remote control using the [libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/) library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant application or plugin. The connection works in both directions
+- the [MIDIUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h) class implements MIDI control in both directions, and it explained more deeply later on
 
 #### Some Useful UI Classes for Developers 
 
@@ -555,6 +557,7 @@ Some useful UI classes can possibly be reused in developer code:
 - the extended [APIUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h) offers `setParamValue/getParamValue` API similar to `MapUI`, with additional methods to deal with accelerometer/gyroscope kind of metadata
 - the [MetaDataUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h) class decodes all currently supported metadata and can be used to retrieve their values 
 - the [JSONUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUI.h) class allows us to generate the JSON description of a given DSP 
+- the [JSONUIDecoder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h) class is used to decode the DSP JSON description and implement its `buildUserInterface` and  `metadata` methods
 - the [FUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/FUI.h) class allows us to save and restore the parameters state as a text file
 - the [SoundUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h) class with the associated [Soundfile](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h) class is used to implement the `soundfile` primitive, and load the described audio resources (typically audio files), by using different concrete implementations, either using [libsndfile](http://www.mega-nerd.com/libsndfile/) (with the [LibsndfileReader.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h) file), or [JUCE](https://juce.com) (with the [JuceReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h) file). A new audio file loader can possibly be written by subclassing the `SoundfileReader` class. A pure memory reader could be implemented for instance to load wavetables to be used as the`soundfile` URL list. Look at the template [MemoryReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MemoryReader.h) class, as an example to be completed. 
 
@@ -1141,7 +1144,7 @@ This class can typically be used in tools that help developers discover the best
 
 ### The Proxy DSP Class
 
-In some cases, a DSP may run outside of the application or plugin context, like on another machine. The [proxy_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-dsp.h) class allows to create a proxy DSP that will be finally connected to the real one (using an OSC or HTTP based machinery for instance), and will reflect its behaviour. An additional [JSONUIDecoder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h) class is used to decode the DSP JSON description and implement its `buildUserInterface` and  `metadata` methods. Then the `proxy_dsp` can be used in place of the real DSP, and connected with `UI` controllers using the standard `buildUserInterface` to control it.  
+In some cases, a DSP may run outside of the application or plugin context, like on another machine. The [proxy_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-dsp.h) class allows to create a proxy DSP that will be finally connected to the real one (using an OSC or HTTP based machinery for instance), and will reflect its behaviour. It uses the previously described  [JSONUIDecoder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h) class. Then the `proxy_dsp` can be used in place of the real DSP, and connected with `UI` controllers using the standard `buildUserInterface` to control it.  
 
 The [faust-osc-controller](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark) tool demonstrates this capability using an OSC connection between the real DSP and its proxy. The [proxy_osc_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-osc-dsp.h) class implements a specialized `proxy_dsp` using the [liblo](http://liblo.sourceforge.net) OSC library to connect to a OSC controllable DSP (which is using the `OSCUI` class and running in another context or machine). Then the `faust-osc-controller` program [creates a real GUI](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/faust-osc-controller.cpp) (using `GTKUI` in this example) and have it control the remote DSP and reflect its dynamic state (like vumeter values coming back from the real DSP). 
 

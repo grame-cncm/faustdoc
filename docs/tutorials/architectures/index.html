@@ -300,6 +300,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#using-metadata" class="nav-link">Using metadata</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -318,7 +322,7 @@ We assume here a general understanding of the architecture files model. In this 
 <li>gradually enriching it to show how multiple controllers can be used (OSC, http, MIDI etc.) </li>
 <li>showing how the architectures files can be used with statically generated C++ files, or dynamically generated DSP using the LLVM or Interpreter backends </li>
 <li>demonstrate how to create polyphonic instruments, add a global effects using the DSP C++ algebra, setup sample accurate controllable DSP</li>
-<li>finally demonstrating how to write simple architecture files, or combine extend and use existing ones. </li>
+<li>finally demonstrating how to write simple architecture files, or combine, extend and use existing ones. </li>
 </ul>
 <h2 id="plan">Plan</h2>
 <p>The Faust compiler generates the DSP code as a C++ class, a C structure and associated functions, a LLVM module or a wasm module.etc. with a fixed API shared among the backends.</p>
@@ -326,7 +330,7 @@ We assume here a general understanding of the architecture files model. In this 
 <p>Let's start with the simple following DSP program:</p>
 <p>Compiling it with the command <code>faust test1.dsp -o test.cpp</code> produces the following C++ class:</p>
 <p>which does not directly compile since it refers to a base <code>dsp</code> class, and additional <code>UI</code> and <code>meta</code> definitions which are not available in the generated code. </p>
-<p>The purpose of the architecture file is first to fill all the <em>holes</em>, so that the C++ class can be compiled and used in a real program. The following <code>nullarch.cpp</code>  wich contains 2 special lines:</p>
+<p>The purpose of the architecture file is first to fill all the <em>holes</em>, so that the C++ class can be compiled and used in a real program. The following <code>nullarch.cpp</code>  which contains 2 special lines:</p>
 <pre><code>&lt;&lt;includeIntrinsic&gt;&gt;
 &lt;&lt;includeclass&gt;&gt;
 </code></pre>
@@ -399,10 +403,11 @@ struct UI {
 
 &lt;&lt;includeclass&gt;&gt;
 </code></pre>
-<p>When used whith the <code>-a</code> option, the compiler will simply replace them with the C++ class (or C code when sued wiht the C backend etc.). Type the following command to generate a ready to compile C++ file:</p>
+<p>When used with the <code>-a</code> option, the compiler will simply replace them with the C++ class (or C code when used with the C backend, or any other textual output when used with backend like Rust, SOUL...). </p>
+<p>Type the following command to generate a ready to compile C++ file:</p>
 <pre><code>faust -a nullarch.cpp test1.dsp -o test1.cpp
 </code></pre>
-<p>And compile it with (using the -S option since the file does not even contain a <code>main</code>:</p>
+<p>And compile it with, using the -S option since the file does not even contain a <code>main</code> and would not compile otherwise:</p>
 <pre><code>c++ -S test1.cpp
 </code></pre>
 <ul>
@@ -412,7 +417,7 @@ struct UI {
 <ul>
 <li>adding a dummy audio driver, explain DSP itinialisation with SR with <code>init(SR)</code>, </li>
 </ul>
-<p>A Faust generated program has to connect to a underlying audio layer, either an audio driver or an audio plugin API, which will call the DSP <code>init</code> method at init time to setup the <code>ma.SR</code> variable, and the DSP <code>compute</code> to handle incoming audio buffers and/or to produce audio outputs. </p>
+<p>A Faust generated program has to connect to an underlying audio layer, either an audio driver or a plugin API, which will call the DSP <code>init</code> method at init time to setup the <code>ma.SR</code> variable, and the DSP <code>compute</code> to handle incoming audio buffers and/or to produce audio outputs. </p>
 <p>The audio driver base class has an <code>init(const char* name, dsp* dsp)</code>  that will be called first</p>
 <h4 id="using-a-real-audio-driver-jack">Using a real audio driver JACK</h4>
 <ul>
@@ -439,10 +444,10 @@ gtk_interface-&gt;run();
 </code></pre>
 <ul>
 <li>use a ready-to-use GUI architecture:  <code>GTKUI</code> using GTK framework</li>
-<li>explain and demonstrate <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a>  (with <code>setParamValue/getParamValue</code> model), explain the label and path distinction, shoudl the <code>PathBuilder</code> helper. </li>
+<li>explain and demonstrate <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a>  (with <code>setParamValue/getParamValue</code> model), explain the label and path distinction, should the <code>PathBuilder</code> helper. </li>
 </ul>
 <h4 id="using-the-oscui-controller">Using the OSCUI controller</h4>
-<p>The <a href="https://faustdoc.grame.fr/manual/osc/">OSCUI controller</a> can be used to control parameters with incoming OSC messages, or emit OSC messages when parameters are moved.  It can simply be plugged on the DSP using <code>buildUserInterface</code> a second time</p>
+<p>The <a href="https://faustdoc.grame.fr/manual/osc/">OSCUI</a> controller can be used to change parameters with incoming OSC messages, or emit OSC messages when parameters are moved. It can simply be plugged on the DSP using <code>buildUserInterface</code> a third time with the following code:</p>
 <pre><code class="language-c++">#include &quot;faust/gui/OSCUI.h&quot;
 
 // Create and plug the OSC interface
@@ -452,46 +457,96 @@ DSP-&gt;buildUserInterface(&amp;osc_interface);
 // Start osc_interface
 osc_interface-&gt;run();
 </code></pre>
+<p>Now received OSC messages on the correct path and input port will change the parameters values, and moving the GUI items (button, sliders...) will generate OSC messages on the output port.  This synchronization mechanism between the two controllers is implemented in a generic way in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h">GUI</a> class, which both <code>GTKUI</code> and <code>OSCUI</code> are sub-classes of.</p>
 <ul>
+<li></li>
 <li>use  <code>OSCUI</code> as a first example of remote control, explain how several UIs can be combined and synchronized (using the GUI class)</li>
 </ul>
+<p>Type the following command to generate a ready to compile C++ file:</p>
 <h4 id="using-the-httpdui-controller">Using the httpdUI controller</h4>
 <ul>
-<li>
-<p>use <code>httpdUI</code>, as a second example of remote control</p>
-</li>
+<li>use <code>httpdUI</code>, as a second example of remote control</li>
+</ul>
+<p>The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpdUI.h">httpdUI</a> class implements HTTP remote control using the <a href="https://www.gnu.org/software/libmicrohttpd/">libmicrohttpd</a> library to embed a HTTP server inside the application. Then by opening a browser on a specific URL (http://127.0.0.1:5510), the GUI will appear and allow to control the distant application or plugin. The connection works in both directions.</p>
+<pre><code class="language-c++">#include &quot;faust/gui/httpdUI.h&quot;
+
+// Create and plug the Httpd interface
+httpdUI httpd_interface(name, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(&amp;httpd_interface);
+
+// Start httpd_interface
+httpd_interface-&gt;run();
+</code></pre>
+<p>Since the<code>httpdUI</code>class is also a sub-class of the <code>GUI</code> class, all UI items stay synchronized. </p>
+<h4 id="using-metadata">Using metadata</h4>
+<p>The Faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a declare method taking as argument, a pointer to the widget associated zone, the metadata key and value:</p>
+<pre><code class="language-c++">declare(FAUSTFLOAT* zone, const char* key, const char* value);
+</code></pre>
+<p>Lets take a first concrete example with unit The <code>[midi:ctrl 7]</code> metadata can be added. </p>
+<p>Lets take a second concrete example with MIDI metadata to control sliders. The <code>[midi:ctrl 7]</code> metadata can be added on a slider to control its value with a MIDI CtrlChange 7 event. </p>
+<p>Now we can use </p>
+<ul>
 <li>
 <p>explain the concept of metadata, take MIDI as an example, add some in the DSP program, use <code>MIDIUI</code>, demonstrate MIDI control  in both directions</p>
 </li>
-<li>sample-accurate control: used of <code>time_dsp</code> decorator, example of MIDI clock base synchro </li>
-<li>explain polyphony implementation: explain how we can <em>aggregate</em> several C++ dsp, subclassing the base <code>dsp</code> class to keep the same interface, show control with MIDI</li>
-<li>explains the <em>global effect</em> model, show control with MIDI</li>
-<li>moving to dynamic compilation using libfaust: the factory/instance concept, show how what was previously explained can simply be reused with a dynamically created <code>llvm_dsp</code> object, saving/restoring DSP factories</li>
-<li>using the interpreter backend</li>
-<li>Tour of the main ready-to-use architecture files: </li>
+<li>
+<p>sample-accurate control: used of <code>time_dsp</code> decorator, example of MIDI clock base synchro </p>
+</li>
+<li>
+<p>explain polyphony implementation: explain how we can <em>aggregate</em> several C++ dsp, subclassing the base <code>dsp</code> class to keep the same interface, show control with MIDI</p>
+</li>
+<li>
+<p>explains the <em>global effect</em> model, show control with MIDI</p>
+</li>
+<li>
+<p>moving to dynamic compilation using libfaust: the factory/instance concept, show how what was previously explained can simply be reused with a dynamically created <code>llvm_dsp</code> object, saving/restoring DSP factories</p>
+</li>
+<li>
+<p>using the interpreter backend</p>
+</li>
+<li>
+<p>Tour of the main ready-to-use architecture files: </p>
+</li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/QTUI.h">QTUI</a> class uses the <a href="https://www.qt.io/">QT</a> toolkit</li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceUI.h">JuceUI</a> class uses the <a href="https://juce.com/">JUCE</a> framework: <code>faust2juce</code> tool</li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> (déjà vu) </li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h">APIUI</a> </li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> </li>
 <li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h">SoundUI</a> </li>
-<li>...</li>
-<li>Developing a new UI architecture file:</li>
+<li>
+<p>...</p>
+</li>
+<li>
+<p>Developing a new UI architecture file:</p>
+</li>
 <li>from scratch </li>
 <li>subclassing existing ones</li>
-<li>aggregating existing ones</li>
+<li>
+<p>aggregating existing ones</p>
+</li>
 <li>
 <p>Embedded devices:</p>
 </li>
+</ul>
+<p>​ </p>
+<ul>
+<li>list of shared metadata : <strong>discussion to have</strong> ? </li>
 <li>
-<p>list of shared metadata : <strong>discussion to have</strong> ? </p>
+<p>memory layout issue: (idea of a improved <em>custom_memory_manager</em>)</p>
 </li>
-<li>memory layout issue: (idea of a improved <em>custom_memory_manager</em>)</li>
-<li>Developing a <em>faust2xx</em> script:</li>
-<li>Other target languages:</li>
+<li>
+<p>Developing a <em>faust2xx</em> script:</p>
+</li>
+<li>
+<p>Other target languages:</p>
+</li>
 <li>C interface</li>
-<li>Rust interface</li>
-<li>Advanced, other tools</li>
+<li>
+<p>Rust interface</p>
+</li>
+<li>
+<p>Advanced, other tools</p>
+</li>
 <li>measuring DSP CPU with the <code>measure_dsp</code> decorator</li>
 <li>proxy DSP model with <code>proxy_dsp</code></li>
 <li>using a <code>custom_memory_manager</code></li>
