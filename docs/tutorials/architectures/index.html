@@ -318,11 +318,30 @@
 <p>A Faust program describes a <em>signal processor</em>, a pure DSP computation that maps <em>input signals</em> to <em>output signals</em>. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by <a href="https://faustdoc.grame.fr/manual/architectures/"><em>architecture files</em></a>.
 We assume here a general understanding of the architecture files model. In this tutorial, we'll explain how the machinery works:</p>
 <ul>
-<li>starting with a simple example</li>
-<li>gradually enriching it to show how multiple controllers can be used (OSC, http, MIDI etc.) </li>
-<li>showing how the architectures files can be used with statically generated C++ files, or dynamically generated DSP using the LLVM or Interpreter backends </li>
-<li>demonstrate how to create polyphonic instruments, add a global effects using the DSP C++ algebra, setup sample accurate controllable DSP</li>
-<li>finally demonstrating how to write simple architecture files, or combine, extend and use existing ones. </li>
+<li>
+<p>starting with a simple example</p>
+</li>
+<li>
+<p>compter des buttons et sliders: faust -a architecture (renseignere sur le DSP)</p>
+</li>
+<li>
+<p>gradually enriching it to show how multiple controllers can be used (OSC, http, MIDI etc.) </p>
+</li>
+<li>
+<p>showing how the architectures files can be used with statically generated C++ files, or dynamically generated DSP using the LLVM or Interpreter backends </p>
+</li>
+<li>
+<p>demonstrate how to create polyphonic instruments, add a global effects using the DSP C++ algebra, setup sample accurate controllable DSP</p>
+</li>
+<li>
+<p>finally demonstrating how to write simple architecture files, or combine, extend and use existing ones. </p>
+</li>
+<li>
+<p>expliquer: faust2xx</p>
+</li>
+<li>
+<p>generation de code (exemple swift sans passer par le JSON)</p>
+</li>
 </ul>
 <h2 id="plan">Plan</h2>
 <p>The Faust compiler generates the DSP code as a C++ class, a C structure and associated functions, a LLVM module or a wasm module.etc. with a fixed API shared among the backends.</p>

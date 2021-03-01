@@ -50,7 +50,7 @@ $ make help
 
 The docs folder at rool level contains all files that will be published. To make the current version publicly available:
 - add all the new files using `git add docs`
-- commit using `git commit -m "message"`  (so new files and deleted files will be commited, except docs/CNAME file) 
+- commit using `git commit -am "message"` (so new files and deleted files will be commited, except docs/CNAME file) 
 - and push the commit
 
 
