@@ -306,6 +306,10 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link"></a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -503,6 +507,14 @@ httpd_interface-&gt;run();
 </code></pre>
 <p>Lets take a first concrete example with unit The <code>[midi:ctrl 7]</code> metadata can be added. </p>
 <p>Lets take a second concrete example with MIDI metadata to control sliders. The <code>[midi:ctrl 7]</code> metadata can be added on a slider to control its value with a MIDI CtrlChange 7 event. </p>
+<p>The MIDI metadata are decoded using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h">MIDIUI</a> class, initialized with a  <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261">midi_hander</a> class to be connected to real MIDI devices. In the following piece of code, a <code>MidiUI</code> object is created and connected to a <code>rt_midi</code> MIDI messages handler (using the <a href="http://www.music.mcgill.ca/~gary/rtmidi/">RTMidi</a> library), then given as a parameter to the standard <code>buildUserInterface</code> to control DSP parameters:</p>
+<pre><code class="language-c++">...
+rt_midi midi_handler(&quot;MIDI&quot;);
+MidiUI midi_interface(&amp;midi_handler);
+DSP-&gt;buildUserInterface(&amp;midi_interface);
+...
+</code></pre>
+<h2 id="_1"></h2>
 <p>Now we can use </p>
 <ul>
 <li>

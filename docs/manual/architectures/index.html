@@ -768,8 +768,8 @@ public:
 <p>In the following piece of code, a <code>MidiUI</code> object is created and connected to a <code>rt_midi</code> MIDI messages handler (using the <a href="http://www.music.mcgill.ca/~gary/rtmidi/">RTMidi</a> library), then given as a parameter to the standard <code>buildUserInterface</code> to control DSP parameters:</p>
 <pre><code class="language-c++">...
 rt_midi midi_handler(&quot;MIDI&quot;);
-MidiUI midiinterface(&amp;midi_handler);
-DSP-&gt;buildUserInterface(&amp;midiinterface);
+MidiUI midi_interface(&amp;midi_handler);
+DSP-&gt;buildUserInterface(&amp;midi_interface);
 ...
 </code></pre>
 <h2 id="ui-architecture-modules">UI Architecture Modules</h2>
@@ -902,7 +902,7 @@ struct UI : public UIReal&lt;FAUSTFLOAT&gt;
 <pre><code>vslider(&quot;freq [unit:dB][style:knob][gyr:0 0 -30 0 30]&quot;, 0, 20, 100, 1)
 </code></pre>
 <p>When one or several metadata are added in the same item label, then will appear in the generated code as one or successives <code>declare(FAUSTFLOAT* zone, const char* key, const char* value);</code> lines <em>before</em> the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> class for an example of this technique.</p>
-<p>MIDI specific metadata are <a href="https://faustdoc.grame.fr/manual/midi/">decribed here</a> and are decoded the <code>MidiUI</code> class.</p>
+<p>MIDI specific metadata are <a href="https://faustdoc.grame.fr/manual/midi/">described here</a> and are decoded the <code>MidiUI</code> class.</p>
 <p>Note that medatada are not supported in all architecture files. Some of them like (<code>acc</code> or <code>gyr</code> for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and <em>can possibly be adapted for a specific project.</em> They can be decoded using the <code>MetaDataUI</code>class.</p>
 <p>Note also that even if the UI architecture module is graphic-oriented, a given implementation can <em>perfectly choose to ignore all layout information</em> and <em>only keep the controller ones, like the buttons, sliders, nentries, bargraphs</em>. This is typically what is done in the <code>MidiUI</code> or <code>OSCUI</code> architectures.</p>
 <h4 id="dsp-json-description">DSP JSON Description</h4>
@@ -989,16 +989,24 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
 <h4 id="multi-controller-and-synchronization">Multi-Controller and Synchronization</h4>
 <p>A given DSP can perfectly be controlled by  several UI classes at the same time, and they will all read and write the same DSP control memory zones. Here is an example of code using a GUI using <code>GTKUI</code> architecture, as well as OSC control using <code>OSCUI</code>:</p>
 <pre><code class="language-c++">...
-GTKUI interface(name, &amp;argc, &amp;argv);
-DSP-&gt;buildUserInterface(&amp;interface);
-OSCUI oscinterface(name, argc, argv);
-DSP-&gt;buildUserInterface(&amp;oscinterface);
+GTKUI gtk_interface(name, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(&amp;gtk_interface);
+OSCUI osc_interface(name, argc, argv);
+DSP-&gt;buildUserInterface(&amp;osc_interface);
 ...
 </code></pre>
 <p>Since several controller <em>access</em> the same values, you may have to synchronize them, in order for instance to have the GUI sliders or buttons <em>reflect the state</em> that would have been changed by the <code>OSCUI</code> controller at reception time, of have OSC messages <em>been sent</em> each time UI items like sliders or buttons are moved.   </p>
-<p>This synchronization mecanism is implemented in a generic way in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h">GUI</a> class, which defines  the <code>uiItem</code> class as the basic synchronizable memory zone, then grouped in a list controlling the same zone from different GUI instances. The <code>uiItem::modifyZone</code> method is used to change the <code>uiItem</code> state at reception time, and <code>uiItem::reflectZone</code>will be called to refect a new value, and can change the Widget layout for instance, or send a message (OSC, MIDI...).</p>
-<p>All classes needing to use this synchronization mechanism will have to subclass the <code>GUI</code> class, which keeps all of them at runtime in a global <code>GUI::fGuiList</code> variable.</p>
-<p>Finally the static <code>GUI::updateAllGuis()</code> synchronization method will have to be called regularly, in the application or plugin event management loop, or in a periodic timer for instance.</p>
+<p>This synchronization mecanism is implemented in a generic way in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h">GUI</a> class. First the<code>uiItemBase</code> class is defined as the basic synchronizable memory zone, then grouped in a list controlling the same zone from different GUI instances. The <code>uiItemBase::modifyZone</code> method is used to change the <code>uiItemBase</code> state at reception time, and <code>uiItemBase::reflectZone</code>will be called to reflect a new value, and can change the Widget layout for instance, or send a message (OSC, MIDI...). </p>
+<p>All classes needing to use this synchronization mechanism will have to subclass the <code>GUI</code> class, which keeps all of them at runtime in a global <code>GUI::fGuiList</code> variable. This is the case for the previously used <code>GTKUI</code> and <code>OSCUI</code> classes. </p>
+<p>Finally the static <code>GUI::updateAllGuis()</code> synchronization method will have to be called regularly, in the application or plugin event management loop, or in a periodic timer for instance. This is typically implemented in the <code>GUI::run</code> method which has to be called to start event or messages processing. </p>
+<p>In the following code, the  <code>OSCUI::run</code>  method is called first to start processing OSC messages, then the blocking <code>GTKUI::run</code> method, which opens the GUI window, to be closed to finally finish the application:</p>
+<pre><code class="language-c++">...
+// Start OSC messages processing
+osc_interface.run();
+// Start GTK GUI as the last one, since it blocks until the opened window is closed
+gtk_interface.run()
+...
+</code></pre>
 <h2 id="dsp-architecture-modules">DSP Architecture Modules</h2>
 <p>The Faust compiler produces a DSP module whose format will depend of the chosen backend: a C++ class with the <code>-lang cpp</code> option, a data structure with associated functions with the <code>-lang c</code> option, an LLVM IR module  with the <code>-lang llvm</code> option, a WebAssembly binary module with the <code>-lang wasm</code> option, a bytecode stream with the <code>-lang interp</code> option... and so on.</p>
 <h3 id="the-base-dsp-class">The Base <code>dsp</code> Class</h3>
@@ -1152,7 +1160,7 @@ process = no.noise;
 <ul>
 <li>metadata like<code>compile_options</code> or <code>filename</code> are automatically generated </li>
 <li>metadata like <code>author</code> of <code>copyright</code>are part of the <a href="https://faustdoc.grame.fr/manual/syntax/#global-metadata">Global Medata</a></li>
-<li>metadata like  <code>noises.lib/name</code>are part of the <a href="https://faustdoc.grame.fr/manual/syntax/#function-metadata">Function Metadata</a></li>
+<li>metadata like<code>noises.lib/name</code>are part of the <a href="https://faustdoc.grame.fr/manual/syntax/#function-metadata">Function Metadata</a></li>
 </ul>
 <p>Specialized subclasses of  the<code>Meta</code> class can be implemented to decode the needed key/value pairs for a given use-case. </p>
 <h3 id="macro-construction-of-dsp-components">Macro Construction of DSP Components</h3>

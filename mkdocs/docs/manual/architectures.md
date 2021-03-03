@@ -328,8 +328,8 @@ In the following piece of code, a `MidiUI` object is created and connected to a 
 ```c++
 ...
 rt_midi midi_handler("MIDI");
-MidiUI midiinterface(&midi_handler);
-DSP->buildUserInterface(&midiinterface);
+MidiUI midi_interface(&midi_handler);
+DSP->buildUserInterface(&midi_interface);
 ...
 ```
 
@@ -461,7 +461,7 @@ vslider("freq [unit:dB][style:knob][gyr:0 0 -30 0 30]", 0, 20, 100, 1)
 
 When one or several metadata are added in the same item label, then will appear in the generated code as one or successives `declare(FAUSTFLOAT* zone, const char* key, const char* value);` lines *before* the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the [MetaDataUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h) class for an example of this technique.
 
-MIDI specific metadata are [decribed here](https://faustdoc.grame.fr/manual/midi/) and are decoded the `MidiUI` class.
+MIDI specific metadata are [described here](https://faustdoc.grame.fr/manual/midi/) and are decoded the `MidiUI` class.
 
 Note that medatada are not supported in all architecture files. Some of them like (`acc` or `gyr` for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and *can possibly be adapted for a specific project.* They can be decoded using the `MetaDataUI`class.
 
@@ -567,21 +567,34 @@ A given DSP can perfectly be controlled by  several UI classes at the same time,
 
 ```c++
 ...
-GTKUI interface(name, &argc, &argv);
-DSP->buildUserInterface(&interface);
-OSCUI oscinterface(name, argc, argv);
-DSP->buildUserInterface(&oscinterface);
+GTKUI gtk_interface(name, &argc, &argv);
+DSP->buildUserInterface(&gtk_interface);
+OSCUI osc_interface(name, argc, argv);
+DSP->buildUserInterface(&osc_interface);
 ...
 ```
 Since several controller *access* the same values, you may have to synchronize them, in order for instance to have the GUI sliders or buttons *reflect the state* that would have been changed by the `OSCUI` controller at reception time, of have OSC messages *been sent* each time UI items like sliders or buttons are moved.   
 
-This synchronization mecanism is implemented in a generic way in the [GUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h) class, which defines  the `uiItem` class as the basic synchronizable memory zone, then grouped in a list controlling the same zone from different GUI instances. The `uiItem::modifyZone` method is used to change the `uiItem` state at reception time, and `uiItem::reflectZone`will be called to refect a new value, and can change the Widget layout for instance, or send a message (OSC, MIDI...).
+This synchronization mecanism is implemented in a generic way in the [GUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h) class. First the`uiItemBase` class is defined as the basic synchronizable memory zone, then grouped in a list controlling the same zone from different GUI instances. The `uiItemBase::modifyZone` method is used to change the `uiItemBase` state at reception time, and `uiItemBase::reflectZone`will be called to reflect a new value, and can change the Widget layout for instance, or send a message (OSC, MIDI...). 
 
-All classes needing to use this synchronization mechanism will have to subclass the `GUI` class, which keeps all of them at runtime in a global `GUI::fGuiList` variable.
+All classes needing to use this synchronization mechanism will have to subclass the `GUI` class, which keeps all of them at runtime in a global `GUI::fGuiList` variable. This is the case for the previously used `GTKUI` and `OSCUI` classes. 
 
-Finally the static `GUI::updateAllGuis()` synchronization method will have to be called regularly, in the application or plugin event management loop, or in a periodic timer for instance.
+Finally the static `GUI::updateAllGuis()` synchronization method will have to be called regularly, in the application or plugin event management loop, or in a periodic timer for instance. This is typically implemented in the `GUI::run` method which has to be called to start event or messages processing. 
+
+In the following code, the  `OSCUI::run`  method is called first to start processing OSC messages, then the blocking `GTKUI::run` method, which opens the GUI window, to be closed to finally finish the application:
 
   
+
+```c++
+...
+// Start OSC messages processing
+osc_interface.run();
+// Start GTK GUI as the last one, since it blocks until the opened window is closed
+gtk_interface.run()
+...
+```
+
+
 
 
 ## DSP Architecture Modules
