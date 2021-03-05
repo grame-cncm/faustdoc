@@ -312,6 +312,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#graphic-oriented-pure-controllers-code-generator-ui" class="nav-link">Graphic-oriented, pure controllers, code generator UI</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#dsp-json-description" class="nav-link">DSP JSON Description</a>
               <ul class="nav flex-column">
               </ul>
@@ -904,7 +908,9 @@ struct UI : public UIReal&lt;FAUSTFLOAT&gt;
 <p>When one or several metadata are added in the same item label, then will appear in the generated code as one or successives <code>declare(FAUSTFLOAT* zone, const char* key, const char* value);</code> lines <em>before</em> the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> class for an example of this technique.</p>
 <p>MIDI specific metadata are <a href="https://faustdoc.grame.fr/manual/midi/">described here</a> and are decoded the <code>MidiUI</code> class.</p>
 <p>Note that medatada are not supported in all architecture files. Some of them like (<code>acc</code> or <code>gyr</code> for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and <em>can possibly be adapted for a specific project.</em> They can be decoded using the <code>MetaDataUI</code>class.</p>
-<p>Note also that even if the UI architecture module is graphic-oriented, a given implementation can <em>perfectly choose to ignore all layout information</em> and <em>only keep the controller ones, like the buttons, sliders, nentries, bargraphs</em>. This is typically what is done in the <code>MidiUI</code> or <code>OSCUI</code> architectures.</p>
+<h4 id="graphic-oriented-pure-controllers-code-generator-ui">Graphic-oriented, pure controllers, code generator UI</h4>
+<p>Even if the UI architecture module is graphic-oriented, a given implementation can <em>perfectly choose to ignore all layout information</em> and <em>only keep the controller ones, like the buttons, sliders, nentries, bargraphs</em>. This is typically what is done in the <code>MidiUI</code> or <code>OSCUI</code> architectures. </p>
+<p>Note that pure code generator can also be written. The <code>JSONUI</code> UI architecture is an example of an architecture generating the DSP JSON description as a text file. </p>
 <h4 id="dsp-json-description">DSP JSON Description</h4>
 <p>The full description of a given compiled DSP can be generated as a JSON file, to be used at several places in the architecture system. This JSON describes the DSP with its inputs/outputs number, some metadata (filename, name, used compilation parameters, used libraries etc.) as well as its UI with a hierarchy of groups up to terminal items (buttons, sliders, nentries, bargraphs) with all their parameters (label, metadata, init, min, max and step values). For the following DSP program:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);

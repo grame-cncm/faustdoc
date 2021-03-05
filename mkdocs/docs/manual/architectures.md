@@ -465,7 +465,11 @@ MIDI specific metadata are [described here](https://faustdoc.grame.fr/manual/mid
 
 Note that medatada are not supported in all architecture files. Some of them like (`acc` or `gyr` for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and *can possibly be adapted for a specific project.* They can be decoded using the `MetaDataUI`class.
 
-Note also that even if the UI architecture module is graphic-oriented, a given implementation can *perfectly choose to ignore all layout information* and *only keep the controller ones, like the buttons, sliders, nentries, bargraphs*. This is typically what is done in the `MidiUI` or `OSCUI` architectures.
+#### Graphic-oriented, pure controllers, code generator UI 
+
+Even if the UI architecture module is graphic-oriented, a given implementation can *perfectly choose to ignore all layout information* and *only keep the controller ones, like the buttons, sliders, nentries, bargraphs*. This is typically what is done in the `MidiUI` or `OSCUI` architectures. 
+
+Note that pure code generator can also be written. The `JSONUI` UI architecture is an example of an architecture generating the DSP JSON description as a text file. 
 
 #### DSP JSON Description 
 
