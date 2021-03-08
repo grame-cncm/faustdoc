@@ -1281,7 +1281,7 @@ The more sophisticated `FAUST_LIST_ACTIVES` and `FAUST_LIST_PASSIVES` macros can
 
 Developing a new architecture file typically means writing a generic file, that will be populated with the actual output of the Faust compiler, in order to produce a complete file, ready-to-be-compiled as a standalone application or plugin.
 
-The architecture to be used is specified at compile time with the `-a` option. It must contain the <<includeIntrinsic>>  and <<includeclass>> lines that will be recognized by the Faust compiler, and replaced by the generated code. Here is an example in C++, but the same logic can be used with other languages producing textual ouputs, like C, SOUL, Rust or Dlang.
+The architecture to be used is specified at compile time with the `-a` option. It must contain the `<<includeIntrinsic>>` and `<<includeclass>>` lines that will be recognized by the Faust compiler, and replaced by the generated code. Here is an example in C++, but the same logic can be used with other languages producing textual outputs, like C, SOUL, Rust or Dlang.
 
 Look at the `minimal.cpp` example located in the architecture folder:
 
@@ -1449,7 +1449,7 @@ int main(int argc, char* argv[])
 
 ```
 
-The `-i` option can possibly be added to actually inline all `#include "faust/xxx/yyy"` headers (all files starting with `faust`). Then a `faust2xxx` script has to be written to chain the Faust compilation step and the C++ compilation one (and possibly others). Look at the *Developing a faust2xx Script* section.
+Generally, several files to connect to the audio layer, controller layer, and possibly other (MIDI, OSC...) have to be used. One of them is the main file and include the others. The `-i` option can be added to actually inline all `#include "faust/xxx/yyy"` headers (all files starting with `faust`) to produce a single self-contained unique file. Then a `faust2xxx` script has to be written to chain the Faust compilation step and the C++ compilation one (and possibly others). Look at the *Developing a faust2xx Script* section.
 
 #### Adapting the Generated DSP
 
@@ -1486,7 +1486,7 @@ class my_class : public base_interface {
 };
 ```
 
-or *subclassing* and extend it, so writing something like:
+or *subclassing* and *extending it*, so writing something like:
 
 ```c++
 class my_class : public mydsp  {
@@ -1633,7 +1633,7 @@ The existing [faust2xx scripts](https://github.com/grame-cncm/faust/tree/master-
 
 This model combining the generated DSP the audio and UI architecture components is very convenient to automatically produce ready-to-use standalone application or plugins, since the controller part (GUI,  MIDI or OSC...) is directly compiled and deployed. 
 
-In some cases, developers prefer to control the DSP by developing a completely new GUI (using a toolkit not supported in the standard architecture files), or even without any GUI and using another control layer. 
+In some cases, developers prefer to control the DSP by creating a completely new GUI (using a toolkit not supported in the standard architecture files), or even without any GUI and using another control layer. 
 
 A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed. It then provides a `setParamValue/getParamValue` kind of API to access all parameters, and let the developer adds his own GUI or any kind of controller. Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, wich goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. 
 
@@ -1757,5 +1757,5 @@ The completed `spectral.cpp` file is now ready to be deployed as a Max/MSP exter
 faust2max6 -inj spectral.cpp -soundfile spectral.dsp
 ```
 
-The two neeeded sound1.wav and sound2.wav audio files are embedded in the generated external, loaded at init time (the`buildUserInterface` method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake `spectral.dsp` DSP program, the generated `spectral.cpp` C++ file, the automatically generated `spectral.maxpat` Max/MSP patch will be able to build the GUI with a ready-to-use slider.
+The two needed sound1.wav and sound2.wav audio files are embedded in the generated external, loaded at init time (the`buildUserInterface` method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake `spectral.dsp` DSP program, the generated `spectral.cpp` C++ file, the automatically generated `spectral.maxpat` Max/MSP patch will be able to build the GUI with a ready-to-use slider.
 
