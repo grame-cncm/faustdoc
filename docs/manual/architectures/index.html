@@ -472,7 +472,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#deploying-it-as-a-maxmsp-external-using-the-faust2max6-tool" class="nav-link">Deploying it as a Max/MSP External Using the faust2max6 Tool</a>
+            <li class="nav-item" data-level="3"><a href="#deploying-it-as-a-maxmsp-external-using-the-faust2max6-script" class="nav-link">Deploying it as a Max/MSP External Using the faust2max6 Script</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -909,7 +909,7 @@ struct UI : public UIReal&lt;FAUSTFLOAT&gt;
 <p>MIDI specific metadata are <a href="https://faustdoc.grame.fr/manual/midi/">described here</a> and are decoded the <code>MidiUI</code> class.</p>
 <p>Note that medatada are not supported in all architecture files. Some of them like (<code>acc</code> or <code>gyr</code> for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and <em>can possibly be adapted for a specific project.</em> They can be decoded using the <code>MetaDataUI</code>class.</p>
 <h4 id="graphic-oriented-pure-controllers-code-generator-ui">Graphic-oriented, pure controllers, code generator UI</h4>
-<p>Even if the UI architecture module is graphic-oriented, a given implementation can <em>perfectly choose to ignore all layout information</em> and <em>only keep the controller ones, like the buttons, sliders, nentries, bargraphs</em>. This is typically what is done in the <code>MidiUI</code> or <code>OSCUI</code> architectures. </p>
+<p>Even if the UI architecture module is graphic-oriented, a given implementation can perfectly choose to ignore all layout information and only keep the controller ones, like the buttons, sliders, nentries, bargraphs. This is typically what is done in the <code>MidiUI</code> or <code>OSCUI</code> architectures. </p>
 <p>Note that pure code generator can also be written. The <code>JSONUI</code> UI architecture is an example of an architecture generating the DSP JSON description as a text file. </p>
 <h4 id="dsp-json-description">DSP JSON Description</h4>
 <p>The full description of a given compiled DSP can be generated as a JSON file, to be used at several places in the architecture system. This JSON describes the DSP with its inputs/outputs number, some metadata (filename, name, used compilation parameters, used libraries etc.) as well as its UI with a hierarchy of groups up to terminal items (buttons, sliders, nentries, bargraphs) with all their parameters (label, metadata, init, min, max and step values). For the following DSP program:</p>
@@ -1762,8 +1762,8 @@ int main(int argc, char* argv[])
 <p>Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, SOUL and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:</p>
 <ul>
 <li>the C backend needs additional <code>CGlue</code>and <code>CInterface</code> files, with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.c">minimal-c</a> file a simple console mode example using them</li>
-<li>the experimental Rust backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs">minimal-rs</a> architecture, or the more complex JACK <code>minimal-jack.rs</code>used in <code>faust2jackrust</code> script, or PortAudio <code>minimal-portaudio.rs</code> used in <code>faust2jackportaudio</code> script</li>
-<li>the experimental Dlang backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.d">minimal.d</a> or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-dplug.d">minimal-dplug</a> to generate <a href="https://dplug.org">DPlug</a> plugins with the <code>faust2dplug</code> tool</li>
+<li>the experimental Rust backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs">minimal-rs</a> architecture, the more complex JACK <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-jack.rs">minimal-jack.rs</a> used in <code>faust2jackrust</code> script, or the PortAudio <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-portaudio.rs">minimal-portaudio.rs</a> used in <code>faust2jackportaudio</code> script</li>
+<li>the experimental Dlang backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.d">minimal.d</a> or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-dplug.d">minimal-dplug.d</a> to generate <a href="https://dplug.org">DPlug</a> plugins with the <code>faust2dplug</code> script</li>
 </ul>
 <h2 id="the-faust2xx-scripts">The faust2xx Scripts</h2>
 <h3 id="using-faust2xx-scripts">Using faust2xx Scripts</h3>
@@ -1943,11 +1943,11 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 };
 </code></pre>
 <p>Here we assume that <code>createSpectrogram</code> and <code>playSpectrogram</code> functions are defined elsewhere and ready to be compiled.</p>
-<h3 id="deploying-it-as-a-maxmsp-external-using-the-faust2max6-tool">Deploying it as a Max/MSP External Using the faust2max6 Tool</h3>
-<p>The completed <code>spectral.cpp</code> file is now ready to be deployed as a Max/MSP external using the <code>faust2max6</code> tool and the <code>-inj</code> option with the following line:</p>
+<h3 id="deploying-it-as-a-maxmsp-external-using-the-faust2max6-script">Deploying it as a Max/MSP External Using the faust2max6 Script</h3>
+<p>The completed <code>spectral.cpp</code> file is now ready to be deployed as a Max/MSP external using the <code>faust2max6</code> script and the <code>-inj</code> option with the following line:</p>
 <pre><code>faust2max6 -inj spectral.cpp -soundfile spectral.dsp
 </code></pre>
-<p>The two needed sound1.wav and sound2.wav audio files are embedded in the generated external, loaded at init time (the<code>buildUserInterface</code> method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake <code>spectral.dsp</code> DSP program, the generated <code>spectral.cpp</code> C++ file, the automatically generated <code>spectral.maxpat</code> Max/MSP patch will be able to build the GUI with a ready-to-use slider.</p></div>
+<p>The two needed <code>sound1.wav</code> and <code>sound2.wav</code> audio files are embedded in the generated external, loaded at init time (since the<code>buildUserInterface</code> method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake <code>spectral.dsp</code> DSP program, the generated <code>spectral.cpp</code> C++ file, the automatically generated <code>spectral.maxpat</code> Max/MSP patch will be able to build the GUI with a ready-to-use slider.</p></div>
             </div>
         </div>
 
