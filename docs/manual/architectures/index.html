@@ -1007,7 +1007,11 @@ DSP-&gt;buildUserInterface(&amp;osc_interface);
 </code></pre>
 <p>Since several controller <em>access</em> the same values, you may have to synchronize them, in order for instance to have the GUI sliders or buttons <em>reflect the state</em> that would have been changed by the <code>OSCUI</code> controller at reception time, of have OSC messages <em>been sent</em> each time UI items like sliders or buttons are moved.   </p>
 <p>This synchronization mecanism is implemented in a generic way in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h">GUI</a> class. First the<code>uiItemBase</code> class is defined as the basic synchronizable memory zone, then grouped in a list controlling the same zone from different GUI instances. The <code>uiItemBase::modifyZone</code> method is used to change the <code>uiItemBase</code> state at reception time, and <code>uiItemBase::reflectZone</code>will be called to reflect a new value, and can change the Widget layout for instance, or send a message (OSC, MIDI...). </p>
-<p>All classes needing to use this synchronization mechanism will have to subclass the <code>GUI</code> class, which keeps all of them at runtime in a global <code>GUI::fGuiList</code> variable. This is the case for the previously used <code>GTKUI</code> and <code>OSCUI</code> classes. </p>
+<p>All classes needing to use this synchronization mechanism will have to subclass the <code>GUI</code> class, which keeps all of them at runtime in a global <code>GUI::fGuiList</code> variable. This is the case for the previously used <code>GTKUI</code> and <code>OSCUI</code> classes. Note that when using the <code>GUI</code> class, <strong>some global variables have to be defined in the code,</strong> like in the following code:</p>
+<pre><code class="language-c++">// Globals
+std::list&lt;GUI*&gt; GUI::fGuiList;
+ztimedmap GUI::gTimedZoneMap;
+</code></pre>
 <p>Finally the static <code>GUI::updateAllGuis()</code> synchronization method will have to be called regularly, in the application or plugin event management loop, or in a periodic timer for instance. This is typically implemented in the <code>GUI::run</code> method which has to be called to start event or messages processing. </p>
 <p>In the following code, the  <code>OSCUI::run</code>  method is called first to start processing OSC messages, then the blocking <code>GTKUI::run</code> method, which opens the GUI window, to be closed to finally finish the application:</p>
 <pre><code class="language-c++">...

@@ -581,13 +581,17 @@ Since several controller *access* the same values, you may have to synchronize t
 
 This synchronization mecanism is implemented in a generic way in the [GUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h) class. First the`uiItemBase` class is defined as the basic synchronizable memory zone, then grouped in a list controlling the same zone from different GUI instances. The `uiItemBase::modifyZone` method is used to change the `uiItemBase` state at reception time, and `uiItemBase::reflectZone`will be called to reflect a new value, and can change the Widget layout for instance, or send a message (OSC, MIDI...). 
 
-All classes needing to use this synchronization mechanism will have to subclass the `GUI` class, which keeps all of them at runtime in a global `GUI::fGuiList` variable. This is the case for the previously used `GTKUI` and `OSCUI` classes. 
+All classes needing to use this synchronization mechanism will have to subclass the `GUI` class, which keeps all of them at runtime in a global `GUI::fGuiList` variable. This is the case for the previously used `GTKUI` and `OSCUI` classes. Note that when using the `GUI` class, **some global variables have to be defined in the code,** like in the following code:
+
+```c++
+// Globals
+std::list<GUI*> GUI::fGuiList;
+ztimedmap GUI::gTimedZoneMap;
+```
 
 Finally the static `GUI::updateAllGuis()` synchronization method will have to be called regularly, in the application or plugin event management loop, or in a periodic timer for instance. This is typically implemented in the `GUI::run` method which has to be called to start event or messages processing. 
 
 In the following code, the  `OSCUI::run`  method is called first to start processing OSC messages, then the blocking `GTKUI::run` method, which opens the GUI window, to be closed to finally finish the application:
-
-  
 
 ```c++
 ...
@@ -597,9 +601,6 @@ osc_interface.run();
 gtk_interface.run()
 ...
 ```
-
-
-
 
 ## DSP Architecture Modules
 
@@ -721,8 +722,6 @@ The dsp class is central to the Faust architecture design:
 For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or C++ class, or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `soulpatch_dsp`  typed object (defined in the [soulpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio`  C++ classes (like the C++ generated class). See the following class diagram:
 
 <img src="img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
-
-
 
 ### Global DSP metadata 
 
