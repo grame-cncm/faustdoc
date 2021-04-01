@@ -343,7 +343,7 @@ process = os.sawtooth(freq)*gain;
 <p>This Faust program can be turned into an object for the Teensy Audio Library simply by running the following command in a terminal:</p>
 <pre><code>faust2teensy -lib FaustSawtooth.dsp
 </code></pre>
-<p>which will generate a zip file containing a <code>.cpp</code> and a <code>.h</code> file in return. Alternatively, the Faust online compilation service can be used through the <a href="https://faust.grame.fr/tools/editor/index.html">Faust Online Editor</a> to carry out this task (Export(Truck)/source/teensy). The generated package should contain a file called <code>FaustSawtooth.cpp</code> and <code>FaustSawtooth.h</code>. </p>
+<p>which will generate a zip file containing a <code>.cpp</code> and a <code>.h</code> file in return. Alternatively, the Faust online compilation service can be used through the <a href="https://faustide.grame.fr">Faust Web IDE</a> to carry out this task (Export(Truck)/source/teensy). The generated package should contain a file called <code>FaustSawtooth.cpp</code> and <code>FaustSawtooth.h</code>. </p>
 <p>Create a new project in the Arduino/Teensyduino software (e.g., call it <code>faustSawtooth</code>) and place <code>FaustSawtooth.cpp</code> and <code>FaustSawtooth.h</code> in the same folder (whose name should probably be <code>/faustSawtooth</code>) than <code>faustSawtooth.ino</code>.</p>
 <p>Replace the content of the Arduino program with the following:</p>
 <pre><code>#include &lt;Audio.h&gt;

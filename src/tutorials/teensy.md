@@ -45,7 +45,7 @@ This Faust program can be turned into an object for the Teensy Audio Library sim
 faust2teensy -lib FaustSawtooth.dsp
 ```
 
-which will generate a zip file containing a `.cpp` and a `.h` file in return. Alternatively, the Faust online compilation service can be used through the [Faust Online Editor](https://faust.grame.fr/tools/editor/index.html) to carry out this task (Export(Truck)/source/teensy). The generated package should contain a file called `FaustSawtooth.cpp` and `FaustSawtooth.h`. 
+which will generate a zip file containing a `.cpp` and a `.h` file in return. Alternatively, the Faust online compilation service can be used through the [Faust Web IDE](https://faustide.grame.fr) to carry out this task (Export(Truck)/source/teensy). The generated package should contain a file called `FaustSawtooth.cpp` and `FaustSawtooth.h`. 
 
 Create a new project in the Arduino/Teensyduino software (e.g., call it `faustSawtooth`) and place `FaustSawtooth.cpp` and `FaustSawtooth.h` in the same folder (whose name should probably be `/faustSawtooth`) than `faustSawtooth.ino`.
 
