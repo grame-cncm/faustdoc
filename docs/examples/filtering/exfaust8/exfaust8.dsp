@@ -1,15 +1,8 @@
 
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
+declare name "filterBank";
+declare description "Graphic Equalizer consisting of a filter-bank driving a bank of faders";
 
-declare name "highShelf";
+import("stdfaust.lib");
 
-import("maxmsp.lib");
-
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
-
-process(x) = highShelf(x,F,G,Q);
-
+process = dm.filterbank_demo;
 

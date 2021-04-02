@@ -581,7 +581,7 @@ Since several controller *access* the same values, you may have to synchronize t
 
 This synchronization mecanism is implemented in a generic way in the [GUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h) class. First the`uiItemBase` class is defined as the basic synchronizable memory zone, then grouped in a list controlling the same zone from different GUI instances. The `uiItemBase::modifyZone` method is used to change the `uiItemBase` state at reception time, and `uiItemBase::reflectZone`will be called to reflect a new value, and can change the Widget layout for instance, or send a message (OSC, MIDI...). 
 
-All classes needing to use this synchronization mechanism will have to subclass the `GUI` class, which keeps all of them at runtime in a global `GUI::fGuiList` variable. This is the case for the previously used `GTKUI` and `OSCUI` classes. Note that when using the `GUI` class, **some global variables have to be defined in the code,** like in the following code:
+All classes needing to use this synchronization mechanism will have to subclass the `GUI` class, which keeps all of them at runtime in a global `GUI::fGuiList` variable. This is the case for the previously used `GTKUI` and `OSCUI` classes. Note that when using the `GUI` class, **some global variables have to be defined in the code,** like in the following example:
 
 ```c++
 // Globals

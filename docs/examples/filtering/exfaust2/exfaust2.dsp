@@ -1,15 +1,27 @@
 
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
+// Forward Deep Neural Net (DNN), any number of layers of any size each
 
-declare name "BPF";
+declare name    "DNN";
+declare author  "JOS";
+declare license "STK-4.3";
 
-import("maxmsp.lib");
+import("stdfaust.lib");
 
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
+layerSizes = (8,5,8); // autoencoder with 8 in & out, 5-state hidden layer
+w(m,n,k) = m*100+n*10+k; // placeholder weights: m=layer, n=fromNode, k=destNode
 
-process(x) = BPF(x,F,G,Q);
+M = ba.count(layerSizes);
+N(l) = ba.take(l+1,layerSizes); // Nodes per layer
 
+process = seq(m, M-1, layer(m))
+// look at weights:
+// process = par(m,M,par(n,N(m),par(k,N(m),w(m,n,k))))
+with {
+  layer(m) = weights(m) :> nonlinearities(m);
+  nonlinearities(m) = bus(N(m)*N(m+1)) :> par(n,N(m+1),nl(n));
+  weights(m) = bus(N(m)) <: par(n,N(m),(bus(N(m+1))<:wts(m,n)));
+  wts(m,n) = bus(N(m+1)) : par(k,N(m+1),*(w(m,n,k)));
+  nl(n,x) = x * (x>0); // ReLU
+  bus(N) = par(k,N,_);
+};
 
