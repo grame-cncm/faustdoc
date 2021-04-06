@@ -73,7 +73,7 @@ Please note that pattern matching is not limited to parallel composition, the ot
 
 
 
-## What is the situation about Faust compile licences and the deployed code?
+## What is the situation about Faust compiler licence and the deployed code?
 
 
 
