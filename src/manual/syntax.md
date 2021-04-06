@@ -156,7 +156,7 @@ random = +(12345) ~ *(1103515245);
 
 Definitions with formal parameters correspond to functions definitions.
 
-<img src="img/listing.svg" class="mx-auto d-block">
+<img src="img/functionDefinition.jpg" class="mx-auto d-block" width="60%">
 
 For example the definition of `linear2db`, a function that converts linear values to decibels, is:
 
@@ -174,7 +174,7 @@ linear2db = \(x).(20*log10(x));
 
 Moreover, formal parameters can also be full expressions representing patterns: 
 
-<img src="img/listing.svg" class="mx-auto d-block">
+<img src="img/patternMatching.jpg" class="mx-auto d-block" width="60%">
 
 This powerful mechanism allows to algorithmically create and manipulate block diagrams expressions. Let's say that you want to describe a function to duplicate an expression several times in parallel:
 

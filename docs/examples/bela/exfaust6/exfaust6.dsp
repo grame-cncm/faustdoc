@@ -1,126 +1,114 @@
 
-import("stdfaust.lib");
+import("all.lib");
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// A complete Stereo FX chain with:
-//		CHORUS
-//		PHASER
-//		DELAY
-//		REVERB
+// Simple FM synthesizer.
+// 2 oscillators and FM feedback on modulant oscillator
 //
-// Designed to use the Analog Input for parameters controls.
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
 //
-// CONTROLES ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CC 1		: FM feedback on modulant oscillator.
+// CC 14	: Modulator frequency ratio.
 //
-// ANALOG IN:
-// ANALOG 0	: Chorus Depth
-// ANALOG 1	: Chorus Delay
-// ANALOG 2	: Phaser Dry/Wet
-// ANALOG 3	: Phaser Frequency ratio
-// ANALOG 4	: Delay Dry/Wet
-// ANALOG 5	: Delay Time
-// ANALOG 6	: Reverberation Dry/Wet
-// ANALOG 7	: Reverberation Room size
+// CC 73	: Attack
+// CC 76	: Decay
+// CC 77	: Sustain
+// CC 72	: Release
 //
-// Available by OSC : (see BELA console for precise adress)
-// Rate			: Chorus LFO modulation rate (Hz)
-// Deviation	: Chorus delay time deviation.
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// GENERAL, Keyboard
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 1, 0, 1, 0.01);
+
+// modwheel:
+feedb = (gFreq-1) * (hslider("feedb[midi:ctrl 1]", 0, 0, 1, 0.001) : si.smoo);
+modFreqRatio = hslider("ratio[midi:ctrl 14]",2,0,20,0.01) : si.smoo;
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+//=================================== Parameters Mapping =================================
+//========================================================================================
+// Same for volum & modulation:
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// modulator frequency
+modFreq = gFreq*modFreqRatio;
+
+// modulation index
+FMdepth = envelop * 1000 * midigain;
+
+// Out amplitude
+vol = envelop;
+
+//============================================ DSP =======================================
+//========================================================================================
+
+FMfeedback(frq) = (+(_,frq):os.osci) ~ (* (feedb));
+FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+// Simple FX chain build for a mono synthesizer.
+// It control general volume and pan.
+// FX Chaine is:
+//		Drive
+//		Flanger
+//		Reverberation
 //
-// InvertSum	: Phaser inversion of phaser in sum. (On/Off)
-// VibratoMode	: Phaser vibrato Mode. (On/Off)
-// Speed		: Phaser LFO frequency
-// NotchDepth	: Phaser LFO depth
-// Feedback		: Phaser Feedback
-// NotchWidth	: Phaser Notch Width
-// MinNotch1	: Phaser Minimal frequency
-// MaxNotch1	: Phaser Maximal Frequency
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+// (All are available by OSC)
 //
-// Damp			: Reverberation Damp
-// Stereo		: Reverberation Stereo Width
+// CC 7	: Volume
+// CC 10 : Pan
 //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CC 92 : Distortion Drive
+//
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-process = chorus_stereo(dmax,curdel,rate,sigma,do2,voices) : phaserSt : xdelay : reverb;
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);	// Should be 7 according to MIDI CC norm.
 
-// CHORUS (from SAM demo lib) //////////////////////////////////////////////////////////////////////////////////////////////////////////
-voices = 8; // MUST BE EVEN
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
 
-pi = 4.0*atan(1.0);
-periodic  = 1;
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+	with {
+		fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+		efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+	};
 
-dmax = 8192;
-curdel = dmax * vslider("Delay[BELA: ANALOG_1]", 0.5, 0, 1, 1) : si.smooth(0.999);
-rateMax = 7.0; // Hz
-rateMin = 0.01;
-rateT60 = 0.15661;
+// Pannoramique:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
 
-rate = vslider("Rate", 0.5, rateMin, rateMax, 0.0001): si.smooth(ba.tau2pole(rateT60/6.91));
-depth = vslider("Depth [BELA: ANALOG_0]", 0.5, 0, 1, 0.001) : si.smooth(ba.tau2pole(depthT60/6.91));
-// (dept = dry/wet)
-
-depthT60 = 0.15661;
-delayPerVoice = 0.5*curdel/voices;
-sigma = delayPerVoice * vslider("Deviation",0.5,0,1,0.001) : si.smooth(0.999);
-
-do2 = depth;   // use when depth=1 means "multivibrato" effect (no original => all are modulated)
-
-chorus_stereo(dmax,curdel,rate,sigma,do2,voices) =
-      _,_ <: *(1-do2),*(1-do2),(*(do2),*(do2) <: par(i,voices,voice(i)):>_,_) : ro.interleave(2,2) : +,+;
-      voice(i) = de.fdelay(dmax,min(dmax,del(i)))/(i+1)
-    with {
-       angle(i) = 2*pi*(i/2)/voices + (i%2)*pi/2;
-       voice(i) = de.fdelay(dmax,min(dmax,del(i))) * cos(angle(i));
-
-         del(i) = curdel*(i+1)/voices + dev(i);
-         rates(i) = rate/float(i+1);
-         dev(i) = sigma *
-             os.oscp(rates(i),i*2*pi/voices);
-    };
-
-// PHASER (from demo lib.) /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-phaserSt = _,_ <: _, _, phaser2_stereo : dry_wetST(dwPhaz)
-    with {
-
-        invert = checkbox("InvertSum");
-        vibr = checkbox("VibratoMode"); // In this mode you can hear any "Doppler"
-
-        phaser2_stereo = pf.phaser2_stereo(Notches,width,frqmin,fratio,frqmax,speed,mdepth,fb,invert);
-
-        Notches = 4; // Compile-time parameter: 2 is typical for analog phaser stomp-boxes
-
-        speed  = hslider("Speed", 0.5, 0, 10, 0.001);
-        depth  = hslider("NotchDepth", 1, 0, 1, 0.001);
-        fb     = hslider("Feedback", 0.7, -0.999, 0.999, 0.001);
-
-        width  = hslider("NotchWidth",1000, 10, 5000, 1);
-        frqmin = hslider("MinNotch1",100, 20, 5000, 1);
-        frqmax = hslider("MaxNotch1",800, 20, 10000, 1) : max(frqmin);
-        fratio = hslider("NotchFreqRatio[BELA: ANALOG_3]",1.5, 1.1, 4, 0.001);
-        dwPhaz = vslider("dryWetPhaser[BELA: ANALOG_2]", 0.5, 0, 1, 0.001); 
-
-        mdepth = select2(vibr,depth,2); // Improve "ease of use"
-    };
-
-// DELAY (with feedback and crossfeeback) //////////////////////////////////////////////////////////////////////////////////////////////
-delay = ba.sec2samp(hslider("delay[BELA: ANALOG_5]", 1,0,2,0.001));
-preDelL	= delay/2;
-delL	= delay;
-delR	= delay;
-
-crossLF	= 1200;
-
-CrossFeedb = 0.6;
-dwDel = vslider("dryWetDelay[BELA: ANALOG_4]", 0.5, 0, 1, 0.001);
-
-routeur(a,b,c,d) = ((a*CrossFeedb):fi.lowpass(2,crossLF))+c,
-					((b*CrossFeedb):fi.lowpass(2,crossLF))+d;
-
-xdelay = _,_ <: _,_,((de.sdelay(65536, 512,preDelL),_):
-		(routeur : de.sdelay(65536, 512,delL) ,de.sdelay(65536, 512,delR)) ~ (_,_)) : dry_wetST(dwDel);
-
-// REVERB (from freeverb_demo) /////////////////////////////////////////////////////////////////////////////////////////////////////////
-reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
 	re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
 	*(1-g), *(1-g) :> _,_
     with {
@@ -131,17 +119,22 @@ reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
         fixedgain   = 0.1;
         origSR = 44100;
 
-        damping = vslider("Damp",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.5, 0, 1, 0.001)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider("Stereo",0.5,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.2, 0, 1, 0.001);
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
         // (g = Dry/Wet)
     };
 
 // Dry-Wet (from C. LEBRETON)
-dry_wetST(dw,x1,x2,y1,y2) = (wet*y1 + dry*x1),(wet*y2 + dry*x2)
+dry_wet(dw,x,y) = wet*y + dry*x
     with {
         wet = 0.5*(dw+1.0);
         dry = 1.0-wet;
     };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+process = FMall(gFreq) * vol;
 

@@ -266,10 +266,6 @@
             
             <li class="nav-item" data-level="1"><a href="#misc" class="nav-link">misc</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#uitester" class="nav-link">UITester</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#capture" class="nav-link">capture</a>
               <ul class="nav flex-column">
               </ul>
@@ -290,11 +286,15 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#tester2" class="nav-link">tester2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#tester" class="nav-link">tester</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#tester2" class="nav-link">tester2</a>
+            <li class="nav-item" data-level="2"><a href="#uitester" class="nav-link">UITester</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -306,94 +306,9 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="misc">misc</h1>
-<h2 id="uitester">UITester</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
-
-<pre><code>
-declare name &quot;UITester&quot;;
-declare version &quot;1.0&quot;;
-declare author &quot;O. Guillerminet&quot;;
-declare license &quot;BSD&quot;;
-declare copyright &quot;(c) O. Guillerminet 2012&quot;;
-
-vbox =          vgroup(&quot;vbox&quot;, 
-                    checkbox(&quot;check1&quot;),
-                    checkbox(&quot;check2&quot;),
-                    nentry(&quot;knob0[style:knob]&quot;, 60, 0, 127, 0.1));
-
-sliders =       hgroup(&quot;sliders&quot;,
-                    vslider(&quot;vslider1&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider2&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider3&quot;, 60, 0, 127, 0.1));
-
-knobs =         hgroup(&quot;knobs&quot;,
-                    vslider(&quot;knob1[style:knob]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;knob2[style:knob]&quot;, 60, 0, 127, 0.1), 
-                    vslider(&quot;knob3[style:knob]&quot;, 60, 0, 127, 0.1));
-
-smallhbox1 =        hgroup(&quot;small box 1&quot;,
-                    vslider(&quot;vslider5 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider6 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;knob4[style:knob]&quot;, 60, 0, 127, 0.1),
-                    nentry(&quot;num1 [unit:f]&quot;, 60, 0, 127, 0.1),
-                    vbargraph(&quot;vbar1&quot;, 0, 127));
-
-smallhbox2 =        hgroup(&quot;small box 2&quot;,
-                    vslider(&quot;vslider7 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider8 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;knob5[style:knob]&quot;, 60, 0, 127, 0.1),
-                    nentry(&quot;num2 [unit:f]&quot;, 60, 0, 127, 0.1),
-                    vbargraph(&quot;vbar2&quot;, 0, 127));
-
-smallhbox3 =        hgroup(&quot;small box 3&quot;,
-                    vslider(&quot;vslider9 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider10 [unit:m]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;knob6[style:knob]&quot;, 60, 0, 127, 0.1),
-                    nentry(&quot;num3 [unit:f]&quot;, 60, 0, 127, 0.1),
-                    vbargraph(&quot;vbar3&quot;, 0, 127));
-
-subhbox1 =      hgroup(&quot;sub box 1&quot;,
-                    smallhbox2,
-                    smallhbox3);
-
-vmisc =         vgroup(&quot;vmisc&quot;,
-                    vslider(&quot;vslider4 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    button(&quot;button&quot;),
-                    hslider(&quot;hslider [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    smallhbox1,
-                    subhbox1,
-                    hbargraph(&quot;hbar&quot;, 0, 127));
-
-hmisc =         hgroup(&quot;hmisc&quot;,
-                    vslider(&quot;vslider4 [unit:f]&quot;, 60, 0, 127, 0.1),
-                    button(&quot;button&quot;),
-                    hslider(&quot;hslider&quot;, 60, 0, 127, 0.1),
-                    nentry(&quot;num [unit:f]&quot;, 60, 0, 127, 0.1),
-                    vbargraph(&quot;vbar&quot;, 0, 127),
-                    hbargraph(&quot;hbar&quot;, 0, 127));
-
-//------------------------- Process --------------------------------
-
-process =       tgroup(&quot;grp 1&quot;,
-                    vbox,
-                    sliders,
-                    knobs,
-                    vmisc,
-                    hmisc);
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
 <h2 id="capture">capture</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;capture&quot;;
@@ -425,14 +340,14 @@ process = vgroup(&quot;Audio Capture&quot;, capture : *(level));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="matrix">matrix</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;matrix&quot;;
@@ -456,14 +371,14 @@ process = Matrix(8, 8);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="miditester">midiTester</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;midiTester&quot;;
@@ -592,14 +507,14 @@ booltest(ic, oc) = checkbox(&quot;Pitchwheel Bool IN (Chan %ic) [midi:pitchwheel
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="statespace">statespace</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;statespace&quot;;
@@ -645,14 +560,14 @@ process = system;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust4/exfaust4.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="switcher">switcher</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;switcher&quot;;
@@ -676,6 +591,54 @@ switch(c,x0,x1,y0,y1) = sel(c,x0,y0), sel(c,x1,y1)
 process = switch(hslider(&quot;source 0 &lt;-&gt; source 1&quot;,0,0,1,1));
 
 
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="tester2">tester2</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name        &quot;tester2&quot;;
+declare version     &quot;1.0&quot;;
+declare author      &quot;Grame&quot;;
+declare license     &quot;BSD&quot;;
+declare copyright   &quot;(c)GRAME 2014&quot;;
+
+//-----------------------------------------------
+// Stereo Audio Tester : send a test signal (sine, 
+// noise, pink) on a stereo channel
+//-----------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+pink    = f : (+ ~ g) with {
+    f(x) = 0.04957526213389*x - 0.06305581334498*x' + 0.01483220320740*x'';
+    g(x) = 1.80116083982126*x - 0.80257737639225*x';
+};
+
+// User interface
+//----------------
+transition(n) = \(old,new).(ba.if(old&lt;new, min(old+1.0/n,new), max(old-1.0/n,new))) ~ _;
+
+vol  = hslider(&quot;[2] volume [unit:dB]&quot;, -96, -96, 0, 1): ba.db2linear : si.smoo;
+freq = hslider(&quot;[1] freq [unit:Hz][scale:log]&quot;, 440, 40, 20000, 1);
+wave = nentry(&quot;[3] signal [style:menu{'white noise':0;'pink noise':1;'sine':2}]&quot;, 0, 0, 2, 1) : int;
+dest = nentry(&quot;[4] channel [style:radio{'none':0;'left':1;'right':2;'both':3}]&quot;, 0, 0, 3, 1) : int;
+
+testsignal  = no.noise, pink(no.noise), os.osci(freq): select3(wave);
+
+process     = vgroup(&quot;Stereo Audio Tester&quot;,
+                testsignal*vol 
+                &lt;: par(i, 2, *((dest &amp; (i+1)) != 0 : transition(4410))) 
+            );
 
 
 </code></pre>
@@ -735,44 +698,81 @@ process         = vgroup( &quot;Audio Tester&quot;,
 </div>
 <!-- /faust-run -->
 
-<h2 id="tester2">tester2</h2>
+<h2 id="uitester">UITester</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
-declare name        &quot;tester2&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2014&quot;;
+declare name &quot;UITester&quot;;
+declare version &quot;1.0&quot;;
+declare author &quot;O. Guillerminet&quot;;
+declare license &quot;BSD&quot;;
+declare copyright &quot;(c) O. Guillerminet 2012&quot;;
 
-//-----------------------------------------------
-// Stereo Audio Tester : send a test signal (sine, 
-// noise, pink) on a stereo channel
-//-----------------------------------------------
+vbox =          vgroup(&quot;vbox&quot;, 
+                    checkbox(&quot;check1&quot;),
+                    checkbox(&quot;check2&quot;),
+                    nentry(&quot;knob0[style:knob]&quot;, 60, 0, 127, 0.1));
 
-import(&quot;stdfaust.lib&quot;);
+sliders =       hgroup(&quot;sliders&quot;,
+                    vslider(&quot;vslider1&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;vslider2&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;vslider3&quot;, 60, 0, 127, 0.1));
 
-pink    = f : (+ ~ g) with {
-    f(x) = 0.04957526213389*x - 0.06305581334498*x' + 0.01483220320740*x'';
-    g(x) = 1.80116083982126*x - 0.80257737639225*x';
-};
+knobs =         hgroup(&quot;knobs&quot;,
+                    vslider(&quot;knob1[style:knob]&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;knob2[style:knob]&quot;, 60, 0, 127, 0.1), 
+                    vslider(&quot;knob3[style:knob]&quot;, 60, 0, 127, 0.1));
 
-// User interface
-//----------------
-transition(n) = \(old,new).(ba.if(old&lt;new, min(old+1.0/n,new), max(old-1.0/n,new))) ~ _;
+smallhbox1 =        hgroup(&quot;small box 1&quot;,
+                    vslider(&quot;vslider5 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;vslider6 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;knob4[style:knob]&quot;, 60, 0, 127, 0.1),
+                    nentry(&quot;num1 [unit:f]&quot;, 60, 0, 127, 0.1),
+                    vbargraph(&quot;vbar1&quot;, 0, 127));
 
-vol  = hslider(&quot;[2] volume [unit:dB]&quot;, -96, -96, 0, 1): ba.db2linear : si.smoo;
-freq = hslider(&quot;[1] freq [unit:Hz][scale:log]&quot;, 440, 40, 20000, 1);
-wave = nentry(&quot;[3] signal [style:menu{'white noise':0;'pink noise':1;'sine':2}]&quot;, 0, 0, 2, 1) : int;
-dest = nentry(&quot;[4] channel [style:radio{'none':0;'left':1;'right':2;'both':3}]&quot;, 0, 0, 3, 1) : int;
+smallhbox2 =        hgroup(&quot;small box 2&quot;,
+                    vslider(&quot;vslider7 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;vslider8 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;knob5[style:knob]&quot;, 60, 0, 127, 0.1),
+                    nentry(&quot;num2 [unit:f]&quot;, 60, 0, 127, 0.1),
+                    vbargraph(&quot;vbar2&quot;, 0, 127));
 
-testsignal  = no.noise, pink(no.noise), os.osci(freq): select3(wave);
+smallhbox3 =        hgroup(&quot;small box 3&quot;,
+                    vslider(&quot;vslider9 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;vslider10 [unit:m]&quot;, 60, 0, 127, 0.1),
+                    vslider(&quot;knob6[style:knob]&quot;, 60, 0, 127, 0.1),
+                    nentry(&quot;num3 [unit:f]&quot;, 60, 0, 127, 0.1),
+                    vbargraph(&quot;vbar3&quot;, 0, 127));
 
-process     = vgroup(&quot;Stereo Audio Tester&quot;,
-                testsignal*vol 
-                &lt;: par(i, 2, *((dest &amp; (i+1)) != 0 : transition(4410))) 
-            );
+subhbox1 =      hgroup(&quot;sub box 1&quot;,
+                    smallhbox2,
+                    smallhbox3);
+
+vmisc =         vgroup(&quot;vmisc&quot;,
+                    vslider(&quot;vslider4 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+                    button(&quot;button&quot;),
+                    hslider(&quot;hslider [unit:Hz]&quot;, 60, 0, 127, 0.1),
+                    smallhbox1,
+                    subhbox1,
+                    hbargraph(&quot;hbar&quot;, 0, 127));
+
+hmisc =         hgroup(&quot;hmisc&quot;,
+                    vslider(&quot;vslider4 [unit:f]&quot;, 60, 0, 127, 0.1),
+                    button(&quot;button&quot;),
+                    hslider(&quot;hslider&quot;, 60, 0, 127, 0.1),
+                    nentry(&quot;num [unit:f]&quot;, 60, 0, 127, 0.1),
+                    vbargraph(&quot;vbar&quot;, 0, 127),
+                    hbargraph(&quot;hbar&quot;, 0, 127));
+
+//------------------------- Process --------------------------------
+
+process =       tgroup(&quot;grp 1&quot;,
+                    vbox,
+                    sliders,
+                    knobs,
+                    vmisc,
+                    hmisc);
 
 
 </code></pre>
