@@ -3287,7 +3287,7 @@ process = @(N);
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>n</code>: the table size</li>
+<li><code>n</code>: the table size, known at compile-time</li>
 <li><code>s</code>: the table content</li>
 <li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>)</li>
 </ul>
@@ -3345,7 +3345,7 @@ process = triangleOsc(f);
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>n</code>: the table size</li>
+<li><code>n</code>: the table size, known at compile-time</li>
 <li><code>s</code>: the initial table content</li>
 <li><code>w</code>: the write index (an <code>int</code> between 0 and <code>n-1</code>) </li>
 <li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>)</li>

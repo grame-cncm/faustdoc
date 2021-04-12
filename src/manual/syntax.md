@@ -2014,7 +2014,7 @@ rdtable(n,s,r) : _
 
 Where:
 
-* `n`: the table size
+* `n`: the table size, known at compile-time
 * `s`: the table content
 * `r`: the read index (an `int` between 0 and `n-1`)
 
@@ -2062,7 +2062,7 @@ _ : rwtable(n,s,w,_,r) : _
 
 Where:
 
-* `n`: the table size
+* `n`: the table size, known at compile-time
 * `s`: the initial table content
 * `w`: the write index (an `int` between 0 and `n-1`) 
 * `r`: the read index (an `int` between 0 and `n-1`)
