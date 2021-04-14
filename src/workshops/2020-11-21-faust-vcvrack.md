@@ -118,8 +118,6 @@ Note that **only monophonic examples** can be coded with the propotype.
 
 Faust support thanks to **libfaust** embedding the **Interpreter** backend has been added. It allows to **edit/compile/execute** DSP programs on the fly, with acceptable peformances (even if using the [LLVM JIT](https://llvm.org) would allow to generate faster code, but as the expense of a much more complicated installation procedure).
 
-The VCV Prototype module [faust branch](https://github.com/VCVRack/VCV-Prototype/tree/faust) has to be used for now. 
-
 ### Editing/compiling/executing DSP files
 
 Faust DSP files have to be loaded in VCV Prototype and edited in a external editor (Visual Studio Code, Atom...). Each time the file is saved, it will be recompiled and executed. To possibly save compilation time, the DSP machine code is saved in a cache, and possibly restored the next time the session will be loaded.

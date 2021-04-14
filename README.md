@@ -29,7 +29,6 @@ To generate all these files type:
 $ make all
 ~~~~~~~~~~~~~~~~
 
-
 ### Testing and generating
 
 You can test the web site using the mkdoc embedded web server. This server also scan any change in the source directory and refresh the pages dynamically which is really convenient for the development process. To launch the server type:
@@ -55,7 +54,6 @@ The docs folder at rool level contains all files that will be published. To make
 - add all the new files using `git add docs`
 - commit using `git commit -am "message"` (so new files and deleted files will be commited, except docs/CNAME file) 
 - and push the commit
-
 
 ### WARNING!!
 
