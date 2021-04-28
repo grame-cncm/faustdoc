@@ -483,7 +483,7 @@ process = RMS(1000);
 </div>
 <!-- /faust-run -->
 
-<p>The <a href="#strucutre-of-the-generated-code">corresponding <code>compute()</code> method</a> generated in scalar mode is the following:</p>
+<p>The <a href="#structure-of-the-generated-code">corresponding <code>compute()</code> method</a> generated in scalar mode is the following:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
@@ -616,8 +616,8 @@ process = RMS(1000);
 }
 </code></pre>
 <h4 id="adding-open-mp-directives">Adding Open MP Directives</h4>
-<p>As said before, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set $S_0$ (loops $L1$, $L2$ and $L3$) contains the loops that don't depend on any other loops, the set $S_1$ contains the loops that only depend on loops of $S_0$, (that is loops $L4$ and $L5$), etc.. </p>
-<p>As all the loops of a given set $S_n$ can be computed in parallel, the compiler will generate a <code>sections</code> construct with a <code>section</code> for each loop. </p>
+<p>As said before, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set <code>S_0</code> (loops <code>L1</code>, <code>L2</code> and <code>L3</code>) contains the loops that don't depend on any other loops, the set <code>S_1</code> contains the loops that only depend on loops of <code>S_0</code>, (that is loops <code>L4</code> and <code>L5</code>), etc.. </p>
+<p>As all the loops of a given set <code>S_n</code> can be computed in parallel, the compiler will generate a <code>sections</code> construct with a <code>section</code> for each loop. </p>
 <pre><code>#pragma omp sections
 {
   #pragma omp section
@@ -731,15 +731,15 @@ process = filter(0.9), filter(0.9) : +;
 </code></pre>
 <p>This code requires some comments:</p>
 <ul>
-<li>The parallel construct <code>#pragma omp parallel</code> is the fundamental construct that starts parallel execution. The number of parallel threads is generally the number of CPU cores but it can be controlled in several ways.</li>
-<li>Variables external to the parallel region are shared by default. The pragma <code>firstprivate(fRec0,fRec1)</code> indicates that each thread should have its private copy of <code>fRec0</code> and <code>fRec1</code>. The reason is that accessing shared variables requires an indirection and is quite inefficient compared to private copies.</li>
-<li>The top level loop <code>for (int index = 0;...)...</code> is executed by all threads simultaneously. The subsequent work-sharing directives inside the loop will indicate how the work must be shared between threads. </li>
-<li>Please note that an implied barrier exists at the end of each work-sharing region. All threads must have executed the barrier before any of them can continue.</li>
-<li>The work-sharing directive <code>#pragma omp single</code> indicates that this first section will be executed by only one thread (any of them).</li>
-<li>The work-sharing directive <code>#pragma omp sections</code> indicates that each corresponding <code>#pragma omp section</code>, here our two filters, will be executed in 
+<li>the parallel construct <code>#pragma omp parallel</code> is the fundamental construct that starts parallel execution. The number of parallel threads is generally the number of CPU cores but it can be controlled in several ways.</li>
+<li>variables external to the parallel region are shared by default. The pragma <code>firstprivate(fRec0,fRec1)</code> indicates that each thread should have its private copy of <code>fRec0</code> and <code>fRec1</code>. The reason is that accessing shared variables requires an indirection and is quite inefficient compared to private copies.</li>
+<li>the top level loop <code>for (int index = 0;...)...</code> is executed by all threads simultaneously. The subsequent work-sharing directives inside the loop will indicate how the work must be shared between threads. </li>
+<li>please note that an implied barrier exists at the end of each work-sharing region. All threads must have executed the barrier before any of them can continue.</li>
+<li>the work-sharing directive <code>#pragma omp single</code> indicates that this first section will be executed by only one thread (any of them).</li>
+<li>the work-sharing directive <code>#pragma omp sections</code> indicates that each corresponding <code>#pragma omp section</code>, here our two filters, will be executed in 
 parallel.</li>
-<li>The loop construct <code>#pragma omp for</code> specifies that the iterations of the associated loop will be executed in parallel. The iterations of the loop are distributed across the parallel threads. For example, if we have two threads, the first one can compute indices between 0 and count/2 and the other one between count/2 and count. </li>
-<li>Finally <code>#pragma omp single</code> indicates that this section will be executed by only one thread (any of them).</li>
+<li>the loop construct <code>#pragma omp for</code> specifies that the iterations of the associated loop will be executed in parallel. The iterations of the loop are distributed across the parallel threads. For example, if we have two threads, the first one can compute indices between 0 and count/2 and the other one between count/2 and count. </li>
+<li>finally <code>#pragma omp single</code> indicates that this section will be executed by only one thread (any of them).</li>
 </ul>
 <h4 id="the-scheduler-code-generator">The Scheduler Code Generator</h4>
 <p>With the <a href="https://faustdoc.grame.fr/manual/options/"><code>--scheduler</code> (or <code>-sch</code>) option</a> given to the Faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worked threads is created and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.</p>
@@ -865,7 +865,7 @@ void computeThread(int num_thread) {
 
         <footer class="col-md-12">
             <hr>
-                <p>Copyright &copy; 2020 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+                <p>Copyright &copy; 2020-2021 <a href="https://www.grame.fr">Grame-CNCM</a></p>
         </footer>
         <script>
             var base_url = "../..",

@@ -202,7 +202,7 @@ process = RMS(1000);
 ```
 <!-- /faust-run -->
 
-The [corresponding `compute()` method](#strucutre-of-the-generated-code) generated in scalar mode is the following:
+The [corresponding `compute()` method](#structure-of-the-generated-code) generated in scalar mode is the following:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
@@ -357,9 +357,9 @@ In order not to have every thread doing redundantly the exact same work, OpenMP 
 
 #### Adding Open MP Directives
 
-As said before, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set $S_0$ (loops $L1$, $L2$ and $L3$) contains the loops that don't depend on any other loops, the set $S_1$ contains the loops that only depend on loops of $S_0$, (that is loops $L4$ and $L5$), etc.. 
+As said before, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set `S_0` (loops `L1`, `L2` and `L3`) contains the loops that don't depend on any other loops, the set `S_1` contains the loops that only depend on loops of `S_0`, (that is loops `L4` and `L5`), etc.. 
 
-As all the loops of a given set $S_n$ can be computed in parallel, the compiler will generate a `sections` construct with a `section` for each loop. 
+As all the loops of a given set `S_n` can be computed in parallel, the compiler will generate a `sections` construct with a `section` for each loop. 
 
 ```
 #pragma omp sections
@@ -479,15 +479,15 @@ virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 
 This code requires some comments:
 
-* The parallel construct `#pragma omp parallel` is the fundamental construct that starts parallel execution. The number of parallel threads is generally the number of CPU cores but it can be controlled in several ways.
-* Variables external to the parallel region are shared by default. The pragma `firstprivate(fRec0,fRec1)` indicates that each thread should have its private copy of `fRec0` and `fRec1`. The reason is that accessing shared variables requires an indirection and is quite inefficient compared to private copies.
-* The top level loop `for (int index = 0;...)...` is executed by all threads simultaneously. The subsequent work-sharing directives inside the loop will indicate how the work must be shared between threads. 
-* Please note that an implied barrier exists at the end of each work-sharing region. All threads must have executed the barrier before any of them can continue.
-* The work-sharing directive `#pragma omp single` indicates that this first section will be executed by only one thread (any of them).
-* The work-sharing directive `#pragma omp sections` indicates that each corresponding `#pragma omp section`, here our two filters, will be executed in 
+* the parallel construct `#pragma omp parallel` is the fundamental construct that starts parallel execution. The number of parallel threads is generally the number of CPU cores but it can be controlled in several ways.
+* variables external to the parallel region are shared by default. The pragma `firstprivate(fRec0,fRec1)` indicates that each thread should have its private copy of `fRec0` and `fRec1`. The reason is that accessing shared variables requires an indirection and is quite inefficient compared to private copies.
+* the top level loop `for (int index = 0;...)...` is executed by all threads simultaneously. The subsequent work-sharing directives inside the loop will indicate how the work must be shared between threads. 
+* please note that an implied barrier exists at the end of each work-sharing region. All threads must have executed the barrier before any of them can continue.
+* the work-sharing directive `#pragma omp single` indicates that this first section will be executed by only one thread (any of them).
+* the work-sharing directive `#pragma omp sections` indicates that each corresponding `#pragma omp section`, here our two filters, will be executed in 
 parallel.
-* The loop construct `#pragma omp for` specifies that the iterations of the associated loop will be executed in parallel. The iterations of the loop are distributed across the parallel threads. For example, if we have two threads, the first one can compute indices between 0 and count/2 and the other one between count/2 and count. 
-* Finally `#pragma omp single` indicates that this section will be executed by only one thread (any of them).
+* the loop construct `#pragma omp for` specifies that the iterations of the associated loop will be executed in parallel. The iterations of the loop are distributed across the parallel threads. For example, if we have two threads, the first one can compute indices between 0 and count/2 and the other one between count/2 and count. 
+* finally `#pragma omp single` indicates that this section will be executed by only one thread (any of them).
 
 #### The Scheduler Code Generator
 
