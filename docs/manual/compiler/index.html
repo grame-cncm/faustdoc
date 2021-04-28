@@ -393,30 +393,6 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
   virtual int getNumOutputs() {
     return 1;
   }
-  virtual int getInputRate(int channel) {
-    int rate;
-    switch (channel) {
-      default: {
-        rate = -1;
-        break;
-      }
-    }
-    return rate;
-  }
-  virtual int getOutputRate(int channel) {
-    int rate;
-    switch (channel) {
-      case 0: {
-        rate = 1;
-        break;
-      }
-      default: {
-        rate = -1;
-        break;
-      }
-    }
-    return rate;
-  }
   static void classInit(int samplingFreq) {}
   virtual void instanceConstants(int samplingFreq) {
     fSamplingFreq = samplingFreq;
@@ -456,7 +432,14 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
   }
 };
 </code></pre>
-<p>Several fine-grained initialization methods are available. The <code>instanceInit</code> method calls several additional initialization methods. The <code>instanceConstants</code> method sets the instance constant state. The <code>instanceClear</code> method resets the instance dynamic state (delay lines...).  The <code>instanceResetUserInterface</code> method resets all control values to their default state. All of those methods can be used individually on an allocated instance to reset part of its state. </p>
+<p>Several fine-grained initialization methods are available:</p>
+<ul>
+<li>the <code>instanceInit</code> method calls several additional initialization methods. </li>
+<li>the <code>instanceConstants</code> method sets the instance constant state. </li>
+<li>the <code>instanceClear</code> method resets the instance dynamic state (delay lines...).  </li>
+<li>the <code>instanceResetUserInterface</code> method resets all control value to their default state. </li>
+</ul>
+<p>All of those methods can be used individually on an allocated instance to reset part of its state. </p>
 <p>The <code>init</code> method combines class static state and instance initialization.</p>
 <p>When using a single instance, calling <code>init</code> is the simplest way to do "what is needed." When using several instances, all of them can be initialized using <code>instanceInit</code>, with a single call to <code>classInit</code> to initialize the static shared state.</p>
 <p>The <code>compute</code>  method takes the number of frames to process, and <code>inputs</code> and <code>outputs</code> buffers as interleaved arrays. </p>
@@ -471,8 +454,8 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
-
-<pre><code>// Root Mean Square of n consecutive samples
+<pre><code>
+// Root Mean Square of n consecutive samples
 RMS(n) = square : mean(n) : sqrt;
 
 // Square of a signal
@@ -491,6 +474,7 @@ fix2float(x) = float(x)/(1&lt;&lt;20);
 
 // Root Mean Square of 1000 consecutive samples
 process = RMS(1000);
+
 </code></pre>
 
 
@@ -499,7 +483,7 @@ process = RMS(1000);
 </div>
 <!-- /faust-run -->
 
-<p>The <a href="#structure-of-the-generated-code">corresponding <code>compute()</code> method</a> generated in scalar mode is the following:</p>
+<p>The <a href="#strucutre-of-the-generated-code">corresponding <code>compute()</code> method</a> generated in scalar mode is the following:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
@@ -606,7 +590,7 @@ process = RMS(1000);
 <h4 id="the-openmp-code-generator">The OpenMP Code Generator</h4>
 <p><img src="img/openmpModel.svg" class="mx-auto d-block" width="100%"></p>
 <p>The <a href="https://faustdoc.grame.fr/manual/options/"><code>--openMP</code> (or <code>-omp</code>) option</a>, when given to the Faust compiler, will insert appropriate <a href="https://www.openmp.org/">OpenMP</a> directives into the C++ code. OpenMP is a well established API that is used to explicitly define direct multi-threaded, shared memory parallelism. It is based on a fork-join model of parallelism (see figure above). Parallel regions are delimited by <code>#pragma omp parallel</code> constructs. At the entrance of a parallel region, a group of parallel threads is activated. The code within a parallel region is executed by each thread of the parallel group until the end of the region. </p>
-<pre><code class="language-c++">#pragma omp parallel
+<pre><code>#pragma omp parallel
 {
   // the code here is executed simultaneously by every thread of the parallel 
   // team
@@ -614,7 +598,7 @@ process = RMS(1000);
 }
 </code></pre>
 <p>In order not to have every thread doing redundantly the exact same work, OpenMP provides specific <em>work-sharing</em> directives. For example <code>#pragma omp sections</code> allows to break the work into separate, discrete sections, each section being executed by one thread:</p>
-<pre><code class="language-c++">#pragma omp parallel
+<pre><code>#pragma omp parallel
 {
   #pragma omp sections
   {
@@ -632,9 +616,9 @@ process = RMS(1000);
 }
 </code></pre>
 <h4 id="adding-open-mp-directives">Adding Open MP Directives</h4>
-<p>As said before, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set <em>S_0</em> (loops <em>L1</em>, <em>L2</em> and <em>L3</em>) contains the loops that don't depend on any other loops, the set <em>S_1</em> contains the loops that only depend on loops of <em>S_0</em>, (that is loops <em>L4</em> and <em>L5</em>), etc.. </p>
-<p>As all the loops of a given set <em>S_n</em> can be computed in parallel, the compiler will generate a <code>sections</code> construct with a <code>section</code> for each loop. </p>
-<pre><code class="language-c++">#pragma omp sections
+<p>As said before, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set $S_0$ (loops $L1$, $L2$ and $L3$) contains the loops that don't depend on any other loops, the set $S_1$ contains the loops that only depend on loops of $S_0$, (that is loops $L4$ and $L5$), etc.. </p>
+<p>As all the loops of a given set $S_n$ can be computed in parallel, the compiler will generate a <code>sections</code> construct with a <code>section</code> for each loop. </p>
+<pre><code>#pragma omp sections
 {
   #pragma omp section
   for (...) {
@@ -648,13 +632,13 @@ process = RMS(1000);
 }
 </code></pre>
 <p>If a given set contains only one loop, then the compiler checks to see if the loop can be parallelized (no recursive dependencies) or not. If it can be parallelized, it generates:</p>
-<pre><code class="language-c++">#pragma omp for
+<pre><code>#pragma omp for
 for (...) {
  // Loop code
 }
 </code></pre>
 <p>otherwise it generates a <code>single</code> construct so that only one thread will execute the loop:</p>
-<pre><code class="language-c++">#pragma omp single
+<pre><code>#pragma omp single
 for (...) {
  // Loop code
 }
@@ -664,9 +648,10 @@ for (...) {
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
-
-<pre><code>filter(c) = *(1-c) : + ~ *(c);
+<pre><code>
+filter(c) = *(1-c) : + ~ *(c);
 process = filter(0.9), filter(0.9) : +;
+
 </code></pre>
 
 
@@ -766,9 +751,10 @@ parallel.</li>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
-
-<pre><code>filter(c) = *(1-c) : + ~ *(c);
+<pre><code>
+filter(c) = *(1-c) : + ~ *(c);
 process = filter(0.9), filter(0.9) : +; 
+
 </code></pre>
 
 
@@ -793,7 +779,6 @@ process = filter(0.9), filter(0.9) : +;
   computeThread(0);
   syncAll(fScheduler);
 }
-
 void computeThread(int num_thread) {
   int count = fCount;
   FAUSTFLOAT* fInput0 = 0;

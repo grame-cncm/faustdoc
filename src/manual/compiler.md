@@ -38,7 +38,7 @@ faust -a alsa-gtk.cpp noise.dsp -o noise.cpp
 g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 ```
 
-Note that a wide range of [`faust2...` compilation scripts](TODO) can be used to facilitate this operation by taking a Faust file and returning the corresponding binary for your platform.
+Note that a wide range of [`faust2...` compilation scripts](https://faustdoc.grame.fr/manual/tools/) can be used to facilitate this operation by taking a Faust file and returning the corresponding binary for your platform.
 
 ## Structure of the Generated Code
 
@@ -107,30 +107,6 @@ class mydsp : public dsp {
   virtual int getNumOutputs() {
     return 1;
   }
-  virtual int getInputRate(int channel) {
-    int rate;
-    switch (channel) {
-      default: {
-        rate = -1;
-        break;
-      }
-    }
-    return rate;
-  }
-  virtual int getOutputRate(int channel) {
-    int rate;
-    switch (channel) {
-      case 0: {
-        rate = 1;
-        break;
-      }
-      default: {
-        rate = -1;
-        break;
-      }
-    }
-    return rate;
-  }
   static void classInit(int samplingFreq) {}
   virtual void instanceConstants(int samplingFreq) {
     fSamplingFreq = samplingFreq;
@@ -171,7 +147,14 @@ class mydsp : public dsp {
 };
 ```
 
-Several fine-grained initialization methods are available. The `instanceInit` method calls several additional initialization methods. The `instanceConstants` method sets the instance constant state. The `instanceClear` method resets the instance dynamic state (delay lines...).  The `instanceResetUserInterface` method resets all control value to their default state. All of those methods can be used individually on an allocated instance to reset part of its state. 
+Several fine-grained initialization methods are available:
+
+- the `instanceInit` method calls several additional initialization methods. 
+- the `instanceConstants` method sets the instance constant state. 
+- the `instanceClear` method resets the instance dynamic state (delay lines...).  
+- the `instanceResetUserInterface` method resets all control value to their default state. 
+
+All of those methods can be used individually on an allocated instance to reset part of its state. 
 
 The `init` method combines class static state and instance initialization.
 
@@ -191,7 +174,7 @@ Modern C++ compilers are able to do autovectorization, that is to use SIMD instr
 
 Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular, complex loops can prevent autovectorization. The goal of the vector code generation is to rearrange the C++ code in a way that facilitates the autovectorization job of the C++ compiler. Instead of generating a single sample computation loop, it splits the computation into several simpler loops that communicates by vectors.
 
-The vector code generation is activated by passing the [`--vectorize` (or `-vec`)](#compilation-options) option to the Faust compiler. Two additional options are available: `--vec-size <n>` controls the size of the vector (by default 32 samples) and `--loop-variant 0/1` gives some additional control on the loops.  
+The vector code generation is activated by passing the [`--vectorize` (or `-vec`)](https://faustdoc.grame.fr/manual/options/) option to the Faust compiler. Two additional options are available: `--vec-size <n>` controls the size of the vector (by default 32 samples) and `--loop-variant 0/1` gives some additional control on the loops.  
 
 To illustrate the difference between scalar code and vector code, let's take the computation of the RMS (Root Mean Square) value of a signal.  Here is the Faust code that computes the Root Mean Square of a sliding window of 1000 samples:
 
@@ -334,13 +317,13 @@ The result is a directed graph in which each node is a computation loop (see fig
 
 ### Parallel Code Generation
 
-Parallel code generation is activated by passing either the [`--openMP` (or `-omp`) option or the `--scheduler` (or `-sch`) option](#compilation-options). It implies that the `-vec` option as well as the parallel code generation are built on top of the vector code generation.
+Parallel code generation is activated by passing either the [`--openMP` (or `-omp`) option or the `--scheduler` (or `-sch`) option](https://faustdoc.grame.fr/manual/options/). It implies that the `-vec` option as well as the parallel code generation are built on top of the vector code generation.
 
 #### The OpenMP Code Generator
 
 <img src="img/openmpModel.svg" class="mx-auto d-block" width="100%">
 
-The [`--openMP` (or `-omp`) option](#compilation-options), when given to the Faust compiler, will insert appropriate [OpenMP](https://www.openmp.org/) directives into the C++ code. OpenMP is a well established API that is used to explicitly define direct multi-threaded, shared memory parallelism. It is based on a fork-join model of parallelism (see figure above). Parallel regions are delimited by `#pragma omp parallel` constructs. At the entrance of a parallel region, a group of parallel threads is activated. The code within a parallel region is executed by each thread of the parallel group until the end of the region. 
+The [`--openMP` (or `-omp`) option](https://faustdoc.grame.fr/manual/options/), when given to the Faust compiler, will insert appropriate [OpenMP](https://www.openmp.org/) directives into the C++ code. OpenMP is a well established API that is used to explicitly define direct multi-threaded, shared memory parallelism. It is based on a fork-join model of parallelism (see figure above). Parallel regions are delimited by `#pragma omp parallel` constructs. At the entrance of a parallel region, a group of parallel threads is activated. The code within a parallel region is executed by each thread of the parallel group until the end of the region. 
 
 ```
 #pragma omp parallel
@@ -508,7 +491,7 @@ parallel.
 
 #### The Scheduler Code Generator
 
-With the [`--scheduler` (or `-sch`) option](#compilation-options) given to the Faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worked threads is created and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.
+With the [`--scheduler` (or `-sch`) option](https://faustdoc.grame.fr/manual/options/) given to the Faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worked threads is created and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.
 
 Starting from a ready task, each thread follows the dependencies, possibly pushing ready sub-tasks into it's own local WSQ. When no more tasks can be activated on a given computation path, the thread pops a task from it's local WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from other threads WSQ.
 
