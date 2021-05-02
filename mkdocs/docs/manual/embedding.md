@@ -87,6 +87,10 @@ Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](h
 
 Then the DSP object has to be connected to an audio driver to be rendered (see the `m_dsp->compute(128, m_input, m_output);` block). A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp). A example using the pure C API can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c). 
 
+### Sample size adaptation
+
+When compiled with the `-double`option, the generated code internally uses `double` format for samples, but also expects inputs/ouputs buffers to be filled with samples in double. The `dsp_sample_adapter` decorator class defined in [faust/dsp/dsp-adapter.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h) can be used to adapt the buffers. 
+
 ### Deployment
 
 The application or plugin using `libfaust` can embed the library either as a statically linked component (to get a self-contained binary) or provided as a separate component and load it dynamically at runtime. The Faust libraries themselves usually have to be bundled separately and can be accessed at runtime using the compiler `-I /path/to/libraries` option in `createDSPFactoryFromString/createDSPFactoryFromFile` functions.

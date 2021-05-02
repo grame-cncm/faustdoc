@@ -284,6 +284,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#sample-size-adaptation" class="nav-link">Sample size adaptation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="3"><a href="#deployment" class="nav-link">Deployment</a>
               <ul class="nav flex-column">
               </ul>
@@ -390,6 +394,8 @@ deleteDSPFactory(m_factory);
 <p>The first step consists in creating a DSP factory from a DSP file (using <code>createDSPFactoryFromFile</code>) or string  (using <code>createDSPFactoryFromString</code>) with additional parameters given to the compiler. Assuming the compilation works, a factory is returned, to create a DSP instance with the factory <code>createDSPInstance</code> method. </p>
 <p>Note that the resulting <code>llvm_dsp*</code> pointer type (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h"><code>faust/dsp/llvm-dsp.h</code></a> header file) is a subclass of the base <code>dsp</code> class (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h"><code>faust/dsp/dsp.h</code></a> header file). Thus it can be used with any <code>UI</code> type to plug a GUI, MIDI or OSC controller on the DSP object, like it would be done with a DSP program compiled to a C++ class (the generated <code>mydsp</code>  class is also a subclass of the base <code>dsp</code> class). This is demonstrated with the <code>my_ui* m_ui = new MyUI();</code> and <code>m_dsp-&gt;buildUserInterface(m_ui);</code> lines where the <code>buildUserInterface</code> method is used to connect a controller. </p>
 <p>Then the DSP object has to be connected to an audio driver to be rendered (see the <code>m_dsp-&gt;compute(128, m_input, m_output);</code> block). A more complete C++ example can be <a href="https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp">found here</a>. A example using the pure C API can be <a href="https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c">found here</a>. </p>
+<h3 id="sample-size-adaptation">Sample size adaptation</h3>
+<p>When compiled with the <code>-double</code>option, the generated code internally uses <code>double</code> format for samples, but also expects inputs/ouputs buffers to be filled with samples in double. The <code>dsp_sample_adapter</code> decorator class defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h">faust/dsp/dsp-adapter.h</a> can be used to adapt the buffers. </p>
 <h3 id="deployment">Deployment</h3>
 <p>The application or plugin using <code>libfaust</code> can embed the library either as a statically linked component (to get a self-contained binary) or provided as a separate component and load it dynamically at runtime. The Faust libraries themselves usually have to be bundled separately and can be accessed at runtime using the compiler <code>-I /path/to/libraries</code> option in <code>createDSPFactoryFromString/createDSPFactoryFromFile</code> functions.</p>
 <h2 id="using-libfaust-with-the-interpreter-backend">Using libfaust with the Interpreter backend</h2>
