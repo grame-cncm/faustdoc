@@ -346,6 +346,10 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#dsp-with-polyphonic-support" class="nav-link">DSP with polyphonic support</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -912,7 +916,26 @@ process = no.noise * hslider(&quot;level[osc:/accxyz/0 0 9.81]&quot;,0,0,1,0.01)
 <td>alias with <em>min</em>, <em>max</em> clipping</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+<h2 id="dsp-with-polyphonic-support">DSP with polyphonic support</h2>
+<p>When the DSP code is compiled in polyphonic mode, the generated program will create a more complex hierarchy to possibly access and control individual voices.</p>
+<p>The following OSC messages reflect the same DSP code either compiled normally, or in polyphonic mode (only part of the OSC hierarchies are displayed here):</p>
+<pre><code>// Mono mode
+
+/Organ/vol f -10.0
+/Organ/pan f 0.0
+</code></pre>
+<pre><code>// Polyphonic mode
+
+/Polyphonic/Voices/Organ/pan f 0.0
+/Polyphonic/Voices/Organ/vol f -10.0
+...
+/Polyphonic/Voice1/Organ/vol f -10.0
+/Polyphonic/Voice1/Organ/pan f 0.0
+...
+/Polyphonic/Voice2/Organ/vol f -10.0
+/Polyphonic/Voice2/Organ/pan f 0.0
+</code></pre></div>
             </div>
         </div>
 

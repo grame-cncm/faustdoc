@@ -927,6 +927,8 @@ The following OSC messages reflect the same DSP code either compiled normally, o
 /Polyphonic/Voice2/Organ/pan f 0.0
 ```
 
+Note that to save space on the screen, the`/Polyphonic/VoiceX/xxx` syntax is used when the number of allocated voices is less than 8, then the`/Polyphonic/VX/xxx` syntax is used when more voices are used.
+
 The polyphonic instrument allocation takes the DSP to be used for one voice, the desired number of voices, the dynamic voice allocation state, and the group state which controls if separated voices are displayed or not:
 
 ```c++

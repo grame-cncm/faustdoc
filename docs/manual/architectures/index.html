@@ -1272,6 +1272,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 /Polyphonic/Voice2/Organ/vol f -10.0
 /Polyphonic/Voice2/Organ/pan f 0.0
 </code></pre>
+<p>Note that to save space on the screen, the<code>/Polyphonic/VoiceX/xxx</code> syntax is used when the number of allocated voices is less than 8, then the<code>/Polyphonic/VX/xxx</code> syntax is used when more voices are used.</p>
 <p>The polyphonic instrument allocation takes the DSP to be used for one voice, the desired number of voices, the dynamic voice allocation state, and the group state which controls if separated voices are displayed or not:</p>
 <pre><code class="language-c++">dsp* poly = new mydsp_poly(dsp, 2, true, true);
 </code></pre>

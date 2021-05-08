@@ -447,3 +447,28 @@ process = no.noise * hslider("level[osc:/accxyz/0 0 9.81]",0,0,1,0.01);
 | `"...[osc: address lo  hi ]..."` | alias with  \(lo \rightarrow min\),  \(hi \rightarrow max\) mapping |
 | `"...[osc:' address]..."` | alias with *min*, *max* clipping |
 
+## DSP with polyphonic support
+
+When the DSP code is compiled in polyphonic mode, the generated program will create a more complex hierarchy to possibly access and control individual voices.
+
+The following OSC messages reflect the same DSP code either compiled normally, or in polyphonic mode (only part of the OSC hierarchies are displayed here):
+
+```
+// Mono mode
+
+/Organ/vol f -10.0
+/Organ/pan f 0.0
+```
+
+```
+// Polyphonic mode
+
+/Polyphonic/Voices/Organ/pan f 0.0
+/Polyphonic/Voices/Organ/vol f -10.0
+...
+/Polyphonic/Voice1/Organ/vol f -10.0
+/Polyphonic/Voice1/Organ/pan f 0.0
+...
+/Polyphonic/Voice2/Organ/vol f -10.0
+/Polyphonic/Voice2/Organ/pan f 0.0
+```
