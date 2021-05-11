@@ -1486,7 +1486,7 @@ mydsp::classDestroy();
 {
     // Init the DSP optimizer with the dsp_source to compile 
     // (either the filename or source code string)
-    dsp_optimizer optimizer&lt;FAUSTFLOAT&gt;(dsp_source, &quot;/usr/local/share/faust&quot;, &quot;&quot;, 1024);
+    dsp_optimizer optimizer(dsp_source, &quot;/usr/local/share/faust&quot;, &quot;&quot;, 1024);
     // Discover the best set of parameters
     pair&lt;double, vector&lt;string&gt;&gt; res = optimizer.findOptimizedParameters();
     cout &lt;&lt; &quot;Best value for '&quot; &lt;&lt; in_filename &lt;&lt; &quot;' is : &quot; 

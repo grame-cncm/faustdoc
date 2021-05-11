@@ -1204,7 +1204,7 @@ static void dynamic_bench(const string& dsp_source)
 {
     // Init the DSP optimizer with the dsp_source to compile 
     // (either the filename or source code string)
-    dsp_optimizer optimizer<FAUSTFLOAT>(dsp_source, "/usr/local/share/faust", "", 1024);
+    dsp_optimizer optimizer(dsp_source, "/usr/local/share/faust", "", 1024);
     // Discover the best set of parameters
     pair<double, vector<string>> res = optimizer.findOptimizedParameters();
     cout << "Best value for '" << in_filename << "' is : " 
