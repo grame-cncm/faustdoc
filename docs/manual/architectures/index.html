@@ -482,6 +482,18 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#additional-ressources" class="nav-link">Additional Ressources</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#faust2hpp" class="nav-link">faust2hpp</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#faustpp" class="nav-link">faustpp</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -1956,7 +1968,13 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <p>The completed <code>spectral.cpp</code> file is now ready to be deployed as a Max/MSP external using the <code>faust2max6</code> script and the <code>-inj</code> option with the following line:</p>
 <pre><code>faust2max6 -inj spectral.cpp -soundfile spectral.dsp
 </code></pre>
-<p>The two needed <code>sound1.wav</code> and <code>sound2.wav</code> audio files are embedded in the generated external, loaded at init time (since the<code>buildUserInterface</code> method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake <code>spectral.dsp</code> DSP program, the generated <code>spectral.cpp</code> C++ file, the automatically generated <code>spectral.maxpat</code> Max/MSP patch will be able to build the GUI with a ready-to-use slider.</p></div>
+<p>The two needed <code>sound1.wav</code> and <code>sound2.wav</code> audio files are embedded in the generated external, loaded at init time (since the<code>buildUserInterface</code> method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake <code>spectral.dsp</code> DSP program, the generated <code>spectral.cpp</code> C++ file, the automatically generated <code>spectral.maxpat</code> Max/MSP patch will be able to build the GUI with a ready-to-use slider.</p>
+<h2 id="additional-ressources">Additional Ressources</h2>
+<p>Several external projects are providing quite sophisticated tools to arrange the way how Faust source is generated.</p>
+<h3 id="faust2hpp"><a href="https://github.com/resonantdsp/faust2hpp">faust2hpp</a></h3>
+<p>Convert <a href="https://faust.grame.fr/">FAUST</a> code to a header-only standalone C++ library. A collection of header files is generated as the output. A class is provided from which a DSP object can be built with methods in the style of <a href="https://juce.com/">JUCE</a> DSP objects. </p>
+<h3 id="faustpp"><a href="https://github.com/jpcima/faustpp">faustpp</a></h3>
+<p>A post-processor for Faust, which allows to generate with more flexibility This is a source transformation tool based on the <a href="https://faust.grame.fr/">Faust compiler</a>. It permits to arrange the way how Faust source is generated with greater flexibility.</p></div>
             </div>
         </div>
 

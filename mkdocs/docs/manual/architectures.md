@@ -1760,3 +1760,17 @@ faust2max6 -inj spectral.cpp -soundfile spectral.dsp
 
 The two needed `sound1.wav` and `sound2.wav` audio files are embedded in the generated external, loaded at init time (since the`buildUserInterface` method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake `spectral.dsp` DSP program, the generated `spectral.cpp` C++ file, the automatically generated `spectral.maxpat` Max/MSP patch will be able to build the GUI with a ready-to-use slider.
 
+## Additional Ressources 
+
+Several external projects are providing quite sophisticated tools to arrange the way how Faust source is generated.
+
+### [faust2hpp](https://github.com/resonantdsp/faust2hpp)
+
+Convert [FAUST](https://faust.grame.fr/) code to a header-only standalone C++ library. A collection of header files is generated as the output. A class is provided from which a DSP object can be built with methods in the style of [JUCE](https://juce.com/) DSP objects. 
+
+### [faustpp](https://github.com/jpcima/faustpp)
+
+A post-processor for Faust, which allows to generate with more flexibility This is a source transformation tool based on the [Faust compiler](https://faust.grame.fr/). It permits to arrange the way how Faust source is generated with greater flexibility.
+
+
+
