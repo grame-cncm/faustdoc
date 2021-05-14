@@ -1762,11 +1762,11 @@ The two needed `sound1.wav` and `sound2.wav` audio files are embedded in the gen
 
 ## Additional Ressources 
 
-Several external projects are providing quite sophisticated tools to arrange the way how Faust source is generated.
+Several external projects are providing  tools to arrange the way Faust source code is generated, by using and adapting the `dsp/UI/audio` model in a more sophisticated way.
 
 ### [faust2hpp](https://github.com/resonantdsp/faust2hpp)
 
-Convert [FAUST](https://faust.grame.fr/) code to a header-only standalone C++ library. A collection of header files is generated as the output. A class is provided from which a DSP object can be built with methods in the style of [JUCE](https://juce.com/) DSP objects. 
+Convert [Faust](https://faust.grame.fr/) code to a header-only standalone C++ library. A collection of header files is generated as the output. A class is provided from which a DSP object can be built with methods in the style of [JUCE](https://juce.com/) DSP objects. 
 
 ### [faustpp](https://github.com/jpcima/faustpp)
 
