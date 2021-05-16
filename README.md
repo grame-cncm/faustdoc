@@ -42,7 +42,6 @@ $ make build
 ~~~~~~~~~~~~~~~~
 The web site will be available from the `docs` folder at the root of the `faustdoc` folder
 
-
 More details on the build process:
 ~~~~~~~~~~~~~~~~
 $ make help
