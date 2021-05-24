@@ -294,6 +294,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2cagtk" class="nav-link">faust2cagtk</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2caqt" class="nav-link">faust2caqt</a>
               <ul class="nav flex-column">
               </ul>
@@ -611,6 +615,26 @@ Polyphonic mode means MIDI instrument with at least 1 voice. Use no arguments fo
    -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI
    -tobela : to send C++ file into bela, and to run it.
+</pre>
+
+<h2 id="faust2cagtk">faust2cagtk</h2>
+<pre class=faust-tools>
+Usage: faust2cagtk [options] [Faust options] &lt;file.dsp>
+Target platform: Linux
+Require: Jack
+Compiles Faust programs to CoreAudio-GTK
+Options:
+   -httpd : activates HTTP control
+   -osc : activates OSC control
+   -midi : activates MIDI control
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -resample : to resample soundfiles to the audio driver sample rate.
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
+   -preset &lt;directory> : add a preset manager on top of GUI and save the preset files in the given directory
+   -preset auto : add a preset manager on top of GUI and save the preset files in a system temporary directory
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2caqt">faust2caqt</h2>

@@ -1770,7 +1770,7 @@ Convert [Faust](https://faust.grame.fr/) code to a header-only standalone C++ li
 
 ### [faustpp](https://github.com/jpcima/faustpp)
 
-A post-processor for Faust, which allows to generate with more flexibility This is a source transformation tool based on the [Faust compiler](https://faust.grame.fr/). It permits to arrange the way how Faust source is generated with greater flexibility.
+A post-processor for Faust, which allows to generate with more flexibility. This is a source transformation tool based on the [Faust compiler](https://faust.grame.fr/). It permits to arrange the way how Faust source is generated with greater flexibility.
 
 
 
