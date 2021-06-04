@@ -1762,15 +1762,22 @@ The two needed `sound1.wav` and `sound2.wav` audio files are embedded in the gen
 
 ## Additional Ressources 
 
-Several external projects are providing  tools to arrange the way Faust source code is generated, by using and adapting the `dsp/UI/audio` model in a more sophisticated way.
+Several external projects are providing tools to arrange the way Faust source code is generated or used, in different languages.
 
-### [faust2hpp](https://github.com/resonantdsp/faust2hpp)
+### C++ tools 
+Using and adapting the `dsp/UI/audio` model in a more sophisticated way.
+
+#### [faust2hpp](https://github.com/resonantdsp/faust2hpp)
 
 Convert [Faust](https://faust.grame.fr/) code to a header-only standalone C++ library. A collection of header files is generated as the output. A class is provided from which a DSP object can be built with methods in the style of [JUCE](https://juce.com/) DSP objects. 
 
-### [faustpp](https://github.com/jpcima/faustpp)
+#### [faustpp](https://github.com/jpcima/faustpp)
 
 A post-processor for Faust, which allows to generate with more flexibility. This is a source transformation tool based on the [Faust compiler](https://faust.grame.fr/). It permits to arrange the way how Faust source is generated with greater flexibility.
 
 
+### Rust tools 
 
+#### [rust-faust](https://github.com/Frando/rust-faust)
+
+A better integration of FAUST for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps

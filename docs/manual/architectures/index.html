@@ -484,12 +484,24 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#additional-ressources" class="nav-link">Additional Ressources</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#faust2hpp" class="nav-link">faust2hpp</a>
+            <li class="nav-item" data-level="3"><a href="#c-tools" class="nav-link">C++ tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#faust2hpp" class="nav-link">faust2hpp</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#faustpp" class="nav-link">faustpp</a>
+            <li class="nav-item" data-level="4"><a href="#faustpp" class="nav-link">faustpp</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#rust-tools" class="nav-link">Rust tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#rust-faust" class="nav-link">rust-faust</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -1970,11 +1982,16 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 </code></pre>
 <p>The two needed <code>sound1.wav</code> and <code>sound2.wav</code> audio files are embedded in the generated external, loaded at init time (since the<code>buildUserInterface</code> method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake <code>spectral.dsp</code> DSP program, the generated <code>spectral.cpp</code> C++ file, the automatically generated <code>spectral.maxpat</code> Max/MSP patch will be able to build the GUI with a ready-to-use slider.</p>
 <h2 id="additional-ressources">Additional Ressources</h2>
-<p>Several external projects are providing  tools to arrange the way Faust source code is generated, by using and adapting the <code>dsp/UI/audio</code> model in a more sophisticated way.</p>
-<h3 id="faust2hpp"><a href="https://github.com/resonantdsp/faust2hpp">faust2hpp</a></h3>
+<p>Several external projects are providing tools to arrange the way Faust source code is generated or used, in different languages.</p>
+<h3 id="c-tools">C++ tools</h3>
+<p>Using and adapting the <code>dsp/UI/audio</code> model in a more sophisticated way.</p>
+<h4 id="faust2hpp"><a href="https://github.com/resonantdsp/faust2hpp">faust2hpp</a></h4>
 <p>Convert <a href="https://faust.grame.fr/">Faust</a> code to a header-only standalone C++ library. A collection of header files is generated as the output. A class is provided from which a DSP object can be built with methods in the style of <a href="https://juce.com/">JUCE</a> DSP objects. </p>
-<h3 id="faustpp"><a href="https://github.com/jpcima/faustpp">faustpp</a></h3>
-<p>A post-processor for Faust, which allows to generate with more flexibility. This is a source transformation tool based on the <a href="https://faust.grame.fr/">Faust compiler</a>. It permits to arrange the way how Faust source is generated with greater flexibility.</p></div>
+<h4 id="faustpp"><a href="https://github.com/jpcima/faustpp">faustpp</a></h4>
+<p>A post-processor for Faust, which allows to generate with more flexibility. This is a source transformation tool based on the <a href="https://faust.grame.fr/">Faust compiler</a>. It permits to arrange the way how Faust source is generated with greater flexibility.</p>
+<h3 id="rust-tools">Rust tools</h3>
+<h4 id="rust-faust"><a href="https://github.com/Frando/rust-faust">rust-faust</a></h4>
+<p>A better integration of FAUST for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps</p></div>
             </div>
         </div>
 
