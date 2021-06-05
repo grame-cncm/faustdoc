@@ -1775,9 +1775,21 @@ Convert [Faust](https://faust.grame.fr/) code to a header-only standalone C++ li
 
 A post-processor for Faust, which allows to generate with more flexibility. This is a source transformation tool based on the [Faust compiler](https://faust.grame.fr/). It permits to arrange the way how Faust source is generated with greater flexibility.
 
+#### [faustmd](https://github.com/jpcima/faustmd)
+
+Static metadata generator for Faust/C++. This program builds the metadata for a Faust DSP ahead of time, rather than dynamically. The result is a block of C++ code which can be appended to the code generation.
+
 
 ### Rust tools 
 
 #### [rust-faust](https://github.com/Frando/rust-faust)
 
-A better integration of FAUST for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps
+A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps
+
+### Python tools 
+
+#### [FAUSTPy](https://github.com/marcecj/faust_python)
+FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time.
+
+#### [Faustwatch](https://github.com/hrtlacek/faustTools)
+At the moment there is one tool present, faustwatch.py. Faustwatch is a tool that observes a .dsp file used by the dsp language Faust. 
