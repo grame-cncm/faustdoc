@@ -1,10 +1,10 @@
 
-declare name "fdnRev";
-declare version "0.0";
-declare author "JOS, Revised by RM";
-declare description "A feedback delay network reverb.";
+declare name "dattorro";
+declare version "0.1";
+declare author "Jakob Zerbian";
+declare description "Dattorro demo application.";
 
 import("stdfaust.lib");
 
-process = dm.fdnrev0_demo(16,5,3);
+process = dm.dattorro_rev_demo;	
 

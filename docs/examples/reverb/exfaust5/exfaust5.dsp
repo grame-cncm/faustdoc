@@ -1,10 +1,11 @@
 
-declare name "zitaRevFDN";
-declare version "0.0";
-declare author "JOS, Revised by RM";
-declare description "Reverb demo application based on zita_rev_fdn.";
+declare name "reverbDesigner";
 
 import("stdfaust.lib");
 
-process = dm.zita_rev_fdn_demo;
+N = 16; 	// Feedback Delay Network (FDN) order (power of 2, 2 to 16)
+NB =  5; 	// Number of T60-controlled frequency-bands (3 or more)
+BSO =  3;	// Order of each lowpass/highpass bandsplit (odd positive integer)
+
+process = dm.fdnrev0_demo(N,NB,BSO);
 

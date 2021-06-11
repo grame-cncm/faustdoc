@@ -266,11 +266,23 @@
             
             <li class="nav-item" data-level="1"><a href="#reverb" class="nav-link">reverb</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#dattorro" class="nav-link">dattorro</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#fdnrev" class="nav-link">fdnRev</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#freeverb" class="nav-link">freeverb</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#greyhole" class="nav-link">greyhole</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#jprev" class="nav-link">jprev</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -298,9 +310,31 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="reverb">reverb</h1>
-<h2 id="fdnrev">fdnRev</h2>
+<h2 id="dattorro">dattorro</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;dattorro&quot;;
+declare version &quot;0.1&quot;;
+declare author &quot;Jakob Zerbian&quot;;
+declare description &quot;Dattorro demo application.&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = dm.dattorro_rev_demo; 
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="fdnrev">fdnRev</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;fdnRev&quot;;
@@ -315,14 +349,14 @@ process = dm.fdnrev0_demo(16,5,3);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust0/exfaust0.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="freeverb">freeverb</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;freeverb&quot;;
@@ -337,14 +371,58 @@ process = dm.freeverb_demo;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="greyhole">greyhole</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;greyhole&quot;;
+declare version &quot;0.1&quot;;
+declare author &quot;GRAME&quot;;
+declare description &quot;Greyhole demo application.&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = dm.greyhole_demo; 
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="jprev">jprev</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name &quot;jprev&quot;;
+declare version &quot;0.1&quot;;
+declare author &quot;GRAME&quot;;
+declare description &quot;Jprev demo application.&quot;;
+
+import(&quot;stdfaust.lib&quot;);
+
+process = dm.jprev_demo;    
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="reverbdesigner">reverbDesigner</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;reverbDesigner&quot;;
@@ -360,14 +438,14 @@ process = dm.fdnrev0_demo(N,NB,BSO);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="reverbtester">reverbTester</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;reverbTester&quot;;
@@ -382,14 +460,14 @@ process = dm.stereo_reverb_tester;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="zitarev">zitaRev</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;zitaRev&quot;;
@@ -404,14 +482,14 @@ process = dm.zita_rev1;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust4/exfaust4.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="zitarevfdn">zitaRevFDN</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name &quot;zitaRevFDN&quot;;
@@ -426,7 +504,7 @@ process = dm.zita_rev_fdn_demo;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust5/exfaust5.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/reverb/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run --></div>
