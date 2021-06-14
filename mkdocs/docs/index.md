@@ -56,7 +56,8 @@ In 2018, Yann Orlarey and Romain Michon shot and online course on the [Kadenze p
 
 ### @ Stanford
 
-* Julius Smith's online book series on audio signal processing which hosts dozens of Faust code examples: <https://ccrma.stanford.edu/~jos/>
+* Julius Smith's Faust tutorial: <https://ccrma.stanford.edu/~jos/aspf/>
 * Romain Michon's Faust Tutorials: <https://ccrma.stanford.edu/~rmichon/faustTutorials/>
 * Music 250a (Physical Interaction Design for Music) course which hosts various tutorials on Faust and hardware: <https://ccrma.stanford.edu/courses/250a-winter-2020/>
+* Music 320c (Audio Plugin Development in Faust and C++): <https://ccrma.stanford.edu/courses/320c/>
 * Embedded DSP With Faust Workshop: <https://ccrma.stanford.edu/workshops/faust-embedded-19/>
