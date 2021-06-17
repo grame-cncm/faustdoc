@@ -8,6 +8,13 @@ they are brought to the right section. -->
 
 A Faust program is essentially a list of *statements*. These statements can be *metadata declarations* (either [global metadata](#global-metadata) or [function metadata](#function-metadata)), [*imports*](#imports), [*definitions*](#definitions), and [*documentation tags*](#documentation-tags), with optional C++ style (`//...` and `/*...*/`) comments.
 
+Each statement can be precedeed by a *variantlist*, composed of *variants* which can be *singleprecision*, *doubleprecision*, *quadprecision* or *fixedpointprecision*. This allows *statements* to be defined only with a (or several) specific float precision options in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` repectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
+
+```
+singleprecision INFINITY = 3.402823466e+38;
+doubleprecision INFINITY = 1.7976931348623158e+308;
+```
+
 Here is a short Faust program that implements of a simple noise generator (called from the `noises.lib` Faust library). It exhibits various kind of statements : two [*global metadata*](#global-metadata) declarations, an [*imports*](#imports), a *comment*, and a [*definition*](#definitions). We will study later how [*documentation statements*](#documentation-tags) work:
 
 <!-- faust-run -->
@@ -84,7 +91,7 @@ There exists a series of standard [global metadata](#global-metadata) in Faust w
 
 | Metadata | Role |
 | --- | --- |
-| `declare options "[key0:value][key1:value]"` | This metadata can be used to specify various options associated to a Faust code such as the fact its polyphonic, if it should have OSC, MIDI support, etc. Specific `keys` usable with this metadata are described throughout this documentation. | 
+| `declare options "[key0:value][key1:value]"` | This metadata can be used to specify various options associated to a Faust code such as the fact its polyphonic, if it should have OSC, MIDI support, etc. Specific `keys` usable with this metadata are described throughout this documentation. |
 | `declare interface "xxx"` | Specifies an interface replacing the standard Faust UI. |
 
 <!-- TODO: some are missing here: incomplete -->
@@ -163,7 +170,7 @@ For example the definition of `linear2db`, a function that converts linear value
 ```
 linear2db(x) = 20*log10(x);
 ```
- 
+
 Please note that this notation is only a convenient alternative to the direct use of [*lambda-abstractions*](#abstractions) (also called anonymous functions). The following is an equivalent definition of `linear2db` using a lambda-abstraction:
 
 ```
@@ -249,7 +256,7 @@ One can think of each of these composition operations as a particular way to con
 
 To describe precisely how these connections are done, we have to introduce some notation. The number of inputs and outputs of a block-diagram \(A\) are expressed as \(\mathrm{inputs}(A)\) and \(\mathrm{outputs}(A)\). The inputs and outputs themselves are respectively expressed as: \([0]A\), \([1]A\), \([2]A\), \(\ldots\) and
 \(A[0]\), \(A[1]\), \(A[2]\), etc. 
- 
+
 For each composition operation between two block-diagrams \(A\) and \(B\) we will describe the connections \(A[i]\rightarrow [j]B\) that are created and the constraints on their relative numbers of inputs and outputs.
 
 The priority and associativity of this five operations are:
@@ -467,9 +474,9 @@ To be applicable, it requires that:
 $$\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)$$
 
 Each input of \(B\) is connected to the corresponding output of \(A\) via an implicit 1-sample delay :
- 
+
 $$A[i]\stackrel{Z^{-1}}{\rightarrow}[i]B$$
- 
+
 and each output of \(B\) is connected to the corresponding input of \(A\):
 
 $$B[i]\rightarrow [i]A$$
@@ -683,7 +690,7 @@ The *infix notation* is not limited to numbers or numerical expressions. Arbitra
 
 Here are a few examples of equivalences:
 
-| Infix Syntax | | Core Syntax | 
+| Infix Syntax | | Core Syntax |
 | ----- | -------- | --------- |
 | `2-3` | \(\equiv\) | `2,3 : -` |
 | `2*3` | \(\equiv\) | `2,3 : *` |
@@ -702,15 +709,15 @@ Built-in primitives that can be used in infix notation are called *infix operato
 #### Prefix Notation
 
 Beside *infix notation*, it is also possible to use *prefix notation*. The *prefix notation* is the usual mathematical notation for functions \(f(x,y,z,\ldots)\), but extended to *infix operators*.
- 
+
 It consists in first having the operator, for example `/`, followed by its arguments between parentheses: `/(2,3)`: 
- 
+
 | Prefix Syntax | | Core Syntax |
 | -------- | -------- | --------- |
 | `*(2,3)` | \(\equiv\) | `2,3 : *` |
 | `@(_,7)` | \(\equiv\) | `_,7 : @` |
 | `/(_,2)` | \(\equiv\) | `_,2 : /` |
-| `<(A,B)` | \(\equiv\) | `A,B : <` | 
+| `<(A,B)` | \(\equiv\) | `A,B : <` |
 
 #### Partial Application
 
@@ -934,13 +941,13 @@ The `component` construction allows us to reuse a full Faust program (e.g., a `.
 <img src="img/component.svg" class="mx-auto d-block">
 
 For example `component("freeverb.dsp")` denotes the signal processor defined in file `freeverb.dsp`. 
- 
+
 Components can be used within expressions like in: 
- 
+
 ```
 ...component("karplus32.dsp") : component("freeverb.dsp")... 
 ```
-  
+
 Please note that `component("freeverb.dsp")` is equivalent to `library("freeverb.dsp").process`.
 
 `component` works well in tandem with [explicit substitution](#explicit-substitution) (see next section).
@@ -1052,7 +1059,7 @@ The resulting abstraction can then be applied to transform other effects. Note t
 ```
 \(fx).(_ <: fx :> _)
 ```
- 
+
 A name can be given to the abstraction and in turn use it on `dm.zita_light`:
 
 <!-- faust-run -->
@@ -1067,7 +1074,7 @@ Or even use a more traditional, but equivalent, notation:
 
 ```
 mono(fx) = _ <: fx :> _;
-``` 
+```
 
 #### Applications
 
@@ -2103,7 +2110,7 @@ The semantics of `select2` is as follows:
 
 * **Type:** \((s,x_0,x_1)\rightarrow y\) 
 * **Mathematical Description:** 
-\[ y(t) = \left\{ \begin{array}{ll}
+  \[ y(t) = \left\{ \begin{array}{ll}
          x_0(t) & \mathrm{if\ } s(t) = 0;\\
          x_1(t) & \mathrm{if\ } s(t) = 1.\end{array} \right. \] 
 
@@ -2150,7 +2157,7 @@ The `select3` primitive is a "three-ways selector". It has four input signals: \
 
 * **Type:** \((s,x_0,x_1,x_2)\rightarrow y\) 
 * **Mathematical Description:** 
-\[ y(t) = \left\{ \begin{array}{ll}
+  \[ y(t) = \left\{ \begin{array}{ll}
          x_0(t) & \mathrm{if\ } s(t) = 0;\\
          x_1(t) & \mathrm{if\ } s(t) = 1.\\
          x_2(t) & \mathrm{if\ } s(t) = 2.\end{array} \right. \] 
@@ -2486,7 +2493,7 @@ The `vbargraph` primitive implements a vertical bar-graph (typically a meter dis
 
 ```
 _ : vbargraph("label",min,max) : _
-``` 
+```
 
 Where:
 
@@ -2516,7 +2523,7 @@ The `hbargraph` primitive implements a horizontal bar-graph (typically a meter d
 
 ```
 _ : hbargraph("label",min,max) : _
-``` 
+```
 
 Where:
 
