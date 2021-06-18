@@ -848,6 +848,10 @@ they are brought to the right section. -->
 
 <h2 id="faust-program">Faust Program</h2>
 <p>A Faust program is essentially a list of <em>statements</em>. These statements can be <em>metadata declarations</em> (either <a href="#global-metadata">global metadata</a> or <a href="#function-metadata">function metadata</a>), <a href="#imports"><em>imports</em></a>, <a href="#definitions"><em>definitions</em></a>, and <a href="#documentation-tags"><em>documentation tags</em></a>, with optional C++ style (<code>//...</code> and <code>/*...*/</code>) comments.</p>
+<p>Each statement can be preceded by a <em>variantlist</em>, composed of <em>variants</em> which can be <em>singleprecision</em>, <em>doubleprecision</em>, <em>quadprecision</em> or <em>fixedpointprecision</em>. This allows <em>statements</em> to be parsed and defined only for a (or several) specific float precision option in the compiler (that is either <code>-single</code>, <code>-double</code>, <code>-quad</code> or <code>-fx</code> repectively). A typical use-case is the definition of floating point constants in the <code>maths.lib</code> library with the following lines:</p>
+<pre><code>singleprecision INFINITY = 3.402823466e+38;
+doubleprecision INFINITY = 1.7976931348623158e+308;
+</code></pre>
 <p>Here is a short Faust program that implements of a simple noise generator (called from the <code>noises.lib</code> Faust library). It exhibits various kind of statements : two <a href="#global-metadata"><em>global metadata</em></a> declarations, an <a href="#imports"><em>imports</em></a>, a <em>comment</em>, and a <a href="#definitions"><em>definition</em></a>. We will study later how <a href="#documentation-tags"><em>documentation statements</em></a> work:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -3393,7 +3397,7 @@ process = looper;
 <li><strong>Type:</strong> <script type="math/tex">(s,x_0,x_1)\rightarrow y</script>
 </li>
 <li><strong>Mathematical Description:</strong> 
-<script type="math/tex; mode=display"> y(t) = \left\{ \begin{array}{ll}
+  <script type="math/tex; mode=display"> y(t) = \left\{ \begin{array}{ll}
          x_0(t) & \mathrm{if\ } s(t) = 0;\\
          x_1(t) & \mathrm{if\ } s(t) = 1.\end{array} \right. </script>
 </li>
@@ -3450,7 +3454,7 @@ process = sig;
 <li><strong>Type:</strong> <script type="math/tex">(s,x_0,x_1,x_2)\rightarrow y</script>
 </li>
 <li><strong>Mathematical Description:</strong> 
-<script type="math/tex; mode=display"> y(t) = \left\{ \begin{array}{ll}
+  <script type="math/tex; mode=display"> y(t) = \left\{ \begin{array}{ll}
          x_0(t) & \mathrm{if\ } s(t) = 0;\\
          x_1(t) & \mathrm{if\ } s(t) = 1.\\
          x_2(t) & \mathrm{if\ } s(t) = 2.\end{array} \right. </script>

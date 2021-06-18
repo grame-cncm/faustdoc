@@ -8,7 +8,7 @@ they are brought to the right section. -->
 
 A Faust program is essentially a list of *statements*. These statements can be *metadata declarations* (either [global metadata](#global-metadata) or [function metadata](#function-metadata)), [*imports*](#imports), [*definitions*](#definitions), and [*documentation tags*](#documentation-tags), with optional C++ style (`//...` and `/*...*/`) comments.
 
-Each statement can be precedeed by a *variantlist*, composed of *variants* which can be *singleprecision*, *doubleprecision*, *quadprecision* or *fixedpointprecision*. This allows *statements* to be defined only with a (or several) specific float precision options in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` repectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
+Each statement can be preceded by a *variantlist*, composed of *variants* which can be *singleprecision*, *doubleprecision*, *quadprecision* or *fixedpointprecision*. This allows *statements* to be parsed and defined only for a (or several) specific float precision option in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` repectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
 
 ```
 singleprecision INFINITY = 3.402823466e+38;
