@@ -4222,14 +4222,14 @@ process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[style:nume
 <!-- /faust-run -->
 
 <h4 id="unitdb-metadata"><code>[unit:dB]</code> Metadata</h4>
-<p>The <code>[style:dB]</code> metadata changes the unit of a <a href="#vbargraph-metadata"><code>vbargraph</code></a> or a <a href="#hbargraph-metadata"><code>hbargraph</code></a> to dB. This impacts its overall appearance by applying a rainbow color scheme, etc.</p>
+<p>The <code>[unit:dB]</code> metadata changes the unit of a <a href="#vbargraph-metadata"><code>vbargraph</code></a> or a <a href="#hbargraph-metadata"><code>hbargraph</code></a> to dB. This impacts its overall appearance by applying a rainbow color scheme, etc.</p>
 <p><strong>Example: Level Display</strong></p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust117/exfaust117.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
-process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[style:dB]&quot;,-60,0));
+process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[unit:dB]&quot;,-60,0));
 
 </code></pre>
 
