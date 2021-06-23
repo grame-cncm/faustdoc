@@ -10,7 +10,7 @@ A Faust program is essentially a list of *statements*. These statements can be *
 
 
 ### Variants
-Some statements ([*imports*](#imports), [*definitions*](#definitions)) can be preceded by a *variantlist*, composed of *variants* which can be `singleprecision`, `doubleprecision`, `quadprecision` or `fixedpointprecision`. This allows some `imports` and `definitions` to be effective only for a (or several) specific float precision option in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` repectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
+Some statements ([*imports*](#imports), [*definitions*](#definitions)) can be preceded by a *variantlist*, composed of *variants* which can be `singleprecision`, `doubleprecision`, `quadprecision` or `fixedpointprecision`. This allows some `imports` and `definitions` to be effective only for a (or several) specific float precision option in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` respectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
 
 ```
 singleprecision INFINITY = 3.402823466e+38;
@@ -239,7 +239,7 @@ Despite its textual syntax, Faust is conceptually a block-diagram language. Faus
 
 ### Constant Numerical Expressions  
 
-Some language primitive (like `rdtable`, `rwtable`, `hslider` etc.) take constant numbers as some of their parameters. Those numbers can be directly given in the code, but can also be computed by more complex expressions *which have to produce numbers at compile time*. We will refer to them as [constant numerical expressions](#constant-numerical-expressions) in the documentation.
+Some language primitives (like `rdtable`, `rwtable`, `hslider` etc.) take constant numbers as some of their parameters. Those numbers can be directly given in the code, but can also be computed by more complex expressions *which have to produce numbers at compile time*. We will refer to them as [constant numerical expressions](#constant-numerical-expressions) in the documentation.
 
 ### Diagram Expressions
 

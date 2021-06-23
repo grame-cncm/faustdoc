@@ -1793,3 +1793,8 @@ FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using 
 
 #### [Faustwatch](https://github.com/hrtlacek/faustTools)
 At the moment there is one tool present, faustwatch.py. Faustwatch is a tool that observes a .dsp file used by the dsp language Faust. 
+
+### Julia tools 
+
+#### [Faust.jl](https://github.com/corajr/Faust.jl)
+Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.
