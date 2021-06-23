@@ -10,14 +10,14 @@ A Faust program is essentially a list of *statements*. These statements can be *
 
 
 ### Variants
-Some statements ([*imports*](#imports), [*definitions*](#definitions)) can be preceded by a *variantlist*, composed of *variants* which can be *singleprecision*, *doubleprecision*, *quadprecision* or *fixedpointprecision*. This allows some *imports* and *definitions* to be effective only for a (or several) specific float precision option in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` repectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
+Some statements ([*imports*](#imports), [*definitions*](#definitions)) can be preceded by a *variantlist*, composed of *variants* which can be `singleprecision`, `doubleprecision`, `quadprecision` or `fixedpointprecision`. This allows some `imports` and `definitions` to be effective only for a (or several) specific float precision option in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` repectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
 
 ```
 singleprecision INFINITY = 3.402823466e+38;
 doubleprecision INFINITY = 1.7976931348623158e+308;
 ```
 
-### Simple program
+### A Simple Program
 Here is a short Faust program that implements of a simple noise generator (called from the `noises.lib` Faust library). It exhibits various kind of statements : two [*global metadata*](#global-metadata) declarations, an [*imports*](#imports), a *comment*, and a [*definition*](#definitions). We will study later how [*documentation statements*](#documentation-tags) work:
 
 <!-- faust-run -->
@@ -237,7 +237,7 @@ Despite its textual syntax, Faust is conceptually a block-diagram language. Faus
 
 <img src="img/expression.svg" class="mx-auto d-block">
 
-### Constant numerical expressions  
+### Constant Numerical Expressions  
 
 Some language primitive (like `rdtable`, `rwtable`, `hslider` etc.) take constant numbers as some of their parameters. Those numbers can be directly given in the code, but can also be computed by more complex expressions *which have to produce numbers at compile time*. We will refer to them as [constant numerical expressions](#constant-numerical-expressions) in the documentation.
 
@@ -1200,7 +1200,7 @@ process = r;
 
 ### `waveform` Primitive
 
-The `waveform` primitive was designed to facilitate the use of [`rdtable`](#rdtable) (read table). It allows us to specify a fixed periodic signal as a list of samples. 
+The `waveform` primitive was designed to facilitate the use of [`rdtable`](#rdtable-primitive) (read table). It allows us to specify a fixed periodic signal as a list of samples. 
 
 `waveform` has two outputs:
 
@@ -2255,7 +2255,7 @@ button("label") : _
 
 Where:
 
-* `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
+* `label`: the [label](#variable-parts-of-a-label) (expressed as a string) of the element in the interface
 
 **Example: Trigger**
 
@@ -2278,7 +2278,7 @@ checkbox("label") : _
 
 Where:
 
-* `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
+* `label`: the [label](#variable-parts-of-a-label) (expressed as a string) of the element in the interface
 
 **Example: Trigger**
 
@@ -2301,7 +2301,7 @@ hslider("label",init,min,max,step) : _
 
 Where:
 
-* `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
+* `label`: the [label](#variable-parts-of-a-label) (expressed as a string) of the element in the interface
 * `init`: the initial value of the slider, a [constant numerical expression](#constant-numerical-expressions)
 * `min`: the minimum value of the slider, a [constant numerical expression](#constant-numerical-expressions)
 * `max`: the maximum value of the slider, a [constant numerical expression](#constant-numerical-expressions)
@@ -2322,6 +2322,7 @@ Here is an example of a 3 oscillators instrument where the default frequency of 
 
 <!-- faust-run -->
 ```
+import("stdfaust.lib");
 process = par(i,3,os.osc(hslider("Freq%i", 200+i*400, 200, 2000, 1)));
 ```
 <!-- /faust-run -->
@@ -2339,7 +2340,7 @@ vslider("label",init,min,max,step) : _
 
 Where:
 
-* `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
+* `label`: the [label](#variable-parts-of-a-label) (expressed as a string) of the element in the interface
 * `init`: the initial value of the slider, a [constant numerical expression](#constant-numerical-expressions)
 * `min`: the minimum value of the slider, a [constant numerical expression](#constant-numerical-expressions)
 * `max`: the maximum value of the slider, a [constant numerical expression](#constant-numerical-expressions)
@@ -2366,7 +2367,7 @@ nentry("label",init,min,max,step) : _
 
 Where:
 
-* `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
+* `label`: the [label](#variable-parts-of-a-label) (expressed as a string) of the element in the interface
 * `init`: the initial value of the numerical entry, a [constant numerical expression](#constant-numerical-expressions)
 * `min`: the minimum value of the numerical entry, a [constant numerical expression](#constant-numerical-expressions)
 * `max`: the maximum value of the numerical entry, a [constant numerical expression](#constant-numerical-expressions)
@@ -2393,7 +2394,7 @@ hgroup("label",x)
 
 Where:
 
-* `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
+* `label`: the [label](#variable-parts-of-a-label) (expressed as a string) of the element in the interface
 * `x`: the encapsulated/labeled Faust code
 
 **Example**
@@ -2433,7 +2434,7 @@ vgroup("label",x)
 
 Where:
 
-* `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
+* `label`: the [label](#variable-parts-of-a-label) (expressed as a string) of the element in the interface
 * `x`: the encapsulated/labeled Faust code
 
 **Example**
@@ -2473,7 +2474,7 @@ tgroup("label",x)
 
 Where:
 
-* `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
+* `label`: the [label](#variable-parts-of-a-label) (expressed as a string) of the element in the interface
 * `x`: the encapsulated/labeled Faust code
 
 **Example**
@@ -2935,11 +2936,11 @@ Sensors control metadata can be used to map the built-in sensors of mobile devic
 
 **Compatibility**
 
-These metadatas are compatible with the following Faust targets and no additional step is required for them to be taken into account when the corresponding app is generated:
+These metadatas are compatible with the following Faust targets and no additional step is required for them to be taken into account when the corresponding application is generated:
 
-* [`faust2android`](#faust2android)
-* [`faust2ios`](#faust2ios)
-* [`faust2smartkeyb`](#faust2smartkeyb)
+* [`faust2android`](https://faustdoc.grame.fr/manual/tools/)
+* [`faust2ios`](https://faustdoc.grame.fr/manual/tools/)
+* [`faust2smartkeyb`](https://faustdoc.grame.fr/manual/tools/)
 
 Sensors control metadatas have five parameters and follow the following syntax:
 

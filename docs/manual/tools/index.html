@@ -688,7 +688,11 @@ Options:
 <h2 id="faust2csvplot">faust2csvplot</h2>
 <pre class=faust-tools>
 Usage: faust2csvplot [options]  [Faust options] &lt;file.dsp>
-Compiles Faust programs to plotters
+Compiles Faust programs to plotters, the following 4 options are given at runtime:
+   -s &lt;n> : start at the sample number &lt;n> (default is 0)
+   -n &lt;n> : render &lt;n> samples (default is 16)
+   -r &lt;rate> : change the sample rate (default is 44100 Hz)
+   -bs &lt;buffer> : change the buffer size (default is 512 frames)
 Options:
    -arch32 : generates a 32 bit architecture.
    -arch64 : generates a 64 bit architecture.
@@ -1106,11 +1110,11 @@ Options:
 <h2 id="faust2plot">faust2plot</h2>
 <pre class=faust-tools>
 Usage: faust2plot [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to plotters
-Options:
+Compiles Faust programs to plotters, the following 3 options are given at runtime:
    -s &lt;n> : start at the sample number &lt;n> (default is 0)
    -n &lt;n> : render &lt;n> samples (default is 16)
-   -r &lt;rate> : change the sample rate (default is 44100 Hz))
+   -r &lt;rate> : change the sample rate (default is 44100 Hz)
+Options:
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
