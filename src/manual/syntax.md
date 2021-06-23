@@ -8,6 +8,8 @@ they are brought to the right section. -->
 
 A Faust program is essentially a list of *statements*. These statements can be *metadata declarations* (either [global metadata](#global-metadata) or [function metadata](#function-metadata)), [*imports*](#imports), [*definitions*](#definitions), and [*documentation tags*](#documentation-tags), with optional C++ style (`//...` and `/*...*/`) comments.
 
+
+### Variants
 Some statements ([*imports*](#imports), [*definitions*](#definitions)) can be preceded by a *variantlist*, composed of *variants* which can be *singleprecision*, *doubleprecision*, *quadprecision* or *fixedpointprecision*. This allows some *imports* and *definitions* to be effective only for a (or several) specific float precision option in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` repectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
 
 ```
@@ -15,6 +17,7 @@ singleprecision INFINITY = 3.402823466e+38;
 doubleprecision INFINITY = 1.7976931348623158e+308;
 ```
 
+### Simple program
 Here is a short Faust program that implements of a simple noise generator (called from the `noises.lib` Faust library). It exhibits various kind of statements : two [*global metadata*](#global-metadata) declarations, an [*imports*](#imports), a *comment*, and a [*definition*](#definitions). We will study later how [*documentation statements*](#documentation-tags) work:
 
 <!-- faust-run -->
@@ -25,7 +28,7 @@ declare copyright "(c)GRAME 2018";
 import("stdfaust.lib");
 
 // noise level controlled by a slider
-process = no.noise * hslider("gain",0,0,1, 0.1);
+process = no.noise * hslider("gain",0,0,1,0.1);
 ```
 <!-- /faust-run -->
 
@@ -233,6 +236,10 @@ the first rule will always match and the second rule will never be called.
 Despite its textual syntax, Faust is conceptually a block-diagram language. Faust expressions represent DSP block-diagrams and are assembled from primitive ones using various *composition* operations. More traditional *numerical* expressions in infix notation are also possible. Additionally Faust provides time based expressions, like delays, expressions related to lexical environments, expressions to interface with foreign function and lambda expressions.
 
 <img src="img/expression.svg" class="mx-auto d-block">
+
+### Constant numerical expressions  
+
+Some language primitive (like `rdtable`, `rwtable`, `hslider` etc.) take constant numbers as some of their parameters. Those numbers can be directly given in the code, but can also be computed by more complex expressions *which have to produce numbers at compile time*. We will refer to them as [constant numerical expressions](#constant-numerical-expressions) in the documentation.
 
 ### Diagram Expressions
 
@@ -1185,7 +1192,7 @@ More complex expressions can be written using algorithmic constructions, like th
 // input 9 -> output 0
 
 N = 10;
-r = route(N, N, par(i, N, (i+1,N-i)));
+r = route(N,N,par(i,N,(i+1,N-i)));
 
 process = r;
 ```
@@ -2021,7 +2028,7 @@ rdtable(n,s,r) : _
 
 Where:
 
-* `n`: the table size, known at compile-time
+* `n`: the table size, a [constant numerical expression](#constant-numerical-expressions)
 * `s`: the table content
 * `r`: the read index (an `int` between 0 and `n-1`)
 
@@ -2069,7 +2076,7 @@ _ : rwtable(n,s,w,_,r) : _
 
 Where:
 
-* `n`: the table size, known at compile-time
+* `n`: the table size, a [constant numerical expression](#constant-numerical-expressions)
 * `s`: the initial table content
 * `w`: the write index (an `int` between 0 and `n-1`) 
 * `r`: the read index (an `int` between 0 and `n-1`)
@@ -2295,10 +2302,10 @@ hslider("label",init,min,max,step) : _
 Where:
 
 * `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
-* `init`: the initial value of the slider
-* `min`: the minimum value of the slider
-* `max`: the maximum value of the slider
-* `step`: the precision (step) of the slider (1 to count 1 by 1, 0.1 to count 0.1 by 0.1, etc.)
+* `init`: the initial value of the slider, a [constant numerical expression](#constant-numerical-expressions)
+* `min`: the minimum value of the slider, a [constant numerical expression](#constant-numerical-expressions)
+* `max`: the maximum value of the slider, a [constant numerical expression](#constant-numerical-expressions)
+* `step`: the precision (step) of the slider (1 to count 1 by 1, 0.1 to count 0.1 by 0.1, etc.), a [constant numerical expression](#constant-numerical-expressions)
 
 **Example: Gain Control**
 
@@ -2308,6 +2315,17 @@ gain = hslider("gain",0,0,1,0.01);
 process = *(gain);
 ```
 <!-- /faust-run -->
+
+**Example: Additive Oscillator**
+
+Here is an example of a 3 oscillators instrument where the default frequency of each partial is *computed using a more complex [constant numerical expression](#constant-numerical-expressions)*.
+
+<!-- faust-run -->
+```
+process = par(i,3,os.osc(hslider("Freq%i", 200+i*400, 200, 2000, 1)));
+```
+<!-- /faust-run -->
+
 
 #### `vslider` Primitive 
 
@@ -2322,10 +2340,10 @@ vslider("label",init,min,max,step) : _
 Where:
 
 * `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
-* `init`: the initial value of the slider
-* `min`: the minimum value of the slider
-* `max`: the maximum value of the slider
-* `step`: the precision (step) of the slider (1 to count 1 by 1, 0.1 to count 0.1 by 0.1, etc.)
+* `init`: the initial value of the slider, a [constant numerical expression](#constant-numerical-expressions)
+* `min`: the minimum value of the slider, a [constant numerical expression](#constant-numerical-expressions)
+* `max`: the maximum value of the slider, a [constant numerical expression](#constant-numerical-expressions)
+* `step`: the precision (step) of the slider (1 to count 1 by 1, 0.1 to count 0.1 by 0.1, etc.), a [constant numerical expression](#constant-numerical-expressions)
 
 **Example**
 
@@ -2349,10 +2367,10 @@ nentry("label",init,min,max,step) : _
 Where:
 
 * `label`: the [label](#ui-labels-configuration) (expressed as a string) of the element in the interface
-* `init`: the initial value of the numerical entry
-* `min`: the minimum value of the numerical entry
-* `max`: the maximum value of the numerical entry
-* `step`: the precision (step) of the numerical entry (1 to count 1 by 1, 0.1 to count 0.1 by 0.1, etc.)
+* `init`: the initial value of the numerical entry, a [constant numerical expression](#constant-numerical-expressions)
+* `min`: the minimum value of the numerical entry, a [constant numerical expression](#constant-numerical-expressions)
+* `max`: the maximum value of the numerical entry, a [constant numerical expression](#constant-numerical-expressions)
+* `step`: the precision (step) of the numerical entry (1 to count 1 by 1, 0.1 to count 0.1 by 0.1, etc.), a [constant numerical expression](#constant-numerical-expressions)
 
 **Example**
 
@@ -2497,8 +2515,8 @@ _ : vbargraph("label",min,max) : _
 
 Where:
 
-* `min`: the minimum value of the signal in the interface
-* `max`: the maximum value of the signal in the interface
+* `min`: the minimum value of the signal in the interface, a [constant numerical expression](#constant-numerical-expressions)
+* `max`: the maximum value of the signal in the interface, a [constant numerical expression](#constant-numerical-expressions)
 
 **Example: Simple VU Meter** 
 
@@ -2527,8 +2545,8 @@ _ : hbargraph("label",min,max) : _
 
 Where:
 
-* `min`: the minimum value of the signal in the interface
-* `max`: the maximum value of the signal in the interface
+* `min`: the minimum value of the signal in the interface, a [constant numerical expression](#constant-numerical-expressions)
+* `max`: the maximum value of the signal in the interface, a [constant numerical expression](#constant-numerical-expressions)
 
 **Example: Simple VU Meter** 
 
@@ -2557,11 +2575,11 @@ Labels can contain variable parts. These are indicated with the sign `%` followe
 
 <!-- faust-run -->
 ```
-process = par(i,8,hslider("Voice %i", 0.9, 0, 1, 0.01));
+process = par(i,8,hslider("Voice %i",0.9,0,1,0.01));
 ```
 <!-- /faust-run -->
 
-creates 8 sliders in parallel with different names while `par(i,8,hslider("Voice", 0.9, 0, 1, 0.01))` would have created only one slider and duplicated its output 8 times.
+creates 8 sliders in parallel with different names while `par(i,8,hslider("Voice",0.9,0,1,0.01))` would have created only one slider and duplicated its output 8 times.
 
 The variable part can have an optional format digit. For example `"Voice %2i"` would indicate to use two digit when inserting the value of `i` in the string.
 
