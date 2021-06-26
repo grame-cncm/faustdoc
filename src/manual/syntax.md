@@ -231,6 +231,8 @@ count((x,xs)) = 1+count(xs);
 
 the first rule will always match and the second rule will never be called.
 
+Please note that number arguments in pattern matching rules are typically [constant numerical expressions](#constant-numerical-expressions), so can be the result of more complex expressions involving computations done at compile-time.
+
 ## Expressions
 
 Despite its textual syntax, Faust is conceptually a block-diagram language. Faust expressions represent DSP block-diagrams and are assembled from primitive ones using various *composition* operations. More traditional *numerical* expressions in infix notation are also possible. Additionally Faust provides time based expressions, like delays, expressions related to lexical environments, expressions to interface with foreign function and lambda expressions.
@@ -239,7 +241,7 @@ Despite its textual syntax, Faust is conceptually a block-diagram language. Faus
 
 ### Constant Numerical Expressions  
 
-Some language primitives (like `rdtable`, `rwtable`, `hslider` etc.) take constant numbers as some of their parameters. Those numbers can be directly given in the code, but can also be computed by more complex expressions *which have to produce numbers at compile time*. We will refer to them as [constant numerical expressions](#constant-numerical-expressions) in the documentation.
+Some language primitives (like `rdtable`, `rwtable`, `hslider` etc.) take constant numbers as some of their parameters. This is the case also for expressions using pattern matching techniques. Those numbers can be directly given in the code, but can also be computed by more complex expressions *which have to produce numbers at compile time*. We will refer to them as [constant numerical expressions](#constant-numerical-expressions) in the documentation.
 
 ### Diagram Expressions
 
