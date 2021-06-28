@@ -173,3 +173,6 @@ The dynamic compilation chain has been used in several projects:
 * [Radium](https://users.notam02.no/~kjetism/radium/) is a music editor with a new type of interface, including a Faust audio DSP development environment using libfaust with the LLVM and Interpreter backends
 
 * [Mephisto LV2](https://open-music-kontrollers.ch/lv2/mephisto/) is a Just-in-Time Faust compiler embedded in an LV2 plugin, using the C API.
+
+* [gwion-plug](https://github.com/Gwion/gwion-plug/tree/master/Faust) is a Faust plugin for the [Gwion](https://github.com/Gwion/Gwion) programming language. 
+
