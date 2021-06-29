@@ -176,3 +176,4 @@ The dynamic compilation chain has been used in several projects:
 
 * [gwion-plug](https://github.com/Gwion/gwion-plug/tree/master/Faust) is a Faust plugin for the [Gwion](https://github.com/Gwion/Gwion) programming language. 
 
+* [FaustGen](https://github.com/madskjeldgaard/faustgen-supercollider/) allows to livecode Faust in SuperCollider.
