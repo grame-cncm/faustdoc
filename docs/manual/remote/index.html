@@ -279,7 +279,10 @@
 
 <h1 id="remote-compilation">Remote compilation</h1>
 <p>Compiling a same Faust DSP program on different platforms and targets (applications and plugins) can be a tedious task when SDKs have to be installed and configurated, or when the user want to do cross-compilation. </p>
-<p>A remote compilation service has been developed to simplify this process. It allows to send DSP source code on a cloud based infrastructure, which hosts a lot of targets and can do cross-compilation. This service is accessible in several applications like <a href="https://github.com/grame-cncm/faustlive">FaustLive</a>, <a href="https://github.com/grame-cncm/fausteditor">Faust Editor</a> or <a href="https://github.com/grame-cncm/faustide">Faust IDE</a>, but can also be used with a dedicated API explained in more details in the <a href="https://github.com/grame-cncm/faustservice">faustservice</a> project and in the <a href="https://github.com/grame-cncm/faustservice/tree/master/client">FaustWeb client</a> tool. </p></div>
+<p>A remote compilation service has been developed to simplify this process. It allows to send DSP source code on a cloud based infrastructure, which hosts a lot of targets and can do cross-compilation. This service is accessible: 
+- in several applications like <a href="https://github.com/grame-cncm/faustlive">FaustLive</a>, <a href="https://github.com/grame-cncm/fausteditor">Faust Editor</a> or <a href="https://github.com/grame-cncm/faustide">Faust IDE</a>
+- with a dedicated API explained in more details in the <a href="https://github.com/grame-cncm/faustservice">faustservice</a> project and in the <a href="https://github.com/grame-cncm/faustservice/tree/master/client">FaustWeb client</a> tool
+- with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustremote">faustremote</a> script (part of the Faust distribution), which allows to access the remote compilation service and execute compilation requests. </p></div>
             </div>
         </div>
 
