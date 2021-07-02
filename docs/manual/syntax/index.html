@@ -1039,11 +1039,12 @@ count(x) = 1;
 count((x,xs)) = 1+count(xs);
 </code></pre>
 <p>the first rule will always match and the second rule will never be called.</p>
+<p>Please note that number arguments in pattern matching rules are typically <a href="#constant-numerical-expressions">constant numerical expressions</a>, so can be the result of more complex expressions involving computations done at compile-time.</p>
 <h2 id="expressions">Expressions</h2>
 <p>Despite its textual syntax, Faust is conceptually a block-diagram language. Faust expressions represent DSP block-diagrams and are assembled from primitive ones using various <em>composition</em> operations. More traditional <em>numerical</em> expressions in infix notation are also possible. Additionally Faust provides time based expressions, like delays, expressions related to lexical environments, expressions to interface with foreign function and lambda expressions.</p>
 <p><img src="img/expression.svg" class="mx-auto d-block"></p>
 <h3 id="constant-numerical-expressions">Constant Numerical Expressions</h3>
-<p>Some language primitives (like <code>rdtable</code>, <code>rwtable</code>, <code>hslider</code> etc.) take constant numbers as some of their parameters. Those numbers can be directly given in the code, but can also be computed by more complex expressions <em>which have to produce numbers at compile time</em>. We will refer to them as <a href="#constant-numerical-expressions">constant numerical expressions</a> in the documentation.</p>
+<p>Some language primitives (like <code>rdtable</code>, <code>rwtable</code>, <code>hslider</code> etc.) take constant numbers as some of their parameters. This is the case also for expressions using pattern matching techniques. Those numbers can be directly given in the code, but can also be computed by more complex expressions <em>which have to produce numbers at compile time</em>. We will refer to them as <a href="#constant-numerical-expressions">constant numerical expressions</a> in the documentation.</p>
 <h3 id="diagram-expressions">Diagram Expressions</h3>
 <p>Diagram expressions are assembled from primitive ones using either binary composition operations or high level iterative constructions.</p>
 <p><img src="img/diagramexp.svg" class="mx-auto d-block"></p>
