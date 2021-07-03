@@ -532,6 +532,18 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#webassembly-tools" class="nav-link">WebAssembly tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#faust-loader" class="nav-link">faust-loader</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#faust-compiler-microservice" class="nav-link">Faust Compiler Microservice</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -2029,7 +2041,12 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <p>At the moment there is one tool present, faustwatch.py. Faustwatch is a tool that observes a .dsp file used by the dsp language Faust. </p>
 <h3 id="julia-tools">Julia tools</h3>
 <h4 id="faustjl"><a href="https://github.com/corajr/Faust.jl">Faust.jl</a></h4>
-<p>Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.</p></div>
+<p>Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.</p>
+<h3 id="webassembly-tools">WebAssembly tools</h3>
+<h4 id="faust-loader"><a href="https://github.com/Smona/faust-loader">faust-loader</a></h4>
+<p>Import Faust .dsp files, and get back an AudioWorklet or ScriptProcessor node.</p>
+<h4 id="faust-compiler-microservice"><a href="https://github.com/Ameobea/web-synth/tree/master/faust-compiler#faust-compiler-microservice">Faust Compiler Microservice</a></h4>
+<p>This is a microservice that serves a single purpose: Compiling Faust code that is sent to it into WebAssembly that can then be loaded and run natively from within the web synth application. It is written in go because go is supposed to be good for this sort of thing.</p></div>
             </div>
         </div>
 

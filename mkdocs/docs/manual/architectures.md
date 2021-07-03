@@ -1798,3 +1798,13 @@ At the moment there is one tool present, faustwatch.py. Faustwatch is a tool tha
 
 #### [Faust.jl](https://github.com/corajr/Faust.jl)
 Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.
+
+### WebAssembly tools 
+
+#### [faust-loader](https://github.com/Smona/faust-loader)
+Import Faust .dsp files, and get back an AudioWorklet or ScriptProcessor node.
+
+#### [Faust Compiler Microservice](https://github.com/Ameobea/web-synth/tree/master/faust-compiler#faust-compiler-microservice)
+This is a microservice that serves a single purpose: Compiling Faust code that is sent to it into WebAssembly that can then be loaded and run natively from within the web synth application. It is written in go because go is supposed to be good for this sort of thing.
+
+
