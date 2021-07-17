@@ -1789,7 +1789,7 @@ A better integration of Faust for Rust. It allows to build the DSPs via build.rs
 ### Python tools 
 
 #### [FAUSTPy](https://github.com/marcecj/faust_python)
-FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time.
+FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on [this fork](https://github.com/hrtlacek/faust_python).
 
 #### [Faustwatch](https://github.com/hrtlacek/faustTools)
 At the moment there is one tool present, faustwatch.py. Faustwatch is a tool that observes a .dsp file used by the dsp language Faust. 
