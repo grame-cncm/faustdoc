@@ -72,7 +72,6 @@ struct UI {
 
 This architecture is still not very useful, but it gives an idea of what a real-life architecture file has to implement, in addition to the audio part itself. As we will see in the next section, Faust architectures are implemented using a modular approach to avoid code duplication and favor code maintenance and reuse.
 
-
 ## Audio Architecture Modules
 
 A Faust generated program has to connect to a underlying audio layer. Depending if the final program is a application or plugin, the way to connect to this audio layer will differ:
@@ -84,7 +83,7 @@ A Faust generated program has to connect to a underlying audio layer. Depending 
 
 An *audio driver architecture* typically connects a Faust program to the audio drivers. It is responsible for:
 
-- allocating and releasing the audio channels and presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0
+- allocating and releasing the audio channels and presenting the audio as non-interleaved float/double data (depending of the `FAUSTFLOAT` macro definition), normalized between -1.0 and 1.0
 - calling the DSP `init` method at init time, to setup the `ma.SR` variable possibly used in the DSP code
 - calling the DSP `compute` method to handle incoming audio buffers and/or to produce audio outputs. 
 
@@ -147,19 +146,17 @@ The API is simple enough to give a great flexibility to audio architectures impl
 
 <img src="img/AudioHierarchy.jpg" class="mx-auto d-block" width="70%">
 
-
 ### Connection to a plugin audio API
 
 In the case of plugin, an *audio plugin architecture* has to be developed, by integrating the Faust DSP *new/init/compute/delete* methods in the plugin API. Here is a concrete example using the JUCE framework:
 
-- a [FaustPlugInAudioProcessor](https://github.com/grame-cncm/faust/blob/master-dev/architecture/juce/juce-plugin.cpp#L221) class, subclass of the `juce::AudioProcessor` has to be defined. The Faust generated C++ instance will be created in its constructor, either in monophonic of polyphonic mode (see later sections)
+- a [FaustPlugInAudioProcessor](https://github.com/grame-cncm/faust/blob/master-dev/architecture/juce/juce-plugin.cpp#L227) class, subclass of the `juce::AudioProcessor` has to be defined. The Faust generated C++ instance will be created in its constructor, either in monophonic of polyphonic mode (see later sections)
 
 - the Faust DSP instance is initialized in the JUCE `prepareToPlay` method using the current sample rate value
 
 - the Faust dsp `compute` is called in the JUCE `process` which receives the audio inputs/outputs buffers to be processed
 
 - additional methods can possibly be implemented to handle MIDI messages or save/restore the plugin parameters state for instance. 
-
 
 This methodology obviously has to be adapted for each supported plugin API.
 
@@ -293,7 +290,6 @@ struct midi_interface {
 ```
 A [midi_hander](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261) subclass implements actual MIDI decoding and *maintains a list of MIDI aware components* (classes inheriting from `midi` and ready to send and/or receive MIDI events) using the `addMidiIn/removeMidiIn` methods:
 
-
 ```c++
 class midi_handler : public midi, public midi_interface {
 
@@ -337,7 +333,7 @@ DSP->buildUserInterface(&midi_interface);
 
 A UI architecture module links user actions (i.e., via graphic widgets, command line parameters, OSC messages, etc.) with the Faust program to control. It is responsible for associating program parameters to user interface elements and to update parameter’s values according to user actions. This association is triggered by the `buildUserInterface` call, where the `dsp` asks a UI object to build the DSP module controllers.
 
-Since the interface is basically graphic-oriented, the main concepts are *widget* based: a UI architecture module is semantically oriented to handle active widgets, passive widgets and widgets layout.
+Since the interface is basically graphic-oriented, the main concepts are *widget* based: an UI architecture module is semantically oriented to handle active widgets, passive widgets and widgets layout.
 
 A Faust UI architecture module derives the `UI` base class: 
 
@@ -474,7 +470,6 @@ Note that pure code generator can also be written. The `JSONUI` UI architecture 
 #### DSP JSON Description 
 
 The full description of a given compiled DSP can be generated as a JSON file, to be used at several places in the architecture system. This JSON describes the DSP with its inputs/outputs number, some metadata (filename, name, used compilation parameters, used libraries etc.) as well as its UI with a hierarchy of groups up to terminal items (buttons, sliders, nentries, bargraphs) with all their parameters (label, metadata, init, min, max and step values). For the following DSP program:
-
 
 ```
 import("stdfaust.lib");
@@ -959,7 +954,6 @@ Some helper classes like the base [dsp_poly_factory](https://github.com/grame-cn
 
 The `mydsp_poly` class is also ready for MIDI control (as a class implementing the `midi` interface) and can react to `keyOn/keyOff` and `pitchWheel` events. Other MIDI control parameters can directly be added in the DSP source code as MIDI metadata. To receive MIDI events, the created polyphonic DSP will be automatically added to the `midi_handler` object when calling `buildUserInterface` on a `MidiUI` object.
 
-
 #### Deploying the Polyphonic Instrument
 
 Several architecture files and associated scripts have been updated to handle polyphonic instruments:
@@ -1218,15 +1212,11 @@ static void dynamic_bench(const string& dsp_source)
 
 This class can typically be used in tools that help developers discover the best Faust compilation parameters for a given DSP program, like the [faustbench](https://faustdoc.grame.fr/manual/optimizing/#faustbench) and [faustbench-llvm](https://faustdoc.grame.fr/manual/optimizing/#faustbench-llvm) tools.
 
-
-
 ### The Proxy DSP Class
 
 In some cases, a DSP may run outside of the application or plugin context, like on another machine. The [proxy_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-dsp.h) class allows to create a proxy DSP that will be finally connected to the real one (using an OSC or HTTP based machinery for instance), and will reflect its behaviour. It uses the previously described  [JSONUIDecoder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h) class. Then the `proxy_dsp` can be used in place of the real DSP, and connected with `UI` controllers using the standard `buildUserInterface` to control it.  
 
 The [faust-osc-controller](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark) tool demonstrates this capability using an OSC connection between the real DSP and its proxy. The [proxy_osc_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-osc-dsp.h) class implements a specialized `proxy_dsp` using the [liblo](http://liblo.sourceforge.net) OSC library to connect to a OSC controllable DSP (which is using the `OSCUI` class and running in another context or machine). Then the `faust-osc-controller` program [creates a real GUI](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/faust-osc-controller.cpp) (using `GTKUI` in this example) and have it control the remote DSP and reflect its dynamic state (like vumeter values coming back from the real DSP). 
-
-
 
 ## Embedded Platforms 
 
@@ -1246,7 +1236,6 @@ A extended set of metadata will probably have to be progressively defined and st
 On embedded platforms with limited capabilities, the use of the `-uim` option can be helpful. It allows the C/C++ generated code to contain a static description of several caracteristics of the  generated code, like the *number of audio inputs/outputs*, the *number of controls inputs/outputs*, and *macros feed with the controls parameters (label, DSP filed name, init, min, max, step)* that can be implemented in the architecture file for various needs. 
 
 For example the following DSP program:
-
 
 ```
 process = _*hslider("Gain", 0, 0, 1, 0.01) : hbargraph("Vol", 0, 1);
@@ -1655,7 +1644,6 @@ process = (hslider("Spectro", 0, 0, 1, 1),0) : sf : !,!,_,_;
 ```
 The point of explicitly using `soundfile` primitive and a `nentry` control is to generate a C++ file with a prefilled DSP structure (containing the `fSoundfile0` and `fHslider0` fields) and code inside the `buildUserInterface` method. Compiling it manually with the following command: 
 
-
 ```
 faust spectral.dsp -cn spectral -o spectral.c++
 ```
@@ -1778,7 +1766,6 @@ A post-processor for Faust, which allows to generate with more flexibility. This
 #### [faustmd](https://github.com/jpcima/faustmd)
 
 Static metadata generator for Faust/C++. This program builds the metadata for a Faust DSP ahead of time, rather than dynamically. The result is a block of C++ code which can be appended to the code generation.
-
 
 ### Rust tools 
 

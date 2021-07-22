@@ -622,7 +622,7 @@ struct UI {
 <h3 id="connection-to-an-audio-driver-api">Connection to an audio driver API</h3>
 <p>An <em>audio driver architecture</em> typically connects a Faust program to the audio drivers. It is responsible for:</p>
 <ul>
-<li>allocating and releasing the audio channels and presenting the audio as non-interleaved float data, normalized between -1.0 and 1.0</li>
+<li>allocating and releasing the audio channels and presenting the audio as non-interleaved float/double data (depending of the <code>FAUSTFLOAT</code> macro definition), normalized between -1.0 and 1.0</li>
 <li>calling the DSP <code>init</code> method at init time, to setup the <code>ma.SR</code> variable possibly used in the DSP code</li>
 <li>calling the DSP <code>compute</code> method to handle incoming audio buffers and/or to produce audio outputs. </li>
 </ul>
@@ -683,7 +683,7 @@ struct UI {
 <p>In the case of plugin, an <em>audio plugin architecture</em> has to be developed, by integrating the Faust DSP <em>new/init/compute/delete</em> methods in the plugin API. Here is a concrete example using the JUCE framework:</p>
 <ul>
 <li>
-<p>a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/juce/juce-plugin.cpp#L221">FaustPlugInAudioProcessor</a> class, subclass of the <code>juce::AudioProcessor</code> has to be defined. The Faust generated C++ instance will be created in its constructor, either in monophonic of polyphonic mode (see later sections)</p>
+<p>a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/juce/juce-plugin.cpp#L227">FaustPlugInAudioProcessor</a> class, subclass of the <code>juce::AudioProcessor</code> has to be defined. The Faust generated C++ instance will be created in its constructor, either in monophonic of polyphonic mode (see later sections)</p>
 </li>
 <li>
 <p>the Faust DSP instance is initialized in the JUCE <code>prepareToPlay</code> method using the current sample rate value</p>
@@ -846,7 +846,7 @@ DSP-&gt;buildUserInterface(&amp;midi_interface);
 </code></pre>
 <h2 id="ui-architecture-modules">UI Architecture Modules</h2>
 <p>A UI architecture module links user actions (i.e., via graphic widgets, command line parameters, OSC messages, etc.) with the Faust program to control. It is responsible for associating program parameters to user interface elements and to update parameter’s values according to user actions. This association is triggered by the <code>buildUserInterface</code> call, where the <code>dsp</code> asks a UI object to build the DSP module controllers.</p>
-<p>Since the interface is basically graphic-oriented, the main concepts are <em>widget</em> based: a UI architecture module is semantically oriented to handle active widgets, passive widgets and widgets layout.</p>
+<p>Since the interface is basically graphic-oriented, the main concepts are <em>widget</em> based: an UI architecture module is semantically oriented to handle active widgets, passive widgets and widgets layout.</p>
 <p>A Faust UI architecture module derives the <code>UI</code> base class: </p>
 <pre><code class="language-c++">template &lt;typename REAL&gt;
 struct UIReal {
