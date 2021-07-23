@@ -131,7 +131,7 @@ The **dynamic-faust** tool uses the dynamic compilation chain (based on the LLVM
 
 ### Optimizing with any faust2xx tool
 
-All `faust2xx` tools compile in scalar mode by default, but can take any combination of optimal options (like `-vec -fun -vs 32 -dfs -mcd 32` for instance) the previously described tools will automatically find. So by chaining the use of **faustbench** of **faustbench-llvm** to discover the best compilation options for  given DSP, then use them in the desired **faust2xx** tool, an CPU optimized standalone or plugin can be obtained. 
+All `faust2xx` tools compile in scalar mode by default, but can take any combination of optimal options (like `-vec -fun -vs 32 -dfs -mcd 32` for instance) the previously described tools will automatically find. So by chaining the use of **faustbench** of **faustbench-llvm** to discover the best compilation options for a given DSP, then use them in the desired **faust2xx** tool, a CPU optimized standalone or plugin can be obtained. 
  
 Note that some **faust2xx** tools like [`faust2max6`](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp) or `faust2caqt` can internally call the `faustbench-llvm` tool to discover and later on use the best possible compilation options. 
 
