@@ -211,6 +211,10 @@
 <li>
     <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
+                                    
+<li>
+    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -300,6 +304,7 @@
 <h1 id="delayecho">delayEcho</h1>
 <h2 id="echo">echo</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -325,10 +330,12 @@ process = vgroup(&quot;echo-simple&quot;, ef.echo1s);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/delayEcho/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="quadecho">quadEcho</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -360,10 +367,12 @@ process = vgroup(&quot;stereo echo&quot;, multi(ef.echo1s, 4))
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/delayEcho/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="smoothdelay">smoothDelay</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -400,10 +409,12 @@ process = par(i, 2, voice)
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/delayEcho/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="stereoecho">stereoEcho</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -430,10 +441,12 @@ process = vgroup(&quot;stereo echo&quot;, (ef.echo1s, ef.echo1s));
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/delayEcho/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="tapiir">tapiir</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -488,6 +501,7 @@ process = tapiir(6,2);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/delayEcho/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run --></div>
             </div>
         </div>

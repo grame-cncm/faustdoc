@@ -211,6 +211,10 @@
 <li>
     <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
+                                    
+<li>
+    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -288,6 +292,7 @@
 <h1 id="ambisonics">ambisonics</h1>
 <h2 id="foursourcestoocto">fourSourcesToOcto</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -318,10 +323,12 @@ process(sig1, sig2, sig3, sig4) = ho.map(3, sig1, r1, a1), ho.map(3, sig2, r2, a
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/ambisonics/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="onesourcetostereo">oneSourceToStereo</h2>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -344,6 +351,7 @@ process(sig) = ho.map(7, sig, r1, a1) : ho.optimInPhase(7) : ho.decoderStereo(7)
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/ambisonics/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run --></div>
             </div>
         </div>

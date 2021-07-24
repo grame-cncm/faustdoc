@@ -211,6 +211,10 @@
 <li>
     <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
+                                    
+<li>
+    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
                                 </ul>
                             </li>
                             <li class="dropdown active">
@@ -369,18 +373,21 @@
 <h3 id="generating-a-template">Generating a template</h3>
 <pre><code>./helper.py createplugin MyPlugin
 </code></pre>
+
 <p>The created folder contains a Makefile that can be used to compile and install the module in your (previously installed) VCV Rack application:</p>
 <pre><code>make &amp;&amp; make install
 </code></pre>
+
 <h3 id="gui-description-using-svg">GUI description using SVG</h3>
 <p>The module GUI is done using SVG. Developers will classically prepare the background layer with <a href="https://inkscape.org/">Inkscape</a> or a similar tool, with special conventions to describe audio or CV inputs/outputs, UI items (knobs, lights, custom widgets... ). Here a example of a basic SVG template with a <em>light</em>, a <em>param</em> (like knob), an <em>audio or CV input</em>, and an <em>audio or CV output</em>:</p>
 <p><img src="img/VCV_SVG.png" width="12%" class="mx-auto d-block"></p>
 <p>Inside the module project, the following command will decode the SVG file and generate template C++ code to create the various widget:</p>
 <pre><code>../helper.py createmodule MyModule res/MyModule.svg src/MyModule.cpp
 </code></pre>
+
 <h3 id="adding-dsp-code">Adding DSP code</h3>
 <p>Then C++ code will be added to implement as simple oscillator in the <code>process</code> function:</p>
-<pre><code class="language-C++"> float phase = 0.f;
+<pre><code class="C++"> float phase = 0.f;
  float freq = 440.f;
 
  void process(const ProcessArgs &amp;args) override {
@@ -396,15 +403,19 @@
         outputs[SINE_OUTPUT].setVoltage(5.f * sine);
  }
 </code></pre>
+
 <p>The following line in plugin.cpp has to be uncommented:</p>
-<pre><code class="language-C++">p-&gt;addModel(modelMyModule);
+<pre><code class="C++">p-&gt;addModel(modelMyModule);
 </code></pre>
+
 <p>and well as in plugin.hpp:</p>
-<pre><code class="language-C++">extern Model* modelMyModule;
+<pre><code class="C++">extern Model* modelMyModule;
 </code></pre>
+
 <p>And compilation and installation of the module has to be done again:</p>
 <pre><code>make &amp;&amp; make install
 </code></pre>
+
 <h2 id="programming-using-the-faust-aware-vcv-prototype-module">Programming using the Faust aware VCV Prototype module</h2>
 <p>The <a href="https://github.com/VCVRack/VCV-Prototype">VCV Prototype module</a> run scripting languages for prototyping, learning, and live coding. It can currently be programmed using  JavaScript, <a href="https://www.lua.org">Lua</a>, <a href="https://github.com/modlfo/vult">Vult</a>, or <a href="https://puredata.info">PureData</a>. A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (with RGB LEDs) is defined. </p>
 <p>Note that <strong>only monophonic examples</strong> can be coded with the propotype. </p>
@@ -434,6 +445,7 @@
 <h3 id="dsp-examples">DSP examples</h3>
 <p>Here is a simple example showing how oscillators can be controlled by GUI items, associated with metadata in the DSP code:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -453,6 +465,7 @@ process = os.osc(freq) * gain * 5, os.sawtooth(freq) * gain * gate * 5;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>Following the VCV Prototype model, note that audio outputs <strong>are multipled by 5</strong> to follow the [-5v..5v] range convention. </p>
@@ -461,6 +474,7 @@ process = os.osc(freq) * gain * 5, os.sawtooth(freq) * gain * gate * 5;
 <li><strong>gain.dsp</strong>  shows how switches and knobs can be connected using metadata , and even change color when pressed or moved:</li>
 </ul>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -482,12 +496,14 @@ process = si.bus(6) : par(i, 6, *(gain(i+1)) * (1-switch(i+1)));
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <ul>
 <li><strong>vco.dsp</strong>  shows an oscillator with frequency controlled by a knob and a CV pich signal (following the 1V/octave convention):</li>
 </ul>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -512,6 +528,7 @@ process(x) = sin(2 * ma.PI * phasor(cv_pitch2freq(pitch(x)))) * 5;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <ul>
@@ -552,6 +569,7 @@ process(x) = sin(2 * ma.PI * phasor(cv_pitch2freq(pitch(x)))) * 5;
 <h3 id="dsp-examples_1">DSP examples</h3>
 <p>Here is a simple example showing how oscillators can be controlled by UI items. One switch, one button and two knobs will be created in the GUI:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -571,10 +589,12 @@ process = os.osc(freq) * gain * gate, os.sawtooth(freq) * gain * check;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>A polyphonic instrument with <code>freq/gate/gain</code> controllers associated with VC MIDI inputs, using the <code>[CV:N]</code> metadata, to be compiled with the <code>-nvoices &lt;num&gt;</code> option:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -609,10 +629,12 @@ process = sum(i, 3, partial(i))
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>This polyphonic instrument can then be connected to a polyphonic reverb, to be also compiled with the <code>-nvoices &lt;num&gt;</code> option:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -625,6 +647,7 @@ process = dm.freeverb_demo;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run --></div>
             </div>
         </div>

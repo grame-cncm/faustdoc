@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>RMS and Summation in Faust - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/remote/" class="dropdown-item">Remote compilation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">RMS and Summation in Faust</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#rms-and-summation-in-faust" class="nav-link">RMS and Summation in Faust</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#rms-value" class="nav-link">RMS value</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#sliding-sum" class="nav-link">Sliding Sum</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#fix-point-sliding-sum" class="nav-link">Fix-Point Sliding Sum</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#block-sum" class="nav-link">Block Sum</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#overlapping-block-sum" class="nav-link">Overlapping Block Sum</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#comparing-all-the-solutions" class="nav-link">Comparing all the solutions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<h1 id="rms-and-summation-in-faust">RMS and Summation in Faust</h1>
+<p>In this tutorial, we present different programming techniques to compute the <strong>sum of <em>n</em> consecutive samples</strong> in Faust. Such sums are typically used when computing the RMS value of a signal. It is therefore in the RMS context that we will present them. We will not use any predefined function, only Faust primitives, so that you can see all the details. </p>
+<p>The text is intended for beginners, but with some basic knowledge of Faust. If this is not your case you can consult the various documentations of this same site.</p>
+<h2 id="rms-value">RMS value</h2>
+<p>The computation of the RMS (Root Mean Square) value of a signal is defined by the following Faust expression:</p>
+<pre><code>^(2) : summation : /(n) : sqrt
+</code></pre>
+
+<p>where <em>n</em> is the number of consecutive samples considered.</p>
+<p>This expression involves several steps :</p>
+<ul>
+<li>First, we take the square of the signal: <code>^(2)</code>. This is the S of RMS. </li>
+<li>Then we sum the <em>n</em> consecutive samples: <code>summation</code> and divide this sum by <em>n</em> to get the mean value: <code>/(n)</code>. This is the M of RMS. </li>
+<li>Finally, we take the square root <code>sqrt</code>. This is the R of RMS. </li>
+</ul>
+<p>In other words, RMS is written S:M:R in Faust (letting the <code>summation</code> function undefined for the moment) :</p>
+<pre><code>RMS(n) = S:M:R with {
+    S = ^(2);
+    M = summation : /(n);
+    R = sqrt;
+};
+</code></pre>
+
+<p>In the following paragraphs, we will introduce 4 different techniques to write this <code>summation</code> function. We will assume that the audio samples are between -1 and 1.</p>
+<h2 id="sliding-sum">Sliding Sum</h2>
+<p>Let's start with the <em>sliding sum</em> approach, probably the simplest way to efficiently add <em>n</em> consecutive samples. First, let's recall that we can add up all the samples of a signal <em>s</em>, from time 0 to the present time, with the following expression: <code>s : +~_</code>. </p>
+<p>The trick to adding only the last <em>n</em> samples is to subtract from this sum the same sum but as it was <em>n</em> samples earlier. For example, in order to keep only the sum of the last 10 samples, we just have to subtract from the sum of all samples <code>(s:+~_)</code> the value of this same sum 10 samples ago <code>(s:+~_ : @(10))</code>: </p>
+<pre><code>(s:+~_), (s:+~_ : @(10)) : -
+</code></pre>
+
+<p>This expression can be further simplified by factoring <code>s:+~_</code>. We then get:</p>
+<p><code>s : +~_ &lt;: _, @(10) : -</code></p>
+<p>From a mathematical point of view, this is perfectly correct but poses problems when computed using floating-point numbers. Unlike mathematical numbers, floating-point numbers have a limited precision (23 bits in single precision). When calculating the RMS value, we only add positive numbers. Therefore the sum will increase forever. But at some point, when the sum exceeds <script type="math/tex">2^{23} </script>​, the least significant bit will be higher than any number between <script type="math/tex">0</script>​ and <script type="math/tex">1</script>​. Therefore adding such a small number will be exactly like adding 0, and the sum will never evolve anymore.</p>
+<p>Fortunately, the problem can be solved easily. We just have to swap the integration and the difference parts:</p>
+<pre><code>s &lt;: _, @(10) : - : +~_
+</code></pre>
+
+<p>This new formulation is identical to the previous one from a mathematical point of view. But now, the sum will always stay between <script type="math/tex">-10​</script> and <script type="math/tex">+10</script>​​, and the accuracy problems are only on the least significant bits and tend to compensate statistically.</p>
+<p>We can now complete the definition of RMS:</p>
+<pre><code>RMS(n) = S:M:R with {
+    S = ^(2);
+    M = summation : /(n);
+    R = sqrt;
+
+    summation = _ &lt;: _, @(n) : -`: +~_;
+};
+</code></pre>
+
+<h2 id="fix-point-sliding-sum">Fix-Point Sliding Sum</h2>
+<p>While the previous solution works very well with most signals, it can have potential accuracy problems on some pathological signals. To avoid these problems, we can use a fix-point encoding of the samples. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed <script type="math/tex">2^4</script>​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. </p>
+<p>The conversions are straightforward. To convert floating point values to fix point we can use the following expression : <code>*(2^27):int</code>. To convert back from fix point to floating point we can use the inverse expression : <code>float:/(2^27)</code>.</p>
+<p>We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fixpoint, do the summation on integers, then convert the result back to floating-point. </p>
+<pre><code>RMS(n) = S:M:R with {
+    S = ^(2);
+    M = summation : /(n);
+    R = sqrt;
+
+    summation = float2fix(16) : _ &lt;: _, @(n) : -`: +~_ : fix2float(16);
+    float2fix(p) = *(2^p) : int;
+    fix2float(p) = float : /(2^p);
+};
+</code></pre>
+
+<p>Obviously this is correct only if we let enough bits for the integral part. Here we have 15 bits (31-16), enough for <em>n</em> up to 32000 samples.</p>
+<h2 id="block-sum">Block Sum</h2>
+<p><em>Sliding sums</em> have a nice and smooth behavior because an updated sum is produced every sample. But they require a large delay line (larger than <em>n</em>​)​​, and can have precision problems. In this third approach, we will use a summation by blocks. The summation will be exact, will not require a large delay line, but will be only updated once per block of  <em>n</em> samples.</p>
+<p>The code is a little bit more involved. It will require a <em>phase</em> signal: <script type="math/tex">0,1,2,3,\ldots,n-1,0,1\ldots</script>​,​​​ and a <em>capture</em> (sample and hold) operation.</p>
+<p>Let's start with a simplified version derived from: <code>s:+~_</code>. Remind that <code>_</code> is the identity function and is equivalent to <code>*(1)</code>.  We can therefore rewrite the previous expression <code>s:+~*(1)</code>. Now, imagine that instead of <code>1</code> we have a boolean <code>b</code> as in: <code>s:~*(b)</code>. When <code>b</code> is <code>1</code> the input sample is added to the previous sum, but when <code>b</code> is <code>0</code> the input sample is added to <code>0</code>, and the sum is reset to be the input sample.</p>
+<p>In our case, we want to reset the sum after every block of <em>n</em> samples, that is, every time <code>phase</code> returns to <code>0</code>. This can be written: <code>s:+~*(phase!=0)</code>. </p>
+<p>Note that we can't use the output of this expression directly. It only represents the sum we are looking for when <code>phase==(n-1)</code>. That is why we need an additional <em>capture</em> stage to sample the sum and hold it while the next block is processed. Let's say that <code>b</code> indicates when to capture the input value, then: <code>select2(b)~_</code> will do the job. When <code>b</code> is <code>0</code>, it reproduces the feedback signal, and when <code>b</code> is <code>1</code>, it captures the input signal.</p>
+<p>Here is the full implementation:</p>
+<pre><code>RMS(n) = S:M:R with {
+    S = ^(2);
+    M = summation : /(n);
+    R = sqrt;
+
+    summation = +~*(phase!=0) : capture(phase==(n-1));
+    phase = 1 : (+,n:%)~_;
+    capture(b) = select2(n)~_;
+};
+</code></pre>
+
+<h2 id="overlapping-block-sum">Overlapping Block Sum</h2>
+<p>As we mentioned, the block sum has the disadvantage of producing a new value only once per block. If the blocks are large, this can be a problem. In this fourth approach, we will see how to overlap the produced values. For example, we would like to compute the sum of the last 1000 samples, but with a new result every 250 samples (i.e., an overlap of 75%).</p>
+<p>The principle will be to sum small blocks of 250 samples, keep the last four sums, and add them together to produce, every 250 samples, a new sum of the last 1000 samples. Let's call <em>w</em> the size of a small block, and <em>c</em> the number of small blocks in a large block of <em>n</em> samples (i.e., <script type="math/tex">n=c*w</script>)​.</p>
+<p>Instead of computing sums of <em>n</em> samples as with: <code>+ ~ *(phase != 0)</code>, we compute sums of <em>w</em> samples: <code>+ ~ *(phase%w != 0)</code>. Instead of having one capture every <em>n</em> samples: <code>capture(phase == (n-1))</code>, we need <em>c</em> captures in parallel at <code>1*w-1</code>, <code>2*w-1</code>, etc. : <code>par(i,c, capture( phase == (w*(i+1) - 1) ))</code></p>
+<p>Here is the full code:</p>
+<pre><code>RMS(n) = S:M:R with {
+    S = ^(2);
+    M = summation : /(n);
+    R = sqrt;
+
+    c=4; // number of overlaps
+    summation = + ~ *(phase%w != 0) 
+                 &lt;: par(i, c, capture( phase == (w*(i+1) - 1) )) 
+                 :&gt; _
+        with { w = n/c; };
+
+    phase = 1 : (+,n:%)~_;
+    capture(b) = select2(n)~_;
+};
+
+
+</code></pre>
+
+<h2 id="comparing-all-the-solutions">Comparing all the solutions</h2>
+<p>Using the Faust IDE, we can easily compare all these solutions. To encapsulate all the definitions and select the RMS implementation, we will use an environment. If you are not familiar with the concept of environment, it is a way to group definitions. </p>
+<!-- faust-run -->
+
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = testsource &lt;: _, RMS(n).sliding, RMS(n).fixpoint, RMS(n).block, RMS(n).overlap(4)
+    with {
+        n = 10000;
+        testsource = os.osc(40) * lfo(1) * hslider(&quot;level&quot;, 1, 0,1,0.01);
+        lfo(f) = os.osc(f)/2+0.5;
+    };
+
+RMS(n) = environment {
+
+    // The 4 implementations to test
+    sliding    = horms(( _ &lt;: _, @(n) : - : +~_ ));
+    fixpoint   = horms(( float2fix(16) : _ &lt;: _, @(n) : -: +~_ : fix2float(16) ));
+    block      = horms(( +~*(phase != 0) : capture(phase == (n-1)) ));
+    overlap(c) = horms(( + ~ *(phase%w != 0) &lt;: par(i, c, capture( phase == (w*(i+1) - 1) )) :&gt; _ with { w = n/c; } ));
+
+    // high order rms with summation function as parameter
+    horms(summation) = S:M:R with {
+        S = ^(2);
+        M = summation : /(n);
+        R = sqrt;
+    };
+
+    // helpers
+    float2fix(p) = *(2^p) : int;
+    fix2float(p) = float : /(2^p);
+
+    phase = 1 : (+,n:%)~_;
+    capture(b) = select2(b)~_;
+
+};
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/summation/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+
+<!-- /faust-run -->
+
+<p>The screen shot of the Faust IDE below shows the RMS values of testsource according to the 4 methods: <em>Sliding Sum</em>, <em>Fix-Point Sliding Sum</em>, <em>Block Sum</em>, and <em>Overlapping Block Sum</em>.</p>
+<p><img src="img/curves.png" width="100%" class="mx-auto d-block"></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020-2021 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
