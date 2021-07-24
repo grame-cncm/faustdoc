@@ -13,13 +13,13 @@ The computation of the RMS (Root Mean Square) value of a signal is defined by th
 
 where *n* is the number of consecutive samples considered.
 
-This expression involves several steps :
+This expression involves several steps:
 
 - First, we take the square of the signal: `^(2)`. This is the S of RMS. 
 - Then we sum the *n* consecutive samples: `summation` and divide this sum by *n* to get the mean value: `/(n)`. This is the M of RMS. 
 - Finally, we take the square root `sqrt`. This is the R of RMS. 
 
-In other words, RMS is written S:M:R in Faust (letting the `summation` function undefined for the moment) :
+In other words, RMS is written S:M:R in Faust (letting the `summation` function undefined for the moment):
 
 ```
 RMS(n) = S:M:R with {
@@ -66,7 +66,7 @@ RMS(n) = S:M:R with {
 	M = summation : /(n);
 	R = sqrt;
 
-	summation = _ <: _, @(n) : -`: +~_;
+	summation = _ <: _, @(n) : - : +~_;
 };
 ```
 
@@ -74,11 +74,9 @@ RMS(n) = S:M:R with {
 
 While the previous solution works very well with most signals, it can have potential accuracy problems on some pathological signals. To avoid these problems, we can use a fix-point encoding of the samples. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed \(2^4\)​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. 
 
-The conversions are straightforward. To convert floating point values to fix point we can use the following expression : `*(2^27):int`. To convert back from fix point to floating point we can use the inverse expression : `float:/(2^27)`.
+The conversions are straightforward. To convert floating point values to fix point we can use the following expression: `*(2^27):int`. To convert back from fix point to floating point we can use the inverse expression: `float:/(2^27)`.
 
-
-We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fixpoint, do the summation on integers, then convert the result back to floating-point. 
-
+We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fixpoint, do the summation on integers, then convert the result back to floating-point:
 
 ```
 RMS(n) = S:M:R with {
@@ -86,7 +84,7 @@ RMS(n) = S:M:R with {
 	M = summation : /(n);
 	R = sqrt;
 
-	summation = float2fix(16) : _ <: _, @(n) : -`: +~_ : fix2float(16);
+	summation = float2fix(16) : _ <: _, @(n) : - : +~_ : fix2float(16);
 	float2fix(p) = *(2^p) : int;
 	fix2float(p) = float : /(2^p);
 };
@@ -125,10 +123,9 @@ As we mentioned, the block sum has the disadvantage of producing a new value onl
 
 The principle will be to sum small blocks of 250 samples, keep the last four sums, and add them together to produce, every 250 samples, a new sum of the last 1000 samples. Let's call *w* the size of a small block, and *c* the number of small blocks in a large block of *n* samples (i.e., \(n=c*w\))​.
 
-Instead of computing sums of *n* samples as with: `+ ~ *(phase != 0)`, we compute sums of *w* samples: `+ ~ *(phase%w != 0)`. Instead of having one capture every *n* samples: `capture(phase == (n-1))`, we need *c* captures in parallel at `1*w-1`, `2*w-1`, etc. : `par(i,c, capture( phase == (w*(i+1) - 1) ))`
+Instead of computing sums of *n* samples as with: `+ ~ *(phase != 0)`, we compute sums of *w* samples: `+ ~ *(phase%w != 0)`. Instead of having one capture every *n* samples: `capture(phase == (n-1))`, we need *c* captures in parallel at `1*w-1`, `2*w-1`, etc.: `par(i,c, capture( phase == (w*(i+1) - 1) ))`
 
 Here is the full code:
-
 
 ```
 RMS(n) = S:M:R with {
@@ -136,7 +133,7 @@ RMS(n) = S:M:R with {
 	M = summation : /(n);
 	R = sqrt;
 
-	c=4; // number of overlaps
+	c = 4; // number of overlaps
 	summation = + ~ *(phase%w != 0) 
 	             <: par(i, c, capture( phase == (w*(i+1) - 1) )) 
 	             :> _
@@ -145,8 +142,6 @@ RMS(n) = S:M:R with {
 	phase = 1 : (+,n:%)~_;
 	capture(b) = select2(n)~_;
 };
-
-
 ```
 
 ## Comparing all the solutions
