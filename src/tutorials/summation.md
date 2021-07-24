@@ -43,9 +43,9 @@ The trick to adding only the last *n* samples is to subtract from this sum the s
 
 This expression can be further simplified by factoring `s:+~_`. We then get:
 
- ```
+```
 s : +~_ <: _, @(10) : -
- ```
+```
 
 From a mathematical point of view, this is perfectly correct but poses problems when computed using floating-point numbers. Unlike mathematical numbers, floating-point numbers have a limited precision (23 bits in single precision). When calculating the RMS value, we only add positive numbers. Therefore the sum will increase forever. But at some point, when the sum exceeds \(2^{23} \)​, the least significant bit will be higher than any number between \(0\)​ and \(1\)​. Therefore adding such a small number will be exactly like adding 0, and the sum will never evolve anymore.
 
@@ -58,7 +58,6 @@ s <: _, @(10) : - : +~_
 This new formulation is identical to the previous one from a mathematical point of view. But now, the sum will always stay between \(-10​\) and \(+10\)​​, and the accuracy problems are only on the least significant bits and tend to compensate statistically.
 
 We can now complete the definition of RMS:
-
 
 ```
 RMS(n) = S:M:R with {
@@ -112,7 +111,7 @@ RMS(n) = S:M:R with {
 	M = summation : /(n);
 	R = sqrt;
 
-	summation = +~*(phase!=0) : capture(phase==(n-1));
+	summation = + ~ *(phase != 0) : capture(phase==(n-1));
 	phase = 1 : (+,n:%)~_;
 	capture(b) = select2(n)~_;
 };
@@ -155,7 +154,7 @@ import("stdfaust.lib");
 process = testsource <: _, RMS(n).sliding, RMS(n).fixpoint, RMS(n).block, RMS(n).overlap(4)
     with {
         n = 10000;
-        testsource = os.osc(40) * lfo(1) * hslider("level", 1, 0,1,0.01);
+        testsource = os.osc(40) * lfo(1) * hslider("level", 1, 0, 1, 0.01);
         lfo(f) = os.osc(f)/2+0.5;
     };
 
@@ -164,7 +163,7 @@ RMS(n) = environment {
 	// The 4 implementations to test
 	sliding    = horms(( _ <: _, @(n) : - : +~_ ));
 	fixpoint   = horms(( float2fix(16) : _ <: _, @(n) : -: +~_ : fix2float(16) ));
-	block      = horms(( +~*(phase != 0) : capture(phase == (n-1)) ));
+	block      = horms(( + ~ *(phase != 0) : capture(phase == (n-1)) ));
 	overlap(c) = horms(( + ~ *(phase%w != 0) <: par(i, c, capture( phase == (w*(i+1) - 1) )) :> _ with { w = n/c; } ));
 
 	// high order rms with summation function as parameter
@@ -182,7 +181,6 @@ RMS(n) = environment {
 	capture(b) = select2(b)~_;
 
 };
-
 ```
 <!-- /faust-run -->
 
