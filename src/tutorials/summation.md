@@ -73,9 +73,9 @@ RMS(n) = S:M:R with {
 
 While the previous solution works very well with most signals, it can have potential accuracy problems on some pathological signals. To avoid these problems, we can use a fix-point encoding of the samples. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed \(2^4\)​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. 
 
-The conversions are straightforward. To convert floating point values to fix point we can use the following expression: `*(2^27):int`. To convert back from fix point to floating point we can use the inverse expression: `float:/(2^27)`.
+The conversions are straightforward. To convert floating-point values to fix-point we can use the following expression: `*(2^27):int`. To convert back from fix-point to floating-point we can use the inverse expression: `float:/(2^27)`.
 
-We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fixpoint, do the summation on integers, then convert the result back to floating-point:
+We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fix-point, do the summation on integers, then convert the result back to floating-point:
 
 ```
 RMS(n) = S:M:R with {

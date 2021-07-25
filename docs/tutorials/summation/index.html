@@ -351,8 +351,8 @@
 </code></pre>
 <h2 id="fix-point-sliding-sum">Fix-Point Sliding Sum</h2>
 <p>While the previous solution works very well with most signals, it can have potential accuracy problems on some pathological signals. To avoid these problems, we can use a fix-point encoding of the samples. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed <script type="math/tex">2^4</script>​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. </p>
-<p>The conversions are straightforward. To convert floating point values to fix point we can use the following expression: <code>*(2^27):int</code>. To convert back from fix point to floating point we can use the inverse expression: <code>float:/(2^27)</code>.</p>
-<p>We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fixpoint, do the summation on integers, then convert the result back to floating-point:</p>
+<p>The conversions are straightforward. To convert floating-point values to fix-point we can use the following expression: <code>*(2^27):int</code>. To convert back from fix-point to floating-point we can use the inverse expression: <code>float:/(2^27)</code>.</p>
+<p>We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fix-point, do the summation on integers, then convert the result back to floating-point:</p>
 <pre><code>RMS(n) = S:M:R with {
     S = ^(2);
     M = summation : /(n);

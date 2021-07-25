@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Using and Developing Architectures Files - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/remote/" class="dropdown-item">Remote compilation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                    
+<li>
+    <a href="../summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#using-and-developing-architectures-files" class="nav-link">Using and Developing Architectures Files</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#introduction" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#plan" class="nav-link">Plan</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#the-simplest-c-file" class="nav-link">The simplest C++ file</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#adding-an-audio-driver" class="nav-link">Adding an audio driver</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-a-real-audio-driver-jack" class="nav-link">Using a real audio driver JACK</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#create-dsp-program-with-some-controllers" class="nav-link">Create DSP program with some controllers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#the-builduserinterface-method" class="nav-link">The buildUserInterface method</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-gtkui-controller" class="nav-link">Using the GTKUI controller</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-oscui-controller" class="nav-link">Using the OSCUI controller</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-httpdui-controller" class="nav-link">Using the httpdUI controller</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-metadata" class="nav-link">Using metadata</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link"></a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<h1 id="using-and-developing-architectures-files">Using and Developing Architectures Files</h1>
+<h2 id="introduction">Introduction</h2>
+<p>A Faust program describes a <em>signal processor</em>, a pure DSP computation that maps <em>input signals</em> to <em>output signals</em>. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by <a href="https://faustdoc.grame.fr/manual/architectures/"><em>architecture files</em></a>.
+We assume here a general understanding of the architecture files model. In this tutorial, we'll explain how the machinery works:</p>
+<ul>
+<li>
+<p>starting with a simple example</p>
+</li>
+<li>
+<p>compter des buttons et sliders: faust -a architecture (renseigner sur le DSP), ou générer un fichier de sortie. <strong>example avec JSONUI</strong> </p>
+</li>
+<li>
+<p>gradually enriching it to show how multiple controllers can be used (OSC, http, MIDI etc.) </p>
+</li>
+<li>
+<p>showing how the architectures files can be used with statically generated C++ files, or dynamically generated DSP using the LLVM or Interpreter backends </p>
+</li>
+<li>
+<p>demonstrate how to create polyphonic instruments, add a global effects using the DSP C++ algebra, setup sample accurate controllable DSP</p>
+</li>
+<li>
+<p>finally demonstrating how to write simple architecture files, or combine, extend and use existing ones. </p>
+</li>
+<li>
+<p>expliquer: faust2xx</p>
+</li>
+<li>
+<p>generation de code (exemple swift sans passer par le JSON)</p>
+</li>
+</ul>
+<h2 id="plan">Plan</h2>
+<p>The Faust compiler generates the DSP code as a C++ class, a C structure and associated functions, a LLVM module or a wasm module.etc. with a fixed API shared among the backends.</p>
+<h4 id="the-simplest-c-file">The simplest C++ file</h4>
+<p>Let's start with the simple following DSP program:</p>
+<p>Compiling it with the command <code>faust test1.dsp -o test.cpp</code> produces the following C++ class:</p>
+<p>which does not directly compile since it refers to a base <code>dsp</code> class, and additional <code>UI</code> and <code>meta</code> definitions which are not available in the generated code. </p>
+<p>The purpose of the architecture file is first to fill all the <em>holes</em>, so that the C++ class can be compiled and used in a real program. The following <code>nullarch.cpp</code>  which contains 2 special lines:</p>
+<pre><code>&lt;&lt;includeIntrinsic&gt;&gt;
+&lt;&lt;includeclass&gt;&gt;
+</code></pre>
+<p>can be used to generate the C++ file:</p>
+<pre><code class="language-c++">&lt;&lt;includeIntrinsic&gt;&gt;
+
+#define FAUSTFLOAT float
+
+class dsp {};
+
+struct Meta {
+    virtual void declare(const char* key, const char* value) {};
+};
+
+struct Soundfile {
+    FAUSTFLOAT** fBuffers;
+    int* fLength;   // length of each part
+    int* fSR;       // sample rate of each part
+    int* fOffset;   // offset of each part in the global buffer
+    int fChannels;  // max number of channels of all concatenated files
+};
+
+struct UI {
+    // -- widget's layouts
+    virtual void openTabBox(const char* label) {}
+    virtual void openHorizontalBox(const char* label) {}
+    virtual void openVerticalBox(const char* label) {}
+    virtual void closeBox() {}
+
+    // -- active widgets
+    virtual void addButton(const char* label, FAUSTFLOAT* zone) {}
+    virtual void addCheckButton(const char* label, FAUSTFLOAT* zone) {}
+    virtual void addVerticalSlider(const char* label, 
+                                   FAUSTFLOAT* zone, 
+                                   FAUSTFLOAT init,
+                                   FAUSTFLOAT min, 
+                                   FAUSTFLOAT max, 
+                                   FAUSTFLOAT step) {}
+    virtual void addHorizontalSlider(const char* label, 
+                                   FAUSTFLOAT* zone, 
+                                   FAUSTFLOAT init,
+                                   FAUSTFLOAT min, 
+                                   FAUSTFLOAT max, 
+                                   FAUSTFLOAT step) {}
+    virtual void addNumEntry(const char* label, 
+                                   FAUSTFLOAT* zone, 
+                                   FAUSTFLOAT init,
+                                   FAUSTFLOAT min, 
+                                   FAUSTFLOAT max, 
+                                   FAUSTFLOAT step) {}
+
+    // -- passive widgets
+    virtual void addHorizontalBargraph(const char* label, 
+                                       FAUSTFLOAT* zone, 
+                                       FAUSTFLOAT min,
+                                       FAUSTFLOAT max) {}
+    virtual void addVerticalBargraph(const char* label, 
+                                       FAUSTFLOAT* zone, 
+                                       FAUSTFLOAT min,
+                                       FAUSTFLOAT max) {}
+
+    // -- soundfiles
+    virtual void addSoundfile(const char* label, 
+                              const char* filename, 
+                              Soundfile** sf_zone) {}
+
+    // -- metadata declarations
+    virtual void declare(FAUSTFLOAT* zone, const char* key, const char* val) {}
+};
+
+&lt;&lt;includeclass&gt;&gt;
+</code></pre>
+<p>When used with the <code>-a</code> option, the compiler will simply replace them with the C++ class (or C code when used with the C backend, or any other textual output when used with backend like Rust, SOUL...). </p>
+<p>Type the following command to generate a ready to compile C++ file:</p>
+<pre><code>faust -a nullarch.cpp test1.dsp -o test1.cpp
+</code></pre>
+<p>And compile it with, using the -S option since the file does not even contain a <code>main</code> and would not compile otherwise:</p>
+<pre><code>c++ -S test1.cpp
+</code></pre>
+<ul>
+<li>starting from a C++ generated class in a minimal architecture file</li>
+</ul>
+<h4 id="adding-an-audio-driver">Adding an audio driver</h4>
+<ul>
+<li>adding a dummy audio driver, explain DSP itinialisation with SR with <code>init(SR)</code>, </li>
+</ul>
+<p>A Faust generated program has to connect to an underlying audio layer, either an audio driver or a plugin API, which will call the DSP <code>init</code> method at init time to setup the <code>ma.SR</code> variable, and the DSP <code>compute</code> to handle incoming audio buffers and/or to produce audio outputs. </p>
+<p>The audio driver base class has an <code>init(const char* name, dsp* dsp)</code>  that will be called first</p>
+<h4 id="using-a-real-audio-driver-jack">Using a real audio driver JACK</h4>
+<ul>
+<li>switching to a real audio driver using <a href="https://jackaudio.org">JACK</a> =&gt; using a DSP that always generates sound (osc.osc(440), we hear sound</li>
+</ul>
+<h4 id="create-dsp-program-with-some-controllers">Create DSP program with some controllers</h4>
+<ul>
+<li>create DSP program with some controllers</li>
+</ul>
+<h4 id="the-builduserinterface-method">The buildUserInterface method</h4>
+<ul>
+<li>explain <code>buildUserInterface</code> method, write a simple <code>PrintUI</code> architecture that prints each control, plug it on the DSP </li>
+</ul>
+<h4 id="using-the-gtkui-controller">Using the GTKUI controller</h4>
+<p>The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GTKUI.h">GTKUI</a> class uses the <a href="https://www.gtk.org">GTK</a> toolkit to create a Graphical User Interface with a proper group-based layout.  It can simply be plugged on the DSP using <code>buildUserInterface</code> a second time on the DSP:</p>
+<pre><code class="language-c++">#include &quot;faust/gui/GTKUI.h&quot;
+
+// Create and plug the GTK interface
+GTKUI gtk_interface(name, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(&amp;gtk_interface);
+
+// Start gtk_interface (layout and event handing)
+gtk_interface-&gt;run();
+</code></pre>
+<ul>
+<li>use a ready-to-use GUI architecture:  <code>GTKUI</code> using GTK framework</li>
+<li>explain and demonstrate <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a>  (with <code>setParamValue/getParamValue</code> model), explain the label and path distinction, should the <code>PathBuilder</code> helper. </li>
+</ul>
+<h4 id="using-the-oscui-controller">Using the OSCUI controller</h4>
+<p>The <a href="https://faustdoc.grame.fr/manual/osc/">OSCUI</a> controller can be used to change parameters with incoming OSC messages, or emit OSC messages when parameters are moved. It can simply be plugged on the DSP using <code>buildUserInterface</code> a third time with the following code:</p>
+<pre><code class="language-c++">#include &quot;faust/gui/OSCUI.h&quot;
+
+// Create and plug the OSC interface
+OSCUI osc_interface(name, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(&amp;osc_interface);
+
+// Start osc_interface
+osc_interface-&gt;run();
+</code></pre>
+<p>Now received OSC messages on the correct path and input port will change the parameters values, and moving the GUI items (button, sliders...) will generate OSC messages on the output port.  This synchronization mechanism between the two controllers is implemented in a generic way in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h">GUI</a> class, which both <code>GTKUI</code> and <code>OSCUI</code> are sub-classes of.</p>
+<ul>
+<li></li>
+<li>use  <code>OSCUI</code> as a first example of remote control, explain how several UIs can be combined and synchronized (using the GUI class)</li>
+</ul>
+<p>Type the following command to generate a ready to compile C++ file:</p>
+<h4 id="using-the-httpdui-controller">Using the httpdUI controller</h4>
+<ul>
+<li>use <code>httpdUI</code>, as a second example of remote control</li>
+</ul>
+<p>The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpdUI.h">httpdUI</a> class implements HTTP remote control using the <a href="https://www.gnu.org/software/libmicrohttpd/">libmicrohttpd</a> library to embed a HTTP server inside the application. Then by opening a browser on a specific URL (http://127.0.0.1:5510), the GUI will appear and allow to control the distant application or plugin. The connection works in both directions.</p>
+<pre><code class="language-c++">#include &quot;faust/gui/httpdUI.h&quot;
+
+// Create and plug the Httpd interface
+httpdUI httpd_interface(name, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(&amp;httpd_interface);
+
+// Start httpd_interface
+httpd_interface-&gt;run();
+</code></pre>
+<p>Since the<code>httpdUI</code>class is also a sub-class of the <code>GUI</code> class, all UI items stay synchronized. </p>
+<h4 id="using-metadata">Using metadata</h4>
+<p>The Faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a declare method taking as argument, a pointer to the widget associated zone, the metadata key and value:</p>
+<pre><code class="language-c++">declare(FAUSTFLOAT* zone, const char* key, const char* value);
+</code></pre>
+<p>Lets take a first concrete example with unit The <code>[midi:ctrl 7]</code> metadata can be added. </p>
+<p>Lets take a second concrete example with MIDI metadata to control sliders. The <code>[midi:ctrl 7]</code> metadata can be added on a slider to control its value with a MIDI CtrlChange 7 event. </p>
+<p>The MIDI metadata are decoded using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h">MIDIUI</a> class, initialized with a  <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/midi/midi.h#L261">midi_hander</a> class to be connected to real MIDI devices. In the following piece of code, a <code>MidiUI</code> object is created and connected to a <code>rt_midi</code> MIDI messages handler (using the <a href="http://www.music.mcgill.ca/~gary/rtmidi/">RTMidi</a> library), then given as a parameter to the standard <code>buildUserInterface</code> to control DSP parameters:</p>
+<pre><code class="language-c++">...
+rt_midi midi_handler(&quot;MIDI&quot;);
+MidiUI midi_interface(&amp;midi_handler);
+DSP-&gt;buildUserInterface(&amp;midi_interface);
+...
+</code></pre>
+<h2 id="_1"></h2>
+<p>Now we can use </p>
+<ul>
+<li>
+<p>explain the concept of metadata, take MIDI as an example, add some in the DSP program, use <code>MIDIUI</code>, demonstrate MIDI control  in both directions</p>
+</li>
+<li>
+<p>sample-accurate control: used of <code>time_dsp</code> decorator, example of MIDI clock base synchro </p>
+</li>
+<li>
+<p>explain polyphony implementation: explain how we can <em>aggregate</em> several C++ dsp, subclassing the base <code>dsp</code> class to keep the same interface, show control with MIDI</p>
+</li>
+<li>
+<p>explains the <em>global effect</em> model, show control with MIDI</p>
+</li>
+<li>
+<p>moving to dynamic compilation using libfaust: the factory/instance concept, show how what was previously explained can simply be reused with a dynamically created <code>llvm_dsp</code> object, saving/restoring DSP factories</p>
+</li>
+<li>
+<p>using the interpreter backend</p>
+</li>
+<li>
+<p>Tour of the main ready-to-use architecture files: </p>
+</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/QTUI.h">QTUI</a> class uses the <a href="https://www.qt.io/">QT</a> toolkit</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceUI.h">JuceUI</a> class uses the <a href="https://juce.com/">JUCE</a> framework: <code>faust2juce</code> tool</li>
+<li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> (déjà vu) </li>
+<li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h">APIUI</a> </li>
+<li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> </li>
+<li><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h">SoundUI</a> </li>
+<li>
+<p>...</p>
+</li>
+<li>
+<p>Developing a new UI architecture file:</p>
+</li>
+<li>from scratch </li>
+<li>subclassing existing ones</li>
+<li>
+<p>aggregating existing ones</p>
+</li>
+<li>
+<p>Embedded devices:</p>
+</li>
+</ul>
+<p>​ </p>
+<ul>
+<li>list of shared metadata : <strong>discussion to have</strong> ? </li>
+<li>
+<p>memory layout issue: (idea of a improved <em>custom_memory_manager</em>)</p>
+</li>
+<li>
+<p>Developing a <em>faust2xx</em> script:</p>
+</li>
+<li>
+<p>Other target languages:</p>
+</li>
+<li>C interface</li>
+<li>
+<p>Rust interface</p>
+</li>
+<li>
+<p>Advanced, other tools</p>
+</li>
+<li>measuring DSP CPU with the <code>measure_dsp</code> decorator</li>
+<li>proxy DSP model with <code>proxy_dsp</code></li>
+<li>using a <code>custom_memory_manager</code></li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020-2021 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
