@@ -319,7 +319,7 @@
 <li>Then we sum the <em>n</em> consecutive samples: <code>summation</code> and divide this sum by <em>n</em> to get the mean value: <code>/(n)</code>. This is the M of RMS. </li>
 <li>Finally, we take the square root <code>sqrt</code>. This is the R of RMS. </li>
 </ul>
-<p>In other words, RMS is written S:M:R in Faust (letting the <code>summation</code> function undefined for the moment):</p>
+<p>In other words, RMS is written S:M:R in Faust (leaving the <code>summation</code> function undefined for the moment):</p>
 <pre><code>RMS(n) = S:M:R with {
     S = ^(2);
     M = summation : /(n);
@@ -339,7 +339,13 @@
 <p>Fortunately, the problem can be solved easily. We just have to swap the integration and the difference parts:</p>
 <pre><code>s &lt;: _, @(10) : - : +~_
 </code></pre>
-<p>This new formulation is identical to the previous one from a mathematical point of view. But now, the sum will always stay between <script type="math/tex">-10​</script> and <script type="math/tex">+10</script>​​, and the accuracy problems are only on the least significant bits and tend to compensate statistically.</p>
+<p>This new formulation is identical to the previous one from a mathematical point of view. But now, the sum will always stay between <script type="math/tex">-10​</script> and <script type="math/tex">+10</script>​​, and the accuracy problems are only on the least significant bits.
+If the roundoff error due to quantization is modeled as a uniformly
+distributed random number between -q/2 and q/2, then its variance
+(mean square) is q^2/12, and this value increases linearly over time
+in a running sum (see "Wiener process"). Thus, we expect the roundoff
+error in a running-sum rms calculator to grow proportional to the
+square root of time in samples.</p>
 <p>We can now complete the definition of RMS:</p>
 <pre><code>RMS(n) = S:M:R with {
     S = ^(2);
@@ -350,7 +356,11 @@
 };
 </code></pre>
 <h2 id="fix-point-sliding-sum">Fix-Point Sliding Sum</h2>
-<p>While the previous solution works very well with most signals, it can have potential accuracy problems on some pathological signals. To avoid these problems, we can use a fix-point encoding of the samples. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed <script type="math/tex">2^4</script>​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. </p>
+<p>While the previous solution works very well with typical signals
+  over practical time spans, the roundoff error continues to grow
+  slowly. To avoid a gradual loss of precision, we can use a
+  fix-point encoding of the samples, so that the subtraction after delay is always exact.
+  Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed <script type="math/tex">2^4</script>​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. </p>
 <p>The conversions are straightforward. To convert floating-point values to fix-point we can use the following expression: <code>*(2^27):int</code>. To convert back from fix-point to floating-point we can use the inverse expression: <code>float:/(2^27)</code>.</p>
 <p>We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fix-point, do the summation on integers, then convert the result back to floating-point:</p>
 <pre><code>RMS(n) = S:M:R with {
