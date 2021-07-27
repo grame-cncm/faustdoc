@@ -319,31 +319,34 @@
 
 <h1 id="faust-compiler-options">Faust Compiler Options</h1>
 <h2 id="faust-compiler-version-2305">FAUST compiler version 2.30.5</h2>
-<pre><code class="language-faust-options">usage : faust [options] file1 [file2 ...].
+<pre><code class="faust-options">usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
     and fileN represents a Faust source file (.dsp extension).
 </code></pre>
+
 <h2 id="input-options">Input options:</h2>
 <hr />
-<pre><code class="language-faust-options">  -a &lt;file&gt;                               wrapper architecture file.
+<pre><code class="faust-options">  -a &lt;file&gt;                               wrapper architecture file.
   -i        --inline-architecture-files   inline architecture files.
   -A &lt;dir&gt;  --architecture-dir &lt;dir&gt;      add the directory &lt;dir&gt; to the architecture search path.
   -I &lt;dir&gt;  --import-dir &lt;dir&gt;            add the directory &lt;dir&gt; to the import search path.
   -L &lt;file&gt; --library &lt;file&gt;              link with the LLVM module &lt;file&gt;.
   -t &lt;sec&gt;  --timeout &lt;sec&gt;               abort compilation after &lt;sec&gt; seconds (default 120).
 </code></pre>
+
 <h2 id="output-options">Output options:</h2>
 <hr />
-<pre><code class="language-faust-options">  -o &lt;file&gt;                               the output file.
+<pre><code class="faust-options">  -o &lt;file&gt;                               the output file.
   -e        --export-dsp                  export expanded DSP (with all included libraries).
   -uim      --user-interface-macros       add user interface macro definitions to the output code.
   -xml                                    generate an XML description file.
   -json                                   generate a JSON description file.
   -O &lt;dir&gt;  --output-dir &lt;dir&gt;            specify the relative directory of the generated output code and of additional generated files (SVG, XML...).
 </code></pre>
+
 <h2 id="code-generation-options">Code generation options:</h2>
 <hr />
-<pre><code class="language-faust-options">  -lang &lt;lang&gt; --language                 select output language,
+<pre><code class="faust-options">  -lang &lt;lang&gt; --language                 select output language,
                                           'lang' should be in c, ocpp, cpp (default), rust, java, llvm, cllvm, fir, wast/wasm, soul, interp.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
@@ -386,9 +389,10 @@
   -mapp      --math-approximation         simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
   -ns &lt;name&gt; --namespace &lt;name&gt;           generate C++ or D code in a namespace &lt;name&gt;.
 </code></pre>
+
 <h2 id="block-diagram-options">Block diagram options:</h2>
 <hr />
-<pre><code class="language-faust-options">  -ps        --postscript                 print block-diagram to a postscript file.
+<pre><code class="faust-options">  -ps        --postscript                 print block-diagram to a postscript file.
   -svg       --svg                        print block-diagram to a svg file.
   -sd        --simplify-diagrams          try to further simplify diagrams before drawing.
   -drf       --draw-route-frame           draw route frames instead of simple cables.
@@ -398,15 +402,17 @@
   -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
   -blur      --shadow-blur                add a shadow blur to SVG boxes.
 </code></pre>
+
 <h2 id="math-doc-options">Math doc options:</h2>
 <hr />
-<pre><code class="language-faust-options">  -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
+<pre><code class="faust-options">  -mdoc       --mathdoc                   print math documentation of the Faust program in LaTeX format in a -mdoc folder.
   -mdlang &lt;l&gt; --mathdoc-lang &lt;l&gt;          if translation file exists (&lt;l&gt; = en, fr, ...).
   -stripmdoc  --strip-mdoc-tags           strip mdoc tags when printing Faust -mdoc listings.
 </code></pre>
+
 <h2 id="debug-options">Debug options:</h2>
 <hr />
-<pre><code class="language-faust-options">  -d          --details                   print compilation details.
+<pre><code class="faust-options">  -d          --details                   print compilation details.
   -time       --compilation-time          display compilation phases timing information.
   -tg         --task-graph                print the internal task graph in dot format.
   -sg         --signal-graph              print the internal signal graph in dot format.
@@ -414,9 +420,10 @@
   -ct         --check-table               check table index range and fails.
   -cat        --check-all-table           check all table index range.
 </code></pre>
+
 <h2 id="information-options">Information options:</h2>
 <hr />
-<pre><code class="language-faust-options">  -h          --help                      print this help message.
+<pre><code class="faust-options">  -h          --help                      print this help message.
   -v          --version                   print version information and embedded backends list.
   -libdir     --libdir                    print directory containing the Faust libraries.
   -includedir --includedir                print directory containing the Faust headers.
@@ -424,9 +431,10 @@
   -dspdir     --dspdir                    print directory containing the Faust dsp libraries.
   -pathslist  --pathslist                 print the architectures and dsp library paths.
 </code></pre>
+
 <h2 id="example">Example:</h2>
 <hr />
-<pre><code class="language-faust-options">faust -a jack-gtk.cpp myfx.dsp -o myfx.cpp 
+<pre><code class="faust-options">faust -a jack-gtk.cpp myfx.dsp -o myfx.cpp 
 </code></pre></div>
             </div>
         </div>

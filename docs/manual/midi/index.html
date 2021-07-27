@@ -367,6 +367,7 @@
 <p>MIDI support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the <code>[midi:on]</code> metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a>:</p>
 <pre><code>declare options &quot;[midi:on]&quot;;
 </code></pre>
+
 <!-- TODO: the tables indicating which architectures implement MIDI support should be placed here. -->
 
 <p>MIDI control is configured in Faust using <a href="../syntax/#metadata">metadata</a> in <a href="../syntax/#user-interface-primitives-and-configuration">UI elements</a>. MIDI channels from 1 to 16 can be used at reception or sending time. <strong>By convention, using the channel = 0 value (or no channel setting) means "all channels".</strong> That is, at reception time, MIDI messages received on all channels can be used to control a given parameter, and at sending time, the MIDI message associated to a parameter will be sent on all channels.</p>
@@ -374,6 +375,7 @@
 <p>All MIDI configuration metadata in Faust follow the following format:</p>
 <pre><code>[midi:xxx yyy...]
 </code></pre>
+
 <p>This section provides a list of the most common metadata that can be used to configure of the MIDI behavior of a Faust program.</p>
 <p>Below, when a 7-bit MIDI parameter is used to drive a <a href="../syntax/#button-primitive">button</a> or a <a href="../syntax/#checkbox-primitive">checkbox</a>, its maximum value (127) maps to 1 ("on") while its minimum value (0) maps to 0 ("off").</p>
 <h3 id="midictrl-num-or-midictrl-num-chan-metadata"><code>[midi:ctrl num]</code> or <code>[midi:ctrl num chan]</code> Metadata</h3>
@@ -381,6 +383,7 @@
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:ctrl num chan]&quot;,...);
 </code></pre>
+
 <p>Where:</p>
 <ul>
 <li><code>num</code>: the MIDI CC number</li>
@@ -389,6 +392,7 @@
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by MIDI CC 11. When CC11=0, then the frequency is 200Hz, when CC11=127, then the frequency is 1000Hz.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -402,6 +406,7 @@ process = os.sawtooth(freq);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h3 id="midikeyon-midikey-or-midikeyon-midikey-chan-metadata"><code>[midi:keyon midikey]</code> or <code>[midi:keyon midikey chan]</code> Metadata</h3>
@@ -409,6 +414,7 @@ process = os.sawtooth(freq);
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:keyon midikey chan]&quot;,...);
 </code></pre>
+
 <p>Where:</p>
 <ul>
 <li><code>midikey</code>: the MIDI key number</li>
@@ -417,6 +423,7 @@ process = os.sawtooth(freq);
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when a key-on message issent. Therefore, the frequency will only be updated when MIDI key 62 is pressed.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -430,6 +437,7 @@ process = os.sawtooth(freq);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h3 id="midikeyoff-midikey-or-midikeyoff-midikey-chan-metadata"><code>[midi:keyoff midikey]</code> or <code>[midi:keyoff midikey chan]</code> Metadata</h3>
@@ -437,6 +445,7 @@ process = os.sawtooth(freq);
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:keyoff midikey chan]&quot;,...);
 </code></pre>
+
 <p>Where:</p>
 <ul>
 <li><code>midikey</code>: the MIDI key number</li>
@@ -445,6 +454,7 @@ process = os.sawtooth(freq);
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when a key-off message is sent. Therefore, the frequency will only be updated when MIDI key 62 is released.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -458,6 +468,7 @@ process = os.sawtooth(freq);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h3 id="midikey-midikey-or-midikey-midikey-chan-metadata"><code>[midi:key midikey]</code> or <code>[midi:key midikey chan]</code> Metadata</h3>
@@ -465,6 +476,7 @@ process = os.sawtooth(freq);
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:key midikey chan]&quot;,...);
 </code></pre>
+
 <p>Where:</p>
 <ul>
 <li><code>midikey</code>: the MIDI key number</li>
@@ -473,6 +485,7 @@ process = os.sawtooth(freq);
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when key-on and key-off messages are sent. Therefore, the frequency will only be updated when MIDI key 62 is pressed and released.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -486,6 +499,7 @@ process = os.sawtooth(freq);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h3 id="midikeypress-midikey-or-midikeypress-midikey-chan-metadata"><code>[midi:keypress midikey]</code> or <code>[midi:keypress midikey chan]</code> Metadata</h3>
@@ -493,6 +507,7 @@ process = os.sawtooth(freq);
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:keypress midikey chan]&quot;,...);
 </code></pre>
+
 <p>Where:</p>
 <ul>
 <li><code>midikey</code>: the MIDI key number</li>
@@ -501,6 +516,7 @@ process = os.sawtooth(freq);
 <p><strong>Example</strong></p>
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the pressure (after-touch) values received on key 62.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -514,6 +530,7 @@ process = os.sawtooth(freq);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h3 id="midichanpress-or-midichanpress-chan-metadata"><code>[midi:chanpress]</code> or <code>[midi:chanpress chan]</code> Metadata</h3>
@@ -521,6 +538,7 @@ process = os.sawtooth(freq);
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:chanpress chan]&quot;,...);
 </code></pre>
+
 <p>Where:</p>
 <ul>
 <li><code>chan</code>: optional, the MIDI channel number</li>
@@ -528,6 +546,7 @@ process = os.sawtooth(freq);
 <p><strong>Example</strong></p>
 <p>In the following example, the volume of a sawtooth wave oscillator is controlled by the channel pressure values.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -541,6 +560,7 @@ process = os.sawtooth(440) * vol;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h3 id="midipgm-or-midipgm-chan-metadata"><code>[midi:pgm]</code> or <code>[midi:pgm chan]</code> Metadata</h3>
@@ -548,6 +568,7 @@ process = os.sawtooth(440) * vol;
 <p><strong>Usage</strong></p>
 <pre><code>foo = nentry(&quot;foo[midi:pgm chan]&quot;,...);
 </code></pre>
+
 <p>Where:</p>
 <ul>
 <li><code>chan</code>: optional, the MIDI channel number</li>
@@ -555,6 +576,7 @@ process = os.sawtooth(440) * vol;
 <p><strong>Example</strong></p>
 <p>In the following example, the instrument will be choosen in the {0,3} range.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -568,6 +590,7 @@ process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selec
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h3 id="midipitchwheel-or-midipitchwheel-chan-metadata"><code>[midi:pitchwheel]</code> or <code>[midi:pitchwheel chan]</code> Metadata</h3>
@@ -575,6 +598,7 @@ process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selec
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:pitchwheel chan]&quot;,...);
 </code></pre>
+
 <p>Where:</p>
 <ul>
 <li><code>chan</code>: optional, the MIDI channel number</li>
@@ -582,6 +606,7 @@ process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selec
 <p><strong>Example</strong></p>
 <p>In the following example, the bend of a sawtooth wave oscillator is controlled by the pitch-wheel in the {-2, 2} semitone range, then converted as a frequency multiplicative ratio and multiplied by a given frequency.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -595,6 +620,7 @@ process = os.sawtooth(440*bend);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h3 id="midistart-metadata"><code>[midi:start]</code> Metadata</h3>
@@ -602,20 +628,24 @@ process = os.sawtooth(440*bend);
 <p><strong>Usage</strong></p>
 <pre><code>foo = checkbox(&quot;foo[midi:start]&quot;);
 </code></pre>
+
 <h3 id="midistop-metadata"><code>[midi:stop]</code> Metadata</h3>
 <p>When used with a button or a checkbox, <code>[midi:stop]</code> will trigger a value of 0 when a <code>stop</code> MIDI message is received. </p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = checkbox(&quot;foo[midi:stop]&quot;);
 </code></pre>
+
 <h3 id="midiclock-metadata"><code>[midi:clock]</code> Metadata</h3>
 <p>When used with a button or a checkbox, <code>[midi:clock]</code> will deliver a sequence of successive 1 and 0 values each time a <code>clock</code> MIDI message is received (seen by Faust code as a square command signal, to be used to compute higher level information).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = checkbox(&quot;foo[midi:clock]&quot;);
 </code></pre>
+
 <h3 id="midi-sync">MIDI Sync</h3>
 <p>MIDI clock-based synchronization can be used to slave a given Faust program using the metadata presented in the 3 past sections.</p>
 <p>A typical Faust program will then use the MIDI clock stream to possibly compute the BPM information, or for any synchronization need it may have.  Here is a simple example of a sinus generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -641,6 +671,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <h2 id="midi-polyphony-support">MIDI Polyphony Support</h2>
@@ -648,6 +679,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 <p>Polyphony support can be added to any Faust program (as long as the target architecture supports it) simply by adding the <code>[nvoices:n]</code> metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a> where <code>n</code> is the maximum number of voices of polyphony to be allocated:</p>
 <pre><code>declare options &quot;[nvoices:12]&quot;;
 </code></pre>
+
 <h3 id="standard-polyphony-parameters">Standard Polyphony Parameters</h3>
 <p>Most Faust architectures allow for the implementation of polyphonic instruments simply by using a set of "standard user interface names." Hence, any Faust program declaring the <code>freq (or key)</code>, <code>gain (or vel or velocity)</code>, and <code>gate</code> parameter is polyphony-compatible. These 3 parameters are directly associated to key-on and key-off events and have the following behavior: </p>
 <ul>
@@ -658,6 +690,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 <p><strong>Example: Simple Polyphonic Synthesizer</strong></p>
 <p>In the following example, the standard <code>freq</code>, <code>gain</code>, and <code>gate</code> parameters are used to implement a simple polyphonic synth.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -673,6 +706,7 @@ process = os.sawtooth(freq)*gain*gate;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <blockquote>
@@ -680,6 +714,7 @@ process = os.sawtooth(freq)*gain*gate;
 </blockquote>
 <p>In the next example, the standard <code>key</code>, <code>gain</code>, and <code>gate</code> parameters are used to implement a simple polyphonic synth with alternate tuning.</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -699,6 +734,7 @@ process = os.sawtooth(freq)*gain*gate;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust10/exfaust10.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <blockquote>
@@ -706,6 +742,7 @@ process = os.sawtooth(freq)*gain*gate;
 </blockquote>
 <p>The previous example can be slightly improved by adding an envelope generator and controlling it with <code>gain</code> and <code>gate</code>: </p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -722,16 +759,19 @@ process = os.sawtooth(freq)*envelope;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust11/exfaust11.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p><strong>Warning:</strong> Note that all the active voices of polyphony are added together without scaling! This means that the previous example will likely click if several voices are played at the same time. It is the Faust programmer's responsibility to take this into account in his code. For example, assuming that the number of active voices will always be smaller or equal to 4, the following safeguard could be added to the previous example:</p>
 <pre><code>process = os.sawtooth(freq)*envelope : /(4);
 </code></pre>
+
 <h3 id="configuring-and-activating-polyphony">Configuring and Activating Polyphony</h3>
 <p>Polyphony can be activated "manually" in some Faust architectures using an option/flag during compilation (e.g., typically <code>-poly</code> or <code>-nvoices</code> in the <a href="TODO">faust2xx</a> scripts). That's also how the <a href="https://faustide.grame.fr">Faust Online IDE</a> works where a button can be used to turn polyphony on or off.</p>
 <p>However, the most standard way to activate polyphony in Faust is to declare the <code>[nvoices:n]</code> metadata which allows us to specify the maximum number of voices of polyphony (<code>n</code>) that will be allocated in the generated program.</p>
 <p>For example, the Faust program from the previous section could be modified such that: </p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -749,6 +789,7 @@ process = os.sawtooth(freq)*envelope;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust12/exfaust12.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <!--
@@ -758,15 +799,18 @@ process = os.sawtooth(freq)*envelope;
 <p>which when compiled running (for example):</p>
 <pre><code>faust2jaqt faustProgram.dsp
 </code></pre>
+
 <p>will generate a MIDI-controllable polyphonic synthesizer.</p>
 <h3 id="audio-effects-and-polyphonic-synthesizer">Audio Effects and Polyphonic Synthesizer</h3>
 <p>While audio audio effects can be added directly to the <code>process</code> line of a Faust synthesizer, for example:</p>
 <pre><code>process = os.sawtooth(freq)*envelope : reverb;
 </code></pre>
+
 <p>it is not a good practice since a new instance of that effect will be created for each active voice of polyphony. The main consequence of this would be an increased CPU cost.</p>
 <p>Similarly to <code>process</code>, Faust allows for the declaration of an <code>effect</code> line, which identifies an audio effect to be connected to the output of the polyphonic synthesizer.</p>
 <p>For example, a simple reverb can be added to the previous example simply by writing:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -785,6 +829,7 @@ effect = dm.zita_light;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust13/exfaust13.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>In this case, the polyphonic part is based on <code>process</code> and a single instance of the effect defined in <code>effect</code> will be created and shared by all voices.</p>
@@ -797,10 +842,12 @@ effect = dm.zita_light;
 bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.01));
 freq = f*bend; // the &quot;final&quot; freq parameter to be used
 </code></pre>
+
 <p>The <code>bend</code> variable is controlled by the pitch-wheel thanks to <a href="#midipitchwheel-metadata"><code>[midi:pitchwheel]</code> metadata</a>, then converted in a frequency ratio using the <code>ba.semi2ratio</code> function. <code>bend</code> is used as a factor multiplied to the base frequency retrieved from <code>freq</code>. Therefore, the default value of <code>bend</code>  is 0 in semitones, which corresponds to the central position of the pitch wheel, and will correspond  to a multiplicative ratio of 1. A value smaller than 0 will decrease the pitch and a value greater than 0 will increase it. </p>
 <p>While the above example will have the expected behavior, it is likely that clicking will happen when changing the value of <code>bend</code> since this parameter is not smoothed. Unfortunately, regular smoothing (through the use of <a href="https://faustlibraries.grame.fr/libs/signals/#sismoo"><code>si.smoo</code></a>, for example) is not a good option here. This is due to the fact that instances of polyphonic voices are frozen when a voice is not being used. Since the value of <code>bend</code> might jump from one value to another when a voice is being reactivated/reused, continuous smoothing would probably create an "ugly sweep" in that case. Hence, <a href="https://faustlibraries.grame.fr/libs/signals/#sipolysmooth"><code>si.polySmooth</code></a> should be used in this context instead of <a href="https://faustlibraries.grame.fr/libs/signals/#sismoo"><code>si.smoo</code></a>. This function shuts down smoothing for a given number of samples when a trigger is activated.</p>
 <p>Reusing the example from the previous section, we can implement a click-free polyphonic synthesizer with continuous pitch control:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -821,6 +868,7 @@ effect = dm.zita_light;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust14/exfaust14.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>Observe the usage of <a href="https://faustlibraries.grame.fr/libs/signals/#sismoo"><code>si.polySmooth</code></a> here: when <code>gate=0</code> the signal is not smoothed, when <code>gate=1</code> the signal is smoothed with a factor of 0.999 after one sample.</p>
@@ -831,9 +879,11 @@ effect = dm.zita_light;
 t = button(&quot;gate&quot;);
 gate = t+s : min(1);
 </code></pre>
+
 <p>Hence, <code>gate</code> will remain equal to 1 as long as the sustain pedal is pressed.</p>
 <p>The simple synthesizer from the previous section (which is literally just a sawtooth oscillator) can be slightly improved by processing it with a dynamically-controlled lowpass filter:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -857,11 +907,13 @@ effect = dm.zita_light;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust15/exfaust15.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>MIDI CC 1 corresponds to the modulation wheel which is used here to control the cut-off frequency of the lowpass filter.</p>
 <p>Next we can add a global master, using the MIDI CC 7 standard volume control to change its level:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -886,6 +938,7 @@ effect = dm.zita_light;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust16/exfaust16.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <!-- Note: the original documentation of polyphony support from the quick reference hasn't been integrated to this new doc. We believe that it scares people more than it helps them. We do think that it would be nice to have a proper description of the C++ implementation of poly-dsp, but this is the wrong place for it. --></div>

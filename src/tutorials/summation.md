@@ -2,7 +2,7 @@
 
 In this tutorial, we present different programming techniques to compute the **sum of *n* consecutive samples** in Faust. Such sums are typically used when computing the RMS value of a signal. It is therefore in the RMS context that we will present them. We will not use any predefined function, only Faust primitives, so that you can see all the details. 
 
-The text is intended for beginners, but with some basic knowledge of Faust. If this is not your case you can consult the various documentations of this same site.
+The text is intended for beginners, but with some basic knowledge of Faust. If this is not your case have a look at the various documentations on this website.
 
 ## RMS value
 The computation of the RMS (Root Mean Square) value of a signal is defined by the following Faust expression:
@@ -19,7 +19,7 @@ This expression involves several steps:
 - Then we sum the *n* consecutive samples: `summation` and divide this sum by *n* to get the mean value: `/(n)`. This is the M of RMS. 
 - Finally, we take the square root `sqrt`. This is the R of RMS. 
 
-In other words, RMS is written S:M:R in Faust (letting the `summation` function undefined for the moment):
+In other words, RMS is written S:M:R in Faust (leaving the `summation` function undefined for the moment):
 
 ```
 RMS(n) = S:M:R with {
@@ -35,7 +35,7 @@ In the following paragraphs, we will introduce 4 different techniques to write t
 ## Sliding Sum
 Let's start with the *sliding sum* approach, probably the simplest way to efficiently add *n* consecutive samples. First, let's recall that we can add up all the samples of a signal *s*, from time 0 to the present time, with the following expression: `s : +~_`. 
 
-The trick to adding only the last *n* samples is to subtract from this sum the same sum but as it was *n* samples earlier. For example, in order to keep only the sum of the last 10 samples, we just have to subtract from the sum of all samples `(s:+~_)` the value of this same sum 10 samples ago `(s:+~_ : @(10))`: 
+The trick for adding only the last *n* samples is to subtract from this sum the same sum but as it was *n* samples earlier. For example, in order to keep only the sum of the last 10 samples, we just have to subtract from the sum of all samples `(s:+~_)` the value of this same sum 10 samples ago `(s:+~_ : @(10))`: 
 
 ```
 (s:+~_), (s:+~_ : @(10)) : -
@@ -55,7 +55,7 @@ Fortunately, the problem can be solved easily. We just have to swap the integrat
 s <: _, @(10) : - : +~_
 ```
 
-This new formulation is identical to the previous one from a mathematical point of view. But now, the sum will always stay between \(-10​\) and \(+10\)​​, and the accuracy problems are only on the least significant bits and tend to compensate statistically.
+This new formulation is identical to the previous one from a mathematical point of view. But now, the sum will always stay between \(-10​\) and \(+10\)​​, and the accuracy problems are only on the least significant bits. If the roundoff error due to quantization is modeled as a uniformly distributed random number between -q/2 and q/2, then its variance (mean square) is q^2/12, and this value increases linearly over time in a running sum (see "Wiener process"). Thus, we expect the roundoff error in a running-sum rms calculator to grow proportional to the square root of time.
 
 We can now complete the definition of RMS:
 
@@ -71,7 +71,7 @@ RMS(n) = S:M:R with {
 
 ## Fix-Point Sliding Sum
 
-While the previous solution works very well with most signals, it can have potential accuracy problems on some pathological signals. To avoid these problems, we can use a fix-point encoding of the samples. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed \(2^4\)​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. 
+While the previous solution works very well with typical signals over practical time spans, the roundoff error continues to grow slowly. To avoid a gradual loss of precision, we can use a fix-point encoding of the samples, so that the subtraction after delay is always exact. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed \(2^4\)​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. 
 
 The conversions are straightforward. To convert floating-point values to fix-point we can use the following expression: `*(2^27):int`. To convert back from fix-point to floating-point we can use the inverse expression: `float:/(2^27)`.
 

@@ -322,15 +322,19 @@
 <p>A typical call of the Faust command line compiler is:</p>
 <pre><code>faust [OPTIONS] faustFile.dsp
 </code></pre>
+
 <p>The Faust compiler outputs C++ code by default therefore running: </p>
 <pre><code>faust noise.dsp 
 </code></pre>
+
 <p>will compile <code>noise.dsp</code> and output the corresponding C++ code on the standard output. The option <code>-o</code> allows to reroute the standard output to a file: </p>
 <pre><code>faust noise.dsp -o noise.cpp
 </code></pre>
+
 <p>The <code>-a</code> option allows us to wrap the generated code into an architecture file:</p>
 <pre><code>faust -a alsa-gtk.cpp noise.dsp 
 </code></pre>
+
 <p>which can either be placed in the same folder as the current Faust file (<code>noise.dsp</code> here) or be one of the standard Faust architectures.</p>
 <!-- TODO: we must check if talk about architectures somewhere in greater
 details and put a link to that here -->
@@ -339,6 +343,7 @@ details and put a link to that here -->
 <pre><code>faust -a alsa-gtk.cpp noise.dsp -o noise.cpp
 g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 </code></pre>
+
 <p>Note that a wide range of <a href="https://faustdoc.grame.fr/manual/tools/"><code>faust2...</code> compilation scripts</a> can be used to facilitate this operation by taking a Faust file and returning the corresponding binary for your platform.</p>
 <h2 id="structure-of-the-generated-code">Structure of the Generated Code</h2>
 <p>A Faust DSP C++ class derives from the base <code>dsp</code> class defined as below (a similar structure is used for languages than C++):</p>
@@ -381,6 +386,7 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
      FAUSTFLOAT** outputs) { compute(count, inputs, outputs); }
 };
 </code></pre>
+
 <p>Methods are filled by the compiler with the actual code. In the case of <code>noise.dsp</code>:</p>
 <pre><code>class mydsp : public dsp {
   private:
@@ -440,6 +446,7 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
   }
 };
 </code></pre>
+
 <p>Several fine-grained initialization methods are available:</p>
 <ul>
 <li>the <code>instanceInit</code> method calls several additional initialization methods. </li>
@@ -460,6 +467,7 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 <p>The vector code generation is activated by passing the <a href="https://faustdoc.grame.fr/manual/options/"><code>--vectorize</code> (or <code>-vec</code>)</a> option to the Faust compiler. Two additional options are available: <code>--vec-size &lt;n&gt;</code> controls the size of the vector (by default 32 samples) and <code>--loop-variant 0/1</code> gives some additional control on the loops.  </p>
 <p>To illustrate the difference between scalar code and vector code, let's take the computation of the RMS (Root Mean Square) value of a signal.  Here is the Faust code that computes the Root Mean Square of a sliding window of 1000 samples:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -489,10 +497,11 @@ process = RMS(1000);
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/compiler/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>The <a href="#structure-of-the-generated-code">corresponding <code>compute()</code> method</a> generated in scalar mode is the following:</p>
-<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
   for (int i = 0; (i &lt; count); i = (i + 1)) {
@@ -505,8 +514,9 @@ process = RMS(1000);
   }
 }
 </code></pre>
+
 <p>The <code>-vec</code> option leads to the following reorganization of the code:</p>
-<pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   fInput0_ptr = inputs[0];
   FAUSTFLOAT* fInput0 = 0;
   fOutput0_ptr = outputs[0];
@@ -588,6 +598,7 @@ process = RMS(1000);
   }
 }
 </code></pre>
+
 <p>While the second version of the code is more complex, it turns out to be much easier to vectorize efficiently by the C++ compiler. With the exact same compilation options: <code>-O3 -xHost -ftz -fno-alias -fp-model fast=2</code>, the scalar version leads to a throughput performance of 129.144  MB/s, while the vector version achieves 359.548  MB/s, a speedup of x2.8 ! </p>
 <p><img src="img/compilerStack.svg" class="mx-auto d-block" width="30%"></p>
 <p>The vector code generation is built on top of the scalar code generation (see previous figure). Every time an expression needs to be compiled, the compiler checks if it requires a separate loop or not. Expressions that are shared (and are complex enough) are good candidates to be compiled in a separate loop, as well as recursive expressions and expressions used in delay lines. </p>
@@ -605,6 +616,7 @@ process = RMS(1000);
   ...
 }
 </code></pre>
+
 <p>In order not to have every thread doing redundantly the exact same work, OpenMP provides specific <em>work-sharing</em> directives. For example <code>#pragma omp sections</code> allows to break the work into separate, discrete sections, each section being executed by one thread:</p>
 <pre><code>#pragma omp parallel
 {
@@ -623,6 +635,7 @@ process = RMS(1000);
   ...
 }
 </code></pre>
+
 <h4 id="adding-open-mp-directives">Adding Open MP Directives</h4>
 <p>As said before, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set <code>S_0</code> (loops <code>L1</code>, <code>L2</code> and <code>L3</code>) contains the loops that don't depend on any other loops, the set <code>S_1</code> contains the loops that only depend on loops of <code>S_0</code>, (that is loops <code>L4</code> and <code>L5</code>), etc.. </p>
 <p>As all the loops of a given set <code>S_n</code> can be computed in parallel, the compiler will generate a <code>sections</code> construct with a <code>section</code> for each loop. </p>
@@ -639,21 +652,25 @@ process = RMS(1000);
   ...
 }
 </code></pre>
+
 <p>If a given set contains only one loop, then the compiler checks to see if the loop can be parallelized (no recursive dependencies) or not. If it can be parallelized, it generates:</p>
 <pre><code>#pragma omp for
 for (...) {
  // Loop code
 }
 </code></pre>
+
 <p>otherwise it generates a <code>single</code> construct so that only one thread will execute the loop:</p>
 <pre><code>#pragma omp single
 for (...) {
  // Loop code
 }
 </code></pre>
+
 <h4 id="example-of-parallel-openmp-code">Example of Parallel OpenMP Code</h4>
 <p>To illustrate how Faust uses the OpenMP directives, here is a very simple example, two 1-pole filters in parallel connected to an adder:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -666,10 +683,11 @@ process = filter(0.9), filter(0.9) : +;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/compiler/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>The corresponding <code>compute()</code> method obtained using the <code>-omp</code> option looks like this:</p>
-<pre><code class="language-c++">virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="c++">virtual void compute(int fullcount, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   float fRec0_tmp[36];
   float fRec1_tmp[36];
   FAUSTFLOAT* fInput0 = 0;
@@ -737,6 +755,7 @@ process = filter(0.9), filter(0.9) : +;
   }
 }
 </code></pre>
+
 <p>This code requires some comments:</p>
 <ul>
 <li>the parallel construct <code>#pragma omp parallel</code> is the fundamental construct that starts parallel execution. The number of parallel threads is generally the number of CPU cores but it can be controlled in several ways.</li>
@@ -757,6 +776,7 @@ parallel.</li>
 <h4 id="example-of-parallel-scheduler-code">Example of Parallel Scheduler Code</h4>
 <p>To illustrate how Faust generates the scheduler code, let's reuse the previous example made of two 1-pole filters in parallel connected to an adder:</p>
 <!-- faust-run -->
+
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -769,10 +789,11 @@ process = filter(0.9), filter(0.9) : +;
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/compiler/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
+
 <!-- /faust-run -->
 
 <p>When <code>-sch</code> option is used, the content of the additional <code>architecture/scheduler.h</code> file is inserted in the generated code. It contains code to deal with WSQ and thread management. The <code>compute()</code> and <code>computeThread()</code> methods are the following:</p>
-<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   fInput0_ptr = inputs[0];
   fInput1_ptr = inputs[1];
   fOutput0_ptr = outputs[0];
