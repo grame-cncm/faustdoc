@@ -312,7 +312,6 @@
 <p>The computation of the RMS (Root Mean Square) value of a signal is defined by the following Faust expression:</p>
 <pre><code>^(2) : summation : /(n) : sqrt
 </code></pre>
-
 <p>where <em>n</em> is the number of consecutive samples considered.</p>
 <p>This expression involves several steps:</p>
 <ul>
@@ -327,23 +326,19 @@
     R = sqrt;
 };
 </code></pre>
-
 <p>In the following paragraphs, we will introduce 4 different techniques to write this <code>summation</code> function. We will assume that the audio samples are between -1 and 1.</p>
 <h2 id="sliding-sum">Sliding Sum</h2>
 <p>Let's start with the <em>sliding sum</em> approach, probably the simplest way to efficiently add <em>n</em> consecutive samples. First, let's recall that we can add up all the samples of a signal <em>s</em>, from time 0 to the present time, with the following expression: <code>s : +~_</code>. </p>
 <p>The trick for adding only the last <em>n</em> samples is to subtract from this sum the same sum but as it was <em>n</em> samples earlier. For example, in order to keep only the sum of the last 10 samples, we just have to subtract from the sum of all samples <code>(s:+~_)</code> the value of this same sum 10 samples ago <code>(s:+~_ : @(10))</code>: </p>
 <pre><code>(s:+~_), (s:+~_ : @(10)) : -
 </code></pre>
-
 <p>This expression can be further simplified by factoring <code>s:+~_</code>. We then get:</p>
 <pre><code>s : +~_ &lt;: _, @(10) : -
 </code></pre>
-
 <p>From a mathematical point of view, this is perfectly correct but poses problems when computed using floating-point numbers. Unlike mathematical numbers, floating-point numbers have a limited precision (23 bits in single precision). When calculating the RMS value, we only add positive numbers. Therefore the sum will increase forever. But at some point, when the sum exceeds <script type="math/tex">2^{23} </script>​, the least significant bit will be higher than any number between <script type="math/tex">0</script>​ and <script type="math/tex">1</script>​. Therefore adding such a small number will be exactly like adding 0, and the sum will never evolve anymore.</p>
 <p>Fortunately, the problem can be solved easily. We just have to swap the integration and the difference parts:</p>
 <pre><code>s &lt;: _, @(10) : - : +~_
 </code></pre>
-
 <p>This new formulation is identical to the previous one from a mathematical point of view. But now, the sum will always stay between <script type="math/tex">-10​</script> and <script type="math/tex">+10</script>​​, and the accuracy problems are only on the least significant bits. If the roundoff error due to quantization is modeled as a uniformly distributed random number between -q/2 and q/2, then its variance (mean square) is q^2/12, and this value increases linearly over time in a running sum (see "Wiener process"). Thus, we expect the roundoff error in a running-sum rms calculator to grow proportional to the square root of time.</p>
 <p>We can now complete the definition of RMS:</p>
 <pre><code>RMS(n) = S:M:R with {
@@ -354,7 +349,6 @@
     summation = _ &lt;: _, @(n) : - : +~_;
 };
 </code></pre>
-
 <h2 id="fix-point-sliding-sum">Fix-Point Sliding Sum</h2>
 <p>While the previous solution works very well with typical signals over practical time spans, the roundoff error continues to grow slowly. To avoid a gradual loss of precision, we can use a fix-point encoding of the samples, so that the subtraction after delay is always exact. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed <script type="math/tex">2^4</script>​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. </p>
 <p>The conversions are straightforward. To convert floating-point values to fix-point we can use the following expression: <code>*(2^27):int</code>. To convert back from fix-point to floating-point we can use the inverse expression: <code>float:/(2^27)</code>.</p>
@@ -369,7 +363,6 @@
     fix2float(p) = float : /(2^p);
 };
 </code></pre>
-
 <p>Obviously this is correct only if we let enough bits for the integral part. Here we have 15 bits (31-16), enough for <em>n</em> up to 32000 samples.</p>
 <h2 id="block-sum">Block Sum</h2>
 <p><em>Sliding sums</em> have a nice and smooth behavior because an updated sum is produced every sample. But they require a large delay line (larger than <em>n</em>​)​​, and can have precision problems. In this third approach, we will use a summation by blocks. The summation will be exact, will not require a large delay line, but will be only updated once per block of  <em>n</em> samples.</p>
@@ -388,7 +381,6 @@
     capture(b) = select2(n)~_;
 };
 </code></pre>
-
 <h2 id="overlapping-block-sum">Overlapping Block Sum</h2>
 <p>As we mentioned, the block sum has the disadvantage of producing a new value only once per block. If the blocks are large, this can be a problem. In this fourth approach, we will see how to overlap the produced values. For example, we would like to compute the sum of the last 1000 samples, but with a new result every 250 samples (i.e., an overlap of 75%).</p>
 <p>The principle will be to sum small blocks of 250 samples, keep the last four sums, and add them together to produce, every 250 samples, a new sum of the last 1000 samples. Let's call <em>w</em> the size of a small block, and <em>c</em> the number of small blocks in a large block of <em>n</em> samples (i.e., <script type="math/tex">n=c*w</script>)​.</p>
@@ -409,11 +401,9 @@
     capture(b) = select2(n)~_;
 };
 </code></pre>
-
 <h2 id="comparing-all-the-solutions">Comparing all the solutions</h2>
 <p>Using the Faust IDE, we can easily compare all these solutions. To encapsulate all the definitions and select the RMS implementation, we will use an environment. If you are not familiar with the concept of environment, it is a way to group definitions. </p>
 <!-- faust-run -->
-
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
@@ -456,7 +446,6 @@ RMS(n) = environment {
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/summation/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
-
 <!-- /faust-run -->
 
 <p>The screen shot of the Faust IDE below shows the RMS values of testsource according to the 4 methods: <em>Sliding Sum</em>, <em>Fix-Point Sliding Sum</em>, <em>Block Sum</em>, and <em>Overlapping Block Sum</em>.</p>

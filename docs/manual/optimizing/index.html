@@ -401,9 +401,8 @@
 smoother_vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : ba.linear2db : si.smoo;
 process = *(smoother_vol);
 </code></pre>
-
 <p>And the generated C++ code for <code>compute</code> has the costly <code>log10</code> math function used in <code>ba.linear2db</code> evaluted at control rate, so once before the DSP loop:</p>
-<pre><code class="c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
   float fSlow0 = (0.0199999996f * std::log10(float(fHslider0)));
@@ -414,15 +413,13 @@ process = *(smoother_vol);
   }
 }
 </code></pre>
-
 <p>But if the order between <code>ba.linear2db</code> and  <code>si.smoo</code> is reversed like in the following code:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 smoother_vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : si.smoo: ba.linear2db;
 process = *(smoother_vol);
 </code></pre>
-
 <p>The generated C++ code for <code>compute</code> now has the <code>log10</code> math function used in <code>ba.linear2db</code> evaluted at sample rate in the DSP loop, which is obviously much more costly:</p>
-<pre><code class="c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+<pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
   float fSlow0 = (0.00100000005f * float(fHslider0));
@@ -433,7 +430,6 @@ process = *(smoother_vol);
   }
 }
 </code></pre>
-
 <p>So to obtain the best performances in the generated code, all costly computations have to be done on the control value (as much as possible, this may not always be the desirable behaviour), and <code>si.smoo</code> (or any function that moves the computation from control rate to sample rate) as the last operation. </p>
 <h3 id="computations-done-at-sample-rate">Computations Done <em>at Sample Rate</em></h3>
 <h4 id="using-function-tabulation">Using Function Tabulation</h4>

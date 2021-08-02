@@ -303,7 +303,6 @@
 <p>Concerning the way <code>select2</code> is compiled, in principle, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if.  For example:</p>
 <pre><code>process = button(&quot;choose&quot;), (*(3) : +~_), (*(7):+~_) : select2;
 </code></pre>
-
 <p>is compiled in C/C++ as:</p>
 <pre><code>for (int i = 0; (i &lt; count); i = (i + 1)) {
     fRec0[0] = (fRec0[1] + (3.0f * float(input0[i])));
@@ -313,7 +312,6 @@
     fRec1[1] = fRec1[0];
 }
 </code></pre>
-
 <p>In order for the stateful parts to be always computed, and therefore preserve the strict semantic, even if a non-strict <code>(cond) ? then : else</code> expression is used.</p>
 <p>But it turns out that due to a bug in the compiler, the code generated for <code>select2</code> and <code>select3</code> is not really strict! Moreover, <strong>our interval calculation system, which is supposed to detect this kind of error, is currently quite imperfect and doesn't do it</strong>. </p>
 <p>For computations that need to avoid certains values or ranges (like doing  <code>val/0</code> that would return INF, or <code>log</code> of a negative value that would return NAN), the solution is to use min and max to force the arguments to be in the right range of values. For example, to avoid division by 0, you can write <code>1/max(epsilon, x)</code>.</p>
@@ -337,7 +335,6 @@
 <pre><code>count((x,y)) = 1 + count(y);  // rule R1
 count(x)     = 1;             // rule R2 
 </code></pre>
-
 <p>we have:</p>
 <pre><code>ba.count( ((1,2),((3,4),(5,6))) ) 
 -R1-&gt;   1 + ba.count( ((3,4),(5,6)) ) 
@@ -345,7 +342,6 @@ count(x)     = 1;             // rule R2
 -R1-&gt;   1 + 1 + 1 + ba.count( 6 )
 -R2-&gt;   1 + 1 + 1 + 1 
 </code></pre>
-
 <p>Please note that pattern matching is not limited to parallel composition, the other composition operators <code>(&lt;: : :&gt; ~)</code> can be used too.</p>
 <h2 id="what-is-the-situation-about-faust-compiler-licence-and-the-deployed-code">What is the situation about Faust compiler licence and the deployed code?</h2>
 <p><em>Q: Does the Faust license (GPL) apply somehow to the code exports that it produces as well? Or can the license of the exported code be freely chosen such that one could develop commercial software (e.g. VST plug-ins) using Faust?</em></p>

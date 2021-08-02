@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.30.5
+## FAUST compiler version 2.33.1
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -29,10 +29,11 @@ usage : faust [options] file1 [file2 ...].
 ---------------------------------------
 ~~~faust-options
   -lang <lang> --language                 select output language,
-                                          'lang' should be in c, ocpp, cpp (default), rust, java, llvm, cllvm, fir, wast/wasm, soul, interp.
+                                          'lang' should be c, cpp (default), csharp, dlang, fir, interp, java, llvm, ocpp, rust, soul or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.
+  -fx         --fixed-point               use fixed-point for internal computations.
   -es 1|0     --enable-semantics 1|0      use enable semantics when 1 (default), and simple multiplication otherwise.
   -lcc        --local-causality-check     check causality also at local level.
   -light      --light-mode                do not generate the entire DSP API.
@@ -40,6 +41,8 @@ usage : faust [options] file1 [file2 ...].
   -flist      --file-list                 use file list used to eval process.
   -exp10      --generate-exp10            pow(10,x) replaced by possibly faster exp10(x).
   -os         --one-sample                generate one sample computation.
+  -os0        --one-sample0               generate one sample computation (0 = separated control).
+  -os1        --one-sample1               generate one sample computation (1 = separated control and DSP struct).
   -cn <name>  --class-name <name>         specify the name of the dsp class to be used instead of mydsp.
   -scn <name> --super-class-name <name>   specify the name of the super class to be used instead of dsp.
   -pn <name>  --process-name <name>       specify the name of the dsp entry-point instead of process.
@@ -67,7 +70,6 @@ usage : faust [options] file1 [file2 ...].
   -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
   -fm <file> --fast-math <file>           use optimized versions of mathematical functions implemented in <file>.
                                           use 'faust/dsp/fastmath.cpp' when file is 'def'.
-  -ns <name> --namespace <name>           generate C++ code in a namespace <name>.
   -mapp      --math-approximation         simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
   -ns <name> --namespace <name>           generate C++ or D code in a namespace <name>.
 ~~~
