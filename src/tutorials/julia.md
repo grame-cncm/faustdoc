@@ -256,7 +256,18 @@ The following command:
 faust2portaudiojulia -play 2 -osc osc.dsp
 ```
 
-Will create the **osc.jl** file, directly execute it using **Julia**, with PortAudio based audio rendering and OSC control (and with 2 threads needed for OSC and audio). Direct OSC commands can be sent, as [explained here](https://faustdoc.grame.fr/manual/osc/). So for instance to change both channel frequencies:
+Will create the **osc.jl** file, directly execute it using **Julia**, with PortAudio based audio rendering and OSC control (and with 2 threads needed for OSC and audio).  Now the application starts with an OSC controller running on ports 5000 and 5001:
+
+```bash
+getNumInputs: 0
+getNumOutputs: 2
+
+Dict{String, UIZone}("/Oscillator/volume" => UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), "/Oscillator/freq2" => UIZone(:fHslider2, 500.0f0, 20.0f0, 3000.0f0, 1.0f0), "/Oscillator/freq1" => UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
+
+Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
+```
+
+Direct OSC commands can be sent, as [explained here](https://faustdoc.grame.fr/manual/osc/). So for instance to change both channel frequencies:
 
 ```bash
  oscsend localhost 5000 /Oscillator/freq1 f 400
