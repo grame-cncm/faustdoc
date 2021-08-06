@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Using Faust in Julia - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/remote/" class="dropdown-item">Remote compilation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/community/" class="dropdown-item">Community</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                    
+<li>
+    <a href="../summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Using Faust in Julia</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#using-faust-in-julia" class="nav-link">Using Faust in Julia</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#using-command-line-tools" class="nav-link">Using command line tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#generating-julia-code" class="nav-link">Generating Julia code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#looking-at-the-generated-code" class="nav-link">Looking at the generated code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#using-the-generated-code" class="nav-link">Using the generated code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#the-faust2portaudiojulia-tool" class="nav-link">The faust2portaudiojulia tool</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-faust-web-ide" class="nav-link">Using Faust Web IDE</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#todo" class="nav-link">TODO</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<h1 id="using-faust-in-julia">Using Faust in Julia</h1>
+<p>In this tutorial, we present how Faust can be used in <a href="https://julialang.org/">Julia</a>, a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.</p>
+<p>A <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia">Julia backend</a> has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. An <a href="https://github.com/corajr/Faust.jl">integration of the libfaust compiler</a> in Julia has been developed by <a href="https://corajr.com">Cora Johnson-Roberson</a>, but will not be covered by this tutorial.</p>
+<h2 id="using-command-line-tools">Using command line tools</h2>
+<h3 id="generating-julia-code">Generating Julia code</h3>
+<p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed</a> the <strong>faust</strong> compiler from the <a href="https://github.com/grame-cncm/faust">master-dev branch</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
+freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 500, 20, 3000, 1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/julia/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>The Julia code can be generated using:</p>
+<pre><code class="language-bash">faust -lang julia osc.dsp -o osc.jl
+</code></pre>
+<p>This will generate a <code>mydsp</code> data structure, as a subtype of the <code>abstract type dsp</code>, with a set of methods to manipulate it. The generated API simply follows <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/dsp/dsp.jl">the one defined</a> for the base <code>dsp</code> type. This API basically mimics the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h">one defined for the C++ backend</a>.</p>
+<p>The resulting file is not self-contained and so cannot be directly compiled using the <strong>julia</strong> program:</p>
+<pre><code class="language-bash">julia osc.jl
+ERROR: LoadError: UndefVarError: dsp not defined
+...
+</code></pre>
+<p>Some additional types like <code>FAUSTFLOAT</code>, <code>dsp</code>, <code>Meta</code> and <code>UI</code> have to be defined in a so-called <a href="https://faustdoc.grame.fr/manual/architectures/">architecture file</a>. A simple one named <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl">minimal.jl</a> can be used for that with the following command:</p>
+<pre><code class="language-bash">faust -lang julia osc.dsp -a julia/minimal.jl -o osc.jl
+</code></pre>
+<p>Now the resulting <strong>foo.jl </strong>file is self-contained and can be executed with: </p>
+<pre><code class="language-bash">julia osc.jl
+</code></pre>
+<p>Which compiles the Julia code, executes it and produces:</p>
+<pre><code class="language-bash">Application name: osc
+
+getNumInputs: 0
+getNumOutputs: 2
+
+Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt; UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), &quot;/Oscillator/freq2&quot; =&gt; UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), &quot;/Oscillator/freq1&quot; =&gt; UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
+
+One computed output buffer: Float32[0.00014198698 0.00014198698; 0.0005619127 0.0005619127; 0.0012422898 0.0012422898; 0.0021548683 0.0021548683; 0.003261512 0.003261512; 0.0045153787 0.0045153787; 0.005862374 0.005862374; 0.0072428365 0.0072428365; 0.008593408 0.008593408; 0.0098490445 0.0098490445; 0.010945092 0.010945092; 0.011819404 0.011819404; 0.012414059 0.012414059; 0.0126785105 0.0126785105; 0.012569941 0.012569941; 0.0120556755 0.0120556755]
+
+</code></pre>
+<p>With the name of the application, the number of input/output channels, the set of controller paths with their range, and finally one computed output audio buffer.</p>
+<h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
+<p>A <code>mydsp</code> data structure, as a subtype of the <code>abstract type dsp</code> is generated, and contains the field definitions with their types, as well as a constructor initializing them:</p>
+<pre><code class="language-julia">mutable struct mydsp &lt;: dsp
+    fSampleRate::Int32 
+    fConst1::Float32 
+    fHslider0::FAUSTFLOAT 
+    fConst2::Float32 
+    fRec0::Vector{Float32} 
+    fConst3::Float32 
+    fHslider1::FAUSTFLOAT 
+    fRec2::Vector{Float32} 
+    fHslider2::FAUSTFLOAT 
+    fRec3::Vector{Float32} 
+    mydsp() = begin
+        dsp = new()
+        dsp.fRec0 = zeros(Float32, 2)
+        dsp.fRec2 = zeros(Float32, 2)
+        dsp.fRec3 = zeros(Float32, 2)
+        dsp
+    end
+end
+</code></pre>
+<p>Several access methods are generated:</p>
+<pre><code class="language-julia">function getNumInputs(dsp::mydsp)
+    return Int32(0) 
+end
+function getNumOutputs(dsp::mydsp)
+    return Int32(2) 
+end
+</code></pre>
+<p>Several initialiation methods like <code>init</code>, <code>initanceInit</code>, <code>instanceResetUserInterface</code> etc. are generated, here he one of them:</p>
+<pre><code class="language-julia">function instanceResetUserInterface(dsp::mydsp)
+    dsp.fHslider0 = FAUSTFLOAT(0.0f0) 
+    dsp.fHslider1 = FAUSTFLOAT(1000.0f0) 
+    dsp.fHslider2 = FAUSTFLOAT(500.0f0) 
+end
+</code></pre>
+<p>The <code>buildUserInterface</code> method uses a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl">UI</a> subtype to build a controller, either a Graphical User Interface (for example using <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl">GTK</a>), or an <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl">OSC</a> controller:</p>
+<pre><code class="language-julia">function buildUserInterface(dsp::mydsp, ui_interface::UI)
+    openVerticalBox(ui_interface, &quot;Oscillator&quot;) 
+    declare(ui_interface, :fHslider1, &quot;unit&quot;, &quot;Hz&quot;) 
+    addHorizontalSlider(ui_interface, &quot;freq1&quot;, :fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0) 
+    declare(ui_interface, :fHslider2, &quot;unit&quot;, &quot;Hz&quot;) 
+    addHorizontalSlider(ui_interface, &quot;freq2&quot;, :fHslider2, 500.0f0, 20.0f0, 3000.0f0, 1.0f0) 
+    declare(ui_interface, :fHslider0, &quot;unit&quot;, &quot;dB&quot;) 
+    addHorizontalSlider(ui_interface, &quot;volume&quot;, :fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0) 
+    closeBox(ui_interface)
+end
+</code></pre>
+<p>The DSP structure fields to access are simply described with their name, and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue</code> and <code>getParamValue</code>methods coded in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
+<p>And finally the <code>compute</code> method that processes and input buffer with <code>count</code> frames to produce an output buffer: </p>
+<pre><code class="language-julia">inbounds function compute(dsp::mydsp, count::Int32, inputs, outputs)
+    output0 = @inbounds @view outputs[:, 1]
+    output1 = @inbounds @view outputs[:, 2]
+    fSlow0::Float32 = (dsp.fConst1 * pow(10.0f0, (0.0500000007f0 * Float32(dsp.fHslider0)))) 
+    fSlow1::Float32 = (dsp.fConst3 * Float32(dsp.fHslider1)) 
+    fSlow2::Float32 = (dsp.fConst3 * Float32(dsp.fHslider2)) 
+    @inbounds for i0 in 0:count-1
+        dsp.fRec0[1] = (fSlow0 + (dsp.fConst2 * dsp.fRec0[2])) 
+        dsp.fRec2[1] = (fSlow1 + (dsp.fRec2[2] - floor((fSlow1 + dsp.fRec2[2])))) 
+        output0[i0+1] = FAUSTFLOAT((dsp.fRec0[1] * ftbl0mydspSIG0[trunc(Int32, 
+            (65536.0f0 * dsp.fRec2[1]))+1])) 
+        dsp.fRec3[1] = (fSlow2 + (dsp.fRec3[2] - floor((fSlow2 + dsp.fRec3[2])))) 
+        output1[i0+1] = FAUSTFLOAT((dsp.fRec0[1] * ftbl0mydspSIG0[trunc(Int32, 
+            (65536.0f0 * dsp.fRec3[1]))+1])) 
+        dsp.fRec0[2] = dsp.fRec0[1] 
+        dsp.fRec2[2] = dsp.fRec2[1] 
+        dsp.fRec3[2] = dsp.fRec3[1] 
+    end
+end
+</code></pre>
+<p><strong>Note</strong> that not all generated methods are presented in this short presentation. Look at the generated <strong>osc.jl</strong> file to see them.</p>
+<h3 id="using-the-generated-code">Using the generated code</h3>
+<p>Some globals have to be defined:</p>
+<pre><code class="language-julia"># Testing
+samplerate = Int32(44100)
+block_size = Int32(16)
+</code></pre>
+<p>The DSP object has to be created and initialized:</p>
+<pre><code class="language-julia"># Init DSP
+my_dsp = mydsp()
+init(my_dsp, samplerate)
+</code></pre>
+<p>His name can be extracted from the DSP metadata using the following code:</p>
+<pre><code class="language-julia"># Retrieve the application name
+mutable struct NameMeta &lt;: Meta
+    name::String
+end
+
+function declare(m::NameMeta, key::String, value::String)
+    if (key == &quot;name&quot;) 
+        m.name = value;
+    end
+end)
+
+m = NameMeta(&quot;&quot;)
+metadata(my_dsp, m)
+println(&quot;Application name: &quot;, m.name, &quot;\n&quot;)
+</code></pre>
+<p>The number of inputs/output can be printed:</p>
+<pre><code class="language-julia">println(&quot;getNumInputs: &quot;, getNumInputs(my_dsp))
+println(&quot;getNumOutputs: &quot;, getNumOutputs(my_dsp), &quot;\n&quot;)
+</code></pre>
+<p>Infomation on all controllers can be retrieved using the <code>MapUI</code> type:</p>
+<pre><code class="language-julia"># Create a MapUI controller
+map_ui = MapUI(my_dsp)
+buildUserInterface(my_dsp, map_ui)
+
+# Print all zones
+println(&quot;Path/UIZone dictionary: &quot;, getZoneMap(map_ui), &quot;\n&quot;)   
+</code></pre>
+<p>And finally one buffer can be processed with the code:</p>
+<pre><code class="language-julia">inputs = zeros(REAL, block_size, getNumInputs(my_dsp))
+outputs = zeros(REAL, block_size, getNumOutputs(my_dsp)) 
+compute(my_dsp, block_size, inputs, outputs)
+println(&quot;One computed output buffer: &quot;, outputs)
+</code></pre>
+<p>Now the <strong>osc.jl</strong> can possibly be directly integrated in a larger project, or customised using an adapted new architecture file. </p>
+<h3 id="the-faust2portaudiojulia-tool">The faust2portaudiojulia tool</h3>
+<p>The Faust DSP program can be compiled and run with the more sophisticated <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/julia#faust2portaudiojulia">faust2portaudiojulia</a> tool which will render it using the <a href="https://juliapackages.com/p/portaudio">PortAudio.jl</a> package to access the audio driver, <a href="https://juliapackages.com/p/opensoundcontrol">OpenSoundControl.jl</a> package for OSC control, and <a href="http://juliagraphics.github.io/Gtk.jl/latest/">GTK.jl</a> package for the Graphical User Interface.</p>
+<p>The <strong>faust2portaudiojulia</strong> tool use this <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/portaudio_gtk.jl">portaudio_gtk.jl</a> architecture file. When used the following way:</p>
+<pre><code class="language-bash">faust2portaudiojulia osc.dsp
+</code></pre>
+<p>It creates an <strong>osc.jl</strong> file that can simply be executed using:</p>
+<pre><code class="language-bash">julia osc.jl
+</code></pre>
+<p>So the stereo program generating sinewaves at 1000 Hz and 500 Hz by default is now playing, without any interface to control it.</p>
+<p>Now using the following command:</p>
+<pre><code class="language-bash">faust2portaudiojulia -play 2 osc.dsp
+</code></pre>
+<p>Will create the <strong>osc.jl</strong> file, directly execute it using <strong>Julia</strong>, with PortAudio based audio rendering and GTK GUI (and with 2 threads needed for GTK and audio). <strong>Note</strong> that the GUI is still quite simple:</p>
+<p><img src="img/osc-gtk.png" class="mx-auto d-block" width="50%">
+<center><em>The GTK based controller</em></center></p>
+<p>The following command:</p>
+<pre><code class="language-bash">faust2portaudiojulia -play 2 -osc osc.dsp
+</code></pre>
+<p>Will create the <strong>osc.jl</strong> file, directly execute it using <strong>Julia</strong>, with PortAudio based audio rendering and OSC control (and with 2 threads needed for OSC and audio). Direct OSC commands can be sent, as <a href="https://faustdoc.grame.fr/manual/osc/">explained here</a>. So for instance to change both channel frequencies:</p>
+<pre><code class="language-bash"> oscsend localhost 5000 /Oscillator/freq1 f 400
+ oscsend localhost 5000 /Oscillator/freq2 f 960
+</code></pre>
+<p>You can possibly use the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faust-osc-controller">faust-osc-controller</a> tool to remotely control the Julia program, with the following command:</p>
+<pre><code class="language-bash">faust-osc-controller /Oscillator -port 5001 -outport 5000 -xmit 1
+</code></pre>
+<p><img src="img/faust-osc-controller.png" class="mx-auto d-block" width="50%">
+<center><em>The faust-osc-controller OSC controller</em></center></p>
+<h2 id="using-faust-web-ide">Using Faust Web IDE</h2>
+<p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Julia code, or possibly as working audio applications using the <a href="https://juliapackages.com/p/portaudio">PortAudio.jl</a> package to render audio, and <a href="https://juliapackages.com/p/opensoundcontrol">OpenSoundControl.jl</a> package for OSC control.</p>
+<h3 id="todo">TODO</h3></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020-2021 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
