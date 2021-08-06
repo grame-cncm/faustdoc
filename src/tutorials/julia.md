@@ -38,7 +38,7 @@ ERROR: LoadError: UndefVarError: dsp not defined
 ...
 ```
 
-Some additional types like `FAUSTFLOAT`, `dsp`, `Meta` and `UI` have to be defined in a so-called [architecture file](https://faustdoc.grame.fr/manual/architectures/). A simple one named [minimal.jl](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl) can be used for that with the following command:
+Some additional types like `FAUSTFLOAT`, `dsp`, `Meta` and `UI` have to be defined in a so-called [architecture files](https://faustdoc.grame.fr/manual/architectures/). The Julia specific ones are [described here](https://github.com/grame-cncm/faust/tree/master-dev/architecture/julia#julia-architecture-files). A simple one named [minimal.jl](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl) can be used for that with the following command:
 
 ```bash
 faust -lang julia osc.dsp -a julia/minimal.jl -o osc.jl
@@ -283,7 +283,6 @@ faust-osc-controller /Oscillator -port 5001 -outport 5000 -xmit 1
 
 <img src="img/faust-osc-controller.png" class="mx-auto d-block" width="50%">
 <center>*The faust-osc-controller OSC controller*</center>
-
 
 ## Using Faust Web IDE
 

@@ -352,7 +352,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 ERROR: LoadError: UndefVarError: dsp not defined
 ...
 </code></pre>
-<p>Some additional types like <code>FAUSTFLOAT</code>, <code>dsp</code>, <code>Meta</code> and <code>UI</code> have to be defined in a so-called <a href="https://faustdoc.grame.fr/manual/architectures/">architecture file</a>. A simple one named <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl">minimal.jl</a> can be used for that with the following command:</p>
+<p>Some additional types like <code>FAUSTFLOAT</code>, <code>dsp</code>, <code>Meta</code> and <code>UI</code> have to be defined in a so-called <a href="https://faustdoc.grame.fr/manual/architectures/">architecture files</a>. The Julia specific ones are <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/julia#julia-architecture-files">described here</a>. A simple one named <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl">minimal.jl</a> can be used for that with the following command:</p>
 <pre><code class="language-bash">faust -lang julia osc.dsp -a julia/minimal.jl -o osc.jl
 </code></pre>
 <p>Now the resulting <strong>foo.jl </strong>file is self-contained and can be executed with: </p>
