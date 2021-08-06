@@ -400,7 +400,7 @@ function getNumOutputs(dsp::mydsp)
     return Int32(2) 
 end
 </code></pre>
-<p>Several initialiation methods like <code>init</code>, <code>initanceInit</code>, <code>instanceResetUserInterface</code> etc. are generated, here he one of them:</p>
+<p>Several initialiation methods like <code>init</code>, <code>initanceInit</code>, <code>instanceResetUserInterface</code> etc. are generated, here is one of them:</p>
 <pre><code class="language-julia">function instanceResetUserInterface(dsp::mydsp)
     dsp.fHslider0 = FAUSTFLOAT(0.0f0) 
     dsp.fHslider1 = FAUSTFLOAT(1000.0f0) 
@@ -419,7 +419,7 @@ end
     closeBox(ui_interface)
 end
 </code></pre>
-<p>The DSP structure fields to access are simply described with their name, and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue</code> and <code>getParamValue</code>methods coded in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
+<p>The DSP structure fields to access are simply described with their name, and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue</code> and <code>getParamValue</code>methods written in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
 <p>And finally the <code>compute</code> method that processes and input buffer with <code>count</code> frames to produce an output buffer: </p>
 <pre><code class="language-julia">inbounds function compute(dsp::mydsp, count::Int32, inputs, outputs)
     output0 = @inbounds @view outputs[:, 1]
@@ -441,7 +441,7 @@ end
     end
 end
 </code></pre>
-<p><strong>Note</strong> that not all generated methods are presented in this short presentation. Look at the generated <strong>osc.jl</strong> file to see them.</p>
+<p><strong>Note</strong> that not all generated methods are presented in this short presentation. Look at the generated <strong>osc.jl</strong> file to see all of them.</p>
 <h3 id="using-the-generated-code">Using the generated code</h3>
 <p>Some globals have to be defined:</p>
 <pre><code class="language-julia"># Testing

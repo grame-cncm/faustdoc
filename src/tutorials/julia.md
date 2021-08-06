@@ -101,7 +101,7 @@ function getNumOutputs(dsp::mydsp)
 end
 ```
 
-Several initialiation methods like `init`, `initanceInit`, `instanceResetUserInterface` etc. are generated, here he one of them:
+Several initialiation methods like `init`, `initanceInit`, `instanceResetUserInterface` etc. are generated, here is one of them:
 
 ```julia
 function instanceResetUserInterface(dsp::mydsp)
@@ -127,7 +127,7 @@ function buildUserInterface(dsp::mydsp, ui_interface::UI)
 end
 ```
 
-The DSP structure fields to access are simply described with their name, and can later be used with the standard [setproperty!](https://docs.julialang.org/en/v1/base/base/#Base.setproperty!) and [getproperty](https://docs.julialang.org/en/v1/base/base/#Base.getproperty) access methods, like in the `setParamValue` and `getParamValue`methods coded in the [MapUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl) architecture.
+The DSP structure fields to access are simply described with their name, and can later be used with the standard [setproperty!](https://docs.julialang.org/en/v1/base/base/#Base.setproperty!) and [getproperty](https://docs.julialang.org/en/v1/base/base/#Base.getproperty) access methods, like in the `setParamValue` and `getParamValue`methods written in the [MapUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl) architecture.
 
 And finally the `compute` method that processes and input buffer with `count` frames to produce an output buffer: 
 
@@ -152,7 +152,7 @@ inbounds function compute(dsp::mydsp, count::Int32, inputs, outputs)
 	end
 end
 ```
-**Note** that not all generated methods are presented in this short presentation. Look at the generated **osc.jl** file to see them.
+**Note** that not all generated methods are presented in this short presentation. Look at the generated **osc.jl** file to see all of them.
 
 ### Using the generated code
 
