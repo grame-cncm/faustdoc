@@ -406,28 +406,28 @@ function getNumOutputs(dsp::mydsp)
     return Int32(2) 
 end
 </code></pre>
-<p>Several initialiation methods like <code>init</code>, <code>initanceInit</code>, <code>instanceResetUserInterface</code> etc. are generated, here is one of them:</p>
-<pre><code class="language-julia">function instanceResetUserInterface(dsp::mydsp)
+<p>Several initialiation methods like <code>init!</code>, <code>initanceInit!</code>, <code>instanceResetUserInterface!</code> etc. are generated, here is one of them:</p>
+<pre><code class="language-julia">function instanceResetUserInterface!(dsp::mydsp)
     dsp.fHslider0 = FAUSTFLOAT(0.0f0) 
     dsp.fHslider1 = FAUSTFLOAT(1000.0f0) 
     dsp.fHslider2 = FAUSTFLOAT(200.0f0) 
 end
 </code></pre>
-<p>The <code>buildUserInterface</code> method uses a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl">UI</a> subtype to build a controller, either a Graphical User Interface (for example using <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl">GTK</a>), or an <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl">OSC</a> controller:</p>
-<pre><code class="language-julia">function buildUserInterface(dsp::mydsp, ui_interface::UI)
-    openVerticalBox(ui_interface, &quot;Oscillator&quot;) 
-    declare(ui_interface, :fHslider1, &quot;unit&quot;, &quot;Hz&quot;) 
-    addHorizontalSlider(ui_interface, &quot;freq1&quot;, :fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0) 
-    declare(ui_interface, :fHslider2, &quot;unit&quot;, &quot;Hz&quot;) 
-    addHorizontalSlider(ui_interface, &quot;freq2&quot;, :fHslider2, 500.0f0, 20.0f0, 3000.0f0, 1.0f0) 
-    declare(ui_interface, :fHslider0, &quot;unit&quot;, &quot;dB&quot;) 
-    addHorizontalSlider(ui_interface, &quot;volume&quot;, :fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0) 
-    closeBox(ui_interface)
+<p>The <code>buildUserInterface!</code> method uses a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl">UI</a> subtype to build a controller, either a Graphical User Interface (for example using <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl">GTK</a>), or an <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl">OSC</a> controller:</p>
+<pre><code class="language-julia">function buildUserInterface!(dsp::mydsp, ui_interface::UI)
+    openVerticalBox!(ui_interface, &quot;Oscillator&quot;) 
+    declare!(ui_interface, :fHslider1, &quot;unit&quot;, &quot;Hz&quot;) 
+    addHorizontalSlider!(ui_interface, &quot;freq1&quot;, :fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0) 
+    declare!(ui_interface, :fHslider2, &quot;unit&quot;, &quot;Hz&quot;) 
+    addHorizontalSlider!(ui_interface, &quot;freq2&quot;, :fHslider2, 500.0f0, 20.0f0, 3000.0f0, 1.0f0) 
+    declare!(ui_interface, :fHslider0, &quot;unit&quot;, &quot;dB&quot;) 
+    addHorizontalSlider!(ui_interface, &quot;volume&quot;, :fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0) 
+    closeBox!(ui_interface)
 end
 </code></pre>
-<p>The DSP structure fields to access are simply described with their name, and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue</code> and <code>getParamValue</code>methods written in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
-<p>And finally the <code>compute</code> method that processes and input buffer with <code>count</code> frames to produce an output buffer: </p>
-<pre><code class="language-julia">inbounds function compute(dsp::mydsp, count::Int32, inputs, outputs)
+<p>The DSP structure fields to access are simply described with their name, and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue!</code> and <code>getParamValue</code>methods written in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
+<p>And finally the <code>compute!</code> method that processes and input buffer with <code>count</code> frames to produce an output buffer: </p>
+<pre><code class="language-julia">inbounds function compute!(dsp::mydsp, count::Int32, inputs, outputs)
     output0 = @inbounds @view outputs[:, 1]
     output1 = @inbounds @view outputs[:, 2]
     fSlow0::Float32 = (dsp.fConst1 * pow(10.0f0, (0.0500000007f0 * Float32(dsp.fHslider0)))) 
@@ -457,7 +457,7 @@ block_size = Int32(16)
 <p>The DSP object has to be created and initialized:</p>
 <pre><code class="language-julia"># Init DSP
 my_dsp = mydsp()
-init(my_dsp, samplerate)
+init!(my_dsp, samplerate)
 </code></pre>
 <p>His name can be extracted from the DSP metadata using the following code:</p>
 <pre><code class="language-julia"># Retrieve the application name
@@ -465,14 +465,14 @@ mutable struct NameMeta &lt;: Meta
     name::String
 end
 
-function declare(m::NameMeta, key::String, value::String)
+function declare!(m::NameMeta, key::String, value::String)
     if (key == &quot;name&quot;) 
         m.name = value;
     end
 end)
 
 m = NameMeta(&quot;&quot;)
-metadata(my_dsp, m)
+metadata!(my_dsp, m)
 println(&quot;Application name: &quot;, m.name, &quot;\n&quot;)
 </code></pre>
 <p>The number of inputs/output can be printed:</p>
@@ -482,7 +482,7 @@ println(&quot;getNumOutputs: &quot;, getNumOutputs(my_dsp), &quot;\n&quot;)
 <p>Infomation on all controllers can be retrieved using the <code>MapUI</code> type:</p>
 <pre><code class="language-julia"># Create a MapUI controller
 map_ui = MapUI(my_dsp)
-buildUserInterface(my_dsp, map_ui)
+buildUserInterface!(my_dsp, map_ui)
 
 # Print all zones
 println(&quot;Path/UIZone dictionary: &quot;, getZoneMap(map_ui), &quot;\n&quot;)   
@@ -490,7 +490,7 @@ println(&quot;Path/UIZone dictionary: &quot;, getZoneMap(map_ui), &quot;\n&quot;
 <p>And finally one buffer can be processed with the code:</p>
 <pre><code class="language-julia">inputs = zeros(REAL, block_size, getNumInputs(my_dsp))
 outputs = zeros(REAL, block_size, getNumOutputs(my_dsp)) 
-compute(my_dsp, block_size, inputs, outputs)
+compute!(my_dsp, block_size, inputs, outputs)
 println(&quot;One computed output buffer: &quot;, outputs)
 </code></pre>
 <p>Now the <strong>osc.jl</strong> can possibly be directly integrated in a larger project, or customised using an adapted new architecture file. </p>
