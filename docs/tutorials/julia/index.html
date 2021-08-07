@@ -282,7 +282,7 @@
             
             <li class="nav-item" data-level="1"><a href="#using-faust-in-julia" class="nav-link">Using Faust in Julia</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#instaling-the-required-packages" class="nav-link">Instaling the required packages</a>
+            <li class="nav-item" data-level="2"><a href="#installing-the-required-packages" class="nav-link">Installing the required packages</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -324,8 +324,8 @@
 <h1 id="using-faust-in-julia">Using Faust in Julia</h1>
 <p>In this tutorial, we present how Faust can be used in <a href="https://julialang.org/">Julia</a>, a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.</p>
 <p>A <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia">Julia backend</a> has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. An <a href="https://github.com/corajr/Faust.jl">integration of the libfaust compiler</a> in Julia has been developed by <a href="https://corajr.com">Cora Johnson-Roberson</a>, but will not be covered by this tutorial.</p>
-<h2 id="instaling-the-required-packages">Instaling the required packages</h2>
-<p>With a fresh Julia install, all required packages can be installed with the <code>julia packages.jl</code> command done in the architecture/julia folder.</p>
+<h2 id="installing-the-required-packages">Installing the required packages</h2>
+<p>With a fresh Julia install, all required packages can be installed with the <code>julia packages.jl</code> command done in the architecture/julia folder when the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/packages.jl">package.jl</a> file is located.</p>
 <h2 id="using-command-line-tools">Using command line tools</h2>
 <h3 id="generating-julia-code">Generating Julia code</h3>
 <p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed</a> the <strong>faust</strong> compiler from the <a href="https://github.com/grame-cncm/faust">master-dev branch</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
