@@ -4,6 +4,10 @@ In this tutorial, we present how Faust can be used in [Julia](https://julialang.
 
 A [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. An [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been developed by [Cora Johnson-Roberson](https://corajr.com), but will not be covered by this tutorial.
 
+## Instaling the required packages
+
+With a fresh Julia install, all required packages can be installed with the `julia packages.jl` command done in the architecture/julia folder.
+
 ## Using command line tools
 
 ### Generating Julia code
@@ -16,7 +20,7 @@ import("stdfaust.lib");
 
 vol = hslider("volume [unit:dB]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
 freq1 = hslider("freq1 [unit:Hz]", 1000, 20, 3000, 1);
-freq2 = hslider("freq2 [unit:Hz]", 500, 20, 3000, 1);
+freq2 = hslider("freq2 [unit:Hz]", 200, 20, 3000, 1);
 
 process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 ```
@@ -47,7 +51,7 @@ faust -lang julia osc.dsp -a julia/minimal.jl -o osc.jl
 Now the resulting **foo.jl **file is self-contained and can be executed with: 
 
 ```bash
-julia osc.jl
+julia -i osc.jl (here -i to stay in interactive mode)
 ```
 
 Which compiles the Julia code, executes it and produces:
@@ -60,10 +64,12 @@ getNumOutputs: 2
 
 Path/UIZone dictionary: Dict{String, UIZone}("/Oscillator/volume" => UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), "/Oscillator/freq2" => UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), "/Oscillator/freq1" => UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
-One computed output buffer: Float32[0.00014198698 0.00014198698; 0.0005619127 0.0005619127; 0.0012422898 0.0012422898; 0.0021548683 0.0021548683; 0.003261512 0.003261512; 0.0045153787 0.0045153787; 0.005862374 0.005862374; 0.0072428365 0.0072428365; 0.008593408 0.008593408; 0.0098490445 0.0098490445; 0.010945092 0.010945092; 0.011819404 0.011819404; 0.012414059 0.012414059; 0.0126785105 0.0126785105; 0.012569941 0.012569941; 0.0120556755 0.0120556755]
-
 ```
-With the name of the application, the number of input/output channels, the set of controller paths with their range, and finally one computed output audio buffer.
+With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerfull [Plots.jl](http://docs.juliaplots.org/latest/) package):
+
+<img src="img/osc-display.png" class="mx-auto d-block" width="60%">
+<center>*Displaying the outputs*</center>
+
 
 ### Looking at the generated code
 
@@ -107,7 +113,7 @@ Several initialiation methods like `init`, `initanceInit`, `instanceResetUserInt
 function instanceResetUserInterface(dsp::mydsp)
 	dsp.fHslider0 = FAUSTFLOAT(0.0f0) 
 	dsp.fHslider1 = FAUSTFLOAT(1000.0f0) 
-	dsp.fHslider2 = FAUSTFLOAT(500.0f0) 
+	dsp.fHslider2 = FAUSTFLOAT(200.0f0) 
 end
 ```
 

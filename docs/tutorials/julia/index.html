@@ -282,6 +282,10 @@
             
             <li class="nav-item" data-level="1"><a href="#using-faust-in-julia" class="nav-link">Using Faust in Julia</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#instaling-the-required-packages" class="nav-link">Instaling the required packages</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#using-command-line-tools" class="nav-link">Using command line tools</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#generating-julia-code" class="nav-link">Generating Julia code</a>
@@ -320,6 +324,8 @@
 <h1 id="using-faust-in-julia">Using Faust in Julia</h1>
 <p>In this tutorial, we present how Faust can be used in <a href="https://julialang.org/">Julia</a>, a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.</p>
 <p>A <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia">Julia backend</a> has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. An <a href="https://github.com/corajr/Faust.jl">integration of the libfaust compiler</a> in Julia has been developed by <a href="https://corajr.com">Cora Johnson-Roberson</a>, but will not be covered by this tutorial.</p>
+<h2 id="instaling-the-required-packages">Instaling the required packages</h2>
+<p>With a fresh Julia install, all required packages can be installed with the <code>julia packages.jl</code> command done in the architecture/julia folder.</p>
 <h2 id="using-command-line-tools">Using command line tools</h2>
 <h3 id="generating-julia-code">Generating Julia code</h3>
 <p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed</a> the <strong>faust</strong> compiler from the <a href="https://github.com/grame-cncm/faust">master-dev branch</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
@@ -331,7 +337,7 @@ import(&quot;stdfaust.lib&quot;);
 
 vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
 freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
-freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 500, 20, 3000, 1);
+freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
 
 process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
 
@@ -356,7 +362,7 @@ ERROR: LoadError: UndefVarError: dsp not defined
 <pre><code class="language-bash">faust -lang julia osc.dsp -a julia/minimal.jl -o osc.jl
 </code></pre>
 <p>Now the resulting <strong>foo.jl </strong>file is self-contained and can be executed with: </p>
-<pre><code class="language-bash">julia osc.jl
+<pre><code class="language-bash">julia -i osc.jl (here -i to stay in interactive mode)
 </code></pre>
 <p>Which compiles the Julia code, executes it and produces:</p>
 <pre><code class="language-bash">Application name: osc
@@ -366,10 +372,10 @@ getNumOutputs: 2
 
 Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt; UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), &quot;/Oscillator/freq2&quot; =&gt; UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), &quot;/Oscillator/freq1&quot; =&gt; UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
-One computed output buffer: Float32[0.00014198698 0.00014198698; 0.0005619127 0.0005619127; 0.0012422898 0.0012422898; 0.0021548683 0.0021548683; 0.003261512 0.003261512; 0.0045153787 0.0045153787; 0.005862374 0.005862374; 0.0072428365 0.0072428365; 0.008593408 0.008593408; 0.0098490445 0.0098490445; 0.010945092 0.010945092; 0.011819404 0.011819404; 0.012414059 0.012414059; 0.0126785105 0.0126785105; 0.012569941 0.012569941; 0.0120556755 0.0120556755]
-
 </code></pre>
-<p>With the name of the application, the number of input/output channels, the set of controller paths with their range, and finally one computed output audio buffer.</p>
+<p>With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerfull <a href="http://docs.juliaplots.org/latest/">Plots.jl</a> package):</p>
+<p><img src="img/osc-display.png" class="mx-auto d-block" width="60%">
+<center><em>Displaying the outputs</em></center></p>
 <h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
 <p>A <code>mydsp</code> data structure, as a subtype of the <code>abstract type dsp</code> is generated, and contains the field definitions with their types, as well as a constructor initializing them:</p>
 <pre><code class="language-julia">mutable struct mydsp &lt;: dsp
@@ -404,7 +410,7 @@ end
 <pre><code class="language-julia">function instanceResetUserInterface(dsp::mydsp)
     dsp.fHslider0 = FAUSTFLOAT(0.0f0) 
     dsp.fHslider1 = FAUSTFLOAT(1000.0f0) 
-    dsp.fHslider2 = FAUSTFLOAT(500.0f0) 
+    dsp.fHslider2 = FAUSTFLOAT(200.0f0) 
 end
 </code></pre>
 <p>The <code>buildUserInterface</code> method uses a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl">UI</a> subtype to build a controller, either a Graphical User Interface (for example using <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl">GTK</a>), or an <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl">OSC</a> controller:</p>
