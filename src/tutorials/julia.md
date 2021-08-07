@@ -65,7 +65,7 @@ getNumOutputs: 2
 Path/UIZone dictionary: Dict{String, UIZone}("/Oscillator/volume" => UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), "/Oscillator/freq2" => UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), "/Oscillator/freq1" => UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
 ```
-With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerfull [Plots.jl](http://docs.juliaplots.org/latest/) package):
+With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerfull [Plots.jl](http://docs.juliaplots.org/latest/) package), and showing here the effect of the `si.smoo` at the beginning of the signals:
 
 <img src="img/osc-display.png" class="mx-auto d-block" width="60%">
 <center>*Displaying the outputs*</center>
