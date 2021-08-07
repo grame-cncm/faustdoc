@@ -177,3 +177,5 @@ The dynamic compilation chain has been used in several projects:
 * [gwion-plug](https://github.com/Gwion/gwion-plug/tree/master/Faust) is a Faust plugin for the [Gwion](https://github.com/Gwion/Gwion) programming language. 
 
 * [FaustGen](https://github.com/madskjeldgaard/faustgen-supercollider/) allows to livecode Faust in SuperCollider.
+
+* [FAUSTPy](https://github.com/marcecj/faust_python) is a Python wrapper for the Faust DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on [this fork](https://github.com/hrtlacek/faust_python).
