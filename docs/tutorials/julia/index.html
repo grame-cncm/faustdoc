@@ -282,7 +282,7 @@
             
             <li class="nav-item" data-level="1"><a href="#using-faust-in-julia" class="nav-link">Using Faust in Julia</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#installing-the-required-packages" class="nav-link">Installing the required packages</a>
+            <li class="nav-item" data-level="2"><a href="#instaling-the-required-packages" class="nav-link">Instaling the required packages</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -324,8 +324,8 @@
 <h1 id="using-faust-in-julia">Using Faust in Julia</h1>
 <p>In this tutorial, we present how Faust can be used in <a href="https://julialang.org/">Julia</a>, a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.</p>
 <p>A <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia">Julia backend</a> has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. An <a href="https://github.com/corajr/Faust.jl">integration of the libfaust compiler</a> in Julia has been developed by <a href="https://corajr.com">Cora Johnson-Roberson</a>, but will not be covered by this tutorial.</p>
-<h2 id="installing-the-required-packages">Installing the required packages</h2>
-<p>With a fresh Julia install, all required packages can be installed with the <code>julia packages.jl</code> command done in the architecture/julia folder when the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/packages.jl">package.jl</a> file is located.</p>
+<h2 id="instaling-the-required-packages">Instaling the required packages</h2>
+<p>With a fresh Julia install, all required packages can be installed with the <code>julia packages.jl</code> command done in the architecture/julia folder.</p>
 <h2 id="using-command-line-tools">Using command line tools</h2>
 <h3 id="generating-julia-code">Generating Julia code</h3>
 <p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed</a> the <strong>faust</strong> compiler from the <a href="https://github.com/grame-cncm/faust">master-dev branch</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
@@ -352,7 +352,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 <p>The Julia code can be generated using:</p>
 <pre><code class="language-bash">faust -lang julia osc.dsp -o osc.jl
 </code></pre>
-<p>This will generate a <code>mydsp</code> data structure, as a subtype of the <code>abstract type dsp</code>, with a set of methods to manipulate it. The generated API simply follows <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/dsp/dsp.jl">the one defined</a> for the base <code>dsp</code> type. This API basically mimics the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h">one defined for the C++ backend</a>.</p>
+<p>This will generate a <code>mydsp{T}</code> data structure, as a subtype of the <code>abstract type dsp</code>, with a set of methods to manipulate it. The generated API simply follows <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/dsp/dsp.jl">the one defined</a> for the base <code>dsp</code> type. This API basically mimics the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h">one defined for the C++ backend</a>.</p>
 <p>The resulting file is not self-contained and so cannot be directly compiled using the <strong>julia</strong> program:</p>
 <pre><code class="language-bash">julia osc.jl
 ERROR: LoadError: UndefVarError: dsp not defined
@@ -367,8 +367,8 @@ ERROR: LoadError: UndefVarError: dsp not defined
 <p>Which compiles the Julia code, executes it and produces:</p>
 <pre><code class="language-bash">Application name: osc
 
-getNumInputs: 0
-getNumOutputs: 2
+getNumInputs!: 0
+getNumOutputs!: 2
 
 Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt; UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), &quot;/Oscillator/freq2&quot; =&gt; UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), &quot;/Oscillator/freq1&quot; =&gt; UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
@@ -377,57 +377,58 @@ Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt
 <p><img src="img/osc-display.png" class="mx-auto d-block" width="60%">
 <center><em>Displaying the outputs</em></center></p>
 <h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
-<p>A <code>mydsp</code> data structure, as a subtype of the <code>abstract type dsp</code> is generated, and contains the field definitions with their types, as well as a constructor initializing them:</p>
-<pre><code class="language-julia">mutable struct mydsp &lt;: dsp
+<p>A <code>mydsp{T}</code> data structure, as a subtype of the <code>abstract type dsp</code> is generated, and contains the field definitions with their types, as well as a constructor initializing them:</p>
+<pre><code class="language-julia">mutable struct mydsp{T} &lt;: dsp
     fSampleRate::Int32 
-    fConst1::Float32 
+    fConst1::T 
     fHslider0::FAUSTFLOAT 
-    fConst2::Float32 
-    fRec0::Vector{Float32} 
-    fConst3::Float32 
+    fConst2::T 
+    fRec0::Vector{T} 
+    fConst3::T 
     fHslider1::FAUSTFLOAT 
-    fRec2::Vector{Float32} 
+    fRec2::Vector{T} 
     fHslider2::FAUSTFLOAT 
-    fRec3::Vector{Float32} 
+    fRec3::Vector{T} 
     mydsp() = begin
         dsp = new()
-        dsp.fRec0 = zeros(Float32, 2)
-        dsp.fRec2 = zeros(Float32, 2)
-        dsp.fRec3 = zeros(Float32, 2)
+        dsp.fRec0 = zeros(T, 2)
+        dsp.fRec2 = zeros(T, 2)
+        dsp.fRec3 = zeros(T, 2)
         dsp
     end
 end
 </code></pre>
+<p>Note that the structure is parametrized with a <code>{T}</code> type to be given at initialization time. The <code>const REAL = Float32</code> or <code>const REAL = Float64</code>  line is generated depending of the <code>-single</code> (default), or <code>-double</code> option given at compilation time can be used for that. </p>
 <p>Several access methods are generated:</p>
-<pre><code class="language-julia">function getNumInputs(dsp::mydsp)
+<pre><code class="language-julia">function getNumInputs(dsp::mydsp{T}) where {T}
     return Int32(0) 
 end
-function getNumOutputs(dsp::mydsp)
+function getNumOutputs(dsp::mydsp{T}) where {T}
     return Int32(2) 
 end
 </code></pre>
 <p>Several initialiation methods like <code>init!</code>, <code>initanceInit!</code>, <code>instanceResetUserInterface!</code> etc. are generated, here is one of them:</p>
-<pre><code class="language-julia">function instanceResetUserInterface!(dsp::mydsp)
+<pre><code class="language-julia">function instanceResetUserInterface!(dsp::mydsp{T}) where {T}
     dsp.fHslider0 = FAUSTFLOAT(0.0f0) 
     dsp.fHslider1 = FAUSTFLOAT(1000.0f0) 
     dsp.fHslider2 = FAUSTFLOAT(200.0f0) 
 end
 </code></pre>
 <p>The <code>buildUserInterface!</code> method uses a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl">UI</a> subtype to build a controller, either a Graphical User Interface (for example using <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl">GTK</a>), or an <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl">OSC</a> controller:</p>
-<pre><code class="language-julia">function buildUserInterface!(dsp::mydsp, ui_interface::UI)
+<pre><code class="language-julia">function buildUserInterface!(dsp::mydsp{T}, ui_interface::UI) where {T}
     openVerticalBox!(ui_interface, &quot;Oscillator&quot;) 
     declare!(ui_interface, :fHslider1, &quot;unit&quot;, &quot;Hz&quot;) 
-    addHorizontalSlider!(ui_interface, &quot;freq1&quot;, :fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0) 
+    addHorizontalSlider!(ui_interface, &quot;freq1&quot;, :fHslider1, FAUSTFLOAT(1000.0f0), FAUSTFLOAT(20.0f0), FAUSTFLOAT(3000.0f0), FAUSTFLOAT(1.0f0)) 
     declare!(ui_interface, :fHslider2, &quot;unit&quot;, &quot;Hz&quot;) 
-    addHorizontalSlider!(ui_interface, &quot;freq2&quot;, :fHslider2, 500.0f0, 20.0f0, 3000.0f0, 1.0f0) 
+    addHorizontalSlider!(ui_interface, &quot;freq2&quot;, :fHslider2, FAUSTFLOAT(500.0f0), FAUSTFLOAT(20.0f0), FAUSTFLOAT(3000.0f0), FAUSTFLOAT(1.0f0)) 
     declare!(ui_interface, :fHslider0, &quot;unit&quot;, &quot;dB&quot;) 
-    addHorizontalSlider!(ui_interface, &quot;volume&quot;, :fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0) 
+    addHorizontalSlider!(ui_interface, &quot;volume&quot;, :fHslider0, FAUSTFLOAT(0.0f0), FAUSTFLOAT(-96.0f0), FAUSTFLOAT(0.0f0), FAUSTFLOAT(0.1f0)) 
     closeBox!(ui_interface)
 end
 </code></pre>
 <p>The DSP structure fields to access are simply described with their name, and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue!</code> and <code>getParamValue</code>methods written in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
 <p>And finally the <code>compute!</code> method that processes and input buffer with <code>count</code> frames to produce an output buffer: </p>
-<pre><code class="language-julia">inbounds function compute!(dsp::mydsp, count::Int32, inputs, outputs)
+<pre><code class="language-julia">inbounds function compute!(dsp::mydsp{T}, count::Int32, inputs::Matrix{FAUSTFLOAT), outputs::Matrix{FAUSTFLOAT)) where {T}
     output0 = @inbounds @view outputs[:, 1]
     output1 = @inbounds @view outputs[:, 2]
     fSlow0::Float32 = (dsp.fConst1 * pow(10.0f0, (0.0500000007f0 * Float32(dsp.fHslider0)))) 
@@ -454,9 +455,9 @@ end
 samplerate = Int32(44100)
 block_size = Int32(16)
 </code></pre>
-<p>The DSP object has to be created and initialized:</p>
+<p>The DSP object has to be created and initialized, here using the generated <code>REAL</code> type alias:</p>
 <pre><code class="language-julia"># Init DSP
-my_dsp = mydsp()
+my_dsp = mydsp{REAL}()
 init!(my_dsp, samplerate)
 </code></pre>
 <p>His name can be extracted from the DSP metadata using the following code:</p>
@@ -476,8 +477,8 @@ metadata!(my_dsp, m)
 println(&quot;Application name: &quot;, m.name, &quot;\n&quot;)
 </code></pre>
 <p>The number of inputs/output can be printed:</p>
-<pre><code class="language-julia">println(&quot;getNumInputs: &quot;, getNumInputs(my_dsp))
-println(&quot;getNumOutputs: &quot;, getNumOutputs(my_dsp), &quot;\n&quot;)
+<pre><code class="language-julia">println(&quot;getNumInputs!: &quot;, getNumInputs!(my_dsp))
+println(&quot;getNumOutputs!: &quot;, getNumOutputs!(my_dsp), &quot;\n&quot;)
 </code></pre>
 <p>Infomation on all controllers can be retrieved using the <code>MapUI</code> type:</p>
 <pre><code class="language-julia"># Create a MapUI controller
@@ -488,8 +489,8 @@ buildUserInterface!(my_dsp, map_ui)
 println(&quot;Path/UIZone dictionary: &quot;, getZoneMap(map_ui), &quot;\n&quot;)   
 </code></pre>
 <p>And finally one buffer can be processed with the code:</p>
-<pre><code class="language-julia">inputs = zeros(REAL, block_size, getNumInputs(my_dsp))
-outputs = zeros(REAL, block_size, getNumOutputs(my_dsp)) 
+<pre><code class="language-julia">inputs = zeros(FAUSTFLOAT, block_size, getNumInputs!(my_dsp))
+outputs = zeros(FAUSTFLOAT, block_size, getNumOutputs!(my_dsp)) 
 compute!(my_dsp, block_size, inputs, outputs)
 println(&quot;One computed output buffer: &quot;, outputs)
 </code></pre>

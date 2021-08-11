@@ -32,7 +32,7 @@ process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 faust -lang julia osc.dsp -o osc.jl
 ```
 
-This will generate a `mydsp` data structure, as a subtype of the `abstract type dsp`, with a set of methods to manipulate it. The generated API simply follows [the one defined](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/dsp/dsp.jl) for the base `dsp` type. This API basically mimics the [one defined for the C++ backend](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h).
+This will generate a `mydsp{T}` data structure, as a subtype of the `abstract type dsp`, with a set of methods to manipulate it. The generated API simply follows [the one defined](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/dsp/dsp.jl) for the base `dsp` type. This API basically mimics the [one defined for the C++ backend](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h).
 
 The resulting file is not self-contained and so cannot be directly compiled using the **julia** program:
 
@@ -59,8 +59,8 @@ Which compiles the Julia code, executes it and produces:
 ```bash
 Application name: osc
 
-getNumInputs: 0
-getNumOutputs: 2
+getNumInputs!: 0
+getNumOutputs!: 2
 
 Path/UIZone dictionary: Dict{String, UIZone}("/Oscillator/volume" => UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), "/Oscillator/freq2" => UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), "/Oscillator/freq1" => UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
@@ -73,36 +73,38 @@ With the name of the application, the number of input/output channels, the set o
 
 ### Looking at the generated code
 
-A `mydsp` data structure, as a subtype of the `abstract type dsp` is generated, and contains the field definitions with their types, as well as a constructor initializing them:
+A `mydsp{T}` data structure, as a subtype of the `abstract type dsp` is generated, and contains the field definitions with their types, as well as a constructor initializing them:
 
 ```julia
-mutable struct mydsp <: dsp
+mutable struct mydsp{T} <: dsp
 	fSampleRate::Int32 
-	fConst1::Float32 
+	fConst1::T 
 	fHslider0::FAUSTFLOAT 
-	fConst2::Float32 
-	fRec0::Vector{Float32} 
-	fConst3::Float32 
+	fConst2::T 
+	fRec0::Vector{T} 
+	fConst3::T 
 	fHslider1::FAUSTFLOAT 
-	fRec2::Vector{Float32} 
+	fRec2::Vector{T} 
 	fHslider2::FAUSTFLOAT 
-	fRec3::Vector{Float32} 
+	fRec3::Vector{T} 
 	mydsp() = begin
 		dsp = new()
-		dsp.fRec0 = zeros(Float32, 2)
-		dsp.fRec2 = zeros(Float32, 2)
-		dsp.fRec3 = zeros(Float32, 2)
+		dsp.fRec0 = zeros(T, 2)
+		dsp.fRec2 = zeros(T, 2)
+		dsp.fRec3 = zeros(T, 2)
 		dsp
 	end
 end
 ```
+Note that the structure is parametrized with a `{T}` type to be given at initialization time. The `const REAL = Float32` or `const REAL = Float64`  line is generated depending of the `-single` (default), or `-double` option given at compilation time can be used for that. 
+
 Several access methods are generated:
 
 ```julia
-function getNumInputs(dsp::mydsp)
+function getNumInputs(dsp::mydsp{T}) where {T}
 	return Int32(0) 
 end
-function getNumOutputs(dsp::mydsp)
+function getNumOutputs(dsp::mydsp{T}) where {T}
 	return Int32(2) 
 end
 ```
@@ -110,7 +112,7 @@ end
 Several initialiation methods like `init!`, `initanceInit!`, `instanceResetUserInterface!` etc. are generated, here is one of them:
 
 ```julia
-function instanceResetUserInterface!(dsp::mydsp)
+function instanceResetUserInterface!(dsp::mydsp{T}) where {T}
 	dsp.fHslider0 = FAUSTFLOAT(0.0f0) 
 	dsp.fHslider1 = FAUSTFLOAT(1000.0f0) 
 	dsp.fHslider2 = FAUSTFLOAT(200.0f0) 
@@ -121,14 +123,14 @@ The `buildUserInterface!` method uses a [UI](https://github.com/grame-cncm/faust
 
 
 ```julia
-function buildUserInterface!(dsp::mydsp, ui_interface::UI)
+function buildUserInterface!(dsp::mydsp{T}, ui_interface::UI) where {T}
 	openVerticalBox!(ui_interface, "Oscillator") 
 	declare!(ui_interface, :fHslider1, "unit", "Hz") 
-	addHorizontalSlider!(ui_interface, "freq1", :fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0) 
+	addHorizontalSlider!(ui_interface, "freq1", :fHslider1, FAUSTFLOAT(1000.0f0), FAUSTFLOAT(20.0f0), FAUSTFLOAT(3000.0f0), FAUSTFLOAT(1.0f0)) 
 	declare!(ui_interface, :fHslider2, "unit", "Hz") 
-	addHorizontalSlider!(ui_interface, "freq2", :fHslider2, 500.0f0, 20.0f0, 3000.0f0, 1.0f0) 
+	addHorizontalSlider!(ui_interface, "freq2", :fHslider2, FAUSTFLOAT(500.0f0), FAUSTFLOAT(20.0f0), FAUSTFLOAT(3000.0f0), FAUSTFLOAT(1.0f0)) 
 	declare!(ui_interface, :fHslider0, "unit", "dB") 
-	addHorizontalSlider!(ui_interface, "volume", :fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0) 
+	addHorizontalSlider!(ui_interface, "volume", :fHslider0, FAUSTFLOAT(0.0f0), FAUSTFLOAT(-96.0f0), FAUSTFLOAT(0.0f0), FAUSTFLOAT(0.1f0)) 
 	closeBox!(ui_interface)
 end
 ```
@@ -138,7 +140,7 @@ The DSP structure fields to access are simply described with their name, and can
 And finally the `compute!` method that processes and input buffer with `count` frames to produce an output buffer: 
 
 ```julia
-inbounds function compute!(dsp::mydsp, count::Int32, inputs, outputs)
+inbounds function compute!(dsp::mydsp{T}, count::Int32, inputs::Matrix{FAUSTFLOAT), outputs::Matrix{FAUSTFLOAT)) where {T}
 	output0 = @inbounds @view outputs[:, 1]
 	output1 = @inbounds @view outputs[:, 2]
 	fSlow0::Float32 = (dsp.fConst1 * pow(10.0f0, (0.0500000007f0 * Float32(dsp.fHslider0)))) 
@@ -170,11 +172,11 @@ samplerate = Int32(44100)
 block_size = Int32(16)
 ```
 
-The DSP object has to be created and initialized:
+The DSP object has to be created and initialized, here using the generated `REAL` type alias:
 
 ```julia
 # Init DSP
-my_dsp = mydsp()
+my_dsp = mydsp{REAL}()
 init!(my_dsp, samplerate)
 ```
 
@@ -200,8 +202,8 @@ println("Application name: ", m.name, "\n")
 The number of inputs/output can be printed:
 
 ```julia
-println("getNumInputs: ", getNumInputs(my_dsp))
-println("getNumOutputs: ", getNumOutputs(my_dsp), "\n")
+println("getNumInputs!: ", getNumInputs!(my_dsp))
+println("getNumOutputs!: ", getNumOutputs!(my_dsp), "\n")
 ```
 
 Infomation on all controllers can be retrieved using the `MapUI` type:
@@ -218,8 +220,8 @@ println("Path/UIZone dictionary: ", getZoneMap(map_ui), "\n")
 And finally one buffer can be processed with the code:
 
 ```julia
-inputs = zeros(REAL, block_size, getNumInputs(my_dsp))
-outputs = zeros(REAL, block_size, getNumOutputs(my_dsp)) 
+inputs = zeros(FAUSTFLOAT, block_size, getNumInputs!(my_dsp))
+outputs = zeros(FAUSTFLOAT, block_size, getNumOutputs!(my_dsp)) 
 compute!(my_dsp, block_size, inputs, outputs)
 println("One computed output buffer: ", outputs)
 ```
