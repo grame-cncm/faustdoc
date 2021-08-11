@@ -1,10 +1,18 @@
+
+
 # Using Faust in Julia
 
 In this tutorial, we present how Faust can be used in [Julia](https://julialang.org/), a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.
 
 A [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. An [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been developed by [Cora Johnson-Roberson](https://corajr.com), but will not be covered by this tutorial.
 
-## Instaling the required packages
+Note that this tutorial demonstrates a *Work In Progress*, since the Faust Julia integration is not yet distributed as a proper Julia package. This will be the next step, probably adding the *Julia backend in the Faust compiler* approach in the Cora Johnson-Roberson libfaust based package. 
+
+#### Who is this tutorial for?
+
+The [first section](#using-command-line-tools) assumes a working [Faust compiler installed](https://github.com/grame-cncm/faust) on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) is better suited for Julia users who want to discover Faust and test the produced Julia code.  
+
+## Installing the required packages
 
 With a fresh Julia install, all required packages can be installed with the `julia packages.jl` command done in the architecture/julia folder.
 
@@ -292,9 +300,40 @@ faust-osc-controller /Oscillator -port 5001 -outport 5000 -xmit 1
 <img src="img/faust-osc-controller.png" class="mx-auto d-block" width="50%">
 <center>*The faust-osc-controller OSC controller*</center>
 
-## Using Faust Web IDE
+And finally the `faust-osc-controller` tool can be automatically started along the OSC receiver with the `faust2portaudiojulia -play 2 -oscc osc.dsp` command.
 
-Faust DSP program can be written, tested in the [Faust Web IDE](https://faustide.grame.fr/) and generated as embeddable Julia code, or possibly as working audio applications using the [PortAudio.jl](https://juliapackages.com/p/portaudio) package to render audio, and [OpenSoundControl.jl](https://juliapackages.com/p/opensoundcontrol) package for OSC control.
+## Using the Faust Web IDE
 
-### TODO
+Faust DSP program can be written, tested in the [Faust Web IDE](https://faustide.grame.fr/) and generated as embeddable Julia code, or possibly as working audio applications.
 
+### Generating the pure Julia output
+
+The output of the Julia backend can directly be generated using the *Platform = source* and "*Architecture = julia* export options. As previouly explained  the resulting file is not self-contained, but shows the cod eand has to be wrapped with adapter Julia  architecture files.
+
+### Generating a minimal working Julia file
+
+The *Platform = julia* and *Architecture = julia* export options allow to generate a self-contained file using the `minimal.jl`architecture. It can simply by started with the following command:
+
+```bash
+julia -i foo.jl (here -i to stay in interactive mode)
+```
+
+### Generating an audio application controllable with GTK or OSC based interfaces
+
+The *Platform = julia* and *Architecture = portaudiojulia* export options allow to generate a self-contained file using the `portaudio_gtk.jl`architecture. The following command starts the program with the GTK control interface: 
+
+```bash
+julia -t 2 foo.jl -gtk 
+```
+
+The following command starts the program with the OSC control interface, ready to receive OSC commands or controlled with the `faust-osc-controller` tool as previously explained : 
+
+```bash
+julia -t 2 foo.jl -osc 
+```
+
+And finally the `faust-osc-controller` tool can be automatically started along the OSC receiver with the following command: 
+
+```bash
+julia -t 2 foo.jl -oscc 
+```
