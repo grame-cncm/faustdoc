@@ -282,7 +282,11 @@
             
             <li class="nav-item" data-level="1"><a href="#using-faust-in-julia" class="nav-link">Using Faust in Julia</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#instaling-the-required-packages" class="nav-link">Instaling the required packages</a>
+            <li class="nav-item" data-level="4"><a href="#who-is-this-tutorial-for" class="nav-link">Who is this tutorial for?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#installing-the-required-packages" class="nav-link">Installing the required packages</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -306,9 +310,17 @@
             </li>
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#using-faust-web-ide" class="nav-link">Using Faust Web IDE</a>
+            <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide" class="nav-link">Using the Faust Web IDE</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#todo" class="nav-link">TODO</a>
+            <li class="nav-item" data-level="3"><a href="#generating-the-pure-julia-output" class="nav-link">Generating the pure Julia output</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generating-a-minimal-working-julia-file" class="nav-link">Generating a minimal working Julia file</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generating-an-audio-application-controllable-with-gtk-or-osc-based-interfaces" class="nav-link">Generating an audio application controllable with GTK or OSC based interfaces</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -323,9 +335,12 @@
 
 <h1 id="using-faust-in-julia">Using Faust in Julia</h1>
 <p>In this tutorial, we present how Faust can be used in <a href="https://julialang.org/">Julia</a>, a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.</p>
-<p>A <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia">Julia backend</a> has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. An <a href="https://github.com/corajr/Faust.jl">integration of the libfaust compiler</a> in Julia has been developed by <a href="https://corajr.com">Cora Johnson-Roberson</a>, but will not be covered by this tutorial.</p>
-<h2 id="instaling-the-required-packages">Instaling the required packages</h2>
-<p>With a fresh Julia install, all required packages can be installed with the <code>julia packages.jl</code> command done in the architecture/julia folder.</p>
+<p>A <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia">Julia backend</a> has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. On the other hand, an <a href="https://github.com/corajr/Faust.jl">integration of the libfaust compiler</a> in Julia has been developed by <a href="https://corajr.com">Cora Johnson-Roberson</a>, but will not be covered by this tutorial.</p>
+<p>Note that this tutorial demonstrates a <em>Work In Progress</em>, since the Faust Julia integration is not yet distributed as a proper Julia package. This will be the next step, probably adding the <em>Julia backend in the Faust compiler</em> approach in the Cora Johnson-Roberson libfaust based package. </p>
+<h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
+<p>The <a href="#using-command-line-tools">first section</a> assumes a working <a href="https://github.com/grame-cncm/faust">Faust compiler installed</a> on the machine, so is more designed for regular Faust users. The <a href="#using-the-faust-web-ide">second section</a> is better suited for Julia users who want to discover Faust and test the produced Julia code.  </p>
+<h2 id="installing-the-required-packages">Installing the required packages</h2>
+<p>With a fresh Julia install, all required packages are decribed in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/packages.jl">packages.jl</a> file, and can be installed with the <code>julia packages.jl</code> command done in the <code>architecture/julia</code> folder of the Faust repository.</p>
 <h2 id="using-command-line-tools">Using command line tools</h2>
 <h3 id="generating-julia-code">Generating Julia code</h3>
 <p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed</a> the <strong>faust</strong> compiler from the <a href="https://github.com/grame-cncm/faust">master-dev branch</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
@@ -367,8 +382,8 @@ ERROR: LoadError: UndefVarError: dsp not defined
 <p>Which compiles the Julia code, executes it and produces:</p>
 <pre><code class="language-bash">Application name: osc
 
-getNumInputs!: 0
-getNumOutputs!: 2
+getNumInputs: 0
+getNumOutputs: 2
 
 Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt; UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), &quot;/Oscillator/freq2&quot; =&gt; UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), &quot;/Oscillator/freq1&quot; =&gt; UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
@@ -530,9 +545,27 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 </code></pre>
 <p><img src="img/faust-osc-controller.png" class="mx-auto d-block" width="50%">
 <center><em>The faust-osc-controller OSC controller</em></center></p>
-<h2 id="using-faust-web-ide">Using Faust Web IDE</h2>
-<p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Julia code, or possibly as working audio applications using the <a href="https://juliapackages.com/p/portaudio">PortAudio.jl</a> package to render audio, and <a href="https://juliapackages.com/p/opensoundcontrol">OpenSoundControl.jl</a> package for OSC control.</p>
-<h3 id="todo">TODO</h3></div>
+<p>And finally the <code>faust-osc-controller</code> tool can be automatically started along the OSC receiver with the <code>faust2portaudiojulia -play 2 -oscc osc.dsp</code> command.</p>
+<h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
+<p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Julia code, or possibly as working audio applications.</p>
+<h3 id="generating-the-pure-julia-output">Generating the pure Julia output</h3>
+<p>The output of the Julia backend can directly be generated using the <em>Platform = source</em> and <em>Architecture = julia</em> export options. As previouly explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.</p>
+<p><img src="img/export.png" class="mx-auto d-block" width="40%">
+<center><em>Exporting the code</em></center></p>
+<h3 id="generating-a-minimal-working-julia-file">Generating a minimal working Julia file</h3>
+<p>The <em>Platform = julia</em> and <em>Architecture = julia</em> export options allow to generate a self-contained file using the <code>minimal.jl</code>architecture. It can simply by started with the following command:</p>
+<pre><code class="language-bash">julia -i foo.jl (here -i to stay in interactive mode)
+</code></pre>
+<h3 id="generating-an-audio-application-controllable-with-gtk-or-osc-based-interfaces">Generating an audio application controllable with GTK or OSC based interfaces</h3>
+<p>The <em>Platform = julia</em> and <em>Architecture = portaudiojulia</em> export options allow to generate a self-contained file using the <code>portaudio_gtk.jl</code>architecture. The following command starts the program with the GTK control interface: </p>
+<pre><code class="language-bash">julia -t 2 foo.jl -gtk 
+</code></pre>
+<p>The following command starts the program with the OSC control interface, ready to receive OSC commands or controlled with the <code>faust-osc-controller</code> tool as previously explained: </p>
+<pre><code class="language-bash">julia -t 2 foo.jl -osc 
+</code></pre>
+<p>And finally the <code>faust-osc-controller</code> tool can be automatically started along the OSC receiver with the following command: </p>
+<pre><code class="language-bash">julia -t 2 foo.jl -oscc 
+</code></pre></div>
             </div>
         </div>
 

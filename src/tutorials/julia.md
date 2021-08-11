@@ -4,7 +4,7 @@
 
 In this tutorial, we present how Faust can be used in [Julia](https://julialang.org/), a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.
 
-A [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. An [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been developed by [Cora Johnson-Roberson](https://corajr.com), but will not be covered by this tutorial.
+A [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. On the other hand, an [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been developed by [Cora Johnson-Roberson](https://corajr.com), but will not be covered by this tutorial.
 
 Note that this tutorial demonstrates a *Work In Progress*, since the Faust Julia integration is not yet distributed as a proper Julia package. This will be the next step, probably adding the *Julia backend in the Faust compiler* approach in the Cora Johnson-Roberson libfaust based package. 
 
@@ -14,7 +14,7 @@ The [first section](#using-command-line-tools) assumes a working [Faust compiler
 
 ## Installing the required packages
 
-With a fresh Julia install, all required packages can be installed with the `julia packages.jl` command done in the architecture/julia folder.
+With a fresh Julia install, all required packages are decribed in the [packages.jl](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/packages.jl) file, and can be installed with the `julia packages.jl` command done in the `architecture/julia` folder of the Faust repository.
 
 ## Using command line tools
 
@@ -67,8 +67,8 @@ Which compiles the Julia code, executes it and produces:
 ```bash
 Application name: osc
 
-getNumInputs!: 0
-getNumOutputs!: 2
+getNumInputs: 0
+getNumOutputs: 2
 
 Path/UIZone dictionary: Dict{String, UIZone}("/Oscillator/volume" => UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), "/Oscillator/freq2" => UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), "/Oscillator/freq1" => UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
@@ -308,7 +308,11 @@ Faust DSP program can be written, tested in the [Faust Web IDE](https://faustide
 
 ### Generating the pure Julia output
 
-The output of the Julia backend can directly be generated using the *Platform = source* and "*Architecture = julia* export options. As previouly explained  the resulting file is not self-contained, but shows the cod eand has to be wrapped with adapter Julia  architecture files.
+
+The output of the Julia backend can directly be generated using the *Platform = source* and *Architecture = julia* export options. As previouly explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.
+
+<img src="img/export.png" class="mx-auto d-block" width="40%">
+<center>*Exporting the code*</center>
 
 ### Generating a minimal working Julia file
 
@@ -326,7 +330,7 @@ The *Platform = julia* and *Architecture = portaudiojulia* export options allow 
 julia -t 2 foo.jl -gtk 
 ```
 
-The following command starts the program with the OSC control interface, ready to receive OSC commands or controlled with the `faust-osc-controller` tool as previously explained : 
+The following command starts the program with the OSC control interface, ready to receive OSC commands or controlled with the `faust-osc-controller` tool as previously explained: 
 
 ```bash
 julia -t 2 foo.jl -osc 
