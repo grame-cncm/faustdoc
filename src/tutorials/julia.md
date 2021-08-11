@@ -202,8 +202,8 @@ println("Application name: ", m.name, "\n")
 The number of inputs/output can be printed:
 
 ```julia
-println("getNumInputs!: ", getNumInputs!(my_dsp))
-println("getNumOutputs!: ", getNumOutputs!(my_dsp), "\n")
+println("getNumInputs: ", getNumInputs(my_dsp))
+println("getNumOutputs: ", getNumOutputs(my_dsp), "\n")
 ```
 
 Infomation on all controllers can be retrieved using the `MapUI` type:
@@ -217,11 +217,11 @@ buildUserInterface!(my_dsp, map_ui)
 println("Path/UIZone dictionary: ", getZoneMap(map_ui), "\n")   
 ```
 
-And finally one buffer can be processed with the code:
+And finally one buffer can be processed with the following code, here giving `FAUSTFLOAT` as the actual type for external samples:
 
 ```julia
-inputs = zeros(FAUSTFLOAT, block_size, getNumInputs!(my_dsp))
-outputs = zeros(FAUSTFLOAT, block_size, getNumOutputs!(my_dsp)) 
+inputs = zeros(FAUSTFLOAT, block_size, getNumInputs(my_dsp))
+outputs = zeros(FAUSTFLOAT, block_size, getNumOutputs(my_dsp)) 
 compute!(my_dsp, block_size, inputs, outputs)
 println("One computed output buffer: ", outputs)
 ```

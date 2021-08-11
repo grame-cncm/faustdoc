@@ -477,8 +477,8 @@ metadata!(my_dsp, m)
 println(&quot;Application name: &quot;, m.name, &quot;\n&quot;)
 </code></pre>
 <p>The number of inputs/output can be printed:</p>
-<pre><code class="language-julia">println(&quot;getNumInputs!: &quot;, getNumInputs!(my_dsp))
-println(&quot;getNumOutputs!: &quot;, getNumOutputs!(my_dsp), &quot;\n&quot;)
+<pre><code class="language-julia">println(&quot;getNumInputs: &quot;, getNumInputs(my_dsp))
+println(&quot;getNumOutputs: &quot;, getNumOutputs(my_dsp), &quot;\n&quot;)
 </code></pre>
 <p>Infomation on all controllers can be retrieved using the <code>MapUI</code> type:</p>
 <pre><code class="language-julia"># Create a MapUI controller
@@ -488,9 +488,9 @@ buildUserInterface!(my_dsp, map_ui)
 # Print all zones
 println(&quot;Path/UIZone dictionary: &quot;, getZoneMap(map_ui), &quot;\n&quot;)   
 </code></pre>
-<p>And finally one buffer can be processed with the code:</p>
-<pre><code class="language-julia">inputs = zeros(FAUSTFLOAT, block_size, getNumInputs!(my_dsp))
-outputs = zeros(FAUSTFLOAT, block_size, getNumOutputs!(my_dsp)) 
+<p>And finally one buffer can be processed with the following code, here giving <code>FAUSTFLOAT</code> as the actual type for external samples:</p>
+<pre><code class="language-julia">inputs = zeros(FAUSTFLOAT, block_size, getNumInputs(my_dsp))
+outputs = zeros(FAUSTFLOAT, block_size, getNumOutputs(my_dsp)) 
 compute!(my_dsp, block_size, inputs, outputs)
 println(&quot;One computed output buffer: &quot;, outputs)
 </code></pre>
