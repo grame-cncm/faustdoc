@@ -413,7 +413,7 @@ Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt
     end
 end
 </code></pre>
-<p>Note that the structure is parametrized with a <code>{T}</code> type to be given at initialization time. The <code>const REAL = Float32</code> or <code>const REAL = Float64</code>  line is generated depending of the <code>-single</code> (default), or <code>-double</code> option given at compilation time can be used for that. </p>
+<p>Note that the structure is parametrized with a <code>{T}</code> type to be given at initialization time. The <code>const REAL = Float32</code> or <code>const REAL = Float64</code>  line is generated depending of the <code>-single</code> (default), or <code>-double</code> option given at compilation time, and can be used for that. </p>
 <p>Several access methods are generated:</p>
 <pre><code class="language-julia">function getNumInputs(dsp::mydsp{T}) where {T}
     return Int32(0) 
@@ -429,7 +429,7 @@ end
     dsp.fHslider2 = FAUSTFLOAT(200.0f0) 
 end
 </code></pre>
-<p>The <code>buildUserInterface!</code> method uses a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl">UI</a> subtype to build a controller, either a Graphical User Interface (for example using <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl">GTK</a>), or an <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl">OSC</a> controller:</p>
+<p>The <code>buildUserInterface!</code> method uses a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl">UI</a> subtype to build a controller, which could be a Graphical User Interface (for instance using <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl">GTK</a>), or an <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl">OSC</a> controller:</p>
 <pre><code class="language-julia">function buildUserInterface!(dsp::mydsp{T}, ui_interface::UI) where {T}
     openVerticalBox!(ui_interface, &quot;Oscillator&quot;) 
     declare!(ui_interface, :fHslider1, &quot;unit&quot;, &quot;Hz&quot;) 
@@ -441,7 +441,7 @@ end
     closeBox!(ui_interface)
 end
 </code></pre>
-<p>The DSP structure fields to access are simply described with their name, and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue!</code> and <code>getParamValue</code>methods written in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
+<p>The DSP structure fields to access are simply described with their name (actually a <a href="https://docs.julialang.org/en/v1/manual/metaprogramming/#Symbols">Symbol</a> in Julia terminology), and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue!</code> and <code>getParamValue</code>methods written in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
 <p>And finally the <code>compute!</code> method that processes and input buffer with <code>count</code> frames to produce an output buffer: </p>
 <pre><code class="language-julia">inbounds function compute!(dsp::mydsp{T}, count::Int32, inputs::Matrix{FAUSTFLOAT), outputs::Matrix{FAUSTFLOAT)) where {T}
     output0 = @inbounds @view outputs[:, 1]
@@ -491,7 +491,7 @@ m = NameMeta(&quot;&quot;)
 metadata!(my_dsp, m)
 println(&quot;Application name: &quot;, m.name, &quot;\n&quot;)
 </code></pre>
-<p>The number of inputs/output can be printed:</p>
+<p>The number of inputs/outputs can be printed:</p>
 <pre><code class="language-julia">println(&quot;getNumInputs: &quot;, getNumInputs(my_dsp))
 println(&quot;getNumOutputs: &quot;, getNumOutputs(my_dsp), &quot;\n&quot;)
 </code></pre>
@@ -518,7 +518,7 @@ println(&quot;One computed output buffer: &quot;, outputs)
 <p>It creates an <strong>osc.jl</strong> file that can simply be executed using:</p>
 <pre><code class="language-bash">julia osc.jl
 </code></pre>
-<p>So the stereo program generating sinewaves at 1000 Hz and 500 Hz by default is now playing, without any interface to control it.</p>
+<p>So the stereo program generating sinewaves at 1000 Hz and 200 Hz by default is now playing, without any interface to control it.</p>
 <p>Now using the following command:</p>
 <pre><code class="language-bash">faust2portaudiojulia -play 2 osc.dsp
 </code></pre>

@@ -104,7 +104,7 @@ mutable struct mydsp{T} <: dsp
 	end
 end
 ```
-Note that the structure is parametrized with a `{T}` type to be given at initialization time. The `const REAL = Float32` or `const REAL = Float64`  line is generated depending of the `-single` (default), or `-double` option given at compilation time can be used for that. 
+Note that the structure is parametrized with a `{T}` type to be given at initialization time. The `const REAL = Float32` or `const REAL = Float64`  line is generated depending of the `-single` (default), or `-double` option given at compilation time, and can be used for that. 
 
 Several access methods are generated:
 
@@ -127,7 +127,7 @@ function instanceResetUserInterface!(dsp::mydsp{T}) where {T}
 end
 ```
 
-The `buildUserInterface!` method uses a [UI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl) subtype to build a controller, either a Graphical User Interface (for example using [GTK](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl)), or an [OSC](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl) controller:
+The `buildUserInterface!` method uses a [UI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/UI.jl) subtype to build a controller, which could be a Graphical User Interface (for instance using [GTK](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/GTKUI.jl)), or an [OSC](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/OSCUI.jl) controller:
 
 
 ```julia
@@ -143,7 +143,7 @@ function buildUserInterface!(dsp::mydsp{T}, ui_interface::UI) where {T}
 end
 ```
 
-The DSP structure fields to access are simply described with their name, and can later be used with the standard [setproperty!](https://docs.julialang.org/en/v1/base/base/#Base.setproperty!) and [getproperty](https://docs.julialang.org/en/v1/base/base/#Base.getproperty) access methods, like in the `setParamValue!` and `getParamValue`methods written in the [MapUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl) architecture.
+The DSP structure fields to access are simply described with their name (actually a [Symbol](https://docs.julialang.org/en/v1/manual/metaprogramming/#Symbols) in Julia terminology), and can later be used with the standard [setproperty!](https://docs.julialang.org/en/v1/base/base/#Base.setproperty!) and [getproperty](https://docs.julialang.org/en/v1/base/base/#Base.getproperty) access methods, like in the `setParamValue!` and `getParamValue`methods written in the [MapUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl) architecture.
 
 And finally the `compute!` method that processes and input buffer with `count` frames to produce an output buffer: 
 
@@ -207,7 +207,7 @@ metadata!(my_dsp, m)
 println("Application name: ", m.name, "\n")
 ```
 
-The number of inputs/output can be printed:
+The number of inputs/outputs can be printed:
 
 ```julia
 println("getNumInputs: ", getNumInputs(my_dsp))
@@ -252,7 +252,7 @@ It creates an **osc.jl** file that can simply be executed using:
 julia osc.jl
 ```
 
-So the stereo program generating sinewaves at 1000 Hz and 500 Hz by default is now playing, without any interface to control it.
+So the stereo program generating sinewaves at 1000 Hz and 200 Hz by default is now playing, without any interface to control it.
 
 Now using the following command:
 
@@ -307,7 +307,6 @@ And finally the `faust-osc-controller` tool can be automatically started along t
 Faust DSP program can be written, tested in the [Faust Web IDE](https://faustide.grame.fr/) and generated as embeddable Julia code, or possibly as working audio applications.
 
 ### Generating the pure Julia output
-
 
 The output of the Julia backend can directly be generated using the *Platform = source* and *Architecture = julia* export options. As previouly explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.
 
