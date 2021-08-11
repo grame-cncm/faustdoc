@@ -404,11 +404,17 @@ Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt
     fRec2::Vector{T} 
     fHslider2::FAUSTFLOAT 
     fRec3::Vector{T} 
-    mydsp() = begin
-        dsp = new()
+    iVec0::Vector{Int32} 
+    iRec1::Vector{Int32} 
+    ftbl0mydspSIG0::Vector{T} 
+    mydsp{T}() where {T} = begin
+        dsp = new{T}()
         dsp.fRec0 = zeros(T, 2)
         dsp.fRec2 = zeros(T, 2)
         dsp.fRec3 = zeros(T, 2)
+        dsp.iVec0 = zeros(Int32, 2)
+        dsp.iRec1 = zeros(Int32, 2)
+        dsp.ftbl0mydspSIG0 = zeros(T, 65536)
         dsp
     end
 end
@@ -443,7 +449,7 @@ end
 </code></pre>
 <p>The DSP structure fields to access are simply described with their name (actually a <a href="https://docs.julialang.org/en/v1/manual/metaprogramming/#Symbols">Symbol</a> in Julia terminology), and can later be used with the standard <a href="https://docs.julialang.org/en/v1/base/base/#Base.setproperty!">setproperty!</a> and <a href="https://docs.julialang.org/en/v1/base/base/#Base.getproperty">getproperty</a> access methods, like in the <code>setParamValue!</code> and <code>getParamValue</code>methods written in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl">MapUI</a> architecture.</p>
 <p>And finally the <code>compute!</code> method that processes and input buffer with <code>count</code> frames to produce an output buffer: </p>
-<pre><code class="language-julia">inbounds function compute!(dsp::mydsp{T}, count::Int32, inputs::Matrix{FAUSTFLOAT), outputs::Matrix{FAUSTFLOAT)) where {T}
+<pre><code class="language-julia">@inbounds function compute!(dsp::mydsp, count::Int32, inputs, outputs)
     output0 = @inbounds @view outputs[:, 1]
     output1 = @inbounds @view outputs[:, 2]
     fSlow0::Float32 = (dsp.fConst1 * pow(10.0f0, (0.0500000007f0 * Float32(dsp.fHslider0)))) 
@@ -452,11 +458,11 @@ end
     @inbounds for i0 in 0:count-1
         dsp.fRec0[1] = (fSlow0 + (dsp.fConst2 * dsp.fRec0[2])) 
         dsp.fRec2[1] = (fSlow1 + (dsp.fRec2[2] - floor((fSlow1 + dsp.fRec2[2])))) 
-        output0[i0+1] = FAUSTFLOAT((dsp.fRec0[1] * ftbl0mydspSIG0[trunc(Int32, 
-            (65536.0f0 * dsp.fRec2[1]))+1])) 
+        output0[i0+1] = FAUSTFLOAT((dsp.fRec0[1] 
+        * dsp.ftbl0mydspSIG0[trunc(Int32, (65536.0f0 * dsp.fRec2[1]))+1])) 
         dsp.fRec3[1] = (fSlow2 + (dsp.fRec3[2] - floor((fSlow2 + dsp.fRec3[2])))) 
-        output1[i0+1] = FAUSTFLOAT((dsp.fRec0[1] * ftbl0mydspSIG0[trunc(Int32, 
-            (65536.0f0 * dsp.fRec3[1]))+1])) 
+        output1[i0+1] = FAUSTFLOAT((dsp.fRec0[1] 
+        * dsp.ftbl0mydspSIG0[trunc(Int32, (65536.0f0 * dsp.fRec3[1]))+1])) 
         dsp.fRec0[2] = dsp.fRec0[1] 
         dsp.fRec2[2] = dsp.fRec2[1] 
         dsp.fRec3[2] = dsp.fRec3[1] 
