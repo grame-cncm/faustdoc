@@ -14,7 +14,10 @@ The [first section](#using-command-line-tools) assumes a working [Faust compiler
 
 ## Installing the required packages
 
-With a fresh Julia install, all required packages are decribed in the [packages.jl](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/packages.jl) file, and can be installed with the `julia packages.jl` command done in the `architecture/julia` folder of the Faust repository.
+With a fresh Julia install, all required packages are decribed in the [packages.jl](https://raw.githubusercontent.com/grame-cncm/faust/master-dev/architecture/julia/packages.jl) file:
+
+ - in case you have an installed Faust version, it can be installed with the `julia packages.jl` command done in the `architecture/julia` folder of the Faust repository
+ - of directly downloaded, and executed with the `julia packages.jl` command
 
 ## Using command line tools
 
@@ -269,7 +272,7 @@ faust2portaudiojulia -play 2 osc.dsp
 
 Will create the **osc.jl** file, directly execute it using **Julia**, with PortAudio based audio rendering and GTK GUI (and with 2 threads needed for GTK and audio). **Note** that the GUI is still quite simple:
 
-<img src="img/osc-gtk.png" class="mx-auto d-block" width="50%">
+<img src="img/osc-gtk.png" class="mx-auto d-block" width="55%">
 <center>*The GTK based controller*</center>
 
 
