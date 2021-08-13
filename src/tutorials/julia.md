@@ -14,7 +14,7 @@ The [first section](#using-command-line-tools) assumes a working [Faust compiler
 
 ## Installing the required packages
 
-With a fresh Julia install, all required packages are decribed in the [packages.jl](https://raw.githubusercontent.com/grame-cncm/faust/master-dev/architecture/julia/packages.jl) file:
+Be sure to have the **julia** command available in your PATH, as [explained here](https://julialang.org/downloads/platform/). With a fresh Julia install, all required packages are decribed in the [packages.jl](https://raw.githubusercontent.com/grame-cncm/faust/master-dev/architecture/julia/packages.jl) file:
 
  - in case you have an installed Faust version, it can be installed with the `julia packages.jl` command done in the `architecture/julia` folder of the Faust repository
  - of directly downloaded, and executed with the `julia packages.jl` command
