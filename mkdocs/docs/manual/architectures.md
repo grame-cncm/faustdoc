@@ -1768,6 +1768,11 @@ A post-processor for Faust, which allows to generate with more flexibility. This
 
 This is a small project meant as a way to facilitate the creation of UIs from Faust functional programming language, through the [Distrho plugin framework](https://github.com/DISTRHO/DPF).
 
+#### [cookiecutter-dpf-faust](https://github.com/SpotlightKid/cookiecutter-dpf-faust)
+
+A [cookiecutter](https://github.com/cookiecutter/cookiecutter) project template for [Distrho plugin framework](https://github.com/DISTRHO/DPF) audio effect plugins using Faust for the implementation of the DSP pipeline.
+
+
 #### [faustmd](https://github.com/jpcima/faustmd)
 
 Static metadata generator for Faust/C++. This program builds the metadata for a Faust DSP ahead of time, rather than dynamically. The result is a block of C++ code which can be appended to the code generation.
@@ -1798,5 +1803,4 @@ Import Faust .dsp files, and get back an AudioWorklet or ScriptProcessor node.
 
 #### [Faust Compiler Microservice](https://github.com/Ameobea/web-synth/tree/master/faust-compiler#faust-compiler-microservice)
 This is a microservice that serves a single purpose: Compiling Faust code that is sent to it into WebAssembly that can then be loaded and run natively from within the web synth application. It is written in go because go is supposed to be good for this sort of thing.
-
 
