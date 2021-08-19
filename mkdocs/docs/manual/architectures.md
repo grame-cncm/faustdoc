@@ -1766,11 +1766,11 @@ A post-processor for Faust, which allows to generate with more flexibility. This
 
 #### [faust2dpf](https://github.com/travis-aaron/faust2dpf)
 
-This is a small project meant as a way to facilitate the creation of UIs from Faust functional programming language, through the [Distrho plugin framework](https://github.com/DISTRHO/DPF).
+This is a small project meant as a way to facilitate the creation of UIs from Faust functional programming language, through the [DISTRHO plugin framework](https://github.com/DISTRHO/DPF).
 
 #### [cookiecutter-dpf-faust](https://github.com/SpotlightKid/cookiecutter-dpf-faust)
 
-A [cookiecutter](https://github.com/cookiecutter/cookiecutter) project template for [Distrho plugin framework](https://github.com/DISTRHO/DPF) audio effect plugins using Faust for the implementation of the DSP pipeline.
+A [cookiecutter](https://github.com/cookiecutter/cookiecutter) project template for [DISTRHO plugin framework](https://github.com/DISTRHO/DPF) audio effect plugins using Faust for the implementation of the DSP pipeline.
 
 
 #### [faustmd](https://github.com/jpcima/faustmd)
