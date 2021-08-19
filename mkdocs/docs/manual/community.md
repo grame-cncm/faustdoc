@@ -1,6 +1,6 @@
 # Material from the community
 
-Here is a list of additional material contributed by the community of Faust developers.
+Here is a list of additional material contributed by the community of Faust developers or users.
 
 ##### [Handling infinity and not-a-number (NaN) values in Faust and C++ audio programming](https://www.dariosanfilippo.com/blog/2020/handling_inf_nan_values_in_faust_and_cpp/)  
 
@@ -9,6 +9,10 @@ This post by [Dario Sanfilippo](https://www.dariosanfilippo.com) discusses insig
 ##### [Three ways to implement recursive circuits in the Faust language](https://www.dariosanfilippo.com/blog/2020/faust_recursive_circuits/)  
 
 This post by [Dario Sanfilippo](https://www.dariosanfilippo.com) is about the implementation of not-so-simple recursive circuits in the Faust language.  
+
+##### [Make LV2 plugins with Faust](https://z-uo.medium.com/make-lv2-plugins-with-faust-ce58601ab3b9)  
+
+This post by Nicola Landro is about making LV2 plugins with Faust.
 
 ##### Contributing
 Feel free to contribute by [forking this project](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks) and [creating a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), or by mailing the library description [here](mailto:research@grame.fr).
