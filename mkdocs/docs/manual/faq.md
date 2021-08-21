@@ -34,7 +34,7 @@ Similarly, some computations will exceed the range that is representable with fl
 
 After being produced, those values can actually *contaminate* the following flow of computations (that is `Nan + any value = NaN` for instance) up to the point of producing incorrect indexes when used in array access, and causing memory access crashes.  
 
-In Faust, the interval calculation system on signals is supposed to detect possible problematic computations at compile time, and refuse to compile the corresponding DSP code. But **since the interval calculation is currently quite imperfect**, it can misbehave and generate possible problematic code, **that will possibly misbehave at runtime**. The typical case is when producing indexes to access rdtable/rwtable or delay lines, **that may trigger memory access crashes as explained before**.
+In Faust, the interval calculation system on signals is supposed to detect possible problematic computations at compile time, and refuse to compile the corresponding DSP code. But **since the interval calculation is currently quite imperfect**, it can misbehave and generate possible problematic code, **that will possibly crash at runtime**. The typical case is when producing indexes to access rdtable/rwtable or delay lines, **that may trigger memory access crashes as explained before**.
 
 Several strategies have been developed to help programmers better understand their written DSP code, and possibly analyse it both at compile time and runtime:
 
