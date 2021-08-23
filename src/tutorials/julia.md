@@ -4,7 +4,7 @@
 
 In this tutorial, we present how Faust can be used in [Julia](https://julialang.org/), a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.
 
-A [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. On the other hand, an [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been developed by [Cora Johnson-Roberson](https://corajr.com), but will not be covered by this tutorial.
+A [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. On the other hand, an [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been developed by [Cora Johnson-Roberson](https://corajr.com), and will be covered by the [last section of the tutorial](#using-the-faust.jl-julia-package).
 
 Note that this tutorial demonstrates a *Work In Progress*, since the Faust Julia integration is not yet distributed as a proper Julia package. This will be the next step, probably adding the *Julia backend in the Faust compiler* approach in the Cora Johnson-Roberson libfaust based package. 
 
@@ -12,7 +12,7 @@ Note that this tutorial demonstrates a *Work In Progress*, since the Faust Julia
 
 The [first section](#using-command-line-tools) assumes a working [Faust compiler installed](https://github.com/grame-cncm/faust) on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) is better suited for Julia users who want to discover Faust and test the produced Julia code.  
 
-## Installing the required packages
+### Installing the required packages
 
 Be sure to have the **julia** command available in your PATH, as [explained here](https://julialang.org/downloads/platform/). With a fresh Julia install, all required packages are decribed in the [packages.jl](https://raw.githubusercontent.com/grame-cncm/faust/master-dev/architecture/julia/packages.jl) file:
 
@@ -350,3 +350,106 @@ And finally the `faust-osc-controller` tool can be automatically started along t
 ```bash
 julia -t 2 foo.jl -oscc 
 ```
+
+## Using the Faust.jl Julia package
+
+The Julia ecosystem contains over 4,000 packages that [are registered in the General registry](https://julialang.org/packages/). A Faust.lj package initially developed by [Cora Johnson-Roberson](https://corajr.com), has been [forked and extended here](https://github.com/sletz/Faust.jl). It allows to use the libfaust library and the Julias Faust backend. 
+
+The [Visual Studio Code](https://code.visualstudio.com) application can be configurated with a [Julia extension](https://marketplace.visualstudio.com/items?itemName=julialang.language-julia). It is a very convenient way to  edit, compile and test Julia + Faust code. 
+
+### Installing the forked Faust.jl package
+
+In VS Code, you can [enter the pakage mode](https://docs.julialang.org/en/v1/stdlib/Pkg/). Pkg comes with a REPL. Enter the Pkg REPL by pressing `]` from the Julia REPL and install the Faust package with:
+
+```julia
+pkg> add https://github.com/sletz/Faust.jl
+```
+ To get back to the Julia REPL, press backspace or ^C, then load the Faust package with:
+
+```julia
+ julia> Using Faust
+```
+
+Assuming a working Julia environement is setup, the following commands can be used.
+
+### Using the libfaust compiler
+
+```julia
+ using Faust
+ 
+ # Create a DSP factory.
+ dsp = compile("""
+ import("stdfaust.lib");
+ 
+ freq = hslider("freq", 440, 20, 20000, 1);
+ gain = hslider("gain", 0.25, 0, 1, 0.001);
+ process = os.oscs(freq) * gain;
+ """)
+ 
+ # Initialize DSP instance and controls.
+ init!(dsp; block_size=1024, samplerate=48000)
+ 
+ # Compute one block of audio.
+ compute!(dsp)
+```
+
+ By default, programs are compiled as single-precision; you can give `-double` or
+ other arguments to the compiler like so:
+
+```
+ compile("process = _;"; name="passthrough", argv=["-double", "-vec"])
+```
+
+ Each call to `compute!` will calculate `block_size` samples and return the
+ output as a matrix of (block_size, n_channels). If the program takes input,
+ set `dsp.inputs` to a (block_size, n_channels) matrix before calling `compute!`:
+
+```julia
+ passthrough = init!(compile("process = _,_;"))
+ x = rand(Float32, 256, 2)
+ passthrough.inputs = x
+ @test compute!(passthrough) == x
+```
+
+ After calling `init!`, any UI elements declared in your code will have their
+ path names and ranges available via `dsp.ui.ranges`.
+
+```julia
+ julia> dsp.ui.ranges
+ Dict{String, Faust.UIRange} with 2 entries:
+ "/score/gain" => UIRange(0.25, 0.0, 1.0, 0.001)
+ "/score/freq" => UIRange(440.0, 20.0, 20000.0, 1.0)
+ 
+ julia> ctrl = dsp.ui.ranges["/score/freq"]; (ctrl.min, ctrl.max)
+ (20.0f0, 20000.0f0)
+```
+
+ One can then set the values of these params like:
+
+```
+ setparams!(dsp, Dict("/score/freq" => 220.0f0))
+```
+
+### Displaying signals
+
+ The DSP program outputs can be displayed with the following commands: 
+
+```julia
+ # Define a block of DSP code
+ julia> code = """import("stdfaust.lib"); process = os.osc(500), os.sawtooth(1000);"""
+ 
+ # Compile the DSP, compute one block of audio and display the outputs
+ julia> compileFaustString(code)
+ 
+ # Compile the DSP, with aditionals compile arguments and display the outputs
+ julia> compileFaustString(code; argv=["-double", "-vec"])
+ 
+ # Compile the DSP, with a larger block_size and display the outputs
+ julia> compileFaustString(code; block_size=50000)
+```
+ With the following result in VS code:
+ 
+<img src="img/faust-jl-package.png" class="mx-auto d-block" width="80%">
+<center>*Using Julia in VS code*</center>
+
+
