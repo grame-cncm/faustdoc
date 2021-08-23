@@ -353,7 +353,7 @@ julia -t 2 foo.jl -oscc
 
 ## Using the Faust.jl Julia package
 
-The Julia ecosystem contains over 4,000 packages that [are registered in the General registry](https://julialang.org/packages/). A Faust.lj package initially developed by [Cora Johnson-Roberson](https://corajr.com), has been [forked and extended here](https://github.com/sletz/Faust.jl). It allows to use the libfaust library and the Julias Faust backend. 
+The Julia ecosystem contains over 4,000 packages that [are registered in the General registry](https://julialang.org/packages/). A Faust.lj package initially developed by [Cora Johnson-Roberson](https://corajr.com), has been [forked and extended here](https://github.com/sletz/Faust.jl). It allows to use the libfaust library and the Julia Faust backend. 
 
 The [Visual Studio Code](https://code.visualstudio.com) application can be configurated with a [Julia extension](https://marketplace.visualstudio.com/items?itemName=julialang.language-julia). It is a very convenient way to  edit, compile and test Julia + Faust code. 
 
