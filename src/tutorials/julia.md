@@ -4,13 +4,11 @@
 
 In this tutorial, we present how Faust can be used in [Julia](https://julialang.org/), a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.
 
-A [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has recently be added in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. On the other hand, an [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been developed by [Cora Johnson-Roberson](https://corajr.com), and will be covered by the [last section of the tutorial](#using-the-faust.jl-julia-package).
-
-Note that this tutorial demonstrates a *Work In Progress*, since the Faust Julia integration is not yet distributed as a proper Julia package. This will be the next step, probably adding the *Julia backend in the Faust compiler* approach in the Cora Johnson-Roberson libfaust based package. 
+An [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been firstly developed by [Cora Johnson-Roberson](https://corajr.com), and will be covered by the [last section of the tutorial](#using-the-faustjl-julia-package). Then a [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has been added in a second step in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. 
 
 #### Who is this tutorial for?
 
-The [first section](#using-command-line-tools) assumes a working [Faust compiler installed](https://github.com/grame-cncm/faust) on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) is better suited for Julia users who want to discover Faust and test the produced Julia code.  
+The [first section](#using-command-line-tools) assumes a working [Faust compiler installed](https://github.com/grame-cncm/faust) on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) and [third section](#using-the-faustjl-julia-package) are better suited for Julia users who want to discover Faust.  
 
 ### Installing the required packages
 
@@ -325,7 +323,7 @@ The output of the Julia backend can directly be generated using the *Platform = 
 
 ### Generating a minimal working Julia file
 
-The *Platform = julia* and *Architecture = julia* export options allow to generate a self-contained file using the `minimal.jl`architecture. It can simply by started with the following command:
+The *Platform = julia* and *Architecture = julia* export options allow to generate a self-contained file using the `minimal.jl`architecture, to be by started with the following command:
 
 ```bash
 julia -i foo.jl (here -i to stay in interactive mode)
