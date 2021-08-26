@@ -646,7 +646,7 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 <pre><code> setparams!(dsp, Dict(&quot;/score/freq&quot; =&gt; 220.0f0))
 </code></pre>
 <h3 id="displaying-signals">Displaying signals</h3>
-<p>The DSP program outputs can be displayed with the following commands: </p>
+<p>Julia offers a lot of packages to display signals, for example with the following commands (<a href="https://github.com/sletz/Faust.jl/blob/main/src/Faust.jl">coded here</a>) to display the ouputs buffers: </p>
 <pre><code class="language-julia"> # Define a block of DSP code
  julia&gt; code = &quot;&quot;&quot;import(&quot;stdfaust.lib&quot;); process = os.osc(500), os.sawtooth(1000);&quot;&quot;&quot;
 
@@ -661,7 +661,8 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 </code></pre>
 <p>With the following result in VS code:</p>
 <p><img src="img/faust-jl-package.png" class="mx-auto d-block" width="80%">
-<center><em>Using Julia in VS code</em></center></p></div>
+<center><em>Using Julia in VS code</em></center></p>
+<p>More sophisticated analysis can be done, like <a href="https://github.com/sletz/Faust.jl/blob/main/examples/finitediff.jl">this example</a>, or this projet to experiment <a href="https://github.com/corajr/faust_nn">using NNs in Faust</a>. </p></div>
             </div>
         </div>
 

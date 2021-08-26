@@ -430,7 +430,7 @@ Assuming a working Julia environement is setup, the following commands can be us
 
 ### Displaying signals
 
- The DSP program outputs can be displayed with the following commands: 
+ Julia offers a lot of packages to display signals, for example with the following commands ([coded here](https://github.com/sletz/Faust.jl/blob/main/src/Faust.jl)) to display the ouputs buffers: 
 
 ```julia
  # Define a block of DSP code
@@ -450,4 +450,4 @@ Assuming a working Julia environement is setup, the following commands can be us
 <img src="img/faust-jl-package.png" class="mx-auto d-block" width="80%">
 <center>*Using Julia in VS code*</center>
 
-
+More sophisticated analysis can be done, like [this example](https://github.com/sletz/Faust.jl/blob/main/examples/finitediff.jl), or this projet to experiment [using NNs in Faust](https://github.com/corajr/faust_nn). 
