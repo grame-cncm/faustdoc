@@ -18,12 +18,15 @@ This post by Nicola Landro is about making LV2 plugins with Faust.
 
 This post by [Mads Kjeldgaard](https://madskjeldgaard.dk/pages/about/) is about using Faust with [SuperCollider](https://supercollider.github.io).
 
-
 ### [Get Started Audio Programming with the FAUST Language](https://medium.com/@kmatthew/get-started-audio-programming-with-the-faust-language-75b854b6f7d4)  
 
 This post by [Matt K](https://medium.com/@kmatthew) is about starting audio Programming with Faust. 
 
+### [Using Faust on the OWL family of devices ](https://openwarelab.org/Faust)
+
+This tutorial focus on using Faust and on features that are specific to OWL and the OpenWare firmware.
 
 ##### Contributing
+
 Feel free to contribute by [forking this project](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks) and [creating a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), or by mailing the library description [here](mailto:research@grame.fr).
 
