@@ -599,12 +599,11 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 <pre><code class="language-julia">pkg&gt; add https://github.com/sletz/Faust.jl
 </code></pre>
 <p>To get back to the Julia REPL, press backspace or ^C, then load the Faust package with:</p>
-<pre><code class="language-julia"> julia&gt; Using Faust
+<pre><code class="language-julia"> julia&gt; using Faust
 </code></pre>
 <p>Assuming a working Julia environement is setup, the following commands can be used.</p>
 <h3 id="using-the-libfaust-compiler">Using the libfaust compiler</h3>
-<pre><code class="language-julia"> using Faust
-
+<pre><code class="language-julia">
  # Create a DSP factory.
  dsp = compile(&quot;&quot;&quot;
  import(&quot;stdfaust.lib&quot;);
@@ -646,7 +645,7 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 <pre><code> setparams!(dsp, Dict(&quot;/score/freq&quot; =&gt; 220.0f0))
 </code></pre>
 <h3 id="displaying-signals">Displaying signals</h3>
-<p>Julia offers a lot of packages to display signals, for example with the following commands (<a href="https://github.com/sletz/Faust.jl/blob/main/src/Faust.jl">coded here</a>) to display the ouputs buffers: </p>
+<p>Julia offers a lot of packages to display signals, for example with the following commands (<a href="https://github.com/sletz/Faust.jl/blob/main/src/Faust.jl">coded here</a>) to display the outputs buffers: </p>
 <pre><code class="language-julia"> # Define a block of DSP code
  julia&gt; code = &quot;&quot;&quot;import(&quot;stdfaust.lib&quot;); process = os.osc(500), os.sawtooth(1000);&quot;&quot;&quot;
 

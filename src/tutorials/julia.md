@@ -365,7 +365,7 @@ pkg> add https://github.com/sletz/Faust.jl
  To get back to the Julia REPL, press backspace or ^C, then load the Faust package with:
 
 ```julia
- julia> Using Faust
+ julia> using Faust
 ```
 
 Assuming a working Julia environement is setup, the following commands can be used.
@@ -373,7 +373,6 @@ Assuming a working Julia environement is setup, the following commands can be us
 ### Using the libfaust compiler
 
 ```julia
- using Faust
  
  # Create a DSP factory.
  dsp = compile("""
@@ -430,7 +429,7 @@ Assuming a working Julia environement is setup, the following commands can be us
 
 ### Displaying signals
 
- Julia offers a lot of packages to display signals, for example with the following commands ([coded here](https://github.com/sletz/Faust.jl/blob/main/src/Faust.jl)) to display the ouputs buffers: 
+ Julia offers a lot of packages to display signals, for example with the following commands ([coded here](https://github.com/sletz/Faust.jl/blob/main/src/Faust.jl)) to display the outputs buffers: 
 
 ```julia
  # Define a block of DSP code
