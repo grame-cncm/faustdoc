@@ -342,6 +342,18 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#executing-the-generated-code" class="nav-link">Executing the generated code</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#connecting-the-audio-layer" class="nav-link">Connecting the audio layer</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#connecting-the-controller-layer" class="nav-link">Connecting the controller layer</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#creating-a-signal-language-based-on-this-api" class="nav-link">Creating a signal language based on this API</a>
               <ul class="nav flex-column">
               </ul>
@@ -366,7 +378,7 @@
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
 <p>A new intermediate entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <em>signal API</em> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
 <h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
-<p>In this tutorial, we present the signal API with examples of code to show how to use it. The optimizations properties will be demonstrated looking at the generated C++ code. A minimal language (using C code) will be presented. The goal is to demonstrate how more sophisticated languages (graphical or …) could be built on top of the signal API.</p>
+<p>In this tutorial, we present the signal API with examples of code to show how to use it. The optimizations properties will be demonstrated looking at the generated C++ code. A minimal language (using C code) will be presented. The goal is to demonstrate how more sophisticated languages (textual or graphical) could be built on top of the signal API.</p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
 <p>Using the signal API follows the scheme:</p>
 <ul>
@@ -378,7 +390,7 @@
 <h3 id="examples">Examples</h3>
 <p>For each example, the equivalent Faust DSP program and SVG diagram is given as a helper.</p>
 <h4 id="tools">Tools</h4>
-<p>Let's define first the compilation function, which uses the <code>compileDSPSignalFactory</code>API:</p>
+<p>Let's first define a compilation function, which uses the <code>compileDSPSignalFactory</code>API:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
                     tvec signals, 
                     int argc = 0, 
@@ -534,12 +546,74 @@ process = _ &lt;: @(+(0.5), 500), @(*(1.5), 3000);
     }
 }
 </code></pre>
+<p>Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
+<pre><code class="language-C++">static void test5()
+{
+    createLibContext();
+
+    tvec signals;
+    Signal in1 = sigInput(0);
+    signals.push_back(sigFixDelay(sigAdd(in1, sigReal(0.5)), sigReal(500)));
+    signals.push_back(sigFixDelay(sigMul(in1, sigReal(1.5)), sigReal(3000)));
+
+    // Vector compilation
+    compile(&quot;test5&quot;, signals, 3, (const char* []){ &quot;-vec&quot;, &quot;-lv&quot;, &quot;1&quot; });
+
+    destroyLibContext();
+}
+</code></pre>
+<p>The <code>compute</code> method is then:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    FAUSTFLOAT* input0_ptr = inputs[0];
+    FAUSTFLOAT* output0_ptr = outputs[0];
+    FAUSTFLOAT* output1_ptr = outputs[1];
+    for (int vindex = 0; (vindex &lt; count); vindex = (vindex + 32)) {
+        FAUSTFLOAT* input0 = &amp;input0_ptr[vindex];
+        FAUSTFLOAT* output0 = &amp;output0_ptr[vindex];
+        FAUSTFLOAT* output1 = &amp;output1_ptr[vindex];
+        int vsize = std::min&lt;int&gt;(32, (count - vindex));
+        /* Vectorizable loop 0 */
+        /* Pre code */
+        fYec0_idx = ((fYec0_idx + fYec0_idx_save) &amp; 4095);
+        /* Compute code */
+        for (int i = 0; (i &lt; vsize); i = (i + 1)) {
+            fYec0[((i + fYec0_idx) &amp; 4095)] = float(input0[i]);
+        }
+        /* Post code */
+        fYec0_idx_save = vsize;
+        /* Vectorizable loop 1 */
+        /* Pre code */
+        fYec1_idx = ((fYec1_idx + fYec1_idx_save) &amp; 1023);
+        /* Compute code */
+        for (int i = 0; (i &lt; vsize); i = (i + 1)) {
+            fYec1[((i + fYec1_idx) &amp; 1023)] = (float(input0[i]) + 0.5f);
+        }
+        /* Post code */
+        fYec1_idx_save = vsize;
+        /* Vectorizable loop 2 */
+        /* Compute code */
+        for (int i = 0; (i &lt; vsize); i = (i + 1)) {
+            output0[i] = FAUSTFLOAT(fYec1[(((i + fYec1_idx) - 500) &amp; 1023)]);
+        }
+        /* Vectorizable loop 3 */
+        /* Compute code */
+        for (int i = 0; (i &lt; vsize); i = (i + 1)) {
+            output1[i] = FAUSTFLOAT((1.5f * fYec0[(((i + fYec0_idx) - 3000) &amp; 4095)]));
+        }
+    }
+}
+</code></pre>
+<p>and can possibly be faster if the C++ compiler can auto-vectorize it.</p>
 <h4 id="using-user-interfaces-items">Using User Interfaces items</h4>
 <h4 id="defining-recursive-signals">Defining recursive signals</h4>
 <h4 id="acessing-the-global-context">Acessing the global context</h4>
 <h4 id="using-waveforms">Using waveforms</h4>
 <h4 id="using-soundfiles">Using soundfiles</h4>
 <h4 id="defining-more-complex-expressions-a-phasor-then-an-oscillator">Defining more complex expressions: a phasor then an oscillator</h4>
+<h2 id="executing-the-generated-code">Executing the generated code</h2>
+<p>Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. </p>
+<h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
+<h4 id="connecting-the-controller-layer">Connecting the controller layer</h4>
 <h2 id="creating-a-signal-language-based-on-this-api">Creating a signal language based on this API</h2>
 <p>Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the Block Diagram Algebra is all about, and the entire Faust language itself. </p>
 <p>But some other approaches can possibly by tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help buinding complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. </p></div>
