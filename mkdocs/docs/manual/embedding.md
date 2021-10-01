@@ -168,7 +168,7 @@ The dynamic compilation chain has been used in several projects:
 
 * [FaucK](https://github.com/ccrma/chugins/tree/main/Faust): the combination of the [ChucK Programming Language](http://chuck.cs.princeton.edu/) and Faust
 
-* [libossia](https://github.com/ossia/libossia) is a modern C++, cross-environment distributed object model for creative coding. It is used in in [Ossia score](https://github.com/ossia/score) project
+* [libossia](https://github.com/ossia/libossia) is a modern C++, cross-environment distributed object model for creative coding. It is used in [Ossia score](https://github.com/ossia/score) project
 
 * [Radium](https://users.notam02.no/~kjetism/radium/) is a music editor with a new type of interface, including a Faust audio DSP development environment using libfaust with the LLVM and Interpreter backends
 
