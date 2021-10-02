@@ -374,7 +374,7 @@
 <p><img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
 <center><em>The semantic phase</em></center></p>
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
-<p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then translated to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
+<p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
 <p>A new intermediate entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <em>signal API</em> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
 <h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
@@ -849,6 +849,114 @@ process = ma.SR, ma.BS;
 <h4 id="using-waveforms">Using waveforms</h4>
 <h4 id="using-soundfiles">Using soundfiles</h4>
 <h4 id="defining-more-complex-expressions-a-phasor-then-an-oscillator">Defining more complex expressions: a phasor then an oscillator</h4>
+<p>More complex signal expressions can be defined. So the following DSP program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+process = phasor(440)
+ with {
+     decimalpart(x) = x-int(x);
+     phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+ };
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be built with some auxiliary functions:</p>
+<pre><code class="language-C++">static Signal decimalpart(Signal x)
+{
+    return sigSub(x, sigIntCast(x));
+}
+
+static Signal phasor(Signal f)
+{
+    return sigRecursion(decimalpart(sigAdd(sigSelf(), sigDiv(f, getSampleRate()))));
+}
+
+</code></pre>
+<p>And the main function:</p>
+<pre><code class="language-C++">static void test17()
+{
+    COMPILER
+    (
+        tvec signals;
+        signals.push_back(phasor(sigReal(440.0)));
+
+        compile(&quot;test17&quot;, signals);
+    )
+}
+</code></pre>
+<p>Which produces the following <code>compute</code>method:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        fRec0[0] = (fConst0 + (fRec0[1] - float(int((fConst0 + fRec0[1])))));
+        output0[i0] = FAUSTFLOAT(fRec0[0]);
+        fRec0[1] = fRec0[0];
+    }
+}
+</code></pre>
+<p>Now the following oscillator:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+
+<pre><code>
+ import(&quot;stdfaust.lib&quot;);
+ process = osc(440), osc(440)
+ with {
+    decimalpart(x) = x-int(x);
+    phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+    osc(f) = sin(2 * ma.PI * phasor(f));
+ };
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust9/exfaust9.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be built with:</p>
+<pre><code class="language-C++">static Signal osc(Signal f)
+{
+    return sigSin(sigMul(phasor(f), sigMul(sigReal(2.0), sigReal(3.141592653))));
+}
+
+static void test18()
+{
+    COMPILER
+    (
+        tvec signals;
+        signals.push_back(osc(sigReal(440.0)));
+        signals.push_back(osc(sigReal(440.0)));
+
+        compile(&quot;test18&quot;, signals);
+    )
+}
+</code></pre>
+<p>Which produces the following <code>compute</code> method, where one can see that since the <em>same</em> oscillaor is used on both outputs, it is actually computed once and copied twice:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        fRec0[0] = (fConst0 + (fRec0[1] - float(int((fConst0 + fRec0[1])))));
+        float fTemp0 = std::sin((6.28318548f * fRec0[0]));
+        output0[i0] = FAUSTFLOAT(fTemp0);
+        output1[i0] = FAUSTFLOAT(fTemp0);
+        fRec0[1] = fRec0[0];
+    }
+}
+</code></pre>
 <h2 id="executing-the-generated-code">Executing the generated code</h2>
 <p>Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. </p>
 <h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
