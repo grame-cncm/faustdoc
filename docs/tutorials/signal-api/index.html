@@ -314,7 +314,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#using-user-interfaces-items" class="nav-link">Using User Interfaces items</a>
+            <li class="nav-item" data-level="4"><a href="#using-user-interface-items" class="nav-link">Using User Interface items</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -366,31 +366,31 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="using-the-signal-api">Using the signal API</h1>
-<p>The Faust compiler is composed of several steps and has the following structure:</p>
+<p>The Faust compiler is composed of several steps and has the following scheme:</p>
 <p><img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
 <center><em>The compilation chain</em></center></p>
 <p>Starting from the DSP source code, the <em>Semantic Phase</em> produces signals as conceptually infinite streams of samples or control values. Those signals are then compiled in imperative code (C/C++, LLVM IR, WebAssembly, etc.) in the <em>Code Generation Phase</em>.</p>
-<p>The <em>Semantic Phase</em> is decomposed as explained in the following structure:</p>
+<p>The <em>Semantic Phase</em> is decomposed as explained in the following scheme:</p>
 <p><img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
 <center><em>The semantic phase</em></center></p>
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
-<p>The Code Generation Phase translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then translated to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
+<p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then translated to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
 <p>A new intermediate entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <em>signal API</em> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
 <h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
-<p>In this tutorial, we present the signal API with examples of code to show how to use it. The optimizations properties will be demonstrated looking at the generated C++ code. A minimal language (using C code) will be presented. The goal is to demonstrate how more sophisticated languages (textual or graphical) could be built on top of the signal API.</p>
+<p>In this tutorial, we present the signal API with examples of code to show how to use it. The optimizations properties will be demonstrated looking at the generated C++ code. The goal is to demonstrate how more sophisticated languages (textual or graphical) could be built on top of the signal API.</p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
 <p>Using the signal API follows the scheme:</p>
 <ul>
 <li>creating a global compilation context using the <code>createLibContext</code> function. </li>
-<li>creating signals outputs using the signal API, progressively building more complex graphs by combining simpler ones.</li>
+<li>creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones.</li>
 <li>compiling the list of outputs using the <code>compileDSPSignalFactory</code> function to create a DSP factory. Then a DSP instance can be created and used with audio and UI architecture files. </li>
 <li>finally destroying the compilation context using the <code>destroyLibContext</code> function. </li>
 </ul>
 <h3 id="examples">Examples</h3>
-<p>For each example, the equivalent Faust DSP program and SVG diagram is given as a helper.</p>
+<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers.</p>
 <h4 id="tools">Tools</h4>
-<p>Let's first define a compilation function, which uses the <code>compileDSPSignalFactory</code>API:</p>
+<p>Let's first define a compilation function, which uses the <code>compileDSPSignalFactory</code>function:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
                     tvec signals, 
                     int argc = 0, 
@@ -435,7 +435,7 @@ process = 0.5;
 </div>
 <!-- /faust-run -->
 
-<p>The following code creates a vector of output signals (with the <code>tvec</code> type), containing the <code>sigReal(0.5)</code> signal, then compile it and display the C++ class:</p>
+<p>The following code creates a vector of output signals (with the <code>tvec</code> type), containing the single <code>sigReal(0.5)</code> signal, then compile it and display the C++ class:</p>
 <pre><code class="language-C++">
 static void test1()
 {
@@ -473,7 +473,7 @@ process = _ &lt;: +(0.5), *(1.5);
 </div>
 <!-- /faust-run -->
 
-<p>The first audio input is created with <code>sigInput(0)</code> signal, then transformed using <code>sigAdd</code> and <code>sigMul</code> signal operators to produce 2 outputs:</p>
+<p>The first audio input is created with <code>sigInput(0)</code> signal, then transformed using <code>sigAdd</code> and <code>sigMul</code> signal operators to produce two outputs:</p>
 <pre><code class="language-C++">static void test2()
 {
     COMPILER
@@ -603,8 +603,106 @@ process = _ &lt;: @(+(0.5), 500), @(*(1.5), 3000);
     }
 }
 </code></pre>
-<p>and can possibly be faster if the C++ compiler can auto-vectorize it.</p>
-<h4 id="using-user-interfaces-items">Using User Interfaces items</h4>
+<p>And can possibly be faster if the C++ compiler can auto-vectorize it.</p>
+<p>If the delay operators are used on the input signal <em>before</em> the mathematical operations, then <em>a single delay</em> line will be created, taking the maximum size of both delay lines:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+
+<pre><code>
+process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>And built with the following code:</p>
+<pre><code class="language-C++">static void test4()
+{
+    COMPILER
+    (
+        tvec signals;
+        Signal in1 = sigInput(0);
+        signals.push_back(sigAdd(sigFixDelay(in1, sigReal(500)), sigReal(0.5)));
+        signals.push_back(sigMul(sigFixDelay(in1, sigReal(3000)), sigReal(1.5)));
+
+        compile(&quot;test4&quot;, signals);
+    )
+}
+</code></pre>
+<p>In the <code>compute</code> method, the single <code>fVec0</code> delay line is read at 2 differents indexes:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        float fTemp0 = float(input0[i0]);
+        fVec0[(IOTA &amp; 4095)] = fTemp0;
+        output0[i0] = FAUSTFLOAT((fVec0[((IOTA - 500) &amp; 4095)] + 0.5f));
+        output1[i0] = FAUSTFLOAT((1.5f * fVec0[((IOTA - 3000) &amp; 4095)]));
+        IOTA = (IOTA + 1);
+    }
+}
+</code></pre>
+<h4 id="using-user-interface-items">Using User Interface items</h4>
+<p>User Interface items can be used, as in the following example, with a <code>vslider</code>:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+
+process = @(+(0.5), 500) * vslider(&quot;Vol&quot;, 0.5, 0, 1, 0.01);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>And built with the following code:</p>
+<pre><code class="language-C++">static void test8()
+{
+    COMPILER
+    (
+        tvec signals;
+        Signal in1 = sigInput(0);
+        Signal s = sigVSlider(&quot;Vol&quot;, sigReal(0.5), sigReal(0.), sigReal(1.), sigReal(0.01));
+        signals.push_back(sigMul(s, sigFixDelay(sigAdd(in1, sigReal(0.5)), sigReal(500))));
+
+        compile(&quot;test8&quot;, signals);
+    )
+}
+</code></pre>
+<p>The <code>buildUserInterface</code> method is generated, using the <code>fVslider0</code> variable :</p>
+<pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
+{
+    ui_interface-&gt;openVerticalBox(&quot;test8&quot;);
+    ui_interface-&gt;addVerticalSlider(&quot;Vol&quot;, &amp;fVslider0, FAUSTFLOAT(0.5f),
+                                  FAUSTFLOAT(0.0f), 
+                                  FAUSTFLOAT(1.0f), 
+                                  FAUSTFLOAT(0.00999999978f));
+    ui_interface-&gt;closeBox();
+}
+</code></pre>
+<p>The <code>compute</code> method is then: </p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = float(fVslider0);
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        fVec0[(IOTA &amp; 511)] = (float(input0[i0]) + 0.5f);
+        output0[i0] = FAUSTFLOAT((fSlow0 * fVec0[((IOTA - 500) &amp; 511)]));
+        IOTA = (IOTA + 1);
+    }
+}
+</code></pre>
 <h4 id="defining-recursive-signals">Defining recursive signals</h4>
 <h4 id="acessing-the-global-context">Acessing the global context</h4>
 <h4 id="using-waveforms">Using waveforms</h4>
