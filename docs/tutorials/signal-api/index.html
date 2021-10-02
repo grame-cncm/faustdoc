@@ -322,7 +322,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#acessing-the-global-context" class="nav-link">Acessing the global context</a>
+            <li class="nav-item" data-level="4"><a href="#accessing-the-global-context" class="nav-link">Accessing the global context</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -654,7 +654,6 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
-
 process = @(+(0.5), 500) * vslider(&quot;Vol&quot;, 0.5, 0, 1, 0.01);
 
 </code></pre>
@@ -665,7 +664,7 @@ process = @(+(0.5), 500) * vslider(&quot;Vol&quot;, 0.5, 0, 1, 0.01);
 </div>
 <!-- /faust-run -->
 
-<p>And built with the following code:</p>
+<p>Built with the following code:</p>
 <pre><code class="language-C++">static void test8()
 {
     COMPILER
@@ -679,7 +678,7 @@ process = @(+(0.5), 500) * vslider(&quot;Vol&quot;, 0.5, 0, 1, 0.01);
     )
 }
 </code></pre>
-<p>The <code>buildUserInterface</code> method is generated, using the <code>fVslider0</code> variable :</p>
+<p>The <code>buildUserInterface</code> method is generated, using the <code>fVslider0</code> variable:</p>
 <pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
 {
     ui_interface-&gt;openVerticalBox(&quot;test8&quot;);
@@ -703,8 +702,150 @@ process = @(+(0.5), 500) * vslider(&quot;Vol&quot;, 0.5, 0, 1, 0.01);
     }
 }
 </code></pre>
+<p>User Interface layout can be described with <a href="https://faustdoc.grame.fr/manual/syntax/#hgroup-primitive">hgroup</a>, or <a href="https://faustdoc.grame.fr/manual/syntax/#vgroup-primitive">vgroup</a> or <a href="https://faustdoc.grame.fr/manual/syntax/#tgroup-primitive">tgroup</a>. With the signal API, the layout can be defined using the <a href="https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames">labels-as-pathnames</a> syntax, as in the following example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;); 
+freq = vslider(&quot;h:Oscillator/freq&quot;, 440, 50, 1000, 0.1); 
+gain = vslider(&quot;h:Oscillator/gain&quot;, 0, 0, 1, 0.01); 
+process = freq*gain;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Built with the following code:</p>
+<pre><code class="language-C++">static void test9()
+{
+    COMPILER
+    (
+        tvec signals;
+        Signal freq = sigVSlider(&quot;h:Oscillator/freq&quot;, 
+                                 sigReal(440), sigReal(50), 
+                                 sigReal(1000), sigReal(0.1));
+        Signal gain = sigVSlider(&quot;h:Oscillator/gain&quot;, 
+                                 sigReal(0), sigReal(0), 
+                                 sigReal(1), sigReal(0.011));
+        signals.push_back(sigMul(freq, sigMul(gain, sigInput(0))));
+
+        compile(&quot;test9&quot;, signals);
+    )
+}
+</code></pre>
+<p>The <code>buildUserInterface</code> method is generated (TODO):</p>
 <h4 id="defining-recursive-signals">Defining recursive signals</h4>
-<h4 id="acessing-the-global-context">Acessing the global context</h4>
+<p>Recursive signals can be defined using the <code>sigRecursion</code> function and the <code>sigSelf</code> function to refer to the recursive signal itself. A one sample delay is automatically created to produce a valid computation. Here is a simple example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+
+<pre><code>
+process = + ~ _;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Built with the following code:</p>
+<pre><code class="language-C++">static void test10()
+{
+    COMPILER
+    (
+        tvec signals;
+        Signal in1 = sigInput(0);
+        signals.push_back(sigRecursion(sigAdd(sigSelf(), in1)));
+
+        compile(&quot;test10&quot;, signals);
+    )
+}
+</code></pre>
+<p>The <code>compute</code> method shows the <code>fRec0</code>variable that keeps the delayed signal:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        fRec0[0] = (float(input0[i0]) + fRec0[1]);
+        output0[i0] = FAUSTFLOAT(fRec0[0]);
+        fRec0[1] = fRec0[0];
+    }
+}
+</code></pre>
+<h4 id="accessing-the-global-context">Accessing the global context</h4>
+<p>In Faust, the underlying audio engine sample rate and buffer size  is accessed using the foreign function or constant mechanism. The values can also be used in the signal language with the following helper functions: </p>
+<pre><code class="language-C++">// Reproduce the 'SR' definition in platform.lib 
+// SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, &lt;dummy.h&gt;)));
+inline Signal getSampleRate()
+{
+    return sigMin(sigReal(192000.0), 
+           sigMax(sigReal(1.0), 
+           sigFConst(SType::kSInt, &quot;fSamplingFreq&quot;, &quot;&lt;dummy.h&gt;&quot;)));
+}
+
+// Reproduce the 'BS' definition in platform.lib 
+// BS = fvariable(int count, &lt;dummy.h&gt;);
+inline Signal getBufferSize()
+{
+    return sigFVar(SType::kSInt, &quot;count&quot;, &quot;&lt;dummy.h&gt;&quot;);
+}
+</code></pre>
+<p>So the following DSP program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;); 
+process = ma.SR, ma.BS;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be written at the signal API level with:</p>
+<pre><code class="language-C++">static void test11()
+{
+    COMPILER
+    (
+        tvec signals;
+        signals.push_back(getSampleRate());
+        signals.push_back(getBufferSize());
+
+        compile(&quot;test11&quot;, signals);
+    )
+}
+</code></pre>
+<p>And the resulting C++ class contains:</p>
+<pre><code class="language-C++">virtual void instanceConstants(int sample_rate) 
+{
+    fSampleRate = sample_rate;
+    fConst0 = std::min&lt;float&gt;(192000.0f, std::max&lt;float&gt;(1.0f, float(fSampleRate)));
+}
+</code></pre>
+<p>and:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    int iSlow0 = count;
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT(fConst0);
+        output1[i0] = FAUSTFLOAT(iSlow0);
+    }
+}
+</code></pre>
 <h4 id="using-waveforms">Using waveforms</h4>
 <h4 id="using-soundfiles">Using soundfiles</h4>
 <h4 id="defining-more-complex-expressions-a-phasor-then-an-oscillator">Defining more complex expressions: a phasor then an oscillator</h4>
