@@ -314,6 +314,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#equivalent-signal-expressions" class="nav-link">Equivalent signal expressions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#using-user-interface-items" class="nav-link">Using User Interface items</a>
               <ul class="nav flex-column">
               </ul>
@@ -326,11 +330,15 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#using-waveforms" class="nav-link">Using waveforms</a>
+            <li class="nav-item" data-level="4"><a href="#using-tables-todo" class="nav-link">Using tables (TODO)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#using-soundfiles" class="nav-link">Using soundfiles</a>
+            <li class="nav-item" data-level="4"><a href="#using-waveforms-todo" class="nav-link">Using waveforms (TODO)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-soundfiles-todo" class="nav-link">Using soundfiles (TODO)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -344,11 +352,11 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#executing-the-generated-code" class="nav-link">Executing the generated code</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#connecting-the-audio-layer" class="nav-link">Connecting the audio layer</a>
+            <li class="nav-item" data-level="4"><a href="#connecting-the-audio-layer-todo" class="nav-link">Connecting the audio layer (TODO)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#connecting-the-controller-layer" class="nav-link">Connecting the controller layer</a>
+            <li class="nav-item" data-level="4"><a href="#connecting-the-controller-layer-todo" class="nav-link">Connecting the controller layer (TODO)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -500,6 +508,7 @@ process = _ &lt;: +(0.5), *(1.5);
     }
 }
 </code></pre>
+<p>Note that accessing input N is simply done using the <code>sigInput(N)</code>expression. </p>
 <h4 id="defining-delayed-signals">Defining delayed signals</h4>
 <p>A program using a signal input and doing mathematical operations on it, then delaying the signals: </p>
 <!-- faust-run -->
@@ -648,6 +657,35 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
     }
 }
 </code></pre>
+<h4 id="equivalent-signal-expressions">Equivalent signal expressions</h4>
+<p>It is really important to note that <em>syntactically equivalent signal expressions</em> will be <em>internally represented by the same memory structure</em> (using hashconsing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>sigAdd(sigFixDelay(sigInput(0), sigReal(500)), sigReal(0.5))</code> expression, then used in both outputs:</p>
+<pre><code class="language-C++">static void test5()
+{
+    COMPILER
+    (
+        tvec signals;
+        Signal s1 = sigAdd(sigFixDelay(sigInput(0), sigReal(500)), sigReal(0.5))
+        signals.push_back(s1);
+        signals.push_back(s1);
+
+        compile(&quot;test5&quot;, signals);
+    )
+}
+</code></pre>
+<p>Will be exactly the same as the following code, where the <code>sigAdd(sigFixDelay(sigInput(0), sigReal(500)), sigReal(0.5))</code> expression is used twice:</p>
+<pre><code class="language-C++">static void test5bis()
+{
+    COMPILER
+    (
+        tvec signals;
+        signals.push_back(sigAdd(sigFixDelay(sigInput(0), sigReal(500)), sigReal(0.5))
+        signals.push_back(sigAdd(sigFixDelay(sigInput(0), sigReal(500)), sigReal(0.5))
+
+        compile(&quot;test5bis&quot;, signals);
+    )
+}
+</code></pre>
+<p>It can be a property to remember when creating a DSL on top of the signal API.</p>
 <h4 id="using-user-interface-items">Using User Interface items</h4>
 <p>User Interface items can be used, as in the following example, with a <code>vslider</code>:</p>
 <!-- faust-run -->
@@ -846,8 +884,9 @@ process = ma.SR, ma.BS;
     }
 }
 </code></pre>
-<h4 id="using-waveforms">Using waveforms</h4>
-<h4 id="using-soundfiles">Using soundfiles</h4>
+<h4 id="using-tables-todo">Using tables (TODO)</h4>
+<h4 id="using-waveforms-todo">Using waveforms (TODO)</h4>
+<h4 id="using-soundfiles-todo">Using soundfiles (TODO)</h4>
 <h4 id="defining-more-complex-expressions-a-phasor-then-an-oscillator">Defining more complex expressions: a phasor then an oscillator</h4>
 <p>More complex signal expressions can be defined. So the following DSP program:</p>
 <!-- faust-run -->
@@ -959,8 +998,8 @@ static void test18()
 </code></pre>
 <h2 id="executing-the-generated-code">Executing the generated code</h2>
 <p>Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. </p>
-<h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
-<h4 id="connecting-the-controller-layer">Connecting the controller layer</h4>
+<h4 id="connecting-the-audio-layer-todo">Connecting the audio layer (TODO)</h4>
+<h4 id="connecting-the-controller-layer-todo">Connecting the controller layer (TODO)</h4>
 <h2 id="creating-a-signal-language-based-on-this-api">Creating a signal language based on this API</h2>
 <p>Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the Block Diagram Algebra is all about, and the entire Faust language itself. </p>
 <p>But some other approaches can possibly by tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help buinding complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. </p></div>
