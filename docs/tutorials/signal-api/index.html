@@ -943,7 +943,7 @@ static void test18()
     )
 }
 </code></pre>
-<p>Which produces the following <code>compute</code> method, where one can see that since the <em>same</em> oscillaor is used on both outputs, it is actually computed once and copied twice:</p>
+<p>Which produces the following <code>compute</code> method, where one can see that since the <em>same</em> oscillator signal is used on both outputs, it is actually computed once and copied twice:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
     FAUSTFLOAT* output0 = outputs[0];
