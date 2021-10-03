@@ -360,7 +360,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#connecting-the-controller-layer-todo" class="nav-link">Connecting the controller layer (TODO)</a>
+            <li class="nav-item" data-level="4"><a href="#connecting-the-controller-layer" class="nav-link">Connecting the controller layer</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -1190,7 +1190,13 @@ audio.start();
 ....
 audio.stop();
 </code></pre>
-<h4 id="connecting-the-controller-layer-todo">Connecting the controller layer (TODO)</h4>
+<h4 id="connecting-the-controller-layer">Connecting the controller layer</h4>
+<p>Controllers can be connected to the DSP instance using <a href="https://faustdoc.grame.fr/manual/architectures/">GUI architectures</a>. Here is a code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GTKUI.h">GTKUI</a> interface:</p>
+<pre><code class="language-C++">GUI* interface = new GTKUI(&quot;Test&quot;, &amp;argc, &amp;argv);
+DSP-&gt;buildUserInterface(interface);
+interface-&gt;run();
+</code></pre>
+<p>And all other standard controllers (MIDI, OSC, etc.) can be used as usual.</p>
 <h2 id="creating-a-signal-language-based-on-this-api">Creating a signal language based on this API</h2>
 <p>Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the <em>Block Diagram Algebra</em> is all about, and the entire Faust language itself. </p>
 <p>But some other approaches can possibly by tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help buinding complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. </p></div>
