@@ -384,19 +384,19 @@
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
 <p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
-<p>A new intermediate entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <em>signal API</em> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
+<p>A new intermediate entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h"><em>signal API</em></a> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
 <h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
 <p>In this tutorial, we present the signal API with examples of code to show how to use it. The optimizations properties will be demonstrated looking at the generated C++ code. The goal is to demonstrate how more sophisticated languages (textual or graphical) could be built on top of the signal API.</p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
-<p>Using the signal API follows the scheme:</p>
+<p>To use the signal API, the following steps must be taken:</p>
 <ul>
-<li>creating a global compilation context using the <code>createLibContext</code> function. </li>
-<li>creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones.</li>
-<li>compiling the list of outputs using the <code>compileDSPSignalFactory</code> function to create a DSP factory. Then a DSP instance can be created and used with audio and UI architecture files. </li>
+<li>creating a global compilation context using the <code>createLibContext</code> function</li>
+<li>creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones</li>
+<li>compiling the list of outputs using the <code>compileDSPSignalFactory</code> function to create a DSP factory. Then a DSP instance can be created and used with audio and UI architecture files</li>
 <li>finally destroying the compilation context using the <code>destroyLibContext</code> function. </li>
 </ul>
 <h3 id="examples">Examples</h3>
-<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers.</p>
+<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram in particular clearly shows how each output signal expression has to be created.</p>
 <h4 id="tools">Tools</h4>
 <p>Let's first define a compilation function, which uses the <code>compileDSPSignalFactory</code>function:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
@@ -466,7 +466,7 @@ static void test1()
 }
 </code></pre>
 <h4 id="doing-some-mathematical-operations-on-an-input-signal">Doing some mathematical operations on an input signal</h4>
-<p>A program using a signal input and doing mathematical operations on it:</p>
+<p>Here is a simple program using a signal input and doing mathematical operations on it:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
@@ -510,7 +510,7 @@ process = _ &lt;: +(0.5), *(1.5);
 </code></pre>
 <p>Note that accessing input N is simply done using the <code>sigInput(N)</code>expression. </p>
 <h4 id="defining-delayed-signals">Defining delayed signals</h4>
-<p>A program using a signal input and doing mathematical operations on it, then delaying the signals: </p>
+<p>Here is a simple program using a signal input and doing mathematical operations on it, then delaying the signals: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
