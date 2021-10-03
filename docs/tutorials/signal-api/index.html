@@ -1171,7 +1171,7 @@ static void test18()
 <h2 id="executing-the-generated-code">Executing the generated code</h2>
 <p>Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. The <code>compileDSPSignalFactory</code> produces a DSP factory than can be used to create DSP instances. </p>
 <h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
-<p>Audio drivers allow to render the DSP instance. Here is a simple code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h">dummyaudio</a>:</p>
+<p>Audio drivers allow to render the DSP instance. Here is a simple code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h">dummyaudio</a> audio driver:</p>
 <pre><code class="language-C++">// Allocate the audio driver to render 5 buffers of 512 frames
 dummyaudio audio(5);
 audio.init(&quot;Test&quot;, dsp);
@@ -1180,12 +1180,12 @@ audio.init(&quot;Test&quot;, dsp);
 audio.start();
 audio.stop();
 </code></pre>
-<p>A more involved example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/jack-dsp.h">JACK audio diver</a>:</p>
+<p>A more involved example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/jack-dsp.h">JACK</a> audio driver:</p>
 <pre><code class="language-C++">// Allocate the JACK audio driver
 jackaudio audio;
 audio.init(&quot;Test&quot;, dsp);
 
-// Render buffers...
+// Start real-time processing
 audio.start();
 ....
 audio.stop();
