@@ -286,6 +286,10 @@
             
             <li class="nav-item" data-level="1"><a href="#using-the-signal-api" class="nav-link">Using the signal API</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#faust-compiler-structure" class="nav-link">Faust compiler structure</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#accessing-the-signal-stage" class="nav-link">Accessing the signal stage</a>
               <ul class="nav flex-column">
               </ul>
@@ -330,19 +334,19 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#using-tables-todo" class="nav-link">Using tables (TODO)</a>
+            <li class="nav-item" data-level="4"><a href="#creating-tables" class="nav-link">Creating tables</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#using-waveforms-todo" class="nav-link">Using waveforms (TODO)</a>
+            <li class="nav-item" data-level="4"><a href="#creating-waveform" class="nav-link">Creating waveform</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#using-soundfiles-todo" class="nav-link">Using soundfiles (TODO)</a>
+            <li class="nav-item" data-level="4"><a href="#creating-soundfile-todo" class="nav-link">Creating soundfile (TODO)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#defining-more-complex-expressions-a-phasor-then-an-oscillator" class="nav-link">Defining more complex expressions: a phasor then an oscillator</a>
+            <li class="nav-item" data-level="4"><a href="#defining-more-complex-expressions-phasor-and-oscillator" class="nav-link">Defining more complex expressions: phasor and oscillator</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -374,6 +378,7 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="using-the-signal-api">Using the signal API</h1>
+<h4 id="faust-compiler-structure">Faust compiler structure</h4>
 <p>The Faust compiler is composed of several steps:</p>
 <p><img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
 <center><em>The compilation chain</em></center></p>
@@ -384,7 +389,7 @@
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
 <p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
-<p>A new intermediate entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h"><em>signal API</em></a> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
+<p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h"><em>signal API</em></a> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
 <h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
 <p>In this tutorial, we present the signal API with examples of code to show how to use it. The optimizations properties will be demonstrated looking at the generated C++ code. The goal is to demonstrate how more sophisticated languages (textual or graphical) could be built on top of the signal API.</p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
@@ -396,7 +401,7 @@
 <li>finally destroying the compilation context using the <code>destroyLibContext</code> function. </li>
 </ul>
 <h3 id="examples">Examples</h3>
-<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram in particular clearly shows how each output signal expression has to be created.</p>
+<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step and clearly shows how each output signal expression has to be created. </p>
 <h4 id="tools">Tools</h4>
 <p>Let's first define a compilation function, which uses the <code>compileDSPSignalFactory</code>function:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
@@ -884,13 +889,179 @@ process = ma.SR, ma.BS;
     }
 }
 </code></pre>
-<h4 id="using-tables-todo">Using tables (TODO)</h4>
-<h4 id="using-waveforms-todo">Using waveforms (TODO)</h4>
-<h4 id="using-soundfiles-todo">Using soundfiles (TODO)</h4>
-<h4 id="defining-more-complex-expressions-a-phasor-then-an-oscillator">Defining more complex expressions: a phasor then an oscillator</h4>
-<p>More complex signal expressions can be defined. So the following DSP program:</p>
+<h4 id="creating-tables">Creating tables</h4>
+<p>Read-only and read-write tables can be created. The <em>read-only table</em> signal takes:</p>
+<ul>
+<li>a size first argument</li>
+<li>a content second argument</li>
+<li>a read index  third argument (between 0 and size-1)</li>
+</ul>
+<p>and produces the indexed table content as its single output. The following simple DSP example:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+
+<pre><code>
+
+process = 10,1,int(_) : rdtable;
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be written with the code:</p>
+<pre><code class="language-C++">static void test20()
+{
+    COMPILER
+    (
+        tvec signals;
+        signals.push_back(sigReadOnlyTable(sigInt(10), sigInt(1), sigIntCast(sigInput(0))));
+
+        compile(&quot;test20&quot;, signals);
+    )
+}
+</code></pre>
+<p>The resulting C++ code contains the <code>itbl0mydspSIG0</code> static table definition:</p>
+<pre><code class="language-C++">static int itbl0mydspSIG0[10];
+</code></pre>
+<p>The table filling code that will be called once at init time:</p>
+<pre><code class="language-C++">void fillmydspSIG0(int count, int* table) 
+{
+    for (int i1 = 0; (i1 &lt; count); i1 = (i1 + 1)) {
+        table[i1] = 1;
+    }
+}
+</code></pre>
+<p>An the <code>compute</code> method that access the <code>itbl0mydspSIG0</code> table:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT(itbl0mydspSIG0[int(float(input0[i0]))]);
+    }
+}
+</code></pre>
+<p>The <em>read-write table</em> signal takes:</p>
+<ul>
+<li>a size first argument</li>
+<li>a content second argument</li>
+<li>a write index  a third argument (between 0 and size-1)</li>
+<li>the input of the table as fourth argument </li>
+<li>a read index as fifth argument (between 0 and size-1)</li>
+</ul>
+<p>and produces the indexed table content as its single output. The following simple DSP example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+
+<pre><code>
+process = 10,1,int(_),int(_),int(_) : rwtable;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust9/exfaust9.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be written with the code:</p>
+<pre><code class="language-C++">static void test20()
+{
+    COMPILER
+    (
+        tvec signals;
+        signals.push_back(sigWriteReadTable(sigInt(10), 
+                        sigInt(1), 
+                        sigIntCast(sigInput(0)), 
+                        sigIntCast(sigInput(1)),    
+                        sigIntCast(sigInput(2))));
+
+        compile(&quot;test21&quot;, signals);
+    )
+}
+</code></pre>
+<p>The resulting C++ code contains the <code>itbl0</code> definition as a field in the <code>mydsp</code> class:</p>
+<pre><code class="language-C++">int itbl0[10];
+</code></pre>
+<p>The table filling code that will be called once at init time:</p>
+<pre><code class="language-C++">void fillmydspSIG0(int count, int* table) 
+{
+    for (int i1 = 0; (i1 &lt; count); i1 = (i1 + 1)) {
+        table[i1] = 1;
+    }
+}
+</code></pre>
+<p>An the <code>compute</code> method that reads and writes in the <code>itbl0</code> table:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* input2 = inputs[2];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        itbl0[int(float(input0[i0]))] = int(float(input1[i0]));
+        output0[i0] = FAUSTFLOAT(itbl0[int(float(input2[i0]))]);
+    }
+}
+</code></pre>
+<h4 id="creating-waveform">Creating waveform</h4>
+<p>The following DSP program defining a waveform:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+
+<pre><code>
+process = waveform { 0, 100, 200, 300, 400 };
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust10/exfaust10.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be written with the code:</p>
+<pre><code class="language-C++">static void test12()
+{
+    COMPILER
+    (
+        tvec waveform;
+        for (int i = 0; i &lt; 5; i++) {
+            waveform.push_back(sigReal(100*i));
+        }
+        tvec signals;
+        signals.push_back(sigInt(waveform.size())); // the waveform size
+        signals.push_back(sigWaveform(waveform));   // the waveform content
+
+        compile(&quot;test12&quot;, signals);
+     )
+}
+</code></pre>
+<p>With the resulting C++ code, where the <code>fmydspWave0</code>waveform is defined as a static table: </p>
+<pre><code class="language-C++">const static float fmydspWave0[5] = {0.0f,100.0f,200.0f,300.0f,400.0f};
+</code></pre>
+<p>And using in the following <code>compute</code> method:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT(5);
+        output1[i0] = FAUSTFLOAT(fmydspWave0[fmydspWave0_idx]);
+        fmydspWave0_idx = ((1 + fmydspWave0_idx) % 5);
+    }
+}
+</code></pre>
+<h4 id="creating-soundfile-todo">Creating soundfile (TODO)</h4>
+<h4 id="defining-more-complex-expressions-phasor-and-oscillator">Defining more complex expressions: phasor and oscillator</h4>
+<p>More complex signal expressions can be defined. So the following DSP program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -903,12 +1074,12 @@ process = phasor(440)
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust8/exfaust8.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust11/exfaust11.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
-<p>Can be built with some auxiliary functions:</p>
+<p>Can be built with some auxiliary functions, here written in C:</p>
 <pre><code class="language-C++">static Signal decimalpart(Signal x)
 {
     return sigSub(x, sigIntCast(x));
@@ -932,7 +1103,7 @@ static Signal phasor(Signal f)
     )
 }
 </code></pre>
-<p>Which produces the following <code>compute</code>method:</p>
+<p>Which produces the following <code>compute</code> method:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
     FAUSTFLOAT* output0 = outputs[0];
@@ -945,9 +1116,10 @@ static Signal phasor(Signal f)
 </code></pre>
 <p>Now the following oscillator:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
 <pre><code>
+
  import(&quot;stdfaust.lib&quot;);
  process = osc(440), osc(440)
  with {
@@ -959,7 +1131,7 @@ static Signal phasor(Signal f)
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust9/exfaust9.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/signal-api/exfaust12/exfaust12.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -1001,7 +1173,7 @@ static void test18()
 <h4 id="connecting-the-audio-layer-todo">Connecting the audio layer (TODO)</h4>
 <h4 id="connecting-the-controller-layer-todo">Connecting the controller layer (TODO)</h4>
 <h2 id="creating-a-signal-language-based-on-this-api">Creating a signal language based on this API</h2>
-<p>Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the Block Diagram Algebra is all about, and the entire Faust language itself. </p>
+<p>Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the <em>Block Diagram Algebra</em> is all about, and the entire Faust language itself. </p>
 <p>But some other approaches can possibly by tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help buinding complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. </p></div>
             </div>
         </div>
