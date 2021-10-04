@@ -294,10 +294,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#who-is-this-tutorial-for" class="nav-link">Who is this tutorial for?</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#compiling-signal-expressions" class="nav-link">Compiling signal expressions</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#examples" class="nav-link">Examples</a>
@@ -378,6 +374,7 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="using-the-signal-api">Using the signal API</h1>
+<p>The signal API opens an <em>intermediate access inside the Faust compilation chain</em>. In this tutorial, we present it with examples of code. Different optimizations will be demonstrated looking at the generated C++ code. The goal is to demonstrate how new audio DSP languages (textual or graphical) could be built on top of the signal API.</p>
 <h4 id="faust-compiler-structure">Faust compiler structure</h4>
 <p>The Faust compiler is composed of several steps:</p>
 <p><img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
@@ -390,8 +387,6 @@
 <p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
 <p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h"><em>signal API</em></a> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
-<h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
-<p>In this tutorial, we present the signal API with examples of code to show how to use it. The optimizations properties will be demonstrated looking at the generated C++ code. The goal is to demonstrate how more sophisticated languages (textual or graphical) could be built on top of the signal API.</p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
 <p>To use the signal API, the following steps must be taken:</p>
 <ul>
