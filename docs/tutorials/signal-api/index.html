@@ -395,11 +395,20 @@
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
 <p>To use the signal API, the following steps must be taken:</p>
 <ul>
-<li>creating a global compilation context using the <code>createLibContext</code> function</li>
-<li>creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones</li>
-<li>compiling the list of outputs using the <code>compileDSPSignalFactory</code> function to create a DSP factory. Then a DSP instance can be created and used with audio and UI architecture files</li>
-<li>finally destroying the compilation context using the <code>destroyLibContext</code> function. </li>
+<li>
+<p>creating a global compilation context using the <code>createLibContext</code> function</p>
+</li>
+<li>
+<p>creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones</p>
+</li>
+<li>
+<p>compiling the list of outputs using the <code>compileDSPSignalFactory</code> function to create a DSP factory</p>
+</li>
+<li>
+<p>finally destroying the compilation context using the <code>destroyLibContext</code> function</p>
+</li>
 </ul>
+<p>The  DSP factory allows to create DSP instances, to be used with audio and UI architecture files. The DSP instances and factory will finally have to be deallocated.</p>
 <h3 id="examples">Examples</h3>
 <p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression must be created. </p>
 <h4 id="tools">Tools</h4>
@@ -724,7 +733,8 @@ process = @(+(0.5), 500) * vslider(&quot;Vol&quot;, 0.5, 0, 1, 0.01);
 <pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
 {
     ui_interface-&gt;openVerticalBox(&quot;test8&quot;);
-    ui_interface-&gt;addVerticalSlider(&quot;Vol&quot;, &amp;fVslider0, FAUSTFLOAT(0.5f),
+    ui_interface-&gt;addVerticalSlider(&quot;Vol&quot;, &amp;fVslider0, 
+                                  FAUSTFLOAT(0.5f),
                                   FAUSTFLOAT(0.0f), 
                                   FAUSTFLOAT(1.0f), 
                                   FAUSTFLOAT(0.00999999978f));
@@ -780,7 +790,23 @@ process = freq*gain;
     )
 }
 </code></pre>
-<p>The <code>buildUserInterface</code> method is generated (TODO):</p>
+<p>The <code>buildUserInterface</code> method is generated with the expected <code>openHorizontalBox</code> call:</p>
+<pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
+{
+    ui_interface-&gt;openHorizontalBox(&quot;Oscillator&quot;);
+    ui_interface-&gt;addVerticalSlider(&quot;freq&quot;, &amp;fVslider0, 
+                                    FAUSTFLOAT(440.0f), 
+                                    FAUSTFLOAT(50.0f), 
+                                    FAUSTFLOAT(1000.0f), 
+                                    FAUSTFLOAT(0.100000001f));
+    ui_interface-&gt;addVerticalSlider(&quot;gain&quot;, &amp;fVslider1, 
+                                    FAUSTFLOAT(0.0f), 
+                                    FAUSTFLOAT(0.0f), 
+                                    FAUSTFLOAT(1.0f), 
+                                    FAUSTFLOAT(0.0109999999f));
+    ui_interface-&gt;closeBox();
+}
+</code></pre>
 <h4 id="defining-recursive-signals">Defining recursive signals</h4>
 <p>Recursive signals can be defined using the <code>sigRecursion</code> function and the <code>sigSelf</code> function to refer to the recursive signal itself. A one sample delay is automatically created to produce a valid computation. Here is a simple example:</p>
 <!-- faust-run -->
