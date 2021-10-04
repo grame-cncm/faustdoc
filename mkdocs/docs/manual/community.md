@@ -22,9 +22,13 @@ This post by [Mads Kjeldgaard](https://madskjeldgaard.dk/pages/about/) is about 
 
 This post by [Matt K](https://medium.com/@kmatthew) is about starting audio Programming with Faust. 
 
-### [Using Faust on the OWL family of devices ](https://openwarelab.org/Faust)
+### [Using Faust on the OWL family of devices](https://openwarelab.org/Faust)
 
 This tutorial focus on using Faust and on features that are specific to OWL and the OpenWare firmware.
+
+### [Sublime Text syntax](https://github.com/nuchi/faust-sublime-syntax)
+
+Sublime Text syntax file for the Faust programming language.
 
 ##### Contributing
 
