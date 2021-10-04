@@ -1,8 +1,3 @@
 
-import("stdfaust.lib");
-process = phasor(440)
- with {
-     decimalpart(x) = x-int(x);
-     phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
- };
+process = 0,0 : soundfile("sound[url:{'tango.wav'}]", 1);
 
