@@ -403,11 +403,11 @@
 <p>finally destroying the compilation context using the <code>destroyLibContext</code> function</p>
 </li>
 </ul>
-<p>The  DSP factory allows to create DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em> . The DSP instances and factory will finally have to be deallocated when no more used.</p>
+<p>The  DSP factory allows to create DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
 <h3 id="examples">Examples</h3>
-<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression must be created. All C/C++ code is in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool.</p>
+<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. The C/C++ examples are defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool.</p>
 <h4 id="tools">Tools</h4>
-<p>Let's first define a compilation function, which uses the <code>compileDSPSignalFactory</code>function:</p>
+<p>Let's first define a compilation function, which uses the <code>compileDSPSignalFactory</code> function:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
                     tvec signals, 
                     int argc = 0, 
@@ -515,7 +515,7 @@ process = _ &lt;: +(0.5), *(1.5);
     }
 }
 </code></pre>
-<p>Note that accessing input N is simply done using the <code>sigInput(N)</code>expression. </p>
+<p>Note that accessing input N is simply done using the <code>sigInput(N)</code> expression. </p>
 <h4 id="defining-delayed-signals">Defining delayed signals</h4>
 <p>Here is a simple program using a signal input and doing mathematical operations on it, then delaying the signals: </p>
 <!-- faust-run -->
@@ -1267,7 +1267,10 @@ static void test18()
 }
 </code></pre>
 <h2 id="using-the-generated-code">Using the generated code</h2>
-<p>Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. The <code>compileDSPSignalFactory</code> produces a DSP factory than can be used to create DSP instances. Then all existing <a href="https://faustdoc.grame.fr/manual/architectures/">architectures files</a> can be used to render the instances.</p>
+<p>Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. The <code>compileDSPSignalFactory</code> produces a DSP factory than can be used to create DSP instances using the following code:</p>
+<pre><code class="language-C++">dsp = factory-&gt;createDSPInstance();
+</code></pre>
+<p>Then all existing <a href="https://faustdoc.grame.fr/manual/architectures/">architectures files</a> can be used to render the instances.</p>
 <h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
 <p>Audio drivers allow to render the DSP instance. Here is a simple code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h">dummyaudio</a> audio driver:</p>
 <pre><code class="language-C++">// Allocate the audio driver to render 5 buffers of 512 frames
