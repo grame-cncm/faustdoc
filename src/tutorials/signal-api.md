@@ -40,13 +40,9 @@ To use the signal API, the following steps must be taken:
 
 The  DSP factory allows to create DSP instances, to be used with audio and UI architecture files, *outside of the compilation process itself*. The DSP instances and factory will finally have to be deallocated when no more used.
 
-### Examples 
+### Tools
 
-For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. The C/C++ examples are defined in [signal-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp) tool.
-
-#### Tools
-
-Let's first define a compilation function, which uses the `createCPPDSPFactoryFromSignals` function:
+Let's first define a `compile` function, which uses the `createCPPDSPFactoryFromSignals` function and print the generated C++ class:
 
 ```C++
 static void compile(const string& name, 
@@ -61,6 +57,7 @@ static void compile(const string& name,
                                                               argv, 
                                                               error_msg);
     if (factory) {
+      	// Print the C++ class
         factory->write(&cout);
         delete(factory);
     } else {
@@ -79,6 +76,10 @@ And a macro to wrap all the needed steps:
     destroyLibContext(); \
 }                        \   
 ```
+
+### Examples 
+
+For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. The C/C++ examples are defined in [signal-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp) tool.
 
 #### Simple constant signal 
 

@@ -296,12 +296,12 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#compiling-signal-expressions" class="nav-link">Compiling signal expressions</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#examples" class="nav-link">Examples</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#tools" class="nav-link">Tools</a>
+            <li class="nav-item" data-level="3"><a href="#tools" class="nav-link">Tools</a>
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#examples" class="nav-link">Examples</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#simple-constant-signal" class="nav-link">Simple constant signal</a>
               <ul class="nav flex-column">
               </ul>
@@ -401,17 +401,15 @@
 <p>creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones</p>
 </li>
 <li>
-<p>compiling the list of outputs using the <code>createCPPDSPFactoryFromSignals</code> function to create a DSP factory (or <a href="#using-the-generated-code">createDSPFactoryFromSignals</a> or <a href="#using-the-generated-code">createInterpreterDSPFactoryFromSignals</a>)</p>
+<p>compiling the list of outputs using the <code>createCPPDSPFactoryFromSignals</code> function to create a DSP factory (or <a href="#using-the-generated-code">createDSPFactoryFromSignals</a>  or <a href="#using-the-generated-code">createInterpreterDSPFactoryFromSignals</a>)</p>
 </li>
 <li>
 <p>finally destroying the compilation context using the <code>destroyLibContext</code> function</p>
 </li>
 </ul>
 <p>The  DSP factory allows to create DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
-<h3 id="examples">Examples</h3>
-<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. The C/C++ examples are defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool.</p>
-<h4 id="tools">Tools</h4>
-<p>Let's first define a compilation function, which uses the <code>createCPPDSPFactoryFromSignals</code> function:</p>
+<h3 id="tools">Tools</h3>
+<p>Let's first define a <code>compile</code> function, which uses the <code>createCPPDSPFactoryFromSignals</code> function and print the generated C++ class:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
                     tvec signals, 
                     int argc = 0, 
@@ -424,6 +422,7 @@
                                                               argv, 
                                                               error_msg);
     if (factory) {
+        // Print the C++ class
         factory-&gt;write(&amp;cout);
         delete(factory);
     } else {
@@ -439,6 +438,8 @@
     destroyLibContext(); \
 }                        \   
 </code></pre>
+<h3 id="examples">Examples</h3>
+<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. The C/C++ examples are defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool.</p>
 <h4 id="simple-constant-signal">Simple constant signal</h4>
 <p>Let's create a program generating the 0.5 constant value. Here is the Faust DSP code:</p>
 <!-- faust-run -->
