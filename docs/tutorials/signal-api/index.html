@@ -1296,7 +1296,6 @@ dsp* dsp = factory-&gt;createDSPInstance();
 ...
 // Use dsp
 </code></pre>
-<p>Then all existing <a href="https://faustdoc.grame.fr/manual/architectures/">architectures files</a> can be used to render the instances.</p>
 <h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
 <p>Audio drivers allow to render the DSP instance. Here is a simple code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h">dummyaudio</a> audio driver:</p>
 <pre><code class="language-C++">// Allocate the audio driver to render 5 buffers of 512 frames
@@ -1318,12 +1317,12 @@ audio.start();
 audio.stop();
 </code></pre>
 <h4 id="connecting-the-controller-layer">Connecting the controller layer</h4>
-<p>Controllers can be connected to the DSP instance using <a href="https://faustdoc.grame.fr/manual/architectures/">GUI architectures</a>. Here is a code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GTKUI.h">GTKUI</a> interface:</p>
+<p>Controllers can be connected to the DSP instance using GUI architectures. Here is a code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GTKUI.h">GTKUI</a> interface:</p>
 <pre><code class="language-C++">GUI* interface = new GTKUI(&quot;Test&quot;, &amp;argc, &amp;argv);
 dsp-&gt;buildUserInterface(interface);
 interface-&gt;run();
 </code></pre>
-<p>And all other standard controllers (MIDI, OSC, etc.) can be used as usual.  </p>
+<p>And all other <a href="https://faustdoc.grame.fr/manual/architectures/">standard controllers</a> (MIDI, OSC, etc.) can be used as usual.  </p>
 <h4 id="a-complete-example">A complete example</h4>
 <p>Here is a more comple example, first with the DSP code:</p>
 <!-- faust-run -->
