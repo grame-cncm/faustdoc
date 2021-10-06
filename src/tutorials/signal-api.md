@@ -2,9 +2,7 @@
 
 # Using the signal API
 
-The signal API opens an *intermediate access inside the Faust compilation chain*. In this tutorial, we present it with examples of code. Different optimizations will be demonstrated looking at the generated C++ code. 
-
-The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API, and take profit of part of the Faust compiler infrastructure.
+The signal API opens an *intermediate access inside the Faust compilation chain*. In this tutorial, we present it with examples of code. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API, and take profit of part of the Faust compiler infrastructure.
 
 #### Faust compiler structure
 
@@ -26,7 +24,7 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 #### Accessing the signal stage
 
-A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. 
+A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files.  Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
 
 ## Compiling signal expressions
 
