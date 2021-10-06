@@ -79,7 +79,7 @@ And a macro to wrap all the needed steps:
 
 ### Examples 
 
-For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C/C++ examples are defined in [signal-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp) tool, to be compiled with `make signal-tester` in the benchmark folder.
+For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C/C++ examples are defined in the [signal-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp) tool, to be compiled with `make signal-tester` in the tools/benchmark folder.
 
 #### Simple constant signal 
 
