@@ -2,7 +2,9 @@
 
 # Using the signal API
 
-The signal API opens an *intermediate access inside the Faust compilation chain*. In this tutorial, we present it with examples of code. Different optimizations will be demonstrated looking at the generated C++ code. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API.
+The signal API opens an *intermediate access inside the Faust compilation chain*. In this tutorial, we present it with examples of code. Different optimizations will be demonstrated looking at the generated C++ code. 
+
+The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API, and take profit of part of the Faust compiler infrastructure.
 
 #### Faust compiler structure
 
@@ -24,7 +26,7 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 #### Accessing the signal stage
 
-A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. 
+A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. 
 
 ## Compiling signal expressions
 
@@ -34,11 +36,11 @@ To use the signal API, the following steps must be taken:
 
 - creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones
 
-- compiling the list of outputs using the `createCPPDSPFactoryFromSignals` function to create a DSP factory (or [createDSPFactoryFromSignals](#using-the-generated-code)  or [createInterpreterDSPFactoryFromSignals](#using-the-generated-code))
+- compiling the list of outputs using the `createCPPDSPFactoryFromSignals` function to create a DSP factory (or [createDSPFactoryFromSignals](#using-the-generated-code)  to generate a LLVM embedding factory, or [createInterpreterDSPFactoryFromSignals](#using-the-generated-code) to generate an Interpreter embedding factory)
 
 - finally destroying the compilation context using the `destroyLibContext` function
 
-The  DSP factory allows to create DSP instances, to be used with audio and UI architecture files, *outside of the compilation process itself*. The DSP instances and factory will finally have to be deallocated when no more used.
+The  DSP factories allows to create DSP instances, to be used with audio and UI architecture files, *outside of the compilation process itself*. The DSP instances and factory will finally have to be deallocated when no more used.
 
 ### Tools
 
