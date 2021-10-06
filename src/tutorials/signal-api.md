@@ -571,7 +571,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Creating tables
 
-Read-only and read-write tables can be created. The *read-only table* signal is created with `sigReadOnlyTable` and takes:
+Read only and read/write tables can be created. The *read only table* signal is created with `sigReadOnlyTable` and takes:
 
  - a size first argument
  - a content second argument
@@ -630,7 +630,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-The *read-write table* signal is created with `sigWriteReadTable` and takes:
+The *read/write table* signal is created with `sigWriteReadTable` and takes:
 
  - a size first argument
  - a content second argument
@@ -655,7 +655,7 @@ static void test20()
     (
         tvec signals;
         signals.push_back(sigWriteReadTable(sigInt(10), 
-                        									  sigInt(1), 
+                                            sigInt(1), 
                                             sigIntCast(sigInput(0)), 
                                             sigIntCast(sigInput(1)),    
                                             sigIntCast(sigInput(2))));
@@ -758,10 +758,10 @@ The generated block has:
 - two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
 - several more outputs for the sound channels themselves
 
-The soundfile block is created with  `sigSoundfile`, but cannot be used directly. It has to be used with:
+The soundfile block is created with `sigSoundfile`, but cannot be used directly. It has to be used with:
 
 - `sigSoundfileLength`to access the sound length in frames
-- `sigSoundfileRate` to access the sound rate in frames 
+- `sigSoundfileRate` to access the sound rate in Hz 
 - `sigSoundfileBuffer` to access the actual samples
 
 Thus the following DSP code:
@@ -772,7 +772,7 @@ process = 0,0 : soundfile("sound[url:{'tango.wav'}]", 1);
 ```
 <!-- /faust-run -->
 
-Will be created using the signal API with (here with a simple read index of 0 to simplify the code):
+Will be created using the signal API with: 
 
 ```C++
 static void test19()
@@ -782,7 +782,7 @@ static void test19()
         tvec signals;
         // Soundfile definition 
         Signal sf = sigSoundfile("sound[url:{'tango.wav'}]");
-        // Simple read index of 0
+        // Simple read index of 0 to simplify the code
         Signal rdx = sigInt(0);
         // Part 0
         Signal part = sigInt(0);
@@ -826,7 +826,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 ```
 #### Defining more complex expressions: phasor and oscillator
 
-More complex signal expressions can be defined. So the following DSP program:
+More complex signal expressions can be defined, creating signals using auxiliary definitions. So the following DSP program:
 
 <!-- faust-run -->
 ```
@@ -839,7 +839,7 @@ with {
 ```
 <!-- /faust-run -->
 
-Can be built using some auxiliary functions, here written in C:
+Can be built using the sollowing helper functions, here written in C:
 
 ```C++
 static Signal decimalpart(Signal x)
@@ -852,7 +852,7 @@ static Signal phasor(Signal f)
     return sigRecursion(decimalpart(sigAdd(sigSelf(), sigDiv(f, getSampleRate()))));
 }
 ```
-And the main function combining hem:
+And the main function combining them:
 
 ```C++
 static void test17()
@@ -894,7 +894,7 @@ Now the following oscillator:
 ```
 <!-- /faust-run -->
 
- Can be built with:
+Can be built with:
 
 ```C++
 static Signal osc(Signal f)
@@ -1006,7 +1006,7 @@ And all other [standard controllers](https://faustdoc.grame.fr/manual/architectu
 
 #### A complete example
 
-Here is a more comple example, first with the DSP code:
+Here is a more complete example, first with the DSP code:
 
 <!-- faust-run -->
 ```
