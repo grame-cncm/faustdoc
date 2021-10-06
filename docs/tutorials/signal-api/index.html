@@ -378,7 +378,8 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="using-the-signal-api">Using the signal API</h1>
-<p>The signal API opens an <em>intermediate access inside the Faust compilation chain</em>. In this tutorial, we present it with examples of code. Different optimizations will be demonstrated looking at the generated C++ code. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API.</p>
+<p>The signal API opens an <em>intermediate access inside the Faust compilation chain</em>. In this tutorial, we present it with examples of code. Different optimizations will be demonstrated looking at the generated C++ code. </p>
+<p>The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API, and take profit of part of the Faust compiler infrastructure.</p>
 <h4 id="faust-compiler-structure">Faust compiler structure</h4>
 <p>The Faust compiler is composed of several steps:</p>
 <p><img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
@@ -390,7 +391,7 @@
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
 <p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
-<p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of output signals, then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h">signal API</a> allows to programmatically create a signal graph, then compile it to create a ready-to-use DSP object as a C++ class, an LLVM or WebAssembly module, etc. to be used with all existing architecture files. </p>
+<p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h">signal API</a> allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. </p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
 <p>To use the signal API, the following steps must be taken:</p>
 <ul>
@@ -401,13 +402,13 @@
 <p>creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones</p>
 </li>
 <li>
-<p>compiling the list of outputs using the <code>createCPPDSPFactoryFromSignals</code> function to create a DSP factory (or <a href="#using-the-generated-code">createDSPFactoryFromSignals</a>  or <a href="#using-the-generated-code">createInterpreterDSPFactoryFromSignals</a>)</p>
+<p>compiling the list of outputs using the <code>createCPPDSPFactoryFromSignals</code> function to create a DSP factory (or <a href="#using-the-generated-code">createDSPFactoryFromSignals</a>  to generate a LLVM embedding factory, or <a href="#using-the-generated-code">createInterpreterDSPFactoryFromSignals</a> to generate an Interpreter embedding factory)</p>
 </li>
 <li>
 <p>finally destroying the compilation context using the <code>destroyLibContext</code> function</p>
 </li>
 </ul>
-<p>The  DSP factory allows to create DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
+<p>The  DSP factories allows to create DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
 <h3 id="tools">Tools</h3>
 <p>Let's first define a <code>compile</code> function, which uses the <code>createCPPDSPFactoryFromSignals</code> function and print the generated C++ class:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
@@ -439,7 +440,7 @@
 }                        \   
 </code></pre>
 <h3 id="examples">Examples</h3>
-<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. The C/C++ examples are defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool.</p>
+<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C/C++ examples are defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool, to be compiled with <code>make signal-tester</code> in the benchmark folder.</p>
 <h4 id="simple-constant-signal">Simple constant signal</h4>
 <p>Let's create a program generating the 0.5 constant value. Here is the Faust DSP code:</p>
 <!-- faust-run -->
@@ -915,7 +916,7 @@ process = ma.SR, ma.BS;
 }
 </code></pre>
 <h4 id="creating-tables">Creating tables</h4>
-<p>Read-only and read-write tables can be created. The <em>read-only table</em> signal is created with <code>sigReadOnlyTable</code> and takes:</p>
+<p>Read only and read/write tables can be created. The <em>read only table</em> signal is created with <code>sigReadOnlyTable</code> and takes:</p>
 <ul>
 <li>a size first argument</li>
 <li>a content second argument</li>
@@ -971,7 +972,7 @@ process = 10,1,int(_) : rdtable;
     }
 }
 </code></pre>
-<p>The <em>read-write table</em> signal is created with <code>sigWriteReadTable</code> and takes:</p>
+<p>The <em>read/write table</em> signal is created with <code>sigWriteReadTable</code> and takes:</p>
 <ul>
 <li>a size first argument</li>
 <li>a content second argument</li>
@@ -1001,7 +1002,7 @@ process = 10,1,int(_),int(_),int(_) : rwtable;
     (
         tvec signals;
         signals.push_back(sigWriteReadTable(sigInt(10), 
-                                                              sigInt(1), 
+                                            sigInt(1), 
                                             sigIntCast(sigInput(0)), 
                                             sigIntCast(sigInput(1)),    
                                             sigIntCast(sigInput(2))));
@@ -1094,10 +1095,10 @@ process = waveform { 0, 100, 200, 300, 400 };
 <li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate</li>
 <li>several more outputs for the sound channels themselves</li>
 </ul>
-<p>The soundfile block is created with  <code>sigSoundfile</code>, but cannot be used directly. It has to be used with:</p>
+<p>The soundfile block is created with <code>sigSoundfile</code>, but cannot be used directly. It has to be used with:</p>
 <ul>
 <li><code>sigSoundfileLength</code>to access the sound length in frames</li>
-<li><code>sigSoundfileRate</code> to access the sound rate in frames </li>
+<li><code>sigSoundfileRate</code> to access the sound rate in Hz </li>
 <li><code>sigSoundfileBuffer</code> to access the actual samples</li>
 </ul>
 <p>Thus the following DSP code:</p>
@@ -1115,7 +1116,7 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
 </div>
 <!-- /faust-run -->
 
-<p>Will be created using the signal API with (here with a simple read index of 0 to simplify the code):</p>
+<p>Will be created using the signal API with: </p>
 <pre><code class="language-C++">static void test19()
 {
     COMPILER
@@ -1123,7 +1124,7 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
         tvec signals;
         // Soundfile definition 
         Signal sf = sigSoundfile(&quot;sound[url:{'tango.wav'}]&quot;);
-        // Simple read index of 0
+        // Simple read index of 0 to simplify the code
         Signal rdx = sigInt(0);
         // Part 0
         Signal part = sigInt(0);
@@ -1164,7 +1165,7 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
 }
 </code></pre>
 <h4 id="defining-more-complex-expressions-phasor-and-oscillator">Defining more complex expressions: phasor and oscillator</h4>
-<p>More complex signal expressions can be defined. So the following DSP program:</p>
+<p>More complex signal expressions can be defined, creating signals using auxiliary definitions. So the following DSP program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 
@@ -1184,7 +1185,7 @@ with {
 </div>
 <!-- /faust-run -->
 
-<p>Can be built using some auxiliary functions, here written in C:</p>
+<p>Can be built using the sollowing helper functions, here written in C:</p>
 <pre><code class="language-C++">static Signal decimalpart(Signal x)
 {
     return sigSub(x, sigIntCast(x));
@@ -1195,7 +1196,7 @@ static Signal phasor(Signal f)
     return sigRecursion(decimalpart(sigAdd(sigSelf(), sigDiv(f, getSampleRate()))));
 }
 </code></pre>
-<p>And the main function combining hem:</p>
+<p>And the main function combining them:</p>
 <pre><code class="language-C++">static void test17()
 {
     COMPILER
@@ -1325,7 +1326,7 @@ interface-&gt;run();
 </code></pre>
 <p>And all other <a href="https://faustdoc.grame.fr/manual/architectures/">standard controllers</a> (MIDI, OSC, etc.) can be used as usual.  </p>
 <h4 id="a-complete-example">A complete example</h4>
-<p>Here is a more comple example, first with the DSP code:</p>
+<p>Here is a more complete example, first with the DSP code:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
 
@@ -1384,14 +1385,14 @@ static void test23(int argc, char* argv[])
         audio.init(&quot;Test&quot;, dsp);
 
         // Create GUI
-        GUI* interface = new GTKUI(&quot;Test&quot;, &amp;argc, &amp;argv);
-        dsp-&gt;buildUserInterface(interface);
+        GTKUI gtk_ui = GTKUI(&quot;Organ&quot;, &amp;argc, &amp;argv);
+        dsp-&gt;buildUserInterface(&amp;gtk_ui);
 
         // Start real-time processing
         audio.start();
 
         // Start GUI
-        interface-&gt;run();
+        gtk_ui.run();
 
         // Cleanup
         audio.stop();
@@ -1404,7 +1405,7 @@ static void test23(int argc, char* argv[])
 </code></pre>
 <h2 id="creating-a-signal-language-based-on-this-api">Creating a signal language based on this API</h2>
 <p>Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the <em>Block Diagram Algebra</em> is all about, and the entire Faust language itself. </p>
-<p>But some other approaches can possibly by tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help buinding complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. </p></div>
+<p>But some other approaches can possibly by tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help create complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. </p></div>
             </div>
         </div>
 

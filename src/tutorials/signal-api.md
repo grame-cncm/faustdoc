@@ -1,6 +1,6 @@
  
 
-# Opening the signal API
+# Using the signal API
 
 The signal API opens an *intermediate access inside the Faust compilation chain*. In this tutorial, we present it with examples of code. Different optimizations will be demonstrated looking at the generated C++ code. 
 
