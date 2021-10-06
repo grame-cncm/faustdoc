@@ -1062,14 +1062,14 @@ static void test23(int argc, char* argv[])
         audio.init("Test", dsp);
         
         // Create GUI
-        GUI* interface = new GTKUI("Test", &argc, &argv);
-        dsp->buildUserInterface(interface);
+        GTKUI gtk_ui = GTKUI("Organ", &argc, &argv);
+        dsp->buildUserInterface(&gtk_ui);
         
         // Start real-time processing
         audio.start();
         
         // Start GUI
-        interface->run();
+        gtk_ui.run();
         
         // Cleanup
         audio.stop();
