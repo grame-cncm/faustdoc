@@ -12,8 +12,6 @@ To generate various output languages, several backends have been developed: for 
 
 [LLVM](https://llvm.org/) is a compiler infrastructure, designed for compile-time, link-time, and run-time optimization of programs written in arbitrary programming languages. Executable code is produced dynamically using a *Just In Time* compiler from a specific code representation, called LLVM IR. Clang, the LLVM native C/C++/Objective-C compiler is a front-end for the LLVM Compiler. It can, for instance, convert a C or C++ source file into LLVM IR code. Domain-specific languages like Faust can easily target the LLVM IR. This has been done by developing an LLVM IR backend in the Faust compiler.
 
-
-
 ## Using libfaust with the LLVM backend
 
 The `libfaust` library is fully integrated to the Faust distribution which has to be compiled and installed to make it available. For an exhaustive documentation/description of the API, the code in the [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
@@ -22,13 +20,18 @@ The `libfaust` library is fully integrated to the Faust distribution which has t
 
 The complete chain goes from the Faust DSP source code, compiled in LLVM IR using the LLVM backend, to finally produce the executable code using the LLVM JIT. All steps take place in memory, getting rid of the classical file-based approaches. Pointers to executable functions can be retrieved from the resulting LLVM module and the code directly called with the appropriate parameters.
 
+#### Creation API
+
 The  `libfaust` library exports the following API: 
 
-- given a Faust source code (as a file or a string), calling the `createDSPFactoryXXX` function runs the compilation chain (Faust + LLVM JIT) and generates the *prototype* of the class, as a `llvm_dsp_factory` pointer. This factory actually contains the compiled LLVM IR for the given DSP
+- given a Faust source code (as a string or a file), calling the `createDSPFactoryFromString` or `createDSPFactoryFromFile` functions runs the compilation chain (Faust + LLVM JIT) and generates the *prototype* of the class, as a `llvm_dsp_factory` pointer. This factory actually contains the compiled LLVM IR for the given DSP
+- alternatively the `createDSPFactoryFromSignals`allows to create the factory from a list of outputs signals built with the [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h)
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
 - `deleteDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. A unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
 - next, the `createDSPInstance` function (corresponding to the `new className` of C++) instantiates a `llvm_dsp` pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, `delete` can be used to destroy the dsp instance
 - since `llvm_dsp` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
+
+#### Saving/restoring the factory
 
 After the DSP factory has been compiled, the application or the plugin running it might need to save it and then restore it. To get the internal factory compiled code, several functions are available:
 
@@ -107,10 +110,13 @@ The FIR language is simple enough to be easily translated in the typed bytecode 
 The interpreter backend API is similar to the LLVM backend API: 
 
 - given a FAUST source code (as a file or a string),  calling the `createInterpreterDSPFactory`  function runs the compilation chain (Faust + interpreter backend) and generates the *prototype* of the class, as an `interpreter_dsp_factory` pointer. This factory actually contains the compiled bytecode for the given DSP
+- alternatively the `createInterpreterDSPFactoryFromSignals` allows to create the factory from a list of outputs signals built with the [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h)
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
 - `deleteInterpreterDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. A unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
 - next, the `createDSPInstance` method of the factory class, corresponding to the `new className` of C++, instantiates an `interpreter_dsp` pointer, to be used as any regular Faust compiled DSP object, run and controlled through its interface. The instance contains the interpreter virtual machine loaded with the compiled bytecode, to be executed for each method
 - since ``interpreter_dsp`` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
+
+#### Saving/restoring the factory
 
 After the DSP factory has been compiled, the application or plugin may want to save/restore it in order to save Faust to interpreter bytecode compilation at next use. To get the internal factory bytecode and save it, two functions are available:
 
@@ -141,10 +147,11 @@ Some additional functions are available in the `libfaust` API:
 
 ## Additional Resources 
 
-Some papers are available:
+Some papers and tutorials are available:
 
 - [Comment Embarquer le Compilateur Faust dans Vos Applications ?](https://hal.archives-ouvertes.fr/hal-00832224)
 - [An Overview of the FAUST Developer Ecosystem](https://hal.archives-ouvertes.fr/hal-02158929)
+- [Using the signal API](https://faustdoc.grame.fr/tutorials/signal-api/])
 
 ## Use Case Examples
 
