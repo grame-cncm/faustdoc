@@ -1004,7 +1004,7 @@ interface->run();
 ```
 And all other [standard controllers](https://faustdoc.grame.fr/manual/architectures/) (MIDI, OSC, etc.) can be used as usual.  
 
-#### A complete example
+#### Example with audio rendering and GUI control
 
 Here is a more complete example, first with the DSP code:
 
@@ -1065,6 +1065,105 @@ static void test23(int argc, char* argv[])
         
         // Start real-time processing
         audio.start();
+        
+        // Start GUI
+        gtk_ui.run();
+        
+        // Cleanup
+        audio.stop();
+        delete dsp;
+        deleteInterpreterDSPFactory(factory);
+    } else {
+        cerr << error_msg;
+    }
+}
+```
+
+#### Polyphonic MIDI controllable simple synthesizer
+
+Here is a MIDI controlable simple synthesizer, first with the DSP code:
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+process = organ, organ
+with {
+    decimalpart(x) = x-int(x);
+    phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+    osc(f) = sin(2 * ma.PI * phasor(f));
+    freq = nentry("freq", 100, 100, 3000, 0.01);
+    gate = button("gate");
+    gain = nentry("gain", 0.5, 0, 1, 0.01);
+    organ = gate * (osc(freq) * gain + osc(2 * freq) * gain);
+    
+};
+```
+<!-- /faust-run -->
+
+Then with the C++ code using the signal API:
+
+```C++
+// Simple polyphonic DSP.
+static void test24(int argc, char* argv[])
+{
+    interpreter_dsp_factory* factory = nullptr;
+    string error_msg;
+    
+    createLibContext();
+    {
+        tvec signals;
+    
+        // Follow the freq/gate/gain convention, 
+      	// see: https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters
+        Signal freq = sigNumEntry("freq", 
+                                  sigReal(100), 
+                                  sigReal(100), 
+                                  sigReal(3000), 
+                                  sigReal(0.01));
+        Signal gate = sigButton("gate");
+        Signal gain = sigNumEntry("gain", 
+                                  sigReal(0.5), 
+                                  sigReal(0), 
+                                  sigReal(1), 
+                                  sigReal(0.01));
+        Signal organ = sigMul(gate, sigAdd(sigMul(osc(freq), gain), 
+                                           sigMul(osc(sigMul(freq, sigInt(2))), gain)));
+        // Stereo
+        signals.push_back(organ);
+        signals.push_back(organ);
+    
+        factory = createInterpreterDSPFactoryFromSignals("FaustDSP", 
+                                                         signals, 
+                                                         0, nullptr, 
+                                                         error_msg);
+    }
+    destroyLibContext();
+    
+    // Use factory outside of the createLibContext/destroyLibContext scope
+    if (factory) {
+        dsp* dsp = factory->createDSPInstance();
+        assert(dsp);
+        
+        // Allocate polyphonic DSP
+        dsp = new mydsp_poly(dsp, 8, true, true);
+        
+        // Allocate MIDI/audio driver
+        jackaudio_midi audio;
+        audio.init("Organ", dsp);
+        
+        // Create GUI
+        GTKUI gtk_ui = GTKUI("Organ", &argc, &argv);
+        dsp->buildUserInterface(&gtk_ui);
+        
+        // Create MIDI controller
+        MidiUI midi_ui = MidiUI(&audio);
+        dsp->buildUserInterface(&midi_ui);
+        
+        // Start real-time processing
+        audio.start();
+        
+        // Start MIDI
+        midi_ui.run();
         
         // Start GUI
         gtk_ui.run();

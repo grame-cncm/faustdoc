@@ -479,7 +479,8 @@ deleteDSPFactory(m_factory);
 <h2 id="sample-size-adaptation">Sample size adaptation</h2>
 <p>When compiled with the <code>-double</code> option, the generated code internally uses <code>double</code> format for samples, but also expects inputs/outputs buffers to be filled with samples in double. The <code>dsp_sample_adapter</code> decorator class defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h">faust/dsp/dsp-adapter.h</a> can be used to adapt the buffers. </p>
 <h2 id="deployment">Deployment</h2>
-<p>The application or plugin using <code>libfaust</code> can embed the library either as a statically linked component (to get a self-contained binary) or provided as a separate component to be loaded dynamically at runtime. The Faust libraries themselves usually have to be bundled separately and can be accessed at runtime using the compiler <code>-I /path/to/libraries</code> option in <code>createDSPFactoryFromString/createDSPFactoryFromFile</code> functions.</p>
+<p>The application or plugin using <code>libfaust</code> can embed the library either as a statically linked component (to get a self-contained binary) or provided as a separate component to be loaded dynamically at runtime. The Faust libraries themselves usually have to be bundled separately and can be accessed at runtime using the compiler <code>-I /path/to/libraries</code> option in <code>createDSPFactoryFromString/createDSPFactoryFromFile</code> functions.
+≤</p>
 <h2 id="additional-resources">Additional Resources</h2>
 <p>Some papers and tutorials are available:</p>
 <ul>

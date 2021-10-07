@@ -148,7 +148,7 @@ When compiled with the `-double` option, the generated code internally uses `dou
 ## Deployment
 
 The application or plugin using `libfaust` can embed the library either as a statically linked component (to get a self-contained binary) or provided as a separate component to be loaded dynamically at runtime. The Faust libraries themselves usually have to be bundled separately and can be accessed at runtime using the compiler `-I /path/to/libraries` option in `createDSPFactoryFromString/createDSPFactoryFromFile` functions.
-
+≤
 ## Additional Resources 
 
 Some papers and tutorials are available:
