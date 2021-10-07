@@ -90,13 +90,6 @@ Note that the resulting `llvm_dsp*` pointer type (see [`faust/dsp/llvm-dsp.h`](h
 
 Then the DSP object has to be connected to an audio driver to be rendered (see the `m_dsp->compute(128, m_input, m_output);` block). A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.cpp). A example using the pure C API can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/llvm-tests/llvm-test.c). 
 
-### Sample size adaptation
-
-When compiled with the `-double` option, the generated code internally uses `double` format for samples, but also expects inputs/outputs buffers to be filled with samples in double. The `dsp_sample_adapter` decorator class defined in [faust/dsp/dsp-adapter.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h) can be used to adapt the buffers. 
-
-### Deployment
-
-The application or plugin using `libfaust` can embed the library either as a statically linked component (to get a self-contained binary) or provided as a separate component to be loaded dynamically at runtime. The Faust libraries themselves usually have to be bundled separately and can be accessed at runtime using the compiler `-I /path/to/libraries` option in `createDSPFactoryFromString/createDSPFactoryFromFile` functions.
 
 ## Using libfaust with the Interpreter backend
 
@@ -137,6 +130,7 @@ The complete API is available and documented in the installed [faust/dsp/interpr
 
 The generated code is obviously much slower than LLVM generated native code. Measurements on various DSPs examples have been done, and the code is between 3 and more than 10 times slower than the LLVM native code.
 
+
 ## Additional Functions
 
 Some additional functions are available in the `libfaust` API:
@@ -146,6 +140,14 @@ Some additional functions are available in the `libfaust` API:
 - **Using other backends or generating auxiliary files**. The `generateAuxFilesFromString` and `generateAuxFilesFromFile` functions taking a DSP source string or file can be used:
     - to activate and use other backends (depending of which ones have been compiled in libfaust) to generate like C, C++, or SOUL code, etc. The `argv` parameter has to mimic the command line like for instance: `-lang cpp -vec -lv 1` to generate a C++ file in vector mode.
     - to generate auxiliary files which can be text files SVG, XML, ps, etc. The `argv` parameter has to mimic the command line like for instance: `-json` to generate a JSON file.
+
+## Sample size adaptation
+
+When compiled with the `-double` option, the generated code internally uses `double` format for samples, but also expects inputs/outputs buffers to be filled with samples in double. The `dsp_sample_adapter` decorator class defined in [faust/dsp/dsp-adapter.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h) can be used to adapt the buffers. 
+
+## Deployment
+
+The application or plugin using `libfaust` can embed the library either as a statically linked component (to get a self-contained binary) or provided as a separate component to be loaded dynamically at runtime. The Faust libraries themselves usually have to be bundled separately and can be accessed at runtime using the compiler `-I /path/to/libraries` option in `createDSPFactoryFromString/createDSPFactoryFromFile` functions.
 
 ## Additional Resources 
 
