@@ -151,7 +151,7 @@ Some papers and tutorials are available:
 
 - [Comment Embarquer le Compilateur Faust dans Vos Applications ?](https://hal.archives-ouvertes.fr/hal-00832224)
 - [An Overview of the FAUST Developer Ecosystem](https://hal.archives-ouvertes.fr/hal-02158929)
-- [Using the signal API](https://faustdoc.grame.fr/tutorials/signal-api/])
+- [Using the signal API](https://faustdoc.grame.fr/tutorials/signal-api/)
 
 ## Use Case Examples
 
