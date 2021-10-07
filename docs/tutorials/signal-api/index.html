@@ -1277,7 +1277,7 @@ static void test18()
 </code></pre>
 <h2 id="using-the-generated-code">Using the generated code</h2>
 <p>Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. </p>
-<p>The LLVM backend can be used with <code>createDSPFactoryFromSignals</code> (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h">llvm-dsp.h</a>) to produces a DSP factory then a DSP instance:</p>
+<p>The LLVM backend can be used with <code>createDSPFactoryFromSignals</code> (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h">llvm-dsp.h</a>) to produce a DSP factory then a DSP instance:</p>
 <pre><code class="language-C++">string error_msg;
 llvm_dsp_factory* factory = createDSPFactoryFromSignals(&quot;FaustDSP&quot;, 
                                                         signals, 0, 
@@ -1288,18 +1288,26 @@ dsp* dsp = factory-&gt;createDSPInstance();
 // Check dsp
 ...
 // Use dsp
+...
+// Delete dsp and factory
+delete dsp;
+deleteDSPFactory(factory);
 </code></pre>
-<p>The Interpreter backend can be used with <code>createInterpreterDSPFactoryFromSignals</code> (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h">interpreter-dsp.h</a>) to produces a DSP factory then a DSP instance:</p>
+<p>The Interpreter backend can be used with <code>createInterpreterDSPFactoryFromSignals</code> (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h">interpreter-dsp.h</a>) to produce a DSP factory then a DSP instance:</p>
 <pre><code class="language-C++">string error_msg;
-llvm_dsp_factory* factory = createInterpreterDSPFactoryFromSignals(&quot;FaustDSP&quot;, 
-                                                                   signals, 0, 
-                                                                   nullptr, &quot;&quot;, 
-                                                                   error_msg);
+interpreter_dsp_factory* factory = createInterpreterDSPFactoryFromSignals(&quot;FaustDSP&quot;, 
+                                                                          signals, 0, 
+                                                                          nullptr, &quot;&quot;, 
+                                                                          error_msg);
 // Check factory
 dsp* dsp = factory-&gt;createDSPInstance();
 // Check dsp
 ...
 // Use dsp
+...
+// Delete dsp and factory
+delete dsp;
+deleteInterpreterDSPFactory(factory);
 </code></pre>
 <h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
 <p>Audio drivers allow to render the DSP instance. Here is a simple code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h">dummyaudio</a> audio driver:</p>

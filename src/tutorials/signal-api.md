@@ -936,7 +936,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. 
 
-The LLVM backend can be used with `createDSPFactoryFromSignals` (see [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h)) to produces a DSP factory then a DSP instance:
+The LLVM backend can be used with `createDSPFactoryFromSignals` (see [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h)) to produce a DSP factory then a DSP instance:
 
 ```C++
 string error_msg;
@@ -949,21 +949,29 @@ dsp* dsp = factory->createDSPInstance();
 // Check dsp
 ...
 // Use dsp
+...
+// Delete dsp and factory
+delete dsp;
+deleteDSPFactory(factory);
 ```
 
-The Interpreter backend can be used with `createInterpreterDSPFactoryFromSignals` (see [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h)) to produces a DSP factory then a DSP instance:
+The Interpreter backend can be used with `createInterpreterDSPFactoryFromSignals` (see [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h)) to produce a DSP factory then a DSP instance:
 
 ```C++
 string error_msg;
-llvm_dsp_factory* factory = createInterpreterDSPFactoryFromSignals("FaustDSP", 
-                                                                   signals, 0, 
-                                                                   nullptr, "", 
-                                                                   error_msg);
+interpreter_dsp_factory* factory = createInterpreterDSPFactoryFromSignals("FaustDSP", 
+                                                                          signals, 0, 
+                                                                          nullptr, "", 
+                                                                          error_msg);
 // Check factory
 dsp* dsp = factory->createDSPInstance();
 // Check dsp
 ...
 // Use dsp
+...
+// Delete dsp and factory
+delete dsp;
+deleteInterpreterDSPFactory(factory);
 ```
 
 #### Connecting the audio layer 
