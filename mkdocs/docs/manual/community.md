@@ -30,6 +30,14 @@ This tutorial focus on using Faust and on features that are specific to OWL and 
 
 Sublime Text syntax file for the Faust programming language.
 
+### [Faust-Mode](https://github.com/rukano/emacs-faust-mode)
+
+Major Emacs mode for the Faust programming language, featuring syntax highlighting, automatic indentation and auto-completion.
+
+### [Faustine](https://bitbucket.org/yphil/faustine/src/master/)
+
+Faustine allows the edition of Faust code.
+
 ##### Contributing
 
 Feel free to contribute by [forking this project](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks) and [creating a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), or by mailing the library description [here](mailto:research@grame.fr).
