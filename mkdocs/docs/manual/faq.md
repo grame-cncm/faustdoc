@@ -39,9 +39,9 @@ In Faust, the interval calculation system on signals is supposed to detect possi
 Several strategies have been developed to help programmers better understand their written DSP code, and possibly analyse it both at compile time and runtime:
 
 - at compile time, using the `-ct` and  `-cat` compilation options allows to check table index range, by verifying that the actual signal range is compatible with the actual table size. Note that since the interval calculation is currently imperfect, you may see *false positive* especially when using recursive signals where the interval calculation system will typically produce *[-INFINITY, INFINITY]* range, which is not precise enough to correctly describe the real signal range. 
-- at runtime, the [inter-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark) tool runs and instruments the compiled program using the Interpreter backend, and can give various informations like the production *NaN* or *INFINITY* values, and using the `-me` with the `faust2caqt` script to catch math computation exceptions (see the [Debugging the DSP Code](https://faustdoc.grame.fr/manual/optimizing/) section in the documentation).
+- at runtime, the [inter-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark) tool runs and instruments the compiled program using the Interpreter backend, and can give various informations like the production *NaN* or *INFINITY* values, and using the `-me` with the `faust2caqt` script to catch math computation exceptions (see the [Debugging the DSP Code](https://faustdoc.grame.fr/manual/optimizing/#debugging-the-dsp-code) section in the documentation).
 
-Note that the Faust [math library](https://faustlibraries.grame.fr/libs/maths/) contains the implementation of the`INFINITY` value (depending of the choosen type like `float`, `double` or `quad`), and `isnan` and `isinf`  functions that may help during development.
+Note that the Faust [math library](https://faustlibraries.grame.fr/libs/maths/) contains the implementation of `isnan` and `isinf`  functions that may help during development.
 
 
 ## Pattern matching and lists
