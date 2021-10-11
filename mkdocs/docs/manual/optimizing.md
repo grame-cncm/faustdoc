@@ -1,6 +1,4 @@
-# Optimize and Debug the Code
-
-
+# Optimizing the Code
 
 
 ## Optimizing the DSP Code 
@@ -142,22 +140,3 @@ On modern CPUs, compiling native code dedicated to the target processor is criti
 ### faust2object
 
 The `faust2object` tool  either uses the standard C++ compiler or the LLVM dynamic compilation chain (the `dynamic-faust` tool) to compile a Faust DSP to object code files (.o) and wrapper C++ header files for different CPUs. The DSP name is used in the generated C++ and object code files, thus allowing to generate distinct versions of the code that can finally be linked together in a single binary. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faust2object).
-
-## Debugging the DSP Code 
-
-The Faust compiler gives error messages when the written code is not syntactically or semantically correct. When a correct program is finally generated, it may still have numerical or precision issues only appearing at runtime **(Note**: this is mainly due the the non powerful enough signal interval computation of the compiler). This typically happens when using mathematical functions outside of their definition domain, like calling `log(0)` or `sqrt(-1)` at some point in the signal path. Those errors have to be then fixed by carefully checking signal range, like verifying the min/max values in `vslider/hslider/nentry` user-interface items. One way to detect and understand them is by running the code in a controlled and instrumented environment. A special version of the `interpreter` backend can be used for that purpose and is embedded in a dedicated testing tool. 
-
-Look at the [Produced NaN or INFINITY values and table access](https://faustdoc.grame.fr/manual/faq/#produced-nan-or-infinity-values-and-table-access) section in the [FAQ](https://faustdoc.grame.fr/manual/faq/#frequently-asked-questions).
-
-### interp-tracer
-
-The `interp-tracer` tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically `FP_SUBNORMAL`, `FP_INFINITE` and `FP_NAN` values, or `INTEGER_OVERFLOW`, `CAST_INT_OVERFLOW`  and `DIV_BY_ZERO` operations, or `LOAD/STORE` errors. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer).
-
-### Debugging at Runtime
-
-On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow) at runtime. Developers can possibly use the [dsp_me_checker](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP object with the math computation exception handling code. 
-
-### Additional Resources 
-
-Handling infinity and not-a-number (NaN) the right way still remains a tricky problem that is not completely handled in the current version of the compiler. Dario Sanfilippo [blog post](https://www.dariosanfilippo.com/blog/2020/handling_inf_nan_values_in_faust_and_cpp/) is a very helpful summary of the situation with a lot of practical solutions to [write safer DSP code](https://github.com/dariosanfilippo/realfaust/blob/main/realfaust.lib).  
-
