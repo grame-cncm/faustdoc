@@ -1186,7 +1186,7 @@ static void test24(int argc, char* argv[])
 }
 ```
 
-#### Examples with the C API
+## Examples with the C API
 
 The signal API is also available as a [pure C API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h). Here is one of the previous example rewritten using the C API to create signals, where the LLVM backend is used with the C version `createCDSPFactoryFromSignals` function (see [llvm-dsp-c.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp-c.h)) to produce a DSP factory, then a DSP instance:
 

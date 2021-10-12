@@ -372,10 +372,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#examples-with-the-c-api" class="nav-link">Examples with the C API</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#examples-with-the-c-api" class="nav-link">Examples with the C API</a>
+              <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#creating-a-signal-language-based-on-this-api" class="nav-link">Creating a signal language based on this API</a>
@@ -1524,7 +1524,7 @@ static void test24(int argc, char* argv[])
     }
 }
 </code></pre>
-<h4 id="examples-with-the-c-api">Examples with the C API</h4>
+<h2 id="examples-with-the-c-api">Examples with the C API</h2>
 <p>The signal API is also available as a <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h">pure C API</a>. Here is one of the previous example rewritten using the C API to create signals, where the LLVM backend is used with the C version <code>createCDSPFactoryFromSignals</code> function (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp-c.h">llvm-dsp-c.h</a>) to produce a DSP factory, then a DSP instance:</p>
 <pre><code class="language-C++">/*
  import(&quot;stdfaust.lib&quot;);
