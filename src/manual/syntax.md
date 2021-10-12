@@ -13,8 +13,8 @@ A Faust program is essentially a list of *statements*. These statements can be *
 Some statements ([*imports*](#imports), [*definitions*](#definitions)) can be preceded by a *variantlist*, composed of *variants* which can be `singleprecision`, `doubleprecision`, `quadprecision` or `fixedpointprecision`. This allows some `imports` and `definitions` to be effective only for a (or several) specific float precision option in the compiler (that is either `-single`, `-double`, `-quad` or `-fx` respectively). A typical use-case is the definition of floating point constants in the `maths.lib` library with the following lines:
 
 ```
-singleprecision INFINITY = 3.402823466e+38;
-doubleprecision INFINITY = 1.7976931348623158e+308;
+singleprecision MAX = 3.402823466e+38;
+doubleprecision MAX = 1.7976931348623158e+308;
 ```
 
 ### A Simple Program

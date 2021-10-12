@@ -24,7 +24,7 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 #### Accessing the signal stage
 
-A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files.  Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
+A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) (or the [C signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h) version) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files.  Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
 
 ## Compiling signal expressions
 
@@ -79,7 +79,7 @@ And a macro to wrap all the needed steps:
 
 ### Examples 
 
-For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C/C++ examples are defined in the [signal-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp) tool, to be compiled with `make signal-tester` in the tools/benchmark folder.
+For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C++ examples are defined in the [signal-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp) tool, to be compiled with `make signal-tester` in the tools/benchmark folder.
 
 #### Simple constant signal 
 
@@ -934,7 +934,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 ## Using the generated code
 
-Using the LLVM or Interpreter backends allows to generate and execute the DSP on the fly. 
+Using the LLVM or Interpreter backends allows to generate and execute the compiled DSP on the fly. 
 
 The LLVM backend can be used with `createDSPFactoryFromSignals` (see [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h)) to produce a DSP factory then a DSP instance:
 
@@ -1185,6 +1185,129 @@ static void test24(int argc, char* argv[])
     }
 }
 ```
+
+#### Examples with the C API
+
+The signal API is also available as the [pure C API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h). Here is one of the previous example rewritten using the C API to create signals, where the LLVM backend is used with the C version `createCDSPFactoryFromSignals` (see [llvm-dsp-c.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp-c.h)) to produce a DSP factory then a DSP instance:
+
+```C++
+/*
+ import("stdfaust.lib");
+ process = phasor(440)
+ with {
+     decimalpart(x) = x-int(x);
+     phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+ };
+ */
+
+static Signal decimalpart(Signal x)
+{
+    return CsigSub(x, CsigIntCast(x));
+}
+
+static Signal phasor(Signal f)
+{
+    return CsigRecursion(decimalpart(CsigAdd(CsigSelf(), CsigDiv(f, getSampleRate()))));
+}
+
+static void test1()
+{
+    createLibContext();
+    {
+        Signal signals[2];
+        signals[0] = phasor(CsigReal(2000));
+        signals[1] = NULL; // Null terminated array
+
+        char error_msg[4096];
+        llvm_dsp_factory* factory = createCDSPFactoryFromSignals("test1", 
+                                                                 signals, 
+                                                                 0, NULL, 
+                                                                 "", 
+                                                                 error_msg, 
+                                                                 -1);
+            
+        if (factory) {
+            
+            llvm_dsp* dsp = createCDSPInstance(factory);
+            assert(dsp);
+            
+            // Render audio
+            render(dsp);
+            
+            // Cleanup
+            deleteCDSPInstance(dsp);
+            deleteCDSPFactory(factory);
+        
+        } else {
+            printf("Cannot create factory : %s\n", error_msg);
+        }
+    }
+    destroyLibContext();
+}
+```
+
+Here is an example using controller and the `PrintUI`architecture to display their parameters:
+
+```C++
+/*
+ import("stdfaust.lib");
+ 
+ freq = vslider("h:Oscillator/freq", 440, 50, 1000, 0.1);
+ gain = vslider("h:Oscillator/gain", 0, 0, 1, 0.01);
+ 
+ process = freq * gain;
+ */
+
+static void test3()
+{
+    createLibContext();
+    {
+        Signal signals[2];
+        Signal freq = CsigVSlider("h:Oscillator/freq", 
+                                  CsigReal(440), 
+                                  CsigReal(50), 
+                                  CsigReal(1000), 
+                                  CsigReal(0.1));
+        Signal gain = CsigVSlider("h:Oscillator/gain", 
+                                  CsigReal(0), 
+                                  CsigReal(0), 
+                                  CsigReal(1), 
+                                  CsigReal(0.011));
+        signals[0] = CsigMul(freq, CsigMul(gain, CsigInput(0)));
+        signals[1] = NULL; // Null terminated array
+
+        char error_msg[4096];
+        llvm_dsp_factory* factory = createCDSPFactoryFromSignals("test3", 
+                                                                 signals, 0, 
+                                                                 NULL, "", 
+                                                                 error_msg, 
+                                                                 -1);
+        
+        if (factory) {
+            
+            llvm_dsp* dsp = createCDSPInstance(factory);
+            assert(dsp);
+            
+            printf("=================UI=================\n");
+            
+            // Defined in PrintCUI.h
+            metadataCDSPInstance(dsp, &mglue);
+            
+            buildUserInterfaceCDSPInstance(dsp, &uglue);
+            
+            // Cleanup
+            deleteCDSPInstance(dsp);
+            deleteCDSPFactory(factory);
+            
+        } else {
+            printf("Cannot create factory : %s\n", error_msg);
+        }
+    }
+    destroyLibContext();
+}
+```
+
+All C examples are defined in the [signal-tester-c](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.c) tool, to be compiled with `make signal-tester-c` in the tools/benchmark folder.
 
 ## Creating a signal language based on this API 
 
