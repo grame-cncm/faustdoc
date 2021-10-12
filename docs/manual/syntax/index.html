@@ -882,8 +882,8 @@ they are brought to the right section. -->
 <p>A Faust program is essentially a list of <em>statements</em>. These statements can be <em>metadata declarations</em> (either <a href="#global-metadata">global metadata</a> or <a href="#function-metadata">function metadata</a>), <a href="#imports"><em>imports</em></a>, <a href="#definitions"><em>definitions</em></a>, and <a href="#documentation-tags"><em>documentation tags</em></a>, with optional C++ style (<code>//...</code> and <code>/*...*/</code>) comments.</p>
 <h3 id="variants">Variants</h3>
 <p>Some statements (<a href="#imports"><em>imports</em></a>, <a href="#definitions"><em>definitions</em></a>) can be preceded by a <em>variantlist</em>, composed of <em>variants</em> which can be <code>singleprecision</code>, <code>doubleprecision</code>, <code>quadprecision</code> or <code>fixedpointprecision</code>. This allows some <code>imports</code> and <code>definitions</code> to be effective only for a (or several) specific float precision option in the compiler (that is either <code>-single</code>, <code>-double</code>, <code>-quad</code> or <code>-fx</code> respectively). A typical use-case is the definition of floating point constants in the <code>maths.lib</code> library with the following lines:</p>
-<pre><code>singleprecision INFINITY = 3.402823466e+38;
-doubleprecision INFINITY = 1.7976931348623158e+308;
+<pre><code>singleprecision MAX = 3.402823466e+38;
+doubleprecision MAX = 1.7976931348623158e+308;
 </code></pre>
 <h3 id="a-simple-program">A Simple Program</h3>
 <p>Here is a short Faust program that implements of a simple noise generator (called from the <code>noises.lib</code> Faust library). It exhibits various kind of statements : two <a href="#global-metadata"><em>global metadata</em></a> declarations, an <a href="#imports"><em>imports</em></a>, a <em>comment</em>, and a <a href="#definitions"><em>definition</em></a>. We will study later how <a href="#documentation-tags"><em>documentation statements</em></a> work:</p>

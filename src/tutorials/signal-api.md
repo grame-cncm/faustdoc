@@ -936,7 +936,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 Using the LLVM or Interpreter backends allows to generate and execute the compiled DSP on the fly. 
 
-The LLVM backend can be used with `createDSPFactoryFromSignals` (see [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h)) to produce a DSP factory then a DSP instance:
+The LLVM backend can be used with `createDSPFactoryFromSignals` (see [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h)) to produce a DSP factory, then a DSP instance:
 
 ```C++
 string error_msg;
@@ -955,7 +955,7 @@ delete dsp;
 deleteDSPFactory(factory);
 ```
 
-The Interpreter backend can be used with `createInterpreterDSPFactoryFromSignals` (see [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h)) to produce a DSP factory then a DSP instance:
+The Interpreter backend can be used with `createInterpreterDSPFactoryFromSignals` (see [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h)) to produce a DSP factory, then a DSP instance:
 
 ```C++
 string error_msg;
@@ -1188,7 +1188,7 @@ static void test24(int argc, char* argv[])
 
 #### Examples with the C API
 
-The signal API is also available as the [pure C API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h). Here is one of the previous example rewritten using the C API to create signals, where the LLVM backend is used with the C version `createCDSPFactoryFromSignals` (see [llvm-dsp-c.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp-c.h)) to produce a DSP factory then a DSP instance:
+The signal API is also available as a [pure C API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h). Here is one of the previous example rewritten using the C API to create signals, where the LLVM backend is used with the C version `createCDSPFactoryFromSignals` function (see [llvm-dsp-c.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp-c.h)) to produce a DSP factory, then a DSP instance:
 
 ```C++
 /*
@@ -1246,7 +1246,7 @@ static void test1()
 }
 ```
 
-Here is an example using controller and the `PrintUI`architecture to display their parameters:
+Here is an example using controllers and the `PrintUI` architecture to display their parameters:
 
 ```C++
 /*
