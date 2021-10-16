@@ -2195,7 +2195,7 @@ process = triangleOsc(f);
 <ul>
 <li>two inputs: the sound number (as a integer between 0 and 255 as a <a href="#constant-numerical-expressions">constant numerical expression</a>), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)</li>
 <li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate</li>
-<li>several more outputs for the sound channels themselves</li>
+<li><code>n</code> several more outputs for the sound channels themselves</li>
 </ul>
 <p>If more outputs than the actual number of channels in the sound file are used, the audio channels will be automatically duplicated up to the wanted number of outputs (so for instance, if a stereo file is used with four output channels, the same group of two channels will be duplicated).</p>
 <p>If the soundfile cannot be loaded for whatever reason, a default sound with one channel, a length of 1024 frames and null outputs (with samples of value 0) will be used. Note also that soundfiles are entirely loaded in memory by the architecture file, so that the read index signal can access any sample.</p>
