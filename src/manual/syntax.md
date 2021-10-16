@@ -1233,7 +1233,7 @@ The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows for 
 
 * two inputs: the sound number (as a integer between 0 and 255 as a [constant numerical expression](#constant-numerical-expressions)), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)
 * two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
-* `n` several more outputs for the sound channels themselves
+* `n` several more outputs for the sound channels themselves, as a [constant numerical expression](#constant-numerical-expressions)
 
 If more outputs than the actual number of channels in the sound file are used, the audio channels will be automatically duplicated up to the wanted number of outputs (so for instance, if a stereo file is used with four output channels, the same group of two channels will be duplicated).
 
