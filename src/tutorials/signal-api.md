@@ -66,7 +66,7 @@ static void compile(const string& name,
 }
 ```
 
-And a macro to wrap all the needed steps: 
+A macro to wrap all the needed steps: 
 
 ```C++
 #define COMPILER(exp)    \
@@ -75,6 +75,36 @@ And a macro to wrap all the needed steps:
     exp                  \
     destroyLibContext(); \
 }                        \   
+```
+
+And additional usefull functions to be used later in the tutorial: 
+```C++
+/**
+ * Return the current runtime sample rate.
+ *
+ * Reproduce the 'SR' definition in platform.lib: 
+ * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, <dummy.h>)));
+ *
+ * @return the current runtime sample rate.
+ */
+inline Signal getSampleRate()
+{
+    return sigMin(sigReal(192000.0), 
+                  sigMax(sigReal(1.0), 
+                         sigFConst(SType::kSInt, "fSamplingFreq", "<dummy.h>")));
+}
+
+/**
+ * Return the current runtime buffer size.
+ *
+ * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, <dummy.h>);
+ *
+ * @return the current runtime buffer size.
+ */
+inline Signal getBufferSize()
+{
+    return sigFVar(SType::kSInt, "count", "<dummy.h>");
+}
 ```
 
 ### Examples 

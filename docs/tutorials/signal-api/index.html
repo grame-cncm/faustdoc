@@ -442,13 +442,41 @@
     }
 }
 </code></pre>
-<p>And a macro to wrap all the needed steps: </p>
+<p>A macro to wrap all the needed steps: </p>
 <pre><code class="language-C++">#define COMPILER(exp)    \
 {                        \
     createLibContext();  \
     exp                  \
     destroyLibContext(); \
 }                        \   
+</code></pre>
+<p>And additional usefull functions to be used later in the tutorial: </p>
+<pre><code class="language-C++">/**
+ * Return the current runtime sample rate.
+ *
+ * Reproduce the 'SR' definition in platform.lib: 
+ * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, &lt;dummy.h&gt;)));
+ *
+ * @return the current runtime sample rate.
+ */
+inline Signal getSampleRate()
+{
+    return sigMin(sigReal(192000.0), 
+                  sigMax(sigReal(1.0), 
+                         sigFConst(SType::kSInt, &quot;fSamplingFreq&quot;, &quot;&lt;dummy.h&gt;&quot;)));
+}
+
+/**
+ * Return the current runtime buffer size.
+ *
+ * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, &lt;dummy.h&gt;);
+ *
+ * @return the current runtime buffer size.
+ */
+inline Signal getBufferSize()
+{
+    return sigFVar(SType::kSInt, &quot;count&quot;, &quot;&lt;dummy.h&gt;&quot;);
+}
 </code></pre>
 <h3 id="examples">Examples</h3>
 <p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C++ examples are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool, to be compiled with <code>make signal-tester</code> in the tools/benchmark folder.</p>
