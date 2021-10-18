@@ -1,8 +1,8 @@
  
 
-# Using the signal API
+# Using the box API
 
-The signal API opens an *intermediate access inside the Faust compilation chain*. In this tutorial, we present it with examples of code. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API, and take profit of part of the Faust compiler infrastructure.
+The box API opens an *intermediate access inside the Faust compilation chain*. In this tutorial, we present it with examples of code. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the box API, and take profit of part of the Faust compiler infrastructure.
 
 #### Faust compiler structure
 
@@ -24,19 +24,19 @@ The list of output signals is produced by the *Symbolic Propagation* step. Each 
 
 The *Code Generation Phase* translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.
 
-#### Accessing the signal stage
+#### Accessing the box stage
 
-A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) (or the [C signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h) version) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
+A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a box expression, then beneficiate of all remaining parts of the compilation chain. The [box API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box.h) (or the [C box API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box-c.h) version) allows to programmatically create the box expression, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
 
-## Compiling signal expressions
+## Compiling box expressions
 
-To use the signal API, the following steps must be taken:
+To use the box API, the following steps must be taken:
 
 - creating a global compilation context using the `createLibContext` function
 
-- creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones
+- creating a box expression using the box API, progressively building more complex expressions by combining simpler ones
 
-- compiling the list of outputs using the `createCPPDSPFactoryFromSignals` function to create a DSP factory (or [createDSPFactoryFromSignals](#using-the-generated-code)  to generate a LLVM embedding factory, or [createInterpreterDSPFactoryFromSignals](#using-the-generated-code) to generate an Interpreter embedding factory)
+- compiling the box expression using the `createCPPDSPFactoryFromBoxes` function to create a DSP factory (or [createDSPFactoryFromBoxes](#using-the-generated-code)  to generate a LLVM embedding factory, or [createInterpreterDSPFactoryFromBoxes](#using-the-generated-code) to generate an Interpreter embedding factory)
 
 - finally destroying the compilation context using the `destroyLibContext` function
 
@@ -44,7 +44,7 @@ The  DSP factories allows to create DSP instances, to be used with audio and UI 
 
 ### Tools
 
-Let's first define a `compile` function, which uses the `createCPPDSPFactoryFromSignals` function and print the generated C++ class:
+Let's first define a `compile` function, which uses the `createCPPDSPFactoryFromBoxes` function and print the generated C++ class:
 
 ```C++
 static void compile(const string& name, 
@@ -53,11 +53,11 @@ static void compile(const string& name,
                     const char* argv[] = nullptr)
 {
     string error_msg;
-    dsp_factory_base* factory = createCPPDSPFactoryFromSignals(name, 
-                                                              signals, 
-                                                              argc, 
-                                                              argv, 
-                                                              error_msg);
+    dsp_factory_base* factory = createCPPDSPFactoryFromBoxes(name, 
+                                                             signals, 
+                                                             argc, 
+                                                             argv, 
+                                                             error_msg);
     if (factory) {
       	// Print the C++ class
         factory->write(&cout);
@@ -90,50 +90,49 @@ And additional usefull functions to be used later in the tutorial:
  *
  * @return the current runtime sample rate.
  */
-inline Signal getSampleRate()
+inline Box getSampleRate()
 {
-    return sigMin(sigReal(192000.0), 
-                  sigMax(sigReal(1.0), 
-                         sigFConst(SType::kSInt, "fSamplingFreq", "<dummy.h>")));
+    return boxMin(boxReal(192000.0), 
+                  boxMax(boxReal(1.0), 
+        	 	     				 boxFConst(SType::kSInt, "fSamplingFreq", "<dummy.h>")));
 }
 
-/**
+/** 
  * Return the current runtime buffer size.
  *
  * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, <dummy.h>);
  *
  * @return the current runtime buffer size.
  */
-inline Signal getBufferSize()
+inline Box getBufferSize()
 {
-    return sigFVar(SType::kSInt, "count", "<dummy.h>");
+    return boxFVar(SType::kSInt, "count", "<dummy.h>");
 }
 ```
 
 ### Examples 
 
-For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C++ examples are defined in the [signal-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp) tool, to be compiled with `make signal-tester` in the tools/benchmark folder.
+For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps). All C++ examples are defined in the [box-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.cpp) tool, to be compiled with `make box-tester` in the tools/benchmark folder.
 
-#### Simple constant signal 
+#### Expression generating constant signals 
 
-Let's create a program generating the 0.5 constant value. Here is the Faust DSP code:
+Let's create a program generating a parallel construction of 7 and 3.14 constant values. Here is the Faust DSP code:
 
 <!-- faust-run -->
 ```
-process = 0.5;
+process = 7,3.14;
 ```
 <!-- /faust-run -->
 
-The following code creates a vector of output signals (with the `tvec` type), containing the single `sigReal(0.5)` signal, then compile it and display the C++ class:
+The following code creates a box expresson, containing a box `boxPar(boxInt(7), boxReal(3.14))` expression, then compile it and display the C++ class:
 
 ```C++
 static void test1()
 {
     COMPILER
     (
-        tvec signals;
-        signals.push_back(sigReal(0.5));
-     
+        Box box = boxPar(boxInt(7), boxReal(3.14));
+    
         compile("test1", signals);
     )
 }
@@ -144,8 +143,10 @@ The `compute` method is then:
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
     FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
     for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-        output0[i0] = FAUSTFLOAT(0.5f);
+        output0[i0] = FAUSTFLOAT(7);
+        output1[i0] = FAUSTFLOAT(3.1400001f);
     }
 }
 ```
@@ -156,23 +157,20 @@ Here is a simple program doing a mathematical operation on an signal input:
 
 <!-- faust-run -->
 ```
-process = _ <: +(0.5), *(1.5);
+process = _,3.14 : +;
 ```
 <!-- /faust-run -->
 
-The first audio input is created with `sigInput(0)` signal, then transformed using `sigAdd` and `sigMul` signal operators to produce two outputs:
+The first audio input is created with `boxWire()` expression, then transformed using the `boxAdd` and `boxSeq` operators to produce one output:
 
 ```C++
 static void test2()
 {
     COMPILER
     (
-        tvec signals;
-        Signal in1 = sigInput(0);
-        signals.push_back(sigAdd(in1, sigReal(0.5)));
-        signals.push_back(sigMul(in1, sigReal(1.5)));
-        
-        compile("test2", signals);
+        Box box = boxSeq(boxPar(boxWire(), boxReal(3.14)), boxAdd());
+     
+        compile("test2", box);
      )
 }
 ```
@@ -183,43 +181,50 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 {
     FAUSTFLOAT* input0 = inputs[0];
     FAUSTFLOAT* output0 = outputs[0];
-    FAUSTFLOAT* output1 = outputs[1];
     for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-        float fTemp0 = float(input0[i0]);
-        output0[i0] = FAUSTFLOAT((fTemp0 + 0.5f));
-        output1[i0] = FAUSTFLOAT((1.5f * fTemp0));
+        output0[i0] = FAUSTFLOAT((float(input0[i0]) + 3.1400001f));
     }
 }
 ```
 
-Note that accessing input N is simply done using the `sigInput(N)` expression. 
-
-#### Defining delayed signals 
-
-Here is a simple program using a signal input and doing mathematical operations on it, then delaying the signals: 
-
-<!-- faust-run -->
-```
-process = _ <: @(+(0.5), 500), @(*(1.5), 3000);
-```
-<!-- /faust-run -->
-
-The  `sigDelay(x, y)` operator is used to delay the `x` first parameter with the second `y` parameter, here with constant values:
+In the published API, most operators are exported as simple *no-argument* operators, using the language [core-syntax](https://faustdoc.grame.fr/manual/syntax/#infix-notation-and-other-syntax-extensions). The [prefix notation](https://faustdoc.grame.fr/manual/syntax/#prefix-notation) can be used with added multi-argument versions. So the previous example can be written in a simpler way with the following code, which will produce the exact same C++:
 
 ```C++
 static void test3()
 {
     COMPILER
     (
-        tvec signals;
-        Signal in1 = sigInput(0);
-        signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500)));
-        signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigReal(3000)));
+        Box box = boxAdd(boxWire(), boxReal(3.14));
+     
+        compile("test3", box);
+     )
+}
+```
 
-        compile("test3", signals);
+#### Defining a delay expression 
+
+Here is a simple program delaying the first input: 
+
+<!-- faust-run -->
+```
+process = @(_,7);
+```
+<!-- /faust-run -->
+
+The prefix-notation `boxDelay(x, y)` operator is used to delay the `boxWire()` first parameter with the second `boxInt(7)`:
+
+```C++
+static void test6()
+{
+    COMPILER
+    (
+        Box box = boxDelay(boxWire(), boxInt(7));
+
+        compile("test3", test6);
     )
 }
 ```
+
 The `compute` method is then:
 
 ```C++
@@ -227,14 +232,12 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 {
     FAUSTFLOAT* input0 = inputs[0];
     FAUSTFLOAT* output0 = outputs[0];
-    FAUSTFLOAT* output1 = outputs[1];
     for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-        float fTemp0 = float(input0[i0]);
-        fVec0[(IOTA & 4095)] = fTemp0;
-        fVec1[(IOTA & 511)] = (fTemp0 + 0.5f);
-        output0[i0] = FAUSTFLOAT(fVec1[((IOTA - 500) & 511)]);
-        output1[i0] = FAUSTFLOAT((1.5f * fVec0[((IOTA - 3000) & 4095)]));
-        IOTA = (IOTA + 1);
+        fVec0[0] = float(input0[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[7]);
+        for (int j0 = 7; (j0 > 0); j0 = (j0 - 1)) {
+            fVec0[j0] = fVec0[(j0 - 1)];
+        }
     }
 }
 ```
@@ -242,21 +245,16 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the [compiler can also generate vector and parallel code](https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation). The following code show how to compile in vector mode:
 
 ```C++
-static void test5()
+static void test7()
 {
     createLibContext();
-    
-    tvec signals;
-    Signal in1 = sigInput(0);
-    signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500)));
-    signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigReal(3000)));
-    
-    // Vector compilation
-    compile("test5", signals, 3, (const char* []){ "-vec", "-lv", "1" });
-
+    Box box = boxDelay(boxWire(), boxInt(7));
+     
+    compile("test7", box, 3, (const char* []){ "-vec", "-lv", "1" });
     destroyLibContext();
 }
 ```
+
 The `compute` method is then:
 
 ```C++
@@ -264,39 +262,29 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 {
     FAUSTFLOAT* input0_ptr = inputs[0];
     FAUSTFLOAT* output0_ptr = outputs[0];
-    FAUSTFLOAT* output1_ptr = outputs[1];
+    float fYec0_tmp[40];
+    float* fYec0 = &fYec0_tmp[8];
     for (int vindex = 0; (vindex < count); vindex = (vindex + 32)) {
         FAUSTFLOAT* input0 = &input0_ptr[vindex];
         FAUSTFLOAT* output0 = &output0_ptr[vindex];
-        FAUSTFLOAT* output1 = &output1_ptr[vindex];
         int vsize = std::min<int>(32, (count - vindex));
         /* Vectorizable loop 0 */
         /* Pre code */
-        fYec0_idx = ((fYec0_idx + fYec0_idx_save) & 4095);
+        for (int j0 = 0; (j0 < 8); j0 = (j0 + 1)) {
+            fYec0_tmp[j0] = fYec0_perm[j0];
+        }
         /* Compute code */
         for (int i = 0; (i < vsize); i = (i + 1)) {
-            fYec0[((i + fYec0_idx) & 4095)] = float(input0[i]);
+            fYec0[i] = float(input0[i]);
         }
         /* Post code */
-        fYec0_idx_save = vsize;
+        for (int j1 = 0; (j1 < 8); j1 = (j1 + 1)) {
+            fYec0_perm[j1] = fYec0_tmp[(vsize + j1)];
+        }
         /* Vectorizable loop 1 */
-        /* Pre code */
-        fYec1_idx = ((fYec1_idx + fYec1_idx_save) & 1023);
         /* Compute code */
         for (int i = 0; (i < vsize); i = (i + 1)) {
-            fYec1[((i + fYec1_idx) & 1023)] = (float(input0[i]) + 0.5f);
-        }
-        /* Post code */
-        fYec1_idx_save = vsize;
-        /* Vectorizable loop 2 */
-        /* Compute code */
-        for (int i = 0; (i < vsize); i = (i + 1)) {
-            output0[i] = FAUSTFLOAT(fYec1[(((i + fYec1_idx) - 500) & 1023)]);
-        }
-        /* Vectorizable loop 3 */
-        /* Compute code */
-        for (int i = 0; (i < vsize); i = (i + 1)) {
-            output1[i] = FAUSTFLOAT((1.5f * fYec0[(((i + fYec0_idx) - 3000) & 4095)]));
+            output0[i] = FAUSTFLOAT(fYec0[(i - 7)]);
         }
     }
 }
