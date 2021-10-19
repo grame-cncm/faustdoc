@@ -28,7 +28,7 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) (or the [C signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h) version) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
 
-Note that the [box API](https://faustdoc.grame.fr/tutorials/box-api/) allows to access at another stage in the compilation stage.
+Note that the [box API](https://faustdoc.grame.fr/tutorials/box-api/) allows to access another stage in the compilation stage.
 
 ## Compiling signal expressions
 

@@ -28,7 +28,7 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 A new intermediate public entry point has been created in the *Semantic Phase*, after the *Evaluation, lambda-calculus* step to allow the creation of a box expression, then beneficiate of all remaining parts of the compilation chain. The [box API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box.h) (or the [C box API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box-c.h) version) allows to programmatically create the box expression, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
 
-Note that the [signal API](https://faustdoc.grame.fr/tutorials/signal-api/) allows to access at another stage in the compilation stage.
+Note that the [signal API](https://faustdoc.grame.fr/tutorials/signal-api/) allows to access another stage in the compilation stage.
 
 ## Compiling box expressions
 
@@ -96,7 +96,9 @@ inline Box getSampleRate()
 {
     return boxMin(boxReal(192000.0), 
                   boxMax(boxReal(1.0), 
-        	 	     				 boxFConst(SType::kSInt, "fSamplingFreq", "<math.h>")));
+                    boxFConst(SType::kSInt, 
+                            "fSamplingFreq", 
+                            "<math.h>")));
 }
 
 /** 
@@ -189,7 +191,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-In the published API, most operators are exported as simple *no-argument* operators, using the language [core-syntax](https://faustdoc.grame.fr/manual/syntax/#infix-notation-and-other-syntax-extensions). The [prefix notation](https://faustdoc.grame.fr/manual/syntax/#prefix-notation) can be used with additional multi-argument versions. So the previous example can be written in a simpler way with the following code, which will produce the exact same C++:
+In the published API, most operators are exported as simple *no-argument* operators, using the language [core-syntax](https://faustdoc.grame.fr/manual/syntax/#infix-notation-and-other-syntax-extensions). The [prefix notation](https://faustdoc.grame.fr/manual/syntax/#prefix-notation) has been added for each relevant operator, and can be used with additional multi-argument versions. So the previous example can be written in a simpler way with the following code, which will produce the exact same C++:
 
 ```C++
 static void test3()
@@ -338,7 +340,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-#### Equivalent signal expressions 
+#### Equivalent box expressions 
 
 It is really important to note that *syntactically equivalent box expressions* will be *internally represented by the same memory structure* (using hashconsing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))` expression, then used in both outputs:
 
@@ -525,7 +527,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Accessing the global context
 
-In Faust, the underlying audio engine sample rate and buffer size  is accessed using the foreign function and constant mechanism. The values can also be used in the signal language with the following helper functions: 
+In Faust, the underlying audio engine sample rate and buffer size  is accessed using the foreign function and constant mechanism. The values can also be used in the box language with the following helper functions: 
 
 ```C++
 // Reproduce the 'SR' definition in platform.lib 
@@ -777,13 +779,7 @@ The generated block has:
 - two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
 - several more outputs for the sound channels themselves, as a [constant numerical expression](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions)
 
-The soundfile block is created with `sigSoundfile`, but cannot be used directly. It has to be used with:
-
-- `sigSoundfileLength`to access the sound length in frames
-- `sigSoundfileRate` to access the sound rate in Hz 
-- `sigSoundfileBuffer` to access the actual samples
-
-Thus the following DSP code:
+The soundfile block is created with `boxSoundfile`. Thus the following DSP code:
 
 <!-- faust-run -->
 ```
@@ -834,7 +830,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 ```
 #### Defining more complex expressions: phasor and oscillator
 
-More complex signal expressions can be defined, creating signals using auxiliary definitions. So the following DSP program:
+More complex signal expressions can be defined, creating boxes using auxiliary definitions. So the following DSP program:
 
 <!-- faust-run -->
 ```
@@ -1036,7 +1032,7 @@ with {
 ```
 <!-- /faust-run -->
 
-Then with the C++ code using the signal API:
+Then with the C++ code using the box API:
 
 ```C++
 // Using the Interpreter backend.
