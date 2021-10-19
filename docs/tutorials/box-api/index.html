@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Using the box API - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Faust Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/debugging/" class="dropdown-item">Debugging the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/remote/" class="dropdown-item">Remote compilation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/community/" class="dropdown-item">Community</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                    
+<li>
+    <a href="../summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
+                                    
+<li>
+    <a href="../julia/" class="dropdown-item">Using Faust in Julia</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Using the box API</a>
+</li>
+                                    
+<li>
+    <a href="../signal-api/" class="dropdown-item">Using the signal API</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#using-the-box-api" class="nav-link">Using the box API</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#faust-compiler-structure" class="nav-link">Faust compiler structure</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#accessing-the-box-stage" class="nav-link">Accessing the box stage</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#compiling-box-expressions" class="nav-link">Compiling box expressions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#tools" class="nav-link">Tools</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#examples" class="nav-link">Examples</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#expression-generating-constant-signals" class="nav-link">Expression generating constant signals</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#doing-some-mathematical-operations-on-an-input-signal" class="nav-link">Doing some mathematical operations on an input signal</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#defining-a-delay-expression" class="nav-link">Defining a delay expression</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#equivalent-signal-expressions" class="nav-link">Equivalent signal expressions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#using-user-interface-items" class="nav-link">Using User Interface items</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#defining-recursive-signals" class="nav-link">Defining recursive signals</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#accessing-the-global-context" class="nav-link">Accessing the global context</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#creating-tables" class="nav-link">Creating tables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#creating-waveforms" class="nav-link">Creating waveforms</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#creating-soundfile" class="nav-link">Creating soundfile</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#defining-more-complex-expressions-phasor-and-oscillator" class="nav-link">Defining more complex expressions: phasor and oscillator</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-the-generated-code" class="nav-link">Using the generated code</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#connecting-the-audio-layer" class="nav-link">Connecting the audio layer</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#connecting-the-controller-layer" class="nav-link">Connecting the controller layer</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#example-with-audio-rendering-and-gui-control" class="nav-link">Example with audio rendering and GUI control</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#polyphonic-midi-controllable-simple-synthesizer" class="nav-link">Polyphonic MIDI controllable simple synthesizer</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#examples-with-the-c-api" class="nav-link">Examples with the C API</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<h1 id="using-the-box-api">Using the box API</h1>
+<p>The box API opens an <em>intermediate access inside the Faust compilation chain</em>. In this tutorial, we present it with examples of code. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the box API, and take profit of part of the Faust compiler infrastructure.</p>
+<h4 id="faust-compiler-structure">Faust compiler structure</h4>
+<p>The Faust compiler is composed of several steps:</p>
+<p><img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
+<center><em>The compilation chain</em></center></p>
+<p>Starting from the DSP source code, the <em>Semantic Phase</em> produces signals as conceptually infinite streams of samples or control values. Those signals are then compiled in imperative code (C/C++, LLVM IR, WebAssembly, etc.) in the <em>Code Generation Phase</em>.</p>
+<p>The <em>Semantic Phase</em> itself is composed of several steps:</p>
+<p><img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
+<center><em>The semantic phase</em></center></p>
+<p>The initial DSP code using the Block Diagram Algebra (BDA) is translated in a flat circuit in normal form in the <em>Evaluation, lambda-calculus</em> step. </p>
+<p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
+<p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
+<h4 id="accessing-the-box-stage">Accessing the box stage</h4>
+<p>A new intermediate public entry point has been created in the <em>Semantic Phase</em>, after the <em>Evaluation, lambda-calculus</em> step to allow the creation of a box expression, then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box.h">box API</a> (or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box-c.h">C box API</a> version) allows to programmatically create the box expression, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. </p>
+<p>Note that the <a href="https://faustdoc.grame.fr/tutorials/signal-api/">signal API</a> allows to access at another stage in the compilation stage.</p>
+<h2 id="compiling-box-expressions">Compiling box expressions</h2>
+<p>To use the box API, the following steps must be taken:</p>
+<ul>
+<li>
+<p>creating a global compilation context using the <code>createLibContext</code> function</p>
+</li>
+<li>
+<p>creating a box expression using the box API, progressively building more complex expressions by combining simpler ones</p>
+</li>
+<li>
+<p>compiling the box expression using the <code>createCPPDSPFactoryFromBoxes</code> function to create a DSP factory (or <a href="#using-the-generated-code">createDSPFactoryFromBoxes</a>  to generate a LLVM embedding factory, or <a href="#using-the-generated-code">createInterpreterDSPFactoryFromBoxes</a> to generate an Interpreter embedding factory)</p>
+</li>
+<li>
+<p>finally destroying the compilation context using the <code>destroyLibContext</code> function</p>
+</li>
+</ul>
+<p>The  DSP factories allows to create DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
+<h3 id="tools">Tools</h3>
+<p>Let's first define a <code>compile</code> function, which uses the <code>createCPPDSPFactoryFromBoxes</code> function and print the generated C++ class:</p>
+<pre><code class="language-C++">static void compile(const string&amp; name, 
+                    tvec signals, 
+                    int argc = 0, 
+                    const char* argv[] = nullptr)
+{
+    string error_msg;
+    dsp_factory_base* factory = createCPPDSPFactoryFromBoxes(name, 
+                                                             signals, 
+                                                             argc, 
+                                                             argv, 
+                                                             error_msg);
+    if (factory) {
+        // Print the C++ class
+        factory-&gt;write(&amp;cout);
+        delete(factory);
+    } else {
+        cerr &lt;&lt; error_msg;
+    }
+}
+</code></pre>
+<p>A macro to wrap all the needed steps: </p>
+<pre><code class="language-C++">#define COMPILER(exp)    \
+{                        \
+    createLibContext();  \
+    exp                  \
+    destroyLibContext(); \
+}                        \   
+</code></pre>
+<p>And additional usefull functions to be used later in the tutorial: </p>
+<pre><code class="language-C++">/**
+ * Return the current runtime sample rate.
+ *
+ * Reproduce the 'SR' definition in platform.lib: 
+ * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, &lt;dummy.h&gt;)));
+ *
+ * @return the current runtime sample rate.
+ */
+inline Box getSampleRate()
+{
+    return boxMin(boxReal(192000.0), 
+                  boxMax(boxReal(1.0), 
+                                     boxFConst(SType::kSInt, &quot;fSamplingFreq&quot;, &quot;&lt;math.h&gt;&quot;)));
+}
+
+/** 
+ * Return the current runtime buffer size.
+ *
+ * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, &lt;dummy.h&gt;);
+ *
+ * @return the current runtime buffer size.
+ */
+inline Box getBufferSize()
+{
+    return boxFVar(SType::kSInt, &quot;count&quot;, &quot;&lt;math.h&gt;&quot;);
+}
+</code></pre>
+<h3 id="examples">Examples</h3>
+<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps). All C++ examples are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.cpp">box-tester</a> tool, to be compiled with <code>make box-tester</code> in the tools/benchmark folder.</p>
+<h4 id="expression-generating-constant-signals">Expression generating constant signals</h4>
+<p>Let's create a program generating a parallel construction of 7 and 3.14 constant values. Here is the Faust DSP code:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+process = 7,3.14;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>The following code creates a box expression, containing a box <code>boxPar(boxInt(7), boxReal(3.14))</code> expression, then compile it and display the C++ class:</p>
+<pre><code class="language-C++">static void test1()
+{
+    COMPILER
+    (
+        Box box = boxPar(boxInt(7), boxReal(3.14));
+
+        compile(&quot;test1&quot;, signals);
+    )
+}
+</code></pre>
+<p>The <code>compute</code> method is then:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT(7);
+        output1[i0] = FAUSTFLOAT(3.1400001f);
+    }
+}
+</code></pre>
+<h4 id="doing-some-mathematical-operations-on-an-input-signal">Doing some mathematical operations on an input signal</h4>
+<p>Here is a simple program doing a mathematical operation on an signal input:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+process = _,3.14 : +;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>The first audio input is created with <code>boxWire()</code> expression, then transformed using the <code>boxAdd</code> and <code>boxSeq</code> operators to produce one output:</p>
+<pre><code class="language-C++">static void test2()
+{
+    COMPILER
+    (
+        Box box = boxSeq(boxPar(boxWire(), boxReal(3.14)), boxAdd());
+
+        compile(&quot;test2&quot;, box);
+     )
+}
+</code></pre>
+<p>The <code>compute</code> method is then:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT((float(input0[i0]) + 3.1400001f));
+    }
+}
+</code></pre>
+<p>In the published API, most operators are exported as simple <em>no-argument</em> operators, using the language <a href="https://faustdoc.grame.fr/manual/syntax/#infix-notation-and-other-syntax-extensions">core-syntax</a>. The <a href="https://faustdoc.grame.fr/manual/syntax/#prefix-notation">prefix notation</a> can be used with additional multi-argument versions. So the previous example can be written in a simpler way with the following code, which will produce the exact same C++:</p>
+<pre><code class="language-C++">static void test3()
+{
+    COMPILER
+    (
+        Box box = boxAdd(boxWire(), boxReal(3.14));
+
+        compile(&quot;test3&quot;, box);
+     )
+}
+</code></pre>
+<h4 id="defining-a-delay-expression">Defining a delay expression</h4>
+<p>Here is a simple program delaying the first input: </p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+process = @(_,7);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>The prefix-notation <code>boxDelay(x, y)</code> operator is used to delay the <code>boxWire()</code> first parameter with the second <code>boxInt(7)</code>:</p>
+<pre><code class="language-C++">static void test6()
+{
+    COMPILER
+    (
+        Box box = boxDelay(boxWire(), boxInt(7));
+
+        compile(&quot;test3&quot;, test6);
+    )
+}
+</code></pre>
+<p>The <code>compute</code> method is then:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        fVec0[0] = float(input0[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[7]);
+        for (int j0 = 7; (j0 &gt; 0); j0 = (j0 - 1)) {
+            fVec0[j0] = fVec0[(j0 - 1)];
+        }
+    }
+}
+</code></pre>
+<p>Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
+<pre><code class="language-C++">static void test7()
+{
+    createLibContext();
+    Box box = boxDelay(boxWire(), boxInt(7));
+
+    compile(&quot;test7&quot;, box, 3, (const char* []){ &quot;-vec&quot;, &quot;-lv&quot;, &quot;1&quot; });
+    destroyLibContext();
+}
+</code></pre>
+<p>The <code>compute</code> method is then:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0_ptr = inputs[0];
+    FAUSTFLOAT* output0_ptr = outputs[0];
+    float fYec0_tmp[40];
+    float* fYec0 = &amp;fYec0_tmp[8];
+    for (int vindex = 0; (vindex &lt; count); vindex = (vindex + 32)) {
+        FAUSTFLOAT* input0 = &amp;input0_ptr[vindex];
+        FAUSTFLOAT* output0 = &amp;output0_ptr[vindex];
+        int vsize = std::min&lt;int&gt;(32, (count - vindex));
+        /* Vectorizable loop 0 */
+        /* Pre code */
+        for (int j0 = 0; (j0 &lt; 8); j0 = (j0 + 1)) {
+            fYec0_tmp[j0] = fYec0_perm[j0];
+        }
+        /* Compute code */
+        for (int i = 0; (i &lt; vsize); i = (i + 1)) {
+            fYec0[i] = float(input0[i]);
+        }
+        /* Post code */
+        for (int j1 = 0; (j1 &lt; 8); j1 = (j1 + 1)) {
+            fYec0_perm[j1] = fYec0_tmp[(vsize + j1)];
+        }
+        /* Vectorizable loop 1 */
+        /* Compute code */
+        for (int i = 0; (i &lt; vsize); i = (i + 1)) {
+            output0[i] = FAUSTFLOAT(fYec0[(i - 7)]);
+        }
+    }
+}
+</code></pre>
+<p>And can possibly be faster if the C++ compiler can auto-vectorize it.</p>
+<p>If the delay operators are used on the input signal <em>before</em> the mathematical operations, then <em>a single delay</em> line will be created, taking the maximum size of both delay lines:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+
+<pre><code>
+process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>And built with the following code:</p>
+<pre><code class="language-C++">static void test8()
+{
+    COMPILER
+    (
+        Box box = boxSplit(boxWire(), 
+                            boxPar(boxAdd(boxDelay(boxWire(), 
+                                                    boxReal(500)), boxReal(0.5)),
+                                   boxMul(boxDelay(boxWire(), 
+                                                    boxReal(3000)), boxReal(1.5))));
+
+
+        compile(&quot;test8&quot;, box);
+    )
+}
+</code></pre>
+<p>In the <code>compute</code> method, the single <code>fVec0</code> delay line is read at 2 differents indexes:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        float fTemp0 = float(input0[i0]);
+        fVec0[(IOTA &amp; 4095)] = fTemp0;
+        output0[i0] = FAUSTFLOAT((fVec0[((IOTA - 500) &amp; 4095)] + 0.5f));
+        output1[i0] = FAUSTFLOAT((1.5f * fVec0[((IOTA - 3000) &amp; 4095)]));
+        IOTA = (IOTA + 1);
+    }
+}
+</code></pre>
+<h4 id="equivalent-signal-expressions">Equivalent signal expressions</h4>
+<p>It is really important to note that <em>syntactically equivalent box expressions</em> will be <em>internally represented by the same memory structure</em> (using hashconsing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))</code> expression, then used in both outputs:</p>
+<pre><code class="language-C++">static void equivalent1()
+{
+    COMPILER
+    (
+        Box b1 = boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5));
+        Box box = boxPar(b1, b1);
+
+        compile(&quot;equivalent1&quot;, signals);
+    )
+}
+</code></pre>
+<p>Will behave exactly the same as the following code, where the <code>boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))</code> expression is used twice:</p>
+<pre><code class="language-C++">static void equivalent2()
+{
+    COMPILER
+    (
+         Box box = boxPar(boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5)),
+                          boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5)));
+
+
+        compile(&quot;equivalent2&quot;, box);
+    )
+}
+</code></pre>
+<p>It can be a property to remember when creating a DSL on top of the box API.</p>
+<h4 id="using-user-interface-items">Using User Interface items</h4>
+<p>User Interface items can be used, as in the following example, with a <code>hslider</code>:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+process = _,hslider(&quot;Freq [midi:ctrl 7][style:knob]&quot;, 100, 100, 2000, 1) : *;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Built with the following code:</p>
+<pre><code class="language-C++">static void test8()
+{
+    COMPILER
+    (
+        Box box = boxMul(boxWire(), 
+                         boxHSlider(&quot;Freq [midi:ctrl 7][style:knob]&quot;, 
+                                    boxReal(100), 
+                                    boxReal(100), 
+                                    boxReal(2000), 
+                                    boxReal(1)));
+
+        compile(&quot;test8&quot;, box);
+    )
+}
+</code></pre>
+<p>The <code>buildUserInterface</code> method is generated, using the <code>fHslider0</code> variable:</p>
+<pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
+{
+      ui_interface-&gt;openVerticalBox(&quot;test8&quot;);
+        ui_interface-&gt;declare(&amp;fHslider0, &quot;midi&quot;, &quot;ctrl 7&quot;);
+        ui_interface-&gt;declare(&amp;fHslider0, &quot;style&quot;, &quot;knob&quot;);
+        ui_interface-&gt;addHorizontalSlider(&quot;Freq&quot;, &amp;fHslider0, 
+                                      FAUSTFLOAT(100.0f), 
+                                      FAUSTFLOAT(100.0f), 
+                                      FAUSTFLOAT(2000.0f), 
+                                      FAUSTFLOAT(1.0f));
+        ui_interface-&gt;closeBox();
+}
+</code></pre>
+<p>The <code>compute</code> method is then: </p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+        FAUSTFLOAT* input0 = inputs[0];
+        FAUSTFLOAT* output0 = outputs[0];
+        float fSlow0 = float(fHslider0);
+        for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+            output0[i0] = FAUSTFLOAT((fSlow0 * float(input0[i0])));
+        }
+}
+</code></pre>
+<p>User Interface layout can be described with <a href="https://faustdoc.grame.fr/manual/syntax/#hgroup-primitive">hgroup</a>, or <a href="https://faustdoc.grame.fr/manual/syntax/#vgroup-primitive">vgroup</a> or <a href="https://faustdoc.grame.fr/manual/syntax/#tgroup-primitive">tgroup</a>. With the box API, the layout can be defined using the <a href="https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames">labels-as-pathnames</a> syntax, as in the following example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;); 
+freq = vslider(&quot;h:Oscillator/freq&quot;, 440, 50, 1000, 0.1); 
+gain = vslider(&quot;h:Oscillator/gain&quot;, 0, 0, 1, 0.01); 
+process = freq*gain;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Built with the following code:</p>
+<pre><code class="language-C++">static void test9()
+{
+    COMPILER
+    (
+        Box box = boxMul(boxVSlider(&quot;h:Oscillator/freq&quot;, 
+                                    boxReal(440), 
+                                    boxReal(50), 
+                                    boxReal(1000), 
+                                    boxReal(0.1)),
+                         boxVSlider(&quot;h:Oscillator/gain&quot;, 
+                                    boxReal(0), 
+                                    boxReal(0), 
+                                    boxReal(1), 
+                                    boxReal(0.01)));
+
+        compile(&quot;test9&quot;, box);
+    )
+}
+</code></pre>
+<p>The <code>buildUserInterface</code> method is generated with the expected <code>openHorizontalBox</code> call:</p>
+<pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
+{
+        ui_interface-&gt;openHorizontalBox(&quot;Oscillator&quot;);
+    ui_interface-&gt;addVerticalSlider(&quot;freq&quot;, &amp;fVslider0, 
+                                    FAUSTFLOAT(440.0f), 
+                                    FAUSTFLOAT(50.0f), 
+                                    FAUSTFLOAT(1000.0f), 
+                                    FAUSTFLOAT(0.100000001f));
+    ui_interface-&gt;addVerticalSlider(&quot;gain&quot;, &amp;fVslider1, 
+                                    FAUSTFLOAT(0.0f), 
+                                    FAUSTFLOAT(0.0f), 
+                                    FAUSTFLOAT(1.0f), 
+                                    FAUSTFLOAT(0.0109999999f));
+    ui_interface-&gt;closeBox();
+}
+</code></pre>
+<h4 id="defining-recursive-signals">Defining recursive signals</h4>
+<p>Recursive signals can be defined using the <code>boxRec</code> expression. A one sample delay is automatically created to produce a valid computation. Here is a simple example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+
+<pre><code>
+process = + ~ _;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust6/exfaust6.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Built with the following code:</p>
+<pre><code class="language-C++">static void test10()
+{
+    COMPILER
+    (
+        Box box = boxRec(boxAdd(), boxWire());
+
+        compile(&quot;test10&quot;, box);
+    )
+}
+</code></pre>
+<p>The <code>compute</code> method shows the <code>fRec0</code>variable that keeps the delayed signal:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+        FAUSTFLOAT* input0 = inputs[0];
+        FAUSTFLOAT* output0 = outputs[0];
+        for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+            fRec0[0] = (float(input0[i0]) + fRec0[1]);
+            output0[i0] = FAUSTFLOAT(fRec0[0]);
+            fRec0[1] = fRec0[0];
+        }
+}
+</code></pre>
+<h4 id="accessing-the-global-context">Accessing the global context</h4>
+<p>In Faust, the underlying audio engine sample rate and buffer size  is accessed using the foreign function and constant mechanism. The values can also be used in the signal language with the following helper functions: </p>
+<pre><code class="language-C++">// Reproduce the 'SR' definition in platform.lib 
+// SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, &lt;dummy.h&gt;)));
+inline Box getSampleRate()
+{
+    return boxMin(boxReal(192000.0), 
+                  boxMax(boxReal(1.0), 
+                         boxFConst(SType::kSInt, &quot;fSamplingFreq&quot;, &quot;&lt;math.h&gt;&quot;)));
+}
+
+// Reproduce the 'BS' definition in platform.lib 
+// BS = fvariable(int count, &lt;dummy.h&gt;);
+inline Signal getBufferSize()
+{
+    return boxFVar(SType::kSInt, &quot;count&quot;, &quot;&lt;math.h&gt;&quot;);
+}
+</code></pre>
+<p>So the following DSP program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;); 
+process = ma.SR, ma.BS;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust7/exfaust7.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be written at the box API level with:</p>
+<pre><code class="language-C++">static void test11()
+{
+    COMPILER
+    (
+        Box box = boxPar(getSampleRate(), getBufferSize());
+
+        compile(&quot;test11&quot;, box);
+    )
+}
+</code></pre>
+<p>And the resulting C++ class contains:</p>
+<pre><code class="language-C++">virtual void instanceConstants(int sample_rate) 
+{
+    fSampleRate = sample_rate;
+    fConst0 = std::min&lt;float&gt;(192000.0f, std::max&lt;float&gt;(1.0f, float(fSampleRate)));
+}
+</code></pre>
+<p>and:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    int iSlow0 = count;
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT(fConst0);
+        output1[i0] = FAUSTFLOAT(iSlow0);
+    }
+}
+</code></pre>
+<h4 id="creating-tables">Creating tables</h4>
+<p>Read only and read/write tables can be created. The <em>read only table</em> signal is created with <code>boxReadOnlyTable</code> and takes:</p>
+<ul>
+<li>a size first argument</li>
+<li>a content second argument</li>
+<li>a read index  third argument (between 0 and size-1)</li>
+</ul>
+<p>and produces the indexed table content as its single output. The following simple DSP example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+
+<pre><code>
+
+process = 10,1,int(_) : rdtable;
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be written with the code:</p>
+<pre><code class="language-C++">static void test20()
+{
+    COMPILER
+    (
+        Box box = boxReadOnlyTable(boxInt(10), boxInt(1), boxIntCast(boxWire()));
+
+        compile(&quot;test20&quot;, signals);
+    )
+}
+</code></pre>
+<p>The resulting C++ code contains the <code>itbl0mydspSIG0</code> static table definition:</p>
+<pre><code class="language-C++">static int itbl0mydspSIG0[10];
+</code></pre>
+<p>The table filling code that will be called once at init time:</p>
+<pre><code class="language-C++">void fillmydspSIG0(int count, int* table) 
+{
+    for (int i1 = 0; (i1 &lt; count); i1 = (i1 + 1)) {
+        table[i1] = 1;
+    }
+}
+</code></pre>
+<p>An the <code>compute</code> method that access the <code>itbl0mydspSIG0</code> table:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT(itbl0mydspSIG0[int(float(input0[i0]))]);
+    }
+}
+</code></pre>
+<p>The <em>read/write table</em> signal is created with <code>boxWriteReadTable</code> and takes:</p>
+<ul>
+<li>a size first argument</li>
+<li>a content second argument</li>
+<li>a write index  a third argument (between 0 and size-1)</li>
+<li>the input of the table as fourth argument </li>
+<li>a read index as fifth argument (between 0 and size-1)</li>
+</ul>
+<p>and produces the indexed table content as its single output. The following DSP example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+
+<pre><code>
+process = 10,1,int(_),int(_),int(_) : rwtable;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust9/exfaust9.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be written with the code:</p>
+<pre><code class="language-C++">static void test20()
+{
+    COMPILER
+    (
+        Box box = boxWriteReadTable(boxInt(10), 
+                                    boxInt(1), 
+                                    boxIntCast(boxWire()), 
+                                    boxIntCast(boxWire()), 
+                                    boxIntCast(boxWire()));
+
+        compile(&quot;test21&quot;, signals);
+    )
+}
+</code></pre>
+<p>The resulting C++ code contains the <code>itbl0</code> definition as a field in the <code>mydsp</code> class:</p>
+<pre><code class="language-C++">int itbl0[10];
+</code></pre>
+<p>The table filling code that will be called once at init time:</p>
+<pre><code class="language-C++">void fillmydspSIG0(int count, int* table) 
+{
+    for (int i1 = 0; (i1 &lt; count); i1 = (i1 + 1)) {
+        table[i1] = 1;
+    }
+}
+</code></pre>
+<p>An the <code>compute</code> method that reads and writes in the <code>itbl0</code> table:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* input2 = inputs[2];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        itbl0[int(float(input0[i0]))] = int(float(input1[i0]));
+        output0[i0] = FAUSTFLOAT(itbl0[int(float(input2[i0]))]);
+    }
+}
+</code></pre>
+<h4 id="creating-waveforms">Creating waveforms</h4>
+<p>The following DSP program defining a waveform:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+
+<pre><code>
+process = waveform { 0, 100, 200, 300, 400 };
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust10/exfaust10.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be written with the code, where the size of the waveform is the first output, and the waveform content itself is the second output created with <code>boxWaveform</code>, to follow the <a href="https://faustdoc.grame.fr/manual/syntax/#waveform-primitive">waveform semantic</a>:</p>
+<pre><code class="language-C++">static void test12()
+{
+    COMPILER
+    (
+        tvec waveform;
+        // Fill the waveform content vector
+        for (int i = 0; i &lt; 5; i++) {
+            waveform.push_back(boxReal(100*i));
+        }
+        Box box = boxWaveform(waveform);   // the size and the waveform content
+
+        compile(&quot;test12&quot;, box);
+     )
+}
+</code></pre>
+<p>With the resulting C++ code, where the <code>fmydspWave0</code> waveform is defined as a static table: </p>
+<pre><code class="language-C++">const static float fmydspWave0[5] = {0.0f,100.0f,200.0f,300.0f,400.0f};
+</code></pre>
+<p>And using in the following <code>compute</code> method:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT(5);
+        output1[i0] = FAUSTFLOAT(fmydspWave0[fmydspWave0_idx]);
+        fmydspWave0_idx = ((1 + fmydspWave0_idx) % 5);
+    }
+}
+</code></pre>
+<h4 id="creating-soundfile">Creating soundfile</h4>
+<p>The <em>soundfile</em> primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:</p>
+<ul>
+<li>the sound number (as a integer between 0 and 255 as a <a href="https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions">constant numerical expression</a>)</li>
+<li>the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) </li>
+</ul>
+<p>The generated block has: </p>
+<ul>
+<li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate</li>
+<li>several more outputs for the sound channels themselves, as a <a href="https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions">constant numerical expression</a></li>
+</ul>
+<p>The soundfile block is created with <code>sigSoundfile</code>, but cannot be used directly. It has to be used with:</p>
+<ul>
+<li><code>sigSoundfileLength</code>to access the sound length in frames</li>
+<li><code>sigSoundfileRate</code> to access the sound rate in Hz </li>
+<li><code>sigSoundfileBuffer</code> to access the actual samples</li>
+</ul>
+<p>Thus the following DSP code:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+
+<pre><code>
+process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust11/exfaust11.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Will be created using the box API with: </p>
+<pre><code class="language-C++">static void test19()
+{
+    COMPILER
+    (
+        Box box = boxSoundfile(&quot;sound[url:{'tango.wav'}]&quot;, 
+                               boxInt(2),  
+                               boxInt(0),  
+                               boxInt(0));
+
+        compile(&quot;test19&quot;, box);
+    )
+}
+</code></pre>
+<p>And the following <code>compute</code> method is generated:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    FAUSTFLOAT* output2 = outputs[2];
+    Soundfile* fSoundfile0ca = fSoundfile0;
+    int* fSoundfile0ca_le0 = fSoundfile0ca-&gt;fLength;
+    int iSlow0 = fSoundfile0ca_le0[0];
+    int* fSoundfile0ca_ra0 = fSoundfile0ca-&gt;fSR;
+    int iSlow1 = fSoundfile0ca_ra0[0];
+    int iSlow2 = std::max&lt;int&gt;(0, std::min&lt;int&gt;(0, (iSlow0 + -1)));
+    int* fSoundfile0ca_of0 = fSoundfile0ca-&gt;fOffset;
+    float** fSoundfile0ca_bu0 = static_cast&lt;float**&gt;(fSoundfile0ca-&gt;fBuffers);
+    float* fSoundfile0ca_bu_ch0 = fSoundfile0ca_bu0[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT(iSlow0);
+        output1[i0] = FAUSTFLOAT(iSlow1);
+        output2[i0] = FAUSTFLOAT(fSoundfile0ca_bu_ch0[(fSoundfile0ca_of0[0] + iSlow2)]);
+    }
+    fSoundfile0 = fSoundfile0ca;
+}
+</code></pre>
+<h4 id="defining-more-complex-expressions-phasor-and-oscillator">Defining more complex expressions: phasor and oscillator</h4>
+<p>More complex signal expressions can be defined, creating signals using auxiliary definitions. So the following DSP program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+process = phasor(440)
+with {
+     decimalpart(x) = x-int(x);
+     phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust12/exfaust12.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be built using the following helper functions, here written in C:</p>
+<pre><code class="language-C++">static Box decimalpart()
+{
+    return boxSub(boxWire(), boxIntCast(boxWire()));
+}
+
+static Box phasor(Box f)
+{
+    return boxSeq(boxDiv(f, getSampleRate()), 
+                  boxRec(boxSplit(boxAdd(), decimalpart()), boxWire()));
+}
+</code></pre>
+<p>And the main function combining them:</p>
+<pre><code class="language-C++">static void test17()
+{
+    COMPILER
+    (
+        Box box = phasor(boxReal(440));
+
+        compile(&quot;test17&quot;, box);
+    )
+}
+</code></pre>
+<p>Which produces the following <code>compute</code> method:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        fRec0[0] = (fConst0 + (fRec0[1] - float(int((fConst0 + fRec0[1])))));
+        output0[i0] = FAUSTFLOAT(fRec0[0]);
+        fRec0[1] = fRec0[0];
+    }
+}
+</code></pre>
+<p>Now the following oscillator:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+
+<pre><code>
+ import(&quot;stdfaust.lib&quot;);
+ process = osc(440), osc(440)
+ with {
+    decimalpart(x) = x-int(x);
+    phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+    osc(f) = sin(2 * ma.PI * phasor(f));
+ };
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust13/exfaust13.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Can be built with:</p>
+<pre><code class="language-C++">static Box osc(Box f)
+{
+    return boxSin(boxMul(boxMul(boxReal(2.0), boxReal(3.141592653)), phasor(f)));
+}
+
+static void test18()
+{
+    COMPILER
+    (
+        Box box = boxPar(osc(boxReal(440)), osc(boxReal(440)));
+
+        compile(&quot;test18&quot;, signals);
+    )
+}
+</code></pre>
+<p>Which produces the following <code>compute</code> method, where one can see that since the <em>same</em> oscillator signal is used on both outputs, it is actually computed once and copied twice:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        fRec0[0] = (fConst0 + (fRec0[1] - float(int((fConst0 + fRec0[1])))));
+        float fTemp0 = std::sin((6.28318548f * fRec0[0]));
+        output0[i0] = FAUSTFLOAT(fTemp0);
+        output1[i0] = FAUSTFLOAT(fTemp0);
+        fRec0[1] = fRec0[0];
+    }
+}
+</code></pre>
+<h2 id="using-the-generated-code">Using the generated code</h2>
+<p>Using the LLVM or Interpreter backends allows to generate and execute the compiled DSP on the fly. </p>
+<p>The LLVM backend can be used with <code>createDSPFactoryFromBoxes</code> (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h">llvm-dsp.h</a>) to produce a DSP factory, then a DSP instance:</p>
+<pre><code class="language-C++">string error_msg;
+llvm_dsp_factory* factory = createDSPFactoryFromBoxes(&quot;FaustDSP&quot;, 
+                                                       box, 0, 
+                                                       nullptr, &quot;&quot;, 
+                                                       error_msg);
+// Check factory
+dsp* dsp = factory-&gt;createDSPInstance();
+// Check dsp
+...
+// Use dsp
+...
+// Delete dsp and factory
+delete dsp;
+deleteDSPFactory(factory);
+</code></pre>
+<p>The Interpreter backend can be used with <code>createInterpreterDSPFactoryFromBoxes</code> (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h">interpreter-dsp.h</a>) to produce a DSP factory, then a DSP instance:</p>
+<pre><code class="language-C++">string error_msg;
+interpreter_dsp_factory* factory = createInterpreterDSPFactoryFromBoxes(&quot;FaustDSP&quot;, 
+                                                                         box, 0, 
+                                                                         nullptr, &quot;&quot;, 
+                                                                         error_msg);
+// Check factory
+dsp* dsp = factory-&gt;createDSPInstance();
+// Check dsp
+...
+// Use dsp
+...
+// Delete dsp and factory
+delete dsp;
+deleteInterpreterDSPFactory(factory);
+</code></pre>
+<h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
+<p>Audio drivers allow to render the DSP instance. Here is a simple code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h">dummyaudio</a> audio driver:</p>
+<pre><code class="language-C++">// Allocate the audio driver to render 5 buffers of 512 frames
+dummyaudio audio(5);
+audio.init(&quot;Test&quot;, dsp);
+
+// Render buffers...
+audio.start();
+audio.stop();
+</code></pre>
+<p>A more involved example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/jack-dsp.h">JACK</a> audio driver:</p>
+<pre><code class="language-C++">// Allocate the JACK audio driver
+jackaudio audio;
+audio.init(&quot;Test&quot;, dsp);
+
+// Start real-time processing
+audio.start();
+....
+audio.stop();
+</code></pre>
+<h4 id="connecting-the-controller-layer">Connecting the controller layer</h4>
+<p>Controllers can be connected to the DSP instance using GUI architectures. Here is a code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GTKUI.h">GTKUI</a> interface:</p>
+<pre><code class="language-C++">GUI* interface = new GTKUI(&quot;Test&quot;, &amp;argc, &amp;argv);
+dsp-&gt;buildUserInterface(interface);
+interface-&gt;run();
+</code></pre>
+<p>And all other <a href="https://faustdoc.grame.fr/manual/architectures/">standard controllers</a> (MIDI, OSC, etc.) can be used as usual.  </p>
+<h4 id="example-with-audio-rendering-and-gui-control">Example with audio rendering and GUI control</h4>
+<p>Here is a more complete example, first with the DSP code:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+process = osc(f1), osc(f2)
+with {
+    decimalpart(x) = x-int(x);
+    phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+    osc(f) = sin(2 * ma.PI * phasor(f));
+    f1 = vslider(&quot;Freq1&quot;, 300, 100, 2000, 0.01);
+    f2 = vslider(&quot;Freq2&quot;, 500, 100, 2000, 0.01);
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust14/exfaust14.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Then with the C++ code using the signal API:</p>
+<pre><code class="language-C++">// Using the Interpreter backend.
+static void test23(int argc, char* argv[])
+{
+    interpreter_dsp_factory* factory = nullptr;
+    string error_msg;
+
+    createLibContext();
+    {
+        Box sl1 = boxHSlider(&quot;v:Oscillator/Freq1&quot;, boxReal(300), 
+                             boxReal(100), boxReal(2000), boxReal(0.01));
+        Box sl2 = boxHSlider(&quot;v:Oscillator/Freq2&quot;, boxReal(300), 
+                             boxReal(100), boxReal(2000), boxReal(0.01));
+        Box box = boxPar(osc(sl1), osc(sl2));
+        factory = createInterpreterDSPFactoryFromBoxes(&quot;FaustDSP&quot;, 
+                                                       box, 0, 
+                                                       nullptr, error_msg);
+    }
+    destroyLibContext();
+
+    // Use factory outside of the createLibContext/destroyLibContext scope
+    if (factory) {
+        dsp* dsp = factory-&gt;createDSPInstance();
+        assert(dsp);
+
+        // Allocate audio driver
+        jackaudio audio;
+        audio.init(&quot;Test&quot;, dsp);
+
+        // Create GUI
+        GTKUI gtk_ui = GTKUI(&quot;Organ&quot;, &amp;argc, &amp;argv);
+        dsp-&gt;buildUserInterface(&amp;gtk_ui);
+
+        // Start real-time processing
+        audio.start();
+
+        // Start GUI
+        gtk_ui.run();
+
+        // Cleanup
+        audio.stop();
+        delete dsp;
+        deleteInterpreterDSPFactory(factory);
+    } else {
+        cerr &lt;&lt; error_msg;
+    }
+}
+</code></pre>
+<h4 id="polyphonic-midi-controllable-simple-synthesizer">Polyphonic MIDI controllable simple synthesizer</h4>
+<p>Here is a MIDI controlable simple synthesizer, first with the DSP code:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+process = organ, organ
+with {
+    decimalpart(x) = x-int(x);
+    phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+    osc(f) = sin(2 * ma.PI * phasor(f));
+    freq = nentry(&quot;freq&quot;, 100, 100, 3000, 0.01);
+    gate = button(&quot;gate&quot;);
+    gain = nentry(&quot;gain&quot;, 0.5, 0, 1, 0.01);
+    organ = gate * (osc(freq) * gain + osc(2 * freq) * gain);
+
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/box-api/exfaust15/exfaust15.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Then with the C++ code using the box API:</p>
+<pre><code class="language-C++">// Simple polyphonic DSP.
+static void test24(int argc, char* argv[])
+{
+    interpreter_dsp_factory* factory = nullptr;
+    string error_msg;
+
+    createLibContext();
+    {
+        // Follow the freq/gate/gain convention, 
+        // see: https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters
+        Box freq = boxNumEntry(&quot;freq&quot;, 
+                               boxReal(100), 
+                               boxReal(100), 
+                               boxReal(3000), 
+                               boxReal(0.01));
+        Box gate = boxButton(&quot;gate&quot;);
+        Box gain = boxNumEntry(&quot;gain&quot;,
+                               boxReal(0.5), 
+                               boxReal(0), 
+                               boxReal(1), 
+                               boxReal(0.01));
+        Box organ = boxMul(gate, boxAdd(boxMul(osc(freq), gain), 
+                                        boxMul(osc(boxMul(freq, boxInt(2))), gain)));
+        // Stereo
+        Box box = boxPar(organ, organ);
+
+        factory = createInterpreterDSPFactoryFromBoxes(&quot;FaustDSP&quot;, 
+                                                        box, 
+                                                        0, nullptr, 
+                                                        error_msg);
+    }
+    destroyLibContext();
+
+    // Use factory outside of the createLibContext/destroyLibContext scope
+    if (factory) {
+        dsp* dsp = factory-&gt;createDSPInstance();
+        assert(dsp);
+
+        // Allocate polyphonic DSP
+        dsp = new mydsp_poly(dsp, 8, true, true);
+
+        // Allocate MIDI/audio driver
+        jackaudio_midi audio;
+        audio.init(&quot;Organ&quot;, dsp);
+
+        // Create GUI
+        GTKUI gtk_ui = GTKUI(&quot;Organ&quot;, &amp;argc, &amp;argv);
+        dsp-&gt;buildUserInterface(&amp;gtk_ui);
+
+        // Create MIDI controller
+        MidiUI midi_ui = MidiUI(&amp;audio);
+        dsp-&gt;buildUserInterface(&amp;midi_ui);
+
+        // Start real-time processing
+        audio.start();
+
+        // Start MIDI
+        midi_ui.run();
+
+        // Start GUI
+        gtk_ui.run();
+
+        // Cleanup
+        audio.stop();
+        delete dsp;
+        deleteInterpreterDSPFactory(factory);
+    } else {
+        cerr &lt;&lt; error_msg;
+    }
+}
+</code></pre>
+<h2 id="examples-with-the-c-api">Examples with the C API</h2>
+<p>The box API is also available as a <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h">pure C API</a>. Here is one of the previous example rewritten using the C API to create box expressions, where the LLVM backend is used with the C version <code>createCDSPFactoryFromBoxes</code> function (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp-c.h">llvm-dsp-c.h</a>) to produce a DSP factory, then a DSP instance:</p>
+<pre><code class="language-C++">/*
+ import(&quot;stdfaust.lib&quot;);
+ process = phasor(440)
+ with {
+     decimalpart(x) = x-int(x);
+     phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+ };
+ */
+
+static Box decimalpart()
+{
+    return CboxSubAux(CboxWire(), CboxIntCastAux(CboxWire()));
+}
+
+static Box phasor(Box f)
+{
+    return CboxSeq(CboxDivAux(f, getSampleRate()), 
+                   CboxRec(CboxSplit(CboxAdd(), decimalpart()), CboxWire()));
+}
+
+static void test1()
+{
+    createLibContext();
+    {
+        Box box = phasor(CboxReal(2000));
+
+        char error_msg[4096];
+        llvm_dsp_factory* factory = createCDSPFactoryFromBoxes(&quot;test1&quot;, 
+                                                               box, 
+                                                               0, NULL, 
+                                                               &quot;&quot;, 
+                                                               error_msg, 
+                                                               -1);
+
+        if (factory) {
+
+            llvm_dsp* dsp = createCDSPInstance(factory);
+            assert(dsp);
+
+            // Render audio
+            render(dsp);
+
+            // Cleanup
+            deleteCDSPInstance(dsp);
+            deleteCDSPFactory(factory);
+
+        } else {
+            printf(&quot;Cannot create factory : %s\n&quot;, error_msg);
+        }
+    }
+    destroyLibContext();
+}
+</code></pre>
+<p>Here is an example using controllers and the <code>PrintUI</code> architecture to display their parameters:</p>
+<pre><code class="language-C++">/*
+ import(&quot;stdfaust.lib&quot;);
+
+ freq = vslider(&quot;h:Oscillator/freq&quot;, 440, 50, 1000, 0.1);
+ gain = vslider(&quot;h:Oscillator/gain&quot;, 0, 0, 1, 0.01);
+
+ process = freq * gain;
+ */
+
+static void test3()
+{
+    createLibContext();
+    {
+        Box freq = CboxVSlider(&quot;h:Oscillator/freq&quot;, 
+                               CboxReal(440), 
+                               CboxReal(50), 
+                               CboxReal(1000), 
+                               CboxReal(0.1));
+        Box gain = CboxVSlider(&quot;h:Oscillator/gain&quot;, 
+                               CboxReal(0), 
+                               CboxReal(0), 
+                               CboxReal(1), 
+                               CboxReal(0.011));
+        Box box = CboxMulAux(freq, CboxMulAux(gain, CboxWire()));
+
+        char error_msg[4096];
+        llvm_dsp_factory* factory = createCDSPFactoryFromBoxes(&quot;test3&quot;, 
+                                                               box, 0, 
+                                                               NULL, &quot;&quot;, 
+                                                               error_msg, 
+                                                               -1);
+
+        if (factory) {
+
+            llvm_dsp* dsp = createCDSPInstance(factory);
+            assert(dsp);
+
+            printf(&quot;=================UI=================\n&quot;);
+
+            // Defined in PrintCUI.h
+            metadataCDSPInstance(dsp, &amp;mglue);
+
+            buildUserInterfaceCDSPInstance(dsp, &amp;uglue);
+
+            // Cleanup
+            deleteCDSPInstance(dsp);
+            deleteCDSPFactory(factory);
+
+        } else {
+            printf(&quot;Cannot create factory : %s\n&quot;, error_msg);
+        }
+    }
+    destroyLibContext();
+}
+</code></pre>
+<p>All C examples are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.c">box-tester-c</a> tool, to be compiled with <code>make box-tester-c</code> in the tools/benchmark folder.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020-2021 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

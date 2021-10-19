@@ -229,6 +229,10 @@
 </li>
                                     
 <li>
+    <a href="../box-api/" class="dropdown-item">Using the box API</a>
+</li>
+                                    
+<li>
     <a href="./" class="dropdown-item active">Using the signal API</a>
 </li>
                                 </ul>
@@ -399,10 +403,12 @@
 <p>The <em>Semantic Phase</em> itself is composed of several steps:</p>
 <p><img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
 <center><em>The semantic phase</em></center></p>
+<p>The initial DSP code using the Block Diagram Albegra (BDA) is translated in a flat circuit in normal form in the <em>Evaluation \calculus step</em>. </p>
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
 <p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
-<p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h">signal API</a> (or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h">C signal API</a> version) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files.  Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. </p>
+<p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h">signal API</a> (or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h">C signal API</a> version) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. </p>
+<p>Note that the <a href="https://faustdoc.grame.fr/tutorials/box-api/">box API</a> allows to access at another stage in the compilation stage.</p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
 <p>To use the signal API, the following steps must be taken:</p>
 <ul>
@@ -455,7 +461,7 @@
  * Return the current runtime sample rate.
  *
  * Reproduce the 'SR' definition in platform.lib: 
- * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, &lt;dummy.h&gt;)));
+ * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, &lt;math.h&gt;)));
  *
  * @return the current runtime sample rate.
  */
@@ -463,19 +469,19 @@ inline Signal getSampleRate()
 {
     return sigMin(sigReal(192000.0), 
                   sigMax(sigReal(1.0), 
-                         sigFConst(SType::kSInt, &quot;fSamplingFreq&quot;, &quot;&lt;dummy.h&gt;&quot;)));
+                         sigFConst(SType::kSInt, &quot;fSamplingFreq&quot;, &quot;&lt;math.h&gt;&quot;)));
 }
 
 /**
  * Return the current runtime buffer size.
  *
- * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, &lt;dummy.h&gt;);
+ * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, &lt;math.h&gt;);
  *
  * @return the current runtime buffer size.
  */
 inline Signal getBufferSize()
 {
-    return sigFVar(SType::kSInt, &quot;count&quot;, &quot;&lt;dummy.h&gt;&quot;);
+    return sigFVar(SType::kSInt, &quot;count&quot;, &quot;&lt;math.h&gt;&quot;);
 }
 </code></pre>
 <h3 id="examples">Examples</h3>
@@ -518,7 +524,7 @@ process = 0.5;
 }
 </code></pre>
 <h4 id="doing-some-mathematical-operations-on-an-input-signal">Doing some mathematical operations on an input signal</h4>
-<p>Here is a simple program using a signal input and doing mathematical operations on it:</p>
+<p>Here is a simple program doing a mathematical operation on an signal input:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
@@ -772,26 +778,26 @@ process = @(+(0.5), 500) * vslider(&quot;Vol&quot;, 0.5, 0, 1, 0.01);
 <p>The <code>buildUserInterface</code> method is generated, using the <code>fVslider0</code> variable:</p>
 <pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
 {
-    ui_interface-&gt;openVerticalBox(&quot;test8&quot;);
-    ui_interface-&gt;addVerticalSlider(&quot;Vol&quot;, &amp;fVslider0, 
-                                  FAUSTFLOAT(0.5f),
-                                  FAUSTFLOAT(0.0f), 
-                                  FAUSTFLOAT(1.0f), 
-                                  FAUSTFLOAT(0.00999999978f));
-    ui_interface-&gt;closeBox();
+        ui_interface-&gt;openVerticalBox(&quot;test8&quot;);
+        ui_interface-&gt;addVerticalSlider(&quot;Vol&quot;, &amp;fVslider0, 
+                                    FAUSTFLOAT(0.5f),
+                                    FAUSTFLOAT(0.0f), 
+                                    FAUSTFLOAT(1.0f), 
+                                    FAUSTFLOAT(0.00999999978f));
+        ui_interface-&gt;closeBox();
 }
 </code></pre>
 <p>The <code>compute</code> method is then: </p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-    FAUSTFLOAT* input0 = inputs[0];
-    FAUSTFLOAT* output0 = outputs[0];
-    float fSlow0 = float(fVslider0);
-    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
-        fVec0[(IOTA &amp; 511)] = (float(input0[i0]) + 0.5f);
-        output0[i0] = FAUSTFLOAT((fSlow0 * fVec0[((IOTA - 500) &amp; 511)]));
-        IOTA = (IOTA + 1);
-    }
+        FAUSTFLOAT* input0 = inputs[0];
+        FAUSTFLOAT* output0 = outputs[0];
+        float fSlow0 = float(fVslider0);
+        for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+            fVec0[(IOTA &amp; 511)] = (float(input0[i0]) + 0.5f);
+            output0[i0] = FAUSTFLOAT((fSlow0 * fVec0[((IOTA - 500) &amp; 511)]));
+            IOTA = (IOTA + 1);
+        }
 }
 </code></pre>
 <p>User Interface layout can be described with <a href="https://faustdoc.grame.fr/manual/syntax/#hgroup-primitive">hgroup</a>, or <a href="https://faustdoc.grame.fr/manual/syntax/#vgroup-primitive">vgroup</a> or <a href="https://faustdoc.grame.fr/manual/syntax/#tgroup-primitive">tgroup</a>. With the signal API, the layout can be defined using the <a href="https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames">labels-as-pathnames</a> syntax, as in the following example:</p>
@@ -879,13 +885,13 @@ process = + ~ _;
 <p>The <code>compute</code> method shows the <code>fRec0</code>variable that keeps the delayed signal:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-    FAUSTFLOAT* input0 = inputs[0];
-    FAUSTFLOAT* output0 = outputs[0];
-    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
-        fRec0[0] = (float(input0[i0]) + fRec0[1]);
-        output0[i0] = FAUSTFLOAT(fRec0[0]);
-        fRec0[1] = fRec0[0];
-    }
+        FAUSTFLOAT* input0 = inputs[0];
+        FAUSTFLOAT* output0 = outputs[0];
+        for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+            fRec0[0] = (float(input0[i0]) + fRec0[1]);
+            output0[i0] = FAUSTFLOAT(fRec0[0]);
+            fRec0[1] = fRec0[0];
+        }
 }
 </code></pre>
 <h4 id="accessing-the-global-context">Accessing the global context</h4>
@@ -1126,13 +1132,13 @@ process = waveform { 0, 100, 200, 300, 400 };
 <h4 id="creating-soundfile">Creating soundfile</h4>
 <p>The <em>soundfile</em> primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:</p>
 <ul>
-<li>the sound number (as a integer between 0 and 255 checked at compilation time)</li>
+<li>the sound number (as a integer between 0 and 255 as a <a href="https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions">constant numerical expression</a>)</li>
 <li>the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) </li>
 </ul>
 <p>The generated block has: </p>
 <ul>
 <li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate</li>
-<li>several more outputs for the sound channels themselves</li>
+<li>several more outputs for the sound channels themselves, as a <a href="https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions">constant numerical expression</a></li>
 </ul>
 <p>The soundfile block is created with <code>sigSoundfile</code>, but cannot be used directly. It has to be used with:</p>
 <ul>
@@ -1168,7 +1174,10 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
         // Part 0
         Signal part = sigInt(0);
         // Wrapped index to avoid reading outside the buffer
-        Signal wridx = sigIntCast(sigMax(sigInt(0), sigMin(rdx, sigSub(sigSoundfileLength(sf, sigInt(0)), sigInt(1)))));
+        Signal wridx = sigIntCast(sigMax(sigInt(0), 
+                       sigMin(rdx, sigSub(sigSoundfileLength(sf, 
+                       sigInt(0)),
+                       sigInt(1)))));
         // Accessing part 0
         signals.push_back(sigSoundfileLength(sf, part));
         // Accessing part 0
@@ -1224,7 +1233,7 @@ with {
 </div>
 <!-- /faust-run -->
 
-<p>Can be built using the sollowing helper functions, here written in C:</p>
+<p>Can be built using the following helper functions, here written in C:</p>
 <pre><code class="language-C++">static Signal decimalpart(Signal x)
 {
     return sigSub(x, sigIntCast(x));
@@ -1668,7 +1677,7 @@ static void test3()
 </code></pre>
 <p>All C examples are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.c">signal-tester-c</a> tool, to be compiled with <code>make signal-tester-c</code> in the tools/benchmark folder.</p>
 <h2 id="creating-a-signal-language-based-on-this-api">Creating a signal language based on this API</h2>
-<p>Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the <em>Block Diagram Algebra</em> is all about, and the entire Faust language itself. </p>
+<p>Generating complex expressions by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the <em>Block Diagram Algebra</em> is all about, and the entire Faust language itself. </p>
 <p>But some other approaches can possibly by tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help create complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. </p></div>
             </div>
         </div>

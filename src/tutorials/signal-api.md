@@ -28,6 +28,8 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal.h) (or the [C signal API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h) version) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
 
+Note that the [box API](https://faustdoc.grame.fr/tutorials/box-api/) allows to access at another stage in the compilation stage.
+
 ## Compiling signal expressions
 
 To use the signal API, the following steps must be taken:
@@ -86,7 +88,7 @@ And additional usefull functions to be used later in the tutorial:
  * Return the current runtime sample rate.
  *
  * Reproduce the 'SR' definition in platform.lib: 
- * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, <dummy.h>)));
+ * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, <math.h>)));
  *
  * @return the current runtime sample rate.
  */
@@ -94,19 +96,19 @@ inline Signal getSampleRate()
 {
     return sigMin(sigReal(192000.0), 
                   sigMax(sigReal(1.0), 
-                         sigFConst(SType::kSInt, "fSamplingFreq", "<dummy.h>")));
+                         sigFConst(SType::kSInt, "fSamplingFreq", "<math.h>")));
 }
 
 /**
  * Return the current runtime buffer size.
  *
- * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, <dummy.h>);
+ * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, <math.h>);
  *
  * @return the current runtime buffer size.
  */
 inline Signal getBufferSize()
 {
-    return sigFVar(SType::kSInt, "count", "<dummy.h>");
+    return sigFVar(SType::kSInt, "count", "<math.h>");
 }
 ```
 
@@ -414,13 +416,13 @@ The `buildUserInterface` method is generated, using the `fVslider0` variable:
 ```C++
 virtual void buildUserInterface(UI* ui_interface) 
 {
-	ui_interface->openVerticalBox("test8");
-	ui_interface->addVerticalSlider("Vol", &fVslider0, 
-                                  FAUSTFLOAT(0.5f),
-                                  FAUSTFLOAT(0.0f), 
-                                  FAUSTFLOAT(1.0f), 
-                                  FAUSTFLOAT(0.00999999978f));
-	ui_interface->closeBox();
+		ui_interface->openVerticalBox("test8");
+		ui_interface->addVerticalSlider("Vol", &fVslider0, 
+                                  	FAUSTFLOAT(0.5f),
+                                  	FAUSTFLOAT(0.0f), 
+                                  	FAUSTFLOAT(1.0f), 
+                                  	FAUSTFLOAT(0.00999999978f));
+		ui_interface->closeBox();
 }
 ```
 
@@ -429,14 +431,14 @@ The `compute` method is then:
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-	FAUSTFLOAT* input0 = inputs[0];
-	FAUSTFLOAT* output0 = outputs[0];
-	float fSlow0 = float(fVslider0);
-	for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-		fVec0[(IOTA & 511)] = (float(input0[i0]) + 0.5f);
-		output0[i0] = FAUSTFLOAT((fSlow0 * fVec0[((IOTA - 500) & 511)]));
-		IOTA = (IOTA + 1);
-	}
+		FAUSTFLOAT* input0 = inputs[0];
+		FAUSTFLOAT* output0 = outputs[0];
+		float fSlow0 = float(fVslider0);
+		for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
+			fVec0[(IOTA & 511)] = (float(input0[i0]) + 0.5f);
+			output0[i0] = FAUSTFLOAT((fSlow0 * fVec0[((IOTA - 500) & 511)]));
+			IOTA = (IOTA + 1);
+		}
 }
 ```
 
@@ -521,13 +523,13 @@ The `compute` method shows the `fRec0`variable that keeps the delayed signal:
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-	FAUSTFLOAT* input0 = inputs[0];
-	FAUSTFLOAT* output0 = outputs[0];
-	for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-		fRec0[0] = (float(input0[i0]) + fRec0[1]);
-		output0[i0] = FAUSTFLOAT(fRec0[0]);
-		fRec0[1] = fRec0[0];
-	}
+		FAUSTFLOAT* input0 = inputs[0];
+		FAUSTFLOAT* output0 = outputs[0];
+		for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
+			fRec0[0] = (float(input0[i0]) + fRec0[1]);
+			output0[i0] = FAUSTFLOAT(fRec0[0]);
+			fRec0[1] = fRec0[0];
+		}
 }
 ```
 
@@ -783,13 +785,13 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 The *soundfile* primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:
 
-- the sound number (as a integer between 0 and 255 checked at compilation time)
+- the sound number (as a integer between 0 and 255 as a [constant numerical expression](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions))
 - the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) 
 
 The generated block has: 
 
 - two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
-- several more outputs for the sound channels themselves
+- several more outputs for the sound channels themselves, as a [constant numerical expression](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions)
 
 The soundfile block is created with `sigSoundfile`, but cannot be used directly. It has to be used with:
 
@@ -820,7 +822,10 @@ static void test19()
         // Part 0
         Signal part = sigInt(0);
         // Wrapped index to avoid reading outside the buffer
-        Signal wridx = sigIntCast(sigMax(sigInt(0), sigMin(rdx, sigSub(sigSoundfileLength(sf, sigInt(0)), sigInt(1)))));
+        Signal wridx = sigIntCast(sigMax(sigInt(0), 
+                       sigMin(rdx, sigSub(sigSoundfileLength(sf, 
+                       sigInt(0)),
+                       sigInt(1)))));
         // Accessing part 0
         signals.push_back(sigSoundfileLength(sf, part));
         // Accessing part 0
@@ -872,7 +877,7 @@ with {
 ```
 <!-- /faust-run -->
 
-Can be built using the sollowing helper functions, here written in C:
+Can be built using the following helper functions, here written in C:
 
 ```C++
 static Signal decimalpart(Signal x)
@@ -1344,7 +1349,7 @@ All C examples are defined in the [signal-tester-c](https://github.com/grame-cnc
 
 ## Creating a signal language based on this API 
 
-Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language *created on top* of the signal API is usually needed. This is exactly what the *Block Diagram Algebra* is all about, and the entire Faust language itself. 
+Generating complex expressions by directly using the signal API can quickly become really tricky and unpracticable. So a language *created on top* of the signal API is usually needed. This is exactly what the *Block Diagram Algebra* is all about, and the entire Faust language itself. 
 
 But some other approaches can possibly by tested. The [Elementary audio language](https://www.elementary.audio) for instance is built over a similar [signal language](https://docs.elementary.audio/guides/making_sound) and uses JavaScript as the upper layer language to help create complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. 
 

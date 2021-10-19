@@ -18,7 +18,7 @@ The *Semantic Phase* itself is composed of several steps:
 <img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
 <center>*The semantic phase*</center>
 
-The initial DSP code using the Block Diagram Albegra (BDA) is translated in a flat circuit in normal form in the *Evaluation \calculus step*. 
+The initial DSP code using the Block Diagram Algebra (BDA) is translated in a flat circuit in normal form in the *Evaluation, lambda-calculus* step. 
 
 The list of output signals is produced by the *Symbolic Propagation* step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a *list of output signals in normal form*. 
 
@@ -26,7 +26,9 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 #### Accessing the box stage
 
-A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a box expression, then beneficiate of all remaining parts of the compilation chain. The [box API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box.h) (or the [C box API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box-c.h) version) allows to programmatically create the box expression, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
+A new intermediate public entry point has been created in the *Semantic Phase*, after the *Evaluation, lambda-calculus* step to allow the creation of a box expression, then beneficiate of all remaining parts of the compilation chain. The [box API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box.h) (or the [C box API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-box-c.h) version) allows to programmatically create the box expression, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
+
+Note that the [signal API](https://faustdoc.grame.fr/tutorials/signal-api/) allows to access at another stage in the compilation stage.
 
 ## Compiling box expressions
 
@@ -94,7 +96,7 @@ inline Box getSampleRate()
 {
     return boxMin(boxReal(192000.0), 
                   boxMax(boxReal(1.0), 
-        	 	     				 boxFConst(SType::kSInt, "fSamplingFreq", "<dummy.h>")));
+        	 	     				 boxFConst(SType::kSInt, "fSamplingFreq", "<math.h>")));
 }
 
 /** 
@@ -106,7 +108,7 @@ inline Box getSampleRate()
  */
 inline Box getBufferSize()
 {
-    return boxFVar(SType::kSInt, "count", "<dummy.h>");
+    return boxFVar(SType::kSInt, "count", "<math.h>");
 }
 ```
 
@@ -124,7 +126,7 @@ process = 7,3.14;
 ```
 <!-- /faust-run -->
 
-The following code creates a box expresson, containing a box `boxPar(boxInt(7), boxReal(3.14))` expression, then compile it and display the C++ class:
+The following code creates a box expression, containing a box `boxPar(boxInt(7), boxReal(3.14))` expression, then compile it and display the C++ class:
 
 ```C++
 static void test1()
@@ -187,7 +189,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-In the published API, most operators are exported as simple *no-argument* operators, using the language [core-syntax](https://faustdoc.grame.fr/manual/syntax/#infix-notation-and-other-syntax-extensions). The [prefix notation](https://faustdoc.grame.fr/manual/syntax/#prefix-notation) can be used with added multi-argument versions. So the previous example can be written in a simpler way with the following code, which will produce the exact same C++:
+In the published API, most operators are exported as simple *no-argument* operators, using the language [core-syntax](https://faustdoc.grame.fr/manual/syntax/#infix-notation-and-other-syntax-extensions). The [prefix notation](https://faustdoc.grame.fr/manual/syntax/#prefix-notation) can be used with additional multi-argument versions. So the previous example can be written in a simpler way with the following code, which will produce the exact same C++:
 
 ```C++
 static void test3()
@@ -303,16 +305,18 @@ process = _ <: @(500) + 0.5, @(3000) * 1.5;
 And built with the following code:
 
 ```C++
-static void test4()
+static void test8()
 {
     COMPILER
     (
-        tvec signals;
-        Signal in1 = sigInput(0);
-        signals.push_back(sigAdd(sigDelay(in1, sigReal(500)), sigReal(0.5)));
-        signals.push_back(sigMul(sigDelay(in1, sigReal(3000)), sigReal(1.5)));
+        Box box = boxSplit(boxWire(), 
+                           	boxPar(boxAdd(boxDelay(boxWire(), 
+                                                    boxReal(500)), boxReal(0.5)),
+                                   boxMul(boxDelay(boxWire(), 
+                                                    boxReal(3000)), boxReal(1.5))));
      
-        compile("test4", signals);
+     
+        compile("test8", box);
     )
 }
 ```
@@ -336,47 +340,45 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Equivalent signal expressions 
 
-It is really important to note that *syntactically equivalent signal expressions* will be *internally represented by the same memory structure* (using hashconsing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))` expression, then used in both outputs:
+It is really important to note that *syntactically equivalent box expressions* will be *internally represented by the same memory structure* (using hashconsing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))` expression, then used in both outputs:
 
 ```C++
 static void equivalent1()
 {
     COMPILER
     (
-        tvec signals;
-        Signal s1 = sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))
-        signals.push_back(s1);
-        signals.push_back(s1);
+        Box b1 = boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5));
+        Box box = boxPar(b1, b1);
      
         compile("equivalent1", signals);
     )
 }
 ```
 
-Will behave exactly the same as the following code, where the `sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))` expression is used twice:
+Will behave exactly the same as the following code, where the `boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))` expression is used twice:
 
 ```C++
 static void equivalent2()
 {
     COMPILER
     (
-        tvec signals;
-        signals.push_back(sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5)));
-        signals.push_back(sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5)));
+         Box box = boxPar(boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5)),
+                          boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5)));
      
-        compile("equivalent2", signals);
+     
+        compile("equivalent2", box);
     )
 }
 ```
-It can be a property to remember when creating a DSL on top of the signal API.
+It can be a property to remember when creating a DSL on top of the box API.
 
 #### Using User Interface items
 
-User Interface items can be used, as in the following example, with a `vslider`:
+User Interface items can be used, as in the following example, with a `hslider`:
 
 <!-- faust-run -->
 ```
-process = @(+(0.5), 500) * vslider("Vol", 0.5, 0, 1, 0.01);
+process = _,hslider("Freq [midi:ctrl 7][style:knob]", 100, 100, 2000, 1) : *;
 ```
 <!-- /faust-run -->
 
@@ -387,28 +389,32 @@ static void test8()
 {
     COMPILER
     (
-        tvec signals;
-        Signal in1 = sigInput(0);
-        Signal s = sigVSlider("Vol", sigReal(0.5), sigReal(0.), sigReal(1.), sigReal(0.01));
-        signals.push_back(sigMul(s, sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500))));
+        Box box = boxMul(boxWire(), 
+                         boxHSlider("Freq [midi:ctrl 7][style:knob]", 
+                                    boxReal(100), 
+                                    boxReal(100), 
+                                    boxReal(2000), 
+                                    boxReal(1)));
         
-        compile("test8", signals);
+        compile("test8", box);
     )
 }
 ```
 
-The `buildUserInterface` method is generated, using the `fVslider0` variable:
+The `buildUserInterface` method is generated, using the `fHslider0` variable:
 
 ```C++
 virtual void buildUserInterface(UI* ui_interface) 
 {
-	ui_interface->openVerticalBox("test8");
-	ui_interface->addVerticalSlider("Vol", &fVslider0, 
-                                  FAUSTFLOAT(0.5f),
-                                  FAUSTFLOAT(0.0f), 
-                                  FAUSTFLOAT(1.0f), 
-                                  FAUSTFLOAT(0.00999999978f));
-	ui_interface->closeBox();
+	  ui_interface->openVerticalBox("test8");
+		ui_interface->declare(&fHslider0, "midi", "ctrl 7");
+		ui_interface->declare(&fHslider0, "style", "knob");
+		ui_interface->addHorizontalSlider("Freq", &fHslider0, 
+                                      FAUSTFLOAT(100.0f), 
+                                      FAUSTFLOAT(100.0f), 
+                                      FAUSTFLOAT(2000.0f), 
+                                      FAUSTFLOAT(1.0f));
+		ui_interface->closeBox();
 }
 ```
 
@@ -417,18 +423,16 @@ The `compute` method is then:
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-	FAUSTFLOAT* input0 = inputs[0];
-	FAUSTFLOAT* output0 = outputs[0];
-	float fSlow0 = float(fVslider0);
-	for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-		fVec0[(IOTA & 511)] = (float(input0[i0]) + 0.5f);
-		output0[i0] = FAUSTFLOAT((fSlow0 * fVec0[((IOTA - 500) & 511)]));
-		IOTA = (IOTA + 1);
-	}
+		FAUSTFLOAT* input0 = inputs[0];
+		FAUSTFLOAT* output0 = outputs[0];
+		float fSlow0 = float(fHslider0);
+		for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
+			output0[i0] = FAUSTFLOAT((fSlow0 * float(input0[i0])));
+		}
 }
 ```
 
-User Interface layout can be described with [hgroup](https://faustdoc.grame.fr/manual/syntax/#hgroup-primitive), or [vgroup](https://faustdoc.grame.fr/manual/syntax/#vgroup-primitive) or [tgroup](https://faustdoc.grame.fr/manual/syntax/#tgroup-primitive). With the signal API, the layout can be defined using the [labels-as-pathnames](https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames) syntax, as in the following example:
+User Interface layout can be described with [hgroup](https://faustdoc.grame.fr/manual/syntax/#hgroup-primitive), or [vgroup](https://faustdoc.grame.fr/manual/syntax/#vgroup-primitive) or [tgroup](https://faustdoc.grame.fr/manual/syntax/#tgroup-primitive). With the box API, the layout can be defined using the [labels-as-pathnames](https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames) syntax, as in the following example:
 
 <!-- faust-run -->
 ```
@@ -446,16 +450,18 @@ static void test9()
 {
     COMPILER
     (
-        tvec signals;
-        Signal freq = sigVSlider("h:Oscillator/freq", 
-                                 sigReal(440), sigReal(50), 
-                                 sigReal(1000), sigReal(0.1));
-        Signal gain = sigVSlider("h:Oscillator/gain", 
-                                 sigReal(0), sigReal(0), 
-                                 sigReal(1), sigReal(0.011));
-        signals.push_back(sigMul(freq, sigMul(gain, sigInput(0))));
+        Box box = boxMul(boxVSlider("h:Oscillator/freq", 
+                                    boxReal(440), 
+                                    boxReal(50), 
+                                    boxReal(1000), 
+                                    boxReal(0.1)),
+                         boxVSlider("h:Oscillator/gain", 
+                                    boxReal(0), 
+                                    boxReal(0), 
+                                    boxReal(1), 
+                                    boxReal(0.01)));
 
-        compile("test9", signals);
+        compile("test9", box);
     )
 }
 ```
@@ -465,7 +471,7 @@ The `buildUserInterface` method is generated with the expected `openHorizontalBo
 ```C++
 virtual void buildUserInterface(UI* ui_interface) 
 {
-    ui_interface->openHorizontalBox("Oscillator");
+ 		ui_interface->openHorizontalBox("Oscillator");
     ui_interface->addVerticalSlider("freq", &fVslider0, 
                                     FAUSTFLOAT(440.0f), 
                                     FAUSTFLOAT(50.0f), 
@@ -481,7 +487,7 @@ virtual void buildUserInterface(UI* ui_interface)
 ```
 #### Defining recursive signals
 
-Recursive signals can be defined using the `sigRecursion` function and the `sigSelf` function to refer to the recursive signal itself. A one sample delay is automatically created to produce a valid computation. Here is a simple example:
+Recursive signals can be defined using the `boxRec` expression. A one sample delay is automatically created to produce a valid computation. Here is a simple example:
 
 <!-- faust-run -->
 ```
@@ -496,11 +502,9 @@ static void test10()
 {
     COMPILER
     (
-        tvec signals;
-        Signal in1 = sigInput(0);
-        signals.push_back(sigRecursion(sigAdd(sigSelf(), in1)));
+        Box box = boxRec(boxAdd(), boxWire());
 
-        compile("test10", signals);
+        compile("test10", box);
     )
 }
 ```
@@ -509,13 +513,13 @@ The `compute` method shows the `fRec0`variable that keeps the delayed signal:
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-	FAUSTFLOAT* input0 = inputs[0];
-	FAUSTFLOAT* output0 = outputs[0];
-	for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-		fRec0[0] = (float(input0[i0]) + fRec0[1]);
-		output0[i0] = FAUSTFLOAT(fRec0[0]);
-		fRec0[1] = fRec0[0];
-	}
+		FAUSTFLOAT* input0 = inputs[0];
+		FAUSTFLOAT* output0 = outputs[0];
+		for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
+			fRec0[0] = (float(input0[i0]) + fRec0[1]);
+			output0[i0] = FAUSTFLOAT(fRec0[0]);
+			fRec0[1] = fRec0[0];
+		}
 }
 ```
 
@@ -526,18 +530,18 @@ In Faust, the underlying audio engine sample rate and buffer size  is accessed u
 ```C++
 // Reproduce the 'SR' definition in platform.lib 
 // SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, <dummy.h>)));
-inline Signal getSampleRate()
+inline Box getSampleRate()
 {
-    return sigMin(sigReal(192000.0), 
-           sigMax(sigReal(1.0), 
-           sigFConst(SType::kSInt, "fSamplingFreq", "<dummy.h>")));
+    return boxMin(boxReal(192000.0), 
+                  boxMax(boxReal(1.0), 
+                         boxFConst(SType::kSInt, "fSamplingFreq", "<math.h>")));
 }
 
 // Reproduce the 'BS' definition in platform.lib 
 // BS = fvariable(int count, <dummy.h>);
 inline Signal getBufferSize()
 {
-    return sigFVar(SType::kSInt, "count", "<dummy.h>");
+    return boxFVar(SType::kSInt, "count", "<math.h>");
 }
 ```
 So the following DSP program:
@@ -549,18 +553,16 @@ process = ma.SR, ma.BS;
 ```
 <!-- /faust-run -->
 
- Can be written at the signal API level with:
+ Can be written at the box API level with:
 
 ```C++
 static void test11()
 {
     COMPILER
     (
-        tvec signals;
-        signals.push_back(getSampleRate());
-        signals.push_back(getBufferSize());
+        Box box = boxPar(getSampleRate(), getBufferSize());
 
-        compile("test11", signals);
+        compile("test11", box);
     )
 }
 ```
@@ -592,7 +594,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Creating tables
 
-Read only and read/write tables can be created. The *read only table* signal is created with `sigReadOnlyTable` and takes:
+Read only and read/write tables can be created. The *read only table* signal is created with `boxReadOnlyTable` and takes:
 
  - a size first argument
  - a content second argument
@@ -615,9 +617,8 @@ static void test20()
 {
     COMPILER
     (
-        tvec signals;
-        signals.push_back(sigReadOnlyTable(sigInt(10), sigInt(1), sigIntCast(sigInput(0))));
-
+       	Box box = boxReadOnlyTable(boxInt(10), boxInt(1), boxIntCast(boxWire()));
+      
         compile("test20", signals);
     )
 }
@@ -651,7 +652,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-The *read/write table* signal is created with `sigWriteReadTable` and takes:
+The *read/write table* signal is created with `boxWriteReadTable` and takes:
 
  - a size first argument
  - a content second argument
@@ -674,12 +675,11 @@ static void test20()
 {
     COMPILER
     (
-        tvec signals;
-        signals.push_back(sigWriteReadTable(sigInt(10), 
-                                            sigInt(1), 
-                                            sigIntCast(sigInput(0)), 
-                                            sigIntCast(sigInput(1)),    
-                                            sigIntCast(sigInput(2))));
+        Box box = boxWriteReadTable(boxInt(10), 
+                                    boxInt(1), 
+                                    boxIntCast(boxWire()), 
+                                    boxIntCast(boxWire()), 
+                                    boxIntCast(boxWire()));
 
         compile("test21", signals);
     )
@@ -726,7 +726,7 @@ process = waveform { 0, 100, 200, 300, 400 };
 ```
 <!-- /faust-run -->
 
-Can be written with the code, where the size of the waveform is the first output, and the waveform content itself is the second output created with `sigWaveform`, to follow the [waveform semantic](https://faustdoc.grame.fr/manual/syntax/#waveform-primitive):
+Can be written with the code, where the size of the waveform is the first output, and the waveform content itself is the second output created with `boxWaveform`, to follow the [waveform semantic](https://faustdoc.grame.fr/manual/syntax/#waveform-primitive):
 
 ```C++
 static void test12()
@@ -736,13 +736,11 @@ static void test12()
         tvec waveform;
         // Fill the waveform content vector
         for (int i = 0; i < 5; i++) {
-            waveform.push_back(sigReal(100*i));
+            waveform.push_back(boxReal(100*i));
         }
-        tvec signals;
-        signals.push_back(sigInt(waveform.size())); // the waveform size
-        signals.push_back(sigWaveform(waveform));   // the waveform content
+        Box box = boxWaveform(waveform);   // the size and the waveform content
         
-        compile("test12", signals);
+        compile("test12", box);
      )
 }
 ```
@@ -771,13 +769,13 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 The *soundfile* primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:
 
-- the sound number (as a integer between 0 and 255 checked at compilation time)
+- the sound number (as a integer between 0 and 255 as a [constant numerical expression](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions))
 - the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) 
 
 The generated block has: 
 
 - two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
-- several more outputs for the sound channels themselves
+- several more outputs for the sound channels themselves, as a [constant numerical expression](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions)
 
 The soundfile block is created with `sigSoundfile`, but cannot be used directly. It has to be used with:
 
@@ -793,30 +791,19 @@ process = 0,0 : soundfile("sound[url:{'tango.wav'}]", 1);
 ```
 <!-- /faust-run -->
 
-Will be created using the signal API with: 
+Will be created using the box API with: 
 
 ```C++
 static void test19()
 {
     COMPILER
     (
-        tvec signals;
-        // Soundfile definition 
-        Signal sf = sigSoundfile("sound[url:{'tango.wav'}]");
-        // Simple read index of 0 to simplify the code
-        Signal rdx = sigInt(0);
-        // Part 0
-        Signal part = sigInt(0);
-        // Wrapped index to avoid reading outside the buffer
-        Signal wridx = sigIntCast(sigMax(sigInt(0), sigMin(rdx, sigSub(sigSoundfileLength(sf, sigInt(0)), sigInt(1)))));
-        // Accessing part 0
-        signals.push_back(sigSoundfileLength(sf, part));
-        // Accessing part 0
-        signals.push_back(sigSoundfileRate(sf, part));
-        // Accessing chan 0 and part 0, with a wrapped read index
-        signals.push_back(sigSoundfileBuffer(sf, sigInt(0), part, wridx));
+        Box box = boxSoundfile("sound[url:{'tango.wav'}]", 
+                               boxInt(2),  
+                               boxInt(0),  
+                               boxInt(0));
         
-        compile("test19", signals);
+        compile("test19", box);
     )
 }
 ```
@@ -860,17 +847,18 @@ with {
 ```
 <!-- /faust-run -->
 
-Can be built using the sollowing helper functions, here written in C:
+Can be built using the following helper functions, here written in C:
 
 ```C++
-static Signal decimalpart(Signal x)
+static Box decimalpart()
 {
-    return sigSub(x, sigIntCast(x));
+    return boxSub(boxWire(), boxIntCast(boxWire()));
 }
 
-static Signal phasor(Signal f)
+static Box phasor(Box f)
 {
-    return sigRecursion(decimalpart(sigAdd(sigSelf(), sigDiv(f, getSampleRate()))));
+    return boxSeq(boxDiv(f, getSampleRate()), 
+                  boxRec(boxSplit(boxAdd(), decimalpart()), boxWire()));
 }
 ```
 And the main function combining them:
@@ -880,10 +868,9 @@ static void test17()
 {
     COMPILER
     (
-        tvec signals;
-        signals.push_back(phasor(sigReal(440.0)));
+        Box box = phasor(boxReal(440));
 
-        compile("test17", signals);
+        compile("test17", box);
     )
 }
 ```
@@ -918,18 +905,16 @@ Now the following oscillator:
 Can be built with:
 
 ```C++
-static Signal osc(Signal f)
+static Box osc(Box f)
 {
-    return sigSin(sigMul(phasor(f), sigMul(sigReal(2.0), sigReal(3.141592653))));
+    return boxSin(boxMul(boxMul(boxReal(2.0), boxReal(3.141592653)), phasor(f)));
 }
 
 static void test18()
 {
     COMPILER
     (
-        tvec signals;
-        signals.push_back(osc(sigReal(440.0)));
-        signals.push_back(osc(sigReal(440.0)));
+        Box box = boxPar(osc(boxReal(440)), osc(boxReal(440)));
 
         compile("test18", signals);
     )
@@ -957,14 +942,14 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 Using the LLVM or Interpreter backends allows to generate and execute the compiled DSP on the fly. 
 
-The LLVM backend can be used with `createDSPFactoryFromSignals` (see [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h)) to produce a DSP factory, then a DSP instance:
+The LLVM backend can be used with `createDSPFactoryFromBoxes` (see [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h)) to produce a DSP factory, then a DSP instance:
 
 ```C++
 string error_msg;
-llvm_dsp_factory* factory = createDSPFactoryFromSignals("FaustDSP", 
-                                                        signals, 0, 
-                                                        nullptr, "", 
-                                                        error_msg);
+llvm_dsp_factory* factory = createDSPFactoryFromBoxes("FaustDSP", 
+                                                       box, 0, 
+                                                       nullptr, "", 
+                                                       error_msg);
 // Check factory
 dsp* dsp = factory->createDSPInstance();
 // Check dsp
@@ -976,14 +961,14 @@ delete dsp;
 deleteDSPFactory(factory);
 ```
 
-The Interpreter backend can be used with `createInterpreterDSPFactoryFromSignals` (see [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h)) to produce a DSP factory, then a DSP instance:
+The Interpreter backend can be used with `createInterpreterDSPFactoryFromBoxes` (see [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h)) to produce a DSP factory, then a DSP instance:
 
 ```C++
 string error_msg;
-interpreter_dsp_factory* factory = createInterpreterDSPFactoryFromSignals("FaustDSP", 
-                                                                          signals, 0, 
-                                                                          nullptr, "", 
-                                                                          error_msg);
+interpreter_dsp_factory* factory = createInterpreterDSPFactoryFromBoxes("FaustDSP", 
+                                                                         box, 0, 
+                                                                         nullptr, "", 
+                                                                         error_msg);
 // Check factory
 dsp* dsp = factory->createDSPInstance();
 // Check dsp
@@ -1062,20 +1047,14 @@ static void test23(int argc, char* argv[])
     
     createLibContext();
     {
-        tvec signals;
-        signals.push_back(osc(sigHSlider("v:Oscillator/Freq1", 
-                                         sigReal(300), 
-                                         sigReal(100), 
-                                         sigReal(2000), 
-                                         sigReal(0.01))));
-        signals.push_back(osc(sigHSlider("v:Oscillator/Freq2",
-                                         sigReal(500), 
-                                         sigReal(100), 
-                                         sigReal(2000), 
-                                         sigReal(0.01))));
-        factory = createInterpreterDSPFactoryFromSignals("FaustDSP", 
-                                                         signals, 0, 
-                                                         nullptr, error_msg);
+        Box sl1 = boxHSlider("v:Oscillator/Freq1", boxReal(300), 
+                             boxReal(100), boxReal(2000), boxReal(0.01));
+        Box sl2 = boxHSlider("v:Oscillator/Freq2", boxReal(300), 
+                             boxReal(100), boxReal(2000), boxReal(0.01));
+        Box box = boxPar(osc(sl1), osc(sl2));
+        factory = createInterpreterDSPFactoryFromBoxes("FaustDSP", 
+                                                       box, 0, 
+                                                       nullptr, error_msg);
     }
     destroyLibContext();
     
@@ -1129,7 +1108,7 @@ with {
 ```
 <!-- /faust-run -->
 
-Then with the C++ code using the signal API:
+Then with the C++ code using the box API:
 
 ```C++
 // Simple polyphonic DSP.
@@ -1140,31 +1119,28 @@ static void test24(int argc, char* argv[])
     
     createLibContext();
     {
-        tvec signals;
-    
         // Follow the freq/gate/gain convention, 
-      	// see: https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters
-        Signal freq = sigNumEntry("freq", 
-                                  sigReal(100), 
-                                  sigReal(100), 
-                                  sigReal(3000), 
-                                  sigReal(0.01));
-        Signal gate = sigButton("gate");
-        Signal gain = sigNumEntry("gain", 
-                                  sigReal(0.5), 
-                                  sigReal(0), 
-                                  sigReal(1), 
-                                  sigReal(0.01));
-        Signal organ = sigMul(gate, sigAdd(sigMul(osc(freq), gain), 
-                                           sigMul(osc(sigMul(freq, sigInt(2))), gain)));
+        // see: https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters
+        Box freq = boxNumEntry("freq", 
+                               boxReal(100), 
+                               boxReal(100), 
+                               boxReal(3000), 
+                               boxReal(0.01));
+        Box gate = boxButton("gate");
+        Box gain = boxNumEntry("gain",
+                               boxReal(0.5), 
+                               boxReal(0), 
+                               boxReal(1), 
+                               boxReal(0.01));
+        Box organ = boxMul(gate, boxAdd(boxMul(osc(freq), gain), 
+                                        boxMul(osc(boxMul(freq, boxInt(2))), gain)));
         // Stereo
-        signals.push_back(organ);
-        signals.push_back(organ);
+        Box box = boxPar(organ, organ);
     
-        factory = createInterpreterDSPFactoryFromSignals("FaustDSP", 
-                                                         signals, 
-                                                         0, nullptr, 
-                                                         error_msg);
+        factory = createInterpreterDSPFactoryFromBoxes("FaustDSP", 
+                                                        box, 
+                                                        0, nullptr, 
+                                                        error_msg);
     }
     destroyLibContext();
     
@@ -1209,7 +1185,7 @@ static void test24(int argc, char* argv[])
 
 ## Examples with the C API
 
-The signal API is also available as a [pure C API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h). Here is one of the previous example rewritten using the C API to create signals, where the LLVM backend is used with the C version `createCDSPFactoryFromSignals` function (see [llvm-dsp-c.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp-c.h)) to produce a DSP factory, then a DSP instance:
+The box API is also available as a [pure C API](https://github.com/grame-cncm/faust/blob/master-dev/compiler/generator/libfaust-signal-c.h). Here is one of the previous example rewritten using the C API to create box expressions, where the LLVM backend is used with the C version `createCDSPFactoryFromBoxes` function (see [llvm-dsp-c.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp-c.h)) to produce a DSP factory, then a DSP instance:
 
 ```C++
 /*
@@ -1221,31 +1197,30 @@ The signal API is also available as a [pure C API](https://github.com/grame-cncm
  };
  */
 
-static Signal decimalpart(Signal x)
+static Box decimalpart()
 {
-    return CsigSub(x, CsigIntCast(x));
+    return CboxSubAux(CboxWire(), CboxIntCastAux(CboxWire()));
 }
 
-static Signal phasor(Signal f)
+static Box phasor(Box f)
 {
-    return CsigRecursion(decimalpart(CsigAdd(CsigSelf(), CsigDiv(f, getSampleRate()))));
+    return CboxSeq(CboxDivAux(f, getSampleRate()), 
+                   CboxRec(CboxSplit(CboxAdd(), decimalpart()), CboxWire()));
 }
 
 static void test1()
 {
     createLibContext();
     {
-        Signal signals[2];
-        signals[0] = phasor(CsigReal(2000));
-        signals[1] = NULL; // Null terminated array
+        Box box = phasor(CboxReal(2000));
 
         char error_msg[4096];
-        llvm_dsp_factory* factory = createCDSPFactoryFromSignals("test1", 
-                                                                 signals, 
-                                                                 0, NULL, 
-                                                                 "", 
-                                                                 error_msg, 
-                                                                 -1);
+        llvm_dsp_factory* factory = createCDSPFactoryFromBoxes("test1", 
+                                                               box, 
+                                                               0, NULL, 
+                                                               "", 
+                                                               error_msg, 
+                                                               -1);
             
         if (factory) {
             
@@ -1283,26 +1258,24 @@ static void test3()
 {
     createLibContext();
     {
-        Signal signals[2];
-        Signal freq = CsigVSlider("h:Oscillator/freq", 
-                                  CsigReal(440), 
-                                  CsigReal(50), 
-                                  CsigReal(1000), 
-                                  CsigReal(0.1));
-        Signal gain = CsigVSlider("h:Oscillator/gain", 
-                                  CsigReal(0), 
-                                  CsigReal(0), 
-                                  CsigReal(1), 
-                                  CsigReal(0.011));
-        signals[0] = CsigMul(freq, CsigMul(gain, CsigInput(0)));
-        signals[1] = NULL; // Null terminated array
+        Box freq = CboxVSlider("h:Oscillator/freq", 
+                               CboxReal(440), 
+                               CboxReal(50), 
+                               CboxReal(1000), 
+                               CboxReal(0.1));
+        Box gain = CboxVSlider("h:Oscillator/gain", 
+                               CboxReal(0), 
+                               CboxReal(0), 
+                               CboxReal(1), 
+                               CboxReal(0.011));
+        Box box = CboxMulAux(freq, CboxMulAux(gain, CboxWire()));
 
         char error_msg[4096];
-        llvm_dsp_factory* factory = createCDSPFactoryFromSignals("test3", 
-                                                                 signals, 0, 
-                                                                 NULL, "", 
-                                                                 error_msg, 
-                                                                 -1);
+        llvm_dsp_factory* factory = createCDSPFactoryFromBoxes("test3", 
+                                                               box, 0, 
+                                                               NULL, "", 
+                                                               error_msg, 
+                                                               -1);
         
         if (factory) {
             
@@ -1328,13 +1301,7 @@ static void test3()
 }
 ```
 
-All C examples are defined in the [signal-tester-c](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.c) tool, to be compiled with `make signal-tester-c` in the tools/benchmark folder.
-
-## Creating a signal language based on this API 
-
-Generating a complex graph by directly using the signal API can quickly become really tricky and unpracticable. So a language *created on top* of the signal API is usually needed. This is exactly what the *Block Diagram Algebra* is all about, and the entire Faust language itself. 
-
-But some other approaches can possibly by tested. The [Elementary audio language](https://www.elementary.audio) for instance is built over a similar [signal language](https://docs.elementary.audio/guides/making_sound) and uses JavaScript as the upper layer language to help create complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. 
+All C examples are defined in the [box-tester-c](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.c) tool, to be compiled with `make box-tester-c` in the tools/benchmark folder.
 
  
 
