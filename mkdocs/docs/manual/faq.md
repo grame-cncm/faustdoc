@@ -35,7 +35,7 @@ for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
 ```
 To therefore preserve the strict semantic, even if a non-strict `(cond) ? then : else` construction is finally used to produce the result of the `select2` expression.
 
-For computations that need to avoid certains values or ranges (like doing  `val/0` that would return INF, or `log` of a negative value that would return NAN), the solution is to use min and max to force the arguments to be in the right range of values. For example, to avoid division by 0, you can write `1/max(epsilon, x)`.
+For computations that need to avoid some values or ranges (like doing  `val/0` that would return INF, or `log` of a negative value that would return NAN), the solution is to use min and max to force the arguments to be in the right range of values. For example, to avoid division by 0, you can write `1/max(epsilon, x)`.
 
 ## Pattern matching and lists
 
