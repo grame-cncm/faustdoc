@@ -4,7 +4,7 @@
 
 The semantics of Faust is always strict. That's why there is no real `if` in Faust. And that's why the `ba.if` in the library (based on `select2` ) can be misleading. 
 
-Concerning the way `select2` is compiled, in principle, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if.  For example:
+Concerning the way `select2` is compiled, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if.  For example:
 ```
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
 ```
@@ -19,9 +19,21 @@ for (int i = 0; (i < count); i = (i + 1)) {
     fRec1[1] = fRec1[0];
 }
 ```
-In order for the stateful parts to be always computed, and therefore preserve the strict semantic, even if a non-strict `(cond) ? then : else` expression is used.
 
-But it turns out that due to a bug in the compiler, the code generated for `select2` and `select3` is not really strict! Moreover, **our interval calculation system, which is supposed to detect this kind of error, is currently quite imperfect and doesn't do it**. 
+When stateless expressions are used, their proper computation if forced by putting them in local variables, as in the following example:
+```
+process = select2(button("choose"), sin:cos, cos:sin);
+```
+which is compiled in C/C++ as:
+
+```
+for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
+    float fThen0 = std::cos(std::sin(float(input0[i0])));
+    float fElse0 = std::sin(std::cos(float(input1[i0])));
+    output0[i0] = FAUSTFLOAT((iSlow0 ? fElse0 : fThen0));
+}
+```
+To therefore preserve the strict semantic, even if a non-strict `(cond) ? then : else` construction is finally used to produce the result of the `select2` expression.
 
 For computations that need to avoid certains values or ranges (like doing  `val/0` that would return INF, or `log` of a negative value that would return NAN), the solution is to use min and max to force the arguments to be in the right range of values. For example, to avoid division by 0, you can write `1/max(epsilon, x)`.
 

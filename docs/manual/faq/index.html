@@ -316,7 +316,7 @@
 <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
 <h2 id="does-select2-behaves-as-a-standard-cc-like-if">Does select2 behaves as a standard C/C++ like if ?</h2>
 <p>The semantics of Faust is always strict. That's why there is no real <code>if</code> in Faust. And that's why the <code>ba.if</code> in the library (based on <code>select2</code> ) can be misleading. </p>
-<p>Concerning the way <code>select2</code> is compiled, in principle, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if.  For example:</p>
+<p>Concerning the way <code>select2</code> is compiled, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if.  For example:</p>
 <pre><code>process = button(&quot;choose&quot;), (*(3) : +~_), (*(7):+~_) : select2;
 </code></pre>
 <p>is compiled in C/C++ as:</p>
@@ -328,8 +328,17 @@
     fRec1[1] = fRec1[0];
 }
 </code></pre>
-<p>In order for the stateful parts to be always computed, and therefore preserve the strict semantic, even if a non-strict <code>(cond) ? then : else</code> expression is used.</p>
-<p>But it turns out that due to a bug in the compiler, the code generated for <code>select2</code> and <code>select3</code> is not really strict! Moreover, <strong>our interval calculation system, which is supposed to detect this kind of error, is currently quite imperfect and doesn't do it</strong>. </p>
+<p>When stateless expressions are used, their proper computation if forced by putting them in local variables, as in the following example:</p>
+<pre><code>process = select2(button(&quot;choose&quot;), sin:cos, cos:sin);
+</code></pre>
+<p>which is compiled in C/C++ as:</p>
+<pre><code>for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+    float fThen0 = std::cos(std::sin(float(input0[i0])));
+    float fElse0 = std::sin(std::cos(float(input1[i0])));
+    output0[i0] = FAUSTFLOAT((iSlow0 ? fElse0 : fThen0));
+}
+</code></pre>
+<p>To therefore preserve the strict semantic, even if a non-strict <code>(cond) ? then : else</code> construction is finally used to produce the result of the <code>select2</code> expression.</p>
 <p>For computations that need to avoid certains values or ranges (like doing  <code>val/0</code> that would return INF, or <code>log</code> of a negative value that would return NAN), the solution is to use min and max to force the arguments to be in the right range of values. For example, to avoid division by 0, you can write <code>1/max(epsilon, x)</code>.</p>
 <h2 id="pattern-matching-and-lists">Pattern matching and lists</h2>
 <p>Strictly speaking, there are no lists in Faust. For example the expression <code>()</code> or <code>NIL</code> in Lisp, which indicates an empty list, does not exist in Faust. Similarly, the distinction in Lisp between the number <code>3</code> and the list with only one element <code>(3)</code> does not exist in Faust. </p>
