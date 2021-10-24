@@ -1783,6 +1783,10 @@ Static metadata generator for Faust/C++. This program builds the metadata for a 
 
 A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps
 
+#### [RustFaustExperiments](https://github.com/bluenote10/RustFaustExperiments)
+
+Tools to compare C++ and Rust  code generated from Faust. 
+
 ### Python tools 
 
 #### [FAUSTPy](https://github.com/marcecj/faust_python)
