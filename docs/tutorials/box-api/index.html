@@ -469,9 +469,7 @@ inline Box getSampleRate()
 {
     return boxMin(boxReal(192000.0), 
                   boxMax(boxReal(1.0), 
-                    boxFConst(SType::kSInt, 
-                            &quot;fSamplingFreq&quot;, 
-                            &quot;&lt;math.h&gt;&quot;)));
+                  boxFConst(SType::kSInt, &quot;fSamplingFreq&quot;, &quot;&lt;math.h&gt;&quot;)));
 }
 
 /** 
