@@ -408,15 +408,15 @@ The `buildUserInterface` method is generated, using the `fHslider0` variable:
 ```C++
 virtual void buildUserInterface(UI* ui_interface) 
 {
-	  ui_interface->openVerticalBox("test8");
-		ui_interface->declare(&fHslider0, "midi", "ctrl 7");
-		ui_interface->declare(&fHslider0, "style", "knob");
-		ui_interface->addHorizontalSlider("Freq", &fHslider0, 
-                                      FAUSTFLOAT(100.0f), 
-                                      FAUSTFLOAT(100.0f), 
-                                      FAUSTFLOAT(2000.0f), 
-                                      FAUSTFLOAT(1.0f));
-		ui_interface->closeBox();
+    ui_interface->openVerticalBox("test8");
+    ui_interface->declare(&fHslider0, "midi", "ctrl 7");
+    ui_interface->declare(&fHslider0, "style", "knob");
+    ui_interface->addHorizontalSlider("Freq", &fHslider0, 
+                                  FAUSTFLOAT(100.0f), 
+                                  FAUSTFLOAT(100.0f), 
+                                  FAUSTFLOAT(2000.0f), 
+                                  FAUSTFLOAT(1.0f));
+    ui_interface->closeBox();
 }
 ```
 
@@ -425,12 +425,12 @@ The `compute` method is then:
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-		FAUSTFLOAT* input0 = inputs[0];
-		FAUSTFLOAT* output0 = outputs[0];
-		float fSlow0 = float(fHslider0);
-		for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-			output0[i0] = FAUSTFLOAT((fSlow0 * float(input0[i0])));
-		}
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = float(fHslider0);
+    for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT((fSlow0 * float(input0[i0])));
+    }
 }
 ```
 
@@ -473,7 +473,7 @@ The `buildUserInterface` method is generated with the expected `openHorizontalBo
 ```C++
 virtual void buildUserInterface(UI* ui_interface) 
 {
- 		ui_interface->openHorizontalBox("Oscillator");
+    ui_interface->openHorizontalBox("Oscillator");
     ui_interface->addVerticalSlider("freq", &fVslider0, 
                                     FAUSTFLOAT(440.0f), 
                                     FAUSTFLOAT(50.0f), 
@@ -515,13 +515,13 @@ The `compute` method shows the `fRec0`variable that keeps the delayed signal:
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-		FAUSTFLOAT* input0 = inputs[0];
-		FAUSTFLOAT* output0 = outputs[0];
-		for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-			fRec0[0] = (float(input0[i0]) + fRec0[1]);
-			output0[i0] = FAUSTFLOAT(fRec0[0]);
-			fRec0[1] = fRec0[0];
-		}
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
+        fRec0[0] = (float(input0[i0]) + fRec0[1]);
+        output0[i0] = FAUSTFLOAT(fRec0[0]);
+        fRec0[1] = fRec0[0];
+    }
 }
 ```
 
@@ -1036,7 +1036,7 @@ Then with the C++ code using the box API:
 
 ```C++
 // Using the Interpreter backend.
-static void test23(int argc, char* argv[])
+static void test22(int argc, char* argv[])
 {
     interpreter_dsp_factory* factory = nullptr;
     string error_msg;
@@ -1051,6 +1051,64 @@ static void test23(int argc, char* argv[])
         factory = createInterpreterDSPFactoryFromBoxes("FaustDSP", 
                                                        box, 0, 
                                                        nullptr, error_msg);
+    }
+    destroyLibContext();
+    
+    // Use factory outside of the createLibContext/destroyLibContext scope
+    if (factory) {
+        dsp* dsp = factory->createDSPInstance();
+        assert(dsp);
+        
+        // Allocate audio driver
+        jackaudio audio;
+        audio.init("Test", dsp);
+        
+        // Create GUI
+        GTKUI gtk_ui = GTKUI("Organ", &argc, &argv);
+        dsp->buildUserInterface(&gtk_ui);
+        
+        // Start real-time processing
+        audio.start();
+        
+        // Start GUI
+        gtk_ui.run();
+        
+        // Cleanup
+        audio.stop();
+        delete dsp;
+        deleteInterpreterDSPFactory(factory);
+    } else {
+        cerr << error_msg;
+    }
+}
+```
+
+#### Generating the signals as an intermediate step
+
+The `boxesToSignals` function allows to compile a box in a list of signals, to be used with the [signal API](https://faustdoc.grame.fr/tutorials/signal-api/). The following example shows how the two steps (box => signals then signals => DSP factory) can be chained, rewriting the previous code as:
+
+```C++
+// Using the Interpreter backend.
+static void test23(int argc, char* argv[])
+{
+    interpreter_dsp_factory* factory = nullptr;
+    string error_msg;
+    
+    createLibContext();
+    {
+        Box sl1 = boxHSlider("v:Oscillator/Freq1", boxReal(300), 
+                             boxReal(100), boxReal(2000), boxReal(0.01));
+        Box sl2 = boxHSlider("v:Oscillator/Freq2", boxReal(300), 
+                             boxReal(100), boxReal(2000), boxReal(0.01));
+        Box box = boxPar(osc(sl1), osc(sl2));
+        
+      	// Compile the 'box' to 'signals'
+      	tvec signals = boxesToSignals(box, error_msg);
+      
+      	// Then compile the 'signals' to a DSP factory
+        factory = createInterpreterDSPFactoryFromSignals("FaustDSP", 
+                                                        signals, 0, 
+                                                        nullptr, error_msg);
     }
     destroyLibContext();
     

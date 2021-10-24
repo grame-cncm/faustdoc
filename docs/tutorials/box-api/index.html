@@ -372,6 +372,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#generating-the-signals-as-an-intermediate-step" class="nav-link">Generating the signals as an intermediate step</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#polyphonic-midi-controllable-simple-synthesizer" class="nav-link">Polyphonic MIDI controllable simple synthesizer</a>
               <ul class="nav flex-column">
               </ul>
@@ -762,26 +766,26 @@ process = _,hslider(&quot;Freq [midi:ctrl 7][style:knob]&quot;, 100, 100, 2000, 
 <p>The <code>buildUserInterface</code> method is generated, using the <code>fHslider0</code> variable:</p>
 <pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
 {
-      ui_interface-&gt;openVerticalBox(&quot;test8&quot;);
-        ui_interface-&gt;declare(&amp;fHslider0, &quot;midi&quot;, &quot;ctrl 7&quot;);
-        ui_interface-&gt;declare(&amp;fHslider0, &quot;style&quot;, &quot;knob&quot;);
-        ui_interface-&gt;addHorizontalSlider(&quot;Freq&quot;, &amp;fHslider0, 
-                                      FAUSTFLOAT(100.0f), 
-                                      FAUSTFLOAT(100.0f), 
-                                      FAUSTFLOAT(2000.0f), 
-                                      FAUSTFLOAT(1.0f));
-        ui_interface-&gt;closeBox();
+    ui_interface-&gt;openVerticalBox(&quot;test8&quot;);
+    ui_interface-&gt;declare(&amp;fHslider0, &quot;midi&quot;, &quot;ctrl 7&quot;);
+    ui_interface-&gt;declare(&amp;fHslider0, &quot;style&quot;, &quot;knob&quot;);
+    ui_interface-&gt;addHorizontalSlider(&quot;Freq&quot;, &amp;fHslider0, 
+                                  FAUSTFLOAT(100.0f), 
+                                  FAUSTFLOAT(100.0f), 
+                                  FAUSTFLOAT(2000.0f), 
+                                  FAUSTFLOAT(1.0f));
+    ui_interface-&gt;closeBox();
 }
 </code></pre>
 <p>The <code>compute</code> method is then: </p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-        FAUSTFLOAT* input0 = inputs[0];
-        FAUSTFLOAT* output0 = outputs[0];
-        float fSlow0 = float(fHslider0);
-        for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
-            output0[i0] = FAUSTFLOAT((fSlow0 * float(input0[i0])));
-        }
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = float(fHslider0);
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        output0[i0] = FAUSTFLOAT((fSlow0 * float(input0[i0])));
+    }
 }
 </code></pre>
 <p>User Interface layout can be described with <a href="https://faustdoc.grame.fr/manual/syntax/#hgroup-primitive">hgroup</a>, or <a href="https://faustdoc.grame.fr/manual/syntax/#vgroup-primitive">vgroup</a> or <a href="https://faustdoc.grame.fr/manual/syntax/#tgroup-primitive">tgroup</a>. With the box API, the layout can be defined using the <a href="https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames">labels-as-pathnames</a> syntax, as in the following example:</p>
@@ -825,7 +829,7 @@ process = freq*gain;
 <p>The <code>buildUserInterface</code> method is generated with the expected <code>openHorizontalBox</code> call:</p>
 <pre><code class="language-C++">virtual void buildUserInterface(UI* ui_interface) 
 {
-        ui_interface-&gt;openHorizontalBox(&quot;Oscillator&quot;);
+    ui_interface-&gt;openHorizontalBox(&quot;Oscillator&quot;);
     ui_interface-&gt;addVerticalSlider(&quot;freq&quot;, &amp;fVslider0, 
                                     FAUSTFLOAT(440.0f), 
                                     FAUSTFLOAT(50.0f), 
@@ -869,13 +873,13 @@ process = + ~ _;
 <p>The <code>compute</code> method shows the <code>fRec0</code>variable that keeps the delayed signal:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
-        FAUSTFLOAT* input0 = inputs[0];
-        FAUSTFLOAT* output0 = outputs[0];
-        for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
-            fRec0[0] = (float(input0[i0]) + fRec0[1]);
-            output0[i0] = FAUSTFLOAT(fRec0[0]);
-            fRec0[1] = fRec0[0];
-        }
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; (i0 &lt; count); i0 = (i0 + 1)) {
+        fRec0[0] = (float(input0[i0]) + fRec0[1]);
+        output0[i0] = FAUSTFLOAT(fRec0[0]);
+        fRec0[1] = fRec0[0];
+    }
 }
 </code></pre>
 <h4 id="accessing-the-global-context">Accessing the global context</h4>
@@ -1363,7 +1367,7 @@ with {
 
 <p>Then with the C++ code using the box API:</p>
 <pre><code class="language-C++">// Using the Interpreter backend.
-static void test23(int argc, char* argv[])
+static void test22(int argc, char* argv[])
 {
     interpreter_dsp_factory* factory = nullptr;
     string error_msg;
@@ -1378,6 +1382,60 @@ static void test23(int argc, char* argv[])
         factory = createInterpreterDSPFactoryFromBoxes(&quot;FaustDSP&quot;, 
                                                        box, 0, 
                                                        nullptr, error_msg);
+    }
+    destroyLibContext();
+
+    // Use factory outside of the createLibContext/destroyLibContext scope
+    if (factory) {
+        dsp* dsp = factory-&gt;createDSPInstance();
+        assert(dsp);
+
+        // Allocate audio driver
+        jackaudio audio;
+        audio.init(&quot;Test&quot;, dsp);
+
+        // Create GUI
+        GTKUI gtk_ui = GTKUI(&quot;Organ&quot;, &amp;argc, &amp;argv);
+        dsp-&gt;buildUserInterface(&amp;gtk_ui);
+
+        // Start real-time processing
+        audio.start();
+
+        // Start GUI
+        gtk_ui.run();
+
+        // Cleanup
+        audio.stop();
+        delete dsp;
+        deleteInterpreterDSPFactory(factory);
+    } else {
+        cerr &lt;&lt; error_msg;
+    }
+}
+</code></pre>
+<h4 id="generating-the-signals-as-an-intermediate-step">Generating the signals as an intermediate step</h4>
+<p>The <code>boxesToSignals</code> function allows to compile a box in a list of signals, to be used with the <a href="https://faustdoc.grame.fr/tutorials/signal-api/">signal API</a>. The following example shows how the two steps (box =&gt; signals then signals =&gt; DSP factory) can be chained, rewriting the previous code as:</p>
+<pre><code class="language-C++">// Using the Interpreter backend.
+static void test23(int argc, char* argv[])
+{
+    interpreter_dsp_factory* factory = nullptr;
+    string error_msg;
+
+    createLibContext();
+    {
+        Box sl1 = boxHSlider(&quot;v:Oscillator/Freq1&quot;, boxReal(300), 
+                             boxReal(100), boxReal(2000), boxReal(0.01));
+        Box sl2 = boxHSlider(&quot;v:Oscillator/Freq2&quot;, boxReal(300), 
+                             boxReal(100), boxReal(2000), boxReal(0.01));
+        Box box = boxPar(osc(sl1), osc(sl2));
+
+        // Compile the 'box' to 'signals'
+        tvec signals = boxesToSignals(box, error_msg);
+
+        // Then compile the 'signals' to a DSP factory
+        factory = createInterpreterDSPFactoryFromSignals(&quot;FaustDSP&quot;, 
+                                                        signals, 0, 
+                                                        nullptr, error_msg);
     }
     destroyLibContext();
 
