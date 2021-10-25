@@ -1,6 +1,4 @@
 \chapter{Controlling the code generation}
-\label{Code-generation}
-
 Several options of the \faust compiler allow to control the generated C++ code. By default the computations are done sample by sample in a single loop. But the compiler can also generate \textit{vector} and \textit{parallel} code.
 
 \section{Vector code generation}
@@ -125,7 +123,7 @@ The parallel code generation is activated by passing either the \lstinline!--ope
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[scale=0.5]{images/openmp-model}
+  \includegraphics[scale=0.5,angle=-90]{images/openmp-model}
   \caption{OpenMP is based on a fork-join model}   
   \label{fig:openmp}
 \end{figure}
@@ -206,11 +204,11 @@ filter(c) = *(1-c) : + ~ *(c);
 process = filter(0.9), filter(0.9) : +; 
 \end{lstlisting}
 
-\label{fig:parfilter}
 \begin{figure}[htb] 
   \centering
-  \includegraphics[scale=0.6]{images/filter2}
+  \includegraphics[width=8cm]{images/filter2}
   \caption{two filters in parallel connected to an adder}   
+  \label{fig:parfilter}
 \end{figure}
 
 The corresponding compute() method obtained using the \lstinline!-omp! option is the following:

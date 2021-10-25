@@ -1,6 +1,5 @@
 %---------------------------------------------------
-\chapter{Architecture files} 
-\label{Architectures}
+\chapter{Architecture files} \label{sec:audio}
 %---------------------------------------------------
 
 A \faust program describes a \emph{signal processor}, a pure computation that maps \emph{input signals} to \emph{output signals}. It says nothing about audio drivers or GUI toolkits. This missing information is provided by \emph{architecture files}. 
@@ -138,8 +137,7 @@ Pure 			& Linux, Mac OS X, Windows \\
 
 
 %---------------------------------------------------
-\section{UI architecture modules} 
-\label{sec:gui}
+\section{UI architecture modules} \label{sec:gui}
 %---------------------------------------------------
 
 A UI architecture module links user actions (via graphic widgets, command line parameters, OSC messages, etc.) with the \faust program to control. 
@@ -238,8 +236,6 @@ A UI architecture must support the following methods to setup this hierarchy : \
 Note that all the widgets are added to the current box.
 
 %%Table \ref{tab:uiarch} gives some of the UI architectures currently available.
-\label{tab:uiarch}
-
 \begin{table}[htp]
 \begin{center}
 \begin{tabular}{|c|l|}
@@ -250,13 +246,14 @@ console & a textual command line UI \\
 GTKUI & a GTK-based GUI \\
 QTGUI & a multi-platform QT-based GUI \\
 FUI & a file-based UI to store and recall modules states \\
-OSCUI & OSC control (see section \ref{OSC}) \\
-httpdUI & HTTP control (see section \ref{HTTP}) \\
+OSCUI & OSC control (see section \ref{sec:osc}) \\
+httpdUI & HTTP control (see section \ref{sec:http}) \\
 ...  & ... \\
 \hline
 \end{tabular}
 \end{center}
 \caption{Some of the available UI architectures.}
+\label{tab:uiarch}
 \end{table}%
 
 %---------------------------------------------------
@@ -265,7 +262,7 @@ httpdUI & HTTP control (see section \ref{HTTP}) \\
 The \faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a \code{declare} method taking as argument, a pointer to the widget associated zone, the metadata key and value: \\
 \htab\code{declare(FAUSTFLOAT* zone, const char* key, const char* value)} \\
 
-Here is the table of currently supported general medatada (look at section \ref{OSC} for OSC specific metadata and section \ref{MIDI} for MIDI specific metadata):
+Here is the table of currently supported general medatada (look at section \ref{sec:osc} for OSC specific metadata and section \ref{sec:midi} for MIDI specific metadata):
 
 %%Table \ref{tab:uiarch} gives some of the UI architectures currently available.
 \begin{table}[htp]

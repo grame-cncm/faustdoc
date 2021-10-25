@@ -4,8 +4,6 @@
 
 
 \chapter{Invoking the \faust compiler}
-\label{Compiler}
-
 The \faust compiler is invoked using the \texttt{faust} command. It translate \faust programs into C++ code.
 The generated code can be wrapped into an optional \emph{architecture file} allowing to directly produce a fully operational program.
 
@@ -67,10 +65,6 @@ The \lstinline'classInit' static method will initialize static tables that are s
 Finally the \lstinline'init' method combines class static state and instance initialization.
 
 When using a single instance, then calling  \lstinline'init'  is the simplest way to do what is needed. When using several instances, then all of them can be initialized using  \lstinline'instanceInit' , whith a single call to \lstinline'classInit' to initialize the static shared state.  
-
-The \lstinline'compute'  method takes the number of frames to process, and \lstinline'inputs' and \lstinline'outputs'  buffers as interleaved arrays.
-
-By default the generated code process  \lstinline'float'  type samples. This can be changed using the \lstinline'-double' option (or  even \lstinline'-quad' in some backends). The \lstinline'FAUSTFLOAT' type used in the \lstinline'compute' method is defined in architecture files, and can be \lstinline'float' or \lstinline'double', depending of the audio driver layer. Sample adaptation may have to be used between the DSP sample type and the audio driver sample type.
 
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize\color{yotxt}]
 class mydsp : public dsp {
