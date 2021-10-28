@@ -454,17 +454,17 @@ import(&quot;stdfaust.lib&quot;);
 
 // SMARTKEYBOARD PARAMS
 kbfreq(0) = hslider(&quot;kb0freq&quot;,164.8,20,10000,0.01);
-kbbend(0) = hslider(&quot;kb0bend&quot;,1,0,10,0.01);
+kbbend(0) = hslider(&quot;kb0bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(1) = hslider(&quot;kb1freq&quot;,220,20,10000,0.01);
-kbbend(1) = hslider(&quot;kb1bend&quot;,1,0,10,0.01);
+kbbend(1) = hslider(&quot;kb1bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(2) = hslider(&quot;kb2freq&quot;,293.7,20,10000,0.01);
-kbbend(2) = hslider(&quot;kb2bend&quot;,1,0,10,0.01);
+kbbend(2) = hslider(&quot;kb2bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(3) = hslider(&quot;kb3freq&quot;,392,20,10000,0.01);
-kbbend(3) = hslider(&quot;kb3bend&quot;,1,0,10,0.01);
+kbbend(3) = hslider(&quot;kb3bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(4) = hslider(&quot;kb4freq&quot;,493.9,20,10000,0.01);
-kbbend(4) = hslider(&quot;kb4bend&quot;,1,0,10,0.01);
+kbbend(4) = hslider(&quot;kb4bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(5) = hslider(&quot;kb5freq&quot;,659.2,20,10000,0.01);
-kbbend(5) = hslider(&quot;kb5bend&quot;,1,0,10,0.01);
+kbbend(5) = hslider(&quot;kb5bend&quot;,1,ma.EPSILON,10,0.01);
 kb6kstatus(0) = hslider(&quot;kb6k0status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
 kb6kstatus(1) = hslider(&quot;kb6k1status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
 kb6kstatus(2) = hslider(&quot;kb6k2status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
@@ -2087,13 +2087,13 @@ import(&quot;stdfaust.lib&quot;);
 
 // SMARTKEYBOARD PARAMS
 kbfreq(0) = hslider(&quot;kb0freq&quot;,220,20,10000,0.01);
-kbbend(0) = hslider(&quot;kb0bend&quot;,1,0,10,0.01);
+kbbend(0) = hslider(&quot;kb0bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(1) = hslider(&quot;kb1freq&quot;,330,20,10000,0.01);
-kbbend(1) = hslider(&quot;kb1bend&quot;,1,0,10,0.01);
+kbbend(1) = hslider(&quot;kb1bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(2) = hslider(&quot;kb2freq&quot;,440,20,10000,0.01);
-kbbend(2) = hslider(&quot;kb2bend&quot;,1,0,10,0.01);
+kbbend(2) = hslider(&quot;kb2bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(3) = hslider(&quot;kb3freq&quot;,550,20,10000,0.01);
-kbbend(3) = hslider(&quot;kb3bend&quot;,1,0,10,0.01);
+kbbend(3) = hslider(&quot;kb3bend&quot;,1,ma.EPSILON,10,0.01);
 kb4k0x = hslider(&quot;kb4k0x&quot;,0,0,1,1) : si.smoo;
 kb4k0y = hslider(&quot;kb4k0y&quot;,0,0,1,1) : si.smoo;
 kbfingers(0) = hslider(&quot;kb0fingers&quot;,0,0,10,1) : int;
@@ -2187,13 +2187,13 @@ import(&quot;stdfaust.lib&quot;);
 
 // SMARTKEYBOARD PARAMS
 kbfreq(0) = hslider(&quot;kb0freq&quot;,220,20,10000,0.01);
-kbbend(0) = hslider(&quot;kb0bend&quot;,1,0,10,0.01);
+kbbend(0) = hslider(&quot;kb0bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(1) = hslider(&quot;kb1freq&quot;,330,20,10000,0.01);
-kbbend(1) = hslider(&quot;kb1bend&quot;,1,0,10,0.01);
+kbbend(1) = hslider(&quot;kb1bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(2) = hslider(&quot;kb2freq&quot;,440,20,10000,0.01);
-kbbend(2) = hslider(&quot;kb2bend&quot;,1,0,10,0.01);
+kbbend(2) = hslider(&quot;kb2bend&quot;,1,ma.EPSILON,10,0.01);
 kbfreq(3) = hslider(&quot;kb3freq&quot;,550,20,10000,0.01);
-kbbend(3) = hslider(&quot;kb3bend&quot;,1,0,10,0.01);
+kbbend(3) = hslider(&quot;kb3bend&quot;,1,ma.EPSILON,10,0.01);
 kbfingers(0) = hslider(&quot;kb0fingers&quot;,0,0,10,1) : int;
 kbfingers(1) = hslider(&quot;kb1fingers&quot;,0,0,10,1) : int;
 kbfingers(2) = hslider(&quot;kb2fingers&quot;,0,0,10,1) : int;

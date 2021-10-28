@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.33.1
+## FAUST compiler version 2.37.3
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -29,7 +29,7 @@ usage : faust [options] file1 [file2 ...].
 ---------------------------------------
 ~~~faust-options
   -lang <lang> --language                 select output language,
-                                          'lang' should be c, cpp (default), csharp, dlang, fir, interp, java, llvm, ocpp, rust, soul or wast/wasm.
+                                          'lang' should be c, cpp (default), csharp, dlang, fir, interp, java, julia, llvm, ocpp, rust, soul or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.
@@ -38,23 +38,20 @@ usage : faust [options] file1 [file2 ...].
   -lcc        --local-causality-check     check causality also at local level.
   -light      --light-mode                do not generate the entire DSP API.
   -clang      --clang                     when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
-  -flist      --file-list                 use file list used to eval process.
   -exp10      --generate-exp10            pow(10,x) replaced by possibly faster exp10(x).
-  -os         --one-sample                generate one sample computation.
+  -os         --one-sample                generate one sample computation (same as -os0).
   -os0        --one-sample0               generate one sample computation (0 = separated control).
   -os1        --one-sample1               generate one sample computation (1 = separated control and DSP struct).
+  -cm         --compute-mix               mix in outputs buffers.
   -cn <name>  --class-name <name>         specify the name of the dsp class to be used instead of mydsp.
   -scn <name> --super-class-name <name>   specify the name of the super class to be used instead of dsp.
   -pn <name>  --process-name <name>       specify the name of the dsp entry-point instead of process.
-  -lb         --left-balanced             generate left balanced expressions.
-  -mb         --mid-balanced              generate mid balanced expressions (default).
-  -rb         --right-balanced            generate right balanced expressions.
   -mcd <n>    --max-copy-delay <n>        threshold between copy and ring buffer implementation (default 16 samples).
   -dlt <n>    --delay-line-threshold <n>  threshold between 'mask' and 'select' ring buffer implementation (default INT_MAX samples).
   -mem        --memory                    allocate static in global state using a custom memory manager.
   -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
   -rui        --range-ui                  whether to generate code to limit vslider/hslider/nentry values in [min..max] range.
-  -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compile a dsp file.
+  -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compiling a dsp file.
   -scal      --scalar                     generate non-vectorized code.
   -inpl      --in-place                   generates code working when input and output buffers are the same (scalar mode only).
   -vec       --vectorize                  generate easier to vectorize code.
@@ -68,10 +65,12 @@ usage : faust [options] file1 [file2 ...].
   -dfs       --deep-first-scheduling      schedule vector loops in deep first order.
   -g         --group-tasks                group single-threaded sequential tasks together when -omp or -sch is used.
   -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
-  -fm <file> --fast-math <file>           use optimized versions of mathematical functions implemented in <file>.
-                                          use 'faust/dsp/fastmath.cpp' when file is 'def'.
+  -fm <file> --fast-math <file>           use optimized versions of mathematical functions implemented in <file>, use 'faust/dsp/fastmath.cpp' when file is 'def'.
   -mapp      --math-approximation         simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
   -ns <name> --namespace <name>           generate C++ or D code in a namespace <name>.
+  -vhdl      --vhdl                       output vhdl file.
+  -wi <n>    --widening-iterations <n>    number of iterations before widening in signal bounding.
+  -ni <n>    --narrowing-iterations <n>   number of iterations before stopping narrowing in signal bounding.
 ~~~
 ## Block diagram options:
 ---------------------------------------
@@ -81,7 +80,7 @@ usage : faust [options] file1 [file2 ...].
   -sd        --simplify-diagrams          try to further simplify diagrams before drawing.
   -drf       --draw-route-frame           draw route frames instead of simple cables.
   -f <n>     --fold <n>                   threshold to activate folding mode during block-diagram generation (default 25 elements).
-  -fc <n>    --fold-complexity <n>        complexity threshold to fold an expression in folding mode (default 2)
+  -fc <n>    --fold-complexity <n>        complexity threshold to fold an expression in folding mode (default 2).
   -mns <n>   --max-name-size <n>          threshold during block-diagram generation (default 40 char).
   -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
   -blur      --shadow-blur                add a shadow blur to SVG boxes.
@@ -98,11 +97,13 @@ usage : faust [options] file1 [file2 ...].
 ~~~faust-options
   -d          --details                   print compilation details.
   -time       --compilation-time          display compilation phases timing information.
+  -flist      --file-list                 print file list (including libraries) used to eval process.
   -tg         --task-graph                print the internal task graph in dot format.
   -sg         --signal-graph              print the internal signal graph in dot format.
   -norm       --normalized-form           print signals in normalized form and exit.
-  -ct         --check-table               check table index range and fails.
+  -ct         --check-table               check table index range and exit at first failure.
   -cat        --check-all-table           check all table index range.
+  -me         --math-exceptions           check / for 0 as denominator and remainder, fmod, sqrt, log10, log, acos, asin functions domain.
 ~~~
 ## Information options:
 ---------------------------------------
@@ -118,6 +119,5 @@ usage : faust [options] file1 [file2 ...].
 ## Example:
 ---------------------------------------
 ~~~faust-options
-faust -a jack-gtk.cpp myfx.dsp -o myfx.cpp 
+faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
 ~~~
-

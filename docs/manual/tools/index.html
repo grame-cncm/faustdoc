@@ -334,6 +334,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2cpalrust" class="nav-link">faust2cpalrust</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2csound" class="nav-link">faust2csound</a>
               <ul class="nav flex-column">
               </ul>
@@ -359,6 +363,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#faust2faustvst" class="nav-link">faust2faustvst</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#faust2feh" class="nav-link">faust2feh</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -447,6 +455,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#faust2plot" class="nav-link">faust2plot</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#faust2portaudiojulia" class="nav-link">faust2portaudiojulia</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -698,6 +710,16 @@ Options:
 #### you must create an alias named 'qmake-ios' that points to the appropriate qmake in your Qt ios dist
 </pre>
 
+<h2 id="faust2cpalrust">faust2cpalrust</h2>
+<pre class=faust-tools>
+Usage: faust2cpalrust [options] [Faust options] &lt;file.dsp>
+Require: CPAL
+Compiles Faust programs to CPAL and Rust binary
+Options:
+   -source : only generates the source project.
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
 <h2 id="faust2csound">faust2csound</h2>
 <pre class=faust-tools>
 Usage: faust2csound [options] [Faust options] &lt;file.dsp>
@@ -809,6 +831,12 @@ Environment variables:
     Default: /usr/local/include/vstsdk2.4
   SDKSRC: specify the location of the VST SDK sources
     Default: /usr/local/include/vstsdk2.4/public.sdk/source/vst2.x
+</pre>
+
+<h2 id="faust2feh">faust2feh</h2>
+<pre class=faust-tools>
+Usage: faust2feh &lt;file.dsp>
+Compiles Faust programs to SVG and opens it with feh
 </pre>
 
 <h2 id="faust2gen">faust2gen</h2>
@@ -1141,6 +1169,16 @@ Compiles Faust programs to plotters, the following 3 options are given at runtim
    -n &lt;n> : render &lt;n> samples (default is 16)
    -r &lt;rate> : change the sample rate (default is 44100 Hz)
 Options:
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2portaudiojulia">faust2portaudiojulia</h2>
+<pre class=faust-tools>
+Usage: faust2portaudiojulia [options] [Faust options] &lt;file.dsp>
+Require: PortAudio
+Compiles Faust programs to PortAudio and Julia binary
+   -osc : to activate OSC control on 5000 and 5001 ports
+   -play &lt;num> : to start the 'Julia' runtime with &lt;num> threads and the generated file.jl
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 

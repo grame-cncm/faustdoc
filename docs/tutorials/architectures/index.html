@@ -358,7 +358,7 @@ We assume here a general understanding of the architecture files model. In this 
 <p>starting with a simple example</p>
 </li>
 <li>
-<p>count sliders, buttons and barograph: faust -a architecture (renseigner sur le DSP), ou générer un fichier de sortie. <strong>example avec JSONUI</strong> </p>
+<p>compter des buttons et sliders: faust -a architecture (renseigner sur le DSP), ou générer un fichier de sortie. <strong>example avec JSONUI</strong> </p>
 </li>
 <li>
 <p>gradually enriching it to show how multiple controllers can be used (OSC, http, MIDI etc.) </p>
@@ -384,8 +384,8 @@ We assume here a general understanding of the architecture files model. In this 
 <h4 id="the-simplest-c-file">The simplest C++ file</h4>
 <p>Let's start with the simple following DSP program:</p>
 <p>Compiling it with the command <code>faust test1.dsp -o test.cpp</code> produces the following C++ class:</p>
-<p>Which does not directly compile since it refers to a base <code>dsp</code> class, and additional <code>UI</code> and <code>meta</code> definitions which are not available in the generated code. </p>
-<p>The purpose of the architecture file is first to fill all the <em>holes</em>, so that the C++ class can be compiled and used in a real program. The following <code>nullarch.cpp</code>  which contains two‡ special lines:</p>
+<p>which does not directly compile since it refers to a base <code>dsp</code> class, and additional <code>UI</code> and <code>meta</code> definitions which are not available in the generated code. </p>
+<p>The purpose of the architecture file is first to fill all the <em>holes</em>, so that the C++ class can be compiled and used in a real program. The following <code>nullarch.cpp</code>  which contains 2 special lines:</p>
 <pre><code>&lt;&lt;includeIntrinsic&gt;&gt;
 &lt;&lt;includeclass&gt;&gt;
 </code></pre>
@@ -514,6 +514,7 @@ osc_interface-&gt;run();
 </code></pre>
 <p>Now received OSC messages on the correct path and input port will change the parameters values, and moving the GUI items (button, sliders...) will generate OSC messages on the output port.  This synchronization mechanism between the two controllers is implemented in a generic way in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/GUI.h">GUI</a> class, which both <code>GTKUI</code> and <code>OSCUI</code> are sub-classes of.</p>
 <ul>
+<li></li>
 <li>use  <code>OSCUI</code> as a first example of remote control, explain how several UIs can be combined and synchronized (using the GUI class)</li>
 </ul>
 <p>Type the following command to generate a ready to compile C++ file:</p>
@@ -589,9 +590,10 @@ DSP-&gt;buildUserInterface(&amp;midi_interface);
 <li>
 <p>Embedded devices:</p>
 </li>
-<li>
-<p>list of shared metadata : <strong>discussion to have</strong> ? </p>
-</li>
+</ul>
+<p>​ </p>
+<ul>
+<li>list of shared metadata : <strong>discussion to have</strong> ? </li>
 <li>
 <p>memory layout issue: (idea of a improved <em>custom_memory_manager</em>)</p>
 </li>
