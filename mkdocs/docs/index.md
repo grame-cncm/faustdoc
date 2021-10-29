@@ -46,18 +46,5 @@ Check out [**the Faust Kadenze course**](https://www.kadenze.com/courses/real-ti
 
 You can use the **Search** function of this website if you're looking for something specific.
 
----
+### [Other Resources to learn Faust](https://faust.grame.fr/community/learning/)
 
-## Other Resources
-
-### Faust Kadenze Course
-
-In 2018, Yann Orlarey and Romain Michon shot and online course on the [Kadenze platform](https://www.kadenze.com) on "Real Time Audio Signal Processing in Faust." The videos of this course are free to watch online: <https://www.kadenze.com/courses/real-time-audio-signal-processing-in-faust/info>
-
-### @ Stanford
-
-* Julius Smith's Faust tutorial: <https://ccrma.stanford.edu/~jos/aspf/>
-* Romain Michon's Faust Tutorials: <https://ccrma.stanford.edu/~rmichon/faustTutorials/>
-* Music 250a (Physical Interaction Design for Music) course which hosts various tutorials on Faust and hardware: <https://ccrma.stanford.edu/courses/250a-winter-2020/>
-* Music 320c (Audio Plugin Development in Faust and C++): <https://ccrma.stanford.edu/courses/320c/>
-* Embedded DSP With Faust Workshop: <https://ccrma.stanford.edu/workshops/faust-embedded-19/>
