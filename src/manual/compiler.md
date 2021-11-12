@@ -160,7 +160,7 @@ The `init` method combines class static state and instance initialization.
 
 When using a single instance, calling `init` is the simplest way to do "what is needed." When using several instances, all of them can be initialized using `instanceInit`, with a single call to `classInit` to initialize the static shared state.
 
-The `compute`  method takes the number of frames to process, and `inputs` and `outputs` buffers as interleaved arrays. 
+The `compute` method takes the number of frames to process, and `inputs` and `outputs` buffers as arrays of separated mono channels. Note that by default `inputs` and `outputs` buffers are supposed to be distinct memory zones, so one cannot safely write `compute(count, inputs, inputs)`. The `-inpl` compilation option can be used for that, but only in scalar mode for now. 
 
 By default the generated code process `float` type samples. This can be changed using the `-double` option (or even `-quad` in some backends). The `FAUSTFLOAT` type used in the `compute` method is defined in architecture files, and can be `float` or `double`, depending of the audio driver layer. Sample adaptation may have to be used between the DSP sample type and the audio driver sample type.
 

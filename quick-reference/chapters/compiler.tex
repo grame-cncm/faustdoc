@@ -66,7 +66,7 @@ Finally the \lstinline'init' method combines class static state and instance ini
 
 When using a single instance, then calling  \lstinline'init'  is the simplest way to do what is needed. When using several instances, then all of them can be initialized using  \lstinline'instanceInit' , whith a single call to \lstinline'classInit' to initialize the static shared state.  
 
-The \lstinline'compute' method takes the number of frames to process, and \lstinline'inputs' and \lstinline'outputs' buffers as interleaved arrays.
+The \lstinline'compute' method takes the number of frames to process, and \lstinline'inputs' and \lstinline'outputs' buffers as arrays of separated mono channels. Note that by default \lstinline'inputs' and \lstinline'outputs' buffers are supposed to be distinct memory zones, so one cannot safely write \lstinline'compute(count, inputs, inputs)'. The \lstinline'-inpl' compilation option can be used for that, but only in scalar mode for now. 
 
 By default the generated code process \lstinline'float' type samples. This can be changed using the \lstinline'-double' option (or even \lstinline'-quad' in some backends). The \lstinline'FAUSTFLOAT' type used in the \lstinline'compute' method is defined in architecture files, and can be \lstinline'float' or \lstinline'double', depending of the audio driver layer. Sample adaptation may have to be used between the DSP sample type and the audio driver sample type.
 
