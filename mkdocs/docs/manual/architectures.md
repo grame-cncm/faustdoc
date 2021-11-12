@@ -1772,10 +1772,13 @@ This is a small project meant as a way to facilitate the creation of UIs from Fa
 
 A [cookiecutter](https://github.com/cookiecutter/cookiecutter) project template for [DISTRHO plugin framework](https://github.com/DISTRHO/DPF) audio effect plugins using Faust for the implementation of the DSP pipeline.
 
-
 #### [faustmd](https://github.com/jpcima/faustmd)
 
 Static metadata generator for Faust/C++. This program builds the metadata for a Faust DSP ahead of time, rather than dynamically. The result is a block of C++ code which can be appended to the code generation.
+
+#### [FaustCPPConverter](https://github.com/eyalamirmusic/FaustCPPConverter)
+
+A tool to facilitate the use of C++ generated Faust code in JUCE projects. 
 
 ### Rust tools 
 
