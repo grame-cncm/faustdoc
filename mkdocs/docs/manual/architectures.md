@@ -1626,7 +1626,7 @@ This model combining the generated DSP the audio and UI architecture components 
 
 In some cases, developers prefer to control the DSP by creating a completely new GUI (using a toolkit not supported in the standard architecture files), or even without any GUI and using another control layer. 
 
-A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed. It then provides `setParamValue/getParamValue` functions to access all parameters (or the additional`setVoiceParamValue` method function to access a single voice in a polyphonic case), and let the developer adds his own GUI or any kind of controller. Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, wich goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. 
+A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed. It then provides a set of functions like `getParamsCount, setParamValue, getParamValue` etc. to access all parameters (or the additional`setVoiceParamValue` method function to access a single voice in a polyphonic case), and let the developer adds his own GUI or any kind of controller. Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, which goal is to provide a tool to easily generate custom APIs based on one or several Faust objects. 
 
 <img src="img/FaustArchitecture5.jpg" class="mx-auto d-block" width="40%">
 
