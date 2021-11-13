@@ -538,6 +538,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#josmodules-and-jos_faust" class="nav-link">JOSModules and jos_faust</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#rust-tools" class="nav-link">Rust tools</a>
@@ -2065,7 +2069,7 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <h2 id="additional-ressources">Additional Ressources</h2>
 <p>Several external projects are providing tools to arrange the way Faust source code is generated or used, in different languages.</p>
 <h3 id="c-tools">C++ tools</h3>
-<p>Using and adapting the <code>dsp/UI/audio</code> model in a more sophisticated way.</p>
+<p>Using and adapting the <code>dsp/UI/audio</code> model in a more sophisticated way, or integrating Faust generated C++ classes in others frameworks (like JUCE).</p>
 <h4 id="faust2hpp"><a href="https://github.com/resonantdsp/faust2hpp">faust2hpp</a></h4>
 <p>Convert Faust code to a header-only standalone C++ library. A collection of header files is generated as the output. A class is provided from which a DSP object can be built with methods in the style of <a href="https://juce.com/">JUCE</a> DSP objects. </p>
 <h4 id="faustpp"><a href="https://github.com/jpcima/faustpp">faustpp</a></h4>
@@ -2077,7 +2081,9 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <h4 id="faustmd"><a href="https://github.com/jpcima/faustmd">faustmd</a></h4>
 <p>Static metadata generator for Faust/C++. This program builds the metadata for a Faust DSP ahead of time, rather than dynamically. The result is a block of C++ code which can be appended to the code generation.</p>
 <h4 id="faustcppconverter"><a href="https://github.com/eyalamirmusic/FaustCPPConverter">FaustCPPConverter</a></h4>
-<p>A tool to facilitate the use of C++ generated Faust code in JUCE projects. </p>
+<p><a href="https://github.com/eyalamirmusic">Eyal Amir</a> tool to facilitate the use of Faust generated  C++ code in JUCE projects. </p>
+<h4 id="josmodules-and-jos_faust"><a href="https://github.com/josmithiii/JOSModules">JOSModules</a> and <a href="https://github.com/josmithiii/jos_faust">jos_faust</a></h4>
+<p><a href="https://ccrma.stanford.edu/~jos/">Julius Smith</a> projects to facilitate the use of Faust generated  C++ code in JUCE projects. </p>
 <h3 id="rust-tools">Rust tools</h3>
 <h4 id="rust-faust"><a href="https://github.com/Frando/rust-faust">rust-faust</a></h4>
 <p>A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps</p>

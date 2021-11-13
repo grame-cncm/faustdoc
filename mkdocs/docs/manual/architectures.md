@@ -1754,7 +1754,7 @@ The two needed `sound1.wav` and `sound2.wav` audio files are embedded in the gen
 Several external projects are providing tools to arrange the way Faust source code is generated or used, in different languages.
 
 ### C++ tools 
-Using and adapting the `dsp/UI/audio` model in a more sophisticated way.
+Using and adapting the `dsp/UI/audio` model in a more sophisticated way, or integrating Faust generated C++ classes in others frameworks (like JUCE).
 
 #### [faust2hpp](https://github.com/resonantdsp/faust2hpp)
 
@@ -1778,7 +1778,11 @@ Static metadata generator for Faust/C++. This program builds the metadata for a 
 
 #### [FaustCPPConverter](https://github.com/eyalamirmusic/FaustCPPConverter)
 
-A tool to facilitate the use of C++ generated Faust code in JUCE projects. 
+[Eyal Amir](https://github.com/eyalamirmusic) tool to facilitate the use of Faust generated  C++ code in JUCE projects. 
+
+#### [JOSModules](https://github.com/josmithiii/JOSModules) and [jos_faust](https://github.com/josmithiii/jos_faust)
+
+[Julius Smith](https://ccrma.stanford.edu/~jos/) projects to facilitate the use of Faust generated  C++ code in JUCE projects. 
 
 ### Rust tools 
 
