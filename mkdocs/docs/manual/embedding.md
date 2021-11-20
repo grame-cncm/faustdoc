@@ -196,3 +196,5 @@ The dynamic compilation chain has been used in several projects:
 * [Faust.jl](https://github.com/corajr/Faust.jl) is Julia wrapper for the Faust compiler. It uses the Faust LLVM C API.
 
 * [fl-tui](https://gitlab.com/raoulhc/fl-tui) is a Rust wrapper for the Faust compiler. It uses the Faust LLVM C API.
+
+* [DawDreamer](https://github.com/DBraun/DawDreamer) is an audio-processing Python framework supporting core DAW features. It uses the Faust LLVM C API.
