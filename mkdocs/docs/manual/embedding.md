@@ -189,12 +189,14 @@ The dynamic compilation chain has been used in several projects:
 
 * [gwion-plug](https://github.com/Gwion/gwion-plug/tree/master/Faust) is a Faust plugin for the [Gwion](https://github.com/Gwion/Gwion) programming language. 
 
-* [FaustGen](https://github.com/madskjeldgaard/faustgen-supercollider/) allows to livecode Faust in SuperCollider.
+* [FaustGen](https://github.com/madskjeldgaard/faustgen-supercollider/) allows to livecode Faust in SuperCollider.  It uses the libfaust LLVM C++ API.
 
 * [FAUSTPy](https://github.com/marcecj/faust_python) is a Python wrapper for the Faust DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on [this fork](https://github.com/hrtlacek/faust_python).
 
-* [Faust.jl](https://github.com/corajr/Faust.jl) is Julia wrapper for the Faust compiler. It uses the Faust LLVM C API.
+* [Faust.jl](https://github.com/corajr/Faust.jl) is Julia wrapper for the Faust compiler. It uses the libfaust LLVM C API.
 
-* [fl-tui](https://gitlab.com/raoulhc/fl-tui) is a Rust wrapper for the Faust compiler. It uses the Faust LLVM C API.
+* [fl-tui](https://gitlab.com/raoulhc/fl-tui) is a Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.
 
-* [DawDreamer](https://github.com/DBraun/DawDreamer) is an audio-processing Python framework supporting core DAW features. It uses the Faust LLVM C API.
+* [DawDreamer](https://github.com/DBraun/DawDreamer) is an audio-processing Python framework supporting core DAW features. It uses the libfaust LLVM C API.
+
+*[metaSurface64](https://github.com/dblanchemain/metaSurface) is a real-time continuous sound transformation control surface that features both its own loop generator for up to 64 voices and a multi-effects FX engine.  It uses the libfaust LLVM C++ API.
