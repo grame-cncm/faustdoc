@@ -1559,7 +1559,6 @@ virtual void readFile(Soundfile* soundfile,
                       int part, 
                       int& offset, 
                       int max_chan);
-}
 ```
 Another example to look at is [WaveReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/WaveReader.h).
 
