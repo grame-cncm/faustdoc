@@ -558,7 +558,7 @@ Some useful UI classes can possibly be reused in developer code:
 - the [JSONUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUI.h) class allows us to generate the JSON description of a given DSP 
 - the [JSONUIDecoder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h) class is used to decode the DSP JSON description and implement its `buildUserInterface` and  `metadata` methods
 - the [FUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/FUI.h) class allows us to save and restore the parameters state as a text file
-- the [SoundUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h) class with the associated [Soundfile](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h) class is used to implement the `soundfile` primitive, and load the described audio resources (typically audio files), by using different concrete implementations, either using [libsndfile](http://www.mega-nerd.com/libsndfile/) (with the [LibsndfileReader.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h) file), or [JUCE](https://juce.com) (with the [JuceReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h) file). A new audio file loader can possibly be written by subclassing the `SoundfileReader` class. A pure memory reader could be implemented for instance to load wavetables to be used as the`soundfile` URL list. Look at the template [MemoryReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MemoryReader.h) class, as an example to be completed. 
+- the [SoundUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h) class with the associated [Soundfile](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h) class is used to implement the `soundfile` primitive, and load the described audio resources (typically audio files), by using different concrete implementations, either using [libsndfile](http://www.mega-nerd.com/libsndfile/) (with the [LibsndfileReader.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h) file), or [JUCE](https://juce.com) (with the [JuceReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h) file). 
 
 #### Multi-Controller and Synchronization 
 
@@ -1516,6 +1516,52 @@ For really new architectures, the `UI` base class,  the [GenericUI](https://gith
 #### Developing New Audio Architectures
 
 The `audio` base class has to be subclassed and each method implemented for the given audio hardware. In some cases the audio driver can adapt to the required number of DSP inputs/outputs (like the [JACK](https://jackaudio.org) audio system for instance which can open any number of virtual audio ports). But in general, the number of hardware audio inputs/outputs may not exactly match the DSP ones. This is the responsability of the audio driver to adapt to this situation. The [dsp_adapter](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h) `dsp` decorator can help in this situation.
+
+#### Developing a New Soundfile Loader
+
+Soundfiles are defined in the DSP program using the [soundfile primitive](https://faustdoc.grame.fr/manual/syntax/#soundfile-primitive). The specialized [SoundUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h) file is then used to load the required soundfiles at DSP init time. 
+
+A new audio file loader can be written by subclassing the [SoundfileReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h) class. A pure memory reader could be implemented for instance to load wavetables to be used as the`soundfile` URL list. Look at the template [MemoryReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MemoryReader.h) class, as an example to be completed, with the following methods to be implemented:
+
+```c++
+/**
+* Check the availability of a sound resource.
+*
+* @param path_name - the name of the file, or sound resource identified this way
+*
+* @return true if the sound resource is available, false otherwise.
+*/
+virtual bool checkFile(const std::string& path_name);
+
+/**
+* Get the channels and length values of the given sound resource.
+*
+* @param path_name - the name of the file, or sound resource identified this way
+* @param channels - the channels value to be filled with the sound resource 
+* number of channels
+* @param length - the length value to be filled with the sound resource length in frames
+*
+*/
+virtual void getParamsFile(const std::string& path_name, int& channels, int& length);
+
+/**
+* Read one sound resource and fill the 'soundfile' structure accordingly
+*
+* @param path_name - the name of the file, or sound resource identified this way
+* @param part - the part number to be filled in the soundfile
+* @param offset - the offset value to be incremented with the actual 
+* sound resource length in frames
+* @param max_chan - the maximum number of mono channels to fill
+*
+*/
+virtual void readFile(Soundfile* soundfile, 
+                      const std::string& path_name, 
+                      int part, 
+                      int& offset, 
+                      int max_chan);
+}
+```
+Another example to look at is [WaveReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/WaveReader.h).
 
 ## Other Languages Than C++
 

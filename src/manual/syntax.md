@@ -1249,7 +1249,7 @@ The 0 first parameter selects the first sound in the soundfile list (which only 
 
 Specialized architecture files are responsible to load the actual soundfile. The `SoundUI` C++ class located in the `faust/gui/SoundUI.h` file in the [Faust repository](https://github.com/grame-cncm/faust) implements the `void addSoundfile(label, path, sf_zone)` method, which loads the actual soundfiles using the `libsndfile` library, or possibly specific audio file loading code (in the case of the JUCE framework for instance), and set up the `sf_zone` sound memory pointers. If *label* is used without any *url* metadata, it will be considered as the soundfile pathname. Note that the complete sounfile content is preloaded in memory at initialisation time when the compiled program starts.
 
-Note that a special architecture file can well decide to access and use sound resources created by another means (that is, not directly loaded from a sound file). For instance a mapping between labels and sound resources defined in memory could be used, with some additional code in charge of actually setting up all sound memory pointers when `void  addSoundfile(label, path, sf_zone)` is called by the `buidUserInterface` mechanism.
+Note that a special architecture file can well decide to access and use sound resources created by another means (that is, not directly loaded from a sound file). For instance a mapping between labels and sound resources defined in memory could be used, with some additional code in charge of actually setting up all sound memory pointers when `void addSoundfile(label, path, sf_zone)` is called by the `buidUserInterface` mechanism.
 
 <!-- TODO: we need some working example here -->
 
