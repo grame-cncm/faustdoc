@@ -1,5 +1,70 @@
 # Debugging the Code
 
+## Looking at the generated code 
+
+### Using the FIR backend
+
+The FIR (Faust Imperative Representation) backend can possibly be use to look at a textual version of the intermediate imperative language. 
+
+```
+import("stdfaust.lib");
+
+vol = hslider("volume [unit:dB]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider("freq1 [unit:Hz]", 1000, 20, 3000, 1);
+freq2 = hslider("freq2 [unit:Hz]", 200, 20, 3000, 1);
+
+process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
+```
+For instance compiling the previous code with the `faust -lang fir osc.dsp` command will display various statistics, for example the number of operations done in the generated `compute` method:
+
+```
+======= Compute DSP begin ==========
+Instructions complexity : Load = 23 Store = 9 
+Binop = 12 [ { Int(+) = 1 } { Int(<) = 1 } { Real(*) = 3 } { Real(+) = 5 } { Real(-) = 2 } ] 
+Mathop = 2 [ { floorf = 2 } ] 
+Numbers = 8 
+Declare = 1 
+Cast = 2 
+Select = 0 
+Loop = 1
+```
+As well as the DSP structure memory layout and read/write stastitics:
+
+```
+======= Object memory footprint ==========
+
+Heap size int = 4 bytes
+Heap size int* = 0 bytes
+Heap size real = 48 bytes
+Total heap size = 68 bytes
+Stack size in compute = 28 bytes
+
+======= Variable access in compute control ==========
+
+Field = fSampleRate size = 1 r_count = 0 w_count = 0
+Field = fConst1 size = 1 r_count = 1 w_count = 0
+Field = fHslider0 size = 1 r_count = 1 w_count = 0
+Field = fConst2 size = 1 r_count = 0 w_count = 0
+Field = fRec0 size = 2 r_count = 0 w_count = 0
+Field = fConst3 size = 1 r_count = 2 w_count = 0
+Field = fHslider1 size = 1 r_count = 1 w_count = 0
+Field = fRec2 size = 2 r_count = 0 w_count = 0
+Field = fHslider2 size = 1 r_count = 1 w_count = 0
+Field = fRec3 size = 2 r_count = 0 w_count = 0
+
+======= Variable access in compute DSP ==========
+
+Field = fSampleRate size = 1 r_count = 0 w_count = 0
+Field = fConst1 size = 1 r_count = 0 w_count = 0
+Field = fHslider0 size = 1 r_count = 0 w_count = 0
+Field = fConst2 size = 1 r_count = 1 w_count = 0
+Field = fRec0 size = 2 r_count = 4 w_count = 2
+Field = fConst3 size = 1 r_count = 0 w_count = 0
+Field = fHslider1 size = 1 r_count = 0 w_count = 0
+Field = fRec2 size = 2 r_count = 4 w_count = 2
+Field = fHslider2 size = 1 r_count = 0 w_count = 0
+Field = fRec3 size = 2 r_count = 4 w_count = 2
+```
 
 ## Debugging the DSP Code 
 
@@ -21,7 +86,7 @@ Using the `-ct` and  `-cat` compilation options allows to check table index rang
 
 Starting with version 2.37.0, mathematical functions which have a finite domain (like `sqrt` defined for positive or null values, or `asin` defined for values in the [-1..1] range) are *checked at compile time* when they *actually compute values at that time*, and *raise an error* if the program tries to compute an out-of-domain value.  If those functions appear in the generated code, their domain of use can also be checked (using the interval computation system) and  the `-me` option *will display warnings* if the domain of use is incorrect. Note that again because of the imperfect  interval computation system, *false positive* may appear and should be checked.
 
-### Debugging at runtime time
+### Debugging at runtime
 
 #### The interp-tracer tool
 

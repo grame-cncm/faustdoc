@@ -294,6 +294,14 @@
             
             <li class="nav-item" data-level="1"><a href="#debugging-the-code" class="nav-link">Debugging the Code</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#looking-at-the-generated-code" class="nav-link">Looking at the generated code</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#using-the-fir-backend" class="nav-link">Using the FIR backend</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#debugging-the-dsp-code" class="nav-link">Debugging the DSP Code</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#debugging-at-compile-time" class="nav-link">Debugging at compile time</a>
@@ -308,7 +316,7 @@
             </li>
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#debugging-at-runtime-time" class="nav-link">Debugging at runtime time</a>
+            <li class="nav-item" data-level="3"><a href="#debugging-at-runtime" class="nav-link">Debugging at runtime</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#the-interp-tracer-tool" class="nav-link">The interp-tracer tool</a>
               <ul class="nav flex-column">
@@ -338,6 +346,63 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="debugging-the-code">Debugging the Code</h1>
+<h2 id="looking-at-the-generated-code">Looking at the generated code</h2>
+<h3 id="using-the-fir-backend">Using the FIR backend</h3>
+<p>The FIR (Faust Imperative Representation) backend can possibly be use to look at a textual version of the intermediate imperative language. </p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+
+vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
+freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+</code></pre>
+<p>For instance compiling the previous code with the <code>faust -lang fir osc.dsp</code> command will display various statistics, for example the number of operations done in the generated <code>compute</code> method:</p>
+<pre><code>======= Compute DSP begin ==========
+Instructions complexity : Load = 23 Store = 9 
+Binop = 12 [ { Int(+) = 1 } { Int(&lt;) = 1 } { Real(*) = 3 } { Real(+) = 5 } { Real(-) = 2 } ] 
+Mathop = 2 [ { floorf = 2 } ] 
+Numbers = 8 
+Declare = 1 
+Cast = 2 
+Select = 0 
+Loop = 1
+</code></pre>
+<p>As well as the DSP structure memory layout and read/write stastitics:</p>
+<pre><code>======= Object memory footprint ==========
+
+Heap size int = 4 bytes
+Heap size int* = 0 bytes
+Heap size real = 48 bytes
+Total heap size = 68 bytes
+Stack size in compute = 28 bytes
+
+======= Variable access in compute control ==========
+
+Field = fSampleRate size = 1 r_count = 0 w_count = 0
+Field = fConst1 size = 1 r_count = 1 w_count = 0
+Field = fHslider0 size = 1 r_count = 1 w_count = 0
+Field = fConst2 size = 1 r_count = 0 w_count = 0
+Field = fRec0 size = 2 r_count = 0 w_count = 0
+Field = fConst3 size = 1 r_count = 2 w_count = 0
+Field = fHslider1 size = 1 r_count = 1 w_count = 0
+Field = fRec2 size = 2 r_count = 0 w_count = 0
+Field = fHslider2 size = 1 r_count = 1 w_count = 0
+Field = fRec3 size = 2 r_count = 0 w_count = 0
+
+======= Variable access in compute DSP ==========
+
+Field = fSampleRate size = 1 r_count = 0 w_count = 0
+Field = fConst1 size = 1 r_count = 0 w_count = 0
+Field = fHslider0 size = 1 r_count = 0 w_count = 0
+Field = fConst2 size = 1 r_count = 1 w_count = 0
+Field = fRec0 size = 2 r_count = 4 w_count = 2
+Field = fConst3 size = 1 r_count = 0 w_count = 0
+Field = fHslider1 size = 1 r_count = 0 w_count = 0
+Field = fRec2 size = 2 r_count = 4 w_count = 2
+Field = fHslider2 size = 1 r_count = 0 w_count = 0
+Field = fRec3 size = 2 r_count = 4 w_count = 2
+</code></pre>
 <h2 id="debugging-the-dsp-code">Debugging the DSP Code</h2>
 <p>On a computer, doing a computation that is undefined in mathematics (like <code>val/0</code> of <code>log(-1)</code>), and unrepresentable in floating-point arithmetic, will produce a <a href="https://en.wikipedia.org/wiki/NaN">NaN</a> value, which has a <a href="https://en.cppreference.com/w/cpp/numeric/math/NAN">special internal representation</a>. Similarly, some computations will exceed the range that is representable with floating-point arithmetics, and are represented with a special <a href="https://en.cppreference.com/w/cpp/numeric/math/INFINITY">INFINITY</a> value, which value depends of the choosen type (like <code>float</code>, <code>double</code> or <code>long double</code>).</p>
 <p>After being produced, those values can actually <em>contaminate</em> the following flow of computations (that is <code>Nan + any value = NaN</code> for instance) up to the point of producing incorrect indexes when used in array access, and causing memory access crashes.  </p>
@@ -348,7 +413,7 @@
 <p>Using the <code>-ct</code> and  <code>-cat</code> compilation options allows to check table index range, by verifying that the actual signal range is compatible with the actual table size. Note that since the interval calculation is  imperfect, you may see <em>false positive</em> especially when using recursive signals where the interval calculation system will typically produce <em>[-inf, inf]</em> range, which is not precise enough to correctly describe the real signal range. </p>
 <h4 id="the-me-option">The -me option</h4>
 <p>Starting with version 2.37.0, mathematical functions which have a finite domain (like <code>sqrt</code> defined for positive or null values, or <code>asin</code> defined for values in the [-1..1] range) are <em>checked at compile time</em> when they <em>actually compute values at that time</em>, and <em>raise an error</em> if the program tries to compute an out-of-domain value.  If those functions appear in the generated code, their domain of use can also be checked (using the interval computation system) and  the <code>-me</code> option <em>will display warnings</em> if the domain of use is incorrect. Note that again because of the imperfect  interval computation system, <em>false positive</em> may appear and should be checked.</p>
-<h3 id="debugging-at-runtime-time">Debugging at runtime time</h3>
+<h3 id="debugging-at-runtime">Debugging at runtime</h3>
 <h4 id="the-interp-tracer-tool">The interp-tracer tool</h4>
 <p>The <code>interp-tracer</code> tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically <code>FP_SUBNORMAL</code>, <code>FP_INFINITE</code> and <code>FP_NAN</code> values, or <code>INTEGER_OVERFLOW</code>, <code>CAST_INT_OVERFLOW</code>  and <code>DIV_BY_ZERO</code> operations, or <code>LOAD/STORE</code> errors. A more complete documentation is available on the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">this page</a>.</p>
 <h4 id="the-faust2caqt-tool">The faust2caqt tool</h4>

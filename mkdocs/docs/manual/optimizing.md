@@ -129,7 +129,7 @@ The **faustbench-llvm** tool uses the `libfaust` library and its LLVM backend to
 
 ### dynamic-faust
 
-The **dynamic-faust** tool uses the dynamic compilation chain (based on the LLVM backend), and compiles a Faust DSP source to a LLVM IR (.ll), bicode (.bc), machine code (.mc) or object code (.o) output file. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#dynamic-faust).
+The **dynamic-faust** tool uses the dynamic compilation chain (based on the LLVM backend), and compiles a Faust DSP source to a LLVM IR (.ll), bicode (.bc), machine code (.mc) or object code (.o) output file. This is an alternative to the C++ compilation chain, since DSP code can be compiled to object code (.o),  then used and linked in a regular C++ project. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#dynamic-faust).
 
 ### Optimizing with any faust2xx tool
 
