@@ -1123,7 +1123,57 @@ Operations on \textit{integer} numbers follow the standard C semantic for \lstin
 %\end{tabular}
 
 %--------------------------------------------------------------------------------------------------------------
-\subsection{Waveforms}
+\subsection{Route Primitive }
+%--------------------------------------------------------------------------------------------------------------
+
+The  \lstinline'route' primitive facilitates the routing of signals in Faust. It has the following syntax:
+
+\begin{lstlisting}
+route(A,B,a,b,c,d,...)
+route(A,B,(a,b),(c,d),...)
+\end{lstlisting}
+
+where:
+
+\begin{itemize} 
+\item \lstinline'A' is the number of input signals, 	as a constant numerical expression 
+\item \lstinline'B' is the number of output signals,  as a constant numerical expression 
+\item \lstinline'a,b / (a,b)' is an input/output pair,  as constant numerical expressions 
+\end{itemize}
+
+Inputs are numbered from \lstinline'1' to \lstinline'A' and outputs are numbered from \lstinline'1' to \lstinline'B'. There can be any number of input/output pairs after the declaration of \lstinline'A' and \lstinline'B'.
+
+For example, crossing two signals can be carried out with:
+
+\begin{lstlisting}
+process = route(2,2,1,2,2,1);
+\end{lstlisting}
+
+In that case, \lstinline'route' has 2 inputs and 2 outputs. The first input (1) is connected to the second output (2) and the second input (2) is connected to the first output (1).
+
+Note that parenthesis can be optionally used to define a pair, so the previous example can also be written as:
+
+\begin{lstlisting}
+process = route(2,2,(1,2),(2,1));
+\end{lstlisting}
+
+More complex expressions can be written using algorithmic constructions, like the following one to cross N signals:
+
+\begin{lstlisting}
+// cross 10 signals: 
+// input 0 -> output 10, 
+// input 1 -> output 9, 
+// ..., 
+// input 9 -> output 0
+
+N = 10;
+r = route(N,N,par(i,N,(i+1,N-i)));
+
+process = r;
+\end{lstlisting}
+
+%--------------------------------------------------------------------------------------------------------------
+\subsection{Waveforms Primitive}
 %--------------------------------------------------------------------------------------------------------------
 
 A waveform is a fixed periodic signal defined by a list of samples. A waveform has two outputs. The first output is constant and indicates the size (number of samples) of the period. The second output is the periodic signal itself. 
@@ -1142,7 +1192,7 @@ process = waveform {10,20,30,40,50,60,70}, %(7)~+(3) : rdtable;
 \bigskip
 
 %--------------------------------------------------------------------------------------------------------------
-\subsection{Soundfiles}
+\subsection{Soundfiles Primitive}
 %--------------------------------------------------------------------------------------------------------------
 
 The  \lstinline'soundfile("label[url:\{'path1';'path2';'path3';\}]", n)' primitive allows to access a list of externally defined sound resources, described as the list of their filename, or complete paths. The \lstinline'soundfile("label[url:path]", n)' simplified syntax allows to use a single file. 
