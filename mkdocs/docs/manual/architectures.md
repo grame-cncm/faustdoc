@@ -1852,6 +1852,11 @@ At the moment there is one tool present, faustwatch.py. Faustwatch is a tool tha
 #### [Faust.jl](https://github.com/corajr/Faust.jl)
 Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.
 
+### DLang tools 
+
+#### [Faust 2 Dplug Guide](https://github.com/Tonton-Blax/dplugfausttest)
+Explains how to use Faust in a [Dplug](https://dplug.org/) project.
+
 ### WebAssembly tools 
 
 #### [faust-loader](https://github.com/Smona/faust-loader)
