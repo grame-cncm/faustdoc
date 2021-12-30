@@ -1233,7 +1233,7 @@ A extended set of metadata will probably have to be progressively defined and st
 
 #### Using the `-uim` Compiler Option
 
-On embedded platforms with limited capabilities, the use of the `-uim` option can be helpful. It allows the C/C++ generated code to contain a static description of several caracteristics of the  generated code, like the *number of audio inputs/outputs*, the *number of controls inputs/outputs*, and *macros feed with the controls parameters (label, DSP filed name, init, min, max, step)* that can be implemented in the architecture file for various needs. 
+On embedded platforms with limited capabilities, using the `-uim` option can be helpful. The C/C++ generated code then contains a static description of several caracteristics of the DSP, like the number of *audio inputs/outputs*, the number of *controls inputs/outputs*, and *macros feed with the controls parameters (label, DSP field name, init, min, max, step)* that can be implemented in the architecture file for various needs. 
 
 For example the following DSP program:
 
@@ -1263,7 +1263,7 @@ process = _*hslider("Gain", 0, 0, 1, 0.01) : hbargraph("Vol", 0, 1);
 		
 	#endif
 
-The `FAUST_ADDHORIZONTALSLIDER` or `FAUST_ADDHORIZONTALBARGRAPH` can the be implemented to do whatever is needed with the `Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f` and `"Vol", fHbargraph0, 0.0f, 1.0f` parameters respectively. 
+The `FAUST_ADDHORIZONTALSLIDER` or `FAUST_ADDHORIZONTALBARGRAPH` can then be implemented to do whatever is needed with the `Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f` and `"Vol", fHbargraph0, 0.0f, 1.0f` parameters respectively. 
 
 The more sophisticated `FAUST_LIST_ACTIVES` and `FAUST_LIST_PASSIVES` macros can possibly be used to call any `p` function (defined elsewhere in the architecture file) on each item. The [minimal-static.cpp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-static.cpp) file demonstrates this feature.
 
