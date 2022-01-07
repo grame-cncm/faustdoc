@@ -420,7 +420,7 @@ Note that all the widgets are added to the current box.
 
 #### Metadata
 
-The Faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a declare method taking as argument, a pointer to the widget associated zone, the metadata key and value:
+The Faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a `declare` method taking as argument, a pointer to the widget associated zone, the metadata key and value:
 
 ```c++
 declare(FAUSTFLOAT* zone, const char* key, const char* value);
@@ -708,13 +708,13 @@ The dsp class is central to the Faust architecture design:
 + the `getNumInputs`, `getNumOutputs` methods provides information about the signal processor
 + the`buildUserInterface` method creates the user interface using a given UI class object (see later)
 + the`init` method (and some more specialized methods like `instanceInit`, `instanceConstants`, etc.) is called to initialize the dsp object with a given sampling rate, typically obtained from the audio architecture
-+ the`compute` method is called by the audio architecture to execute the actual audio processing. It takes a `count` number of samples to process, and `inputs` and `outputs` arrays of non-interleaved float/double samples, to be allocated and handled by the audio driver with the required dsp input and ouputs channels (as given by  `getNumInputs` and `getNumOutputs`)
++ the`compute` method is called by the audio architecture to execute the actual audio processing. It takes a `count` number of samples to process, and `inputs` and `outputs` arrays of non-interleaved float/double samples, to be allocated and handled by the audio driver with the required dsp input and outputs channels (as given by  `getNumInputs` and `getNumOutputs`)
 + the `clone` method can be used to duplicate the instance
 + the`metadata(Meta* m)`method can be called with a `Meta` object to decode the instance global metadata (see next section)
 
-(note that `FAUSTFLOAT` label is typically defined to be the actual type of sample: either float or double using `#define FAUSTFLOAT float` in the code for instance).
+(note that `FAUSTFLOAT` label is typically defined to be the actual type of sample: either `float` or `double` using `#define FAUSTFLOAT float` in the code for instance).
 
-For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or C++ class, or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `soulpatch_dsp`  typed object (defined in the [soulpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio`  C++ classes (like the C++ generated class). See the following class diagram:
+For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `soulpatch_dsp`  typed object (defined in the [soulpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio`  C++ classes (like the C++ generated class). See the following class diagram:
 
 <img src="img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
 
@@ -782,22 +782,22 @@ The Faust program specification is usually entirely done in the language itself.
 
 Since taking advantage of the huge number of already available UI and audio architecture files is important, keeping the same `dsp` API is preferable, so that more complex DSP can be controlled and audio rendered the usual way. Extended DSP classes will typically subclass the `dsp` base class and override or complete part of its API. 
 
-#### Combining DSP
-
-##### Dsp Decorator Pattern
+#### Dsp Decorator Pattern
 
 A `dsp_decorator` class, subclass of the root `dsp` class has first been defined. Following the decorator design pattern, it allows behavior to be added to an individual object, either statically or dynamically.
 
 As an example of the decorator pattern, the `timed_dsp` class allows to decorate a given DSP with sample accurate control capability or  the `mydsp_poly` class for polyphonic DSPs, explained in the next sections.
 
-##### Combining DSP Components
+#### Combining DSP Components
 
 A few additional macro construction classes, subclasses of the root dsp class have been defined in the [dsp-combiner.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-combiner.h)  header file with a five operators construction API:
 
 - the `dsp_sequencer` class combines two DSP in sequence, assuming that the number of outputs of the first DSP equals the number of input of the second one. It somewhat mimics the  *sequence* (that is`:` ) operator of the language by combining two separated C++ objects. Its `buildUserInterface` method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSPs can be individually controlled. Its `compute` method is overloaded to call each DSP `compute` in sequence, using an intermediate output buffer produced by first DSP as the input one given to the second DSP.
 - the `dsp_parallelizer`  class combines two DSP in parallel. It somewhat mimics the  *parallel* (that is`,` ) operator of the language by combining two separated C++ objects. Its `getNumInputs/getNumOutputs` methods are overloaded by correctly reflecting the input/output of the resulting DSP as the sum of the two combined ones. Its `buildUserInterface` method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSP can be individually controlled. Its `compute` method is overloaded to call each DSP compute, where each DSP consuming and producing its own number of input/output audio buffers taken from the method parameters.
 
-This methology is followed to implemented the three remaining composition operators (*split*, *merge*, *recussion*), which ends up with a C++ API to combine DSPs with the usual five operators: `createDSPSequencer`, `createDSPParallelizer`, `createDSPSplitter`, `createDSPMerger`, `createDSPRecursiver` to be used at C++ level to dynamically combine DSPs.
+This methology is followed to implement the three remaining composition operators (*split*, *merge*, *recussion*), which ends up with a C++ API to combine DSPs with the usual five operators: `createDSPSequencer`, `createDSPParallelizer`, `createDSPSplitter`, `createDSPMerger`, `createDSPRecursiver` to be used at C++ level to dynamically combine DSPs.
+
+Note that this idea of decorating or combining several C++  `dsp` objects can perfectly be extended in specific projects, to meet other needs: like muting some part of a graph of several DSPs for instance. But keep in mind that keeping the  `dsp` API then allows to take profit of all already available `UI` and `audio` based classes.
 
 ### Sample Accurate Control
 
@@ -978,7 +978,7 @@ In some specific case (usually in more constrained deployment cases), managing w
 
 #### The -mem Option
 
-A `-mem`compiler parameter changes the way static shared tables are generated. The table is allocated as a class static pointer allocated using a *custom memory allocator*, which has the following propotype: 
+A `-mem` compiler parameter changes the way static shared tables are generated. The table is allocated as a class static pointer allocated using a *custom memory allocator*, which has the following propotype: 
 
 ```c++
 struct dsp_memory_manager {
@@ -1220,7 +1220,7 @@ The [faust-osc-controller](https://github.com/grame-cncm/faust/tree/master-dev/t
 
 ## Embedded Platforms 
 
-Faust has been targeting an increasing number of embedded platforms for real-time audio signal processing applications in recent years. It can now be used to program microcontrollers (i.e., [ESP32](https://www.espressif.com/en), [Teensy](https://www.pjrc.com/teensy/), and [Daisy](https://www.electro-smith.com/daisy)), mobile platforms, embedded Linux systems (i.e., [Bela](https://bela.io) and [Elk](elk audio dsp)),  Digital Signal Processors (DSPs), and more. Specialized [architecture files and faust2xx scripts](https://ifc20.sciencesconf.org/321070) have been developed. 
+Faust has been targeting an increasing number of embedded platforms for real-time audio signal processing applications in recent years. It can now be used to program microcontrollers (i.e., [ESP32](https://www.espressif.com/en), [Teensy](https://www.pjrc.com/teensy/), [Pico DSP](https://www.crowdsupply.com/ohmic/pico-dsp) and [Daisy](https://www.electro-smith.com/daisy)), mobile platforms, embedded Linux systems (i.e., [Bela](https://bela.io) and [Elk](elk audio dsp)),  Digital Signal Processors (DSPs), and more. Specialized [architecture files and faust2xx scripts](https://ifc20.sciencesconf.org/321070) have been developed. 
 
 #### Metadata Naming Convention
 
@@ -1439,11 +1439,11 @@ int main(int argc, char* argv[])
 
 ```
 
-Generally, several files to connect to the audio layer, controller layer, and possibly other (MIDI, OSC...) have to be used. One of them is the main file and include the others. The `-i` option can be added to actually inline all `#include "faust/xxx/yyy"` headers (all files starting with `faust`) to produce a single self-contained unique file. Then a `faust2xxx` script has to be written to chain the Faust compilation step and the C++ compilation one (and possibly others). Look at the *Developing a faust2xx Script* section.
+Generally, several files to connect to the audio layer, controller layer, and possibly other (MIDI, OSC...) have to be used. One of them is the main file and include the others. The `-i` option can be added to actually inline all `#include "faust/xxx/yyy"` headers (all files starting with `faust`) to produce a single self-contained unique file. Then a `faust2xxx` script has to be written to chain the Faust compilation step and the C++ compilation one (and possibly others). Look at the [Developing a faust2xx Script](#developing-a-faust2xx-script) section.
 
 #### Adapting the Generated DSP
 
-Developing the adapted C++ file may require *aggregating* the generated `mydsp` class (subclass of dsp base class defined in `faust/dsp/dsp.h` header) in the specific class, so something like the following would have to be written:
+Developing the adapted C++ file may require *aggregating* the generated `mydsp` class (subclass of the `dsp` base class defined in `faust/dsp/dsp.h` header) in the specific class, so something like the following would have to be written:
 
 ```c++
 class my_class : public base_interface {
@@ -1511,7 +1511,7 @@ class my_class : public mydsp  {
 
 #### Developing New UI Architectures
 
-For really new architectures, the `UI` base class,  the [GenericUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h) helper class or the `GUI` class (describe before), have to be subclassed. Note that a lot of classes described in *Some useful UI classes for developers* section can also be subclassed or possibly enriched with additional code. 
+For really new architectures, the `UI` base class,  the [GenericUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h) helper class or the `GUI` class (describe before), have to be subclassed. Note that a lot of classes described in the [Some useful UI classes for developers](#some-useful-ui-classes-for-developers) section can also be subclassed or possibly enriched with additional code. 
 
 #### Developing New Audio Architectures
 
