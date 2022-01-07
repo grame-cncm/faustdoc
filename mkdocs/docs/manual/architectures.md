@@ -1059,7 +1059,6 @@ class mydsp : public dsp {
         sig1->fillmydspSIG1(7, ftbl1mydspSIG1);
         deletemydspSIG0(sig0, fManager);
         deletemydspSIG1(sig1, fManager);
-
     }
 
     static void classDestroy() {
