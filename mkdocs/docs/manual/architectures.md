@@ -1468,7 +1468,9 @@ class my_class : public base_interface {
         void my_compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
         {
             // Do something specific
-            fDSP.compute(count,  inputs,  outputs);
+            
+            // Call the fDSP 'compute'
+            fDSP.compute(count, inputs, outputs);
         }
 
         // Do something specific
@@ -1501,7 +1503,9 @@ class my_class : public mydsp  {
         void my_compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
         {
             // Do something specific
-            compute(count,  inputs,  outputs);
+            
+            // Call the inherited 'compute' 
+            mydsp::compute(count, inputs, outputs);
         }
 
         // Do something specific
