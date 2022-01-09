@@ -528,7 +528,7 @@ The generated JSON file is then:
 }
 ```
 
-The JSON file can be generated with `faust -json foo.dsp` command, or by program using the `JSONUI` UI architecture (see next *Some Useful UI Classes for Developers* section).
+The JSON file can be generated with `faust -json foo.dsp` command, or by program using the `JSONUI` UI architecture (see next [Some Useful UI Classes for Developers](#some-useful-ui-classes-for-developers) section).
 
 Here is the description of ready-to-use UI classes, followed by classes to be used in developer code:
 
