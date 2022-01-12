@@ -1462,7 +1462,7 @@ will output a signal: `(0,1,2,3,4,5,6,7,8,9,0,1,2,3,4)`.
 
 #### AND Primitive
 
-Logical AND can be expressed in Faust with the `&` primitive.
+Bitwise AND can be expressed in Faust with the `&` primitive.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)\&{x_{2}(t)}\)
@@ -1475,7 +1475,7 @@ TODO
 
 #### OR Primitive
 
-Logical OR can be expressed in Faust with the `|` primitive.
+Bitwise OR can be expressed in Faust with the `|` primitive.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)|{x_{2}(t)}\)
@@ -1492,7 +1492,7 @@ process = _ <: <(0.5) | >(0.7);
 
 #### XOR Primitive
 
-Logical XOR can be expressed in Faust with the `xor` primitive.
+Bitwise XOR can be expressed in Faust with the `xor` primitive.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)\land {x_{2}(t)}\)
