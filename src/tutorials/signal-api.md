@@ -18,7 +18,7 @@ The *Semantic Phase* itself is composed of several steps:
 <img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
 <center>*The semantic phase*</center>
 
-The initial DSP code using the Block Diagram Albegra (BDA) is translated in a flat circuit in normal form in the *Evaluation \calculus step*. 
+The initial DSP code using the Block Diagram Algebra (BDA) is translated in a flat circuit in normal form in the *Evaluation, lambda-calculus* step.  
 
 The list of output signals is produced by the *Symbolic Propagation* step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a *list of output signals in normal form*. 
 
