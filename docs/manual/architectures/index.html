@@ -1447,7 +1447,7 @@ class mydsp : public dsp {
   ...  
   public:
     ...
-    static void classInit(int samplingFreq) {
+    static void classInit(int sample_rate) {
         mydspSIG0* sig0 = newmydspSIG0();
         sig0-&gt;instanceInitmydspSIG0(sample_rate);
         sig0-&gt;fillmydspSIG0(7, itbl0mydspSIG0);
@@ -1458,13 +1458,13 @@ class mydsp : public dsp {
         deletemydspSIG1(sig1);
     }
 
-    virtual void init(int samplingFreq) {
-        classInit(samplingFreq);
-        instanceInit(samplingFreq);
+    virtual void init(int sample_rate) {
+        classInit(sample_rate);
+        instanceInit(sample_rate);
     }
 
-    virtual void instanceInit(int samplingFreq) {
-        instanceConstants(samplingFreq);
+    virtual void instanceInit(int sample_rate) {
+        instanceConstants(sample_rate);
         instanceResetUserInterface();
         instanceClear();
     }
@@ -1483,7 +1483,7 @@ class mydsp : public dsp {
     ...
     static dsp_memory_manager* fManager;
 
-    static void classInit(int samplingFreq) {
+    static void classInit(int sample_rate) {
         mydspSIG0* sig0 = newmydspSIG0(fManager);
         sig0-&gt;instanceInitmydspSIG0(sample_rate);
         itbl0mydspSIG0 = static_cast&lt;int*&gt;(fManager-&gt;allocate(28));
@@ -1501,10 +1501,10 @@ class mydsp : public dsp {
         fManager-&gt;destroy(ftbl1mydspSIG1);
     }
 
-    virtual void init(int samplingFreq) {}
+    virtual void init(int sample_rate) {}
 
-    virtual void instanceInit(int samplingFreq) {
-        instanceConstants(samplingFreq);
+    virtual void instanceInit(int sample_rate) {
+        instanceConstants(sample_rate);
         instanceResetUserInterface();
         instanceClear();
     }

@@ -1010,7 +1010,7 @@ class mydsp : public dsp {
   ...  
   public:
     ...
-    static void classInit(int samplingFreq) {
+    static void classInit(int sample_rate) {
         mydspSIG0* sig0 = newmydspSIG0();
         sig0->instanceInitmydspSIG0(sample_rate);
         sig0->fillmydspSIG0(7, itbl0mydspSIG0);
@@ -1021,13 +1021,13 @@ class mydsp : public dsp {
         deletemydspSIG1(sig1);
     }
 
-    virtual void init(int samplingFreq) {
-        classInit(samplingFreq);
-        instanceInit(samplingFreq);
+    virtual void init(int sample_rate) {
+        classInit(sample_rate);
+        instanceInit(sample_rate);
     }
 
-    virtual void instanceInit(int samplingFreq) {
-        instanceConstants(samplingFreq);
+    virtual void instanceInit(int sample_rate) {
+        instanceConstants(sample_rate);
         instanceResetUserInterface();
         instanceClear();
     }
@@ -1050,7 +1050,7 @@ class mydsp : public dsp {
     ...
     static dsp_memory_manager* fManager;
 
-    static void classInit(int samplingFreq) {
+    static void classInit(int sample_rate) {
         mydspSIG0* sig0 = newmydspSIG0(fManager);
         sig0->instanceInitmydspSIG0(sample_rate);
         itbl0mydspSIG0 = static_cast<int*>(fManager->allocate(28));
@@ -1068,10 +1068,10 @@ class mydsp : public dsp {
         fManager->destroy(ftbl1mydspSIG1);
     }
 
-    virtual void init(int samplingFreq) {}
+    virtual void init(int sample_rate) {}
 
-    virtual void instanceInit(int samplingFreq) {
-        instanceConstants(samplingFreq);
+    virtual void instanceInit(int sample_rate) {
+        instanceConstants(sample_rate);
         instanceResetUserInterface();
         instanceClear();
     }
