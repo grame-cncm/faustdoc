@@ -360,7 +360,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#some-useful-ui-classes-for-developers" class="nav-link">Some Useful UI Classes for Developers</a>
+            <li class="nav-item" data-level="4"><a href="#some-useful-ui-classes-and-tools-for-developers" class="nav-link">Some Useful UI Classes and Tools for Developers</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -1093,7 +1093,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
     ]
 }
 </code></pre>
-<p>The JSON file can be generated with <code>faust -json foo.dsp</code> command, or by program using the <code>JSONUI</code> UI architecture (see next <a href="#some-useful-ui-classes-for-developers">Some Useful UI Classes for Developers</a> section).</p>
+<p>The JSON file can be generated with <code>faust -json foo.dsp</code> command, or by program using the <code>JSONUI</code> UI architecture (see next <a href="#some-useful-ui-classes-and-tools-for-developers">Some Useful UI Classes and Tools for Developers</a> section).</p>
 <p>Here is the description of ready-to-use UI classes, followed by classes to be used in developer code:</p>
 <h4 id="gui-builders">GUI Builders</h4>
 <p>Here is the description of the main GUI classes:</p>
@@ -1109,8 +1109,8 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpdUI.h">httpdUI</a> class implements HTTP remote control using the <a href="https://www.gnu.org/software/libmicrohttpd/">libmicrohttpd</a> library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant application or plugin. The connection works in both directions</li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h">MIDIUI</a> class implements MIDI control in both directions, and it explained more deeply later on</li>
 </ul>
-<h4 id="some-useful-ui-classes-for-developers">Some Useful UI Classes for Developers</h4>
-<p>Some useful UI classes can possibly be reused in developer code:</p>
+<h4 id="some-useful-ui-classes-and-tools-for-developers">Some Useful UI Classes and Tools for Developers</h4>
+<p>Some useful UI classes and tools can possibly be reused in developer code:</p>
 <ul>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> class establishes a mapping beween UI items and their labels or paths, and offers a <code>setParamValue/getParamValue</code> API to set and get their values. It uses an helper <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h">PathBuilder</a> class to create complete pathnames to the leaves in the UI hierarchy. Note that the item path encodes the UI hierarchy in the form of a <em>/group1/group2/.../label</em> string and is the way to distinguish control that may have the same label, but different localisation in the UI tree. The<code>setParamValue/getParamValue</code> API takes either <em>labels</em> or <em>paths</em> as the way to describe the control, but using path is the safer way to use it</li>
 <li>the extended <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h">APIUI</a> offers <code>setParamValue/getParamValue</code> API similar to <code>MapUI</code>, with additional methods to deal with accelerometer/gyroscope kind of metadata</li>
@@ -1119,6 +1119,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h">JSONUIDecoder</a> class is used to decode the DSP JSON description and implement its <code>buildUserInterface</code> and  <code>metadata</code> methods</li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/FUI.h">FUI</a> class allows us to save and restore the parameters state as a text file</li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h">SoundUI</a> class with the associated <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h">Soundfile</a> class is used to implement the <code>soundfile</code> primitive, and load the described audio resources (typically audio files), by using different concrete implementations, either using <a href="http://www.mega-nerd.com/libsndfile/">libsndfile</a> (with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h">LibsndfileReader.h</a> file), or <a href="https://juce.com">JUCE</a> (with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h">JuceReader</a> file). </li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/ValueConverter.h">ValueConverter</a> file contains several mapping classes used to map user interface values (for example a gui slider delivering values between 0 and 1) to Faust values (for example a <code>vslider</code> between 20 and 20000) using linear/log/exp scales. It also provides classes to handle the <code>[acc:a b c d e]</code> and <code>[gyr:a b c d e]</code>  <a href="http://localhost:8000/manual/syntax/#sensors-control-metadatas">Sensors Control Metadatas</a>.</li>
 </ul>
 <h4 id="multi-controller-and-synchronization">Multi-Controller and Synchronization</h4>
 <p>A given DSP can perfectly be controlled by  several UI classes at the same time, and they will all read and write the same DSP control memory zones. Here is an example of code using a GUI using <code>GTKUI</code> architecture, as well as OSC control using <code>OSCUI</code>:</p>
@@ -1891,7 +1892,7 @@ int main(int argc, char* argv[])
 };
 </code></pre>
 <h4 id="developing-new-ui-architectures">Developing New UI Architectures</h4>
-<p>For really new architectures, the <code>UI</code> base class,  the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h">GenericUI</a> helper class or the <code>GUI</code> class (describe before), have to be subclassed. Note that a lot of classes described in the <a href="#some-useful-ui-classes-for-developers">Some useful UI classes for developers</a> section can also be subclassed or possibly enriched with additional code. </p>
+<p>For really new architectures, the <code>UI</code> base class,  the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h">GenericUI</a> helper class or the <code>GUI</code> class (describe before), have to be subclassed. Note that a lot of classes described in the <a href="#some-useful-ui-classes-and-tools-for-developers">Some useful UI classes for developers</a> section can also be subclassed or possibly enriched with additional code. </p>
 <h4 id="developing-new-audio-architectures">Developing New Audio Architectures</h4>
 <p>The <code>audio</code> base class has to be subclassed and each method implemented for the given audio hardware. In some cases the audio driver can adapt to the required number of DSP inputs/outputs (like the <a href="https://jackaudio.org">JACK</a> audio system for instance which can open any number of virtual audio ports). But in general, the number of hardware audio inputs/outputs may not exactly match the DSP ones. This is the responsability of the audio driver to adapt to this situation. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h">dsp_adapter</a> <code>dsp</code> decorator can help in this situation.</p>
 <h4 id="developing-a-new-soundfile-loader">Developing a New Soundfile Loader</h4>

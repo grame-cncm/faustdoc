@@ -528,7 +528,7 @@ The generated JSON file is then:
 }
 ```
 
-The JSON file can be generated with `faust -json foo.dsp` command, or by program using the `JSONUI` UI architecture (see next [Some Useful UI Classes for Developers](#some-useful-ui-classes-for-developers) section).
+The JSON file can be generated with `faust -json foo.dsp` command, or by program using the `JSONUI` UI architecture (see next [Some Useful UI Classes and Tools for Developers](#some-useful-ui-classes-and-tools-for-developers) section).
 
 Here is the description of ready-to-use UI classes, followed by classes to be used in developer code:
 
@@ -548,9 +548,9 @@ Here is the description of the main non-GUI controller classes:
 - the [httpdUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/httpdUI.h) class implements HTTP remote control using the [libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/) library to embed a HTTP server inside the application. Then by opening a browser on a specific URL, the GUI will appear and allow to control the distant application or plugin. The connection works in both directions
 - the [MIDIUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MIDIUI.h) class implements MIDI control in both directions, and it explained more deeply later on
 
-#### Some Useful UI Classes for Developers 
+#### Some Useful UI Classes and Tools for Developers 
 
-Some useful UI classes can possibly be reused in developer code:
+Some useful UI classes and tools can possibly be reused in developer code:
 
 - the [MapUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h) class establishes a mapping beween UI items and their labels or paths, and offers a `setParamValue/getParamValue` API to set and get their values. It uses an helper [PathBuilder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h) class to create complete pathnames to the leaves in the UI hierarchy. Note that the item path encodes the UI hierarchy in the form of a */group1/group2/.../label* string and is the way to distinguish control that may have the same label, but different localisation in the UI tree. The`setParamValue/getParamValue` API takes either *labels* or *paths* as the way to describe the control, but using path is the safer way to use it
 - the extended [APIUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h) offers `setParamValue/getParamValue` API similar to `MapUI`, with additional methods to deal with accelerometer/gyroscope kind of metadata
@@ -559,6 +559,8 @@ Some useful UI classes can possibly be reused in developer code:
 - the [JSONUIDecoder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h) class is used to decode the DSP JSON description and implement its `buildUserInterface` and  `metadata` methods
 - the [FUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/FUI.h) class allows us to save and restore the parameters state as a text file
 - the [SoundUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h) class with the associated [Soundfile](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h) class is used to implement the `soundfile` primitive, and load the described audio resources (typically audio files), by using different concrete implementations, either using [libsndfile](http://www.mega-nerd.com/libsndfile/) (with the [LibsndfileReader.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h) file), or [JUCE](https://juce.com) (with the [JuceReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h) file). 
+- the [ValueConverter](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/ValueConverter.h) file contains several mapping classes used to map user interface values (for example a gui slider delivering values between 0 and 1) to Faust values (for example a `vslider` between 20 and 20000) using linear/log/exp scales. It also provides classes to handle the `[acc:a b c d e]` and `[gyr:a b c d e]`  [Sensors Control Metadatas](http://localhost:8000/manual/syntax/#sensors-control-metadatas).
+
 
 #### Multi-Controller and Synchronization 
 
@@ -1514,7 +1516,7 @@ class my_class : public mydsp  {
 
 #### Developing New UI Architectures
 
-For really new architectures, the `UI` base class,  the [GenericUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h) helper class or the `GUI` class (describe before), have to be subclassed. Note that a lot of classes described in the [Some useful UI classes for developers](#some-useful-ui-classes-for-developers) section can also be subclassed or possibly enriched with additional code. 
+For really new architectures, the `UI` base class,  the [GenericUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h) helper class or the `GUI` class (describe before), have to be subclassed. Note that a lot of classes described in the [Some useful UI classes for developers](#some-useful-ui-classes-and-tools-for-developers) section can also be subclassed or possibly enriched with additional code. 
 
 #### Developing New Audio Architectures
 
