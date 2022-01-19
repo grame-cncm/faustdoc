@@ -106,7 +106,7 @@ In the following example, the frequency of a sawtooth wave oscillator is control
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
-freq = hslider("frequency[midi:keyon 62]",200,50,1000,0.01) : si.smoo;
+freq = hslider("frequency[midi:keyoff 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
