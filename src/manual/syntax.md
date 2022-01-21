@@ -1229,7 +1229,7 @@ process = triangleOsc(f);
 
 ### `soundfile` Primitive
 
-The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. The `soundfile("label[url:path]", n)` simplified syntax allows to use a single file. A `soundfile` has: 
+The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. The `soundfile("label[url:path]", n)` simplified syntax, or `soundfile("label", n)`  (where label is used as the soundfile path) allows to use a single file.  A `soundfile` has: 
 
 * two inputs: the sound number (as a integer between 0 and 255 as a [constant numerical expression](#constant-numerical-expressions)), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)
 * two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
