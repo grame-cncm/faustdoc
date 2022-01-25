@@ -42,7 +42,7 @@ To use the signal API, the following steps must be taken:
 
 - finally destroying the compilation context using the `destroyLibContext` function
 
-The  DSP factories allows to create DSP instances, to be used with audio and UI architecture files, *outside of the compilation process itself*. The DSP instances and factory will finally have to be deallocated when no more used.
+The DSP factories allow the creation of DSP instances, to be used with audio and UI architecture files, *outside of the compilation process itself*. The DSP instances and factory will finally have to be deallocated when no more used.
 
 ### Tools
 
@@ -241,7 +241,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the [compiler can also generate vector and parallel code](https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation). The following code show how to compile in vector mode:
+Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the [compiler can also generate vector and parallel code](https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation). The following code show how to compile in vector mode:
 
 ```C++
 static void test5()
@@ -350,7 +350,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Equivalent signal expressions 
 
-It is really important to note that *syntactically equivalent signal expressions* will be *internally represented by the same memory structure* (using hashconsing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))` expression, then used in both outputs:
+It is really important to note that *syntactically equivalent signal expressions* will be *internally represented by the same memory structure* (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))` expression, then used in both outputs:
 
 ```C++
 static void equivalent1()
@@ -783,7 +783,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 ```
 #### Creating soundfile 
 
-The *soundfile* primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:
+The *soundfile* primitive allows the access of a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:
 
 - the sound number (as a integer between 0 and 255 as a [constant numerical expression](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions))
 - the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) 
@@ -1127,7 +1127,7 @@ static void test23(int argc, char* argv[])
 
 #### Polyphonic MIDI controllable simple synthesizer
 
-Here is a MIDI controlable simple synthesizer, first with the DSP code:
+Here is a MIDI controllable simple synthesizer, first with the DSP code:
 
 <!-- faust-run -->
 ```
@@ -1351,7 +1351,7 @@ All C examples are defined in the [signal-tester-c](https://github.com/grame-cnc
 
 Generating complex expressions by directly using the signal API can quickly become really tricky and unpracticable. So a language *created on top* of the signal API is usually needed. This is exactly what the *Block Diagram Algebra* is all about, and the entire Faust language itself. 
 
-But some other approaches can possibly by tested. The [Elementary audio language](https://www.elementary.audio) for instance is built over a similar [signal language](https://docs.elementary.audio/guides/making_sound) and uses JavaScript as the upper layer language to help create complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. 
+But some other approaches can possibly be tested. The [Elementary audio language](https://www.elementary.audio) for instance is built over a similar [signal language](https://docs.elementary.audio/guides/making_sound) and uses JavaScript as the upper layer language to help create complex signal graphs programmatically. Other approaches using graphical based tools could certainly be tested. 
 
  
 

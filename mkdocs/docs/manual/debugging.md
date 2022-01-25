@@ -80,7 +80,7 @@ Several strategies have been developed to help programmers better understand the
 
 #### The -ct and -cat options
 
-Using the `-ct` and  `-cat` compilation options allows to check table index range, by verifying that the actual signal range is compatible with the actual table size. Note that since the interval calculation is  imperfect, you may see *false positive* especially when using recursive signals where the interval calculation system will typically produce *[-inf, inf]* range, which is not precise enough to correctly describe the real signal range. 
+Using the `-ct` and  `-cat` compilation options allows to check table index range, by verifying that the actual signal range is compatible with the actual table size. Note that since the interval calculation is  imperfect, you may see *false positives* especially when using recursive signals where the interval calculation system will typically produce *[-inf, inf]* range, which is not precise enough to correctly describe the real signal range. 
 
 #### The -me option
 

@@ -425,7 +425,7 @@
 <p>finally destroying the compilation context using the <code>destroyLibContext</code> function</p>
 </li>
 </ul>
-<p>The  DSP factories allows to create DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
+<p>The DSP factories allow the creation of DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
 <h3 id="tools">Tools</h3>
 <p>Let's first define a <code>compile</code> function, which uses the <code>createCPPDSPFactoryFromSignals</code> function and print the generated C++ class:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
@@ -613,7 +613,7 @@ process = _ &lt;: @(+(0.5), 500), @(*(1.5), 3000);
     }
 }
 </code></pre>
-<p>Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
+<p>Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
 <pre><code class="language-C++">static void test5()
 {
     createLibContext();
@@ -717,7 +717,7 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
 }
 </code></pre>
 <h4 id="equivalent-signal-expressions">Equivalent signal expressions</h4>
-<p>It is really important to note that <em>syntactically equivalent signal expressions</em> will be <em>internally represented by the same memory structure</em> (using hashconsing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))</code> expression, then used in both outputs:</p>
+<p>It is really important to note that <em>syntactically equivalent signal expressions</em> will be <em>internally represented by the same memory structure</em> (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))</code> expression, then used in both outputs:</p>
 <pre><code class="language-C++">static void equivalent1()
 {
     COMPILER
@@ -1130,7 +1130,7 @@ process = waveform { 0, 100, 200, 300, 400 };
 }
 </code></pre>
 <h4 id="creating-soundfile">Creating soundfile</h4>
-<p>The <em>soundfile</em> primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:</p>
+<p>The <em>soundfile</em> primitive allows the access of a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:</p>
 <ul>
 <li>the sound number (as a integer between 0 and 255 as a <a href="https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions">constant numerical expression</a>)</li>
 <li>the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) </li>
@@ -1460,7 +1460,7 @@ static void test23(int argc, char* argv[])
 }
 </code></pre>
 <h4 id="polyphonic-midi-controllable-simple-synthesizer">Polyphonic MIDI controllable simple synthesizer</h4>
-<p>Here is a MIDI controlable simple synthesizer, first with the DSP code:</p>
+<p>Here is a MIDI controllable simple synthesizer, first with the DSP code:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
 
@@ -1678,7 +1678,7 @@ static void test3()
 <p>All C examples are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.c">signal-tester-c</a> tool, to be compiled with <code>make signal-tester-c</code> in the tools/benchmark folder.</p>
 <h2 id="creating-a-signal-language-based-on-this-api">Creating a signal language based on this API</h2>
 <p>Generating complex expressions by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the <em>Block Diagram Algebra</em> is all about, and the entire Faust language itself. </p>
-<p>But some other approaches can possibly by tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help create complex signal graphs programatically. Other approaches using graphical based tools could certainly be tested. </p></div>
+<p>But some other approaches can possibly be tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help create complex signal graphs programmatically. Other approaches using graphical based tools could certainly be tested. </p></div>
             </div>
         </div>
 

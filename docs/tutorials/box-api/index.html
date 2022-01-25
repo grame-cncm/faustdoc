@@ -425,7 +425,7 @@
 <p>finally destroying the compilation context using the <code>destroyLibContext</code> function</p>
 </li>
 </ul>
-<p>The  DSP factories allows to create DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
+<p>The DSP factories allow the creation of DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
 <h3 id="tools">Tools</h3>
 <p>Let's first define a <code>compile</code> function, which uses the <code>createCPPDSPFactoryFromBoxes</code> function and print the generated C++ class:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
@@ -613,7 +613,7 @@ process = @(_,7);
     }
 }
 </code></pre>
-<p>Several options of the Faust compiler allow to control the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
+<p>Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
 <pre><code class="language-C++">static void test7()
 {
     createLibContext();
@@ -703,7 +703,7 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
 }
 </code></pre>
 <h4 id="equivalent-box-expressions">Equivalent box expressions</h4>
-<p>It is really important to note that <em>syntactically equivalent box expressions</em> will be <em>internally represented by the same memory structure</em> (using hashconsing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))</code> expression, then used in both outputs:</p>
+<p>It is really important to note that <em>syntactically equivalent box expressions</em> will be <em>internally represented by the same memory structure</em> (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))</code> expression, then used in both outputs:</p>
 <pre><code class="language-C++">static void equivalent1()
 {
     COMPILER
@@ -1110,7 +1110,7 @@ process = waveform { 0, 100, 200, 300, 400 };
 }
 </code></pre>
 <h4 id="creating-soundfile">Creating soundfile</h4>
-<p>The <em>soundfile</em> primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:</p>
+<p>The <em>soundfile</em> primitive allows the access of a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:</p>
 <ul>
 <li>the sound number (as a integer between 0 and 255 as a <a href="https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions">constant numerical expression</a>)</li>
 <li>the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) </li>
