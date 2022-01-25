@@ -110,9 +110,9 @@ make && make install
 
 ## Programming using the Faust aware VCV Prototype module
 
-The [VCV Prototype module](https://github.com/VCVRack/VCV-Prototype) run scripting languages for prototyping, learning, and live coding. It can currently be programmed using  JavaScript, [Lua](https://www.lua.org), [Vult](https://github.com/modlfo/vult), or [PureData](https://puredata.info). A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (with RGB LEDs) is defined. 
+The [VCV Prototype module](https://github.com/VCVRack/VCV-Prototype) runs scripting languages for prototyping, learning, and live coding. It can currently be programmed using JavaScript, [Lua](https://www.lua.org), [Vult](https://github.com/modlfo/vult), or [PureData](https://puredata.info). A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (with RGB LEDs) is defined. 
 
-Note that **only monophonic examples** can be coded with the propotype. 
+Note that **only monophonic examples** can be coded with the prototype. 
 
 <img src="img/VCV_Prototype.png" width="30%" class="mx-auto d-block">
 
@@ -163,7 +163,6 @@ process = os.osc(freq) * gain * 5, os.sawtooth(freq) * gain * gate * 5;
 <!-- /faust-run -->
 
 Following the VCV Prototype model, note that audio outputs **are multipled by 5** to follow the [-5v..5v] range convention. 
-
 
 The VCV Prototype standard examples ported to Faust can be seen in the examples folder:
 

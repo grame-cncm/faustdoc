@@ -430,8 +430,8 @@
 <pre><code>make &amp;&amp; make install
 </code></pre>
 <h2 id="programming-using-the-faust-aware-vcv-prototype-module">Programming using the Faust aware VCV Prototype module</h2>
-<p>The <a href="https://github.com/VCVRack/VCV-Prototype">VCV Prototype module</a> run scripting languages for prototyping, learning, and live coding. It can currently be programmed using  JavaScript, <a href="https://www.lua.org">Lua</a>, <a href="https://github.com/modlfo/vult">Vult</a>, or <a href="https://puredata.info">PureData</a>. A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (with RGB LEDs) is defined. </p>
-<p>Note that <strong>only monophonic examples</strong> can be coded with the propotype. </p>
+<p>The <a href="https://github.com/VCVRack/VCV-Prototype">VCV Prototype module</a> runs scripting languages for prototyping, learning, and live coding. It can currently be programmed using JavaScript, <a href="https://www.lua.org">Lua</a>, <a href="https://github.com/modlfo/vult">Vult</a>, or <a href="https://puredata.info">PureData</a>. A generic GUI with 6 inputs/outputs (either audio or CV signals), 6 knobs, 6 lights (RGB LEDs) or 6 switches (with RGB LEDs) is defined. </p>
+<p>Note that <strong>only monophonic examples</strong> can be coded with the prototype. </p>
 <p><img src="img/VCV_Prototype.png" width="30%" class="mx-auto d-block"></p>
 <p>Faust support thanks to <strong>libfaust</strong> embedding the <strong>Interpreter</strong> backend has been added. It allows to <strong>edit/compile/execute</strong> DSP programs on the fly, with acceptable peformances (even if using the <a href="https://llvm.org">LLVM JIT</a> would allow to generate faster code, but as the expense of a much more complicated installation procedure).</p>
 <h3 id="editingcompilingexecuting-dsp-files">Editing/compiling/executing DSP files</h3>
