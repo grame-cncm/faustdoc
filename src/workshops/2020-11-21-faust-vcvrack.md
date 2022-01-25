@@ -116,7 +116,7 @@ Note that **only monophonic examples** can be coded with the prototype.
 
 <img src="img/VCV_Prototype.png" width="30%" class="mx-auto d-block">
 
-Faust support thanks to **libfaust** embedding the **Interpreter** backend has been added. It allows to **edit/compile/execute** DSP programs on the fly, with acceptable peformances (even if using the [LLVM JIT](https://llvm.org) would allow to generate faster code, but as the expense of a much more complicated installation procedure).
+Faust support thanks to **libfaust** embedding the **Interpreter** backend has been added. It allows to **edit/compile/execute** DSP programs on the fly, with acceptable performances (even if using the [LLVM JIT](https://llvm.org) would allow to generate faster code, but as the expense of a much more complicated installation procedure).
 
 ### Editing/compiling/executing DSP files
 

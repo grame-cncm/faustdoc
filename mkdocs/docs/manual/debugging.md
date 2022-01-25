@@ -84,7 +84,7 @@ Using the `-ct` and  `-cat` compilation options allows to check table index rang
 
 #### The -me option
 
-Starting with version 2.37.0, mathematical functions which have a finite domain (like `sqrt` defined for positive or null values, or `asin` defined for values in the [-1..1] range) are *checked at compile time* when they *actually compute values at that time*, and *raise an error* if the program tries to compute an out-of-domain value.  If those functions appear in the generated code, their domain of use can also be checked (using the interval computation system) and  the `-me` option *will display warnings* if the domain of use is incorrect. Note that again because of the imperfect  interval computation system, *false positive* may appear and should be checked.
+Starting with version 2.37.0, mathematical functions which have a finite domain (like `sqrt` defined for positive or null values, or `asin` defined for values in the [-1..1] range) are *checked at compile time* when they *actually compute values at that time*, and *raise an error* if the program tries to compute an out-of-domain value.  If those functions appear in the generated code, their domain of use can also be checked (using the interval computation system) and  the `-me` option *will display warnings* if the domain of use is incorrect. Note that again because of the imperfect interval computation system, *false positives* may appear and should be checked.
 
 ### Debugging at runtime
 
