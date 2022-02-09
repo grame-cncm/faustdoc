@@ -83,6 +83,9 @@ Hence, the OSC module makes use of three different UDP ports:
 * `5511` is the output port number: control messages sent by the application and answers to query messages are sent to this port.
 * `5512` is the error port number: used for asynchronous error notifications.
 
+Note that if a `declare name "Foo";`  line is present in the DSP program, `Foo` will be used as the OSC root name, otherwise the DSP filename will be used instead.
+
+
 These OSC parameters can be changed from the command line using one of the following options:
 
 * `-port number` sets the port number used by the application to receive messages.

@@ -72,6 +72,7 @@ As we can see the OSC module makes use of three different UDP ports:
 \item \lstinline'5512' is the error port number: used for asynchronous error notifications.
 \end{itemize}
 
+Note that if a \code{ declare name \"Foo\"; } line is present in the DSP program, \code{Foo} will be used as the OSC root name, otherwise the DSP filename will be used instead.
 
 These OSC parameters can be changed from the command line using one of the following options:
 %\begin{lstlisting}

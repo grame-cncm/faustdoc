@@ -521,6 +521,7 @@ process = no.noise*hslider(&quot;level&quot;,0,0,1,0.01);
 <li><code>5511</code> is the output port number: control messages sent by the application and answers to query messages are sent to this port.</li>
 <li><code>5512</code> is the error port number: used for asynchronous error notifications.</li>
 </ul>
+<p>Note that if a <code>declare name "Foo";</code>  line is present in the DSP program, <code>Foo</code> will be used as the OSC root name, otherwise the DSP filename will be used instead.</p>
 <p>These OSC parameters can be changed from the command line using one of the following options:</p>
 <ul>
 <li><code>-port number</code> sets the port number used by the application to receive messages.</li>
