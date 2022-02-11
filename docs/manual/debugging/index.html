@@ -348,7 +348,7 @@
 <h1 id="debugging-the-code">Debugging the Code</h1>
 <h2 id="looking-at-the-generated-code">Looking at the generated code</h2>
 <h3 id="using-the-fir-backend">Using the FIR backend</h3>
-<p>The FIR (Faust Imperative Representation) backend can possibly be use to look at a textual version of the intermediate imperative language. </p>
+<p>The FIR (Faust Imperative Representation) backend can possibly be used to look at a textual version of the intermediate imperative language. </p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 
 vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
@@ -368,7 +368,7 @@ Cast = 2
 Select = 0 
 Loop = 1
 </code></pre>
-<p>As well as the DSP structure memory layout and read/write stastitics:</p>
+<p>As well as the DSP structure memory size and layout, and read/write statistics:</p>
 <pre><code>======= Object memory footprint ==========
 
 Heap size int = 4 bytes
@@ -403,6 +403,7 @@ Field = fRec2 size = 2 r_count = 4 w_count = 2
 Field = fHslider2 size = 1 r_count = 0 w_count = 0
 Field = fRec3 size = 2 r_count = 4 w_count = 2
 </code></pre>
+<p>Those informations can possibly be used to detect abnormal memory consumption. </p>
 <h2 id="debugging-the-dsp-code">Debugging the DSP Code</h2>
 <p>On a computer, doing a computation that is undefined in mathematics (like <code>val/0</code> of <code>log(-1)</code>), and unrepresentable in floating-point arithmetic, will produce a <a href="https://en.wikipedia.org/wiki/NaN">NaN</a> value, which has a <a href="https://en.cppreference.com/w/cpp/numeric/math/NAN">special internal representation</a>. Similarly, some computations will exceed the range that is representable with floating-point arithmetics, and are represented with a special <a href="https://en.cppreference.com/w/cpp/numeric/math/INFINITY">INFINITY</a> value, which value depends of the choosen type (like <code>float</code>, <code>double</code> or <code>long double</code>).</p>
 <p>After being produced, those values can actually <em>contaminate</em> the following flow of computations (that is <code>Nan + any value = NaN</code> for instance) up to the point of producing incorrect indexes when used in array access, and causing memory access crashes.  </p>

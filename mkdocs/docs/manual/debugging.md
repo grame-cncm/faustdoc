@@ -4,7 +4,7 @@
 
 ### Using the FIR backend
 
-The FIR (Faust Imperative Representation) backend can possibly be use to look at a textual version of the intermediate imperative language. 
+The FIR (Faust Imperative Representation) backend can possibly be used to look at a textual version of the intermediate imperative language. 
 
 ```
 import("stdfaust.lib");
@@ -28,7 +28,7 @@ Cast = 2
 Select = 0 
 Loop = 1
 ```
-As well as the DSP structure memory layout and read/write stastitics:
+As well as the DSP structure memory size and layout, and read/write statistics:
 
 ```
 ======= Object memory footprint ==========
@@ -65,6 +65,8 @@ Field = fRec2 size = 2 r_count = 4 w_count = 2
 Field = fHslider2 size = 1 r_count = 0 w_count = 0
 Field = fRec3 size = 2 r_count = 4 w_count = 2
 ```
+
+Those informations can possibly be used to detect abnormal memory consumption. 
 
 ## Debugging the DSP Code 
 
