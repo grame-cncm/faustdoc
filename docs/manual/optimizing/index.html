@@ -399,8 +399,40 @@
 <h3 id="computations-done-at-control-rate">Computations Done <em>at Control Rate</em></h3>
 <h4 id="parameter-smoothing">Parameter Smoothing</h4>
 <p>Control parameters are sampled once per block, their values are considered constant during the block, and the internal state depending of them is updated and appears at the beginning of the <code>compute</code> method, before the sample rate DSP loop. </p>
-<p>If a control parameter needs to be smoothed (like to avoid clicks or too abrupt changes), with the <code>control : si.smoo</code> kind of code, the computation rate moves from <em>control rate</em> to <em>sample rate</em>, and will be more costly. It means that the need for parameter smoothing <em>should be carefully studied</em>. </p>
-<p>Another point to consider is the <em>order of computation</em> when smoothing control. Here slider value is <em>first</em> converted first to a dB value, <em>then</em> smoothed:</p>
+<p>In the following DSP code, the <code>vol</code> slider value is directly applied on the input audio signal:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01);
+process = *(vol);
+</code></pre>
+<p>In the generated C++ code for <code>compute</code>, the <code>vol</code> slider value is sampled before the actual DSP loop, by reading the <code>fHslider0</code> field kept in a local  <code>fSlow0</code> variable:</p>
+<pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = float(fHslider0);
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        output0[i0] = FAUSTFLOAT(fSlow0 * float(input0[i0]));
+    }
+}
+</code></pre>
+<p>If the control parameter needs to be smoothed (like to avoid clicks or too abrupt changes), with the <code>control : si.smoo</code> kind of code, the computation rate moves from <em>control rate</em> to <em>sample rate</em>, and will be more costly. If the previous DSP code is now changed with:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : si.smoo;
+process = *(vol);
+</code></pre>
+<p>The <code>vol</code> slider is sampled before the actual DSP loop and multiplied by the filter <code>fConst0</code> constant computed at init time, and finally used in the DSP loop in the smoothing filter:</p>
+<pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = fConst0 * float(fHslider0);
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        fRec0[0] = fSlow0 + fConst1 * fRec0[1];
+        output0[i0] = FAUSTFLOAT(float(input0[i0]) * fRec0[0]);
+        fRec0[1] = fRec0[0];
+    }
+}
+</code></pre>
+<p>So the CPU usage will obviously be higher, and the need for parameter smoothing <em>should be carefully studied</em>.</p>
+<p>Another point to consider is the <em>order of computation</em> when smoothing control. In the following DSP code, the slider value is <em>first</em> converted first to a dB value, <em>then</em> smoothed:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 smoother_vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : ba.linear2db : si.smoo;
 process = *(smoother_vol);
