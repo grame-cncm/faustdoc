@@ -434,6 +434,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#allocating-several-dsp-instances" class="nav-link">Allocating several DSP instances</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#mesuring-the-dsp-cpu" class="nav-link">Mesuring the DSP CPU</a>
@@ -1784,6 +1788,8 @@ delete DSP;
 mydsp::classDestroy();
 </code></pre>
 <p>More complex custom memory allocators can be developed by refining this <code>malloc_memory_manager</code> example, possibly defining real-time memory allocators...etc... The <a href="https://www.rebeltech.org">OWL</a> architecture file uses this <a href="https://github.com/pingdynasty/OwlProgram/blob/master/FaustCode/owl.cpp">custom memory allocator model</a>.</p>
+<h4 id="allocating-several-dsp-instances">Allocating several DSP instances</h4>
+<p>In a multiple instances scheme, static data structures shared by all instances have to be allocated once at beginning using <code>mydsp::classInit</code>, and deallocated at the end using <code>mydsp::classDestroy</code>. Individual instances are then allocated with <code>mydsp::create()</code> and deallocated with <code>mydsp::destroy()</code>.</p>
 <h3 id="mesuring-the-dsp-cpu">Mesuring the DSP CPU</h3>
 <p>The <code>measure_dsp</code> class defined in the <code>faust/dsp/dsp-bench.h</code> file allows to decorate a given DSP object and measure its <code>compute</code> method CPU consumption. Results are given in Megabytes/seconds (higher is better) and DSP CPU at 44,1 kHz. Here is a C++ code example of its use: </p>
 <pre><code class="language-c++">static void bench(dsp* dsp, const string&amp; name)

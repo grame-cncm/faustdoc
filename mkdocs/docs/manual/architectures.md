@@ -1401,6 +1401,10 @@ mydsp::classDestroy();
 
 More complex custom memory allocators can be developed by refining this `malloc_memory_manager` example, possibly defining real-time memory allocators...etc... The [OWL](https://www.rebeltech.org) architecture file uses this [custom memory allocator model](https://github.com/pingdynasty/OwlProgram/blob/master/FaustCode/owl.cpp).
 
+#### Allocating several DSP instances
+
+In a multiple instances scheme, static data structures shared by all instances have to be allocated once at beginning using `mydsp::classInit`, and deallocated at the end using `mydsp::classDestroy`. Individual instances are then allocated with `mydsp::create()` and deallocated with `mydsp::destroy()`.
+
 
 ### Mesuring the DSP CPU
 
