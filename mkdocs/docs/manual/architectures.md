@@ -974,25 +974,198 @@ Polyphonic-ready `faust2xx` scripts will then compile the polyphonic instrument 
 
 ### Custom Memory Manager
 
-From a DSP source file, the Faust compiler typically generates a C++ class. When a `rdtable` item is used on the source code, the C++ class will contain a table shared by all instances of the class. By default, this table is generated as a static class array, and so allocated in the application global static memory. 
+In C and C++, the Faust compiler produces a class (or a struct in C), to be instantiated to create each DSP instance. The standard generation model produces a flat memory layout, where all fields (scalar and arrays) are simply consecutive in the generated code (following the compilation order). So the DSP is allocated on a single block of memory, either on the stack or the heap depending on the use-case. The following DSP program:
 
-In some specific case (usually in more constrained deployment cases), managing where this data is allocated is crucial. Having a custom memory allocator to precisely control the DSP memory allocation becomes important.
+```
+import("stdfaust.lib");
 
-#### The -mem Option
+gain = hslider("gain", 0.5, 0, 1, 0.01);
+feedback = hslider("feedback", 0.8, 0, 1, 0.01);
 
-A `-mem` compiler parameter changes the way static shared tables are generated. The table is allocated as a class static pointer allocated using a *custom memory allocator*, which has the following propotype: 
+echo(del_sec, fb, g) = + ~ de.delay(50000, del_samples) * fb * g
+with {
+    del_samples = del_sec * ma.SR;
+};
+
+process = echo(1.6, 0.6, 0.7), echo(0.7, feedback, gain);
+```
+
+will have the flat memory layout:
+
+```c++
+int IOTA0;
+int fSampleRate;
+int iConst1;
+float fRec0[65536];
+FAUSTFLOAT fHslider0;
+FAUSTFLOAT fHslider1;
+int iConst2;
+float fRec1[65536];
+```
+
+So scalar `fHslider0` and `fHslider1` correspond to the gain and feedback controllers. The `iConst1` and `iConst2` values are typically computed once at init time using the dynamically given the `fSampleRate` value, and used in the DSP loop later on. The `fRec0` and `fRec1` arrays are used for the recursive delays and finally the shared `IOTA0` index is used to access them.
+
+Here is the generated `compute` function:
+
+```c++
+virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    float fSlow0 = float(fHslider0) * float(fHslider1);
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        fRec0[IOTA0 & 65535] 
+            = float(input0[i0]) + 0.419999987f * fRec0[(IOTA0 - iConst1) & 65535];
+        output0[i0] = FAUSTFLOAT(fRec0[IOTA0 & 65535]);
+        fRec1[IOTA0 & 65535] 
+            = float(input1[i0]) + fSlow0 * fRec1[(IOTA0 - iConst2) & 65535];
+        output1[i0] = FAUSTFLOAT(fRec1[IOTA0 & 65535]);
+        IOTA0 = IOTA0 + 1;
+    }
+}
+```
+
+#### The -mem option
+
+On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. 
+
+The first remark is that scalar values will typically stay in the DSP structure, and the point is to move the big array buffers (`fRec0` and `fRec1` in the example) into separated memory blocks. A new `-mem (--memory-manager)` can be used to generate adapted code. On the previous DSP program, we now have the following generated C++ code: 
+
+```c++
+int IOTA0;
+int fSampleRate;
+int iConst1;
+float* fRec0;
+FAUSTFLOAT fHslider0;
+FAUSTFLOAT fHslider1;
+int iConst2;
+float* fRec1;
+```
+
+The two  `fRec0` and  `fRec1` arrays are becoming pointers, and will be allocated elsewhere. 
+
+An external memory manager is needed to interact with the DSP code. The proposed model does the following:
+
+- in a first step the generated C++ code will inform the memory allocator about its needs in terms of 1) the number of separated memory zones, with 2) their size and 3) access characteristics (like number of Read and Write for each frame computation). This is done be generating an additional  static `memoryInfo` method 
+- with the complete information available, the memory manager can then define the best strategy to allocate all separated memory zones
+- an additional `memoryCreate` method  is generated to allocate each of the separated zones
+- an additional `memoryDestroy` method  is generated to deallocate each of the separated zones
+
+Here is the API for the memory manager:
 
 ```c++
 struct dsp_memory_manager {
 
     virtual ~dsp_memory_manager() {}
 
+    /**
+    * Inform the Memory Manager with the number of expected memory zones.
+    * @param count - the number of memory zones
+    */
+    virtual void begin(size_t count);
+
+    /**
+    * Give the Memory Manager information on a given memory zone.
+    * @param size - the size in bytes of the memory zone
+    * @param reads - the number of Read access to the zone used to compute one frame
+    * @param writes - the number of Write access to the zone used to compute one frame
+    */
+    virtual void info(size_t size, size_t reads, size_t writes) {}
+
+    /**
+    * Inform the Memory Manager that all memory zones have been described, 
+    * to possibly start a 'compute the best allocation strategy' step.
+    */
+    virtual void end();
+
+    /**
+    * Allocate a memory zone.
+    * @param size - the memory zone size in bytes
+    */
     virtual void* allocate(size_t size) = 0;
+
+    /**
+    * Destroy a memory zone.
+    * @param ptr - the memory zone pointer to be deallocated
+    */
     virtual void destroy(void* ptr) = 0;
+
 };
 ```
 
-Taking the following Faust DSP example:
+A class static member is added in the `mydsp` class, to be set with an concrete memory manager later on: 
+
+```c++
+dsp_memory_manager* mydsp::fManager = nullptr;
+```
+The C++ generated code now contains a new `memoryInfo` method, which interacts with the memory manager:
+
+```c++
+static void memoryInfo() {
+    fManager->begin(3);
+    //=================================
+    // Subcontainers used in classInit
+    //=================================
+    //============
+    // DSP object
+    //============
+    fManager->info(sizeof(mydsp), 9, 1);
+    //==============================
+    // Arrays inside the DSP object
+    //==============================
+    // Array fRec0
+    fManager->info(262144, 2, 1);
+    // Array fRec1
+    fManager->info(262144, 2, 1);
+    //==========================================
+    // Subcontainers used in instanceConstants
+    //==========================================
+    fManager->end();
+}
+```
+The `begin` method is first generated to inform that three separated memory zones will be needed. Then three consecutive calls to the `info` method are generated, one for the DSP object itself, one for each recursive delay array. The `end` method is then called to finish the memory layout description, and let the memory manager prepare the actual allocations. 
+
+Finally the  `memoryCreate` and  `memoryDestroy` methods are generated. The  `memoryCreate` method asks the memory manager to allocate the `fRec0` and `fRec1` buffers:
+
+```c++
+void memoryCreate() {
+    fRec0 = static_cast<float*>(fManager->allocate(262144));
+    fRec1 = static_cast<float*>(fManager->allocate(262144));
+}
+```
+
+And  the `memoryDestroy` method asks the memory manager to destroy them:
+
+```c++
+virtual memoryDestroy() {
+    fManager->destroy(fRec0);
+    fManager->destroy(fRec1);
+}
+```
+
+Additional static `create/destroy` methods are generated:
+
+```c++
+static mydsp* create() {
+    mydsp* dsp = new (fManager->allocate(sizeof(mydsp))) mydsp();
+    dsp->memoryCreate();
+    return dsp;
+}
+
+static void destroy(dsp* dsp) {
+    static_cast<mydsp*>(dsp)->memoryDestroy();
+    fManager->destroy(dsp);
+}
+```
+
+Note that the so-called [C++ placement new](https://en.wikipedia.org/wiki/Placement_syntax) will be used to allocate the DSP object itself. 
+
+#### Static tables
+
+When `rdtable` or `rwtable` primitives are used in the source code, the C++ class will contain a table shared by all instances of the class. By default, this table is generated as a static class array, and so allocated in the application global static memory. 
+
+Taking the following DSP example:
 
 ```
 process = (waveform {10,20,30,40,50,60,70}, %(7)~+(3) : rdtable), 
@@ -1035,7 +1208,7 @@ class mydsp : public dsp {
 }
 ```
 
-The two *itbl0mydspSIG0* and *ftbl1mydspSIG1* tables are static global arrays. They are filled in the `classInit` method. The architecture code will typically call the `init` method (which calls `classInit`) on a given DSP, to allocate class related arrays and the DSP itself. If several DSP are going to be allocated, calling `classInit` only once then the `instanceInit` method on each allocated DSP is the way to go.
+The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are static global arrays. They are filled in the `classInit` method. The architecture code will typically call the `init` method (which calls `classInit`) on a given DSP, to allocate class related arrays and the DSP itself. If several DSPs are going to be allocated, calling `classInit` only once then the `instanceInit` method on each allocated DSP is the way to go.
 
 In the `-mem` mode, the generated C++ code is now:
 
@@ -1079,99 +1252,155 @@ class mydsp : public dsp {
 }
 ```
 
-The two *itbl0mydspSIG0* and *ftbl1mydspSIG1* tables are generated as static global pointers. The`classInit`  method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. Finally the `init` method is now empty, since the architecure file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
+The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are generated as static global pointers. The`classInit`  method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. Finally the `init` method is now empty, since the architecure file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
 
-#### Control of the DSP memory allocation
+The `memoryInfo` method now has the following shape, where the two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are describes in the *Subcontainers used in classInit* section:
 
-An architecture file can now define its custom memory manager by subclassing the `dsp_memory_manager`  abstract base class, and implement the two required `allocate` and `destroy` methods. Here is an example of a simple heap allocating manager:
+```c++
+static void memoryInfo() {
+    fManager->begin(6);
+    //=================================
+    // Subcontainers used in classInit
+    //=================================
+    // Subcontainer mydspSIG0
+    fManager->info(sizeof(mydspSIG0), 0, 0);
+    // Table name itbl0mydspSIG0
+    fManager->info(28, 1, 0);
+    // Subcontainer mydspSIG1
+    fManager->info(sizeof(mydspSIG1), 0, 0);
+    // Table name ftbl1mydspSIG1
+    fManager->info(28, 1, 0);
+    //============
+    // DSP object
+    //============
+    fManager->info(sizeof(mydsp), 0, 0);
+    //==============================
+    // Arrays inside the DSP object
+    //==============================
+    // Array iRec0
+    fManager->info(8, 4, 2);
+    //==========================================
+    // Subcontainers used in instanceConstants
+    //==========================================
+    fManager->end();
+}
+```
+
+#### Defining and using a custom memory manager
+
+When compiled with the `-mem` option, the client code has to define an adapted `memory_manager` class for its specific needs. A cutom memory manager is implemented by subclassing the `dsp_memory_manager`  abstract base class, and defining the `begin`, `end`,  `ìnfo`, `allocate` and `destroy` methods. Here is an example of a simple heap allocating manager:
 
 ```c++
 struct malloc_memory_manager : public dsp_memory_manager {
 
+    virtual void begin(size_t count)
+    {
+        // TODO: use ‘count’
+    }
+
+    virtual void end()
+    {
+        // TODO: start sorting the list of memory zones, to prepare 
+        // for the future allocations done in memoryCreate()
+    }
+
+    virtual void info(size_t size, size_t reads, size_t writes)
+    {
+        // TODO: use 'size', ‘reads’ and ‘writes’
+        // to prepare memory layout for allocation
+    }
+
     virtual void* allocate(size_t size)
     {
-        void* res = malloc(size);
-        cout << "malloc_manager: " << size << endl;
-        return res;
+        // TODO: refine the allocation scheme to take
+        // in account what was collected in info
+        return calloc(1, size);
     }
 
     virtual void destroy(void* ptr)
     {
-        cout << "free_manager" << endl;
+        // TODO: refine the allocation scheme to take
+        // in account what was collected in info
         free(ptr);
     }
 
 };
 ```
 
-#### Controlling the table memory allocation
-
-To control table memory allocation, the architecture file will have to do:
+And the specialized `malloc_memory_manager` class can now be used the following way:
 
 ```c++
-// Allocate a custom memory allocator
-malloc_memory_manager manager; 
+// Allocate a global static custom memory manager
+static malloc_memory_manager gManager;
 
-// Setup manager for the class
-mydsp::fManager = &manager;
+// Setup the global custom memory manager on the DSP class
+mydsp::fManager = &gManager;
 
-// Allocate the dsp instance using regular C++ new
-mydsp* dsp = new mydsp();
+// Make the memory manager get information on all subcontainers,
+// static tables, DSP and arrays and prepare memory allocation
+mydsp::memoryInfo();
 
-// Allocate static tables (using the custom memory allocator)
-mydsp::classInit(48000);
+// Done once before allocating any DSP, to allocate static tables
+mydsp::classInit(44100);
 
-// Initialise the given instance
-dsp->instanceInit(48000);
+// ‘Placement new’ and 'memoryCreate' are used inside the ‘create’ method 
+dsp* DSP = mydsp::create();
+
+// Init the DSP instance
+DSP->instanceInit(44100);
 
 ...
+... // use the DSP
 ...
 
-// Deallocate the dsp instance using regular C++ delete
-delete dsp;
+// 'memoryDestroy' and memory manager 'destroy' are used to deallocate memory
+mydsp::destroy();
 
-// Deallocate static tables (using the custom memory allocator)
+// Done once after the last DSP has been destroyed
 mydsp::classDestroy();
 ```
 
-#### Controlling the complete DSP memory allocation
-
-Full control the DSP memory allocation can be done using [C++ placement new](https://en.wikipedia.org/wiki/Placement_syntax):
+Note that the client code can still choose to allocate/deallocate the DSP instance using the regular C++ `new/delete` operators:
 
 ```c++
-#include <new>
+// Allocate a global static custom memory manager
+static malloc_memory_manager gManager;
 
-// Allocate a custom memory allocator
-malloc_memory_manager manager; 
+// Setup the global custom memory manager on the DSP class
+mydsp::fManager = &gManager;
 
-// Setup manager for the class
-mydsp::fManager = &manager;
+// Make the memory manager get information on all subcontainers,
+// static tables, DSP and arrays and prepare memory allocation
+mydsp::memoryInfo();
 
-// Placement new using the custom allocator
-mydsp* dsp = new(manager.allocate(sizeof(mydsp))) mydsp();
+// Done once before allocating any DSP, to allocate static tables
+mydsp::classInit(44100);
 
-// Allocate static tables (using the custom memory allocator)
-mydsp::classInit(48000);
+// Use regular C++ new
+dsp* DSP = new mydsp();
 
-// Initialise the given instance
-dsp->instanceInit(48000);
+/// Allocate internal buffers using the custom memory manager
+DSP->memoryCreate();
+
+// Init the DSP instance
+DSP->instanceInit(44100);
 
 ...
+... // use the DSP
 ...
 
-// Calling the destructor
-dsp->~mydsp();
+// Deallocate internal buffers
+DSP->memoryDestroy();
 
-// Deallocate the pointer itself using the custom memory allocator
-manager.destroy(dsp);
+// Use regular C++ delete
+delete DSP;
 
-// Deallocate static tables (using the custom memory allocator)
+// Done once after the last DSP has been destroyed
 mydsp::classDestroy();
 ```
 
-More complex custom memory allocators can be developed by refining this `malloc_memory_manager`example, possibly defining real-time memory allocators...etc... The [OWL](https://www.rebeltech.org) architecture file uses this [custom memory allocator model](https://github.com/pingdynasty/OwlProgram/blob/master/FaustCode/owl.cpp).
+More complex custom memory allocators can be developed by refining this `malloc_memory_manager` example, possibly defining real-time memory allocators...etc... The [OWL](https://www.rebeltech.org) architecture file uses this [custom memory allocator model](https://github.com/pingdynasty/OwlProgram/blob/master/FaustCode/owl.cpp).
 
-**Note of february 2021**: this custom memory mode is currently only available with the C++ backend. Since Faust is now used in embedded devices, a new flexible will have to be designed in the coming months to answer to more advanced memory layout requirements.
 
 ### Mesuring the DSP CPU
 
@@ -1266,7 +1495,7 @@ process = _*hslider("Gain", 0, 0, 1, 0.01) : hbargraph("Vol", 0, 1);
 
 The `FAUST_ADDHORIZONTALSLIDER` or `FAUST_ADDHORIZONTALBARGRAPH` can then be implemented to do whatever is needed with the `Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f` and `"Vol", fHbargraph0, 0.0f, 1.0f` parameters respectively. 
 
-The more sophisticated `FAUST_LIST_ACTIVES` and `FAUST_LIST_PASSIVES` macros can possibly be used to call any `p` function (defined elsewhere in the architecture file) on each item. The [minimal-static.cpp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-static.cpp) file demonstrates this feature.
+The more sophisticated `FAUST_LIST_ACTIVES` and `FAUST_LIST_PASSIVES` macros can possibly be used to call any `p` function (defined elsewhere in the architecture file) on each item. The [minimal-static.cpp](https://github.com/pingdynasty/OwlProgram/blob/develop/FaustSource/owl.cpp) file demonstrates this feature.
 
 ## Developing a New Architecture File
 
