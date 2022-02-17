@@ -1104,23 +1104,12 @@ The C++ generated code now contains a new `memoryInfo` method, which interacts w
 ```c++
 static void memoryInfo() {
     fManager->begin(3);
-    //=================================
-    // Subcontainers used in classInit
-    //=================================
-    //============
-    // DSP object
-    //============
-    fManager->info(sizeof(mydsp), 9, 1);
-    //==============================
-    // Arrays inside the DSP object
-    //==============================
-    // Array fRec0
+    // mydsp
+    fManager->info(40, 9, 1);
+    // fRec0
     fManager->info(262144, 2, 1);
-    // Array fRec1
+    // fRec1
     fManager->info(262144, 2, 1);
-    //==========================================
-    // Subcontainers used in instanceConstants
-    //==========================================
     fManager->end();
 }
 ```

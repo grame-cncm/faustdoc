@@ -1529,23 +1529,12 @@ float* fRec1;
 <p>The C++ generated code now contains a new <code>memoryInfo</code> method, which interacts with the memory manager:</p>
 <pre><code class="language-c++">static void memoryInfo() {
     fManager-&gt;begin(3);
-    //=================================
-    // Subcontainers used in classInit
-    //=================================
-    //============
-    // DSP object
-    //============
-    fManager-&gt;info(sizeof(mydsp), 9, 1);
-    //==============================
-    // Arrays inside the DSP object
-    //==============================
-    // Array fRec0
+    // mydsp
+    fManager-&gt;info(40, 9, 1);
+    // fRec0
     fManager-&gt;info(262144, 2, 1);
-    // Array fRec1
+    // fRec1
     fManager-&gt;info(262144, 2, 1);
-    //==========================================
-    // Subcontainers used in instanceConstants
-    //==========================================
     fManager-&gt;end();
 }
 </code></pre>
