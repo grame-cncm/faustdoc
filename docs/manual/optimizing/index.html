@@ -414,7 +414,7 @@ process = *(vol);
     }
 }
 </code></pre>
-<p>If the control parameter needs to be smoothed (like to avoid clicks or too abrupt changes), with the <code>control : si.smoo</code> kind of code, the computation rate moves from <em>control rate</em> to <em>sample rate</em>, and will be more costly. If the previous DSP code is now changed with:</p>
+<p>If the control parameter needs to be smoothed (like to avoid clicks or too abrupt changes), with the <code>control : si.smoo</code> kind of code, the computation rate moves from <em>control rate</em> to <em>sample rate</em>. If the previous DSP code is now changed with:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : si.smoo;
 process = *(vol);
@@ -431,7 +431,7 @@ process = *(vol);
     }
 }
 </code></pre>
-<p>So the CPU usage will obviously be higher, and the need for parameter smoothing <em>should be carefully studied</em>.</p>
+<p>So the CPU usage will obviously be higher, and the need for parameter smoothing should be carefully studied.</p>
 <p>Another point to consider is the <em>order of computation</em> when smoothing control. In the following DSP code, the slider value is <em>first</em> converted first to a dB value, <em>then</em> smoothed:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 smoother_vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : ba.linear2db : si.smoo;

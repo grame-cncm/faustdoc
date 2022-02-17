@@ -57,7 +57,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 }
 ```
 
-If the control parameter needs to be smoothed (like to avoid clicks or too abrupt changes), with the `control : si.smoo` kind of code, the computation rate moves from *control rate* to *sample rate*, and will be more costly. If the previous DSP code is now changed with:
+If the control parameter needs to be smoothed (like to avoid clicks or too abrupt changes), with the `control : si.smoo` kind of code, the computation rate moves from *control rate* to *sample rate*. If the previous DSP code is now changed with:
 
 ```
 import("stdfaust.lib");
@@ -81,7 +81,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 }
 ```
 
-So the CPU usage will obviously be higher, and the need for parameter smoothing *should be carefully studied*.
+So the CPU usage will obviously be higher, and the need for parameter smoothing should be carefully studied.
 
 Another point to consider is the *order of computation* when smoothing control. In the following DSP code, the slider value is *first* converted first to a dB value, *then* smoothed:
 
