@@ -508,7 +508,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#writting-the-c-code" class="nav-link">Writting the C++ code</a>
+            <li class="nav-item" data-level="3"><a href="#customizing-the-c-code" class="nav-link">Customizing the C++ code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -2235,7 +2235,7 @@ echo $BINARIES
 process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 </code></pre>
 <p>The point of explicitly using <code>soundfile</code> primitive and a <code>nentry</code> control is to generate a C++ file with a prefilled DSP structure (containing the <code>fSoundfile0</code> and <code>fHslider0</code> fields) and code inside the <code>buildUserInterface</code> method. Compiling it manually with the following command: </p>
-<pre><code>faust spectral.dsp -cn spectral -o spectral.c++
+<pre><code>faust spectral.dsp -cn spectral -o spectral.cpp
 </code></pre>
 <p>produces the following C++ code containing the <code>spectral</code> class:</p>
 <pre><code class="language-c++">class spectral : public dsp {
@@ -2273,12 +2273,12 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 
 };
 </code></pre>
-<h3 id="writting-the-c-code">Writting the C++ code</h3>
+<h3 id="customizing-the-c-code">Customizing the C++ code</h3>
 <p>Now the <code>spectral</code> class can be manually edited and completed with additional code, to compute the two audio files spectrograms in <code>buildUserInterface</code>, and play them in <code>compute</code>. </p>
 <ul>
 <li>a new line <code>Spectrogram fSpectro[2];</code> is added in the DSP structure</li>
 <li>a <code>createSpectrogram(fSoundfile0, fSpectro);</code> function is added in <code>buildUserInterface</code> and used to compute and fill the two spectrograms, by reading the two loaded audio files in <code>fSoundfile0</code></li>
-<li>part of the generated code in <code>compute</code> is removed and replaced by new code to play one of spectrograms (selected with the <code>fHslider0</code> control in the GUI) using a <code>playSpectrogram(fSpectro, count, iSlow0, outputs);</code> function</li>
+<li>part of the generated code in <code>compute</code> is removed and replaced by new code to play one of spectrograms (selected with the <code>fHslider0</code> control in the GUI) using a <code>playSpectrogram(fSpectro, count, iSlow0, outputs);</code> function:</li>
 </ul>
 <pre><code class="language-c++">class spectral : public dsp {
 

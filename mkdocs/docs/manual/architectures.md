@@ -1930,7 +1930,7 @@ process = (hslider("Spectro", 0, 0, 1, 1),0) : sf : !,!,_,_;
 The point of explicitly using `soundfile` primitive and a `nentry` control is to generate a C++ file with a prefilled DSP structure (containing the `fSoundfile0` and `fHslider0` fields) and code inside the `buildUserInterface` method. Compiling it manually with the following command: 
 
 ```
-faust spectral.dsp -cn spectral -o spectral.c++
+faust spectral.dsp -cn spectral -o spectral.cpp
 ```
 
 produces the following C++ code containing the `spectral` class:
@@ -1971,13 +1971,13 @@ class spectral : public dsp {
 
 };
 ```
-### Writting the C++ code
+### Customizing the C++ code
 
 Now the `spectral` class can be manually edited and completed with additional code, to compute the two audio files spectrograms in `buildUserInterface`, and play them in `compute`. 
 
 - a new line `Spectrogram fSpectro[2];` is added in the DSP structure
 - a `createSpectrogram(fSoundfile0, fSpectro);` function is added in `buildUserInterface` and used to compute and fill the two spectrograms, by reading the two loaded audio files in `fSoundfile0`
-- part of the generated code in `compute` is removed and replaced by new code to play one of spectrograms (selected with the `fHslider0` control in the GUI) using a `playSpectrogram(fSpectro, count, iSlow0, outputs);` function
+- part of the generated code in `compute` is removed and replaced by new code to play one of spectrograms (selected with the `fHslider0` control in the GUI) using a `playSpectrogram(fSpectro, count, iSlow0, outputs);` function:
 
 
 ```c++
