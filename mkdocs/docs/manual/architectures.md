@@ -1047,7 +1047,7 @@ The two  `fRec0` and  `fRec1` arrays are becoming pointers, and will be allocate
 
 An external memory manager is needed to interact with the DSP code. The proposed model does the following:
 
-- in a first step the generated C++ code will inform the memory allocator about its needs in terms of 1) the number of separated memory zones, with 2) their size and 3) access characteristics (like number of Read and Write for each frame computation). This is done be generating an additional  static `memoryInfo` method 
+- in a first step the generated C++ code will inform the memory allocator about its needs in terms of 1) number of separated memory zones, with 2) their size 3) access characteristics, like number of Read and Write for each frame computation. This is done be generating an additional  static `memoryInfo` method 
 - with the complete information available, the memory manager can then define the best strategy to allocate all separated memory zones
 - an additional `memoryCreate` method  is generated to allocate each of the separated zones
 - an additional `memoryDestroy` method  is generated to deallocate each of the separated zones
@@ -1115,7 +1115,7 @@ static void memoryInfo() {
 ```
 The `begin` method is first generated to inform that three separated memory zones will be needed. Then three consecutive calls to the `info` method are generated, one for the DSP object itself, one for each recursive delay array. The `end` method is then called to finish the memory layout description, and let the memory manager prepare the actual allocations. 
 
-Finally the  `memoryCreate` and  `memoryDestroy` methods are generated. The  `memoryCreate` method asks the memory manager to allocate the `fRec0` and `fRec1` buffers:
+Finally the  `memoryCreate` and  `memoryDestroy` methods are generated. The `memoryCreate` method asks the memory manager to allocate the `fRec0` and `fRec1` buffers:
 
 ```c++
 void memoryCreate() {
@@ -1241,43 +1241,32 @@ class mydsp : public dsp {
 }
 ```
 
-The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are generated as static global pointers. The`classInit`  method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. Finally the `init` method is now empty, since the architecure file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
+The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are generated as static global pointers. The `classInit`  method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. Finally the `init` method is now empty, since the architecure file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
 
 The `memoryInfo` method now has the following shape, where the two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are describes in the *Subcontainers used in classInit* section:
 
 ```c++
 static void memoryInfo() {
     fManager->begin(6);
-    //=================================
-    // Subcontainers used in classInit
-    //=================================
-    // Subcontainer mydspSIG0
-    fManager->info(sizeof(mydspSIG0), 0, 0);
-    // Table name itbl0mydspSIG0
+    // mydspSIG0
+    fManager->info(4, 0, 0);
+    // itbl0mydspSIG0
     fManager->info(28, 1, 0);
-    // Subcontainer mydspSIG1
-    fManager->info(sizeof(mydspSIG1), 0, 0);
-    // Table name ftbl1mydspSIG1
+    // mydspSIG1
+    fManager->info(4, 0, 0);
+    // ftbl1mydspSIG1
     fManager->info(28, 1, 0);
-    //============
-    // DSP object
-    //============
-    fManager->info(sizeof(mydsp), 0, 0);
-    //==============================
-    // Arrays inside the DSP object
-    //==============================
-    // Array iRec0
+    // mydsp
+    fManager->info(12, 0, 0);
+    // iRec0
     fManager->info(8, 4, 2);
-    //==========================================
-    // Subcontainers used in instanceConstants
-    //==========================================
     fManager->end();
 }
 ```
 
 #### Defining and using a custom memory manager
 
-When compiled with the `-mem` option, the client code has to define an adapted `memory_manager` class for its specific needs. A cutom memory manager is implemented by subclassing the `dsp_memory_manager`  abstract base class, and defining the `begin`, `end`,  `ìnfo`, `allocate` and `destroy` methods. Here is an example of a simple heap allocating manager:
+When compiled with the `-mem` option, the client code has to define an adapted `memory_manager` class for its specific needs. A cutom memory manager is implemented by subclassing the `dsp_memory_manager` abstract base class, and defining the `begin`, `end`, `ìnfo`, `allocate` and `destroy` methods. Here is an example of a simple heap allocating manager:
 
 ```c++
 struct malloc_memory_manager : public dsp_memory_manager {
@@ -1316,7 +1305,7 @@ struct malloc_memory_manager : public dsp_memory_manager {
 };
 ```
 
-And the specialized `malloc_memory_manager` class can now be used the following way:
+The specialized `malloc_memory_manager` class can now be used the following way:
 
 ```c++
 // Allocate a global static custom memory manager
@@ -1368,7 +1357,7 @@ mydsp::classInit(44100);
 // Use regular C++ new
 dsp* DSP = new mydsp();
 
-/// Allocate internal buffers using the custom memory manager
+/// Allocate internal buffers
 DSP->memoryCreate();
 
 // Init the DSP instance
@@ -1388,11 +1377,34 @@ delete DSP;
 mydsp::classDestroy();
 ```
 
+Or even on the stack with:
+
+```c++
+...
+
+// Allocation on the stack
+mydsp DSP;
+
+// Allocate internal buffers
+DSP.memoryCreate();
+
+// Init the DSP instance
+DSP.instanceInit(44100);
+
+...
+... // use the DSP
+...
+
+// Deallocate internal buffers
+DSP.memoryDestroy();
+
+...
+```
 More complex custom memory allocators can be developed by refining this `malloc_memory_manager` example, possibly defining real-time memory allocators...etc... The [OWL](https://www.rebeltech.org) architecture file uses this [custom memory allocator model](https://github.com/pingdynasty/OwlProgram/blob/master/FaustCode/owl.cpp).
 
 #### Allocating several DSP instances
 
-In a multiple instances scheme, static data structures shared by all instances have to be allocated once at beginning using `mydsp::classInit`, and deallocated at the end using `mydsp::classDestroy`. Individual instances are then allocated with `mydsp::create()` and deallocated with `mydsp::destroy()`.
+In a multiple instances scheme, static data structures shared by all instances have to be allocated once at beginning using `mydsp::classInit`, and deallocated at the end using `mydsp::classDestroy`. Individual instances are then allocated with `mydsp::create()` and deallocated with `mydsp::destroy()`, possibly directly using regular `new/delete`, or using stack allocation as explained before.
 
 
 ### Mesuring the DSP CPU
