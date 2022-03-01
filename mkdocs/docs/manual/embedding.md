@@ -4,7 +4,7 @@
 
 The Faust compiler uses an intermediate FIR representation (Faust Imperative Representation), which can be translated to several output languages. The FIR language describes the computation performed on the samples in a generic manner. It contains primitives to read and write variables and arrays, do arithmetic operations, and define the necessary control structures (`for` and `while` loops, `if` structure, etc.). 
 
-To generate various output languages, several backends have been developed: for C, C++, Interpreter, Java, LLVM IR, WebAssembly, etc. The Interpreter, LLVM IR and WebAssembly ones are particularly interesting: they allow direct compilation of a DSP program into executable code in memory, bypassing the external compiler requirement.
+To generate various output languages, several backends have been developed for C, C++, Interpreter, Java, LLVM IR, WebAssembly, etc. The Interpreter, LLVM IR and WebAssembly ones are particularly interesting since they allow the direct compilation of a DSP program into executable code in memory, bypassing the external compiler requirement.
 
 ## Using libfaust with the LLVM backend
 
