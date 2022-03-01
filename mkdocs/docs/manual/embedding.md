@@ -1,20 +1,12 @@
 # Embedding the Faust Compiler Using libfaust
 
-The combination of the awesome [LLVM technology](https://llvm.org/) and `libfaust` (the library version of the Faust compiler) allows developers to compile and execute Faust DSP programs on the fly at full speed and without making compromises. It also contains an Interpreter backend to be used on OS not supporting dynamic compilation (like Apple iOS), or in testing tools.
-
 ## Dynamic Compilation Chain
 
 The Faust compiler uses an intermediate FIR representation (Faust Imperative Representation), which can be translated to several output languages. The FIR language describes the computation performed on the samples in a generic manner. It contains primitives to read and write variables and arrays, do arithmetic operations, and define the necessary control structures (`for` and `while` loops, `if` structure, etc.). 
 
-To generate various output languages, several backends have been developed: for C, C++, Java, LLVM IR, WebAssembly, etc. The native LLVM based compilation chain is particularly interesting: it provides direct compilation of a DSP source into executable code in memory, bypassing the external compiler requirement.
-
-### Low Level Virtual Machine (LLVM)
-
-[LLVM](https://llvm.org/) is a compiler infrastructure, designed for compile-time, link-time, and run-time optimization of programs written in arbitrary programming languages. Executable code is produced dynamically using a *Just In Time* compiler from a specific code representation, called LLVM IR. Clang, the LLVM native C/C++/Objective-C compiler is a front-end for the LLVM Compiler. It can, for instance, convert a C or C++ source file into LLVM IR code. Domain-specific languages like Faust can easily target the LLVM IR. This has been done by developing an LLVM IR backend in the Faust compiler.
+To generate various output languages, several backends have been developed: for C, C++, Interpreter, Java, LLVM IR, WebAssembly, etc. The Interpreter, LLVM IR and WebAssembly ones are particularly interesting: they allow direct compilation of a DSP program into executable code in memory, bypassing the external compiler requirement.
 
 ## Using libfaust with the LLVM backend
-
-The `libfaust` library is fully integrated to the Faust distribution which has to be compiled and installed to make it available. For an exhaustive documentation/description of the API, the code in the [`faust/dsp/llvm-dsp.h`](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) header file. Note that `faust/dsp/llvm-c-dsp.h` is a pure C version of the same API. Additional functions are available in `faust/dsp/libfaust.h` and their C version can be found in `faust/dsp/libfaust-c.h`.
 
 ### Libfaust with LLVM backend API
 
@@ -132,6 +124,10 @@ The complete API is available and documented in the installed [faust/dsp/interpr
 
 The generated code is obviously much slower than LLVM generated native code. Measurements on various DSPs examples have been done, and the code is between 3 and more than 10 times slower than the LLVM native code.
 
+
+## Using libfaust with the WebAssembly backend
+
+The libfaust C++ library can be compiled in WebAssembly with [Emscripten](https://emscripten.org/), and used in the web  or NodeJS platforms. A [specific page on the subject](https://faustdoc.grame.fr/manual/deploying/) is available. 
 
 ## Additional Functions
 
