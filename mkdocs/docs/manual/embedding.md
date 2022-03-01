@@ -197,3 +197,6 @@ The dynamic compilation chain has been used in several projects:
 * [DawDreamer](https://github.com/DBraun/DawDreamer) is an audio-processing Python framework supporting core DAW features. It uses the libfaust LLVM C API.
 
 * [metaSurface64](https://github.com/dblanchemain/metaSurface) is a real-time continuous sound transformation control surface that features both its own loop generator for up to 64 voices and a multi-effects FX engine.  It uses the libfaust LLVM C++ API.
+
+* [metaFx](https://faust.grame.fr/community/made-with-faust/#metafx) is a control surface for continuous sound transformations in real time, just like the metaSurface64.
+Like metaSurface64, it has both its own loop generator and a multi-effects FX engine, but its operation is different, especially for the management of plugin chains and pads.
