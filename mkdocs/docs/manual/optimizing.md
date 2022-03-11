@@ -151,6 +151,10 @@ The Faust compiler automatically allocates memory for delay-lines, represented a
 
 The `-dlt <n>`  (`--delay-line-threshold`) option allows to choose between the two available stategies. By default its value is INT_MAX thus all delay-lines are allocated using the first method. By choising a given value (in frames) for `-dlt`, all delay-lines with size bellow this value will be allocated using the first method (faster but consuming more memory), and other ones with the second method (slower but consuming less memory). Thus by gradually changing this `-dlt`  value in this continuum *faster/more memory up to slower/less memory*, the optimal choice can be done. **This option can be especially useful in embedded devices context.**
 
+### Managing DSP Memory Layout
+
+On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the `-mem` compilation option and an [adapted architecture file](https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager).
+
 ## Optimizing the C++ or LLVM Code
 
 From a given DSP program, the Faust compiler tries to generate the most efficient implementation. Optimizations can be done at DSP writing time, or later on when the target langage is generated (like  C++ or LLVM IR).
