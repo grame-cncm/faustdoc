@@ -344,6 +344,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#adapting-the-c-generated-code" class="nav-link">Adapting the C++ generated code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#optimizing-the-c-or-llvm-code" class="nav-link">Optimizing the C++ or LLVM Code</a>
@@ -458,7 +462,8 @@ process = *(smoother_vol);
 smoother_vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : si.smoo: ba.linear2db;
 process = *(smoother_vol);
 </code></pre>
-<p>The generated C++ code for <code>compute</code> now has the <code>log10</code> math function used in <code>ba.linear2db</code> evaluted at sample rate in the DSP loop, which is obviously much more costly:</p>
+<p>The generated C++ code for <code>compute</code> now has the <code>log10</code> math function used in <code>ba.linear2db</code> evaluted at sample rate in the DSP loop, which is obviously much more costly:
+-dlt</p>
 <pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
@@ -485,6 +490,13 @@ process = *(smoother_vol);
 <p>The <code>-dlt &lt;n&gt;</code>  (<code>--delay-line-threshold</code>) option allows to choose between the two available stategies. By default its value is INT_MAX thus all delay-lines are allocated using the first method. By choising a given value (in frames) for <code>-dlt</code>, all delay-lines with size bellow this value will be allocated using the first method (faster but consuming more memory), and other ones with the second method (slower but consuming less memory). Thus by gradually changing this <code>-dlt</code>  value in this continuum <em>faster/more memory up to slower/less memory</em>, the optimal choice can be done. <strong>This option can be especially useful in embedded devices context.</strong></p>
 <h3 id="managing-dsp-memory-layout">Managing DSP Memory Layout</h3>
 <p>On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the <code>-mem</code> compilation option and an <a href="https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager">adapted architecture file</a>.</p>
+<h3 id="adapting-the-c-generated-code">Adapting the C++ generated code</h3>
+<p>Some options can be used to change the C++ generated code: </p>
+<ul>
+<li><code>-clang</code> option: when compiled with clang/clang++, adds specific #pragma for auto-vectorization.</li>
+<li><code>-nvi</code> option: when compiled with the C++ backend, does not add the 'virtual' keyword. <strong>This option can be especially useful in embedded devices context</strong> </li>
+<li><code>-mapp</code> option: simpler/faster versions of 'floor/ceil/fmod/remainder' functions.</li>
+</ul>
 <h2 id="optimizing-the-c-or-llvm-code">Optimizing the C++ or LLVM Code</h2>
 <p>From a given DSP program, the Faust compiler tries to generate the most efficient implementation. Optimizations can be done at DSP writing time, or later on when the target langage is generated (like  C++ or LLVM IR).
 The generated code can have different <em>shapes</em> depending of compilation options, and can run faster of slower. Several programs and tools are available to help Faust programmers to test (for possible numerical or precision issues), optimize their programs by discovering the best set of options for a given DSP code, and finally compile them into native code for the target CPUs. </p>

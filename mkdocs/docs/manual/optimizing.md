@@ -115,8 +115,7 @@ process = *(smoother_vol);
 ```
 
 The generated C++ code for `compute` now has the `log10` math function used in `ba.linear2db` evaluted at sample rate in the DSP loop, which is obviously much more costly:
-
-
+-dlt
 ```c++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
@@ -154,6 +153,14 @@ The `-dlt <n>`  (`--delay-line-threshold`) option allows to choose between the t
 ### Managing DSP Memory Layout
 
 On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the `-mem` compilation option and an [adapted architecture file](https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager).
+
+### Adapting the C++ generated code
+
+Some options can be used to change the C++ generated code: 
+
+-  `-clang` option: when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
+-  `-nvi` option: when compiled with the C++ backend, does not add the 'virtual' keyword. **This option can be especially useful in embedded devices context** 
+-  `-mapp` option: simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
 
 ## Optimizing the C++ or LLVM Code
 
