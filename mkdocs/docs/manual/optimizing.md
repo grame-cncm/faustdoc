@@ -154,13 +154,6 @@ The `-dlt <n>`  (`--delay-line-threshold`) option allows to choose between the t
 
 On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the `-mem` compilation option and an [adapted architecture file](https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager).
 
-### Adapting the C++ generated code
-
-Some options can be used to change the C++ generated code: 
-
--  `-clang` option: when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
--  `-nvi` option: when compiled with the C++ backend, does not add the 'virtual' keyword. **This option can be especially useful in embedded devices context** 
--  `-mapp` option: simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
 
 ## Optimizing the C++ or LLVM Code
 
@@ -171,7 +164,11 @@ By default the Faust compiler produces a big scalar loop in the generated `mydsp
 
 Delay lines implementation can be be controlled with the `-mcd size` and `-dlt size` options, to choose for example between *power-of-two sizes and mask based wrapping* (faster but consumming more memory) or *if based wrapping*, slower but consumming less memory. 
 
-A lot of other compilation choices are fully controllable with options. Note that the C/C++ and LLVM backends are the one with the maximum of possible compilation options. 
+A lot of other compilation choices are fully controllable with options. Note that the C/C++ and LLVM backends are the one with the maximum of possible compilation options. Here    are some of them:
+
+-  `-clang` option: when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
+-  `-nvi` option: when compiled with the C++ backend, does not add the 'virtual' keyword. **This option can be especially useful in embedded devices context** 
+-  `-mapp` option: simpler/faster versions of 'floor/ceil/fmod/remainder' functions (experimental)
 
 Manually testing each of them and their combination is out of reach. So several tools have been developed to automatize that process and help search the configuration space to discover the best set of compilation options: 
 
