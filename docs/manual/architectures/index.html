@@ -2059,7 +2059,7 @@ int main(int argc, char* argv[])
 };
 </code></pre>
 <p>or <em>subclassing</em> and <em>extending it</em>, so writing something like:</p>
-<pre><code class="language-c++">class my_class : public mydsp  {
+<pre><code class="language-c++">class my_class : public mydsp {
 
     private:
 
@@ -2077,9 +2077,8 @@ int main(int argc, char* argv[])
             // Do something specific
         }
 
-        // Do something specific
-
-        void my_compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+        // Override the 'compute' method
+        void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
         {
             // Do something specific
 

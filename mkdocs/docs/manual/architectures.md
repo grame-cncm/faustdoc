@@ -1716,7 +1716,7 @@ class my_class : public base_interface {
 or *subclassing* and *extending it*, so writing something like:
 
 ```c++
-class my_class : public mydsp  {
+class my_class : public mydsp {
 
     private:
 
@@ -1734,9 +1734,8 @@ class my_class : public mydsp  {
             // Do something specific
         }
 
-        // Do something specific
-
-        void my_compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+        // Override the 'compute' method
+        void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
         {
             // Do something specific
             
