@@ -12,7 +12,7 @@ Since using sound files (actually all formats that can be read by the [libsndfil
 
 Check the [faust2xx]( https://faustdoc.grame.fr/manual/tools/) script description page to know which one currently support the *-soundfile* option.
 
-### The Soundfile Library
+## The Soundfile Library
 
 They are some additional functions in the [soundfiles.lib](https://faustlibraries.grame.fr/libs/soundfiles/) library. Three basic functions are fully documented for now. There is more code already written in the [library source](https://github.com/grame-cncm/faustlibraries/blob/master/soundfiles.lib) that allows to read sound files with different kind of interpolation.
 
