@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.37.3
+## FAUST compiler version 2.40.0
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -11,7 +11,7 @@ usage : faust [options] file1 [file2 ...].
   -a <file>                               wrapper architecture file.
   -i        --inline-architecture-files   inline architecture files.
   -A <dir>  --architecture-dir <dir>      add the directory <dir> to the architecture search path.
-  -I <dir>  --import-dir <dir>            add the directory <dir> to the import search path.
+  -I <dir>  --import-dir <dir>            add the directory <dir> to the libraries search path.
   -L <file> --library <file>              link with the LLVM module <file>.
   -t <sec>  --timeout <sec>               abort compilation after <sec> seconds (default 120).
 ~~~
@@ -38,17 +38,20 @@ usage : faust [options] file1 [file2 ...].
   -lcc        --local-causality-check     check causality also at local level.
   -light      --light-mode                do not generate the entire DSP API.
   -clang      --clang                     when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
+  -nvi        --no-virtual                when compiled with the C++ backend, does not add the 'virtual' keyword.
   -exp10      --generate-exp10            pow(10,x) replaced by possibly faster exp10(x).
   -os         --one-sample                generate one sample computation (same as -os0).
   -os0        --one-sample0               generate one sample computation (0 = separated control).
   -os1        --one-sample1               generate one sample computation (1 = separated control and DSP struct).
+  -os2        --one-sample2               generate one sample computation (2 = separated control and DSP struct. Separation in short and long delay lines).
+  -os3        --one-sample3               generate one sample computation (3 = like 2 but with external memory pointers kept in the DSP struct).
   -cm         --compute-mix               mix in outputs buffers.
   -cn <name>  --class-name <name>         specify the name of the dsp class to be used instead of mydsp.
   -scn <name> --super-class-name <name>   specify the name of the super class to be used instead of dsp.
   -pn <name>  --process-name <name>       specify the name of the dsp entry-point instead of process.
   -mcd <n>    --max-copy-delay <n>        threshold between copy and ring buffer implementation (default 16 samples).
   -dlt <n>    --delay-line-threshold <n>  threshold between 'mask' and 'select' ring buffer implementation (default INT_MAX samples).
-  -mem        --memory                    allocate static in global state using a custom memory manager.
+  -mem        --memory-manager            allocate static in global state using a custom memory manager.
   -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
   -rui        --range-ui                  whether to generate code to limit vslider/hslider/nentry values in [min..max] range.
   -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compiling a dsp file.
