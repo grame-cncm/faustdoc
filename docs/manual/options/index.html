@@ -294,7 +294,7 @@
             
             <li class="nav-item" data-level="1"><a href="#faust-compiler-options" class="nav-link">Faust Compiler Options</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2373" class="nav-link">FAUST compiler version 2.37.3</a>
+            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2400" class="nav-link">FAUST compiler version 2.40.0</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -338,7 +338,7 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="faust-compiler-options">Faust Compiler Options</h1>
-<h2 id="faust-compiler-version-2373">FAUST compiler version 2.37.3</h2>
+<h2 id="faust-compiler-version-2400">FAUST compiler version 2.40.0</h2>
 <pre><code class="language-faust-options">usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
     and fileN represents a Faust source file (.dsp extension).
@@ -348,7 +348,7 @@
 <pre><code class="language-faust-options">  -a &lt;file&gt;                               wrapper architecture file.
   -i        --inline-architecture-files   inline architecture files.
   -A &lt;dir&gt;  --architecture-dir &lt;dir&gt;      add the directory &lt;dir&gt; to the architecture search path.
-  -I &lt;dir&gt;  --import-dir &lt;dir&gt;            add the directory &lt;dir&gt; to the import search path.
+  -I &lt;dir&gt;  --import-dir &lt;dir&gt;            add the directory &lt;dir&gt; to the libraries search path.
   -L &lt;file&gt; --library &lt;file&gt;              link with the LLVM module &lt;file&gt;.
   -t &lt;sec&gt;  --timeout &lt;sec&gt;               abort compilation after &lt;sec&gt; seconds (default 120).
 </code></pre>
@@ -373,17 +373,20 @@
   -lcc        --local-causality-check     check causality also at local level.
   -light      --light-mode                do not generate the entire DSP API.
   -clang      --clang                     when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
+  -nvi        --no-virtual                when compiled with the C++ backend, does not add the 'virtual' keyword.
   -exp10      --generate-exp10            pow(10,x) replaced by possibly faster exp10(x).
   -os         --one-sample                generate one sample computation (same as -os0).
   -os0        --one-sample0               generate one sample computation (0 = separated control).
   -os1        --one-sample1               generate one sample computation (1 = separated control and DSP struct).
+  -os2        --one-sample2               generate one sample computation (2 = separated control and DSP struct. Separation in short and long delay lines).
+  -os3        --one-sample3               generate one sample computation (3 = like 2 but with external memory pointers kept in the DSP struct).
   -cm         --compute-mix               mix in outputs buffers.
   -cn &lt;name&gt;  --class-name &lt;name&gt;         specify the name of the dsp class to be used instead of mydsp.
   -scn &lt;name&gt; --super-class-name &lt;name&gt;   specify the name of the super class to be used instead of dsp.
   -pn &lt;name&gt;  --process-name &lt;name&gt;       specify the name of the dsp entry-point instead of process.
   -mcd &lt;n&gt;    --max-copy-delay &lt;n&gt;        threshold between copy and ring buffer implementation (default 16 samples).
   -dlt &lt;n&gt;    --delay-line-threshold &lt;n&gt;  threshold between 'mask' and 'select' ring buffer implementation (default INT_MAX samples).
-  -mem        --memory                    allocate static in global state using a custom memory manager.
+  -mem        --memory-manager            allocate static in global state using a custom memory manager.
   -ftz &lt;n&gt;    --flush-to-zero &lt;n&gt;         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
   -rui        --range-ui                  whether to generate code to limit vslider/hslider/nentry values in [min..max] range.
   -inj &lt;f&gt;    --inject &lt;f&gt;                inject source file &lt;f&gt; into architecture file instead of compiling a dsp file.
