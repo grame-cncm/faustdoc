@@ -45,25 +45,21 @@ The following subsections present the main tools build on top of the Faust compi
 
 ## FaustLive
 
-[FaustLive](https://github.com/grame-cncm/faustlive) is an advanced self-contained prototyping environment for the Faust programming language with an ultra-short edit-compile-run cycle. Thanks to its fully embedded compilation chain, FaustLive is simple to install and doesn't require any external compiler, development toolchain or SDK to run.
+[FaustLive](https://github.com/grame-cncm/faustlive) is an advanced self-contained prototyping environment for the Faust programming language with an ultra-short edit-compile-run cycle. Thanks to its fully embedded compilation chain, FaustLive is simple [to install](https://github.com/grame-cncm/faustlive/releases) and doesn't require any external compiler, development toolchain or SDK to run.
 
 FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled and run on the fly by simple drag and drop. They can even be edited and recompiled while running, without sound interruption. It supports also native applications generation using the Faust online compiler.
 
-
 ## Faustgen
 
-Faustgen is a Max-MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max-MSP. Faustgen is part of the [Faust](https://github.com/grame-cncm/faust) project, and distributed in the [Faust releases](https://github.com/grame-cncm/faust/releases).
+Faustgen is a Max/MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max/MSP. Faustgen is part of the [Faust](https://github.com/grame-cncm/faust) project, and distributed in the [Faust releases](https://github.com/grame-cncm/faust/releases).
 
+## Faust Editor
 
-## Online Faust Editor
+ [Faust Editor](https://fausteditor.grame.fr) is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures.
 
-The [Online Faust Editor](https://fausteditor.grame.fr) is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures.
+## Faust IDE
 
-
-## Online Faust IDE
-
-The [Online Faust IDE](https://faustide.grame.fr) is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures, but also various utilities for signal processing development.
-
+[Faust IDE](https://faustide.grame.fr) is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures, but also various utilities for signal processing development.
 
 ## Faust Playground
 
