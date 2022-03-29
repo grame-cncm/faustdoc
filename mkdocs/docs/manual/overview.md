@@ -1,34 +1,19 @@
 # Overview of the Faust Universe
 
-While in its most *primitive* form, Faust is distributed as a command-line 
-compiler, a wide range of tools have been developed around it in the course of 
-the past few years. Their variety and their function might be hard to grab at 
-first. This chapter provides an overview of their role and will hopefully 
-help you decide which one is better suited for your personal use. 
+While in its most *primitive* form, Faust is distributed as a command-line compiler, a wide range of tools have been developed around it in the course of the past few years. Their variety and their function might be hard to grab at first. This chapter provides an overview of their role and will hopefully help you decide which one is better suited for your personal use. 
 
-<!-- TODO: it'd be nice to have some kind of figure here summarizing everything
-the various Faust branches should appear in this figure: we want something
-as complete as possible. -->
+<!-- TODO: it'd be nice to have some kind of figure here summarizing everything the various Faust branches should appear in this figure: we want something as complete as possible. -->
 
 ## The Faust Distribution
 
-The Faust distribution hosts the source of the Faust compiler (both in its 
-command line and library version), the source of the Faust *architectures*
-(targets), the various Faust compilation scripts, a wide range of 
-Faust-related-tools, the [Faust DSP Libraries](https://faustlibraries.grame.fr) (which in practice
-are hosted a separate Git submodule), etc.
+The Faust distribution hosts the source of the Faust compiler (both in its command line and library version), the source of the Faust *architectures* (targets), the various Faust compilation scripts, a wide range of Faust-related-tools, the [Faust DSP Libraries](https://faustlibraries.grame.fr) (which in practice are hosted a separate Git submodule), etc.
 
 The latest stable release of the Faust distribution can be found [here](https://github.com/grame-cncm/faust/releases). It is recommended for most Faust users willing to compile the Faust compiler and libfaust from scratch.
 
-To have the latest stable development version, you can use the `master branch` of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master) which is hosted on GitHub. For something even more bleeding edge (to be used at your own risks), you might
-use the `master-dev` branch of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master-dev). 
-`master-dev` is the development sub-branch of `master`. It is used by Faust developers to commit 
-their changes and can be considered as "the main development branch". The goal 
-is to make sure that `master` is always functional. Merges between `master-dev` 
-and `master` are carried out multiple times a week by the GRAME team.
+To have the latest stable development version, you can use the `master branch` of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master) which is hosted on GitHub. For something even more bleeding edge (to be used at your own risks), you might use the `master-dev` branch of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master-dev). 
+`master-dev` is the development sub-branch of `master`. It is used by Faust developers to commit  their changes and can be considered as "the main development branch". The goal is to make sure that `master` is always functional. Merges between `master-dev`  and `master` are carried out at each stable release by the GRAME team.
 
-Also, note that pre-compiled packages of the Faust compiler and of libfaust
-for various platforms can be found on the of the [Faust website](https://faust.grame.fr).
+Also, note that pre-compiled packages of the Faust compiler and of libfaust for various platforms can be found on the of the [Faust website](https://faust.grame.fr).
 
 The Faust distribution is organized as follows:
 
