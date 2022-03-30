@@ -28,6 +28,10 @@ This post by [Matt K](https://medium.com/@kmatthew) is about starting audio Prog
 
 This tutorial focus on using Faust and on features that are specific to OWL and the OpenWare firmware.
 
+#### [I ported native guitar plugins to JavaScript (in-depth)](https://kutalia.medium.com/how-i-ported-native-musical-plugins-to-javascript-in-depth-dafa014dae01)
+
+This post by Konstantine Kutalia is porting Faust coded Kapitonov Plugins Pack in JavaScript.
+
 ## Various Tools
 
 ### Syntax Highlighting
