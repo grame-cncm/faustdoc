@@ -2,7 +2,7 @@
 
 Here is a list of additional material contributed by the community of Faust developers or users.
 
-## Articles et Blog posts
+## Articles and Blog Posts
 
 #### [Handling infinity and not-a-number (NaN) values in Faust and C++ audio programming](https://www.dariosanfilippo.com/blog/2020/handling_inf_nan_values_in_faust_and_cpp/)  
 
@@ -56,7 +56,7 @@ Faustine allows the edition of Faust code.
 
 Plugin to edit Faust code in the hyperextensible Vim-based text editor [neowim](http://neovim.io).
  
-### Code generators
+### Code Generators
  
 #### [faust2pdex](https://github.com/jujudusud/BPD/tree/master/tools/faust2pdex)
  
