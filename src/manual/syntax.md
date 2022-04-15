@@ -2610,6 +2610,8 @@ the volume slider has pathname `/h:Foo/v:Faa/volume`.
 
 In order to give more flexibility to the design of user interfaces, it is possible to explicitly specify the absolute or relative pathname of a widget directly in its label. 
 
+In our previous example the pathname of `hslider("../volume",...)` would have been `/h:Foo/volume`, while the pathname of `hslider("t:Fii/volume",...)` would have been `/h:Foo/v:Faa/t:Fii/volume`. 
+
 Elements of a path are separated using `/`. Group types are defined with the following identifiers:
 
 | Group Type | Group Identifier  |
