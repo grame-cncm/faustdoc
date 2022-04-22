@@ -32,6 +32,10 @@ This tutorial focus on using Faust and on features that are specific to OWL and 
 
 This post by Konstantine Kutalia is porting Faust coded Kapitonov Plugins Pack in JavaScript.
 
+#### [Using Faust with the Arduino Audio Tools Library](https://www.pschatzmann.ch/home/2022/04/22/using-faust-dsp-with-my-arduino-audio-tools/)
+
+A blog about using Faust with  Arduino Audio Tools.
+
 ## Various Tools
 
 ### Syntax Highlighting
