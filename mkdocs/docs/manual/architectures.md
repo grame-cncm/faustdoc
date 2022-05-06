@@ -469,7 +469,7 @@ Note that pure code generator can also be written. The `JSONUI` UI architecture 
 
 #### DSP JSON Description 
 
-The full description of a given compiled DSP can be generated as a JSON file, to be used at several places in the architecture system. This JSON describes the DSP with its inputs/outputs number, some metadata (filename, name, used compilation parameters, used libraries etc.) as well as its UI with a hierarchy of groups up to terminal items (buttons, sliders, nentries, bargraphs) with all their parameters (type, label, shortname, address, metadata, init, min, max and step values). For the following DSP program:
+The full description of a given compiled DSP can be generated as a JSON file, to be used at several places in the architecture system. This JSON describes the DSP with its inputs/outputs number, some metadata (filename, name, used compilation parameters, used libraries etc.) as well as its UI with a hierarchy of groups up to terminal items (*buttons*, *sliders*, *nentries*, *bargraphs*) with all their parameters (*type*, *label*, *shortname*, *address*, *meta*, *init*, *min*, *max* and *step* values). For the following DSP program:
 
 ```
 import("stdfaust.lib");
@@ -483,8 +483,8 @@ The generated JSON file is then:
 
 ```json
 {
-	"name": "tes",
-	"filename": "tes.dsp",
+	"name": "foo",
+	"filename": "foo.dsp",
 	"version": "2.40.8",
 	"compile_options": "-lang cpp -es 1 -mcd 16 -single -ftz 0",
 	"library_list": [],
@@ -495,7 +495,7 @@ The generated JSON file is then:
 		{ "basics.lib/name": "Faust Basic Element Library" },
 		{ "basics.lib/version": "0.6" },
 		{ "compile_options": "-lang cpp -es 1 -mcd 16 -single -ftz 0" },
-		{ "filename": "tes.dsp" },
+		{ "filename": "foo.dsp" },
 		{ "maths.lib/author": "GRAME" },
 		{ "maths.lib/copyright": "GRAME" },
 		{ "maths.lib/license": "LGPL with exception" },
@@ -545,10 +545,6 @@ The generated JSON file is then:
 	]
 }
 ```
-
-The file contains general information fields, a global `meta` section, and a full description of the UI items hierarchy in the `ui` section.
-
-Note that each UI item has a `label`, a `shortname` (built so that they never collide) and a full OSC like `address`. Some architecture files (like `MapUI`) will typically use them to access controllers.
 
 The JSON file can be generated with `faust -json foo.dsp` command, or programmatically using the `JSONUI` UI architecture (see next [Some Useful UI Classes and Tools for Developers](#some-useful-ui-classes-and-tools-for-developers) section).
 
