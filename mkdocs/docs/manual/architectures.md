@@ -903,7 +903,7 @@ Directly programing polyphonic instruments in Faust is perfectly possible. It is
 
 But since all voices would always be computed, this approach could be too CPU costly for simpler or more limited needs. In this case describing a single voice in a Faust DSP program and externally combining several of them with a special polyphonic instrument aware architecture file is a better solution. Moreover, this special architecture file takes care of dynamic voice allocations and control MIDI messages decoding and mapping.
 
-#### Polyphonic-Ready DSP Code
+#### Polyphonic ready DSP Code
 
 By convention Faust architecture files with polyphonic capabilities expect to find control parameters named `freq`, `gain`, and `gate`. The metadata `declare nvoices "8";` kind of line with a desired value of voices can be added in the source code.
 
@@ -988,7 +988,7 @@ faustcaqt -midi -noices 12 inst.dsp -effect effect.dsp
 
 with `inst.dsp` and `effect.dsp` in the same folder, and the number of outputs of the instrument matching the number of inputs of the effect, has to be used. 
 
-Polyphonic-ready `faust2xx` scripts will then compile the polyphonic instrument and the effect, combine them in sequence, and create a ready-to-use DSP.
+Polyphonic ready `faust2xx` scripts will then compile the polyphonic instrument and the effect, combine them in sequence, and create a ready-to-use DSP.
 
 ### Custom Memory Manager
 

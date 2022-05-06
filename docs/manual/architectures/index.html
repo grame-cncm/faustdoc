@@ -398,7 +398,7 @@
             </li>
             <li class="nav-item" data-level="3"><a href="#polyphonic-instruments" class="nav-link">Polyphonic Instruments</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#polyphonic-ready-dsp-code" class="nav-link">Polyphonic-Ready DSP Code</a>
+            <li class="nav-item" data-level="4"><a href="#polyphonic-ready-dsp-code" class="nav-link">Polyphonic ready DSP Code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -1391,7 +1391,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 <h3 id="polyphonic-instruments">Polyphonic Instruments</h3>
 <p>Directly programing polyphonic instruments in Faust is perfectly possible. It is also needed if very complex signal interaction between the different voices have to be described.</p>
 <p>But since all voices would always be computed, this approach could be too CPU costly for simpler or more limited needs. In this case describing a single voice in a Faust DSP program and externally combining several of them with a special polyphonic instrument aware architecture file is a better solution. Moreover, this special architecture file takes care of dynamic voice allocations and control MIDI messages decoding and mapping.</p>
-<h4 id="polyphonic-ready-dsp-code">Polyphonic-Ready DSP Code</h4>
+<h4 id="polyphonic-ready-dsp-code">Polyphonic ready DSP Code</h4>
 <p>By convention Faust architecture files with polyphonic capabilities expect to find control parameters named <code>freq</code>, <code>gain</code>, and <code>gate</code>. The metadata <code>declare nvoices "8";</code> kind of line with a desired value of voices can be added in the source code.</p>
 <p>In the case of MIDI control, the freq parameter (which should be a frequency) will be automatically computed from MIDI note numbers, gain (which should be a value between 0 and 1) from velocity and gate from keyon/keyoff events. Thus, gate can be used as a trigger signal for any envelope generator, etc.</p>
 <h4 id="using-the-mydsp_poly-class">Using the mydsp_poly Class</h4>
@@ -1442,7 +1442,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 <pre><code>faustcaqt -midi -noices 12 inst.dsp -effect effect.dsp
 </code></pre>
 <p>with <code>inst.dsp</code> and <code>effect.dsp</code> in the same folder, and the number of outputs of the instrument matching the number of inputs of the effect, has to be used. </p>
-<p>Polyphonic-ready <code>faust2xx</code> scripts will then compile the polyphonic instrument and the effect, combine them in sequence, and create a ready-to-use DSP.</p>
+<p>Polyphonic ready <code>faust2xx</code> scripts will then compile the polyphonic instrument and the effect, combine them in sequence, and create a ready-to-use DSP.</p>
 <h3 id="custom-memory-manager">Custom Memory Manager</h3>
 <p>In C and C++, the Faust compiler produces a class (or a struct in C), to be instantiated to create each DSP instance. The standard generation model produces a flat memory layout, where all fields (scalar and arrays) are simply consecutive in the generated code (following the compilation order). So the DSP is allocated on a single block of memory, either on the stack or the heap depending on the use-case. The following DSP program:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
