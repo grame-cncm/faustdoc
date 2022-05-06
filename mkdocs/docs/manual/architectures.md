@@ -469,7 +469,7 @@ Note that pure code generator can also be written. The `JSONUI` UI architecture 
 
 #### DSP JSON Description 
 
-The full description of a given compiled DSP can be generated as a JSON file, to be used at several places in the architecture system. This JSON describes the DSP with its inputs/outputs number, some metadata (filename, name, used compilation parameters, used libraries etc.) as well as its UI with a hierarchy of groups up to terminal items (buttons, sliders, nentries, bargraphs) with all their parameters (label, metadata, init, min, max and step values). For the following DSP program:
+The full description of a given compiled DSP can be generated as a JSON file, to be used at several places in the architecture system. This JSON describes the DSP with its inputs/outputs number, some metadata (filename, name, used compilation parameters, used libraries etc.) as well as its UI with a hierarchy of groups up to terminal items (buttons, sliders, nentries, bargraphs) with all their parameters (type, label, shortname, address, metadata, init, min, max and step values). For the following DSP program:
 
 ```
 import("stdfaust.lib");
