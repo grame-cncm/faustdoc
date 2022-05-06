@@ -1053,15 +1053,31 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
 </code></pre>
 <p>The generated JSON file is then:</p>
 <pre><code class="language-json">{
-    &quot;name&quot;: &quot;osc&quot;,
-    &quot;filename&quot;: &quot;osc.dsp&quot;,
-    &quot;version&quot;: &quot;2.28.0&quot;,
-    &quot;compile_options&quot;: &quot;-lang cpp -scal -ftz 0&quot;,
+    &quot;name&quot;: &quot;tes&quot;,
+    &quot;filename&quot;: &quot;tes.dsp&quot;,
+    &quot;version&quot;: &quot;2.40.8&quot;,
+    &quot;compile_options&quot;: &quot;-lang cpp -es 1 -mcd 16 -single -ftz 0&quot;,
     &quot;library_list&quot;: [],
-    &quot;include_pathnames&quot;: [],
+    &quot;include_pathnames&quot;: [&quot;/usr/local/share/faust&quot;],
     &quot;inputs&quot;: 0,
     &quot;outputs&quot;: 2,
-    &quot;meta&quot;: [
+    &quot;meta&quot;: [ 
+        { &quot;basics.lib/name&quot;: &quot;Faust Basic Element Library&quot; },
+        { &quot;basics.lib/version&quot;: &quot;0.6&quot; },
+        { &quot;compile_options&quot;: &quot;-lang cpp -es 1 -mcd 16 -single -ftz 0&quot; },
+        { &quot;filename&quot;: &quot;tes.dsp&quot; },
+        { &quot;maths.lib/author&quot;: &quot;GRAME&quot; },
+        { &quot;maths.lib/copyright&quot;: &quot;GRAME&quot; },
+        { &quot;maths.lib/license&quot;: &quot;LGPL with exception&quot; },
+        { &quot;maths.lib/name&quot;: &quot;Faust Math Library&quot; },
+        { &quot;maths.lib/version&quot;: &quot;2.5&quot; },
+        { &quot;name&quot;: &quot;tes&quot; },
+        { &quot;oscillators.lib/name&quot;: &quot;Faust Oscillator Library&quot; },
+        { &quot;oscillators.lib/version&quot;: &quot;0.3&quot; },
+        { &quot;platform.lib/name&quot;: &quot;Generic Platform Library&quot; },
+        { &quot;platform.lib/version&quot;: &quot;0.2&quot; },
+        { &quot;signals.lib/name&quot;: &quot;Faust Signal Routing Library&quot; },
+        { &quot;signals.lib/version&quot;: &quot;0.1&quot; }
     ],
     &quot;ui&quot;: [ 
         {
@@ -1071,6 +1087,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
                 {
                     &quot;type&quot;: &quot;hslider&quot;,
                     &quot;label&quot;: &quot;freq&quot;,
+                    &quot;shortname&quot;: &quot;freq&quot;,
                     &quot;address&quot;: &quot;/Oscillator/freq&quot;,
                     &quot;meta&quot;: [
                         { &quot;unit&quot;: &quot;Hz&quot; }
@@ -1083,6 +1100,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
                 {
                     &quot;type&quot;: &quot;hslider&quot;,
                     &quot;label&quot;: &quot;volume&quot;,
+                    &quot;shortname&quot;: &quot;volume&quot;,
                     &quot;address&quot;: &quot;/Oscillator/volume&quot;,
                     &quot;meta&quot;: [
                         { &quot;unit&quot;: &quot;dB&quot; }
@@ -1097,7 +1115,9 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
     ]
 }
 </code></pre>
-<p>The JSON file can be generated with <code>faust -json foo.dsp</code> command, or by program using the <code>JSONUI</code> UI architecture (see next <a href="#some-useful-ui-classes-and-tools-for-developers">Some Useful UI Classes and Tools for Developers</a> section).</p>
+<p>The file contains general information fields, a global <code>meta</code> section, and a full description of the UI items hierarchy in the <code>ui</code> section.</p>
+<p>Note that each UI item has a <code>label</code>, a <code>shortname</code> (built so that they never collide) and a full OSC like <code>address</code>. Some architecture files (like <code>MapUI</code>) will typically use them to access controllers.</p>
+<p>The JSON file can be generated with <code>faust -json foo.dsp</code> command, or programmatically using the <code>JSONUI</code> UI architecture (see next <a href="#some-useful-ui-classes-and-tools-for-developers">Some Useful UI Classes and Tools for Developers</a> section).</p>
 <p>Here is the description of ready-to-use UI classes, followed by classes to be used in developer code:</p>
 <h4 id="gui-builders">GUI Builders</h4>
 <p>Here is the description of the main GUI classes:</p>
@@ -1116,7 +1136,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol) &lt;: (_,_);
 <h4 id="some-useful-ui-classes-and-tools-for-developers">Some Useful UI Classes and Tools for Developers</h4>
 <p>Some useful UI classes and tools can possibly be reused in developer code:</p>
 <ul>
-<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> class establishes a mapping beween UI items and their labels or paths, and offers a <code>setParamValue/getParamValue</code> API to set and get their values. It uses an helper <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h">PathBuilder</a> class to create complete pathnames to the leaves in the UI hierarchy. Note that the item path encodes the UI hierarchy in the form of a <em>/group1/group2/.../label</em> string and is the way to distinguish control that may have the same label, but different localisation in the UI tree. The<code>setParamValue/getParamValue</code> API takes either <em>labels</em> or <em>paths</em> as the way to describe the control, but using path is the safer way to use it</li>
+<li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h">MapUI</a> class establishes a mapping beween UI items and their <em>labels</em>, <em>shortname</em> or <em>paths</em>, and offers a <code>setParamValue/getParamValue</code> API to set and get their values. It uses an helper <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h">PathBuilder</a> class to create complete shortnames and pathnames to the leaves in the UI hierarchy. Note that the item path encodes the UI hierarchy in the form of a <em>/group1/group2/.../label</em> string and is the way to distinguish control that may have the same label, but different localisation in the UI tree. Using shortnames (built so that they never collide) is an alternative way to access items. The<code>setParamValue/getParamValue</code> API takes either <em>labels</em>, <em>shortname</em> or <em>paths</em> as the way to describe the control, but using shortnames or paths is the safer way to use it</li>
 <li>the extended <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h">APIUI</a> offers <code>setParamValue/getParamValue</code> API similar to <code>MapUI</code>, with additional methods to deal with accelerometer/gyroscope kind of metadata</li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> class decodes all currently supported metadata and can be used to retrieve their values </li>
 <li>the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUI.h">JSONUI</a> class allows us to generate the JSON description of a given DSP </li>

@@ -483,52 +483,74 @@ The generated JSON file is then:
 
 ```json
 {
-    "name": "osc",
-    "filename": "osc.dsp",
-    "version": "2.28.0",
-    "compile_options": "-lang cpp -scal -ftz 0",
-    "library_list": [],
-    "include_pathnames": [],
-    "inputs": 0,
-    "outputs": 2,
-    "meta": [
-    ],
-    "ui": [ 
-        {
-            "type": "vgroup",
-            "label": "Oscillator",
-            "items": [ 
-                {
-                    "type": "hslider",
-                    "label": "freq",
-                    "address": "/Oscillator/freq",
-                    "meta": [
-                        { "unit": "Hz" }
-                    ],
-                    "init": 600,
-                    "min": 20,
-                    "max": 2000,
-                    "step": 1
-                },
-                {
-                    "type": "hslider",
-                    "label": "volume",
-                    "address": "/Oscillator/volume",
-                    "meta": [
-                        { "unit": "dB" }
-                    ],
-                    "init": 0,
-                    "min": -96,
-                    "max": 0,
-                    "step": 0.1
-                }
-            ]
-        }
-    ]
+	"name": "tes",
+	"filename": "tes.dsp",
+	"version": "2.40.8",
+	"compile_options": "-lang cpp -es 1 -mcd 16 -single -ftz 0",
+	"library_list": [],
+	"include_pathnames": ["/usr/local/share/faust"],
+	"inputs": 0,
+	"outputs": 2,
+	"meta": [ 
+		{ "basics.lib/name": "Faust Basic Element Library" },
+		{ "basics.lib/version": "0.6" },
+		{ "compile_options": "-lang cpp -es 1 -mcd 16 -single -ftz 0" },
+		{ "filename": "tes.dsp" },
+		{ "maths.lib/author": "GRAME" },
+		{ "maths.lib/copyright": "GRAME" },
+		{ "maths.lib/license": "LGPL with exception" },
+		{ "maths.lib/name": "Faust Math Library" },
+		{ "maths.lib/version": "2.5" },
+		{ "name": "tes" },
+		{ "oscillators.lib/name": "Faust Oscillator Library" },
+		{ "oscillators.lib/version": "0.3" },
+		{ "platform.lib/name": "Generic Platform Library" },
+		{ "platform.lib/version": "0.2" },
+		{ "signals.lib/name": "Faust Signal Routing Library" },
+		{ "signals.lib/version": "0.1" }
+	],
+	"ui": [ 
+		{
+			"type": "vgroup",
+			"label": "Oscillator",
+			"items": [ 
+				{
+					"type": "hslider",
+					"label": "freq",
+					"shortname": "freq",
+					"address": "/Oscillator/freq",
+					"meta": [
+						{ "unit": "Hz" }
+					],
+					"init": 600,
+					"min": 20,
+					"max": 2000,
+					"step": 1
+				},
+				{
+					"type": "hslider",
+					"label": "volume",
+					"shortname": "volume",
+					"address": "/Oscillator/volume",
+					"meta": [
+						{ "unit": "dB" }
+					],
+					"init": 0,
+					"min": -96,
+					"max": 0,
+					"step": 0.1
+				}
+			]
+		}
+	]
 }
 ```
 
-The JSON file can be generated with `faust -json foo.dsp` command, or by program using the `JSONUI` UI architecture (see next [Some Useful UI Classes and Tools for Developers](#some-useful-ui-classes-and-tools-for-developers) section).
+The file contains general information fields, a global `meta` section, and a full description of the UI items hierarchy in the `ui` section.
+
+Note that each UI item has a `label`, a `shortname` (built so that they never collide) and a full OSC like `address`. Some architecture files (like `MapUI`) will typically use them to access controllers.
+
+The JSON file can be generated with `faust -json foo.dsp` command, or programmatically using the `JSONUI` UI architecture (see next [Some Useful UI Classes and Tools for Developers](#some-useful-ui-classes-and-tools-for-developers) section).
 
 Here is the description of ready-to-use UI classes, followed by classes to be used in developer code:
 
@@ -552,7 +574,7 @@ Here is the description of the main non-GUI controller classes:
 
 Some useful UI classes and tools can possibly be reused in developer code:
 
-- the [MapUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h) class establishes a mapping beween UI items and their labels or paths, and offers a `setParamValue/getParamValue` API to set and get their values. It uses an helper [PathBuilder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h) class to create complete pathnames to the leaves in the UI hierarchy. Note that the item path encodes the UI hierarchy in the form of a */group1/group2/.../label* string and is the way to distinguish control that may have the same label, but different localisation in the UI tree. The`setParamValue/getParamValue` API takes either *labels* or *paths* as the way to describe the control, but using path is the safer way to use it
+- the [MapUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MapUI.h) class establishes a mapping beween UI items and their *labels*, *shortname* or *paths*, and offers a `setParamValue/getParamValue` API to set and get their values. It uses an helper [PathBuilder](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/PathBuilder.h) class to create complete shortnames and pathnames to the leaves in the UI hierarchy. Note that the item path encodes the UI hierarchy in the form of a */group1/group2/.../label* string and is the way to distinguish control that may have the same label, but different localisation in the UI tree. Using shortnames (built so that they never collide) is an alternative way to access items. The`setParamValue/getParamValue` API takes either *labels*, *shortname* or *paths* as the way to describe the control, but using shortnames or paths is the safer way to use it
 - the extended [APIUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/APIUI.h) offers `setParamValue/getParamValue` API similar to `MapUI`, with additional methods to deal with accelerometer/gyroscope kind of metadata
 - the [MetaDataUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h) class decodes all currently supported metadata and can be used to retrieve their values 
 - the [JSONUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUI.h) class allows us to generate the JSON description of a given DSP 
