@@ -1133,6 +1133,15 @@ static void memoryInfo() {
 ```
 The `begin` method is first generated to inform that three separated memory zones will be needed. Then three consecutive calls to the `info` method are generated, one for the DSP object itself, one for each recursive delay array. The `end` method is then called to finish the memory layout description, and let the memory manager prepare the actual allocations. 
 
+Note that the memory layout information is also available in the JSON file generated using the `-json` option. With the previous program, the memory layout section is:
+
+```json
+"memory_layout": [
+    {"size": 40, "reads": 9, "writes": 1},
+    {"size": 262144, "reads": 2, "writes": 1},
+    {"size": 262144, "reads": 2, "writes": 1}
+]
+```
 Finally the  `memoryCreate` and  `memoryDestroy` methods are generated. The `memoryCreate` method asks the memory manager to allocate the `fRec0` and `fRec1` buffers:
 
 ```c++

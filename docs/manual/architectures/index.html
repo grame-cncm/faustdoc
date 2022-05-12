@@ -1561,6 +1561,13 @@ float* fRec1;
 }
 </code></pre>
 <p>The <code>begin</code> method is first generated to inform that three separated memory zones will be needed. Then three consecutive calls to the <code>info</code> method are generated, one for the DSP object itself, one for each recursive delay array. The <code>end</code> method is then called to finish the memory layout description, and let the memory manager prepare the actual allocations. </p>
+<p>Note that the memory layout information is also available in the JSON file generated using the <code>-json</code> option. With the previous program, the memory layout section is:</p>
+<pre><code class="language-json">&quot;memory_layout&quot;: [
+    {&quot;size&quot;: 40, &quot;reads&quot;: 9, &quot;writes&quot;: 1},
+    {&quot;size&quot;: 262144, &quot;reads&quot;: 2, &quot;writes&quot;: 1},
+    {&quot;size&quot;: 262144, &quot;reads&quot;: 2, &quot;writes&quot;: 1}
+]
+</code></pre>
 <p>Finally the  <code>memoryCreate</code> and  <code>memoryDestroy</code> methods are generated. The <code>memoryCreate</code> method asks the memory manager to allocate the <code>fRec0</code> and <code>fRec1</code> buffers:</p>
 <pre><code class="language-c++">void memoryCreate() {
     fRec0 = static_cast&lt;float*&gt;(fManager-&gt;allocate(262144));
