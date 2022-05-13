@@ -1,4 +1,4 @@
-# Optimizing the Code
+faust2bench# Optimizing the Code
 
 
 ## Optimizing the DSP Code 
@@ -195,7 +195,7 @@ So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp` to produce the executab
 ./foo : 303.599 MBytes/sec (DSP CPU % : 0.224807 at 44100 Hz)
 ```
 
-The `-inj` option allows to possibly inject and benchmark an external C++ class to be *adapted* to behave as a `dsp` class, like in the following `adapted.cpp` example:
+The `-inj` option allows to possibly inject and benchmark an external C++ class to be *adapted* to behave as a `dsp` class, like in the following `adapted.cpp` example. The inherited `compute` method is rewritten to call the external C++ `limiterStereo.SetPreGain` etc... code to update the controllers, and the method `limiterStereo.Process` which computes the DSP:
 
 ```c++
 #include "faust/dsp/dsp.h"
@@ -249,7 +249,7 @@ struct mydsp : public dsp {
 };
 ```
 
-Then using `faust2bench -inj adapted.cpp dummy.dsp` to produce the executable.
+Using `faust2bench -inj adapted.cpp dummy.dsp`  creates the executable to be tested with `./dummy` (remember that  `dummy.dsp ` is a program that is not actually used in `-inj` mode).
 
 ### dynamic-faust
 

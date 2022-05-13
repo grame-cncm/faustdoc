@@ -292,8 +292,6 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#optimizing-the-code" class="nav-link">Optimizing the Code</a>
-              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#optimizing-the-dsp-code" class="nav-link">Optimizing the DSP Code</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#computations-done-at-compilationspecialisation-time" class="nav-link">Computations Done at Compilation/Specialisation Time</a>
@@ -346,6 +344,7 @@
             </li>
               </ul>
             </li>
+            
             <li class="nav-item" data-level="2"><a href="#optimizing-the-c-or-llvm-code" class="nav-link">Optimizing the C++ or LLVM Code</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#faustbench" class="nav-link">faustbench</a>
@@ -353,6 +352,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#faustbench-llvm" class="nav-link">faustbench-llvm</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#faust2bench" class="nav-link">faust2bench</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -366,12 +369,11 @@
             </li>
               </ul>
             </li>
+            
             <li class="nav-item" data-level="2"><a href="#compiling-for-multiple-cpus" class="nav-link">Compiling for Multiple CPUs</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#faust2object" class="nav-link">faust2object</a>
               <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
               </ul>
@@ -381,7 +383,7 @@
 </div></div>
                     <div class="col-md-9 main-container" role="main">
 
-<h1 id="optimizing-the-code">Optimizing the Code</h1>
+<p>faust2bench# Optimizing the Code</p>
 <h2 id="optimizing-the-dsp-code">Optimizing the DSP Code</h2>
 <p>Faust is a Domain Specific Language helping the programmer to write very high-level and concise DSP code, while letting the compiler do the hard work of producing the best and most efficient implementation of the specification. When processing the DSP source, the compiler typing system is able to discover how the described computations are effectively separated in four main categories: </p>
 <ul>
@@ -453,13 +455,12 @@ process = *(smoother_vol);
   }
 }
 </code></pre>
-<p>But if the order between <code>ba.linear2db</code> and  <code>si.smoo</code> is reversed like in the following code:</p>
+<p>But if the order between <code>ba.linear2db</code> and <code>si.smoo</code> is reversed like in the following code:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 smoother_vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : si.smoo: ba.linear2db;
 process = *(smoother_vol);
 </code></pre>
-<p>The generated C++ code for <code>compute</code> now has the <code>log10</code> math function used in <code>ba.linear2db</code> evaluted at sample rate in the DSP loop, which is obviously much more costly:
--dlt</p>
+<p>The generated C++ code for <code>compute</code> now has the <code>log10</code> math function used in <code>ba.linear2db</code> evaluated at sample rate in the DSP loop, which is obviously much more costly:</p>
 <pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
   FAUSTFLOAT* output0 = outputs[0];
@@ -502,6 +503,68 @@ The generated code can have different <em>shapes</em> depending of compilation o
 <p>The <strong>faustbench</strong> tool uses the C++ backend to generate a set of C++ files produced with different Faust compiler options. All files are then compiled in a unique binary that will measure DSP CPU of all versions of the compiled DSP. The tool is supposed to be launched in a terminal, but it can be used to generate an iOS project, ready to be launched and tested in Xcode. A more complete documentation is available on the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faustbench">this page</a>.</p>
 <h3 id="faustbench-llvm">faustbench-llvm</h3>
 <p>The <strong>faustbench-llvm</strong> tool uses the <code>libfaust</code> library and its LLVM backend to dynamically compile DSP objects produced with different Faust compiler options, and then measure their DSP CPU usage. Additional Faust compiler options can be given beside the ones that will be automatically explored by the tool. A more complete documentation is available on the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faustbench-llvm">this page</a>.</p>
+<h3 id="faust2bench">faust2bench</h3>
+<p>The <strong>faust2bench</strong> tool allows to benchmark a given DSP program:</p>
+<pre><code>faust2bench -h
+Usage: faust2bench [Faust options] &lt;file.dsp&gt;
+Compiles Faust programs to a benchmark executable
+</code></pre>
+<p>So something like <code>faust2bench -vec -lv 0 -vs 4 foo.dsp</code> to produce the executable, then:</p>
+<pre><code>./foo
+./foo : 303.599 MBytes/sec (DSP CPU % : 0.224807 at 44100 Hz)
+</code></pre>
+<p>The <code>-inj</code> option allows to possibly inject and benchmark an external C++ class to be <em>adapted</em> to behave as a <code>dsp</code> class, like in the following <code>adapted.cpp</code> example. The inherited <code>compute</code> method is rewritten to call the external C++ <code>limiterStereo.SetPreGain</code> etc... code to update the controllers, and the method <code>limiterStereo.Process</code> which computes the DSP:</p>
+<pre><code class="language-c++">#include &quot;faust/dsp/dsp.h&quot;
+#include &quot;Limiter.hpp&quot;
+
+struct mydsp : public dsp {
+
+    Limiter&lt;float&gt; limiterStereo;
+
+    void init(int sample_rate)
+    {
+        limiterStereo.SetSR(sample_rate);
+    }
+
+    int getNumInputs() { return 2; }
+    int getNumOutputs() { return 2; }
+
+    int getSampleRate() { return 44100; }
+
+    void instanceInit(int sample_rate)
+    {}
+
+    void instanceConstants(int sample_rate)
+    {}
+    void instanceResetUserInterface()
+    {}
+    void instanceClear()
+    {}
+
+    void buildUserInterface(UI* ui_interface)
+    {}
+
+    dsp* clone()
+    {
+        return new mydsp();
+    }
+    void metadata(Meta* m)
+    {}
+
+    void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+    {
+        limiterStereo.SetPreGain(0.5);
+        limiterStereo.SetAttTime(0.5);
+        limiterStereo.SetHoldTime(0.5);
+        limiterStereo.SetRelTime(0.5);
+        limiterStereo.SetThreshold(0.5);
+
+        limiterStereo.Process(inputs, outputs, count);
+    }
+
+};
+</code></pre>
+<p>Using <code>faust2bench -inj adapted.cpp dummy.dsp</code>  creates the executable to be tested with <code>./dummy</code> (remember that  <code>dummy.dsp</code> is a program that is not actually used in <code>-inj</code> mode).</p>
 <h3 id="dynamic-faust">dynamic-faust</h3>
 <p>The <strong>dynamic-faust</strong> tool uses the dynamic compilation chain (based on the LLVM backend), and compiles a Faust DSP source to a LLVM IR (.ll), bicode (.bc), machine code (.mc) or object code (.o) output file. This is an alternative to the C++ compilation chain, since DSP code can be compiled to object code (.o),  then used and linked in a regular C++ project. A more complete documentation is available on the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#dynamic-faust">this page</a>.</p>
 <h3 id="optimizing-with-any-faust2xx-tool">Optimizing with any faust2xx tool</h3>
