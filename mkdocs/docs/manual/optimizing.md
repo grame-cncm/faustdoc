@@ -188,7 +188,7 @@ Usage: faust2bench [Faust options] <file.dsp>
 Compiles Faust programs to a benchmark executable
 ```
 
-So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp` to produce the executable, then:
+So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp`  is used to produce an executable, then launching `./foo` gives :
 
 ```
 ./foo
