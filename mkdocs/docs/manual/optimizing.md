@@ -198,6 +198,9 @@ So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp` to produce the executab
 The `-inj` option allows to possibly inject and benchmark an external C++ class to be *adapted* to behave as a `dsp` class, like in the following `adapted.cpp` example:
 
 ```c++
+#include "faust/dsp/dsp.h"
+#include "Limiter.hpp"
+
 struct mydsp : public dsp {
     
     Limiter<float> limiterStereo;
