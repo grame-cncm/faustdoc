@@ -195,7 +195,7 @@ So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp` to produce the executab
 ./foo : 303.599 MBytes/sec (DSP CPU % : 0.224807 at 44100 Hz)
 ```
 
-The `-inj` option allows to possibly inject and benchmark an external C++ class to be *adapted* to behave as a `dsp` class, like in the following example:
+The `-inj` option allows to possibly inject and benchmark an external C++ class to be *adapted* to behave as a `dsp` class, like in the following `adapted.cpp` example:
 
 ```c++
 struct mydsp : public dsp {
@@ -245,6 +245,8 @@ struct mydsp : public dsp {
     
 };
 ```
+
+Then using `faust2bench -inj adapted.cpp dummy.dsp` to produce the executable.
 
 ### dynamic-faust
 
