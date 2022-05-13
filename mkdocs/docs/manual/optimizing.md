@@ -67,7 +67,6 @@ process = *(vol);
 
 The `vol` slider is sampled before the actual DSP loop and multiplied by the filter `fConst0` constant computed at init time, and finally used in the DSP loop in the smoothing filter:
 
-
 ```c++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
     FAUSTFLOAT* input0 = inputs[0];
@@ -106,7 +105,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 }
 ```
 
-But if the order between `ba.linear2db` and  `si.smoo` is reversed like in the following code:
+But if the order between `ba.linear2db` and `si.smoo` is reversed like in the following code:
 
 ```
 import("stdfaust.lib");
@@ -114,8 +113,8 @@ smoother_vol = hslider("Volume", 0.5, 0, 1, 0.01) : si.smoo: ba.linear2db;
 process = *(smoother_vol);
 ```
 
-The generated C++ code for `compute` now has the `log10` math function used in `ba.linear2db` evaluted at sample rate in the DSP loop, which is obviously much more costly:
--dlt
+The generated C++ code for `compute` now has the `log10` math function used in `ba.linear2db` evaluated at sample rate in the DSP loop, which is obviously much more costly:
+
 ```c++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
   FAUSTFLOAT* input0 = inputs[0];
@@ -154,7 +153,6 @@ The `-dlt <n>`  (`--delay-line-threshold`) option allows to choose between the t
 
 On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the `-mem` compilation option and an [adapted architecture file](https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager).
 
-
 ## Optimizing the C++ or LLVM Code
 
 From a given DSP program, the Faust compiler tries to generate the most efficient implementation. Optimizations can be done at DSP writing time, or later on when the target langage is generated (like  C++ or LLVM IR).
@@ -179,6 +177,74 @@ The **faustbench** tool uses the C++ backend to generate a set of C++ files prod
 ### faustbench-llvm
 
 The **faustbench-llvm** tool uses the `libfaust` library and its LLVM backend to dynamically compile DSP objects produced with different Faust compiler options, and then measure their DSP CPU usage. Additional Faust compiler options can be given beside the ones that will be automatically explored by the tool. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faustbench-llvm).
+
+### faust2bench
+
+The **faust2bench** tool allows to benchmark a given DSP program:
+
+```
+faust2bench -h
+Usage: faust2bench [Faust options] <file.dsp>
+Compiles Faust programs to a benchmark executable
+```
+
+So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp` to produce the executable, then:
+
+```
+./foo
+./foo : 303.599 MBytes/sec (DSP CPU % : 0.224807 at 44100 Hz)
+```
+
+The `-inj` option allows to possibly inject and benchmark an external C++ class to be *adapted* to behave as a `dsp` class, like in the following example:
+
+```c++
+struct mydsp : public dsp {
+    
+    Limiter<float> limiterStereo;
+    
+    void init(int sample_rate)
+    {
+        limiterStereo.SetSR(sample_rate);
+    }
+    
+    int getNumInputs() { return 2; }
+    int getNumOutputs() { return 2; }
+    
+    int getSampleRate() { return 44100; }
+    
+    void instanceInit(int sample_rate)
+    {}
+    
+    void instanceConstants(int sample_rate)
+    {}
+    void instanceResetUserInterface()
+    {}
+    void instanceClear()
+    {}
+    
+    void buildUserInterface(UI* ui_interface)
+    {}
+    
+    dsp* clone()
+    {
+        return new mydsp();
+    }
+    void metadata(Meta* m)
+    {}
+    
+    void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+    {
+        limiterStereo.SetPreGain(0.5);
+        limiterStereo.SetAttTime(0.5);
+        limiterStereo.SetHoldTime(0.5);
+        limiterStereo.SetRelTime(0.5);
+        limiterStereo.SetThreshold(0.5);
+
+        limiterStereo.Process(inputs, outputs, count);
+    }
+    
+};
+```
 
 ### dynamic-faust
 
