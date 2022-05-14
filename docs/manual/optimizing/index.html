@@ -292,6 +292,8 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#optimizing-the-code" class="nav-link">Optimizing the Code</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#optimizing-the-dsp-code" class="nav-link">Optimizing the DSP Code</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#computations-done-at-compilationspecialisation-time" class="nav-link">Computations Done at Compilation/Specialisation Time</a>
@@ -344,7 +346,6 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#optimizing-the-c-or-llvm-code" class="nav-link">Optimizing the C++ or LLVM Code</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#faustbench" class="nav-link">faustbench</a>
@@ -369,11 +370,12 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#compiling-for-multiple-cpus" class="nav-link">Compiling for Multiple CPUs</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#faust2object" class="nav-link">faust2object</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -383,7 +385,7 @@
 </div></div>
                     <div class="col-md-9 main-container" role="main">
 
-<p>faust2bench# Optimizing the Code</p>
+<h1 id="optimizing-the-code">Optimizing the Code</h1>
 <h2 id="optimizing-the-dsp-code">Optimizing the DSP Code</h2>
 <p>Faust is a Domain Specific Language helping the programmer to write very high-level and concise DSP code, while letting the compiler do the hard work of producing the best and most efficient implementation of the specification. When processing the DSP source, the compiler typing system is able to discover how the described computations are effectively separated in four main categories: </p>
 <ul>

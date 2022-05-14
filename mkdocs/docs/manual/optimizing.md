@@ -1,4 +1,4 @@
-faust2bench# Optimizing the Code
+# Optimizing the Code
 
 
 ## Optimizing the DSP Code 
