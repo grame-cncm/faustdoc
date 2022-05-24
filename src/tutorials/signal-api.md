@@ -26,7 +26,7 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 #### Accessing the signal stage
 
-A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal graph (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h) (or the [C signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal-c.h) version) allows to programmatically create the signal graph, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
+A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal set (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h) (or the [C signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal-c.h) version) allows to programmatically create the list of output signals, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
 
 Note that the [box API](https://faustdoc.grame.fr/tutorials/box-api/) allows to access another stage in the compilation stage.
 
@@ -1351,7 +1351,7 @@ All C examples are defined in the [signal-tester-c](https://github.com/grame-cnc
 
 Generating complex expressions by directly using the signal API can quickly become really tricky and unpracticable. So a language *created on top* of the signal API is usually needed. This is exactly what the *Block Diagram Algebra* is all about, and the entire Faust language itself. 
 
-But some other approaches can possibly be tested. The [Elementary audio language](https://www.elementary.audio) for instance is built over a similar [signal language](https://docs.elementary.audio/guides/making_sound) and uses JavaScript as the upper layer language to help create complex signal graphs programmatically. Other approaches using graphical based tools could certainly be tested. 
+But some other approaches can possibly be tested. The [Elementary audio language](https://www.elementary.audio) for instance is built over a similar [signal language](https://docs.elementary.audio/guides/making_sound) and uses JavaScript as the upper layer language to help create a complex list of output signals programmatically. Other approaches using graphical based tools could certainly be tested. 
 
  
 
