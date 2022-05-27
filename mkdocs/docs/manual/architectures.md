@@ -1133,7 +1133,7 @@ static void memoryInfo() {
 ```
 The `begin` method is first generated to inform that three separated memory zones will be needed. Then three consecutive calls to the `info` method are generated, one for the DSP object itself, one for each recursive delay array. The `end` method is then called to finish the memory layout description, and let the memory manager prepare the actual allocations. 
 
-Note that the memory layout information is also available in the JSON file generated using the `-json` option. With the previous program, the memory layout section is:
+Note that the memory layout information is also available in the JSON file generated using the `-json` option, to possibly be used statically by the architecture machinery (that is at compile time). With the previous program, the memory layout section is:
 
 ```json
 "memory_layout": [
