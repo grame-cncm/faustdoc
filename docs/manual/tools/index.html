@@ -523,8 +523,9 @@
 
 <h1 id="faust2-tools"><code>faust2[...]</code> Tools</h1>
 <p>While in its most <em>primitive</em> form, Faust is distributed as a command-line compiler, a wide range of tools have been developed around it in the course of the past few years. Their variety and their function might be hard to grab at first. This sort chapter provides an overview of their role and will hopefully help you decide which one is better suited for your personal use. </p>
-<p>The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools names are in the form <code>faust2xxx</code> where <code>xxx</code> is the target architecture.</p>
+<p>The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools names are in the form <code>faust2xx</code> where <code>xx</code> is the target architecture.</p>
 <p>Use <code>-h</code> or <code>-help</code> to get more information on each specific script options. Additional  Faust compiler options (like <code>-vec -lv 0 -I /path/to/lib</code>) can be given. For scripts that combines Faust and the C++ compiler, you can possibly use the  <code>CXXFLAGS</code> environment variable to give additional options to the C++ compiler.</p>
+<p>Note that using <code>-inj &lt;f&gt;</code> option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base <code>dsp</code> class, the <code>faust2xx</code> scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures. </p>
 <h2 id="faust2alqt">faust2alqt</h2>
 <pre class=faust-tools>
 Usage: faust2alqt [options] &lt;file.dsp>
@@ -810,8 +811,6 @@ Usage: faust2faustvst [options ...] &lt;file.dsp>
 Require: VST SDK
 Compiles Faust programs to VST plugins
 Options:
-   -osc : activates OSC control
-   -httpd : activates HTTP control
    -gui : build the plugin GUI.
    -keep : retain the build directory.
    -nometa : ignore metadata (author information etc.) from the Faust source
@@ -1004,8 +1003,6 @@ Usage: faust2lv2 [options ...] &lt;file.dsp>
 Require: Qt
 Compiles Faust programs to lv2 plugins
 Options:
-   -osc : activates OSC control
-   -httpd : activates HTTP control
    -dyn-manifest : use dynamic manifests (requires LV2 host support).
    -gui : build the plugin GUI (requires LV2 UI host support).
    -keep : retain the build directory.
@@ -1062,7 +1059,7 @@ Options:
 <h2 id="faust2minimal">faust2minimal</h2>
 <pre class=faust-tools>
 Usage: faust2minimal [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to a minimal self-contained C++ file
+Compiles Faust programs to a minimal executable
 </pre>
 
 <h2 id="faust2msp">faust2msp</h2>
