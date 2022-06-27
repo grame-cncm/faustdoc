@@ -1,14 +1,14 @@
 \chapter{Compiling and installing \faust}
 
-The \faust source distribution \lstinline'faust-2.40.0.tar.gz' can be downloaded from GitHub (\myurl{https://github.com/grame-cncm/faust/releases}).
+The \faust source distribution \lstinline'faust-2.41.1.tar.gz' can be downloaded from GitHub (\myurl{https://github.com/grame-cncm/faust/releases}).
 
 \section{Organization of the distribution}
 The first thing is to decompress the downloaded archive. 
 \begin{lstlisting}
-	tar xzf faust-2.40.0.tar.gz
+	tar xzf faust-2.41.1.tar.gz
 \end{lstlisting}
 
-The resulting  \lstinline'faust-2.40.0/' folder should contain the following elements:
+The resulting \lstinline'faust-2.41.1/' folder should contain the following elements:
 
 \begin{tabular}{ll}
 	\lstinline'architecture/' 		&\faust libraries and architecture files\\
@@ -26,44 +26,58 @@ The resulting  \lstinline'faust-2.40.0/' folder should contain the following ele
 \section{Compilation}
 \faust has no dependencies outside standard libraries. Therefore the compilation should be straightforward. There is no configuration phase, to compile the \faust compiler simply do :
 \begin{lstlisting}
-	cd faust-2.40.0/
+	cd faust-2.41.1/
 	make
 \end{lstlisting}
 
 If the compilation was successful you can test the compiler before installing it:
 \begin{lstlisting}
-	[cd faust-2.40.0/]
-	./compiler/faust -v
+	[cd faust-2.41.1/]
+	./build/bin/faust -v
 \end{lstlisting}
 It should output:
 \begin{lstlisting}
-	FAUST, DSP to C++ compiler, Version 2.40.0
-	Copyright (C) 2002-2021, GRAME - Centre... 
+FAUST Version 2.41.1
+Embedded backends: 
+   DSP to C
+   DSP to C++
+   DSP to CSharp
+   DSP to DLang
+   DSP to Java
+   DSP to Julia
+   DSP to old C++
+   DSP to Rust
+   DSP to SOUL
+   DSP to WebAssembly (wast/wasm)
+Copyright (C) 2002-2022, GRAME - Centre National de Creation Musicale. All rights reserved. 
 \end{lstlisting}
 
 Then you can also try to compile one of the examples :
 \begin{lstlisting}
-	[cd faust-2.40.0/]
-	./compiler/faust examples/generator/noise.dsp
+	[cd faust-2.41.1/]
+	./build/bin/faust examples/generator/noise.dsp
 \end{lstlisting}
-It should produce some C++ code on the standard output
+It should produce some C++ code on the standard output.
 
 \section{Installation}
 You can install \faust with:
 \begin{lstlisting}
-	[cd faust-2.40.0/]
+	[cd faust-2.41.1/]
 	sudo make install
 \end{lstlisting}
 or
 \begin{lstlisting}
-	[cd faust-2.40.0/]
+	[cd faust-2.41.1/]
 	su
 	make install
 \end{lstlisting}
 depending on your system.
 
 \section{Compilation of the examples}
-Once \faust correctly installed, you can have a look at the provided examples in the \lstinline'examples/' folder. This folder contains a  \lstinline'Makefile' with all the required instructions to build these examples for various \textit{architectures}\marginpar{An architecture file provides the code needed to connect a signal processor to the outside world. It typically defines the audio communications and user interface.}, either standalone audio applications or plugins.
 
-The command \lstinline'make help' will list the available targets. Before using a specific target, make sure you have the appropriate development tools, libraries and headers installed. For example to compile the examples as ALSA applications with a GTK user interface do a \lstinline'make alsagtk'. This will create a \lstinline'alsagtkdir/' subfolder with all the binaries. 
+Once \faust correctly installed, you can have a look at the provided examples in the \lstinline'examples/' folder. 
+
+You can use any of the \lstinline'faust2...' script installed on your system (go in \lstinline'/tools/faust2appls' to get an exhaustive list) to compile the Faust codes available in this folder. For example, if you're a Mac user and you want to turn \lstinline'filtering/vcfWahLab.dsp' into a standalone CoreAudio application with a QT interface, just run:
+
+\lstinline'faust2caqt filtering/vcfWahLab.dsp'
 
