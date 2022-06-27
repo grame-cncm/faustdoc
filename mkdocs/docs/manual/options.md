@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.40.0
+## FAUST compiler version 2.41.1
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -55,25 +55,29 @@ usage : faust [options] file1 [file2 ...].
   -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
   -rui        --range-ui                  whether to generate code to limit vslider/hslider/nentry values in [min..max] range.
   -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compiling a dsp file.
-  -scal      --scalar                     generate non-vectorized code.
-  -inpl      --in-place                   generates code working when input and output buffers are the same (scalar mode only).
-  -vec       --vectorize                  generate easier to vectorize code.
-  -vs <n>    --vec-size <n>               size of the vector (default 32 samples).
-  -lv <n>    --loop-variant <n>           [0:fastest (default), 1:simple].
-  -omp       --openmp                     generate OpenMP pragmas, activates --vectorize option.
-  -pl        --par-loop                   generate parallel loops in --openmp mode.
-  -sch       --scheduler                  generate tasks and use a Work Stealing scheduler, activates --vectorize option.
-  -ocl       --opencl                     generate tasks with OpenCL (experimental).
-  -cuda      --cuda                       generate tasks with CUDA (experimental).
-  -dfs       --deep-first-scheduling      schedule vector loops in deep first order.
-  -g         --group-tasks                group single-threaded sequential tasks together when -omp or -sch is used.
-  -fun       --fun-tasks                  separate tasks code as separated functions (in -vec, -sch, or -omp mode).
-  -fm <file> --fast-math <file>           use optimized versions of mathematical functions implemented in <file>, use 'faust/dsp/fastmath.cpp' when file is 'def'.
-  -mapp      --math-approximation         simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
-  -ns <name> --namespace <name>           generate C++ or D code in a namespace <name>.
-  -vhdl      --vhdl                       output vhdl file.
-  -wi <n>    --widening-iterations <n>    number of iterations before widening in signal bounding.
-  -ni <n>    --narrowing-iterations <n>   number of iterations before stopping narrowing in signal bounding.
+  -scal       --scalar                    generate non-vectorized code.
+  -inpl       --in-place                  generates code working when input and output buffers are the same (scalar mode only).
+  -vec        --vectorize                 generate easier to vectorize code.
+  -vs <n>     --vec-size <n>              size of the vector (default 32 samples).
+  -lv <n>     --loop-variant <n>          [0:fastest (default), 1:simple].
+  -omp        --openmp                    generate OpenMP pragmas, activates --vectorize option.
+  -pl         --par-loop                  generate parallel loops in --openmp mode.
+  -sch        --scheduler                 generate tasks and use a Work Stealing scheduler, activates --vectorize option.
+  -ocl        --opencl                    generate tasks with OpenCL (experimental).
+  -cuda       --cuda                      generate tasks with CUDA (experimental).
+  -dfs        --deep-first-scheduling     schedule vector loops in deep first order.
+  -g          --group-tasks               group single-threaded sequential tasks together when -omp or -sch is used.
+  -fun        --fun-tasks                 separate tasks code as separated functions (in -vec, -sch, or -omp mode).
+  -fm <file>  --fast-math <file>          use optimized versions of mathematical functions implemented in <file>, use 'faust/dsp/fastmath.cpp' when file is 'def'.
+  -mapp       --math-approximation        simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
+  -ns <name>  --namespace <name>          generate C++ or D code in a namespace <name>.
+  -vhdl       --vhdl                      output vhdl file.
+  -vhdl-trace --vhdl-trace                activate trace.
+  -vhdl-type 0|1 --vhdl-type 0|1          sample format 0 = sfixed (default), 1 = float.
+  -vhdl-msb <n>                           MSB number of bits.
+  -vhdl-lsb <n>                           LSB number of bits.
+  -wi <n>     --widening-iterations <n>   number of iterations before widening in signal bounding.
+  -ni <n>     --narrowing-iterations <n>  number of iterations before stopping narrowing in signal bounding.
 ~~~
 ## Block diagram options:
 ---------------------------------------
