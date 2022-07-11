@@ -350,6 +350,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#using-the-dsptoboxes-function" class="nav-link">Using the DSPToBoxes function</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#defining-more-complex-expressions-phasor-and-oscillator" class="nav-link">Defining more complex expressions: phasor and oscillator</a>
               <ul class="nav flex-column">
               </ul>
@@ -1170,6 +1174,58 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
         output2[i0] = FAUSTFLOAT(fSoundfile0ca_bu_ch0[(fSoundfile0ca_of0[0] + iSlow2)]);
     }
     fSoundfile0 = fSoundfile0ca;
+}
+</code></pre>
+<h4 id="using-the-dsptoboxes-function">Using the DSPToBoxes function</h4>
+<p>Complete DSP programs can be compiled to boxes using the <code>DSPToBoxes</code> function, which takes a DSP program as a string, and returns the number of inputs/outputs and the created box:</p>
+<pre><code class="language-C++">static void test25(int argc, char* argv[])
+{
+    createLibContext();
+    {
+        int inputs = 0;
+        int outputs = 0;
+        string error_msg;
+
+        // Create the oscillator
+        Box osc = DSPToBoxes(&quot;import(\&quot;stdfaust.lib\&quot;); process = os.osc(440);&quot;, inputs, outputs, error_msg);
+
+        // Compile it
+        dsp_factory_base* factory = createCPPDSPFactoryFromBoxes(&quot;FaustDSP&quot;, osc, argc, (const char**)argv, error_msg);
+        if (factory) {
+            factory-&gt;write(&amp;cout);
+            delete(factory);
+        } else {
+            cerr &lt;&lt; error_msg;
+        }
+    }
+    destroyLibContext();
+}
+</code></pre>
+<p>The resulting box expression can possibly be reused in a more complex construction, as in the following example, where a filter is created using the <code>DSPToBoxes</code> function, then called with a slider to control its frequency, and the actual input:</p>
+<pre><code class="language-C++">static void test26(int argc, char* argv[])
+{
+    createLibContext();
+    {
+        int inputs = 0;
+        int outputs = 0;
+        string error_msg;
+
+        // Create the filter without parameter
+        Box filter = DSPToBoxes(&quot;import(\&quot;stdfaust.lib\&quot;); process = fi.lowpass(5);&quot;, inputs, outputs, error_msg);
+
+        // Create the filter parameters and connect
+        Box cutoff = boxHSlider(&quot;cutoff&quot;, boxReal(300), boxReal(100), boxReal(2000), boxReal(0.01));
+        Box cutoffAndInput = boxPar(cutoff, boxWire());
+        Box filteredInput = boxSeq(cutoffAndInput, filter);
+        dsp_factory_base* factory = createCPPDSPFactoryFromBoxes(&quot;FaustDSP&quot;, filteredInput, argc, (const char**)argv, error_msg);
+        if (factory) {
+            factory-&gt;write(&amp;cout);
+            delete(factory);
+        } else {
+            cerr &lt;&lt; error_msg;
+        }
+    }
+    destroyLibContext();
 }
 </code></pre>
 <h4 id="defining-more-complex-expressions-phasor-and-oscillator">Defining more complex expressions: phasor and oscillator</h4>

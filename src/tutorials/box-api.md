@@ -826,6 +826,64 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
     fSoundfile0 = fSoundfile0ca;
 }
 ```
+
+#### Using the DSPToBoxes function 
+
+Complete DSP programs can be compiled to boxes using the `DSPToBoxes` function, which takes a DSP program as a string, and returns the number of inputs/outputs and the created box:
+
+```C++
+static void test25(int argc, char* argv[])
+{
+    createLibContext();
+    {
+        int inputs = 0;
+        int outputs = 0;
+        string error_msg;
+
+        // Create the oscillator
+        Box osc = DSPToBoxes("import(\"stdfaust.lib\"); process = os.osc(440);", inputs, outputs, error_msg);
+
+        // Compile it
+        dsp_factory_base* factory = createCPPDSPFactoryFromBoxes("FaustDSP", osc, argc, (const char**)argv, error_msg);
+        if (factory) {
+            factory->write(&cout);
+            delete(factory);
+        } else {
+            cerr << error_msg;
+        }
+    }
+    destroyLibContext();
+}
+```
+The resulting box expression can possibly be reused in a more complex construction, as in the following example, where a filter is created using the `DSPToBoxes` function, then called with a slider to control its frequency, and the actual input:
+
+```C++
+static void test26(int argc, char* argv[])
+{
+    createLibContext();
+    {
+        int inputs = 0;
+        int outputs = 0;
+        string error_msg;
+
+        // Create the filter without parameter
+        Box filter = DSPToBoxes("import(\"stdfaust.lib\"); process = fi.lowpass(5);", inputs, outputs, error_msg);
+
+        // Create the filter parameters and connect
+        Box cutoff = boxHSlider("cutoff", boxReal(300), boxReal(100), boxReal(2000), boxReal(0.01));
+        Box cutoffAndInput = boxPar(cutoff, boxWire());
+        Box filteredInput = boxSeq(cutoffAndInput, filter);
+        dsp_factory_base* factory = createCPPDSPFactoryFromBoxes("FaustDSP", filteredInput, argc, (const char**)argv, error_msg);
+        if (factory) {
+            factory->write(&cout);
+            delete(factory);
+        } else {
+            cerr << error_msg;
+        }
+    }
+    destroyLibContext();
+}
+```
 #### Defining more complex expressions: phasor and oscillator
 
 More complex signal expressions can be defined, creating boxes using auxiliary definitions. So the following DSP program:
