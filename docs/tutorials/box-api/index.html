@@ -1187,7 +1187,7 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
         string error_msg;
 
         // Create the oscillator
-        Box osc = DSPToBoxes(&quot;import(\&quot;stdfaust.lib\&quot;); process = os.osc(440);&quot;, inputs, outputs, error_msg);
+        Box osc = DSPToBoxes(&quot;import(\&quot;stdfaust.lib\&quot;); process = os.osc(440);&quot;, &amp;inputs, &amp;outputs, error_msg);
 
         // Compile it
         dsp_factory_base* factory = createCPPDSPFactoryFromBoxes(&quot;FaustDSP&quot;, osc, argc, (const char**)argv, error_msg);
@@ -1211,7 +1211,7 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
         string error_msg;
 
         // Create the filter without parameter
-        Box filter = DSPToBoxes(&quot;import(\&quot;stdfaust.lib\&quot;); process = fi.lowpass(5);&quot;, inputs, outputs, error_msg);
+        Box filter = DSPToBoxes(&quot;import(\&quot;stdfaust.lib\&quot;); process = fi.lowpass(5);&quot;, &amp;inputs, &amp;outputs, error_msg);
 
         // Create the filter parameters and connect
         Box cutoff = boxHSlider(&quot;cutoff&quot;, boxReal(300), boxReal(100), boxReal(2000), boxReal(0.01));
