@@ -1217,6 +1217,10 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
         Box cutoff = boxHSlider(&quot;cutoff&quot;, boxReal(300), boxReal(100), boxReal(2000), boxReal(0.01));
         Box cutoffAndInput = boxPar(cutoff, boxWire());
         Box filteredInput = boxSeq(cutoffAndInput, filter);
+
+        bool res = getBoxType(filteredInput, &amp;inputs, &amp;outputs);
+        std::cout &lt;&lt; &quot;getBoxType inputs: &quot; &lt;&lt; inputs &lt;&lt; &quot; outputs: &quot; &lt;&lt; outputs &lt;&lt; std::endl;
+
         dsp_factory_base* factory = createCPPDSPFactoryFromBoxes(&quot;FaustDSP&quot;, filteredInput, argc, (const char**)argv, error_msg);
         if (factory) {
             factory-&gt;write(&amp;cout);
@@ -1228,6 +1232,7 @@ process = 0,0 : soundfile(&quot;sound[url:{'tango.wav'}]&quot;, 1);
     destroyLibContext();
 }
 </code></pre>
+<p>Note that the <code>getBoxType</code> function can be used to retrieve a given box number of inputs and outputs.</p>
 <h4 id="defining-more-complex-expressions-phasor-and-oscillator">Defining more complex expressions: phasor and oscillator</h4>
 <p>More complex signal expressions can be defined, creating boxes using auxiliary definitions. So the following DSP program:</p>
 <!-- faust-run -->

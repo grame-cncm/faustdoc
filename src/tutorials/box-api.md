@@ -873,6 +873,10 @@ static void test26(int argc, char* argv[])
         Box cutoff = boxHSlider("cutoff", boxReal(300), boxReal(100), boxReal(2000), boxReal(0.01));
         Box cutoffAndInput = boxPar(cutoff, boxWire());
         Box filteredInput = boxSeq(cutoffAndInput, filter);
+        
+        bool res = getBoxType(filteredInput, &inputs, &outputs);
+        std::cout << "getBoxType inputs: " << inputs << " outputs: " << outputs << std::endl;
+        
         dsp_factory_base* factory = createCPPDSPFactoryFromBoxes("FaustDSP", filteredInput, argc, (const char**)argv, error_msg);
         if (factory) {
             factory->write(&cout);
@@ -884,6 +888,8 @@ static void test26(int argc, char* argv[])
     destroyLibContext();
 }
 ```
+Note that the `getBoxType` function can be used to retrieve a given box number of inputs and outputs.
+
 #### Defining more complex expressions: phasor and oscillator
 
 More complex signal expressions can be defined, creating boxes using auxiliary definitions. So the following DSP program:
