@@ -671,7 +671,7 @@ To keep their original meaning, \faust expressions are bounded to their lexical 
 
 \begin{rail}
 envexp :    expression 'with' lbrace (definition+) rbrace
-          | expression 'letrec' lbrace (diffequation+) rbrace
+          | expression 'letrec' \\ lbrace (diffequation+) (() | 'where' (definition+)) rbrace
           | 'environment' lbrace (definition+) rbrace
 		  | expression '.' ident
           | 'library' '(' filename ')'
@@ -726,7 +726,7 @@ as \lstinline|E letrec { 'x = y+10; 'y = x-1; }|
 
 The syntax is defined by the following rules:
 \begin{rail}
-	letrecexpression : expression 'letrec' lbrace (diffequation+) rbrace;
+	letrecexpression : expression 'letrec' \\ lbrace (diffequation+) (() | 'where' (definition+)) rbrace;
 diffequation :    kot ident '=' expression ';';  
 \end{rail}
 
@@ -744,10 +744,54 @@ ar(a,r,g) = v
 With the following semantics for $n(t)$ and $v(t)$:
 \begin{eqnarray*}
 	n(t)&=&(n(t-1)+1) * (g(t) <= g(t-1))\\
-	v(t)&=& max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1))
+	v(t)&=& max(0, v(t-1) + (n(t-1)<a(t))/a(t) \\
+						  &-& (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1))
 \end{eqnarray*}
 
-\subsubsection{Environment} 
+In order to factor some expressions common to several recursive definitions, we can use the clause \lstinline'where' followed by one or more definitions. These definitions will only be visible to the recursive equations of the \lstinline'letrec', but not to the outside world, unlike the recursive definitions themselves.
+
+For instance in the previous example we can factorize \lstinline'(g<=g)' leading to the following expression:
+
+\begin{lstlisting}
+	ar(a,r,g) = v
+	  letrec {
+		'n = (n+1) * c;
+		'v = max(0, v + (n<a)/a - (n>=a)/r) * c;
+		where
+		 c = g<=g';
+	  };
+\end{lstlisting}
+
+Please note that \lstinline'letrec' is essentially syntactic sugar.
+
+Here is an example of 'letrec':
+
+\begin{lstlisting}
+	x,y  letrec {
+		 x = defx;
+		 y = defy;
+		 z = defz;
+		where
+		 f = deff;
+		 g = defg;
+	  };
+\end{lstlisting}
+
+and its translation as done internally by the compiler:
+
+\begin{lstlisting}
+	x,y  with {
+		 x = BODY : _,!,!;
+		 y = BODY : !,_,!;
+		 z = BODY : !,!,_;
+		 BODY = \(x,y,z).((defx,defy,defz) with {f=deff; g=defg;}) ~ (_,_,_);
+	  };
+\end{lstlisting}
+
+
+
+
+\subsubsection{Environment}
 
 The \lstinline'environment' construction allows to create an explicit environment. It is like a \lstinline'with', but without the left hand expression. It is a convenient way to group together related definitions, to isolate groups of definitions and to create a name space hierarchy. 
 

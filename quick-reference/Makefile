@@ -35,12 +35,11 @@ menu:
 	$(MAKE) -C menu
 
 
-faust-quick-reference.pdf : faust-quick-reference.tex $(CHAPTERS)
+faust-quick-reference.pdf: faust-quick-reference.tex $(CHAPTERS)
 	pdflatex faust-quick-reference.tex
 	rail faust-quick-reference
 	pdflatex faust-quick-reference.tex
 
-clean :
+clean:
 	rm -f *.out *.toc *.pdf *.aux *.dvi *.rai *.rao *.log *.gz *~
 	$(MAKE) -C mkdocs clean
-
