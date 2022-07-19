@@ -1932,6 +1932,33 @@ n(t) = (n(t-1)+1) * (g(t) <= g(t-1))\\
 v(t) = max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1))
 </script>
 </p>
+<p>In order to factor some expressions common to several recursive definitions, we can use the clause <code>where</code> followed by one or more definitions. These definitions will only be visible to the recursive equations of the <code>letrec</code>, but not to the outside world, unlike the recursive definitions themselves.</p>
+<p>For instance in the previous example we can factorize <code>(g&lt;=g)</code> leading to the following expression:</p>
+<pre><code>ar(a,r,g) = v letrec {
+    'n = (n+1) * c;
+    'v = max(0, v + (n&lt;a)/a - (n&gt;=a)/r) * c; 
+    where
+        c = g&lt;=g'; 
+    };
+</code></pre>
+<p>Please note that <code>letrec</code> is essentially syntactic sugar. Here is an example of ’letrec’:</p>
+<pre><code>x,y letrec {
+    x = defx; 
+    y = defy; 
+    z = defz;
+    where
+        f = deff;
+        g = defg; 
+    };
+</code></pre>
+<p>and its translation as done internally by the compiler:</p>
+<pre><code>x,y with {
+    x = BODY : _,!,!;
+    y = BODY : !,_,!;
+    z = BODY : !,!,_;
+    BODY = \(x,y,z).((defx,defy,defz) with {f=deff; g=defg;}) ~ (_,_,_);
+};
+</code></pre>
 <h4 id="environment-expression"><code>environment</code> Expression</h4>
 <p>The <code>environment</code> construction allows to create an explicit environment. It is like a <a href="#with-expression">`with'</a>, but without the left hand expression. It is a convenient way to group together related definitions, to isolate groups of definitions and to create a name space hierarchy. </p>
 <p><img src="img/environment.svg" class="mx-auto d-block"></p>

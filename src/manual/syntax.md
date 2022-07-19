@@ -875,6 +875,41 @@ n(t) = (n(t-1)+1) * (g(t) <= g(t-1))\\
 v(t) = max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1))
 $$
 
+In order to factor some expressions common to several recursive definitions, we can use the clause `where` followed by one or more definitions. These definitions will only be visible to the recursive equations of the `letrec`, but not to the outside world, unlike the recursive definitions themselves.
+
+For instance in the previous example we can factorize `(g<=g)` leading to the following expression:
+
+```
+ar(a,r,g) = v letrec {
+    'n = (n+1) * c;
+    'v = max(0, v + (n<a)/a - (n>=a)/r) * c; 
+    where
+        c = g<=g'; 
+    };
+```
+Please note that `letrec` is essentially syntactic sugar. Here is an example of ’letrec’:
+
+```
+x,y letrec {
+    x = defx; 
+    y = defy; 
+    z = defz;
+    where
+        f = deff;
+        g = defg; 
+    };
+```
+and its translation as done internally by the compiler:
+
+```
+x,y with {
+    x = BODY : _,!,!;
+    y = BODY : !,_,!;
+    z = BODY : !,!,_;
+    BODY = \(x,y,z).((defx,defy,defz) with {f=deff; g=defg;}) ~ (_,_,_);
+};
+```
+
 #### `environment` Expression
 
 The `environment` construction allows to create an explicit environment. It is like a [`with'](#with-expression), but without the left hand expression. It is a convenient way to group together related definitions, to isolate groups of definitions and to create a name space hierarchy. 
