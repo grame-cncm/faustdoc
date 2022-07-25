@@ -1421,7 +1421,7 @@ DSP.memoryDestroy();
 
 ...
 ```
-More complex custom memory allocators can be developed by refining this `malloc_memory_manager` example, possibly defining real-time memory allocators...etc... The [OWL](https://www.rebeltech.org) architecture file uses this [custom memory allocator model](https://github.com/pingdynasty/OwlProgram/blob/master/FaustCode/owl.cpp).
+More complex custom memory allocators can be developed by refining this `malloc_memory_manager` example, possibly defining real-time memory allocators...etc... The [OWL](https://www.rebeltech.org) architecture file uses a custom [OwlMemoryManager](https://github.com/RebelTechnology/OwlProgram/blob/feature/faust-mem-priority/FaustSource/owl.cpp).
 
 #### Allocating several DSP instances
 
