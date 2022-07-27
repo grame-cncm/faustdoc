@@ -2150,7 +2150,7 @@ int main(int argc, char* argv[])
 }
 </code></pre>
 <p>The specialized <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h">SoundUI</a> architecture file is then used to load the required soundfiles at DSP init time, by using a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h">SoundfileReader</a> object. It only implements the <code>addSoundfile</code> method which will load all needed audio files, create and fill the <code>fSoundfile0</code> object.</p>
-<p>Different concrete implementations are already implemented, either using <a href="http://www.mega-nerd.com/libsndfile/">libsndfile</a> (with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h">LibsndfileReader.h</a> file), or <a href="https://juce.com">JUCE</a> (with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h">JuceReader</a> file).</p>
+<p>Different concrete implementations are already written, either using <a href="http://www.mega-nerd.com/libsndfile/">libsndfile</a> (with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h">LibsndfileReader.h</a> file), or <a href="https://juce.com">JUCE</a> (with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h">JuceReader</a> file).</p>
 <p>A new audio file loader can be written by subclassing the <code>SoundfileReader</code> class. A pure memory reader could be implemented for instance to load wavetables to be used as the<code>soundfile</code> URL list. Look at the template <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MemoryReader.h">MemoryReader</a> class, as an example to be completed, with the following methods to be implemented:</p>
 <pre><code class="language-c++">/**
 * Check the availability of a sound resource.
@@ -2193,24 +2193,24 @@ virtual void readFile(Soundfile* soundfile,
 <pre><code class="language-c++"> mydsp DSP;
  // Here using a compiled time chosen SoundfileReader 
  SoundUI* sound_interface = new SoundUI(); 
- DSP.buildUserInterface(sound_interface)
+ DSP.buildUserInterface(sound_interface);
  ...
  run the DSP
  ...
  // Finally deallocate the sound_interface and associated Soundfile resources
- delete sound_interface
+ delete sound_interface;
 </code></pre>
 <p>The <code>SoundfileReader</code> object can be dynamically choosen by using an alternate version of the <code>SoundUI</code> constructor, possibly choosing the sample format to be <em>double</em> when the DSP code is compiled with the <code>-double</code> option:</p>
 <pre><code class="language-c++"> mydsp DSP;
  // Here using a dynamically chosen custom MyMemoryReader 
  SoundfileReader* sound_reader = new MyMemoryReader(...);
  SoundUI* sound_interface = new SoundUI(&quot;&quot;, false, sound_reader, true);
- DSP.buildUserInterface(sound_interface)
+ DSP.buildUserInterface(sound_interface);
  ...
  run the DSP
  ...
  // Finally deallocate the sound_interface and associated Soundfile resources
- delete sound_interface
+ delete sound_interface;
 </code></pre>
 <h2 id="other-languages-than-c">Other Languages Than C++</h2>
 <p>Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, SOUL and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:</p>

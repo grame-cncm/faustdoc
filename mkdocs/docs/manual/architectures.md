@@ -1824,7 +1824,7 @@ virtual void buildUserInterface(UI* ui_interface)
 
 The specialized [SoundUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/SoundUI.h) architecture file is then used to load the required soundfiles at DSP init time, by using a [SoundfileReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/Soundfile.h) object. It only implements the `addSoundfile` method which will load all needed audio files, create and fill the `fSoundfile0` object.
 
-Different concrete implementations are already implemented, either using [libsndfile](http://www.mega-nerd.com/libsndfile/) (with the [LibsndfileReader.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h) file), or [JUCE](https://juce.com) (with the [JuceReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h) file).
+Different concrete implementations are already written, either using [libsndfile](http://www.mega-nerd.com/libsndfile/) (with the [LibsndfileReader.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/LibsndfileReader.h) file), or [JUCE](https://juce.com) (with the [JuceReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JuceReader.h) file).
 
 A new audio file loader can be written by subclassing the `SoundfileReader` class. A pure memory reader could be implemented for instance to load wavetables to be used as the`soundfile` URL list. Look at the template [MemoryReader](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MemoryReader.h) class, as an example to be completed, with the following methods to be implemented:
 
@@ -1873,12 +1873,12 @@ The `SoundUI` architecture is then used the following way:
  mydsp DSP;
  // Here using a compiled time chosen SoundfileReader 
  SoundUI* sound_interface = new SoundUI(); 
- DSP.buildUserInterface(sound_interface)
+ DSP.buildUserInterface(sound_interface);
  ...
  run the DSP
  ...
  // Finally deallocate the sound_interface and associated Soundfile resources
- delete sound_interface
+ delete sound_interface;
 ```
  
  The `SoundfileReader` object can be dynamically choosen by using an alternate version of the `SoundUI` constructor, possibly choosing the sample format to be *double* when the DSP code is compiled with the `-double` option:
@@ -1888,12 +1888,12 @@ The `SoundUI` architecture is then used the following way:
  // Here using a dynamically chosen custom MyMemoryReader 
  SoundfileReader* sound_reader = new MyMemoryReader(...);
  SoundUI* sound_interface = new SoundUI("", false, sound_reader, true);
- DSP.buildUserInterface(sound_interface)
+ DSP.buildUserInterface(sound_interface);
  ...
  run the DSP
  ...
  // Finally deallocate the sound_interface and associated Soundfile resources
- delete sound_interface
+ delete sound_interface;
 ```
 
 ## Other Languages Than C++

@@ -387,6 +387,7 @@
 <p>MIDI support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the <code>[midi:on]</code> metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a>:</p>
 <pre><code>declare options &quot;[midi:on]&quot;;
 </code></pre>
+<p>or using the <code>-midi</code> option in most of <a href="https://faustdoc.grame.fr/manual/tools/">faust2xx</a> scripts.</p>
 <!-- TODO: the tables indicating which architectures implement MIDI support should be placed here. -->
 
 <p>MIDI control is configured in Faust using <a href="../syntax/#metadata">metadata</a> in <a href="../syntax/#user-interface-primitives-and-configuration">UI elements</a>. MIDI channels from 1 to 16 can be used at reception or sending time. <strong>By convention, using the channel = 0 value (or no channel setting) means "all channels".</strong> That is, at reception time, MIDI messages received on all channels can be used to control a given parameter, and at sending time, the MIDI message associated to a parameter will be sent on all channels.</p>
@@ -748,7 +749,7 @@ process = os.sawtooth(freq)*envelope;
 <pre><code>process = os.sawtooth(freq)*envelope : /(4);
 </code></pre>
 <h3 id="configuring-and-activating-polyphony">Configuring and Activating Polyphony</h3>
-<p>Polyphony can be activated "manually" in some Faust architectures using an option/flag during compilation (e.g., typically <code>-poly</code> or <code>-nvoices</code> in the <a href="TODO">faust2xx</a> scripts). That's also how the <a href="https://faustide.grame.fr">Faust Online IDE</a> works where a button can be used to turn polyphony on or off.</p>
+<p>Polyphony can be activated <em>manually</em> in some Faust architectures using an option/flag during compilation (e.g., typically <code>-poly</code> or <code>-nvoices &lt;num&gt;</code> in the <a href="https://faustdoc.grame.fr/manual/tools/">faust2xx</a> scripts). That's also how the <a href="https://faustide.grame.fr">Faust Online IDE</a> works where a button can be used to turn polyphony on or off.</p>
 <p>However, the most standard way to activate polyphony in Faust is to declare the <code>[nvoices:n]</code> metadata which allows us to specify the maximum number of voices of polyphony (<code>n</code>) that will be allocated in the generated program.</p>
 <p>For example, the Faust program from the previous section could be modified such that: </p>
 <!-- faust-run -->
