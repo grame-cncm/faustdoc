@@ -215,8 +215,8 @@ static void test3()
     (
         tvec signals;
         Signal in1 = sigInput(0);
-        signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500)));
-        signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigReal(3000)));
+        signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigInt(500)));
+        signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigInt(3000)));
 
         compile("test3", signals);
     )
@@ -250,8 +250,8 @@ static void test5()
     
     tvec signals;
     Signal in1 = sigInput(0);
-    signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500)));
-    signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigReal(3000)));
+    signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigInt(500)));
+    signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigInt(3000)));
     
     // Vector compilation
     compile("test5", signals, 3, (const char* []){ "-vec", "-lv", "1" });
@@ -323,8 +323,8 @@ static void test4()
     (
         tvec signals;
         Signal in1 = sigInput(0);
-        signals.push_back(sigAdd(sigDelay(in1, sigReal(500)), sigReal(0.5)));
-        signals.push_back(sigMul(sigDelay(in1, sigReal(3000)), sigReal(1.5)));
+        signals.push_back(sigAdd(sigDelay(in1, sigInt(500)), sigReal(0.5)));
+        signals.push_back(sigMul(sigDelay(in1, sigInt(3000)), sigReal(1.5)));
      
         compile("test4", signals);
     )
@@ -350,7 +350,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Equivalent signal expressions 
 
-It is really important to note that *syntactically equivalent signal expressions* will be *internally represented by the same memory structure* (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))` expression, then used in both outputs:
+It is really important to note that *syntactically equivalent signal expressions* will be *internally represented by the same memory structure* (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))` expression, then used in both outputs:
 
 ```C++
 static void equivalent1()
@@ -358,7 +358,7 @@ static void equivalent1()
     COMPILER
     (
         tvec signals;
-        Signal s1 = sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))
+        Signal s1 = sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))
         signals.push_back(s1);
         signals.push_back(s1);
      
@@ -367,7 +367,7 @@ static void equivalent1()
 }
 ```
 
-Will behave exactly the same as the following code, where the `sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))` expression is used twice:
+Will behave exactly the same as the following code, where the `sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))` expression is used twice:
 
 ```C++
 static void equivalent2()
@@ -375,8 +375,8 @@ static void equivalent2()
     COMPILER
     (
         tvec signals;
-        signals.push_back(sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5)));
-        signals.push_back(sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5)));
+        signals.push_back(sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5)));
+        signals.push_back(sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5)));
      
         compile("equivalent2", signals);
     )
@@ -404,7 +404,7 @@ static void test8()
         tvec signals;
         Signal in1 = sigInput(0);
         Signal s = sigVSlider("Vol", sigReal(0.5), sigReal(0.), sigReal(1.), sigReal(0.01));
-        signals.push_back(sigMul(s, sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500))));
+        signals.push_back(sigMul(s, sigDelay(sigAdd(in1, sigReal(0.5)), sigInt(500))));
         
         compile("test8", signals);
     )
