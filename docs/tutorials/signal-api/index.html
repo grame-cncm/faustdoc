@@ -590,8 +590,8 @@ process = _ &lt;: @(+(0.5), 500), @(*(1.5), 3000);
     (
         tvec signals;
         Signal in1 = sigInput(0);
-        signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500)));
-        signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigReal(3000)));
+        signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigInt(500)));
+        signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigInt(3000)));
 
         compile(&quot;test3&quot;, signals);
     )
@@ -620,8 +620,8 @@ process = _ &lt;: @(+(0.5), 500), @(*(1.5), 3000);
 
     tvec signals;
     Signal in1 = sigInput(0);
-    signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500)));
-    signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigReal(3000)));
+    signals.push_back(sigDelay(sigAdd(in1, sigReal(0.5)), sigInt(500)));
+    signals.push_back(sigDelay(sigMul(in1, sigReal(1.5)), sigInt(3000)));
 
     // Vector compilation
     compile(&quot;test5&quot;, signals, 3, (const char* []){ &quot;-vec&quot;, &quot;-lv&quot;, &quot;1&quot; });
@@ -694,8 +694,8 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
     (
         tvec signals;
         Signal in1 = sigInput(0);
-        signals.push_back(sigAdd(sigDelay(in1, sigReal(500)), sigReal(0.5)));
-        signals.push_back(sigMul(sigDelay(in1, sigReal(3000)), sigReal(1.5)));
+        signals.push_back(sigAdd(sigDelay(in1, sigInt(500)), sigReal(0.5)));
+        signals.push_back(sigMul(sigDelay(in1, sigInt(3000)), sigReal(1.5)));
 
         compile(&quot;test4&quot;, signals);
     )
@@ -717,13 +717,13 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
 }
 </code></pre>
 <h4 id="equivalent-signal-expressions">Equivalent signal expressions</h4>
-<p>It is really important to note that <em>syntactically equivalent signal expressions</em> will be <em>internally represented by the same memory structure</em> (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))</code> expression, then used in both outputs:</p>
+<p>It is really important to note that <em>syntactically equivalent signal expressions</em> will be <em>internally represented by the same memory structure</em> (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))</code> expression, then used in both outputs:</p>
 <pre><code class="language-C++">static void equivalent1()
 {
     COMPILER
     (
         tvec signals;
-        Signal s1 = sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))
+        Signal s1 = sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))
         signals.push_back(s1);
         signals.push_back(s1);
 
@@ -731,14 +731,14 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
     )
 }
 </code></pre>
-<p>Will behave exactly the same as the following code, where the <code>sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5))</code> expression is used twice:</p>
+<p>Will behave exactly the same as the following code, where the <code>sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))</code> expression is used twice:</p>
 <pre><code class="language-C++">static void equivalent2()
 {
     COMPILER
     (
         tvec signals;
-        signals.push_back(sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5)));
-        signals.push_back(sigAdd(sigDelay(sigInput(0), sigReal(500)), sigReal(0.5)));
+        signals.push_back(sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5)));
+        signals.push_back(sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5)));
 
         compile(&quot;equivalent2&quot;, signals);
     )
@@ -769,7 +769,7 @@ process = @(+(0.5), 500) * vslider(&quot;Vol&quot;, 0.5, 0, 1, 0.01);
         tvec signals;
         Signal in1 = sigInput(0);
         Signal s = sigVSlider(&quot;Vol&quot;, sigReal(0.5), sigReal(0.), sigReal(1.), sigReal(0.01));
-        signals.push_back(sigMul(s, sigDelay(sigAdd(in1, sigReal(0.5)), sigReal(500))));
+        signals.push_back(sigMul(s, sigDelay(sigAdd(in1, sigReal(0.5)), sigInt(500))));
 
         compile(&quot;test8&quot;, signals);
     )

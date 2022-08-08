@@ -253,7 +253,7 @@ Diagram expressions are assembled from primitive ones using either binary compos
 
 Five binary *composition operations* are available to combine block-diagrams: 
 
-* [*recursion*](#recursion-composition) (`~`),
+* [*recursion*](#recursive-composition) (`~`),
 * [*parallel*](#parallel-composition) (`,`),
 * [*sequential*](#sequential-composition) (`:`),
 * [*split*](#split-composition) (`<:`),
