@@ -609,7 +609,7 @@ Options:
 Usage: faust2api [options] [Faust options] &lt;file.dsp>
 faust2api can be used to generate Faust based dsp objects for various platforms:
 
-Ouput options:
+Output options:
    -ios : generates an iOS API
    -android : generates an Android API
    -coreaudio : generates an OSX CoreAudio API
@@ -668,7 +668,7 @@ Polyphonic mode means MIDI instrument with at least 1 voice. Use no arguments fo
 <h2 id="faust2cagtk">faust2cagtk</h2>
 <pre class=faust-tools>
 Usage: faust2cagtk [options] [Faust options] &lt;file.dsp>
-Target platform: Linux
+Target platform: MacOS
 Require: Jack
 Compiles Faust programs to CoreAudio and GTK
 Options:
@@ -776,11 +776,11 @@ Usage: faust2dplug [options] [Faust options] &lt;file.dsp>
 Require: Dplug
 Compiles Faust programs to Dplug plugins
 Options:
-   -vendor : &lt;My Company Name>
-   -vendorid : &lt;FaUs>
-   -pluginid : &lt;PlUg>
-   -homepage : &lt;https://faust.grame.fr/>
-   -effectType : &lt;effectDynamics>
+   -vendor &lt;My Company Name> : 
+   -vendorid &lt;FaUs> : 
+   -pluginid &lt;PlUg> : 
+   -homepage &lt;https://faust.grame.fr/> : 
+   -effectType &lt;effectDynamics> : 
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
@@ -1059,8 +1059,7 @@ Options:
    -filter &lt;filter> : use a filter for upsampling or downsampling [0..4]
    -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -native : to compile for the native CPU (otherwise the 'generic' mode is used by default)
-   -universal : to generate a 64/32 bits external
-   -ub : to generate a arm/intel external
+   -universal : to generate a arm/intel external
    -nopatch : to deactivate patch generation
    -nopost : to disable Faust messages to Max console
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
@@ -1124,7 +1123,7 @@ Options:
 <h2 id="faust2nodejs">faust2nodejs</h2>
 <pre class=faust-tools>
 Usage: faust2nodejs [driver] [Faust options] &lt;file.dsp>
-Generate Faust-based nodejs native addons. The generated addons can embed most of the audio engines supported by Faust: ALSA, JACK, CoreAudio, RtAudio, PortAudio, etc. Since faust2nodejs essentially acts as a wrapper to faust2api, it offers the same features than this system (MIDI and OSC suport, polyphony, separate effect file, etc.).
+Generate Faust-based nodejs native addons. The generated addons can embed most of the audio engines supported by Faust: ALSA, JACK, CoreAudio, RtAudio, PortAudio, etc. Since faust2nodejs essentially acts as a wrapper to faust2api, it offers the same features than this system (MIDI and OSC support, polyphony, separate effect file, etc.).
 
 The following drivers are available: -coreaudio // -alsa // -jack // -portaudio // -rtaudio // -dummy. For example, to create a native nodejs addon with a JACK audio engine, run: faust2nodjs -jack faustFile.dsp
 
