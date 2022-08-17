@@ -1,3 +1,3 @@
 
-process = >(0.5);
+process = <=(0.5);
 

@@ -831,9 +831,9 @@ the definitions of `f(x)` and `g(x)` are local to `f : + ~ g`.
 
 Please note that `with` is left associative and has the lowest priority:
 
-* `f : + ~ g with {...}` is equivalent to `(f : + ~ g)  with {...}`. 
+* `f : + ~ g with {...}` is equivalent to `(f : + ~ g) with {...}`. 
 * `f : + ~ g with {...} with {...}` is equivalent to 
-`((f : + ~ g)  with {...})  with {...}`. 
+`((f : + ~ g) with {...}) with {...}`. 
 
 #### `letrec` Expression
 
@@ -1269,6 +1269,13 @@ The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows for 
 * two inputs: the sound number (as a integer between 0 and 255 as a [constant numerical expression](#constant-numerical-expressions)), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)
 * two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
 * `n` several more outputs for the sound channels themselves, as a [constant numerical expression](#constant-numerical-expressions)
+
+<!-- faust-run -->
+```
+reader = _~+(1);
+process = 0,reader:soundfile("son[url:{'foo.wav'}]",2);
+```
+<!-- /faust-run -->
 
 If more outputs than the actual number of channels in the sound file are used, the audio channels will be automatically duplicated up to the wanted number of outputs (so for instance, if a stereo file is used with four output channels, the same group of two channels will be duplicated).
 
