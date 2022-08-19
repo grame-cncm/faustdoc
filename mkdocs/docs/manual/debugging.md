@@ -100,7 +100,7 @@ On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) s
 
 ### Fixing the errors
 
-Those errors have to be then fixed by carefully checking signal range, like verifying the min/max values in `vslider/hslider/nentry` user-interface items. 
+These errors must then be corrected by carefully checking signal range, like verifying the min/max values in `vslider/hslider/nentry` user-interface items. 
 
 ### Additional Resources 
 
