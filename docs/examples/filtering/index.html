@@ -636,7 +636,7 @@ import(&quot;stdfaust.lib&quot;);
 //              G : gain [0..1]
 //------------------------------------------------------------------
 
-filter(Q,F,G)   = fi.TF2(  (1 +  K/Q + K*K)     / D,
+filter(Q,F,G) = fi.TF2((1 +  K/Q + K*K)     / D,
                          2 * (K*K - 1)      / D,
                         (1 - K/Q + K*K)     / D,
                          2 * (K*K - 1)      / D,
@@ -654,14 +654,14 @@ filter(Q,F,G)   = fi.TF2(  (1 +  K/Q + K*K)     / D,
 //
 //------------------------------------------------------------------
 
-bandfilter(F)   = filter(   nentry(&quot;Q factor [style:knob]&quot;,50,0.1,100,0.1),
-                            nentry(&quot;freq [unit:Hz][style:knob]&quot;, F, 20, 20000, 1),
-                            0 - vslider(&quot;gain [unit:dB]&quot;, 0, -50, 50, 0.1)
+bandfilter(F) = filter(nentry(&quot;Q factor [style:knob]&quot;,50,0.1,100,0.1),
+                        nentry(&quot;freq [unit:Hz][style:knob]&quot;, F, 20, 20000, 1),
+                        0 - vslider(&quot;gain [unit:dB]&quot;, 0, -50, 50, 0.1)
                         );
 
 //------------------------- Process --------------------------------
 
-process         = vgroup(&quot;Bandfilter&quot;, bandfilter(1000));
+process = vgroup(&quot;Bandfilter&quot;, bandfilter(1000));
 
 </code></pre>
 
@@ -703,7 +703,7 @@ import(&quot;stdfaust.lib&quot;);
 Q = hslider(&quot;Q&quot;,1,0.7072,25,0.01);
 normFreq = hslider(&quot;freq&quot;,0.1,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
-inputSignal = (no.noise *switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise *switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.diodeLadder(normFreq,Q) &lt;:_,_;
 </code></pre>
@@ -745,7 +745,6 @@ declare description &quot;Signal generators through a filter bank with spectrum 
 import(&quot;stdfaust.lib&quot;);
 
 process = 
-// ol.sawtooth_demo : fl.filterbank_demo : fl.spectral_level_demo &lt;: _,_;
  vgroup(&quot;[1]&quot;,dm.sawtooth_demo) : 
  vgroup(&quot;[2]&quot;,dm.filterbank_demo) : 
  vgroup(&quot;[3]&quot;,dm.spectral_level_demo) &lt;:
@@ -801,7 +800,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise *switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise *switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.korg35HPF(normFreq,Q) &lt;:_,_;
 </code></pre>
@@ -827,7 +826,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise *switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise *switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.korg35LPF(normFreq,Q) &lt;:_,_;
 </code></pre>
@@ -971,25 +970,25 @@ import(&quot;stdfaust.lib&quot;);
 
 //------------------- low-frequency shelving cut (table 2.3) --------------------
 
-V0(g)           = pow(10,g/-20.0);
-K(fc)           = tan(ma.PI*fc/ma.SR);
+V0(g)       = pow(10,g/-20.0);
+K(fc)       = tan(ma.PI*fc/ma.SR);
 squ(x)      = x*x;
-denom(fc,g)     = 1 + sqrt(2*V0(g))*K(fc) + V0(g)*squ(K(fc));
+denom(fc,g) = 1 + sqrt(2*V0(g))*K(fc) + V0(g)*squ(K(fc));
 
-lfcut(fc, g)    = fi.TF2((1 + sqrt(2)*K(fc) + squ(K(fc))) / denom(fc,g),
-                        2 * (squ(K(fc)) - 1) / denom(fc,g),
-                        (1 - sqrt(2)*K(fc) + squ(K(fc))) / denom(fc,g),
-                        2 * (V0(g)*squ(K(fc)) - 1) / denom(fc,g),
-                        (1 - sqrt(2*V0(g))*K(fc) + V0(g)*squ(K(fc))) / denom(fc,g));
+lfcut(fc, g) = fi.TF2((1 + sqrt(2)*K(fc) + squ(K(fc))) / denom(fc,g),
+                    2 * (squ(K(fc)) - 1) / denom(fc,g),
+                    (1 - sqrt(2)*K(fc) + squ(K(fc))) / denom(fc,g),
+                    2 * (V0(g)*squ(K(fc)) - 1) / denom(fc,g),
+                    (1 - sqrt(2*V0(g))*K(fc) + V0(g)*squ(K(fc))) / denom(fc,g));
 
 //------------------------------ User Interface -----------------------------------
 
-freq            = hslider(&quot;freq [unit:Hz][style:knob]&quot;, 100, 20, 5000, 1);
-att             = hslider(&quot;attenuation [unit:dB][style:knob]&quot;, 0, -96, 10, 0.1);
+freq = hslider(&quot;freq [unit:Hz][style:knob]&quot;, 100, 20, 5000, 1);
+att = hslider(&quot;attenuation [unit:dB][style:knob]&quot;, 0, -96, 10, 0.1);
 
 //----------------------------------- Process -------------------------------------
 
-process         = vgroup(&quot;low-freq shelving cut&quot;, lfcut(freq,att));
+process = vgroup(&quot;low-freq shelving cut&quot;, lfcut(freq,att));
 
 
 </code></pre>
@@ -1041,7 +1040,7 @@ import(&quot;stdfaust.lib&quot;);
 Q = hslider(&quot;Q&quot;,1,0.7072,25,0.01);
 normFreq = hslider(&quot;freq&quot;,0.1,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
-inputSignal = (no.noise *switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise *switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.moogHalfLadder(normFreq,Q) &lt;:_,_;
 </code></pre>
@@ -1066,7 +1065,7 @@ import(&quot;stdfaust.lib&quot;);
 Q = hslider(&quot;Q&quot;,1,0.7072,25,0.01);
 normFreq = hslider(&quot;freq&quot;,0.1,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
-inputSignal = (no.noise *switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise *switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.moogLadder(normFreq,Q) &lt;:_,_;
 </code></pre>
@@ -1139,7 +1138,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 // The BSF, BPF, HPF and LPF outputs are produced
 process = inputSignal : ve.oberheim(normFreq,Q);
@@ -1167,7 +1166,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.oberheimBPF(normFreq,Q) &lt;:_,_;
 
@@ -1194,7 +1193,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.oberheimBSF(normFreq,Q) &lt;:_,_;
 
@@ -1221,7 +1220,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.oberheimHPF(normFreq,Q) &lt;:_,_;
 
@@ -1248,7 +1247,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.oberheimLPF(normFreq,Q) &lt;:_,_;
 
@@ -1270,8 +1269,6 @@ declare description &quot;Demonstrate the Parametric Equalizer sections on test 
 
 import(&quot;stdfaust.lib&quot;);
 
-//process = ol.sawtooth_demo : fl.parametric_eq_demo :
-//          fl.mth_octave_spectral_level_demo(2) &lt;: _,_;
 process =
   vgroup(&quot;[1]&quot;, dm.sawtooth_demo) :
   vgroup(&quot;[2]&quot;, dm.parametric_eq_demo) :
@@ -1375,7 +1372,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _ ; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _ ; 
 
 // The LPF and HPF outputs are produced
 process = inputSignal : ve.sallenKey2ndOrder(normFreq,Q);
@@ -1403,7 +1400,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.sallenKey2ndOrderBPF(normFreq,Q) &lt;:_,_;
 
@@ -1430,7 +1427,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.sallenKey2ndOrderHPF(normFreq,Q) &lt;:_,_;
 
@@ -1457,7 +1454,7 @@ Q = hslider(&quot;Q&quot;,1,0.5,10,0.01);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.sallenKey2ndOrderLPF(normFreq,Q) &lt;:_,_;
 
@@ -1483,7 +1480,7 @@ import(&quot;stdfaust.lib&quot;);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 // The LPF, BPF and HPF outputs are produced
 process = inputSignal : ve.sallenKeyOnePole(normFreq);
@@ -1510,7 +1507,7 @@ import(&quot;stdfaust.lib&quot;);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.sallenKeyOnePoleHPF(normFreq) &lt;:_,_;
 
@@ -1536,7 +1533,7 @@ import(&quot;stdfaust.lib&quot;);
 normFreq = hslider(&quot;freq&quot;,0.5,0,1,0.001):si.smoo;
 switch = checkbox(&quot;Saw/Noise&quot;);
 
-inputSignal = (no.noise*switch) , (os.sawtooth(100)*(1-switch)) :&gt; _; 
+inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :&gt; _; 
 
 process = inputSignal : ve.sallenKeyOnePoleLPF(normFreq) &lt;:_,_;
 
@@ -1580,9 +1577,6 @@ declare description &quot;Demonstrate competing variable-lowpass-filter effects 
 
 declare name &quot;vcfWahLab&quot;;
 
-// process = ol.sawtooth_demo : 
-//    el.crybaby_demo : el.moog_vcf_demo : el.wah4_demo : 
-//    fl.spectral_level_demo &lt;: _,_;
 process = 
  vgroup(&quot;[1]&quot;, dm.sawtooth_demo) : 
  vgroup(&quot;[2]&quot;, dm.crybaby_demo) : 

@@ -367,9 +367,6 @@ declare name &quot;phaserFlangerLab&quot;;
 
 import(&quot;stdfaust.lib&quot;);
 
-//process = ol.sawtooth_demo &lt;: 
-//  el.flanger_demo : el.phaser2_demo :&gt; fl.spectral_level_demo &lt;: _,_;
-
 fx_stack = 
  vgroup(&quot;[1]&quot;, dm.sawtooth_demo) &lt;:
  vgroup(&quot;[2]&quot;, dm.flanger_demo) : 

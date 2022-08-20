@@ -375,13 +375,11 @@ declare name &quot;gateCompressor&quot;;
 
 import(&quot;stdfaust.lib&quot;);
 
-process = 
-// ol.sawtooth_demo &lt;: 
-//      el.gate_demo : ef.compressor_demo :&gt; fi.spectral_level_demo &lt;: _,_;
-   vgroup(&quot;[1]&quot;, dm.sawtooth_demo) &lt;:
-   vgroup(&quot;[2]&quot;, dm.gate_demo) : 
-   vgroup(&quot;[3]&quot;, dm.compressor_demo) :&gt;
-   vgroup(&quot;[4]&quot;, dm.spectral_level_demo) &lt;:
+process =  
+    vgroup(&quot;[1]&quot;, dm.sawtooth_demo) &lt;:
+    vgroup(&quot;[2]&quot;, dm.gate_demo) : 
+    vgroup(&quot;[3]&quot;, dm.compressor_demo) :&gt;
+    vgroup(&quot;[4]&quot;, dm.spectral_level_demo) &lt;:
     _,_;
 
 </code></pre>
@@ -431,9 +429,9 @@ declare copyright   &quot;(c)GRAME 2006&quot;;
 
 import(&quot;stdfaust.lib&quot;);
 
-gain        = vslider(&quot;[1]&quot;, 0, -70, +4, 0.1) : ba.db2linear : si.smoo;
+gain = vslider(&quot;[1]&quot;, 0, -70, +4, 0.1) : ba.db2linear : si.smoo;
 
-process     = *(gain);
+process = *(gain);
 
 </code></pre>
 

@@ -442,7 +442,6 @@ I = int(B);             // convert button signal from float to integer
 R = (I-I') &lt;= 0;        // Reset capture when button is pressed
 D = (+(I):*(R))~_;      // Compute capture duration while button is pressed: 0..NNNN0..MMM
 
-
 capture = *(B) : (+ : de.delay(8*65536, D-1)) ~ *(1.0-B);
 
 level = hslider(&quot;level (db)&quot;, 0, -96, 4, 0.1) : ba.db2linear : si.smoo;
@@ -508,113 +507,113 @@ process = _*0, (vgroup(&quot;FAUST MIDI TESTER&quot;, hgroup(&quot;[1]&quot;, co
 
 //Ctrl tester (ctrl ): tester(midi in, midi out)
 controltester = vgroup(&quot;CTRL IN/OUT&quot;, valuetest(50,51), booltest(100,101))
-with{
-valuetest(i,o) = hslider(&quot;Ctrl Value IN (Ctrl %i) [midi:ctrl %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Ctrl Value OUT (Ctrl %o) [midi:ctrl %o]&quot;, 0, 127);
-booltest(i,o) = checkbox(&quot;Ctrl Bool IN (Ctrl %i) [midi:ctrl %i]&quot;) : hbargraph(&quot;Ctrl Bool OUT (Ctrl %o) [midi:ctrl %o]&quot;, 0, 1);
+with {
+    valuetest(i,o) = hslider(&quot;Ctrl Value IN (Ctrl %i) [midi:ctrl %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Ctrl Value OUT (Ctrl %o) [midi:ctrl %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;Ctrl Bool IN (Ctrl %i) [midi:ctrl %i]&quot;) : hbargraph(&quot;Ctrl Bool OUT (Ctrl %o) [midi:ctrl %o]&quot;, 0, 1);
 };
 
 //Ctrl Chan tester (ctrl chan): tester(midi in, midi out)
 controlchantester = vgroup(&quot;CTRL CHAN IN/OUT&quot;, valuetest(50,2,74,3))
-with{
-valuetest(i,ic,o,oc) = hslider(&quot;Ctrl Value IN (Ctrl %i Channel %ic) [midi:ctrl %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Ctrl Value OUT (Ctrl %o) Channel OUT(Chan %oc) [midi:ctrl %o %oc]&quot;, 0, 127);
+with {
+    valuetest(i,ic,o,oc) = hslider(&quot;Ctrl Value IN (Ctrl %i Channel %ic) [midi:ctrl %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Ctrl Value OUT (Ctrl %o) Channel OUT(Chan %oc) [midi:ctrl %o %oc]&quot;, 0, 127);
 };
 
 //Note tester (keyon) : tester(midi in, midi out)
 noteontester = vgroup(&quot;NOTE ON IN/OUT&quot;, valuetest(50,51), booltest(100,101))
-with{
-valuetest(i,o) = hslider(&quot;NoteOn Value IN (Note %i) [midi:keyon %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOn Value OUT (Note %o) [midi:keyon %o]&quot;, 0, 127);
-booltest(i,o) = checkbox(&quot;NoteOn Bool IN (Note %i) [midi:keyon %i]&quot;) : hbargraph(&quot;NoteOn Bool OUT (Note %o) [midi:keyon %o]&quot;, 0, 1);
+with {
+    valuetest(i,o) = hslider(&quot;NoteOn Value IN (Note %i) [midi:keyon %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOn Value OUT (Note %o) [midi:keyon %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;NoteOn Bool IN (Note %i) [midi:keyon %i]&quot;) : hbargraph(&quot;NoteOn Bool OUT (Note %o) [midi:keyon %o]&quot;, 0, 1);
 };
 
 //Note Chan tester (keyon) : tester(midi in, midi out)
 noteonchantester = vgroup(&quot;NOTE ON CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
-with{
-valuetest(i, ic, o, oc) = hslider(&quot;NoteOn Value IN (Note %i Channel %ic) [midi:keyon %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOn Value OUT (Note %o Chan %oc) [midi:keyon %o %oc]&quot;, 0, 127);
-booltest(i, ic, o, oc) = checkbox(&quot;NoteOn Chan Bool IN (Note %i Channel %ic) [midi:keyon %i %ic]&quot;) : hbargraph(&quot;NoteOn Chan Bool OUT (Note %o Channel %oc) [midi:keyon %o %oc]&quot;, 0, 1);
+with {
+    valuetest(i, ic, o, oc) = hslider(&quot;NoteOn Value IN (Note %i Channel %ic) [midi:keyon %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOn Value OUT (Note %o Chan %oc) [midi:keyon %o %oc]&quot;, 0, 127);
+    booltest(i, ic, o, oc) = checkbox(&quot;NoteOn Chan Bool IN (Note %i Channel %ic) [midi:keyon %i %ic]&quot;) : hbargraph(&quot;NoteOn Chan Bool OUT (Note %o Channel %oc) [midi:keyon %o %oc]&quot;, 0, 1);
 };
 
 //Note tester (keyoff) : tester(midi in, midi out)
 noteofftester = vgroup(&quot;NOTE OFF IN/OUT&quot;, valuetest(50,51), booltest(100,101))
-with{
-valuetest(i,o) = hslider(&quot;NoteOff Value IN (Note %i) [midi:keyoff %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOff Value OUT (Note %o) [midi:keyoff %o]&quot;, 0, 127);
-booltest(i,o) = checkbox(&quot;NoteOff Bool IN (Note %i) [midi:keyoff %i]&quot;) : hbargraph(&quot;NoteOff Bool OUT (Note %o) [midi:keyoff %o]&quot;, 0, 1);
+with {
+    valuetest(i,o) = hslider(&quot;NoteOff Value IN (Note %i) [midi:keyoff %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOff Value OUT (Note %o) [midi:keyoff %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;NoteOff Bool IN (Note %i) [midi:keyoff %i]&quot;) : hbargraph(&quot;NoteOff Bool OUT (Note %o) [midi:keyoff %o]&quot;, 0, 1);
 };
 
 //Note Chan tester (keyoff) : tester(midi in, midi out)
 noteoffchantester = vgroup(&quot;NOTE OFF CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
-with{
-valuetest(i, ic, o, oc) = hslider(&quot;NoteOff Value IN (Note %i Channel %ic) [midi:keyoff %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOff Value OUT (Note %o Channel %oc) [midi:keyoff %o %oc]&quot;, 0, 127);
-booltest(i, ic, o, oc) = checkbox(&quot;NoteOff Bool IN (Note %i Channel %ic) [midi:keyoff %i %ic]&quot;) : hbargraph(&quot;NoteOff Bool OUT (Note %o Channel %oc) [midi:keyoff %o %oc]&quot;, 0, 1);
+with {
+    valuetest(i, ic, o, oc) = hslider(&quot;NoteOff Value IN (Note %i Channel %ic) [midi:keyoff %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOff Value OUT (Note %o Channel %oc) [midi:keyoff %o %oc]&quot;, 0, 127);
+    booltest(i, ic, o, oc) = checkbox(&quot;NoteOff Bool IN (Note %i Channel %ic) [midi:keyoff %i %ic]&quot;) : hbargraph(&quot;NoteOff Bool OUT (Note %o Channel %oc) [midi:keyoff %o %oc]&quot;, 0, 1);
 };
 
 //KeyPress Chan tester (keypress) : tester(midi in, midi out)
 keypresschantester = vgroup(&quot;KEY PRESS CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
-with{
-valuetest(i, ic, o, oc) = hslider(&quot;Pressure Value IN (Note %i Channel %ic) [midi:keypress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note Value OUT (Note %o Channel %oc) [midi:keypress %o %oc]&quot;, 0, 127);
-booltest(i, ic, o, oc) = checkbox(&quot;Pressure Bool IN (Note %i Channel %ic) [midi:keypress %i %ic]&quot;) : hbargraph(&quot;Pressure Bool OUT (Note %o Channel %oc) [midi:keypress %o %oc]&quot;, 0, 1);
+with {
+    valuetest(i, ic, o, oc) = hslider(&quot;Pressure Value IN (Note %i Channel %ic) [midi:keypress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note Value OUT (Note %o Channel %oc) [midi:keypress %o %oc]&quot;, 0, 127);
+    booltest(i, ic, o, oc) = checkbox(&quot;Pressure Bool IN (Note %i Channel %ic) [midi:keypress %i %ic]&quot;) : hbargraph(&quot;Pressure Bool OUT (Note %o Channel %oc) [midi:keypress %o %oc]&quot;, 0, 1);
 };
 
 //Midisync tester
 midiclocktester = vgroup(&quot;MIDI SYNC (IN)&quot;, clock, startstop)
-with{
-clock = checkbox(&quot;MIDI clock signal [midi:clock]&quot;);
-startstop = checkbox(&quot;MIDI START/STOP [midi:start] [midi:stop]&quot;);
+with {
+    clock = checkbox(&quot;MIDI clock signal [midi:clock]&quot;);
+    startstop = checkbox(&quot;MIDI START/STOP [midi:start] [midi:stop]&quot;);
 };
 
 //Key Aftertouch tester (keypress) : tester(midi in, midi out)
 kattester = vgroup(&quot;KEY AFTERTOUCH (KAT) IN/OUT&quot;,valuetest(50,51), booltest(100,101))
-with{
-valuetest(i,o) = hslider(&quot;Note KAT Value IN (Note %i) [midi:keypress %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note KAT Value OUT (Note %o) [midi:keypress %o]&quot;, 0, 127);
-booltest(i,o) = checkbox(&quot;Note KAT Bool IN (Note %i) [midi:keypress %i]&quot;) : hbargraph(&quot;Note KAT Bool OUT (Note %o) [midi:keypress %o]&quot;, 0, 1);
+with {
+    valuetest(i,o) = hslider(&quot;Note KAT Value IN (Note %i) [midi:keypress %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note KAT Value OUT (Note %o) [midi:keypress %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;Note KAT Bool IN (Note %i) [midi:keypress %i]&quot;) : hbargraph(&quot;Note KAT Bool OUT (Note %o) [midi:keypress %o]&quot;, 0, 1);
 };
 
 //Key Aftertouch tester (keypress) : tester(midi in, midi out)
 katchantester = vgroup(&quot;KEY AFTERTOUCH CHAN (KAT) IN/OUT&quot;,valuetest(50,2,51,3), booltest(100,2,101,3))
-with{
-valuetest(i,ic,o,oc) = hslider(&quot;Note KAT Value IN (Note %i) (Chan %ic) [midi:keypress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note KAT Value OUT (Note %o) (Chan %oc) [midi:keypress %o %oc]&quot;, 0, 127);
-booltest(i,ic,o,oc) = checkbox(&quot;Note KAT Bool IN (Note %i) (Chan %ic) [midi:keypress %i %ic]&quot;) : hbargraph(&quot;Note KAT Bool OUT (Note %o) (Chan %oc)[midi:keypress %o %oc]&quot;, 0, 1);
+with {
+    valuetest(i,ic,o,oc) = hslider(&quot;Note KAT Value IN (Note %i) (Chan %ic) [midi:keypress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note KAT Value OUT (Note %o) (Chan %oc) [midi:keypress %o %oc]&quot;, 0, 127);
+    booltest(i,ic,o,oc) = checkbox(&quot;Note KAT Bool IN (Note %i) (Chan %ic) [midi:keypress %i %ic]&quot;) : hbargraph(&quot;Note KAT Bool OUT (Note %o) (Chan %oc)[midi:keypress %o %oc]&quot;, 0, 1);
 };
 
 //ProgramChange tester (pgm) : tester(midi in, midi out)
 pctester = vgroup(&quot;PROGRAM CHANGE (PC) IN/OUT&quot;,valuetest(1,2), booltest(1,2))
-with{
-valuetest(i,o) = hslider(&quot;ProgramChange Value IN (PC %i) [midi:pgm %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;ProgramChange Value OUT (PC %o) [midi:pgm %o]&quot;, 0, 127);
-booltest(i,o) = checkbox(&quot;ProgramChange Bool IN (PC %i) [midi:pgm %i]&quot;) : hbargraph(&quot;ProgramChange Bool OUT (PC %o) [midi:pgm %o]&quot;, 0, 1);
+with {
+    valuetest(i,o) = hslider(&quot;ProgramChange Value IN (PC %i) [midi:pgm %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;ProgramChange Value OUT (PC %o) [midi:pgm %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;ProgramChange Bool IN (PC %i) [midi:pgm %i]&quot;) : hbargraph(&quot;ProgramChange Bool OUT (PC %o) [midi:pgm %o]&quot;, 0, 1);
 };
 
 //ProgramChange Chan tester (pgm) : tester(midi in, midi out)
 pcchantester = vgroup(&quot;PROGRAM CHANGE CHAN (PC) IN/OUT&quot;,valuetest(1, 2, 2, 3), booltest(1, 2, 2, 3))
-with{
-valuetest(i,ic,o,oc) = hslider(&quot;ProgramChange Value IN (PC %i) (CHAN %ic) [midi:pgm %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;ProgramChange Value OUT (PC %o) (CHAN %oc) [midi:pgm %o %oc]&quot;, 0, 127);
-booltest(i,ic,o,oc) = checkbox(&quot;ProgramChange Bool IN (PC %i) (CHAN %ic) [midi:pgm %i %ic]&quot;) : hbargraph(&quot;ProgramChange Bool OUT (PC %o) (CHAN %oc) [midi:pgm %o %oc]&quot;, 0, 1);
+with {
+    valuetest(i,ic,o,oc) = hslider(&quot;ProgramChange Value IN (PC %i) (CHAN %ic) [midi:pgm %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;ProgramChange Value OUT (PC %o) (CHAN %oc) [midi:pgm %o %oc]&quot;, 0, 127);
+    booltest(i,ic,o,oc) = checkbox(&quot;ProgramChange Bool IN (PC %i) (CHAN %ic) [midi:pgm %i %ic]&quot;) : hbargraph(&quot;ProgramChange Bool OUT (PC %o) (CHAN %oc) [midi:pgm %o %oc]&quot;, 0, 1);
 };
 
 //Channel Aftertourch tester (chanpress) : tester(midi in, midi out)
 chattester = vgroup(&quot;CHANNEL AFTERTOUCH (CHAT) IN/OUT&quot;,valuetest(50,51), booltest(100,101))
-with{
-valuetest(i,o) = hslider(&quot;Note CHAT Value IN (Note %i) [midi:chanpress %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note CHAT Value OUT (Note %o) [midi:chanpress %o]&quot;, 0, 127);
-booltest(i,o) = checkbox(&quot;Note CHAT Bool IN (Note %i) [midi:chanpress %i]&quot;) : hbargraph(&quot;Note CHAT Bool OUT (Note %o) [midi:chanpress %o]&quot;, 0, 1);
+with {
+    valuetest(i,o) = hslider(&quot;Note CHAT Value IN (Note %i) [midi:chanpress %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note CHAT Value OUT (Note %o) [midi:chanpress %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;Note CHAT Bool IN (Note %i) [midi:chanpress %i]&quot;) : hbargraph(&quot;Note CHAT Bool OUT (Note %o) [midi:chanpress %o]&quot;, 0, 1);
 };
 
 //Channel Aftertourch tester (chanpress) : tester(midi in, midi out)
 chatchantester = vgroup(&quot;CHANNEL AFTERTOUCH CHAN (CHAT) IN/OUT&quot;,valuetest(50,2,51,3), booltest(100,2,101,3))
-with{
-valuetest(i,ic,o,oc) = hslider(&quot;Note CHAT Chan Value IN (Note %i) (Chan %ic) [midi:chanpress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note CHAT Value OUT (Note %o) (Chan %oc) [midi:chanpress %o %oc]&quot;, 0, 127);
-booltest(i,ic,o,oc) = checkbox(&quot;Note CHAT Bool IN (Note %i) (Chan %ic) [midi:chanpress %i %ic]&quot;) : hbargraph(&quot;Note CHAT Bool OUT (Note %o) (Chan %oc) [midi:chanpress %o %oc]&quot;, 0, 1);
+with {
+    valuetest(i,ic,o,oc) = hslider(&quot;Note CHAT Chan Value IN (Note %i) (Chan %ic) [midi:chanpress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note CHAT Value OUT (Note %o) (Chan %oc) [midi:chanpress %o %oc]&quot;, 0, 127);
+    booltest(i,ic,o,oc) = checkbox(&quot;Note CHAT Bool IN (Note %i) (Chan %ic) [midi:chanpress %i %ic]&quot;) : hbargraph(&quot;Note CHAT Bool OUT (Note %o) (Chan %oc) [midi:chanpress %o %oc]&quot;, 0, 1);
 };
 
 //Pitchwheel tester (pitchwheel) : tester(midi in, midi out)
 pitchwheeltester = vgroup(&quot;PITCHWHEEL IN/OUT&quot;,valuetest, booltest)
-with{
-valuetest = hslider(&quot;Pitchwheel Value IN  [midi:pitchwheel]&quot;, 0, -8192, 8191, 1) : hbargraph(&quot;Pitchwheel Value OUT[midi:pitchwheel]&quot;, -8192, 8191);
-booltest = checkbox(&quot;Pitchwheel Bool IN [midi:pitchwheel]&quot;) : hbargraph(&quot;Pitchwheel Bool OUT [midi:pitchwheel]&quot;, 0, 1);
+with {
+    valuetest = hslider(&quot;Pitchwheel Value IN  [midi:pitchwheel]&quot;, 0, -8192, 8191, 1) : hbargraph(&quot;Pitchwheel Value OUT[midi:pitchwheel]&quot;, -8192, 8191);
+    booltest = checkbox(&quot;Pitchwheel Bool IN [midi:pitchwheel]&quot;) : hbargraph(&quot;Pitchwheel Bool OUT [midi:pitchwheel]&quot;, 0, 1);
 };
 
 //Pitchwheel Chan tester (pitchwheel) : tester(midi in, midi out)
 pitchwheelchantester = vgroup(&quot;PITCHWHEEL CHAN IN/OUT&quot;,valuetest(2, 15), booltest(2, 15))
-with{
-valuetest(ic, oc) = hslider(&quot;Pitchwheel Value IN (Chan %ic) [midi:pitchwheel %ic]&quot;, 0, -8192, 8191, 1) : hbargraph(&quot;Pitchwheel Value OUT (Chan %oc)[midi:pitchwheel %oc]&quot;, -8192, 8191);
-booltest(ic, oc) = checkbox(&quot;Pitchwheel Bool IN (Chan %ic) [midi:pitchwheel %ic]&quot;) : hbargraph(&quot;Pitchwheel Bool OUT (Chan %oc) [midi:pitchwheel %oc]&quot;, 0, 1);
+with {
+    valuetest(ic, oc) = hslider(&quot;Pitchwheel Value IN (Chan %ic) [midi:pitchwheel %ic]&quot;, 0, -8192, 8191, 1) : hbargraph(&quot;Pitchwheel Value OUT (Chan %oc)[midi:pitchwheel %oc]&quot;, -8192, 8191);
+    booltest(ic, oc) = checkbox(&quot;Pitchwheel Bool IN (Chan %ic) [midi:pitchwheel %ic]&quot;) : hbargraph(&quot;Pitchwheel Bool OUT (Chan %oc) [midi:pitchwheel %oc]&quot;, 0, 1);
 };
 
 </code></pre>

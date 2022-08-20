@@ -334,10 +334,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#faust2caqtios" class="nav-link">faust2caqtios</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#faust2cpalrust" class="nav-link">faust2cpalrust</a>
               <ul class="nav flex-column">
               </ul>
@@ -431,10 +427,6 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#faust2minimal" class="nav-link">faust2minimal</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2msp" class="nav-link">faust2msp</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -534,7 +526,7 @@
 <pre class=faust-tools>
 Usage: faust2alqt [options] [Faust options] &lt;file.dsp>
 Target platform: Linux
-Require: Alsa, Qt
+Require: Alsa, QT
 Compiles Faust programs to ALSA and QT
 Options:
    -httpd : activates HTTP control
@@ -680,7 +672,7 @@ Compiles Faust programs to a benchmark executable
 <pre class=faust-tools>
 Usage: faust2cagtk [options] [Faust options] &lt;file.dsp>
 Target platform: MacOS
-Require: Jack
+Require: GTK
 Compiles Faust programs to CoreAudio and GTK
 Options:
    -httpd : activates HTTP control
@@ -700,7 +692,7 @@ Options:
 <pre class=faust-tools>
 Usage: faust2caqt [options] [Faust options] &lt;file.dsp>
 Target platform: MacOS
-Require: Qt
+Require: QT
 Compiles Faust programs to CoreAudio and QT
 Options:
    -httpd : activates HTTP control
@@ -720,12 +712,6 @@ Options:
    -debug : to print all the build steps
    -nodeploy : skip self-contained application generation (using 'macdeployqt')
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-</pre>
-
-<h2 id="faust2caqtios">faust2caqtios</h2>
-<pre class=faust-tools>
-#### qmake-ios is not available
-#### you must create an alias named 'qmake-ios' that points to the appropriate qmake in your Qt ios dist
 </pre>
 
 <h2 id="faust2cpalrust">faust2cpalrust</h2>
@@ -932,7 +918,7 @@ Options:
 <h2 id="faust2jackserver">faust2jackserver</h2>
 <pre class=faust-tools>
 Usage: faust2jackserver [options] [Faust options] &lt;file.dsp>
-Require: Jack, Qt
+Require: Jack, QT
 Compiles Faust programs to JACK and QT (server mode)
 Options:
    -httpd : activates HTTP control
@@ -944,7 +930,7 @@ Options:
 <h2 id="faust2jaqt">faust2jaqt</h2>
 <pre class=faust-tools>
 Usage: faust2jaqt [options] [Faust options] &lt;file.dsp>
-Require: Jack, Qt
+Require: Jack, QT
 Compiles Faust programs to JACK and QT
 Options:
    -httpd : activates HTTP control
@@ -964,7 +950,7 @@ Options:
 <h2 id="faust2jaqtchain">faust2jaqtchain</h2>
 <pre class=faust-tools>
 Usage: faust2jaqtchain [options] [Faust options] &lt;file.dsp>
-Require: Jack, Qt
+Require: Jack, QT
 Compiles several Faust programs to JACK and QT
 Options:
    -httpd : activates HTTP control
@@ -1020,7 +1006,7 @@ Options:
 <pre class=faust-tools>
 -std=c++11 -fvisibility=hidden -O3
 Usage: faust2lv2 [options ...] &lt;file.dsp>
-Require: Qt
+Require: QT
 Compiles Faust programs to lv2 plugins
 Options:
    -dyn-manifest : use dynamic manifests (requires LV2 host support).
@@ -1083,24 +1069,6 @@ Compiles Faust programs to a minimal executable
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
-<h2 id="faust2msp">faust2msp</h2>
-<pre class=faust-tools>
-Usage: faust2msp [options] [Faust options] &lt;file.dsp>
-Require: Max/MSP SDK
-Compiles Faust programs to Max6 externals using simple precision samples
-Options:
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -us &lt;factor> : upsample the DSP by a factor
-   -ds &lt;factor> : downsample the DSP by a factor
-   -filter &lt;filter> : use a filter for upsampling or downsampling [0..4]
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -native : to compile for the native CPU (otherwise the 'generic' mode is used by default)
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-</pre>
-
 <h2 id="faust2netjackconsole">faust2netjackconsole</h2>
 <pre class=faust-tools>
 Usage: faust2netjackconsole [options] [Faust options] &lt;file.dsp>
@@ -1119,7 +1087,7 @@ Options:
 <h2 id="faust2netjackqt">faust2netjackqt</h2>
 <pre class=faust-tools>
 Usage: faust2netjackqt [options] [Faust options] &lt;file.dsp>
-Require: Jack, Qt
+Require: Jack, QT
 Compiles Faust programs to NetJack and QT
 Options:
    -httpd : activates HTTP control
@@ -1168,7 +1136,7 @@ See architecture/unity/README.md for more info.
 <h2 id="faust2paqt">faust2paqt</h2>
 <pre class=faust-tools>
 Usage: faust2paqt [options] [Faust options] &lt;file.dsp>
-Require: PortAudio, Qt
+Require: PortAudio, QT
 Compiles Faust programs to PortAudio and QT
 Options:
    -httpd : activates HTTP control
@@ -1215,7 +1183,7 @@ Options:
 <h2 id="faust2raqt">faust2raqt</h2>
 <pre class=faust-tools>
 Usage: faust2raqt [options] [Faust options] &lt;file.dsp>
-Require: Qt
+Require: QT
 Compiles Faust programs to RtAudio and QT
 Options:
    -httpd : activates HTTP control
