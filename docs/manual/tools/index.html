@@ -322,6 +322,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2bench" class="nav-link">faust2bench</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2cagtk" class="nav-link">faust2cagtk</a>
               <ul class="nav flex-column">
               </ul>
@@ -662,6 +666,13 @@ Polyphonic mode means MIDI instrument with at least 1 voice. Use no arguments fo
    -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI
    -tobela : to send C++ file into bela, and to run it
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2bench">faust2bench</h2>
+<pre class=faust-tools>
+Usage: faust2bench [Faust options] &lt;file.dsp>
+Compiles Faust programs to a benchmark executable
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 

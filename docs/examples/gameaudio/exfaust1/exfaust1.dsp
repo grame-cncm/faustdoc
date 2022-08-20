@@ -1,29 +1,48 @@
 
-//----------------------rain--------------------------
-// A very simple rain simulator
+import("stdfaust.lib");
+
+//----------------------------fire---------------------------
+// fire(is_wet) : produces burning fire sound
 //
 // #### Usage
 //
 // 
-//  rain(d,l) : _,_
+// fire(is_wet) : _
 // 
 //
 // Where:
 //
-// * d: is the density of the rain: between 0 and 1
-// * l: is the level (volume) of the rain: between 0 and 1
+// * is_wet: a binary flag/signal adding wet wood
+//             popping sound
 //
-//----------------------------------------------------------
+// #### Example
+//
+// 
+// checkbox("wet") : fire : _
+// 
+//
+//------------------------------------------------------------
 
-import("stdfaust.lib");
+sq(x) = x * x;
+stretch(ms) = ba.countdown(ma.SR * ms / 1000): >(0);
 
-rain(density,level) = no.multinoise(2) : par(i, 2, drop) : par(i, 2, *(level))
-	with {
-		drop = _ <: @(1), (abs < density) : *;
-	};
+crackle(dens, rel) = ((no.noise : fi.lowpass(3, 10000)) * 0.77 * os.osc(50 / dens) * 
+                      en.arfe(0.001, release, 0, trigger: >(0)
+                      : stretch(sus)))
+                      : fi.highpass(3, 1000)
+    with {
+        trigger = no.sparse_noise(dens): abs;
+        sus = 2 + (trigger: ba.latch(trigger) * 8);
+        release = rel + (0.3 * (no.noise : abs : ba.latch(trigger)));
+    };
 
-process  = 	rain (
-				hslider("v:rain/density", 300, 0, 1000, 1) / 1000,
-				hslider("v:rain/volume", 0.5, 0, 1, 0.01)
-			);
+fire(is_wet) = (is_wet * wet) + (base <: (_, fi.lowpass(3, 1000), fi.highpass(3, 10000)) :> _)
+    with {
+        hiss = (no.noise : fi.lowpass(3, 500)) / 5;
+        hiss2 = 0.8 * (no.noise : fi.highpass(3, 3000) / 8) * sq(no.lfnoise(1000));
+        wet = (3 * crackle(0.1, 0.05)) + (2 * crackle(0.2, 0.3));
+        base = hiss + hiss2 + (0.2 * crackle(5, 0.1));
+    };
+
+process = checkbox("wet"): fire;
 

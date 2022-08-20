@@ -4,7 +4,7 @@ AWK		?= awk
 
 MKDIR    := mkdocs
 DOCDIR   := $(MKDIR)/docs
-FAUSTDIR ?= ../faust
+FAUSTDIR ?= faust
 EXDIR    ?= $(FAUSTDIR)/examples
 
 UNAME := $(shell uname)
@@ -28,10 +28,10 @@ EXOUT    := $(GEN:%=%.md)
 
 GENERATED := $(shell find $(DOCDIR) -type d -name "exfaust*")
 #TOOLS    := $(wildcard $(FAUSTDIR)/tools/faust2appls/faust2*)
-IGNORED := "atomsnippets|dummy|faust2eps|firefox|graph|jackinternal|javaswing|mathviewer|faust2md|octave|owl|faust2pdf|faust2png|faust2pure|faust2ros|faust2sig|supercollider|faust2svg|faust2teensy|faust2vst|faust2w32|faust2w64|faust2winunity|faust2au"
+IGNORED := "atomsnippets|dummy|faust2eps|firefox|graph|jackinternal|javaswing|mathviewer|faust2md|octave|owl|faust2pdf|faust2png|faust2pure|faust2ros|faust2sig|supercollider|faust2svg|faust2teensy|faust2vst|faust2w32|faust2w64|faust2winunity|faust2au|faust2sc.py|faust2sublimecompletions|faust2tidalcycles"
 TOOLS    := $(shell find $(FAUSTDIR)/tools/faust2appls -name "faust2*" | egrep -v $(IGNORED) | sort)
 
-EDITOR      := https://faustide.grame.fr/
+EDITOR   := https://faustide.grame.fr/
 
 .PHONY: tagslist.txt
 
@@ -154,7 +154,6 @@ $(FAUSTDIR):
 	@echo "   - set FAUSTDIR to the faust projet location in this Makefile"
 	@echo "   - call $(MAKE) FAUSTDIR=faust_projet_path"
 	@false;
-
 
 ####################################################################
 install:
