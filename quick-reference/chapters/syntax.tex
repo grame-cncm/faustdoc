@@ -1,12 +1,12 @@
 \chapter{\faust syntax}
 
-This section describes the syntax of \faust. Figure \ref{fig:syntax} gives an overview of the various concepts and where they are defined in this section. 
+This section describes the syntax of \faust. Figure \ref{fig-syntax} gives an overview of the various concepts and where they are defined in this section. 
 %% suggestion Carlos: la figure crée une confusion entre la structure de la syntaxe et la structure de la section. Faire un autre schema!
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.45]{illustrations/syntax-chart}
 \caption{Overview of \faust syntax}
-\label{fig:syntax}
+\label{fig-syntax}
 \end{figure}
 
 As we will see, \textit{definitions} and \textit{expressions} have a central role.
@@ -32,7 +32,7 @@ doubleprecision MAX = 1.7976931348623158e+308;
 
 \subsection{A Simple Program}
 
-Here is a short \faust program that implements of a simple noise generator. It exhibits various kind of statements: two \textit{declarations}, an \textit{import}, a \textit{comment} and a \textit{definition}. We will see later on \textit{documentation} statements (\ref{sec:documentation}).
+Here is a short \faust program that implements of a simple noise generator. It exhibits various kind of statements: two \textit{declarations}, an \textit{import}, a \textit{comment} and a \textit{definition}. We will see later on \textit{documentation} statements (\ref{sec-documentation}).
 
 \begin{lstlisting}
 declare name       "noise";
@@ -114,9 +114,9 @@ fileimport : "import" '(' filename ')' ';';
 For example \lstinline{import("maths.lib");} imports the definitions of the \lstinline{maths.lib} library, a set of additional mathematical functions provided as foreign functions.
 
 \subsection{Documentation}
-\label{sec:documentation}
+\label{sec-documentation}
 
-Documentation statements are optional and typically used to control the generation of the mathematical documentation of a \faust program. This documentation system is detailed chapter \ref{chapter:mdoc}. In this section we will essentially describe the documentation statements syntax.
+Documentation statements are optional and typically used to control the generation of the mathematical documentation of a \faust program. This documentation system is detailed chapter \ref{chapter-mdoc}. In this section we will essentially describe the documentation statements syntax.
 
 A documentation statement starts with an opening \lstinline'<mdoc>' tag and ends with a closing \lstinline'</mdoc>' tag. Free text content, typically in \latex format, can be placed in between these two tags. 
 
@@ -341,7 +341,7 @@ To describe precisely how these connections are done, we have to introduce some 
 
 For each composition operation between two block-diagrams $A$ and $B$ we will describe the connections $A[i]\rightarrow [j]B$ that are created and the constraints on their relative numbers of inputs and outputs.
 
-The priority and associativity of this five operations are given table \ref{table:composition}.
+The priority and associativity of this five operations are given table \ref{table-composition}. Please note that a higher priority value means a higher priority in the evaluation order. There is a compagnion table \ref{infix-comparison-priority} that gives the associativity of each numerical operator in infix expressions.
  
 \begin{table}[ht]
 	\centering
@@ -357,11 +357,13 @@ The priority and associativity of this five operations are given table \ref{tabl
 		\hline
 	\end{tabular}
 	\caption{Block-Diagram composition operation priorities}   
-  	\label{table:composition}
+  	\label{table-composition}
 \end{table}
  
+ 
+
 \paragraph{Parallel Composition}
-The \emph{parallel composition}  \lstinline'(A,B)' (figure \ref{figure:par1}) is probably the simplest one. It places the two block-dia\-grams one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of \lstinline$A$ and \lstinline$B$. The outputs of the resulting block-diagram are the outputs of \lstinline$A$ and \lstinline$B$. 
+The \emph{parallel composition}  \lstinline'(A,B)' (figure \ref{figure-par1}) is probably the simplest one. It places the two block-dia\-grams one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of \lstinline$A$ and \lstinline$B$. The outputs of the resulting block-diagram are the outputs of \lstinline$A$ and \lstinline$B$. 
 
 \emph{Parallel composition} is an associative operation : \lstinline$(A,(B,C))$ and \lstinline$((A,B),C)$ are equivalents. When no parenthesis are used : \lstinline'A,B,C,D', \faust uses right associativity and therefore build internally the expression \lstinline$(A,(B,(C,D)))$. This organization is important to know when using pattern matching techniques on parallel compositions. 
 
@@ -369,12 +371,12 @@ The \emph{parallel composition}  \lstinline'(A,B)' (figure \ref{figure:par1}) is
 \centering
 \includegraphics[scale=0.7]{images/par1}
 \caption{Example of parallel composition  \lstinline'(10,*)'}
-\label{figure:par1}
+\label{figure-par1}
 \end{figure}
 
 
 \paragraph{Sequential Composition}
-The \emph{sequential composition}  \lstinline$A:B$ (figure \ref{figure:seq1}) expects:
+The \emph{sequential composition}  \lstinline$A:B$ (figure \ref{figure-seq1}) expects:
 \begin{equation}
 \mathrm{outputs}(A)=\mathrm{inputs}(B)
 \end{equation}  
@@ -387,20 +389,20 @@ A[i]\rightarrow[i]B
 \centering 
 \includegraphics[scale=0.7]{images/seq1}
 \caption{Example of sequential composition  \lstinline'((*,/):+)' } 
-\label{figure:seq1}
+\label{figure-seq1}
 \end{figure}
 
 \emph{Sequential composition} is an associative operation : \lstinline$(A:(B:C))$ and \lstinline$((A:B):C)$ are equivalents. When no parenthesis are used, like in \lstinline$A:B:C:D$, \faust uses right associativity and therefore build internally the expression \lstinline$(A:(B:(C:D)))$.
 
 \paragraph{Split Composition}
-The \emph{split composition}  \lstinline$A<:B$ (figure \ref{figure:split1}) operator is used to distribute the outputs
+The \emph{split composition}  \lstinline$A<:B$ (figure \ref{figure-split1}) operator is used to distribute the outputs
 of $A$ to the inputs of $B$.
 
 \begin{figure}[h]
 \centering 
 \includegraphics[scale=0.7]{images/split1} 
 \caption{example of split composition   \lstinline'((10,20) <: (+,*,/))'}  
-\label{figure:split1}
+\label{figure-split1}
 \end{figure}
 
 For the operation to be valid the number of inputs of $B$ must be a multiple of the number of outputs of $A$ : \begin{equation}
@@ -411,7 +413,7 @@ A[i \bmod k]\rightarrow\ [i]B                                                   
 
 
 \paragraph{Merge Composition}
-The \emph{merge composition}  \lstinline$A:>B$ (figure \ref{figure:merge1}) is the dual of the \emph{split composition}. The number of outputs of $A$ must be a multiple of the number of inputs of $B$ : 
+The \emph{merge composition}  \lstinline$A:>B$ (figure \ref{figure-merge1}) is the dual of the \emph{split composition}. The number of outputs of $A$ must be a multiple of the number of inputs of $B$ : 
 \begin{equation}
 \mathrm{outputs}(A)=k.\mathrm{inputs}(B)                                                                                                                                                                                                                                                  \end{equation}
 Each output $i$ of $A$ is connected to the input $i \bmod k$ of $B$ : 
@@ -423,12 +425,12 @@ The $k$ incoming signals of an input of $B$ are summed together.
 \centering 
 \includegraphics[scale=0.7]{images/merge1} 
 \caption{example of merge composition \lstinline'((10,20,30,40) :> *)'}  
-\label{figure:merge1}
+\label{figure-merge1}
 \end{figure}
 
 
 \paragraph{Recursive Composition}
-The \emph{recursive composition} \lstinline'A~B' (figure \ref{figure:rec1}) is used to create cycles in the block-diagram in order to express recursive computations. It is the most complex operation in terms of connections.
+The \emph{recursive composition} \lstinline'A~B' (figure \ref{figure-rec1}) is used to create cycles in the block-diagram in order to express recursive computations. It is the most complex operation in terms of connections.
 
 To be applicable it requires that :
 \begin{equation}
@@ -448,7 +450,7 @@ The inputs of the resulting block diagram are the remaining unconnected inputs o
 \centering 
 \includegraphics[scale=0.7]{images/rec1} 
 \caption{example of recursive composition \lstinline'+(12345) ~ *(1103515245)'}  
-\label{figure:rec1}
+\label{figure-rec1}
 \end{figure}
 
 \subsubsection{Inputs and outputs of an expression}
@@ -475,7 +477,7 @@ Xi(expr) = bus(n) <: par(i,n,selector(n-i-1,n)) : expr
 
 For example \lstinline'Xi(-)' will reverse the order of the two inputs of the substraction.
 
-%Let's see these composition operations in action with two simple examples (figure \ref{fig:integrator}). 
+%Let's see these composition operations in action with two simple examples (figure \ref{fig-integrator}). 
 
 %The first example uses the recursive composition operator (\lstinline'~'). It is an integrator \lstinline'process = +~_;' that produces an output signal $Y$ such that $Y(t)=X(t)+Y(t-1)$.
 
@@ -486,7 +488,7 @@ For example \lstinline'Xi(-)' will reverse the order of the two inputs of the su
 %    \includegraphics[scale=0.7]{illustrations/ms}
 %  \end{tabular}
 %  \caption{a) integrator, b) mid/side stereo matrix}   
-%  \label{fig:integrator}
+%  \label{fig-integrator}
 %\end{figure}
 
 %The second example uses the parallel (\lstinline',') and split (\lstinline'<:') composition operators. It implements a Mid/Side stereophonic matrix: \lstinline'process = _,_<:+,-;' that produces two output signals $Y_0$ and $Y_1$ such that $Y_0(t)=X_0(t)+X_1(t)$ and $Y_1(t)=X_0(t)-X_1(t)$
@@ -537,7 +539,7 @@ The number of iterations must be a constant expression.
 
 The \emph{infix notation} is not limited to numbers or numerical expressions. Arbitrary expressions \lstinline'A' and \lstinline'B' can be used, provided that \lstinline'A,B' has exactly two outputs. For example you can write \lstinline'_/2'. It is equivalent to \lstinline'_,2:/' which divides the incoming signal by \lstinline'2'. 
 
-Examples of equivalences are given table \ref{tab:infixrules}.
+Examples of equivalences are given table \ref{tab-infixrules}.
 
 \begin{table}[h]
 	\begin{center}
@@ -552,26 +554,135 @@ Examples of equivalences are given table \ref{tab:infixrules}.
 	\end{tabular}
 	\end{center}
 	\caption{Infix and core syntax equivalences}
-	\label{tab:infixrules}
+	\label{tab-infixrules}
 \end{table}
 
 In case of doubts on the meaning of an infix expression, for example \lstinline'_*_', it is useful to translate it to its core syntax equivalent, here \lstinline'_,_:*', which is equivalent to \lstinline'*'.
 	
-\subsubsection{Infix Operators}
-%---------------------------------------------------------------------------------------
-
 Built-in primitives that can be used in infix notation are called \emph{infix operators} and are listed in this section. Please note that a more detailed description of these operators is available section \ref{primitives}. 
 
 
+\subsubsection{Comparison Operators}
+%---------------------------------------------------------------------------------------
+
+Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false.
+
 \begin{rail}
-%%numerical : math | bitwise | comparison | time;
-math : expression ('+'|'-'|'*'|'/'|'\%'|hat) expression;
-bitwise : expression (pipe|ampersand|'xor'|'<<' |'>>') expression;
-comparison : expression ('<'|'<='|'>'|'>='|'=='|'!=') expression;
-delay : expression arobase expression; 
+	comparison : expression ('<'|'<='|'>'|'>='|'=='|'!=') expression;
 \end{rail}
 
-\subsubsection{Prefix Notation}
+The priority and associativity of the comparison operators is given table \ref{infix-comparison-priority}.
+	
+ 
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} \\
+		\hline
+		\texttt{\farg{expression}\ <\ \farg{expression}}			& 5 & left & less than      	\\
+		\texttt{\farg{expression}\ <=\ \farg{expression}}			& 5 & left & less or equal      	\\
+		\texttt{\farg{expression}\ ==\ \farg{expression}}			& 5 & left & equal      	\\
+		\texttt{\farg{expression}\ !=\ \farg{expression}}			& 5 & left & different      	\\
+		\texttt{\farg{expression}\ >=\ \farg{expression}}			& 5 & left & greater or equal      	\\
+		\texttt{\farg{expression}\ >\ \farg{expression}}			& 5 & left & greater than      	\\
+		\hline
+	\end{tabular}
+	\caption{Comparison operators priorities in infix expressions}   
+  	\label{infix-comparison-priority}
+\end{table}
+
+
+\subsubsection{Math Operators}
+%---------------------------------------------------------------------------------------
+
+Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample
+
+\begin{rail}
+	math : expression ('+'|'-'|'*'|'/'|'\%'|hat) expression;
+\end{rail}
+
+The priority and associativity of the math operators is given table \ref{infix-math-priority}.
+
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} \\
+		\hline
+		\texttt{\farg{expression}\ +\ \farg{expression}}			& 6 & left & addition      	\\
+		\texttt{\farg{expression}\ -\ \farg{expression}}			& 6 & left & subtraction      	\\
+		\texttt{\farg{expression}\ *\ \farg{expression}}			& 7 & left & multiplication      	\\
+		\texttt{\farg{expression}\ /\ \farg{expression}}			& 7 & left & division      	\\
+		\texttt{\farg{expression}\ \%\ \farg{expression}}			& 7 & left & modulo      	\\
+		\texttt{\farg{expression}\ \^\ \farg{expression}}			& 8 & left & power      	\\
+		\hline
+	\end{tabular}
+	\caption{Math operators priorities in infix expressions}   
+  	\label{infix-math-priority}
+\end{table}
+
+
+\subsubsection{Bitwise operators}
+%---------------------------------------------------------------------------------------
+
+Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample
+
+\begin{rail}
+	bitwise : expression (pipe|ampersand|'xor'|'<<' |'>>') expression;
+\end{rail}
+
+The priority and associativity of the bitwise operators is given table \ref{infix-math-priority}.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} \\
+		\hline
+		\texttt{\farg{expression}\ |\ \farg{expression}}			& 6 & left & bitwise or      	\\
+		\texttt{\farg{expression}\ \&\ \farg{expression}}			& 7 & left & bitwise and      	\\
+		\texttt{\farg{expression}\ xor\ \farg{expression}}			& 7 & left & bitwise xor      	\\
+		\texttt{\farg{expression}\ <<\ \farg{expression}}			& 7 & left & bitwise left shift      	\\
+		\texttt{\farg{expression}\ >>\ \farg{expression}}			& 7 & left & bitwise right shift      	\\
+		\hline
+	\end{tabular}
+	\caption{Bitwise operators priorities in infix expressions}   
+  	\label{infix-bitwise-priority}
+\end{table}
+
+
+
+\subsubsection{Delay operators}
+%---------------------------------------------------------------------------------------
+
+Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample
+
+\begin{rail}
+	delay : expression arobase expression | expression kot;
+\end{rail}
+
+The delay operator \lstinline'@' allows to delay left handside expression by the amount defined by the right handside expression. The unary operator \lstinline"'" delays the left handside expression by one sample.
+
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} \\
+		\hline
+		\texttt{\farg{expression}\ @\ \farg{expression}}			& 9 & left & variable delay      	\\
+		\texttt{\farg{expression}} \'			& 10 & left & one-sample delay \\
+		\hline
+	\end{tabular}
+	\caption{Delay operators priorities in infix expressions}   
+  	\label{infix-bitwise-priority}
+\end{table}
+
+
+%--------------------------------------------------------------------------------------------------------------
+\subsection{Prefix Notation}
 %---------------------------------------------------------------------------------------
 
 Beside \emph{infix notation}, it is also possible to use \emph{prefix notation}. 
@@ -590,17 +701,17 @@ The \emph{prefix notation} is the usual mathematical notation for functions $f(x
 	\end{tabular}
 	\end{center}
 	\caption{Prefix to core syntax translation rules}
-	\label{tab:prefixrules}
+	\label{tab-prefixrules}
 \end{table}
 
-It consists in first having the operator, for example \lstinline'/', followed by its arguments between parentheses: \lstinline'/(2,3)' (see table \ref{tab:prefixrules}). 
+It consists in first having the operator, for example \lstinline'/', followed by its arguments between parentheses: \lstinline'/(2,3)' (see table \ref{tab-prefixrules}). 
 
 \subsubsection{Partial Application}
 %---------------------------------------------------------------------------------------
 
 The \emph{partial application} notation is a variant of \emph{prefix notation} in which not all arguments are given. For instance  \lstinline'/(2)' (divide by 2), \lstinline'^(3)'  (rise to the cube) and \lstinline'@(512)' (delay by 512 samples) are examples of partial applications where only one argument is given. The result of a partial application is a function that "waits" for the remaining arguments. 
 
-When doing partial application with an \emph{infix operator}, it is important to note that the supplied argument is not the first argument, but always the second one, as summarized table \ref{tab:partialrules}. 
+When doing partial application with an \emph{infix operator}, it is important to note that the supplied argument is not the first argument, but always the second one, as summarized table \ref{tab-partialrules}. 
 
 
 \begin{table}[h]
@@ -615,7 +726,7 @@ When doing partial application with an \emph{infix operator}, it is important to
 	\end{tabular}
 	\end{center}
 	\caption{Partial application of infix operators}
-	\label{tab:partialrules}
+	\label{tab-partialrules}
 \end{table}
 
 For commutative operations that doesn't matter. But for non-commutative ones, it is more ``natural'' to fix the second argument.  We use divide by 2 (\lstinline'/(2)') or rise to the cube (\lstinline'^(3)') more often than the other way around.
@@ -1128,6 +1239,7 @@ The primitive signal processing operations represent the built-in functionalitie
 
   \begin{rail}
   primitive : number
+  			| route
   			| waveform
 			| soundfile
 			| cprimitive
@@ -1354,7 +1466,7 @@ Most of the C \texttt{math.h} functions are also built-in as primitives (the oth
 \subsection{Delay, Table, Selector primitives}
 %--------------------------------------------------------------------------------------------------------------
 
-The following primitives allow to define fixed delays, read-only and read-write tables and 2 or 3-ways selectors (see figure \ref{fig:delays}).
+The following primitives allow to define fixed delays, read-only and read-write tables and 2 or 3-ways selectors (see figure \ref{fig-delays}).
 
 \bigskip
 \begin{tabular}{|l|l|l|}
@@ -1382,7 +1494,7 @@ The following primitives allow to define fixed delays, read-only and read-write 
 \includegraphics[scale=0.6]{illustrations/faust-diagram5}
 \includegraphics[scale=0.6]{illustrations/faust-diagram6}
 \caption{Delays, tables and selectors primitives }
-\label{fig:delays}
+\label{fig-delays}
 \end{figure}
 
 The size input of \textit{rdtable} and \textit{rwtable} are \textit{constant numerical expressions}.
@@ -1395,13 +1507,13 @@ The size input of \textit{rdtable} and \textit{rwtable} are \textit{constant num
 independent of any GUI toolkits. It is based on \emph{buttons}, \emph{checkboxes}, \emph{sliders}, etc. that are grouped together 
 vertically and horizontally using appropriate grouping schemes.
 
-All these GUI elements produce signals. A button for example (see figure \ref{fig:button}) produces a signal which is 1 when the button is pressed and 0 otherwise. These signals can be freely combined with other audio signals. 
+All these GUI elements produce signals. A button for example (see figure \ref{fig-button}) produces a signal which is 1 when the button is pressed and 0 otherwise. These signals can be freely combined with other audio signals. 
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{illustrations/button}
 \caption{User Interface Button}
-\label{fig:button}
+\label{fig-button}
 \end{figure}
 
 \bigskip
