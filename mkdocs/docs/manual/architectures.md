@@ -2007,7 +2007,7 @@ In some cases, developers prefer to control the DSP by creating a completely new
 
 A model that only combines the *generated DSP* with an *audio architecture* file to produce an *audio engine* has been developed (thus gluing the  *blue* and  *red* parts of the three color model explained at the beginning).  A generic template class `DspFaust` has been written in the [DspFaust.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/api/DspFaust.h) and [DspFaust.cpp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/api/DspFaust.cpp) files. This code contains conditional compilation sections to add and initialize the appropriate audio driver (written as a subclass of the previously described base `audio` class), and can produce *audio generators*, *effects*, of fully MIDI and sensor controllable *pophyphonic instruments*. 
 
-The resulting audio engine contains `start`and `stop` methods to control audio processing. It also provides a set of functions like `getParamsCount, setParamValue, getParamValue` etc. to access all parameters (or the additional`setVoiceParamValue` method function to access a single voice in a polyphonic case), and let the developer adds his own GUI or any kind of controller. 
+The resulting audio engine contains `start` and `stop` methods to control audio processing. It also provides a set of functions like `getParamsCount, setParamValue, getParamValue` etc. to access all parameters (or the additional`setVoiceParamValue` method function to access a single voice in a polyphonic case), and let the developer adds his own GUI or any kind of controller. 
 
 Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/architecture/api) script, which uses the previously described architecture files, and provide a tool to easily generate custom APIs based on one or several Faust objects. 
 
@@ -2015,11 +2015,51 @@ Look at the [faust2api](https://github.com/grame-cncm/faust/tree/master-dev/arch
 
 ## Using the -inj Option With faust2xx Scripts
 
-The compiler `-inj <f>`  option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base `dsp` class,  the `faust2xx` scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures.
+The compiler `-inj <f>`  option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base `dsp` class,  the `faust2xx` scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures. Two examples of use are presented next.
 
-Here is a typical use case where some external C++ code is used to compute the *spectrogram of a set of audio files* (which is something that cannot be simply done with the current version fo the Faust language) and output the spectrogram as an audio signal. A `nentry` controller will be used to select the currently playing spectrogram. The Faust compiler will be used to generate a C++ class which is going to be manually edited and enriched with additional code. 
+### Using the template-llvm.cpp architecture
 
-### Writting the DSP code
+ The first one demonstrates how `faust2xx` scripts can become more dynamic by loading and compiling an arbitrary DSP at runtime. This is done using the [template-llvm.cpp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/template-llvm.cpp) architecture file which uses the libfaust library and the LLVM backend to dynamically compile a `foo.dsp` file. So instead of producing a static binary based on a given DSP, the resulting program will be able to load  and compile a DSP at runtime. 
+ 
+ This template-llvm.cpp can be used with the `-inj` option in `faust2xx`  tools like:
+ 
+ ```
+ faust2cagtk -inj template-llvm.cpp faust2cagtk-llvm.dsp (a dummy DSP)
+ ```
+ 
+ to generate a monophonic `faust2cagtk-llvm` application, ready to be used to load and compile a DSP, and run it with the CoreAudio audio layer and GTK as the GUI freamework.
+
+Then `faust2cagtk-llvm` will ask for a DSP to compile:
+
+ ```
+./faust2cagtk-llvm
+<Enter a foo.dsp file>
+ ```
+ 
+ A generic polyphonic (8 voices) and MIDI controllable version can be compiled using:
+ 
+  ```
+ faust2cagtk -inj template-llvm.cpp -midi -nvoices 8 faust2cagtk-llvm.dsp (a dummy DSP)
+  ```
+  
+  Note that the resulting binary keeps its own control options, like:
+  
+   ```
+ ./faust2cagtk-llvm -h
+ ./faust2cagtk-llvm [--frequency <val>] [--buffer <val>] [--nvoices <val>] [--control <0/1>] 
+ [--group <0/1>] [--virtual-midi <0/1>]
+   ```
+   
+  So now  `./faust2cagtk-llvm --nvoices 16` starts the program with 16 voices.
+  
+  The technique has currently be tested with the `faust2cagtk`, `faust2jack` , `faust2csvplot`,  and `faust2plot` tools.
+
+
+### Second use-case computing the spectrogram of a set of audio files
+
+Here is a second use case where some external C++ code is used to compute the *spectrogram of a set of audio files* (which is something that cannot be simply done with the current version fo the Faust language) and output the spectrogram as an audio signal. A `nentry` controller will be used to select the currently playing spectrogram. The Faust compiler will be used to generate a C++ class which is going to be manually edited and enriched with additional code. 
+
+#### Writting the DSP code
 
 First a fake DSP program `spectral.dsp`  using the `soundfile` primitive loading two audio files and a `nentry` control is written: 
 ```
@@ -2070,7 +2110,7 @@ class spectral : public dsp {
 
 };
 ```
-### Customizing the C++ code
+#### Customizing the C++ code
 
 Now the `spectral` class can be manually edited and completed with additional code, to compute the two audio files spectrograms in `buildUserInterface`, and play them in `compute`. 
 
@@ -2122,7 +2162,7 @@ class spectral : public dsp {
 
 Here we assume that `createSpectrogram` and `playSpectrogram` functions are defined elsewhere and ready to be compiled.
 
-### Deploying it as a Max/MSP External Using the faust2max6 Script
+#### Deploying it as a Max/MSP External Using the faust2max6 Script
 
 The completed `spectral.cpp` file is now ready to be deployed as a Max/MSP external using the `faust2max6` script and the `-inj` option with the following line:
 
