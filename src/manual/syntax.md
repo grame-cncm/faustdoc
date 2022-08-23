@@ -278,6 +278,8 @@ The priority and associativity of this five operations are:
 | `expression <: expression` | 1         | right        | Split Composition       |
 | `expression :> expression` | 1         | right        | Merge Composition       |
 
+Please note that a higher priority value means a higher priority in the evaluation order. There is a companion table that gives the associativity of each numerical operator in infix expressions.
+
 #### Parallel Composition
 
 The *parallel composition* (e.g., `(A,B)`) is probably the simplest one. It places the two block-diagrams one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of `A` and `B`. The outputs of the resulting block-diagram are the outputs of `A` and `B`. 
@@ -690,8 +692,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 
 ### Infix Notation and Other Syntax Extensions
 
-> Infix notation is commonly used in mathematics. It consists in placing the 
-operand between the arguments as in \(2+3\)
+> Infix notation is commonly used in mathematics. It consists in placing the operand between the arguments as in \(2+3\)
 
 Besides its algebra-based core syntax, Faust provides some syntax extensions, in particular the familiar *infix notation*. For example if you want to multiply two numbers, say `2` and `3`, you can write directly `2*3` instead of the equivalent core-syntax expression `2,3 : *`.
 
@@ -714,6 +715,54 @@ In case of doubts on the meaning of an infix expression, for example `_*_`, it i
 Built-in primitives that can be used in infix notation are called *infix operators* and are listed below. Please note that a more detailed description of these operators is available [section on primitives](#primitives). 
 
 <img src="img/infixop.svg" class="mx-auto d-block">
+
+##### Comparison Operators
+
+Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false.  The priority and associativity of the comparison operators is given here:
+
+| Syntax | Pri. | Assoc.  | Description |
+| -------- | -----| ------ | --------- |
+| `expression < expression` | 5 | left | less than |
+| `expression <= expression` | 5 | left | less or equal |
+| `expression == expression` | 5 | left | equal |
+| `expression != expression` | 5 | left | different |
+| `expression >= expression` | 5 | left | greater or equal |
+| `expression > expression` | 5 | left | greater than |
+
+##### Math Operators
+
+Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample. The priority and associativity of the math operators is given here:
+
+Syntax | Pri. | Assoc.  | Description |
+| -------- | -----| ------ | --------- |
+| `expression + expression` | 6 | left | addition |
+| `expression - expression` | 6 | left | subtraction |
+| `expression * expression` | 7 | left | multiplication |
+| `expression / expression` | 7 | left | division |
+| `expression % expression` | 7 | left | modulo |
+| `expression ^ expression` | 8 | left | power |
+
+##### Bitwise  Operators
+
+Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority and associativity of the bitwise operators is given here:
+
+Syntax | Pri. | Assoc.  | Description |
+| -------- | -----| ------ | --------- |
+| `expression | expression` | 6 | left | bitwise or |
+| `expression & expression` | 7 | left | bitwise and |
+| `expression xor expression` | 7 | left | bitwise xor |
+| `expression << expression` | 7 | left | bitwise left shift |
+| `expression >> expression` | 7 | left | bitwise right shift |
+
+##### Delay operators
+
+Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator `@` allows to delay left handside expression by the amount defined by the right handside expression. The unary operator `’` delays the left handside expression by one sample.
+
+Syntax | Pri. | Assoc.  | Description |
+| -------- | -----| ------ | --------- |
+| `expression @ expression` | 9 | left | variable delay |
+| `expression' ` | 10 | left | one-sample delay |
+
 
 #### Prefix Notation
 
@@ -1060,7 +1109,7 @@ BS = fvariable(int count, <math.h>);
 
 Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are only computed once, during the initialization period. 
 
-Variable are considered to vary at block speed. This means that expressions depending of external variables are computed every block.
+Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.
 
 #### File Include
 
@@ -1070,7 +1119,7 @@ In declaring foreign functions one has also to specify the include file. It allo
 
 #### Library File
 
-In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the Faust compiler to (possibly) automatically link the library. Note that this feature is only used with the [LLVM backend in 'libfaust' dynamic library model](../embedding).
+In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the Faust compiler to (possibly) automatically link the library. Note that this feature is only used with the [LLVM backend in 'libfaust' dynamic library model](https://faustdoc.grame.fr/manual/embedding/#using-libfaust-with-the-llvm-backend).
 
 <!-- TODO I feel like more could be said here -->
 
@@ -1082,7 +1131,7 @@ In declaring foreign functions one can possibly specify the library where the ac
 
 #### Abstractions
 
-Abstractions correspond to functions definitions and allow to generalize a block-diagram by `making variable` some of its parts. 
+Abstractions correspond to functions definitions and allow to generalize a block-diagram by *making variable* some of its parts. 
 
 Let's say we want to transform a stereo reverb, [`dm.zita_light`](https://faustlibraries.grame.fr/libs/demos/#dmzita_light) for instance, into a mono effect. The following expression can be written (see the sections on [Split Composition](#split-composition) and [Merge Composition](#merge-composition)): 
 
@@ -2629,6 +2678,8 @@ creates 8 sliders in parallel with different names while `par(i,8,hslider("Voice
 The variable part can have an optional format digit. For example `"Voice %2i"` would indicate to use two digit when inserting the value of `i` in the string.
 
 An escape mechanism is provided. If the sign `%` is followed by itself, it will be included in the resulting string. For example `"feedback (%%)"` will result in `"feedback (%)"`.
+
+The variable name can be enclosed in curly brackets to clearly separate it from the rest of the string, as in `par(i,8,hslider("Voice %{i}", 0.9, 0, 1, 0.01))`.
 
 #### Labels as Pathnames
 

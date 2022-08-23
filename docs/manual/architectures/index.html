@@ -504,16 +504,24 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#using-the-inj-option-with-faust2xx-scripts" class="nav-link">Using the -inj Option With faust2xx Scripts</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#writting-the-dsp-code" class="nav-link">Writting the DSP code</a>
+            <li class="nav-item" data-level="3"><a href="#using-the-template-llvmcpp-architecture" class="nav-link">Using the template-llvm.cpp architecture</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#customizing-the-c-code" class="nav-link">Customizing the C++ code</a>
+            <li class="nav-item" data-level="3"><a href="#second-use-case-computing-the-spectrogram-of-a-set-of-audio-files" class="nav-link">Second use-case computing the spectrogram of a set of audio files</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#writting-the-dsp-code" class="nav-link">Writting the DSP code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#deploying-it-as-a-maxmsp-external-using-the-faust2max6-script" class="nav-link">Deploying it as a Max/MSP External Using the faust2max6 Script</a>
+            <li class="nav-item" data-level="4"><a href="#customizing-the-c-code" class="nav-link">Customizing the C++ code</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#deploying-it-as-a-maxmsp-external-using-the-faust2max6-script" class="nav-link">Deploying it as a Max/MSP External Using the faust2max6 Script</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -2303,13 +2311,30 @@ echo $BINARIES
 <p>This model combining the generated DSP the audio and UI architecture components is very convenient to automatically produce ready-to-use standalone application or plugins, since the controller part (GUI,  MIDI or OSC...) is directly compiled and deployed. </p>
 <p>In some cases, developers prefer to control the DSP by creating a completely new GUI (using a toolkit not supported in the standard architecture files), or even without any GUI and using another control layer. </p>
 <p>A model that only combines the <em>generated DSP</em> with an <em>audio architecture</em> file to produce an <em>audio engine</em> has been developed (thus gluing the  <em>blue</em> and  <em>red</em> parts of the three color model explained at the beginning).  A generic template class <code>DspFaust</code> has been written in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/api/DspFaust.h">DspFaust.h</a> and <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/api/DspFaust.cpp">DspFaust.cpp</a> files. This code contains conditional compilation sections to add and initialize the appropriate audio driver (written as a subclass of the previously described base <code>audio</code> class), and can produce <em>audio generators</em>, <em>effects</em>, of fully MIDI and sensor controllable <em>pophyphonic instruments</em>. </p>
-<p>The resulting audio engine contains <code>start</code>and <code>stop</code> methods to control audio processing. It also provides a set of functions like <code>getParamsCount, setParamValue, getParamValue</code> etc. to access all parameters (or the additional<code>setVoiceParamValue</code> method function to access a single voice in a polyphonic case), and let the developer adds his own GUI or any kind of controller. </p>
+<p>The resulting audio engine contains <code>start</code> and <code>stop</code> methods to control audio processing. It also provides a set of functions like <code>getParamsCount, setParamValue, getParamValue</code> etc. to access all parameters (or the additional<code>setVoiceParamValue</code> method function to access a single voice in a polyphonic case), and let the developer adds his own GUI or any kind of controller. </p>
 <p>Look at the <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/api">faust2api</a> script, which uses the previously described architecture files, and provide a tool to easily generate custom APIs based on one or several Faust objects. </p>
 <p><img src="img/FaustArchitecture5.jpg" class="mx-auto d-block" width="40%"></p>
 <h2 id="using-the-inj-option-with-faust2xx-scripts">Using the -inj Option With faust2xx Scripts</h2>
-<p>The compiler <code>-inj &lt;f&gt;</code>  option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base <code>dsp</code> class,  the <code>faust2xx</code> scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures.</p>
-<p>Here is a typical use case where some external C++ code is used to compute the <em>spectrogram of a set of audio files</em> (which is something that cannot be simply done with the current version fo the Faust language) and output the spectrogram as an audio signal. A <code>nentry</code> controller will be used to select the currently playing spectrogram. The Faust compiler will be used to generate a C++ class which is going to be manually edited and enriched with additional code. </p>
-<h3 id="writting-the-dsp-code">Writting the DSP code</h3>
+<p>The compiler <code>-inj &lt;f&gt;</code>  option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base <code>dsp</code> class,  the <code>faust2xx</code> scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures. Two examples of use are presented next.</p>
+<h3 id="using-the-template-llvmcpp-architecture">Using the template-llvm.cpp architecture</h3>
+<p>The first one demonstrates how <code>faust2xx</code> scripts can become more dynamic by loading and compiling an arbitrary DSP at runtime. This is done using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/template-llvm.cpp">template-llvm.cpp</a> architecture file which uses the libfaust library and the LLVM backend to dynamically compile a <code>foo.dsp</code> file. So instead of producing a static binary based on a given DSP, the resulting program will be able to load  and compile a DSP at runtime. </p>
+<p>This template-llvm.cpp can be used with the <code>-inj</code> option in <code>faust2xx</code>  tools like:</p>
+<p><code>faust2cagtk -inj template-llvm.cpp faust2cagtk-llvm.dsp (a dummy DSP)</code></p>
+<p>to generate a monophonic <code>faust2cagtk-llvm</code> application, ready to be used to load and compile a DSP, and run it with the CoreAudio audio layer and GTK as the GUI freamework.</p>
+<p>Then <code>faust2cagtk-llvm</code> will ask for a DSP to compile:</p>
+<p><code>./faust2cagtk-llvm
+&lt;Enter a foo.dsp file&gt;</code></p>
+<p>A generic polyphonic (8 voices) and MIDI controllable version can be compiled using:</p>
+<p><code>faust2cagtk -inj template-llvm.cpp -midi -nvoices 8 faust2cagtk-llvm.dsp (a dummy DSP)</code></p>
+<p>Note that the resulting binary keeps its own control options, like:</p>
+<p><code>./faust2cagtk-llvm -h
+ ./faust2cagtk-llvm [--frequency &lt;val&gt;] [--buffer &lt;val&gt;] [--nvoices &lt;val&gt;] [--control &lt;0/1&gt;] 
+ [--group &lt;0/1&gt;] [--virtual-midi &lt;0/1&gt;]</code></p>
+<p>So now  <code>./faust2cagtk-llvm --nvoices 16</code> starts the program with 16 voices.</p>
+<p>The technique has currently be tested with the <code>faust2cagtk</code>, <code>faust2jack</code> , <code>faust2csvplot</code>,  and <code>faust2plot</code> tools.</p>
+<h3 id="second-use-case-computing-the-spectrogram-of-a-set-of-audio-files">Second use-case computing the spectrogram of a set of audio files</h3>
+<p>Here is a second use case where some external C++ code is used to compute the <em>spectrogram of a set of audio files</em> (which is something that cannot be simply done with the current version fo the Faust language) and output the spectrogram as an audio signal. A <code>nentry</code> controller will be used to select the currently playing spectrogram. The Faust compiler will be used to generate a C++ class which is going to be manually edited and enriched with additional code. </p>
+<h4 id="writting-the-dsp-code">Writting the DSP code</h4>
 <p>First a fake DSP program <code>spectral.dsp</code>  using the <code>soundfile</code> primitive loading two audio files and a <code>nentry</code> control is written: </p>
 <pre><code>sf = soundfile(&quot;sound[url:{'sound1.wav';'sound2.wav'}]&quot;,2);
 process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
@@ -2353,7 +2378,7 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 
 };
 </code></pre>
-<h3 id="customizing-the-c-code">Customizing the C++ code</h3>
+<h4 id="customizing-the-c-code">Customizing the C++ code</h4>
 <p>Now the <code>spectral</code> class can be manually edited and completed with additional code, to compute the two audio files spectrograms in <code>buildUserInterface</code>, and play them in <code>compute</code>. </p>
 <ul>
 <li>a new line <code>Spectrogram fSpectro[2];</code> is added in the DSP structure</li>
@@ -2400,7 +2425,7 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 };
 </code></pre>
 <p>Here we assume that <code>createSpectrogram</code> and <code>playSpectrogram</code> functions are defined elsewhere and ready to be compiled.</p>
-<h3 id="deploying-it-as-a-maxmsp-external-using-the-faust2max6-script">Deploying it as a Max/MSP External Using the faust2max6 Script</h3>
+<h4 id="deploying-it-as-a-maxmsp-external-using-the-faust2max6-script">Deploying it as a Max/MSP External Using the faust2max6 Script</h4>
 <p>The completed <code>spectral.cpp</code> file is now ready to be deployed as a Max/MSP external using the <code>faust2max6</code> script and the <code>-inj</code> option with the following line:</p>
 <pre><code>faust2max6 -inj spectral.cpp -soundfile spectral.dsp
 </code></pre>

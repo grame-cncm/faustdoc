@@ -573,7 +573,6 @@ Comparison operators compare two signals and produce a signal that is 1 when the
 
 The priority and associativity of the comparison operators is given table \ref{infix-comparison-priority}.
 	
- 
 \begin{table}[ht]
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -596,7 +595,7 @@ The priority and associativity of the comparison operators is given table \ref{i
 \subsubsection{Math Operators}
 %---------------------------------------------------------------------------------------
 
-Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample
+Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample.
 
 \begin{rail}
 	math : expression ('+'|'-'|'*'|'/'|'\%'|hat) expression;
@@ -627,7 +626,7 @@ The priority and associativity of the math operators is given table \ref{infix-m
 \subsubsection{Bitwise operators}
 %---------------------------------------------------------------------------------------
 
-Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample
+Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample.
 
 \begin{rail}
 	bitwise : expression (pipe|ampersand|'xor'|'<<' |'>>') expression;
@@ -657,7 +656,7 @@ The priority and associativity of the bitwise operators is given table \ref{infi
 \subsubsection{Delay operators}
 %---------------------------------------------------------------------------------------
 
-Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample
+Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample.
 
 \begin{rail}
 	delay : expression arobase expression | expression kot;
@@ -1074,7 +1073,7 @@ BS    = fvariable(int count, <math.h>);
 
 Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are only computed once, during the initialization period. 
 
-Variable are considered to vary at block speed. This means that expressions depending of external variables are computed every block.
+Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.
 
 \subsubsection{include file}
 In declaring foreign functions one has also to specify the include file. It allows the \faust compiler to add the corresponding \lstinline'#include...' in the generated code.

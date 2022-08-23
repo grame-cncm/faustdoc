@@ -1129,6 +1129,7 @@ count((x,xs)) = 1+count(xs);
 </tr>
 </tbody>
 </table>
+<p>Please note that a higher priority value means a higher priority in the evaluation order. There is a companion table that gives the associativity of each numerical operator in infix expressions.</p>
 <h4 id="parallel-composition">Parallel Composition</h4>
 <p>The <em>parallel composition</em> (e.g., <code>(A,B)</code>) is probably the simplest one. It places the two block-diagrams one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of <code>A</code> and <code>B</code>. The outputs of the resulting block-diagram are the outputs of <code>A</code> and <code>B</code>. </p>
 <p><em>Parallel composition</em> is an associative operation: <code>(A,(B,C))</code> and <code>((A,B),C)</code> are equivalents. When no parenthesis are used (e.g., <code>A,B,C,D</code>), Faust uses right associativity and therefore builds internally the expression <code>(A,(B,(C,D)))</code>. This organization is important to know when using pattern matching techniques on parallel compositions. </p>
@@ -1630,8 +1631,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <p><code>i</code> is used here at each iteration to compute the value of the frequency of the current oscillator. Note that the <code>shift</code> parameter can be used to tune the frequency drift between each oscillator.</p>
 <h3 id="infix-notation-and-other-syntax-extensions">Infix Notation and Other Syntax Extensions</h3>
 <blockquote>
-<p>Infix notation is commonly used in mathematics. It consists in placing the 
-operand between the arguments as in <script type="math/tex">2+3</script>
+<p>Infix notation is commonly used in mathematics. It consists in placing the operand between the arguments as in <script type="math/tex">2+3</script>
 </p>
 </blockquote>
 <p>Besides its algebra-based core syntax, Faust provides some syntax extensions, in particular the familiar <em>infix notation</em>. For example if you want to multiply two numbers, say <code>2</code> and <code>3</code>, you can write directly <code>2*3</code> instead of the equivalent core-syntax expression <code>2,3 : *</code>.</p>
@@ -1687,6 +1687,176 @@ operand between the arguments as in <script type="math/tex">2+3</script>
 <h4 id="infix-operators">Infix Operators</h4>
 <p>Built-in primitives that can be used in infix notation are called <em>infix operators</em> and are listed below. Please note that a more detailed description of these operators is available <a href="#primitives">section on primitives</a>. </p>
 <p><img src="img/infixop.svg" class="mx-auto d-block"></p>
+<h5 id="comparison-operators">Comparison Operators</h5>
+<p>Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false.  The priority and associativity of the comparison operators is given here:</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Pri.</th>
+<th>Assoc.</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>expression &lt; expression</code></td>
+<td>5</td>
+<td>left</td>
+<td>less than</td>
+</tr>
+<tr>
+<td><code>expression &lt;= expression</code></td>
+<td>5</td>
+<td>left</td>
+<td>less or equal</td>
+</tr>
+<tr>
+<td><code>expression == expression</code></td>
+<td>5</td>
+<td>left</td>
+<td>equal</td>
+</tr>
+<tr>
+<td><code>expression != expression</code></td>
+<td>5</td>
+<td>left</td>
+<td>different</td>
+</tr>
+<tr>
+<td><code>expression &gt;= expression</code></td>
+<td>5</td>
+<td>left</td>
+<td>greater or equal</td>
+</tr>
+<tr>
+<td><code>expression &gt; expression</code></td>
+<td>5</td>
+<td>left</td>
+<td>greater than</td>
+</tr>
+</tbody>
+</table>
+<h5 id="math-operators">Math Operators</h5>
+<p>Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample. The priority and associativity of the math operators is given here:</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Pri.</th>
+<th>Assoc.</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>expression + expression</code></td>
+<td>6</td>
+<td>left</td>
+<td>addition</td>
+</tr>
+<tr>
+<td><code>expression - expression</code></td>
+<td>6</td>
+<td>left</td>
+<td>subtraction</td>
+</tr>
+<tr>
+<td><code>expression * expression</code></td>
+<td>7</td>
+<td>left</td>
+<td>multiplication</td>
+</tr>
+<tr>
+<td><code>expression / expression</code></td>
+<td>7</td>
+<td>left</td>
+<td>division</td>
+</tr>
+<tr>
+<td><code>expression % expression</code></td>
+<td>7</td>
+<td>left</td>
+<td>modulo</td>
+</tr>
+<tr>
+<td><code>expression ^ expression</code></td>
+<td>8</td>
+<td>left</td>
+<td>power</td>
+</tr>
+</tbody>
+</table>
+<h5 id="bitwise-operators">Bitwise  Operators</h5>
+<p>Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority and associativity of the bitwise operators is given here:</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Pri.</th>
+<th>Assoc.</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>expression | expression</code></td>
+<td>6</td>
+<td>left</td>
+<td>bitwise or</td>
+</tr>
+<tr>
+<td><code>expression &amp; expression</code></td>
+<td>7</td>
+<td>left</td>
+<td>bitwise and</td>
+</tr>
+<tr>
+<td><code>expression xor expression</code></td>
+<td>7</td>
+<td>left</td>
+<td>bitwise xor</td>
+</tr>
+<tr>
+<td><code>expression &lt;&lt; expression</code></td>
+<td>7</td>
+<td>left</td>
+<td>bitwise left shift</td>
+</tr>
+<tr>
+<td><code>expression &gt;&gt; expression</code></td>
+<td>7</td>
+<td>left</td>
+<td>bitwise right shift</td>
+</tr>
+</tbody>
+</table>
+<h5 id="delay-operators">Delay operators</h5>
+<p>Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator <code>@</code> allows to delay left handside expression by the amount defined by the right handside expression. The unary operator <code>’</code> delays the left handside expression by one sample.</p>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Pri.</th>
+<th>Assoc.</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>expression @ expression</code></td>
+<td>9</td>
+<td>left</td>
+<td>variable delay</td>
+</tr>
+<tr>
+<td><code>expression'</code></td>
+<td>10</td>
+<td>left</td>
+<td>one-sample delay</td>
+</tr>
+</tbody>
+</table>
 <h4 id="prefix-notation">Prefix Notation</h4>
 <p>Beside <em>infix notation</em>, it is also possible to use <em>prefix notation</em>. The <em>prefix notation</em> is the usual mathematical notation for functions <script type="math/tex">f(x,y,z,\ldots)</script>, but extended to <em>infix operators</em>.</p>
 <p>It consists in first having the operator, for example <code>/</code>, followed by its arguments between parentheses: <code>/(2,3)</code>: </p>
@@ -2046,19 +2216,19 @@ define function with variables with a predefined value, etc. -->
 BS = fvariable(int count, &lt;math.h&gt;);
 </code></pre>
 <p>Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are only computed once, during the initialization period. </p>
-<p>Variable are considered to vary at block speed. This means that expressions depending of external variables are computed every block.</p>
+<p>Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.</p>
 <h4 id="file-include">File Include</h4>
 <p>In declaring foreign functions one has also to specify the include file. It allows the Faust compiler to add the corresponding <code>#include</code> in the generated code.</p>
 <p><img src="img/includefile.svg" class="mx-auto d-block"></p>
 <h4 id="library-file">Library File</h4>
-<p>In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the Faust compiler to (possibly) automatically link the library. Note that this feature is only used with the <a href="../embedding">LLVM backend in 'libfaust' dynamic library model</a>.</p>
+<p>In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the Faust compiler to (possibly) automatically link the library. Note that this feature is only used with the <a href="https://faustdoc.grame.fr/manual/embedding/#using-libfaust-with-the-llvm-backend">LLVM backend in 'libfaust' dynamic library model</a>.</p>
 <!-- TODO I feel like more could be said here -->
 
 <h3 id="applications-and-abstractions">Applications and Abstractions</h3>
 <p><em>Abstractions</em> and <em>applications</em> are fundamental programming constructions directly inspired by Lambda-Calculus. These constructions provide powerful ways to describe and transform block-diagrams algorithmically.</p>
 <p><img src="img/abstraction.svg" class="mx-auto d-block"></p>
 <h4 id="abstractions">Abstractions</h4>
-<p>Abstractions correspond to functions definitions and allow to generalize a block-diagram by <code>making variable</code> some of its parts. </p>
+<p>Abstractions correspond to functions definitions and allow to generalize a block-diagram by <em>making variable</em> some of its parts. </p>
 <p>Let's say we want to transform a stereo reverb, <a href="https://faustlibraries.grame.fr/libs/demos/#dmzita_light"><code>dm.zita_light</code></a> for instance, into a mono effect. The following expression can be written (see the sections on <a href="#split-composition">Split Composition</a> and <a href="#merge-composition">Merge Composition</a>): </p>
 <pre><code>_ &lt;: dm.zita_light :&gt; _ 
 </code></pre>
@@ -4021,6 +4191,7 @@ process = par(i,8,hslider(&quot;Voice %i&quot;,0.9,0,1,0.01));
 <p>creates 8 sliders in parallel with different names while <code>par(i,8,hslider("Voice",0.9,0,1,0.01))</code> would have created only one slider and duplicated its output 8 times.</p>
 <p>The variable part can have an optional format digit. For example <code>"Voice %2i"</code> would indicate to use two digit when inserting the value of <code>i</code> in the string.</p>
 <p>An escape mechanism is provided. If the sign <code>%</code> is followed by itself, it will be included in the resulting string. For example <code>"feedback (%%)"</code> will result in <code>"feedback (%)"</code>.</p>
+<p>The variable name can be enclosed in curly brackets to clearly separate it from the rest of the string, as in <code>par(i,8,hslider("Voice %{i}", 0.9, 0, 1, 0.01))</code>.</p>
 <h4 id="labels-as-pathnames">Labels as Pathnames</h4>
 <p>Thanks to <a href="#hgroup-primitive">horizontal</a>, <a href="#vgroup-primitive">vertical</a>, and <a href="#tgroup-primitive">tabs</a> groups, user interfaces have a hierarchical structure analog to a hierarchical file system. Each widget has an associated <em>path name</em> obtained by concatenating the labels of all its surrounding groups with its own label.</p>
 <p>In the following example :</p>
