@@ -2302,9 +2302,9 @@ route(A,B,(a,b),(c,d),...)
 </code></pre>
 <p>where:</p>
 <ul>
-<li><code>A</code> is the number of input signals, as a constant numerical expression  </li>
-<li><code>B</code> is the number of output signals, as a constant numerical expression </li>
-<li><code>a,b / (a,b)</code> is an input/output pair,  as constant numerical expressions</li>
+<li><code>A</code> is the number of input signals, as a <a href="#constant-numerical-expressions">constant numerical expression</a>  </li>
+<li><code>B</code> is the number of output signals, as a <a href="#constant-numerical-expressions">constant numerical expression</a> </li>
+<li><code>a,b / (a,b)</code> is an input/output pair, as <a href="#constant-numerical-expressions">constant numerical expressions</a></li>
 </ul>
 <p>Inputs are numbered from 1 to <code>A</code> and outputs are numbered from 1 to <code>B</code>. There can be any number of input/output pairs after the declaration of <code>A</code> and <code>B</code>.</p>
 <p>For example, crossing two signals can be carried out with:</p>
@@ -2363,7 +2363,7 @@ process = r;
 <!-- /faust-run -->
 
 <h3 id="waveform-primitive"><code>waveform</code> Primitive</h3>
-<p>The <code>waveform</code> primitive was designed to facilitate the use of <a href="#rdtable-primitive"><code>rdtable</code></a> (read table). It allows us to specify a fixed periodic signal as a list of samples. </p>
+<p>The <code>waveform</code> primitive was designed to facilitate the use of <a href="#rdtable-primitive"><code>rdtable</code></a> (read table). It allows us to specify a fixed periodic signal as a list of samples as literal numbers. </p>
 <p><code>waveform</code> has two outputs:</p>
 <ul>
 <li>a constant and indicating the size (as a number of samples) of the period, </li>
@@ -2392,9 +2392,9 @@ process = triangleOsc(f);
 
 <p><code>waveform</code> is used to define a triangle waveform (in its most primitive form), which is then used with a <a href="#rdtable-primitive"><code>rdtable</code></a> controlled by a phaser to implement a triangle wave oscillator. Note that the quality of this oscillator is very low because of the low resolution of the triangle waveform.</p>
 <h3 id="soundfile-primitive"><code>soundfile</code> Primitive</h3>
-<p>The <code>soundfile("label[url:{'path1';'path2';'path3'}]", n)</code> primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. The <code>soundfile("label[url:path]", n)</code> simplified syntax, or <code>soundfile("label", n)</code>  (where label is used as the soundfile path) allows to use a single file.  A <code>soundfile</code> has: </p>
+<p>The <code>soundfile("label[url:{'path1';'path2';'path3'}]", n)</code> primitive allows access to a list of externally defined sound resources, described as the list of their filename, or complete paths. The <code>soundfile("label[url:path]", n)</code> simplified syntax, or <code>soundfile("label", n)</code>  (where label is used as the soundfile path) allows to use a single file.  A <code>soundfile</code> has: </p>
 <ul>
-<li>two inputs: the sound number (as a integer between 0 and 255 as a <a href="#constant-numerical-expressions">constant numerical expression</a>), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)</li>
+<li>two inputs: the sound number (as a integer between 0 and 255), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)</li>
 <li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate</li>
 <li><code>n</code> several more outputs for the sound channels themselves, as a <a href="#constant-numerical-expressions">constant numerical expression</a></li>
 </ul>

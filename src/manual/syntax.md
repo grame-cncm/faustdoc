@@ -1243,9 +1243,9 @@ route(A,B,(a,b),(c,d),...)
 ```
 where:
 
-* `A` is the number of input signals, as a constant numerical expression  
-* `B` is the number of output signals, as a constant numerical expression 
-* `a,b / (a,b)` is an input/output pair,  as constant numerical expressions
+* `A` is the number of input signals, as a [constant numerical expression](#constant-numerical-expressions)  
+* `B` is the number of output signals, as a [constant numerical expression](#constant-numerical-expressions) 
+* `a,b / (a,b)` is an input/output pair, as [constant numerical expressions](#constant-numerical-expressions)
 
 Inputs are numbered from 1 to `A` and outputs are numbered from 1 to `B`. There can be any number of input/output pairs after the declaration of `A` and `B`.
 
@@ -1286,7 +1286,7 @@ process = r;
 
 ### `waveform` Primitive
 
-The `waveform` primitive was designed to facilitate the use of [`rdtable`](#rdtable-primitive) (read table). It allows us to specify a fixed periodic signal as a list of samples. 
+The `waveform` primitive was designed to facilitate the use of [`rdtable`](#rdtable-primitive) (read table). It allows us to specify a fixed periodic signal as a list of samples as literal numbers. 
 
 `waveform` has two outputs:
 
@@ -1313,9 +1313,9 @@ process = triangleOsc(f);
 
 ### `soundfile` Primitive
 
-The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows for the access a list of externally defined sound resources, described as the list of their filename, or complete paths. The `soundfile("label[url:path]", n)` simplified syntax, or `soundfile("label", n)`  (where label is used as the soundfile path) allows to use a single file.  A `soundfile` has: 
+The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows access to a list of externally defined sound resources, described as the list of their filename, or complete paths. The `soundfile("label[url:path]", n)` simplified syntax, or `soundfile("label", n)`  (where label is used as the soundfile path) allows to use a single file.  A `soundfile` has: 
 
-* two inputs: the sound number (as a integer between 0 and 255 as a [constant numerical expression](#constant-numerical-expressions)), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)
+* two inputs: the sound number (as a integer between 0 and 255), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)
 * two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
 * `n` several more outputs for the sound channels themselves, as a [constant numerical expression](#constant-numerical-expressions)
 
