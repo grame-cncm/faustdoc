@@ -742,7 +742,7 @@ Time expressions are used to express delays. The notation \lstinline'X@10' repre
 time : expression arobase expression|expression kot; 
 \end{rail}
 
-The delay don't have to be fixed, but it must be positive and bounded. The values of a slider are perfectly acceptable as in the following example:
+The delay (automatically promoted to \textit{int}) don't have to be fixed, but it must be positive and bounded. The values of a slider are perfectly acceptable as in the following example:
 
 \begin{lstlisting}
 process = _ @ hslider("delay",0, 0, 100, 1);

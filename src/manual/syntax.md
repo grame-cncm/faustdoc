@@ -718,50 +718,50 @@ Built-in primitives that can be used in infix notation are called *infix operato
 
 ##### Comparison Operators
 
-Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false. The priority, associativity, and type promotion of the comparison operators is given here:
+Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false. The priority and associativity of the comparison operators is given here:
 
-| Syntax | Pri. | Assoc.  | Description | Type promotion |
-| -------- | -----| ------ | --------- | --------- |
-| `expression < expression` | 5 | left | less than | Int | 
-| `expression <= expression` | 5 | left | less or equal | Int |
-| `expression == expression` | 5 | left | equal | Int |
-| `expression != expression` | 5 | left | different | Int |
-| `expression >= expression` | 5 | left | greater or equal | Int |
-| `expression > expression` | 5 | left | greater than | Int |
+| Syntax | Pri. | Assoc.  | Description | 
+| -------- | -----| ------ | --------- | 
+| `expression < expression` | 5 | left | less than | I
+| `expression <= expression` | 5 | left | less or equal | 
+| `expression == expression` | 5 | left | equal |
+| `expression != expression` | 5 | left | different | 
+| `expression >= expression` | 5 | left | greater or equal | 
+| `expression > expression` | 5 | left | greater than | 
 
 ##### Math Operators
 
-Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample.  The priority, associativity, and type promotion of the comparison operators is given here:
+Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample.  The priority and associativity of the comparison operators is given here:
 
-Syntax | Pri. | Assoc.  | Description  | Type promotion |
-| -------- | -----| ------ | --------- |--------- |
-| `expression + expression` | 6 | left | addition | Int when both, float otherwise |
-| `expression - expression` | 6 | left | subtraction | Int when both, float otherwise |
-| `expression * expression` | 7 | left | multiplication | Int when both, float otherwise |
-| `expression / expression` | 7 | left | division | float |
-| `expression % expression` | 7 | left | modulo | Int when both, use `fmod` otherwise |
-| `expression ^ expression` | 8 | left | power | Int when both, float otherwise |
+Syntax | Pri. | Assoc.  | Description  | 
+| -------- | -----| ------ | --------- |
+| `expression + expression` | 6 | left | addition |
+| `expression - expression` | 6 | left | subtraction | 
+| `expression * expression` | 7 | left | multiplication | 
+| `expression / expression` | 7 | left | division | 
+| `expression % expression` | 7 | left | modulo |
+| `expression ^ expression` | 8 | left | power | 
 
 ##### Bitwise Operators
 
-Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority, associativity, and type promotion of the bitwise operators is given here:
+Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority and associativity of the bitwise operators is given here:
 
-Syntax | Pri. | Assoc.  | Description | Type promotion |
-| -------- | -----| ------ | --------- |--------- |
-| `expression | expression` | 6 | left | bitwise or | Int | 
-| `expression & expression` | 7 | left | bitwise and | Int | 
-| `expression xor expression` | 7 | left | bitwise xor | Int | 
-| `expression << expression` | 7 | left | bitwise left shift | Int | 
-| `expression >> expression` | 7 | left | bitwise right shift | Int | 
+Syntax | Pri. | Assoc.  | Description | 
+| -------- | -----| ------ | --------- |
+| `expression | expression` | 6 | left | bitwise or | 
+| `expression & expression` | 7 | left | bitwise and | 
+| `expression xor expression` | 7 | left | bitwise xor | 
+| `expression << expression` | 7 | left | bitwise left shift | 
+| `expression >> expression` | 7 | left | bitwise right shift |
 
 ##### Delay operators
 
-Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator `@` allows to delay left handside expression by the amount defined by the right handside expression. The unary operator `’` delays the left handside expression by one sample. Type promotion is described for each operator.
+Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator `@` allows to delay left handside expression by the amount defined by the right handside expression. The unary operator `’` delays the left handside expression by one sample. 
 
-Syntax | Pri. | Assoc.  | Description | Type promotion |
-| -------- | -----| ------ | --------- |--------- |
-| `expression @ expression` | 9 | left | variable delay | Int | 
-| `expression' ` | 10 | left | one-sample delay |  | 
+Syntax | Pri. | Assoc.  | Description | 
+| -------- | -----| ------ | --------- |
+| `expression @ expression` | 9 | left | variable delay | 
+| `expression' ` | 10 | left | one-sample delay |  
 
 
 #### Prefix Notation
@@ -1245,9 +1245,9 @@ route(A,B,(a,b),(c,d),...)
 ```
 where:
 
-* `A` is the number of input signals, as a [constant numerical expression](#constant-numerical-expressions)  
-* `B` is the number of output signals, as a [constant numerical expression](#constant-numerical-expressions) 
-* `a,b / (a,b)` is an input/output pair, as [constant numerical expressions](#constant-numerical-expressions)
+* `A` is the number of input signals, as a integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
+* `B` is the number of output signals, as a integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
+* `a,b / (a,b)` is an input/output pair, as integer [constant numerical expressions](#constant-numerical-expressions), automatically promoted to *int*
 
 Inputs are numbered from 1 to `A` and outputs are numbered from 1 to `B`. There can be any number of input/output pairs after the declaration of `A` and `B`.
 
@@ -1317,9 +1317,9 @@ process = triangleOsc(f);
 
 The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows access to a list of externally defined sound resources, described as the list of their filename, or complete paths. The `soundfile("label[url:path]", n)` simplified syntax, or `soundfile("label", n)`  (where label is used as the soundfile path) allows to use a single file.  A `soundfile` has: 
 
-* two inputs: the sound number (as a integer between 0 and 255), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)
+* two inputs: the sound number (as a integer between 0 and 255, automatically promoted to *int*), and the read index in the sound (automatically promoted to *int*, which will access the last sample of the sound if the read index is greater than the sound length)
 * two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
-* `n` several more outputs for the sound channels themselves, as a [constant numerical expression](#constant-numerical-expressions)
+* `n` several more outputs for the sound channels themselves, as a integer [constant numerical expression](#constant-numerical-expressions)
 
 <!-- faust-run -->
 ```
@@ -1463,7 +1463,7 @@ process = 1.5 : float;
 
 #### Add Primitive
 
-The `+` primitive can be used to add two signals together. 
+The `+` primitive can be used to add two signals together. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)+x_{2}(t)\)
@@ -1478,7 +1478,7 @@ process = +;
 
 #### Subtract Primitive
 
-The `-` primitive can be used to subtract two signals. 
+The `-` primitive can be used to subtract two signals. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)-x_{2}(t)\)
@@ -1493,7 +1493,7 @@ process = -;
 
 #### Multiply Primitive
 
-The `*` primitive can be used to multiply two signals. 
+The `*` primitive can be used to multiply two signals. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)*x_{2}(t)\)
@@ -1508,7 +1508,7 @@ process = *(0.5);
 
 #### Divide Primitive
 
-The `/` primitive can be used to divide two signals. 
+The `/` primitive can be used to divide two signals. The function always promote its arguments to *float*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)/{x_{2}(t)}\)
@@ -1523,7 +1523,7 @@ process = /(2);
 
 #### Power Primitive
 
-The `^` primitive can be used to raise to the power of `N` a signal. 
+The `^` primitive can be used to raise to the power of `N` a signal. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)^{x_{2}(t)}\)
@@ -1538,7 +1538,7 @@ process = ^(2);
 
 #### Modulo Primitive
 
-The `%` primitive can be used to take the modulo of a signal. 
+The `%` primitive can be used to take the modulo of a signal. The function uses the *int* type when both of its parameters are of *int* type, and uses the `fmod` operator on *float* promoted arguments otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)\%{x_{2}(t)}\)
@@ -1557,7 +1557,7 @@ will output a signal: `(0,1,2,3,4,5,6,7,8,9,0,1,2,3,4)`.
 
 #### AND Primitive
 
-Bitwise AND can be expressed in Faust with the `&` primitive.
+Bitwise AND can be expressed in Faust with the `&` primitive. The function promotes its arguments to *int*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)\&{x_{2}(t)}\)
@@ -1570,7 +1570,7 @@ TODO
 
 #### OR Primitive
 
-Bitwise OR can be expressed in Faust with the `|` primitive.
+Bitwise OR can be expressed in Faust with the `|` primitive. The function promotes its arguments to *int*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)|{x_{2}(t)}\)
@@ -1587,7 +1587,7 @@ process = _ <: <(0.5) | >(0.7);
 
 #### XOR Primitive
 
-Bitwise XOR can be expressed in Faust with the `xor` primitive.
+Bitwise XOR can be expressed in Faust with the `xor` primitive. The function promotes its arguments to *int*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)\land {x_{2}(t)}\)
@@ -1602,7 +1602,7 @@ process = _ <: <(0.5) xor >(0.7);
 
 #### Left Shift Primitive
 
-Left shift can be expressed in Faust with the `<<` primitive.
+Left shift can be expressed in Faust with the `<<` primitive. The function promotes its arguments to *int*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) << {x_{2}(t)}\)
@@ -1617,7 +1617,7 @@ process = 1 << 2;
 
 #### Right Shift Primitive
 
-Right shift can be expressed in Faust with the `>>` primitive.
+Right shift can be expressed in Faust with the `>>` primitive. The function promotes its arguments to *int*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) >> {x_{2}(t)}\)
@@ -1632,7 +1632,7 @@ process = 1 >> 2;
 
 #### Smaller Than Primitive
 
-The smaller than comparison can be expressed in Faust with the `<` primitive.
+The smaller than comparison can be expressed in Faust with the `<` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) < {x_{2}(t)}\)
@@ -1649,7 +1649,7 @@ process = <(0.5);
 
 #### Smaller or Equal Than Primitive
 
-The smaller or equal than comparison can be expressed in Faust with the `<=` primitive.
+The smaller or equal than comparison can be expressed in Faust with the `<=` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) <= {x_{2}(t)}\)
@@ -1666,7 +1666,7 @@ process = <=(0.5);
 
 #### Greater Than Primitive
 
-The greater than comparison can be expressed in Faust with the `>` primitive.
+The greater than comparison can be expressed in Faust with the `>` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) > {x_{2}(t)}\)
@@ -1683,7 +1683,7 @@ process = >(0.5);
 
 #### Greater or Equal Than Primitive
 
-The greater or equal than comparison can be expressed in Faust with the `>=` primitive.
+The greater or equal than comparison can be expressed in Faust with the `>=` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) >= {x_{2}(t)}\)
@@ -1700,7 +1700,7 @@ process = >=(0.5);
 
 #### Equal to Primitive
 
-The equal to comparison can be expressed in Faust with the `==` primitive.
+The equal to comparison can be expressed in Faust with the `==` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) == {x_{2}(t)}\)
@@ -1715,7 +1715,7 @@ process = 0 == 1;
 
 #### Different Than Primitive
 
-The different than comparison can be expressed in Faust with the `!=` primitive.
+The different than comparison can be expressed in Faust with the `!=` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) != {x_{2}(t)}\)
@@ -2071,7 +2071,7 @@ process = _';
 
 #### `@` Primitive
 
-An integer delay of `N` samples can be expressed as `@(N)` in Faust. Note that `N` can be dynamic but that its range must be bounded. This can be done by using a UI primitive (see example below) allowing for the definition of a range such as [`hslider`](#hslider-primitive), [`vslider`](#vslider-primitive), or [`nentry`](#nentry-primitive).
+An integer delay of `N` samples can be expressed as `@(N)` in Faust. Note that `N` (automatically promoted to *int*) can be dynamic but that its range must be bounded. This can be done by using a UI primitive (see example below) allowing for the definition of a range such as [`hslider`](#hslider-primitive), [`vslider`](#vslider-primitive), or [`nentry`](#nentry-primitive).
 
 Note that floating point delay is also available in Faust by the mean of [various fractional delay implementations](https://faustlibraries.grame.fr/libs/delays/) available in the Faust standard libraries.
 
@@ -2125,9 +2125,9 @@ rdtable(n,s,r) : _
 
 Where:
 
-* `n`: the table size, a [constant numerical expression](#constant-numerical-expressions)
+* `n`: the table size, an integer as a  [constant numerical expression](#constant-numerical-expressions)
 * `s`: the table content
-* `r`: the read index (an `int` between 0 and `n-1`)
+* `r`: the read index (an `int` between 0 and `n-1`), automatically promoted to *int*
 
 **Example: Basic Triangle Wave Oscillator Using the `waveform` Primitive**
 
@@ -2173,10 +2173,10 @@ _ : rwtable(n,s,w,_,r) : _
 
 Where:
 
-* `n`: the table size, a [constant numerical expression](#constant-numerical-expressions)
+* `n`: the table size, an integer as a [constant numerical expression](#constant-numerical-expressions)
 * `s`: the initial table content
-* `w`: the write index (an `int` between 0 and `n-1`) 
-* `r`: the read index (an `int` between 0 and `n-1`)
+* `w`: the write index (an `int` between 0 and `n-1`), automatically promoted to *int*
+* `r`: the read index (an `int` between 0 and `n-1`), automatically promoted to *int*
 
 Note that the fourth argument of `rwtable` corresponds to the input of the table.
 

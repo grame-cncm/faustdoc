@@ -59,9 +59,9 @@ route(A,B,(a,b),(c,d),...)
 where:
 
 \begin{itemize} 
-\item \lstinline'A' is the number of input signals, as a \textit{constant numerical expression}
-\item \lstinline'B' is the number of output signals, as a \textit{constant numerical expression}
-\item \lstinline'a,b / (a,b)' is an input/output pair, as \textit{constant numerical expressions}
+\item \lstinline'A' is the number of input signals, as a \textit{constant numerical expression}, automatically promoted to \textit{int}
+\item \lstinline'B' is the number of output signals, as a \textit{constant numerical expression}, automatically promoted to \textit{int}
+\item \lstinline'a,b / (a,b)' is an input/output pair, as \textit{constant numerical expressions}, automatically promoted to \textit{int}
 \end{itemize}
 
 Inputs are numbered from \lstinline'1' to \lstinline'A' and outputs are numbered from \lstinline'1' to \lstinline'B'. There can be any number of input/output pairs after the declaration of \lstinline'A' and \lstinline'B'.
@@ -123,9 +123,9 @@ The  \lstinline'soundfile("label[url:\{'path1';'path2';'path3';\}]", n)' primiti
 A soundfile has:
 
 \begin{itemize} 
-\item two inputs: the sound number (as a integer between 0 and 255), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)
+\item two inputs: the sound number (as a integer between 0 and 255, automatically promoted to \textit{int}), and the read index in the sound (automatically promoted to \textit{int}, which will access the last sample of the sound if the read index is greater than the sound length)
 \item two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate in frames
-\item  \lstinline'n' several more outputs for the sound channels themselves, as a \textit{constant numerical expression}
+\item  \lstinline'n' several more outputs for the sound channels themselves, as a integer \textit{constant numerical expression}
 \end{itemize}
 
 If more outputs than the actual number of channels in the soundfile are used, the sound channels will be automatically duplicated up to the wanted number of outputs (so for instance if a stereo sound is used with four output channels, the same group of two channels will be duplicated).
@@ -177,12 +177,12 @@ $n.m$ & $\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}$ & floating point number: $y(t)
 \texttt{>}\texttt{>} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & arith. shift right: $y(t)=x_{1}(t) >> x_{2}(t)$  	& \texttt{int}  \\
 
 
-\texttt{<} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & less than: $y(t)=x_{1}(t) < x_{2}(t)$  			& \texttt{int}  \\
-\texttt{<=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & less or equal: $y(t)=x_{1}(t) <= x_{2}(t)$  		& \texttt{int} \\
-\texttt{>} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & greater than: $y(t)=x_{1}(t) > x_{2}(t)$   	   	& \texttt{int} \\
-\texttt{>=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & greater or equal: $y(t)=x_{1}(t) >= x_{2}(t)$   	& \texttt{int} \\
-\texttt{==} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & equal: $y(t)=x_{1}(t) == x_{2}(t)$ 			& \texttt{int}  \\
-\texttt{!=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & different: $y(t)=x_{1}(t) != x_{2}(t)$  			& \texttt{int} \\
+\texttt{<} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & less than: $y(t)=x_{1}(t) < x_{2}(t)$  			& \texttt{int} if both \texttt{int}, \texttt{float} otherwise  \\
+\texttt{<=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & less or equal: $y(t)=x_{1}(t) <= x_{2}(t)$  		& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
+\texttt{>} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & greater than: $y(t)=x_{1}(t) > x_{2}(t)$   	   	& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
+\texttt{>=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & greater or equal: $y(t)=x_{1}(t) >= x_{2}(t)$   	& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
+\texttt{==} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & equal: $y(t)=x_{1}(t) == x_{2}(t)$ 			& \texttt{int} if both \texttt{int}, \texttt{float} otherwise  \\
+\texttt{!=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & different: $y(t)=x_{1}(t) != x_{2}(t)$  			& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
 
 \hline
 
@@ -201,7 +201,6 @@ Most of them do automatic parameter promotion to \texttt{float} type, except \ls
 
 \begin{tabular}{|l|l|l|l|}
 
-
 \hline
 \textbf{Syntax} & \textbf{Type}  & \textbf{Description} & \textbf{Type promotion} \\
 \hline
@@ -209,7 +208,7 @@ Most of them do automatic parameter promotion to \texttt{float} type, except \ls
 \texttt{acos} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & arc cosine: $y(t)=\mathrm{acosf}(x(t))$  & \texttt{float} \\
 \texttt{asin} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & arc sine: $y(t)=\mathrm{asinf}(x(t))$  & \texttt{float} \\
 \texttt{atan} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & arc tangent: $y(t)=\mathrm{atanf}(x(t))$ & \texttt{float} \\
-\texttt{atan2} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & arc tangent of 2 signals: $y(t)=\mathrm{atan2f}(x_{1}(t), x_{2}(t))$  & \texttt{float}\\
+\texttt{atan2} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & arc tangent: $y(t)=\mathrm{atan2f}(x_{1}(t), x_{2}(t))$  & \texttt{float}\\
 
 \texttt{cos} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & cosine: $y(t)=\mathrm{cosf}(x(t))$ & \texttt{float} \\
 \texttt{sin} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & sine: $y(t)=\mathrm{sinf}(x(t))$  & \texttt{float}\\
@@ -218,20 +217,18 @@ Most of them do automatic parameter promotion to \texttt{float} type, except \ls
 \texttt{exp} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & base-e exponential: $y(t)=\mathrm{expf}(x(t))$  & \texttt{float}\\
 \texttt{log} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & base-e logarithm: $y(t)=\mathrm{logf}(x(t))$  & \texttt{float}\\
 \texttt{log10} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & base-10 logarithm: $y(t)=\mathrm{log10f}(x(t))$ & \texttt{float} \\
-\texttt{pow} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & power: $y(t)=\mathrm{powf}(x_{1}(t),x_{2}(t))$ & \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
+\texttt{pow} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & power: $y(t)=\mathrm{powf}(x_{1}(t),x_{2}(t))$ & \texttt{int} or \texttt{float} \\
 \texttt{sqrt} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & square root: $y(t)=\mathrm{sqrtf}(x(t))$  & \texttt{float}\\
-\texttt{abs} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & absolute value (int): $y(t)=\mathrm{abs}(x(t))$ & \texttt{int} or \texttt{float} depending of the argument \\
-			&											 & absolute value (float): $y(t)=\mathrm{fabsf}(x(t))$ \\
-\texttt{min} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & minimum: $y(t)=\mathrm{min}(x_{1}(t),x_{2}(t))$  &\texttt{int} or \texttt{float} depending of the arguments \\
-\texttt{max} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & maximum: $y(t)=\mathrm{max}(x_{1}(t),x_{2}(t))$  &\texttt{int} or \texttt{float} depending of the arguments \\
+\texttt{abs} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & absolute value (int): $y(t)=\mathrm{abs}(x(t))$ & \texttt{int}  \\
+			&											 & absolute value (float): $y(t)=\mathrm{fabsf}(x(t))$  &  \texttt{float}\\
+\texttt{min} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & minimum: $y(t)=\mathrm{min}(x_{1}(t),x_{2}(t))$  & \texttt{int} or \texttt{float} \\
+\texttt{max} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & maximum: $y(t)=\mathrm{max}(x_{1}(t),x_{2}(t))$  & \texttt{int} or \texttt{float} \\
 \texttt{fmod} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & float modulo: $y(t)=\mathrm{fmodf}(x_{1}(t),x_{2}(t))$ & \texttt{float} \\
 \texttt{remainder} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & float remainder: $y(t)=\mathrm{remainderf}(x_{1}(t),x_{2}(t))$ & \texttt{float} \\
 
 \texttt{floor} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & largest int $\leq$: $y(t)=\mathrm{floorf}(x(t))$  & \texttt{float}\\
 \texttt{ceil} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & smallest int $\geq$: $y(t)=\mathrm{ceilf}(x(t))$  & \texttt{float}\\
 \texttt{rint} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & closest int: $y(t)=\mathrm{rintf}(x(t))$ & \texttt{float} \\
-
-
 
 \hline
 \end{tabular}
@@ -272,7 +269,7 @@ The following primitives allow to define fixed delays, read-only and read-write 
 \label{fig-delays}
 \end{figure}
 
-The size input of \textit{rdtable} and \textit{rwtable} are \textit{constant numerical expressions}.
+The size input of \textit{rdtable} and \textit{rwtable} are integer \textit{constant numerical expressions}. The read and write indexes are automatically promoted to \textit{int}.
 
 %--------------------------------------------------------------------------------------------------------------
 \subsection{User Interface Elements}

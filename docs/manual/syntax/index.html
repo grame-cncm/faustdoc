@@ -1688,7 +1688,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <p>Built-in primitives that can be used in infix notation are called <em>infix operators</em> and are listed below. Please note that a more detailed description of these operators is available <a href="#primitives">section on primitives</a>. </p>
 <p><img src="img/infixop.svg" class="mx-auto d-block"></p>
 <h5 id="comparison-operators">Comparison Operators</h5>
-<p>Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false. The priority, associativity, and type promotion of the comparison operators is given here:</p>
+<p>Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false. The priority and associativity of the comparison operators is given here:</p>
 <table>
 <thead>
 <tr>
@@ -1696,7 +1696,6 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <th>Pri.</th>
 <th>Assoc.</th>
 <th>Description</th>
-<th>Type promotion</th>
 </tr>
 </thead>
 <tbody>
@@ -1705,47 +1704,41 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <td>5</td>
 <td>left</td>
 <td>less than</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &lt;= expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>less or equal</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression == expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>equal</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression != expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>different</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &gt;= expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>greater or equal</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &gt; expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>greater than</td>
-<td>Int</td>
 </tr>
 </tbody>
 </table>
 <h5 id="math-operators">Math Operators</h5>
-<p>Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample.  The priority, associativity, and type promotion of the comparison operators is given here:</p>
+<p>Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample.  The priority and associativity of the comparison operators is given here:</p>
 <table>
 <thead>
 <tr>
@@ -1753,7 +1746,6 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <th>Pri.</th>
 <th>Assoc.</th>
 <th>Description</th>
-<th>Type promotion</th>
 </tr>
 </thead>
 <tbody>
@@ -1762,47 +1754,41 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <td>6</td>
 <td>left</td>
 <td>addition</td>
-<td>Int when both, float otherwise</td>
 </tr>
 <tr>
 <td><code>expression - expression</code></td>
 <td>6</td>
 <td>left</td>
 <td>subtraction</td>
-<td>Int when both, float otherwise</td>
 </tr>
 <tr>
 <td><code>expression * expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>multiplication</td>
-<td>Int when both, float otherwise</td>
 </tr>
 <tr>
 <td><code>expression / expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>division</td>
-<td>float</td>
 </tr>
 <tr>
 <td><code>expression % expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>modulo</td>
-<td>Int when both, use <code>fmod</code> otherwise</td>
 </tr>
 <tr>
 <td><code>expression ^ expression</code></td>
 <td>8</td>
 <td>left</td>
 <td>power</td>
-<td>Int when both, float otherwise</td>
 </tr>
 </tbody>
 </table>
 <h5 id="bitwise-operators">Bitwise Operators</h5>
-<p>Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority, associativity, and type promotion of the bitwise operators is given here:</p>
+<p>Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority and associativity of the bitwise operators is given here:</p>
 <table>
 <thead>
 <tr>
@@ -1810,7 +1796,6 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <th>Pri.</th>
 <th>Assoc.</th>
 <th>Description</th>
-<th>Type promotion</th>
 </tr>
 </thead>
 <tbody>
@@ -1819,40 +1804,35 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <td>6</td>
 <td>left</td>
 <td>bitwise or</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &amp; expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>bitwise and</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression xor expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>bitwise xor</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &lt;&lt; expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>bitwise left shift</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &gt;&gt; expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>bitwise right shift</td>
-<td>Int</td>
 </tr>
 </tbody>
 </table>
 <h5 id="delay-operators">Delay operators</h5>
-<p>Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator <code>@</code> allows to delay left handside expression by the amount defined by the right handside expression. The unary operator <code>’</code> delays the left handside expression by one sample. Type promotion is described for each operator.</p>
+<p>Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator <code>@</code> allows to delay left handside expression by the amount defined by the right handside expression. The unary operator <code>’</code> delays the left handside expression by one sample. </p>
 <table>
 <thead>
 <tr>
@@ -1860,7 +1840,6 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <th>Pri.</th>
 <th>Assoc.</th>
 <th>Description</th>
-<th>Type promotion</th>
 </tr>
 </thead>
 <tbody>
@@ -1869,14 +1848,12 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <td>9</td>
 <td>left</td>
 <td>variable delay</td>
-<td>Int</td>
 </tr>
 <tr>
 <td><code>expression'</code></td>
 <td>10</td>
 <td>left</td>
 <td>one-sample delay</td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -2326,9 +2303,9 @@ route(A,B,(a,b),(c,d),...)
 </code></pre>
 <p>where:</p>
 <ul>
-<li><code>A</code> is the number of input signals, as a <a href="#constant-numerical-expressions">constant numerical expression</a>  </li>
-<li><code>B</code> is the number of output signals, as a <a href="#constant-numerical-expressions">constant numerical expression</a> </li>
-<li><code>a,b / (a,b)</code> is an input/output pair, as <a href="#constant-numerical-expressions">constant numerical expressions</a></li>
+<li><code>A</code> is the number of input signals, as a integer <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
+<li><code>B</code> is the number of output signals, as a integer <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
+<li><code>a,b / (a,b)</code> is an input/output pair, as integer <a href="#constant-numerical-expressions">constant numerical expressions</a>, automatically promoted to <em>int</em></li>
 </ul>
 <p>Inputs are numbered from 1 to <code>A</code> and outputs are numbered from 1 to <code>B</code>. There can be any number of input/output pairs after the declaration of <code>A</code> and <code>B</code>.</p>
 <p>For example, crossing two signals can be carried out with:</p>
@@ -2418,9 +2395,9 @@ process = triangleOsc(f);
 <h3 id="soundfile-primitive"><code>soundfile</code> Primitive</h3>
 <p>The <code>soundfile("label[url:{'path1';'path2';'path3'}]", n)</code> primitive allows access to a list of externally defined sound resources, described as the list of their filename, or complete paths. The <code>soundfile("label[url:path]", n)</code> simplified syntax, or <code>soundfile("label", n)</code>  (where label is used as the soundfile path) allows to use a single file.  A <code>soundfile</code> has: </p>
 <ul>
-<li>two inputs: the sound number (as a integer between 0 and 255), and the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length)</li>
+<li>two inputs: the sound number (as a integer between 0 and 255, automatically promoted to <em>int</em>), and the read index in the sound (automatically promoted to <em>int</em>, which will access the last sample of the sound if the read index is greater than the sound length)</li>
 <li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate</li>
-<li><code>n</code> several more outputs for the sound channels themselves, as a <a href="#constant-numerical-expressions">constant numerical expression</a></li>
+<li><code>n</code> several more outputs for the sound channels themselves, as a integer <a href="#constant-numerical-expressions">constant numerical expression</a></li>
 </ul>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust35/exfaust35.svg" class="mx-auto d-block">
@@ -2613,7 +2590,7 @@ process = 1.5 : float;
 <!-- /faust-run -->
 
 <h4 id="add-primitive">Add Primitive</h4>
-<p>The <code>+</code> primitive can be used to add two signals together. </p>
+<p>The <code>+</code> primitive can be used to add two signals together. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2636,7 +2613,7 @@ process = +;
 <!-- /faust-run -->
 
 <h4 id="subtract-primitive">Subtract Primitive</h4>
-<p>The <code>-</code> primitive can be used to subtract two signals. </p>
+<p>The <code>-</code> primitive can be used to subtract two signals. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2659,7 +2636,7 @@ process = -;
 <!-- /faust-run -->
 
 <h4 id="multiply-primitive">Multiply Primitive</h4>
-<p>The <code>*</code> primitive can be used to multiply two signals. </p>
+<p>The <code>*</code> primitive can be used to multiply two signals. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2682,7 +2659,7 @@ process = *(0.5);
 <!-- /faust-run -->
 
 <h4 id="divide-primitive">Divide Primitive</h4>
-<p>The <code>/</code> primitive can be used to divide two signals. </p>
+<p>The <code>/</code> primitive can be used to divide two signals. The function always promote its arguments to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2705,7 +2682,7 @@ process = /(2);
 <!-- /faust-run -->
 
 <h4 id="power-primitive">Power Primitive</h4>
-<p>The <code>^</code> primitive can be used to raise to the power of <code>N</code> a signal. </p>
+<p>The <code>^</code> primitive can be used to raise to the power of <code>N</code> a signal. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2728,7 +2705,7 @@ process = ^(2);
 <!-- /faust-run -->
 
 <h4 id="modulo-primitive">Modulo Primitive</h4>
-<p>The <code>%</code> primitive can be used to take the modulo of a signal. </p>
+<p>The <code>%</code> primitive can be used to take the modulo of a signal. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and uses the <code>fmod</code> operator on <em>float</em> promoted arguments otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2753,7 +2730,7 @@ process = _~+(1) : -(1) : %(10);
 
 <p>will output a signal: <code>(0,1,2,3,4,5,6,7,8,9,0,1,2,3,4)</code>.</p>
 <h4 id="and-primitive">AND Primitive</h4>
-<p>Bitwise AND can be expressed in Faust with the <code>&amp;</code> primitive.</p>
+<p>Bitwise AND can be expressed in Faust with the <code>&amp;</code> primitive. The function promotes its arguments to <em>int</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2767,7 +2744,7 @@ TODO
 -->
 
 <h4 id="or-primitive">OR Primitive</h4>
-<p>Bitwise OR can be expressed in Faust with the <code>|</code> primitive.</p>
+<p>Bitwise OR can be expressed in Faust with the <code>|</code> primitive. The function promotes its arguments to <em>int</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2791,7 +2768,7 @@ process = _ &lt;: &lt;(0.5) | &gt;(0.7);
 <!-- /faust-run -->
 
 <h4 id="xor-primitive">XOR Primitive</h4>
-<p>Bitwise XOR can be expressed in Faust with the <code>xor</code> primitive.</p>
+<p>Bitwise XOR can be expressed in Faust with the <code>xor</code> primitive. The function promotes its arguments to <em>int</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2814,7 +2791,7 @@ process = _ &lt;: &lt;(0.5) xor &gt;(0.7);
 <!-- /faust-run -->
 
 <h4 id="left-shift-primitive">Left Shift Primitive</h4>
-<p>Left shift can be expressed in Faust with the <code>&lt;&lt;</code> primitive.</p>
+<p>Left shift can be expressed in Faust with the <code>&lt;&lt;</code> primitive. The function promotes its arguments to <em>int</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2837,7 +2814,7 @@ process = 1 &lt;&lt; 2;
 <!-- /faust-run -->
 
 <h4 id="right-shift-primitive">Right Shift Primitive</h4>
-<p>Right shift can be expressed in Faust with the <code>&gt;&gt;</code> primitive.</p>
+<p>Right shift can be expressed in Faust with the <code>&gt;&gt;</code> primitive. The function promotes its arguments to <em>int</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2860,7 +2837,7 @@ process = 1 &gt;&gt; 2;
 <!-- /faust-run -->
 
 <h4 id="smaller-than-primitive">Smaller Than Primitive</h4>
-<p>The smaller than comparison can be expressed in Faust with the <code>&lt;</code> primitive.</p>
+<p>The smaller than comparison can be expressed in Faust with the <code>&lt;</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2884,7 +2861,7 @@ process = &lt;(0.5);
 <!-- /faust-run -->
 
 <h4 id="smaller-or-equal-than-primitive">Smaller or Equal Than Primitive</h4>
-<p>The smaller or equal than comparison can be expressed in Faust with the <code>&lt;=</code> primitive.</p>
+<p>The smaller or equal than comparison can be expressed in Faust with the <code>&lt;=</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2908,7 +2885,7 @@ process = &lt;=(0.5);
 <!-- /faust-run -->
 
 <h4 id="greater-than-primitive">Greater Than Primitive</h4>
-<p>The greater than comparison can be expressed in Faust with the <code>&gt;</code> primitive.</p>
+<p>The greater than comparison can be expressed in Faust with the <code>&gt;</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2932,7 +2909,7 @@ process = &gt;(0.5);
 <!-- /faust-run -->
 
 <h4 id="greater-or-equal-than-primitive">Greater or Equal Than Primitive</h4>
-<p>The greater or equal than comparison can be expressed in Faust with the <code>&gt;=</code> primitive.</p>
+<p>The greater or equal than comparison can be expressed in Faust with the <code>&gt;=</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2956,7 +2933,7 @@ process = &gt;=(0.5);
 <!-- /faust-run -->
 
 <h4 id="equal-to-primitive">Equal to Primitive</h4>
-<p>The equal to comparison can be expressed in Faust with the <code>==</code> primitive.</p>
+<p>The equal to comparison can be expressed in Faust with the <code>==</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2979,7 +2956,7 @@ process = 0 == 1;
 <!-- /faust-run -->
 
 <h4 id="different-than-primitive">Different Than Primitive</h4>
-<p>The different than comparison can be expressed in Faust with the <code>!=</code> primitive.</p>
+<p>The different than comparison can be expressed in Faust with the <code>!=</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3510,7 +3487,7 @@ process = _';
 <!-- /faust-run -->
 
 <h4 id="primitive"><code>@</code> Primitive</h4>
-<p>An integer delay of <code>N</code> samples can be expressed as <code>@(N)</code> in Faust. Note that <code>N</code> can be dynamic but that its range must be bounded. This can be done by using a UI primitive (see example below) allowing for the definition of a range such as <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, or <a href="#nentry-primitive"><code>nentry</code></a>.</p>
+<p>An integer delay of <code>N</code> samples can be expressed as <code>@(N)</code> in Faust. Note that <code>N</code> (automatically promoted to <em>int</em>) can be dynamic but that its range must be bounded. This can be done by using a UI primitive (see example below) allowing for the definition of a range such as <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, or <a href="#nentry-primitive"><code>nentry</code></a>.</p>
 <p>Note that floating point delay is also available in Faust by the mean of <a href="https://faustlibraries.grame.fr/libs/delays/">various fractional delay implementations</a> available in the Faust standard libraries.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
@@ -3573,9 +3550,9 @@ process = @(N);
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>n</code>: the table size, a <a href="#constant-numerical-expressions">constant numerical expression</a></li>
+<li><code>n</code>: the table size, an integer as a  <a href="#constant-numerical-expressions">constant numerical expression</a></li>
 <li><code>s</code>: the table content</li>
-<li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>)</li>
+<li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>), automatically promoted to <em>int</em></li>
 </ul>
 <p><strong>Example: Basic Triangle Wave Oscillator Using the <code>waveform</code> Primitive</strong></p>
 <p>In this example, a basic (and dirty) triangle wave-table is defined using the <a href="#waveform-primitive"><code>waveform</code></a>. It is then used with the <code>rdtable</code> primitive and a phasor to implement a triangle wave oscillator:</p>
@@ -3631,10 +3608,10 @@ process = triangleOsc(f);
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>n</code>: the table size, a <a href="#constant-numerical-expressions">constant numerical expression</a></li>
+<li><code>n</code>: the table size, an integer as a <a href="#constant-numerical-expressions">constant numerical expression</a></li>
 <li><code>s</code>: the initial table content</li>
-<li><code>w</code>: the write index (an <code>int</code> between 0 and <code>n-1</code>) </li>
-<li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>)</li>
+<li><code>w</code>: the write index (an <code>int</code> between 0 and <code>n-1</code>), automatically promoted to <em>int</em></li>
+<li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>), automatically promoted to <em>int</em></li>
 </ul>
 <p>Note that the fourth argument of <code>rwtable</code> corresponds to the input of the table.</p>
 <p><strong>Example: Simple Looper</strong></p>
