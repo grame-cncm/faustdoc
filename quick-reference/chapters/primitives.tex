@@ -192,7 +192,8 @@ $n.m$ & $\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}$ & floating point number: $y(t)
 \subsection{\texttt{math.h}-equivalent primitives}
 %--------------------------------------------------------------------------------------------------------------
 
-Most of the C \texttt{math.h} functions are also built-in as primitives (the others are defined as external functions in file \texttt{maths.lib}).
+Most of the C \texttt{math.h} functions are also built-in as primitives (the others are defined as external functions in file \texttt{maths.lib}). 
+Most of them do automatic parameter promotion to \texttt{float} type, except \lstinline'min' and \lstinline'max' that use \texttt{int} type when both of their parameters are \texttt{int}, and use \texttt{float} otherwise.
 
 \bigskip
 \begin{tabular}{|l|l|l|}

@@ -565,7 +565,7 @@ Built-in primitives that can be used in infix notation are called \emph{infix op
 \subsubsection{Comparison Operators}
 %---------------------------------------------------------------------------------------
 
-Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false.
+Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false. Type promotion is described for each operator.
 
 \begin{rail}
 	comparison : expression ('<'|'<='|'>'|'>='|'=='|'!=') expression;
@@ -575,16 +575,16 @@ The priority and associativity of the comparison operators is given table \ref{i
 	
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{|l|l|l|l|}
+	\begin{tabular}{|l|l|l|l|l|}
 		\hline
-		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} \\
+		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description}  & \textbf{Type promotion} \\
 		\hline
-		\texttt{\farg{expression}\ <\ \farg{expression}}			& 5 & left & less than      	\\
-		\texttt{\farg{expression}\ <=\ \farg{expression}}			& 5 & left & less or equal      	\\
-		\texttt{\farg{expression}\ ==\ \farg{expression}}			& 5 & left & equal      	\\
-		\texttt{\farg{expression}\ !=\ \farg{expression}}			& 5 & left & different      	\\
-		\texttt{\farg{expression}\ >=\ \farg{expression}}			& 5 & left & greater or equal      	\\
-		\texttt{\farg{expression}\ >\ \farg{expression}}			& 5 & left & greater than      	\\
+		\texttt{\farg{expression}\ <\ \farg{expression}}	& 5 & left & less than               & Int  \\ 
+		\texttt{\farg{expression}\ <=\ \farg{expression}}	& 5 & left & less or equal         & Int  \\ 
+		\texttt{\farg{expression}\ ==\ \farg{expression}}	& 5 & left & equal                    & Int  \\ 
+		\texttt{\farg{expression}\ !=\ \farg{expression}}	& 5 & left & different                & Int  \\ 
+		\texttt{\farg{expression}\ >=\ \farg{expression}}	& 5 & left & greater or equal   & Int  \\ 
+		\texttt{\farg{expression}\ >\ \farg{expression}}	& 5 & left & greater than         & Int  \\ 
 		\hline
 	\end{tabular}
 	\caption{Comparison operators priorities in infix expressions}   
@@ -595,7 +595,7 @@ The priority and associativity of the comparison operators is given table \ref{i
 \subsubsection{Math Operators}
 %---------------------------------------------------------------------------------------
 
-Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample.
+Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample. Type promotion is described for each operator and may depend of parameter typing particularities. 
 
 \begin{rail}
 	math : expression ('+'|'-'|'*'|'/'|'\%'|hat) expression;
@@ -606,16 +606,16 @@ The priority and associativity of the math operators is given table \ref{infix-m
 
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{|l|l|l|l|}
+	\begin{tabular}{|l|l|l|l|l|}
 		\hline
-		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} \\
+		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} & \textbf{Type promotion} \\
 		\hline
-		\texttt{\farg{expression}\ +\ \farg{expression}}			& 6 & left & addition      	\\
-		\texttt{\farg{expression}\ -\ \farg{expression}}			& 6 & left & subtraction      	\\
-		\texttt{\farg{expression}\ *\ \farg{expression}}			& 7 & left & multiplication      	\\
-		\texttt{\farg{expression}\ /\ \farg{expression}}			& 7 & left & division      	\\
-		\texttt{\farg{expression}\ \%\ \farg{expression}}			& 7 & left & modulo      	\\
-		\texttt{\farg{expression}\ \^\ \farg{expression}}			& 8 & left & power      	\\
+		\texttt{\farg{expression}\ +\ \farg{expression}}	& 6 & left & addition          & Int when both, float otherwise \\
+		\texttt{\farg{expression}\ -\ \farg{expression}}	& 6 & left & subtraction     & Int when both, float otherwise  \\
+		\texttt{\farg{expression}\ *\ \farg{expression}}	& 7 & left & multiplication  & Int when both, float otherwise  \\
+		\texttt{\farg{expression}\ /\ \farg{expression}}	& 7 & left & division           & float  \\
+		\texttt{\farg{expression}\ \%\ \farg{expression}}	& 7 & left & modulo           & Int when both, use fmod otherwise  \\
+		\texttt{\farg{expression}\ \^\ \farg{expression}}	& 8 & left & power             & Int when both, float otherwise  \\
 		\hline
 	\end{tabular}
 	\caption{Math operators priorities in infix expressions}   
@@ -626,7 +626,7 @@ The priority and associativity of the math operators is given table \ref{infix-m
 \subsubsection{Bitwise operators}
 %---------------------------------------------------------------------------------------
 
-Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample.
+Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. Type promotion is described for each operator.
 
 \begin{rail}
 	bitwise : expression (pipe|ampersand|'xor'|'<<' |'>>') expression;
@@ -636,15 +636,15 @@ The priority and associativity of the bitwise operators is given table \ref{infi
 
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{|l|l|l|l|}
+	\begin{tabular}{|l|l|l|l|l|}
 		\hline
-		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} \\
+		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} & \textbf{Type promotion} \\
 		\hline
-		\texttt{\farg{expression}\ |\ \farg{expression}}			& 6 & left & bitwise or      	\\
-		\texttt{\farg{expression}\ \&\ \farg{expression}}			& 7 & left & bitwise and      	\\
-		\texttt{\farg{expression}\ xor\ \farg{expression}}			& 7 & left & bitwise xor      	\\
-		\texttt{\farg{expression}\ <<\ \farg{expression}}			& 7 & left & bitwise left shift      	\\
-		\texttt{\farg{expression}\ >>\ \farg{expression}}			& 7 & left & bitwise right shift      	\\
+		\texttt{\farg{expression}\ |\ \farg{expression}}	& 6 & left & bitwise or                & Int \\
+		\texttt{\farg{expression}\ \&\ \farg{expression}}	& 7 & left & bitwise and             & Int \\
+		\texttt{\farg{expression}\ xor\ \farg{expression}}	& 7 & left & bitwise xor              & Int \\
+		\texttt{\farg{expression}\ <<\ \farg{expression}}	& 7 & left & bitwise left shift      & Int \\
+		\texttt{\farg{expression}\ >>\ \farg{expression}}	& 7 & left & bitwise right shift   & Int \\
 		\hline
 	\end{tabular}
 	\caption{Bitwise operators priorities in infix expressions}   
@@ -656,23 +656,22 @@ The priority and associativity of the bitwise operators is given table \ref{infi
 \subsubsection{Delay operators}
 %---------------------------------------------------------------------------------------
 
-Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample.
+Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. 
 
 \begin{rail}
 	delay : expression arobase expression | expression kot;
 \end{rail}
 
-The delay operator \lstinline'@' allows to delay left handside expression by the amount defined by the right handside expression. The unary operator \lstinline"'" delays the left handside expression by one sample.
-
+The delay operator \lstinline'@' allows to delay left handside expression by the amount defined by the right handside expression. The unary operator \lstinline"'" delays the left handside expression by one sample. Type promotion is described for each operator.
 
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{|l|l|l|l|}
+	\begin{tabular}{|l|l|l|l|l|}
 		\hline
-		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} \\
+		\textbf{Syntax} & \textbf{Pri.}  & \textbf{Assoc.}  & \textbf{Description} & \textbf{Type promotion} \\
 		\hline
-		\texttt{\farg{expression}\ @\ \farg{expression}}			& 9 & left & variable delay      	\\
-		\texttt{\farg{expression}} \'			& 10 & left & one-sample delay \\
+		\texttt{\farg{expression}\ @\ \farg{expression}}	& 9 & left & variable delay          & Int for delay value \\
+		\texttt{\farg{expression}} \'					& 10 & left & one-sample delay & \\
 		\hline
 	\end{tabular}
 	\caption{Delay operators priorities in infix expressions}   
@@ -1055,7 +1054,9 @@ For example in the declaration \lstinline'asinh = ffunction(float asinhf|asinh|a
 
 
 \subsubsection{types}
-Note that currently only numerical functions involving simple int and float parameters are allowed. No vectors, tables or data structures can be passed as parameters or returned.
+Note that currently only numerical functions involving simple \textit{int} and \textit{float} parameters are allowed. No vectors, tables or data structures can be passed as parameters or returned. 
+
+Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the \faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in \textit{int} when all of their parameters have \textit{int} type, and switch to \textit{float} when one of them is \textit{float}. The precise rule is more precisely described for each mathematical operation.
 
 \begin{rail}
 type : 'int'|'float';
