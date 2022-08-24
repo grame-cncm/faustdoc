@@ -1688,7 +1688,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <p>Built-in primitives that can be used in infix notation are called <em>infix operators</em> and are listed below. Please note that a more detailed description of these operators is available <a href="#primitives">section on primitives</a>. </p>
 <p><img src="img/infixop.svg" class="mx-auto d-block"></p>
 <h5 id="comparison-operators">Comparison Operators</h5>
-<p>Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false.  The priority and associativity of the comparison operators is given here:</p>
+<p>Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false. The priority, associativity, and type promotion of the comparison operators is given here:</p>
 <table>
 <thead>
 <tr>
@@ -1696,6 +1696,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <th>Pri.</th>
 <th>Assoc.</th>
 <th>Description</th>
+<th>Type promotion</th>
 </tr>
 </thead>
 <tbody>
@@ -1704,41 +1705,47 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <td>5</td>
 <td>left</td>
 <td>less than</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &lt;= expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>less or equal</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression == expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>equal</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression != expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>different</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &gt;= expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>greater or equal</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &gt; expression</code></td>
 <td>5</td>
 <td>left</td>
 <td>greater than</td>
+<td>Int</td>
 </tr>
 </tbody>
 </table>
 <h5 id="math-operators">Math Operators</h5>
-<p>Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample. The priority and associativity of the math operators is given here:</p>
+<p>Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample.  The priority, associativity, and type promotion of the comparison operators is given here:</p>
 <table>
 <thead>
 <tr>
@@ -1746,6 +1753,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <th>Pri.</th>
 <th>Assoc.</th>
 <th>Description</th>
+<th>Type promotion</th>
 </tr>
 </thead>
 <tbody>
@@ -1754,41 +1762,47 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <td>6</td>
 <td>left</td>
 <td>addition</td>
+<td>Int when both, float otherwise</td>
 </tr>
 <tr>
 <td><code>expression - expression</code></td>
 <td>6</td>
 <td>left</td>
 <td>subtraction</td>
+<td>Int when both, float otherwise</td>
 </tr>
 <tr>
 <td><code>expression * expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>multiplication</td>
+<td>Int when both, float otherwise</td>
 </tr>
 <tr>
 <td><code>expression / expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>division</td>
+<td>float</td>
 </tr>
 <tr>
 <td><code>expression % expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>modulo</td>
+<td>Int when both, use <code>fmod</code> otherwise</td>
 </tr>
 <tr>
 <td><code>expression ^ expression</code></td>
 <td>8</td>
 <td>left</td>
 <td>power</td>
+<td>Int when both, float otherwise</td>
 </tr>
 </tbody>
 </table>
-<h5 id="bitwise-operators">Bitwise  Operators</h5>
-<p>Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority and associativity of the bitwise operators is given here:</p>
+<h5 id="bitwise-operators">Bitwise Operators</h5>
+<p>Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority, associativity, and type promotion of the bitwise operators is given here:</p>
 <table>
 <thead>
 <tr>
@@ -1796,6 +1810,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <th>Pri.</th>
 <th>Assoc.</th>
 <th>Description</th>
+<th>Type promotion</th>
 </tr>
 </thead>
 <tbody>
@@ -1804,35 +1819,40 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <td>6</td>
 <td>left</td>
 <td>bitwise or</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &amp; expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>bitwise and</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression xor expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>bitwise xor</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &lt;&lt; expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>bitwise left shift</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression &gt;&gt; expression</code></td>
 <td>7</td>
 <td>left</td>
 <td>bitwise right shift</td>
+<td>Int</td>
 </tr>
 </tbody>
 </table>
 <h5 id="delay-operators">Delay operators</h5>
-<p>Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator <code>@</code> allows to delay left handside expression by the amount defined by the right handside expression. The unary operator <code>’</code> delays the left handside expression by one sample.</p>
+<p>Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator <code>@</code> allows to delay left handside expression by the amount defined by the right handside expression. The unary operator <code>’</code> delays the left handside expression by one sample. Type promotion is described for each operator.</p>
 <table>
 <thead>
 <tr>
@@ -1840,6 +1860,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <th>Pri.</th>
 <th>Assoc.</th>
 <th>Description</th>
+<th>Type promotion</th>
 </tr>
 </thead>
 <tbody>
@@ -1848,12 +1869,14 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 <td>9</td>
 <td>left</td>
 <td>variable delay</td>
+<td>Int</td>
 </tr>
 <tr>
 <td><code>expression'</code></td>
 <td>10</td>
 <td>left</td>
 <td>one-sample delay</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -2210,6 +2233,7 @@ define function with variables with a predefined value, etc. -->
 <p>the signature <code>float asinhf|asinh|asinhl (float)</code> indicates to use the function name <code>asinhf</code> in single precision, <code>asinh</code> in double precision and <code>asinhl</code> in long double (quad) precision.</p>
 <h4 id="types">Types</h4>
 <p>Only numerical functions involving simple <code>int</code> and <code>float</code> parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.</p>
+<p>Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the Faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in <em>int</em> when all of their parameters have <em>int</em> type, and switch to <em>float</em> when one of them is <em>float</em>. The precise rule is more precisely described for each mathematical operation.</p>
 <h4 id="variables-and-constants">Variables and Constants</h4>
 <p>External variables and constants can also be declared with a similar syntax. In the same <code>maths.lib</code> file, the definition of the sampling rate constant <a href="https://faustlibraries.grame.fr/libs/maths/#masr"><code>SR</code></a> and the definition of the block-size variable <a href="https://faustlibraries.grame.fr/libs/maths/#mabs"><code>BS</code></a> can be found:</p>
 <pre><code>SR = min(192000.0,max(1.0,fconstant(int fSamplingFreq, &lt;math.h&gt;)));
@@ -2424,7 +2448,8 @@ process = 0,reader:soundfile(&quot;son[url:{'foo.wav'}]&quot;,2);
 <!-- TODO: we need some working example here -->
 
 <h3 id="c-equivalent-primitives">C-Equivalent Primitives</h3>
-<p>Most Faust primitives are analogous to their C counterpart but adapted to signal processing. For example <code>+</code> is a function of type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> that transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)</script>. <code>+</code> can be used to very simply implement a mixer: </p>
+<p>Most Faust primitives are analogous to their C counterpart but adapted to signal processing. Most of them do automatic parameter promotion to <em>float</em> type, except <code>min</code> and <code>max</code> that use int type when both of their parameters are <em>int</em>, and use <em>float</em> otherwise.</p>
+<p>For example <code>+</code> is a function of type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> that transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)</script>. <code>+</code> can be used to very simply implement a mixer: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust36/exfaust36.svg" class="mx-auto d-block">
 
@@ -2979,7 +3004,7 @@ process = 0 != 1;
 <h3 id="mathh-equivalent-primitives"><code>math.h</code>-Equivalent Primitives</h3>
 <p>Most of the C <code>math.h</code> functions are also built-in as primitives (the others are defined as external functions in file <a href="https://faustlibraries.grame.fr/libs/maths/"><code>math.lib</code></a>).</p>
 <h4 id="acos-primitive"><code>acos</code> Primitive</h4>
-<p>Arc cosine can be expressed as <code>acos</code> in Faust.</p>
+<p>Arc cosine can be expressed as <code>acos</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3002,7 +3027,7 @@ process = 0.1 : acos;
 <!-- /faust-run -->
 
 <h4 id="asin-primitive"><code>asin</code> Primitive</h4>
-<p>Arc sine can be expressed as <code>asin</code> in Faust.</p>
+<p>Arc sine can be expressed as <code>asin</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3025,7 +3050,7 @@ process = 0.1 : asin;
 <!-- /faust-run -->
 
 <h4 id="atan-primitive"><code>atan</code> Primitive</h4>
-<p>Arc tangent can be expressed as <code>atan</code> in Faust.</p>
+<p>Arc tangent can be expressed as <code>atan</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3048,7 +3073,7 @@ process = 0.1 : atan;
 <!-- /faust-run -->
 
 <h4 id="atan2-primitive"><code>atan2</code> Primitive</h4>
-<p>The arc tangent of 2 signals can be expressed as <code>atan2</code> in Faust.</p>
+<p>The arc tangent of 2 signals can be expressed as <code>atan2</code> in Faust. Its arguments are promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3071,7 +3096,7 @@ process = 0.1,-0.1 : atan2;
 <!-- /faust-run -->
 
 <h4 id="cos-primitive"><code>cos</code> Primitive</h4>
-<p>Cosine can be expressed as <code>cos</code> in Faust.</p>
+<p>Cosine can be expressed as <code>cos</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3094,7 +3119,7 @@ process = 0.1 : cos;
 <!-- /faust-run -->
 
 <h4 id="sin-primitive"><code>sin</code> Primitive</h4>
-<p>Sine can be expressed as <code>sin</code> in Faust.</p>
+<p>Sine can be expressed as <code>sin</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3117,7 +3142,7 @@ process = 0.1 : sin;
 <!-- /faust-run -->
 
 <h4 id="tan-primitive"><code>tan</code> Primitive</h4>
-<p>Tangent can be expressed as <code>tan</code> in Faust.</p>
+<p>Tangent can be expressed as <code>tan</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3140,7 +3165,7 @@ process = 0.1 : tan;
 <!-- /faust-run -->
 
 <h4 id="exp-primitive"><code>exp</code> Primitive</h4>
-<p>Base-e exponential can be expressed as <code>exp</code> in Faust.</p>
+<p>Base-e exponential can be expressed as <code>exp</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3163,7 +3188,7 @@ process = 0.1 : exp;
 <!-- /faust-run -->
 
 <h4 id="log-primitive"><code>log</code> Primitive</h4>
-<p>Base-e logarithm can be expressed as <code>log</code> in Faust.</p>
+<p>Base-e logarithm can be expressed as <code>log</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3186,7 +3211,7 @@ process = 0.1 : log;
 <!-- /faust-run -->
 
 <h4 id="log10-primitive"><code>log10</code> Primitive</h4>
-<p>Base-10 logarithm can be expressed as <code>log10</code> in Faust.</p>
+<p>Base-10 logarithm can be expressed as <code>log10</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3209,7 +3234,7 @@ process = 0.1 : log10;
 <!-- /faust-run -->
 
 <h4 id="pow-primitive"><code>pow</code> Primitive</h4>
-<p>Power can be expressed as <code>pow</code> in Faust.</p>
+<p>Power can be expressed as <code>pow</code> in Faust.  When both arguments are of type <em>int</em>, <code>pow</code> keeps the <em>int</em> type, otherwhise the function runs in <em>float</em> and both arguments are promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3232,7 +3257,7 @@ process = 2,4 : pow;
 <!-- /faust-run -->
 
 <h4 id="sqrt-primitive"><code>sqrt</code> Primitive</h4>
-<p>Square root can be expressed as <code>sqrt</code> in Faust.</p>
+<p>Square root can be expressed as <code>sqrt</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3255,7 +3280,7 @@ process = 4 : sqrt;
 <!-- /faust-run -->
 
 <h4 id="abs-primitive"><code>abs</code> Primitive</h4>
-<p>Absolute value can be expressed as <code>abs</code> in Faust.</p>
+<p>Absolute value can be expressed as <code>abs</code> in Faust. The function is defined for <em>int</em> type and <em>float</em> types.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3278,7 +3303,7 @@ process = -0.5 : abs;
 <!-- /faust-run -->
 
 <h4 id="min-primitive"><code>min</code> Primitive</h4>
-<p><em>Minimum</em> can be expressed as <code>min</code> in Faust.</p>
+<p><em>Minimum</em> can be expressed as <code>min</code> in Faust. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3301,7 +3326,7 @@ process = -0.5,0.2 : min;
 <!-- /faust-run -->
 
 <h4 id="max-primitive"><code>max</code> Primitive</h4>
-<p><em>Maximum</em> can be expressed as <code>max</code> in Faust.</p>
+<p><em>Maximum</em> can be expressed as <code>max</code> in Faust. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3324,7 +3349,7 @@ process = -0.5,0.2 : max;
 <!-- /faust-run -->
 
 <h4 id="fmod-primitive"><code>fmod</code> Primitive</h4>
-<p>Float modulo can be expressed as <code>fmod</code> in Faust.</p>
+<p>Float modulo can be expressed as <code>fmod</code> in Faust. Its arguments are promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3370,7 +3395,7 @@ process = 5.3,2 : remainder;
 <!-- /faust-run -->
 
 <h4 id="floor-primitive"><code>floor</code> Primitive</h4>
-<p>Largest int can be expressed as <code>floor</code> in Faust.</p>
+<p>Largest int can be expressed as <code>floor</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3393,7 +3418,7 @@ process = 3.6 : floor;
 <!-- /faust-run -->
 
 <h4 id="ceil-primitive"><code>ceil</code> Primitive</h4>
-<p>Smallest int can be expressed as <code>ceil</code> in Faust.</p>
+<p>Smallest int can be expressed as <code>ceil</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3416,7 +3441,7 @@ process = 3.6 : ceil;
 <!-- /faust-run -->
 
 <h4 id="rint-primitive"><code>rint</code> Primitive</h4>
-<p>Closest int can be expressed as <code>rint</code> in Faust.</p>
+<p>Closest int can be expressed as <code>rint</code> in Faust. Its argument is promoted to <em>float</em>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>

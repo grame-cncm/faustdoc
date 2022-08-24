@@ -718,50 +718,50 @@ Built-in primitives that can be used in infix notation are called *infix operato
 
 ##### Comparison Operators
 
-Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false.  The priority and associativity of the comparison operators is given here:
+Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false. The priority, associativity, and type promotion of the comparison operators is given here:
 
-| Syntax | Pri. | Assoc.  | Description |
-| -------- | -----| ------ | --------- |
-| `expression < expression` | 5 | left | less than |
-| `expression <= expression` | 5 | left | less or equal |
-| `expression == expression` | 5 | left | equal |
-| `expression != expression` | 5 | left | different |
-| `expression >= expression` | 5 | left | greater or equal |
-| `expression > expression` | 5 | left | greater than |
+| Syntax | Pri. | Assoc.  | Description | Type promotion |
+| -------- | -----| ------ | --------- | --------- |
+| `expression < expression` | 5 | left | less than | Int | 
+| `expression <= expression` | 5 | left | less or equal | Int |
+| `expression == expression` | 5 | left | equal | Int |
+| `expression != expression` | 5 | left | different | Int |
+| `expression >= expression` | 5 | left | greater or equal | Int |
+| `expression > expression` | 5 | left | greater than | Int |
 
 ##### Math Operators
 
-Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample. The priority and associativity of the math operators is given here:
+Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample.  The priority, associativity, and type promotion of the comparison operators is given here:
 
-Syntax | Pri. | Assoc.  | Description |
-| -------- | -----| ------ | --------- |
-| `expression + expression` | 6 | left | addition |
-| `expression - expression` | 6 | left | subtraction |
-| `expression * expression` | 7 | left | multiplication |
-| `expression / expression` | 7 | left | division |
-| `expression % expression` | 7 | left | modulo |
-| `expression ^ expression` | 8 | left | power |
+Syntax | Pri. | Assoc.  | Description  | Type promotion |
+| -------- | -----| ------ | --------- |--------- |
+| `expression + expression` | 6 | left | addition | Int when both, float otherwise |
+| `expression - expression` | 6 | left | subtraction | Int when both, float otherwise |
+| `expression * expression` | 7 | left | multiplication | Int when both, float otherwise |
+| `expression / expression` | 7 | left | division | float |
+| `expression % expression` | 7 | left | modulo | Int when both, use `fmod` otherwise |
+| `expression ^ expression` | 8 | left | power | Int when both, float otherwise |
 
-##### Bitwise  Operators
+##### Bitwise Operators
 
-Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority and associativity of the bitwise operators is given here:
+Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The priority, associativity, and type promotion of the bitwise operators is given here:
 
-Syntax | Pri. | Assoc.  | Description |
-| -------- | -----| ------ | --------- |
-| `expression | expression` | 6 | left | bitwise or |
-| `expression & expression` | 7 | left | bitwise and |
-| `expression xor expression` | 7 | left | bitwise xor |
-| `expression << expression` | 7 | left | bitwise left shift |
-| `expression >> expression` | 7 | left | bitwise right shift |
+Syntax | Pri. | Assoc.  | Description | Type promotion |
+| -------- | -----| ------ | --------- |--------- |
+| `expression | expression` | 6 | left | bitwise or | Int | 
+| `expression & expression` | 7 | left | bitwise and | Int | 
+| `expression xor expression` | 7 | left | bitwise xor | Int | 
+| `expression << expression` | 7 | left | bitwise left shift | Int | 
+| `expression >> expression` | 7 | left | bitwise right shift | Int | 
 
 ##### Delay operators
 
-Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator `@` allows to delay left handside expression by the amount defined by the right handside expression. The unary operator `’` delays the left handside expression by one sample.
+Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. The delay operator `@` allows to delay left handside expression by the amount defined by the right handside expression. The unary operator `’` delays the left handside expression by one sample. Type promotion is described for each operator.
 
-Syntax | Pri. | Assoc.  | Description |
-| -------- | -----| ------ | --------- |
-| `expression @ expression` | 9 | left | variable delay |
-| `expression' ` | 10 | left | one-sample delay |
+Syntax | Pri. | Assoc.  | Description | Type promotion |
+| -------- | -----| ------ | --------- |--------- |
+| `expression @ expression` | 9 | left | variable delay | Int | 
+| `expression' ` | 10 | left | one-sample delay |  | 
 
 
 #### Prefix Notation
@@ -1098,6 +1098,8 @@ the signature `float asinhf|asinh|asinhl (float)` indicates to use the function 
 
 Only numerical functions involving simple `int` and `float` parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.
 
+Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the Faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in *int* when all of their parameters have *int* type, and switch to *float* when one of them is *float*. The precise rule is more precisely described for each mathematical operation.
+
 #### Variables and Constants
 
 External variables and constants can also be declared with a similar syntax. In the same `maths.lib` file, the definition of the sampling rate constant [`SR`](https://faustlibraries.grame.fr/libs/maths/#masr) and the definition of the block-size variable [`BS`](https://faustlibraries.grame.fr/libs/maths/#mabs) can be found:
@@ -1346,7 +1348,9 @@ Note that a special architecture file can well decide to access and use sound re
 
 ### C-Equivalent Primitives
 
-Most Faust primitives are analogous to their C counterpart but adapted to signal processing. For example `+` is a function of type \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) that transforms a pair of signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) such that \(\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)\). `+` can be used to very simply implement a mixer: 
+Most Faust primitives are analogous to their C counterpart but adapted to signal processing. Most of them do automatic parameter promotion to *float* type, except `min` and `max` that use int type when both of their parameters are *int*, and use *float* otherwise.
+
+For example `+` is a function of type \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) that transforms a pair of signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) such that \(\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)\). `+` can be used to very simply implement a mixer: 
 
 <!-- faust-run -->
 ```
@@ -1730,7 +1734,7 @@ Most of the C `math.h` functions are also built-in as primitives (the others are
 
 #### `acos` Primitive
 
-Arc cosine can be expressed as `acos` in Faust.
+Arc cosine can be expressed as `acos` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{acosf}(x(t))\)
@@ -1745,7 +1749,7 @@ process = 0.1 : acos;
 
 #### `asin` Primitive
 
-Arc sine can be expressed as `asin` in Faust.
+Arc sine can be expressed as `asin` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{asinf}(x(t))\)
@@ -1760,7 +1764,7 @@ process = 0.1 : asin;
 
 #### `atan` Primitive
 
-Arc tangent can be expressed as `atan` in Faust.
+Arc tangent can be expressed as `atan` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{atanf}(x(t))\)
@@ -1775,7 +1779,7 @@ process = 0.1 : atan;
 
 #### `atan2` Primitive
 
-The arc tangent of 2 signals can be expressed as `atan2` in Faust.
+The arc tangent of 2 signals can be expressed as `atan2` in Faust. Its arguments are promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{atan2f}(x_{1}(t), x_{2}(t))\)
@@ -1790,7 +1794,7 @@ process = 0.1,-0.1 : atan2;
 
 #### `cos` Primitive
 
-Cosine can be expressed as `cos` in Faust.
+Cosine can be expressed as `cos` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{cosf}(x(t))\)
@@ -1805,7 +1809,7 @@ process = 0.1 : cos;
 
 #### `sin` Primitive
 
-Sine can be expressed as `sin` in Faust.
+Sine can be expressed as `sin` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{sinf}(x(t))\)
@@ -1820,7 +1824,7 @@ process = 0.1 : sin;
 
 #### `tan` Primitive
 
-Tangent can be expressed as `tan` in Faust.
+Tangent can be expressed as `tan` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{tanf}(x(t))\)
@@ -1835,7 +1839,7 @@ process = 0.1 : tan;
 
 #### `exp` Primitive
 
-Base-e exponential can be expressed as `exp` in Faust.
+Base-e exponential can be expressed as `exp` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{expf}(x(t))\)
@@ -1850,7 +1854,7 @@ process = 0.1 : exp;
 
 #### `log` Primitive
 
-Base-e logarithm can be expressed as `log` in Faust.
+Base-e logarithm can be expressed as `log` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{logf}(x(t))\)
@@ -1865,7 +1869,7 @@ process = 0.1 : log;
 
 #### `log10` Primitive
 
-Base-10 logarithm can be expressed as `log10` in Faust.
+Base-10 logarithm can be expressed as `log10` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{log10}(x(t))\)
@@ -1880,7 +1884,7 @@ process = 0.1 : log10;
 
 #### `pow` Primitive
 
-Power can be expressed as `pow` in Faust.
+Power can be expressed as `pow` in Faust.  When both arguments are of type *int*, `pow` keeps the *int* type, otherwhise the function runs in *float* and both arguments are promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{powf}(x_{1}(t),x_{2}(t))\)
@@ -1895,7 +1899,7 @@ process = 2,4 : pow;
 
 #### `sqrt` Primitive
 
-Square root can be expressed as `sqrt` in Faust.
+Square root can be expressed as `sqrt` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{sqrtf}(x(t))\)
@@ -1910,7 +1914,7 @@ process = 4 : sqrt;
 
 #### `abs` Primitive
 
-Absolute value can be expressed as `abs` in Faust.
+Absolute value can be expressed as `abs` in Faust. The function is defined for *int* type and *float* types.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{abs}(x(t))\) (int) or  
@@ -1926,7 +1930,7 @@ process = -0.5 : abs;
 
 #### `min` Primitive
 
-*Minimum* can be expressed as `min` in Faust.
+*Minimum* can be expressed as `min` in Faust. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{min}(x_{1}(t),x_{2}(t))\)
@@ -1941,7 +1945,7 @@ process = -0.5,0.2 : min;
 
 #### `max` Primitive
 
-*Maximum* can be expressed as `max` in Faust.
+*Maximum* can be expressed as `max` in Faust. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{max}(x_{1}(t),x_{2}(t))\) 
@@ -1956,7 +1960,7 @@ process = -0.5,0.2 : max;
 
 #### `fmod` Primitive
 
-Float modulo can be expressed as `fmod` in Faust.
+Float modulo can be expressed as `fmod` in Faust. Its arguments are promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{fmodf}(x_{1}(t),x_{2}(t))\) 
@@ -1986,7 +1990,7 @@ process = 5.3,2 : remainder;
 
 #### `floor` Primitive
 
-Largest int can be expressed as `floor` in Faust.
+Largest int can be expressed as `floor` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(\leq\): \(y(t)=\mathrm{floorf}(x(t))\) 
@@ -2001,7 +2005,7 @@ process = 3.6 : floor;
 
 #### `ceil` Primitive
 
-Smallest int can be expressed as `ceil` in Faust.
+Smallest int can be expressed as `ceil` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(\geq\): \(y(t)=\mathrm{ceilf}(x(t))\) 
@@ -2016,7 +2020,7 @@ process = 3.6 : ceil;
 
 #### `rint` Primitive
 
-Closest int can be expressed as `rint` in Faust.
+Closest int can be expressed as `rint` in Faust. Its argument is promoted to *float*.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{rintf}(x(t))\)
