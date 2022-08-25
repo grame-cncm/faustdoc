@@ -1057,7 +1057,7 @@ For example in the declaration \lstinline'asinh = ffunction(float asinhf|asinh|a
 \subsubsection{types}
 Note that currently only numerical functions involving simple \textit{int} and \textit{float} parameters are allowed. No vectors, tables or data structures can be passed as parameters or returned. 
 
-Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the \faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in \textit{int} when all of their parameters have \textit{int} type, and switch to \textit{float} when one of them is \textit{float}. The precise rule is more precisely described for each mathematical operation.
+Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the \faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in \textit{int} when all of their parameters have \textit{int} type, and switch to \textit{float} when one of them is \textit{float}. The precise rule is more precisely described for each primitive.
 
 \begin{rail}
 type : 'int'|'float';

@@ -1098,7 +1098,7 @@ the signature `float asinhf|asinh|asinhl (float)` indicates to use the function 
 
 Only numerical functions involving simple `int` and `float` parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.
 
-Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the Faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in *int* when all of their parameters have *int* type, and switch to *float* when one of them is *float*. The precise rule is more precisely described for each mathematical operation.
+Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the Faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in *int* when all of their parameters have *int* type, and switch to *float* when one of them is *float*. The precise rule is more precisely described for each primitive.
 
 #### Variables and Constants
 
