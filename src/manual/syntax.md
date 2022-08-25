@@ -1930,7 +1930,7 @@ process = -0.5 : abs;
 
 #### `min` Primitive
 
-*Minimum* can be expressed as `min` in Faust. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+*Minimum* can be expressed as `min` in Faust. The function uses the *int* type when both of its parameters are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{min}(x_{1}(t),x_{2}(t))\)
@@ -1945,7 +1945,7 @@ process = -0.5,0.2 : min;
 
 #### `max` Primitive
 
-*Maximum* can be expressed as `max` in Faust. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+*Maximum* can be expressed as `max` in Faust. The function uses the *int* type when both of its parameters are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{max}(x_{1}(t),x_{2}(t))\) 
