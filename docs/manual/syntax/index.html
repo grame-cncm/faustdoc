@@ -2425,7 +2425,7 @@ process = 0,reader:soundfile(&quot;son[url:{'foo.wav'}]&quot;,2);
 <!-- TODO: we need some working example here -->
 
 <h3 id="c-equivalent-primitives">C-Equivalent Primitives</h3>
-<p>Most Faust primitives are analogous to their C counterpart but adapted to signal processing. Most of them do automatic parameter promotion to <em>float</em> type, except <code>min</code> and <code>max</code> that use int type when both of their parameters are <em>int</em>, and use <em>float</em> otherwise.</p>
+<p>Most Faust primitives are analogous to their C counterpart but adapted to signal processing. Most of them do automatic parameter promotion and this will be described for each primitive.</p>
 <p>For example <code>+</code> is a function of type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> that transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)</script>. <code>+</code> can be used to very simply implement a mixer: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust36/exfaust36.svg" class="mx-auto d-block">
@@ -2590,7 +2590,7 @@ process = 1.5 : float;
 <!-- /faust-run -->
 
 <h4 id="add-primitive">Add Primitive</h4>
-<p>The <code>+</code> primitive can be used to add two signals together. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The <code>+</code> primitive can be used to add two signals together. The function uses the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2613,7 +2613,7 @@ process = +;
 <!-- /faust-run -->
 
 <h4 id="subtract-primitive">Subtract Primitive</h4>
-<p>The <code>-</code> primitive can be used to subtract two signals. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The <code>-</code> primitive can be used to subtract two signals. The function uses the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2636,7 +2636,7 @@ process = -;
 <!-- /faust-run -->
 
 <h4 id="multiply-primitive">Multiply Primitive</h4>
-<p>The <code>*</code> primitive can be used to multiply two signals. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The <code>*</code> primitive can be used to multiply two signals. The function uses the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2682,7 +2682,7 @@ process = /(2);
 <!-- /faust-run -->
 
 <h4 id="power-primitive">Power Primitive</h4>
-<p>The <code>^</code> primitive can be used to raise to the power of <code>N</code> a signal. The function uses the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The <code>^</code> primitive can be used to raise to the power of <code>N</code> a signal. The function uses the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2837,7 +2837,7 @@ process = 1 &gt;&gt; 2;
 <!-- /faust-run -->
 
 <h4 id="smaller-than-primitive">Smaller Than Primitive</h4>
-<p>The smaller than comparison can be expressed in Faust with the <code>&lt;</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The smaller than comparison can be expressed in Faust with the <code>&lt;</code> primitive. The function keeps the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2861,7 +2861,7 @@ process = &lt;(0.5);
 <!-- /faust-run -->
 
 <h4 id="smaller-or-equal-than-primitive">Smaller or Equal Than Primitive</h4>
-<p>The smaller or equal than comparison can be expressed in Faust with the <code>&lt;=</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The smaller or equal than comparison can be expressed in Faust with the <code>&lt;=</code> primitive. The function keeps the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2885,7 +2885,7 @@ process = &lt;=(0.5);
 <!-- /faust-run -->
 
 <h4 id="greater-than-primitive">Greater Than Primitive</h4>
-<p>The greater than comparison can be expressed in Faust with the <code>&gt;</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The greater than comparison can be expressed in Faust with the <code>&gt;</code> primitive. The function keeps the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2909,7 +2909,7 @@ process = &gt;(0.5);
 <!-- /faust-run -->
 
 <h4 id="greater-or-equal-than-primitive">Greater or Equal Than Primitive</h4>
-<p>The greater or equal than comparison can be expressed in Faust with the <code>&gt;=</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The greater or equal than comparison can be expressed in Faust with the <code>&gt;=</code> primitive. The function keeps the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2933,7 +2933,7 @@ process = &gt;=(0.5);
 <!-- /faust-run -->
 
 <h4 id="equal-to-primitive">Equal to Primitive</h4>
-<p>The equal to comparison can be expressed in Faust with the <code>==</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The equal to comparison can be expressed in Faust with the <code>==</code> primitive. The function keeps the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -2956,7 +2956,7 @@ process = 0 == 1;
 <!-- /faust-run -->
 
 <h4 id="different-than-primitive">Different Than Primitive</h4>
-<p>The different than comparison can be expressed in Faust with the <code>!=</code> primitive. The function keeps the <em>int</em> type when both of its parameters are of <em>int</em> type, and promote them arguments to <em>float</em> otherwise.</p>
+<p>The different than comparison can be expressed in Faust with the <code>!=</code> primitive. The function keeps the <em>int</em> type when both of its arguments are of <em>int</em> type, and promote them to <em>float</em> otherwise.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </li>

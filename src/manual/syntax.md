@@ -1348,7 +1348,7 @@ Note that a special architecture file can well decide to access and use sound re
 
 ### C-Equivalent Primitives
 
-Most Faust primitives are analogous to their C counterpart but adapted to signal processing. Most of them do automatic parameter promotion to *float* type, except `min` and `max` that use int type when both of their parameters are *int*, and use *float* otherwise.
+Most Faust primitives are analogous to their C counterpart but adapted to signal processing. Most of them do automatic parameter promotion and this will be described for each primitive.
 
 For example `+` is a function of type \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) that transforms a pair of signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) such that \(\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)\). `+` can be used to very simply implement a mixer: 
 
@@ -1463,7 +1463,7 @@ process = 1.5 : float;
 
 #### Add Primitive
 
-The `+` primitive can be used to add two signals together. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The `+` primitive can be used to add two signals together. The function uses the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)+x_{2}(t)\)
@@ -1478,7 +1478,7 @@ process = +;
 
 #### Subtract Primitive
 
-The `-` primitive can be used to subtract two signals. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The `-` primitive can be used to subtract two signals. The function uses the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)-x_{2}(t)\)
@@ -1493,7 +1493,7 @@ process = -;
 
 #### Multiply Primitive
 
-The `*` primitive can be used to multiply two signals. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The `*` primitive can be used to multiply two signals. The function uses the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)*x_{2}(t)\)
@@ -1523,7 +1523,7 @@ process = /(2);
 
 #### Power Primitive
 
-The `^` primitive can be used to raise to the power of `N` a signal. The function uses the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The `^` primitive can be used to raise to the power of `N` a signal. The function uses the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)^{x_{2}(t)}\)
@@ -1632,7 +1632,7 @@ process = 1 >> 2;
 
 #### Smaller Than Primitive
 
-The smaller than comparison can be expressed in Faust with the `<` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The smaller than comparison can be expressed in Faust with the `<` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) < {x_{2}(t)}\)
@@ -1649,7 +1649,7 @@ process = <(0.5);
 
 #### Smaller or Equal Than Primitive
 
-The smaller or equal than comparison can be expressed in Faust with the `<=` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The smaller or equal than comparison can be expressed in Faust with the `<=` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) <= {x_{2}(t)}\)
@@ -1666,7 +1666,7 @@ process = <=(0.5);
 
 #### Greater Than Primitive
 
-The greater than comparison can be expressed in Faust with the `>` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The greater than comparison can be expressed in Faust with the `>` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) > {x_{2}(t)}\)
@@ -1683,7 +1683,7 @@ process = >(0.5);
 
 #### Greater or Equal Than Primitive
 
-The greater or equal than comparison can be expressed in Faust with the `>=` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The greater or equal than comparison can be expressed in Faust with the `>=` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) >= {x_{2}(t)}\)
@@ -1700,7 +1700,7 @@ process = >=(0.5);
 
 #### Equal to Primitive
 
-The equal to comparison can be expressed in Faust with the `==` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The equal to comparison can be expressed in Faust with the `==` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) == {x_{2}(t)}\)
@@ -1715,7 +1715,7 @@ process = 0 == 1;
 
 #### Different Than Primitive
 
-The different than comparison can be expressed in Faust with the `!=` primitive. The function keeps the *int* type when both of its parameters are of *int* type, and promote them arguments to *float* otherwise.
+The different than comparison can be expressed in Faust with the `!=` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) != {x_{2}(t)}\)
