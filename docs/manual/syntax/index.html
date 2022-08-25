@@ -3550,7 +3550,7 @@ process = @(N);
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>n</code>: the table size, an integer as a  <a href="#constant-numerical-expressions">constant numerical expression</a></li>
+<li><code>n</code>: the table size, an integer as a  <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
 <li><code>s</code>: the table content</li>
 <li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>), automatically promoted to <em>int</em></li>
 </ul>
@@ -3608,7 +3608,7 @@ process = triangleOsc(f);
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>n</code>: the table size, an integer as a <a href="#constant-numerical-expressions">constant numerical expression</a></li>
+<li><code>n</code>: the table size, an integer as a <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
 <li><code>s</code>: the initial table content</li>
 <li><code>w</code>: the write index (an <code>int</code> between 0 and <code>n-1</code>), automatically promoted to <em>int</em></li>
 <li><code>r</code>: the read index (an <code>int</code> between 0 and <code>n-1</code>), automatically promoted to <em>int</em></li>
@@ -3662,7 +3662,7 @@ process = looper;
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>s</code>: the selector (<code>0</code> for the first signal, <code>1</code> for the second one)</li>
+<li><code>s</code>: the selector (<code>0</code> for the first signal, <code>1</code> for the second one), automatically promoted to <em>int</em></li>
 </ul>
 <p><strong>Example: Signal Selector</strong></p>
 <p>The following example allows the user to choose between a sine and a sawtooth wave oscillator.  </p>
@@ -3720,7 +3720,7 @@ process = sig;
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>s</code>: the selector (<code>0</code> for the first signal, <code>1</code> for the second one, <code>2</code> for the third one)</li>
+<li><code>s</code>: the selector (<code>0</code> for the first signal, <code>1</code> for the second one, <code>2</code> for the third one), automatically promoted to <em>int</em></li>
 </ul>
 <p><strong>Example: Signal Selector</strong></p>
 <p>The following example allows the user to choose between a sine, a sawtooth and a triangle wave oscillator.  </p>

@@ -2125,7 +2125,7 @@ rdtable(n,s,r) : _
 
 Where:
 
-* `n`: the table size, an integer as a  [constant numerical expression](#constant-numerical-expressions)
+* `n`: the table size, an integer as a  [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
 * `s`: the table content
 * `r`: the read index (an `int` between 0 and `n-1`), automatically promoted to *int*
 
@@ -2173,7 +2173,7 @@ _ : rwtable(n,s,w,_,r) : _
 
 Where:
 
-* `n`: the table size, an integer as a [constant numerical expression](#constant-numerical-expressions)
+* `n`: the table size, an integer as a [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
 * `s`: the initial table content
 * `w`: the write index (an `int` between 0 and `n-1`), automatically promoted to *int*
 * `r`: the read index (an `int` between 0 and `n-1`), automatically promoted to *int*
@@ -2226,7 +2226,7 @@ _,_ : select2(s) : _
 
 Where:
 
-* `s`: the selector (`0` for the first signal, `1` for the second one)
+* `s`: the selector (`0` for the first signal, `1` for the second one), automatically promoted to *int*
 
 **Example: Signal Selector**
 
@@ -2274,7 +2274,7 @@ _,_,_ : select3(s) : _
 
 Where:
 
-* `s`: the selector (`0` for the first signal, `1` for the second one, `2` for the third one)
+* `s`: the selector (`0` for the first signal, `1` for the second one, `2` for the third one), automatically promoted to *int*
 
 **Example: Signal Selector**
 

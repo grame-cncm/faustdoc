@@ -162,12 +162,12 @@ $n.m$ & $\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}$ & floating point number: $y(t)
 \texttt{int} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & cast into an int signal: $y(t)=(int)x(t)$  		&  \\
 \texttt{float} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & cast into an float signal: $y(t)=(float)x(t)$  	&  \\
 
-\texttt{+} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & addition: $y(t)=x_{1}(t)+x_{2}(t)$ 		& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
-\texttt{-} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & subtraction: $y(t)=x_{1}(t)-x_{2}(t)$  		& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
-\texttt{*} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & multiplication: $y(t)=x_{1}(t)*x_{2}(t)$  		& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
-\texttt{$\land$} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & power: $y(t)=x_{1}(t)^{x_{2}(t)}$ 	& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
+\texttt{+} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & addition: $y(t)=x_{1}(t)+x_{2}(t)$ 		& \texttt{int} if both \texttt{int}, \texttt{float} if not \\
+\texttt{-} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & subtraction: $y(t)=x_{1}(t)-x_{2}(t)$  		& \texttt{int} if both \texttt{int}, \texttt{float} if not \\
+\texttt{*} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & multiplication: $y(t)=x_{1}(t)*x_{2}(t)$  		& \texttt{int} if both \texttt{int}, \texttt{float} if not \\
+\texttt{$\land$} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & power: $y(t)=x_{1}(t)^{x_{2}(t)}$ 	& \texttt{int} if both \texttt{int}, \texttt{float} if not \\
 \texttt{/} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & division: $y(t)=x_{1}(t)/x_{2}(t)$  			& \texttt{float} \\
-\texttt{\%} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & modulo: $y(t)=x_{1}(t)\%x_{2}(t)$  		&  \texttt{int} if both \texttt{int}, use \texttt{fmod} otherwise \\
+\texttt{\%} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & modulo: $y(t)=x_{1}(t)\%x_{2}(t)$  		&  \texttt{int} if both \texttt{int}, use \texttt{fmod} if not \\
 
 \texttt{\&} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & bitwise AND: $y(t)=x_{1}(t)\&x_{2}(t)$  		& \texttt{int} \\
 \texttt{|} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & bitwise OR: $y(t)=x_{1}(t)|x_{2}(t)$  			& \texttt{int} \\
@@ -177,12 +177,12 @@ $n.m$ & $\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}$ & floating point number: $y(t)
 \texttt{>}\texttt{>} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & arith. shift right: $y(t)=x_{1}(t) >> x_{2}(t)$  	& \texttt{int}  \\
 
 
-\texttt{<} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & less than: $y(t)=x_{1}(t) < x_{2}(t)$  			& \texttt{int} if both \texttt{int}, \texttt{float} otherwise  \\
-\texttt{<=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & less or equal: $y(t)=x_{1}(t) <= x_{2}(t)$  		& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
-\texttt{>} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & greater than: $y(t)=x_{1}(t) > x_{2}(t)$   	   	& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
-\texttt{>=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & greater or equal: $y(t)=x_{1}(t) >= x_{2}(t)$   	& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
-\texttt{==} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & equal: $y(t)=x_{1}(t) == x_{2}(t)$ 			& \texttt{int} if both \texttt{int}, \texttt{float} otherwise  \\
-\texttt{!=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & different: $y(t)=x_{1}(t) != x_{2}(t)$  			& \texttt{int} if both \texttt{int}, \texttt{float} otherwise \\
+\texttt{<} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & less than: $y(t)=x_{1}(t) < x_{2}(t)$  			& \texttt{int} if both \texttt{int}, \texttt{float} if not  \\
+\texttt{<=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & less or equal: $y(t)=x_{1}(t) <= x_{2}(t)$  		& \texttt{int} if both \texttt{int}, \texttt{float} if not \\
+\texttt{>} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & greater than: $y(t)=x_{1}(t) > x_{2}(t)$   	   	& \texttt{int} if both \texttt{int}, \texttt{float} if not \\
+\texttt{>=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & greater or equal: $y(t)=x_{1}(t) >= x_{2}(t)$   	& \texttt{int} if both \texttt{int}, \texttt{float} if not \\
+\texttt{==} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & equal: $y(t)=x_{1}(t) == x_{2}(t)$ 			& \texttt{int} if both \texttt{int}, \texttt{float} if not  \\
+\texttt{!=} & $\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}$ & different: $y(t)=x_{1}(t) != x_{2}(t)$  			& \texttt{int} if both \texttt{int}, \texttt{float} if not \\
 
 \hline
 
@@ -269,7 +269,7 @@ The following primitives allow to define fixed delays, read-only and read-write 
 \label{fig-delays}
 \end{figure}
 
-The size input of \textit{rdtable} and \textit{rwtable} are integer \textit{constant numerical expressions}. The read and write indexes are automatically promoted to \textit{int}.
+The size input of \textit{rdtable} and \textit{rwtable} are integer \textit{constant numerical expressions} automatically promoted to \textit{int}, and the read and write indexes are also automatically promoted to \textit{int}. The delay value is automatically promoted to \textit{int}.
 
 %--------------------------------------------------------------------------------------------------------------
 \subsection{User Interface Elements}
