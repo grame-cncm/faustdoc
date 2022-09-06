@@ -466,7 +466,7 @@
             </li>
             <li class="nav-item" data-level="3"><a href="#foreign-expressions" class="nav-link">Foreign Expressions</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#ffunction" class="nav-link">ffunction</a>
+            <li class="nav-item" data-level="4"><a href="#foreign-function-declaration" class="nav-link">Foreign function declaration</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -478,11 +478,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#variables-and-constants" class="nav-link">Variables and Constants</a>
+            <li class="nav-item" data-level="4"><a href="#foreign-variables-and-constants" class="nav-link">Foreign Variables and Constants</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#file-include" class="nav-link">File Include</a>
+            <li class="nav-item" data-level="4"><a href="#include-file" class="nav-link">Include File</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -2189,36 +2189,34 @@ define function with variables with a predefined value, etc. -->
 };
 </code></pre>
 <h3 id="foreign-expressions">Foreign Expressions</h3>
-<p>Reference to external C <em>functions</em>, <em>variables</em> and <em>constants</em> can be introduced using the <em>foreign function</em> mechanism.</p>
+<p>Reference to external C <em>functions</em>, <em>variables</em> and <em>constants</em> can be introduced using the <em>foreign expressions</em> mechanism.</p>
 <p><img src="img/foreignexp.svg" class="mx-auto d-block"></p>
 <!-- TODO something needs to be said about the fact that this is a C++ thing -->
 
-<h4 id="ffunction"><code>ffunction</code></h4>
-<p>An external C function is declared by indicating its name and signature as well as the required include file. The file <code>maths.lib</code> of the Faust distribution contains several foreign function definitions, for example <a href="https://faustlibraries.grame.fr/libs/maths/#usage_19">the inverse hyperbolic sine function <code>asinh</code></a>:</p>
+<h4 id="foreign-function-declaration">Foreign function declaration</h4>
+<p>An external C function is declared by indicating its name and signature as well as the required include file. The file <code>maths.lib</code> of the Faust distribution contains several foreign function definitions, for example <a href="https://faustlibraries.grame.fr/libs/maths/#usage_19">the inverse hyperbolic sine function <code>asinh</code></a> is defined as follows:</p>
 <pre><code>asinh = ffunction(float asinh (float), &lt;math.h&gt;, &quot;&quot;);
 </code></pre>
 <!-- TODO: what happens for other languages than C? -->
 
-<p>Foreign functions with input parameters are considered pure math functions. They are therefore considered free of side effects and called only when their parameters change (that is at the rate of the fastest parameter). </p>
-<p>Exceptions are functions with no input parameters. A typical example is the C <code>rand()</code> function. In this case, the compiler generates code to call the function at sample rate.</p>
+<p>The signature part of a foreign function, <code>float asinhf|asinh|asinhl(float)</code> in our previous example, describes the prototype of the C function : its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is pos- sible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the <code>asinh</code> function is called <code>asinhf</code> in single precision, <code>asinh</code> in double precision and <code>asinhl</code> in quad precision. This is why the three names are provided in the signature.</p>
 <h4 id="signature">Signature</h4>
-<p>The signature part (<code>float asinh (float)</code> in the example presented in <a href="#ffunction">the previous section</a>) describes the prototype of the C function: return type, function name, and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name or each floating point precision using a signature with up to three function names. </p>
 <p><img src="img/signature.svg" class="mx-auto d-block"></p>
-<p>For example in the declaration: </p>
-<pre><code>asinh = ffunction(float asinhf|asinh|asinhl (float), &lt;math.h&gt;, &quot;&quot;);
-</code></pre>
-<p>the signature <code>float asinhf|asinh|asinhl (float)</code> indicates to use the function name <code>asinhf</code> in single precision, <code>asinh</code> in double precision and <code>asinhl</code> in long double (quad) precision.</p>
 <h4 id="types">Types</h4>
-<p>Only numerical functions involving simple <code>int</code> and <code>float</code> parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.</p>
-<p>Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the Faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in <em>int</em> when all of their parameters have <em>int</em> type, and switch to <em>float</em> when one of them is <em>float</em>. The precise rule is more precisely described for each primitive.</p>
-<h4 id="variables-and-constants">Variables and Constants</h4>
+<p>Foreign functions generally expect a precise type: <code>int</code> or <code>float</code>  for their parameters.  Note that currently only numerical functions involving simple <code>int</code> and <code>float</code> parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.</p>
+<p>Some foreign functions are polymorphic and can accept either int or float arguments. In this case, the polymorphism can be indicated by using the type <code>any</code> instead or <code>int</code> or <code>float</code>. Here is an example the C function sizeof that returns the size of its argument:</p>
+<pre><code>sizeof = ffunction(int sizeof(any), &quot;&quot;,&quot;&quot;);
+</code></pre>
+<p>Foreign functions with input parameters are considered pure math functions. They are therefore considered free of side effects and called only when their parameters change (that is at the rate of the fastest parameter). </p>
+<p>Exceptions are functions with no input parameters. A typical example is the C <code>rand()</code> function. In this case the compiler generates code to call the function at sample rate.</p>
+<h4 id="foreign-variables-and-constants">Foreign Variables and Constants</h4>
 <p>External variables and constants can also be declared with a similar syntax. In the same <code>maths.lib</code> file, the definition of the sampling rate constant <a href="https://faustlibraries.grame.fr/libs/maths/#masr"><code>SR</code></a> and the definition of the block-size variable <a href="https://faustlibraries.grame.fr/libs/maths/#mabs"><code>BS</code></a> can be found:</p>
 <pre><code>SR = min(192000.0,max(1.0,fconstant(int fSamplingFreq, &lt;math.h&gt;)));
 BS = fvariable(int count, &lt;math.h&gt;);
 </code></pre>
 <p>Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are only computed once, during the initialization period. </p>
 <p>Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.</p>
-<h4 id="file-include">File Include</h4>
+<h4 id="include-file">Include File</h4>
 <p>In declaring foreign functions one has also to specify the include file. It allows the Faust compiler to add the corresponding <code>#include</code> in the generated code.</p>
 <p><img src="img/includefile.svg" class="mx-auto d-block"></p>
 <h4 id="library-file">Library File</h4>

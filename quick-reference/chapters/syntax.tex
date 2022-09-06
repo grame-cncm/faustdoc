@@ -1040,7 +1040,7 @@ The file \lstinline'"maths.lib"' of the \faust distribution contains several for
 \end{lstlisting}
 
 
-The signature part of a foreign function, \lstinline'float asinhf|asinh|asinhl (float)' in our previous example, describes the prototype of the C function : its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the \lstinline'asinh' function is called \lstinline'asinhf' in single precision, \lstinline'asinh' in double precision and \lstinline'asinhl' in quad precision. This is why the three names are provided in the signature.
+The signature part of a foreign function, \lstinline'float asinhf|asinh|asinhl (float)' in our previous example, describes the prototype of the C function: its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the \lstinline'asinh' function is called \lstinline'asinhf' in single precision, \lstinline'asinh' in double precision and \lstinline'asinhl' in quad precision. This is why the three names are provided in the signature.
 
 
 \begin{rail}
@@ -1048,11 +1048,9 @@ signature : type funnames '(' (argtype + ',') ')';
 funnames : identifier (| '|' identifier) (| '|' identifier);
 \end{rail}
 
-Note that currently only numerical functions involving simple \textit{int} and \textit{float} parameters are allowed. No vectors, tables or data structures can be passed as parameters or returned. 
-
 Foreign functions generally expect a precise type: (\textit{int} or \textit{float}) for their parameters. Note that currently only numerical functions involving scalar parameters are allowed. No vectors, tables or data structures can be passed as parameters or returned. During the compilation if the type of an argument is not the same as the type of the parameter, it is automatically converted to the expected one.
 
-Some foreign functions are polymorphic and can accept either \textit{int} or \textit{float} arguments. In this case, the polymorphism can be indicated by using the type \textit{any} instead or int or float. Here is an example the C function sizeof that returns the size of its argument:
+Some foreign functions are polymorphic and can accept either \textit{int} or \textit{float} arguments. In this case, the polymorphism can be indicated by using the type \textit{any} instead or int or float. Here is an example the C function \textit{sizeof} that returns the size of its argument:
 
 \begin{lstlisting}
 	sizeof = ffunction(int sizeof(any), "","");
@@ -1065,7 +1063,7 @@ Some foreign functions are polymorphic and can accept either \textit{int} or \te
 
 Foreign functions with input parameters are considered pure math functions. They are therefore considered free of side effects and called only when their parameters change (that is at the rate of the fastest parameter). 
 
-Exceptions are functions with no input parameters. A typical example is the C \lstinline'rand()' function. In this case the compiler generate code to call the function at sample rate.
+Exceptions are functions with no input parameters. A typical example is the C \lstinline'rand()' function. In this case the compiler generates code to call the function at sample rate.
 
 \subsubsection{Foreign variables and constants} 
 External variables and constants can also be declared with a similar syntax. In the same \lstinline'"maths.lib"' file, the definition of the sampling rate constant \lstinline'SR' and the definition of the block-size variable \lstinline'BS' can be found :
@@ -1088,7 +1086,7 @@ In declaring foreign functions one has also to specify the include file. It allo
 includefile : '<' (char+) '>' | '"' (char+) '"' ;
 \end{rail}
 
-\subsubsection{library file}
+\subsubsection{Library file}
 In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the \faust compiler to (possibly) automatically link the library. Note that this feature is only used with the LLVM backend in 'libfaust' dynamic library model.
 
 %The syntax of these foreign declarations is the following :

@@ -1060,15 +1060,15 @@ For example we can create a customized version of `component("freeverb.dsp")`, w
 
 ### Foreign Expressions
 
-Reference to external C *functions*, *variables* and *constants* can be introduced using the *foreign function* mechanism.
+Reference to external C *functions*, *variables* and *constants* can be introduced using the *foreign expressions* mechanism.
 
 <img src="img/foreignexp.svg" class="mx-auto d-block">
 
 <!-- TODO something needs to be said about the fact that this is a C++ thing -->
 
-#### `ffunction`
+#### Foreign function declaration
 
-An external C function is declared by indicating its name and signature as well as the required include file. The file `maths.lib` of the Faust distribution contains several foreign function definitions, for example [the inverse hyperbolic sine function `asinh`](https://faustlibraries.grame.fr/libs/maths/#usage_19):
+An external C function is declared by indicating its name and signature as well as the required include file. The file `maths.lib` of the Faust distribution contains several foreign function definitions, for example [the inverse hyperbolic sine function `asinh`](https://faustlibraries.grame.fr/libs/maths/#usage_19) is defined as follows:
 
 ```
 asinh = ffunction(float asinh (float), <math.h>, "");
@@ -1076,31 +1076,27 @@ asinh = ffunction(float asinh (float), <math.h>, "");
 
 <!-- TODO: what happens for other languages than C? -->
 
-Foreign functions with input parameters are considered pure math functions. They are therefore considered free of side effects and called only when their parameters change (that is at the rate of the fastest parameter). 
-
-Exceptions are functions with no input parameters. A typical example is the C `rand()` function. In this case, the compiler generates code to call the function at sample rate.
+The signature part of a foreign function, `float asinhf|asinh|asinhl(float)` in our previous example, describes the prototype of the C function : its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is pos- sible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the `asinh` function is called `asinhf` in single precision, `asinh` in double precision and `asinhl` in quad precision. This is why the three names are provided in the signature.
 
 #### Signature
 
-The signature part (`float asinh (float)` in the example presented in [the previous section](#ffunction)) describes the prototype of the C function: return type, function name, and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name or each floating point precision using a signature with up to three function names. 
-
 <img src="img/signature.svg" class="mx-auto d-block">
-
-For example in the declaration: 
-
-```
-asinh = ffunction(float asinhf|asinh|asinhl (float), <math.h>, "");
-```
-
-the signature `float asinhf|asinh|asinhl (float)` indicates to use the function name `asinhf` in single precision, `asinh` in double precision and `asinhl` in long double (quad) precision.
 
 #### Types
 
-Only numerical functions involving simple `int` and `float` parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.
+Foreign functions generally expect a precise type: `int` or `float`  for their parameters.  Note that currently only numerical functions involving simple `int` and `float` parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.
 
-Several primitives expect a precise type for some of their parameters. If the parameter type is not the expected one, the Faust compiler automatically promotes it to the correct type. Mathematical operators also do type promotion when needed. Some of them can work in *int* when all of their parameters have *int* type, and switch to *float* when one of them is *float*. The precise rule is more precisely described for each primitive.
+Some foreign functions are polymorphic and can accept either int or float arguments. In this case, the polymorphism can be indicated by using the type `any` instead or `int` or `float`. Here is an example the C function sizeof that returns the size of its argument:
 
-#### Variables and Constants
+```
+sizeof = ffunction(int sizeof(any), "","");
+```
+
+Foreign functions with input parameters are considered pure math functions. They are therefore considered free of side effects and called only when their parameters change (that is at the rate of the fastest parameter). 
+
+Exceptions are functions with no input parameters. A typical example is the C `rand()` function. In this case the compiler generates code to call the function at sample rate.
+
+#### Foreign Variables and Constants
 
 External variables and constants can also be declared with a similar syntax. In the same `maths.lib` file, the definition of the sampling rate constant [`SR`](https://faustlibraries.grame.fr/libs/maths/#masr) and the definition of the block-size variable [`BS`](https://faustlibraries.grame.fr/libs/maths/#mabs) can be found:
 
@@ -1113,7 +1109,7 @@ Foreign constants are not supposed to vary. Therefore expressions involving only
 
 Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.
 
-#### File Include
+#### Include File 
 
 In declaring foreign functions one has also to specify the include file. It allows the Faust compiler to add the corresponding `#include` in the generated code.
 
