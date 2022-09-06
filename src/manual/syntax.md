@@ -1068,7 +1068,7 @@ Reference to external C *functions*, *variables* and *constants* can be introduc
 
 #### Foreign function declaration
 
-An external C function is declared by indicating its name and signature as well as the required include file. The file `maths.lib` of the Faust distribution contains several foreign function definitions, for example [the inverse hyperbolic sine function `asinh`](https://faustlibraries.grame.fr/libs/maths/#usage_19) is defined as follows:
+An external C function is declared by indicating its name and signature as well as the required include file. The file `maths.lib` of the Faust distribution contains several foreign function definitions, for example the inverse hyperbolic sine function [`asinh`](https://faustlibraries.grame.fr/libs/maths/#maasinh) is defined as follows:
 
 ```
 asinh = ffunction(float asinh (float), <math.h>, "");
@@ -1076,7 +1076,7 @@ asinh = ffunction(float asinh (float), <math.h>, "");
 
 <!-- TODO: what happens for other languages than C? -->
 
-The signature part of a foreign function, `float asinhf|asinh|asinhl(float)` in our previous example, describes the prototype of the C function : its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is pos- sible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the `asinh` function is called `asinhf` in single precision, `asinh` in double precision and `asinhl` in quad precision. This is why the three names are provided in the signature.
+The signature part of a foreign function, `float asinhf|asinh|asinhl(float)` in our previous example, describes the prototype of the C function : its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the `asinh` function is called `asinhf` in single precision, `asinh` in double precision and `asinhl` in quad precision. This is why the three names are provided in the signature.
 
 #### Signature
 
