@@ -8,7 +8,7 @@ Similarly to [OSC](../osc), several Faust architectures also provide MIDI suppor
 
 ## Configuring MIDI in Faust
 
-MIDI support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the `[midi:on]` metadata to the [standard `option` metadata](#standard-metadata):
+MIDI support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the `[midi:on]` metadata to the [standard `options` metadata](../syntax/#standard-metadata):
 
 ```
 declare options "[midi:on]";
