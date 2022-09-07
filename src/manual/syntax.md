@@ -1344,7 +1344,7 @@ Note that a special architecture file can well decide to access and use sound re
 
 ### C-Equivalent Primitives
 
-Most Faust primitives are analogous to their C counterpart but adapted to signal processing. Most of them do automatic parameter promotion and this will be described for each primitive.
+Most Faust primitives are analogous to their C counterpart but adapted to signal processing. 
 
 For example `+` is a function of type \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) that transforms a pair of signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) such that \(\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)\). `+` can be used to very simply implement a mixer: 
 
@@ -1364,7 +1364,10 @@ process = _+_;
 
 The function `-` has type \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) and transforms a pair of signals \((x_1,x_2)\) into a 1-tuple of signals \((y)\) such that \(\forall t\in\mathbb{N}, y(t)=x_{1}(t)-x_{2}(t)\). 
 
-**Be aware that** the unary `-` only exists in a limited form. It can be used with numbers: `-0.5` and variables: `-myvar`, but not with expressions surrounded by parenthesis, because in this case it represents a partial application.  For instance,  `-(a*b)` is a partial application. It is syntactic sugar for `_,(a*b) : -`. If you want to negate a complex term in parenthesis, you'll have to use `0 - (a*b)` instead.
+**Please be aware that** the unary `-` only exists in a limited form. It can be used with numbers: `-0.5` and variables: `-myvar`, but not with expressions surrounded by parenthesis, because in this case it represents a partial application.  For instance,  `-(a*b)` is a partial application. It is syntactic sugar for `_,(a*b) : -`. If you want to negate a complex term in parenthesis, you'll have to use `0 - (a*b)` instead.
+
+The primitives may use the `int` type for their arguments, but will automatically use the `float` type when the actual computation requires it. For instance `1/2` using `int` type arguments will correctly result in `0.5` in float type. Logical and shift primitives use the `int` type.
+
 
 <!-- TODO: need to make sure that the identify function and the exclamation
 are properly documented/mentioned somewhere and demonstrated -->
@@ -1459,7 +1462,7 @@ process = 1.5 : float;
 
 #### Add Primitive
 
-The `+` primitive can be used to add two signals together. The function uses the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The `+` primitive can be used to add two signals together. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)+x_{2}(t)\)
@@ -1474,7 +1477,7 @@ process = +;
 
 #### Subtract Primitive
 
-The `-` primitive can be used to subtract two signals. The function uses the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The `-` primitive can be used to subtract two signals. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)-x_{2}(t)\)
@@ -1489,7 +1492,7 @@ process = -;
 
 #### Multiply Primitive
 
-The `*` primitive can be used to multiply two signals. The function uses the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The `*` primitive can be used to multiply two signals. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)*x_{2}(t)\)
@@ -1504,7 +1507,7 @@ process = *(0.5);
 
 #### Divide Primitive
 
-The `/` primitive can be used to divide two signals. The function always promote its arguments to *float*.
+The `/` primitive can be used to divide two signals. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)/{x_{2}(t)}\)
@@ -1519,7 +1522,7 @@ process = /(2);
 
 #### Power Primitive
 
-The `^` primitive can be used to raise to the power of `N` a signal. The function uses the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The `^` primitive can be used to raise to the power of `N` a signal. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)^{x_{2}(t)}\)
@@ -1534,7 +1537,7 @@ process = ^(2);
 
 #### Modulo Primitive
 
-The `%` primitive can be used to take the modulo of a signal. The function uses the *int* type when both of its parameters are of *int* type, and uses the `fmod` operator on *float* promoted arguments otherwise.
+The `%` primitive can be used to take the modulo of a signal. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)\%{x_{2}(t)}\)
@@ -1553,7 +1556,7 @@ will output a signal: `(0,1,2,3,4,5,6,7,8,9,0,1,2,3,4)`.
 
 #### AND Primitive
 
-Bitwise AND can be expressed in Faust with the `&` primitive. The function promotes its arguments to *int*.
+Bitwise AND can be expressed in Faust with the `&` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)\&{x_{2}(t)}\)
@@ -1566,7 +1569,7 @@ TODO
 
 #### OR Primitive
 
-Bitwise OR can be expressed in Faust with the `|` primitive. The function promotes its arguments to *int*.
+Bitwise OR can be expressed in Faust with the `|` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)|{x_{2}(t)}\)
@@ -1583,7 +1586,7 @@ process = _ <: <(0.5) | >(0.7);
 
 #### XOR Primitive
 
-Bitwise XOR can be expressed in Faust with the `xor` primitive. The function promotes its arguments to *int*.
+Bitwise XOR can be expressed in Faust with the `xor` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t)\land {x_{2}(t)}\)
@@ -1598,7 +1601,7 @@ process = _ <: <(0.5) xor >(0.7);
 
 #### Left Shift Primitive
 
-Left shift can be expressed in Faust with the `<<` primitive. The function promotes its arguments to *int*.
+Left shift can be expressed in Faust with the `<<` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) << {x_{2}(t)}\)
@@ -1613,7 +1616,7 @@ process = 1 << 2;
 
 #### Right Shift Primitive
 
-Right shift can be expressed in Faust with the `>>` primitive. The function promotes its arguments to *int*.
+Right shift can be expressed in Faust with the `>>` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) >> {x_{2}(t)}\)
@@ -1628,7 +1631,7 @@ process = 1 >> 2;
 
 #### Smaller Than Primitive
 
-The smaller than comparison can be expressed in Faust with the `<` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The smaller than comparison can be expressed in Faust with the `<` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) < {x_{2}(t)}\)
@@ -1645,7 +1648,7 @@ process = <(0.5);
 
 #### Smaller or Equal Than Primitive
 
-The smaller or equal than comparison can be expressed in Faust with the `<=` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The smaller or equal than comparison can be expressed in Faust with the `<=` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) <= {x_{2}(t)}\)
@@ -1662,7 +1665,7 @@ process = <=(0.5);
 
 #### Greater Than Primitive
 
-The greater than comparison can be expressed in Faust with the `>` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The greater than comparison can be expressed in Faust with the `>` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) > {x_{2}(t)}\)
@@ -1679,7 +1682,7 @@ process = >(0.5);
 
 #### Greater or Equal Than Primitive
 
-The greater or equal than comparison can be expressed in Faust with the `>=` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The greater or equal than comparison can be expressed in Faust with the `>=` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) >= {x_{2}(t)}\)
@@ -1696,7 +1699,7 @@ process = >=(0.5);
 
 #### Equal to Primitive
 
-The equal to comparison can be expressed in Faust with the `==` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The equal to comparison can be expressed in Faust with the `==` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) == {x_{2}(t)}\)
@@ -1711,7 +1714,7 @@ process = 0 == 1;
 
 #### Different Than Primitive
 
-The different than comparison can be expressed in Faust with the `!=` primitive. The function keeps the *int* type when both of its arguments are of *int* type, and promote them to *float* otherwise.
+The different than comparison can be expressed in Faust with the `!=` primitive. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=x_{1}(t) != {x_{2}(t)}\)
@@ -1726,11 +1729,11 @@ process = 0 != 1;
 
 ### `math.h`-Equivalent Primitives
 
-Most of the C `math.h` functions are also built-in as primitives (the others are defined as external functions in file [`math.lib`](https://faustlibraries.grame.fr/libs/maths/)).
+Most of the C `math.h` functions are also built-in as primitives (the others are defined as external functions in file [`math.lib`](https://faustlibraries.grame.fr/libs/maths/)). The primitives may use the `int` type for their arguments, but will automatically use the `float` type when the actual computation requires it. 
 
 #### `acos` Primitive
 
-Arc cosine can be expressed as `acos` in Faust. Its argument is promoted to *float*.
+Arc cosine can be expressed as `acos` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{acosf}(x(t))\)
@@ -1745,7 +1748,7 @@ process = 0.1 : acos;
 
 #### `asin` Primitive
 
-Arc sine can be expressed as `asin` in Faust. Its argument is promoted to *float*.
+Arc sine can be expressed as `asin` in Faust.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{asinf}(x(t))\)
@@ -1760,7 +1763,7 @@ process = 0.1 : asin;
 
 #### `atan` Primitive
 
-Arc tangent can be expressed as `atan` in Faust. Its argument is promoted to *float*.
+Arc tangent can be expressed as `atan` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{atanf}(x(t))\)
@@ -1775,7 +1778,7 @@ process = 0.1 : atan;
 
 #### `atan2` Primitive
 
-The arc tangent of 2 signals can be expressed as `atan2` in Faust. Its arguments are promoted to *float*.
+The arc tangent of 2 signals can be expressed as `atan2` in Faust. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{atan2f}(x_{1}(t), x_{2}(t))\)
@@ -1790,7 +1793,7 @@ process = 0.1,-0.1 : atan2;
 
 #### `cos` Primitive
 
-Cosine can be expressed as `cos` in Faust. Its argument is promoted to *float*.
+Cosine can be expressed as `cos` in Faust.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{cosf}(x(t))\)
@@ -1805,7 +1808,7 @@ process = 0.1 : cos;
 
 #### `sin` Primitive
 
-Sine can be expressed as `sin` in Faust. Its argument is promoted to *float*.
+Sine can be expressed as `sin` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{sinf}(x(t))\)
@@ -1820,7 +1823,7 @@ process = 0.1 : sin;
 
 #### `tan` Primitive
 
-Tangent can be expressed as `tan` in Faust. Its argument is promoted to *float*.
+Tangent can be expressed as `tan` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{tanf}(x(t))\)
@@ -1835,7 +1838,7 @@ process = 0.1 : tan;
 
 #### `exp` Primitive
 
-Base-e exponential can be expressed as `exp` in Faust. Its argument is promoted to *float*.
+Base-e exponential can be expressed as `exp` in Faust.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{expf}(x(t))\)
@@ -1850,7 +1853,7 @@ process = 0.1 : exp;
 
 #### `log` Primitive
 
-Base-e logarithm can be expressed as `log` in Faust. Its argument is promoted to *float*.
+Base-e logarithm can be expressed as `log` in Faust.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{logf}(x(t))\)
@@ -1865,7 +1868,7 @@ process = 0.1 : log;
 
 #### `log10` Primitive
 
-Base-10 logarithm can be expressed as `log10` in Faust. Its argument is promoted to *float*.
+Base-10 logarithm can be expressed as `log10` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{log10}(x(t))\)
@@ -1880,7 +1883,7 @@ process = 0.1 : log10;
 
 #### `pow` Primitive
 
-Power can be expressed as `pow` in Faust.  When both arguments are of type *int*, `pow` keeps the *int* type, otherwhise the function runs in *float* and both arguments are promoted to *float*.
+Power can be expressed as `pow` in Faust.  
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{powf}(x_{1}(t),x_{2}(t))\)
@@ -1895,7 +1898,7 @@ process = 2,4 : pow;
 
 #### `sqrt` Primitive
 
-Square root can be expressed as `sqrt` in Faust. Its argument is promoted to *float*.
+Square root can be expressed as `sqrt` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{sqrtf}(x(t))\)
@@ -1910,7 +1913,7 @@ process = 4 : sqrt;
 
 #### `abs` Primitive
 
-Absolute value can be expressed as `abs` in Faust. The function is defined for *int* type and *float* types.
+Absolute value can be expressed as `abs` in Faust.
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{abs}(x(t))\) (int) or  
@@ -1926,7 +1929,7 @@ process = -0.5 : abs;
 
 #### `min` Primitive
 
-*Minimum* can be expressed as `min` in Faust. The function uses the *int* type when both of its parameters are of *int* type, and promote them to *float* otherwise.
+*Minimum* can be expressed as `min` in Faust.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{min}(x_{1}(t),x_{2}(t))\)
@@ -1941,7 +1944,7 @@ process = -0.5,0.2 : min;
 
 #### `max` Primitive
 
-*Maximum* can be expressed as `max` in Faust. The function uses the *int* type when both of its parameters are of *int* type, and promote them to *float* otherwise.
+*Maximum* can be expressed as `max` in Faust.
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{max}(x_{1}(t),x_{2}(t))\) 
@@ -1956,7 +1959,7 @@ process = -0.5,0.2 : max;
 
 #### `fmod` Primitive
 
-Float modulo can be expressed as `fmod` in Faust. Its arguments are promoted to *float*.
+Float modulo can be expressed as `fmod` in Faust. 
 
 * **Type:** \(\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{fmodf}(x_{1}(t),x_{2}(t))\) 
@@ -1986,7 +1989,7 @@ process = 5.3,2 : remainder;
 
 #### `floor` Primitive
 
-Largest int can be expressed as `floor` in Faust. Its argument is promoted to *float*.
+Largest int can be expressed as `floor` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(\leq\): \(y(t)=\mathrm{floorf}(x(t))\) 
@@ -2001,7 +2004,7 @@ process = 3.6 : floor;
 
 #### `ceil` Primitive
 
-Smallest int can be expressed as `ceil` in Faust. Its argument is promoted to *float*.
+Smallest int can be expressed as `ceil` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(\geq\): \(y(t)=\mathrm{ceilf}(x(t))\) 
@@ -2016,7 +2019,7 @@ process = 3.6 : ceil;
 
 #### `rint` Primitive
 
-Closest int can be expressed as `rint` in Faust. Its argument is promoted to *float*.
+Closest int can be expressed as `rint` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{rintf}(x(t))\)
