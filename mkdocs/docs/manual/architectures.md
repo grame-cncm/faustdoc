@@ -2213,6 +2213,10 @@ Static metadata generator for Faust/C++. This program builds the metadata for a 
 
 A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps
 
+#### [Faust egui](https://github.com/plule/faust-egui)
+
+Proof of concept of drawing a UI with egui and [rust-faust](https://github.com/Frando/rust-faust).
+
 #### [RustFaustExperiments](https://github.com/bluenote10/RustFaustExperiments/tree/master/Benchmarks)
 
 Tools to compare C++ and Rust  code generated from Faust. 
