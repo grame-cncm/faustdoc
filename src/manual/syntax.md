@@ -93,7 +93,7 @@ This is very useful when a library has several contributors and that functions p
 There exists a series of standard [global metadata](#global-metadata) in Faust whose role role is described in the following table:
 
 | Metadata | Role |
-| --- | --- |
+| :---: | --- |
 | `declare options "[key0:value][key1:value]"` | This metadata can be used to specify various options associated to a Faust code such as the fact its polyphonic, if it should have OSC, MIDI support, etc. Specific `keys` usable with this metadata are described throughout this documentation. |
 | `declare interface "xxx"` | Specifies an interface replacing the standard Faust UI. |
 
