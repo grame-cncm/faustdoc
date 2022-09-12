@@ -168,7 +168,7 @@ A lot of other compilation choices are fully controllable with options. Note tha
 -  `-nvi` option: when compiled with the C++ backend, does not add the 'virtual' keyword. **This option can be especially useful in embedded devices context** 
 -  `-mapp` option: simpler/faster versions of 'floor/ceil/fmod/remainder' functions (experimental)
 
-Manually testing each of them and their combination is out of reach. So several tools have been developed to automatize that process and help search the configuration space to discover the best set of compilation options: 
+Manually testing each of them and their combination is out of reach. So several tools have been developed to automatize that process and help search the configuration space to discover the best set of compilation options (be sure to run `make benchmark && sudo make devinstall` in Faust toplevel to install the benchmark tools):
 
 ### faustbench
 
