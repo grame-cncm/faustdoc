@@ -24,8 +24,17 @@ The primitive signal processing operations represent the built-in functionalitie
 
   \begin{rail}
   int : (|'+'|'-')(digit+) ;
+  \end{rail}
+
+  \begin{rail}
   float : (|'+'|'-')( ((digit+)'.'(digit*)) | ((digit*) '.' (digit+)) )(|exponent);
+  \end{rail}
+
+  \begin{rail}
   exponent : 'e'(|'+'|'-')(digit+);
+  \end{rail}
+
+  \begin{rail}
   digit : "0--9";
   \end{rail}
 
@@ -396,7 +405,13 @@ The grammar for labels with pathnames is the following:
 
 \begin{rail}
  label : path name;
+\end{rail}
+
+\begin{rail}
  path : (| '/') (| (folder '/')+);
+\end{rail}
+
+\begin{rail}
  folder : (".." | ("h:" | "v:" | "t:" ) name);
 \end{rail}
 

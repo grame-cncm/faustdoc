@@ -1,4 +1,6 @@
 \chapter{\faust syntax}
+\label{sec:syntax}
+
 
 This section describes the syntax of \faust. Figure \ref{fig-syntax} gives an overview of the various concepts and where they are defined in this section. 
 %% suggestion Carlos: la figure crée une confusion entre la structure de la syntaxe et la structure de la section. Faire un autre schema!
@@ -73,6 +75,9 @@ Meta-data declarations (for example \lstinline'declare name "noise";') are optio
 
 \begin{rail}
 declaration : "declare" key string ';';
+\end{rail}
+
+\begin{rail}
 key : identifier;
 \end{rail}
 
@@ -199,6 +204,9 @@ The \lstinline'<notice />' empty-element tag is used to generate the conventions
 
 \begin{rail}
 listing : "<listing" (listingattribute*) " />";
+\end{rail}
+
+\begin{rail}
 listingattribute : ("mdoctags" | "dependencies" | "distributed") "=" ('"true"' | '"false"');
 \end{rail}
 
@@ -245,7 +253,7 @@ For example here is the definition of \lstinline'random', a simple pseudo-random
 Definitions with formal parameters correspond to functions definitions.
 
 \begin{rail}
-definition  : identifier '(' (parameter + ',')  ')' '=' expression ';';
+fdefinition  : identifier '(' (parameter + ',')  ')' '=' expression ';';
 \end{rail} 
 
 For example the definition of \lstinline'linear2db', a function that converts linear values to decibels, is :
@@ -264,7 +272,10 @@ Please note that this notation is only a convenient alternative to the direct us
 
 Moreover, formal parameters can also be full expressions representing patterns. 
 \begin{rail}
-definition  : identifier '(' (pattern + ',')  ')' '=' expression ';';
+pdefinition  : identifier '(' (pattern + ',')  ')' '=' expression ';';
+\end{rail}
+
+\begin{rail}
 pattern : identifier | expression; 
 \end{rail}
 
@@ -1045,6 +1056,9 @@ The signature part of a foreign function, \lstinline'float asinhf|asinh|asinhl (
 
 \begin{rail}
 signature : type funnames '(' (argtype + ',') ')';
+\end{rail}
+
+\begin{rail}
 funnames : identifier (| '|' identifier) (| '|' identifier);
 \end{rail}
 
@@ -1058,6 +1072,9 @@ Some foreign functions are polymorphic and can accept either \textit{int} or \te
 
 \begin{rail}
 	type : 'int'|'float';
+\end{rail}
+
+\begin{rail}
 	argtype : 'int'|'float'|'any';
 \end{rail}
 
@@ -1160,7 +1177,9 @@ Abstractions correspond to functions definitions and allow to generalize a block
 
 \begin{rail}
 abstraction : lambdaabstraction | patternabstraction; 
- 
+\end{rail}
+
+\begin{rail}
 lambdaabstraction :  backslash '(' (ident + ',') ')' '.' '(' expression ')';
 \end{rail}
 
@@ -1216,9 +1235,16 @@ Whenever the \faust compiler find an application of an abstraction it replaces\m
 Pattern matching rules provide an effective way to analyze and transform block-diagrams algorithmically.
 \begin{rail}
 patternabstraction :  "case" lbrace (rule +) rbrace ;
+\end{rail}
+
+\begin{rail}
 Rule : '(' (pattern + ',') ')' "=>" expression ';';
+\end{rail}
+
+\begin{rail}
 Pattern : ident | expression;
 \end{rail}
+
 
 For example \lstinline'case{ (x:y) => y:x; (x) => x; }' contains two rules. The first one will match a sequential expression and invert the two part. The second one will match all remaining expressions and leave it untouched. Therefore the application:
 
