@@ -1,0 +1,4 @@
+ComplexDiagram(
+	NonTerminal('expression')
+).addTo()
+

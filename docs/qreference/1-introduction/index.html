@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> Introduction - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/debugging/" class="dropdown-item">Debugging the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/remote/" class="dropdown-item">Remote compilation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/community/" class="dropdown-item">Community</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/julia/" class="dropdown-item">Using Faust in Julia</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/box-api/" class="dropdown-item">Using the box API</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/unity/" class="dropdown-item">Unity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Quick Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active"> Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../2-install/" class="dropdown-item"> Compiling and installing Faust</a>
+</li>
+                                    
+<li>
+    <a href="../3-syntax/" class="dropdown-item"> Faust syntax</a>
+</li>
+                                    
+<li>
+    <a href="../4-compiler/" class="dropdown-item"> Invoking the Faust compiler</a>
+</li>
+                                    
+<li>
+    <a href="../5-libfaust/" class="dropdown-item"> Embedding the Faust  compiler using libfaust</a>
+</li>
+                                    
+<li>
+    <a href="../6-audio/" class="dropdown-item"> Architecture files</a>
+</li>
+                                    
+<li>
+    <a href="../7-osc/" class="dropdown-item"> OSC support</a>
+</li>
+                                    
+<li>
+    <a href="../8-http/" class="dropdown-item"> HTTP support</a>
+</li>
+                                    
+<li>
+    <a href="../9-midi/" class="dropdown-item"> MIDI support</a>
+</li>
+                                    
+<li>
+    <a href="../10-poly/" class="dropdown-item"> Polyphonic support</a>
+</li>
+                                    
+<li>
+    <a href="../11-codegeneration/" class="dropdown-item"> Controlling the code generation</a>
+</li>
+                                    
+<li>
+    <a href="../12-mdoc/" class="dropdown-item"> Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../13-acknowledgments/" class="dropdown-item"> Acknowledgments</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#introduction" class="nav-link">Introduction</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#design-principles" class="nav-link">Design Principles</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#signal-processor-semantic" class="nav-link">Signal Processor Semantic</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<script src='/rail/railroad-diagrams.js'></script>
+
+<h1 id="introduction">Introduction</h1>
+<p><a name="introduction"></a></p>
+<p><span class="smallcaps">Faust</span> (<em>Functional Audio Stream</em>) is a functional programming language specifically designed for real-time signal processing and synthesis.  <span class="smallcaps">Faust</span> targets high-performance signal processing applications and audio plug-ins for a variety of platforms and standards. </p>
+<h2 id="design-principles">Design Principles</h2>
+<p>Various principles have guided the design of <span class="smallcaps">Faust</span> :</p>
+<ul>
+<li>
+<p><span class="smallcaps">Faust</span> is a <em>specification language</em>. It aims at providing an adequate notation to describe <em>signal processors</em> from a mathematical point of view. <span class="smallcaps">Faust</span> is, as much as possible, free from implementation details. </p>
+</li>
+<li>
+<p><span class="smallcaps">Faust</span> programs are fully compiled, not interpreted. The compiler translates <span class="smallcaps">Faust</span> programs into equivalent C++ programs taking care of generating the most efficient code. The result can generally compete with, and sometimes even outperform, C++ code written by seasoned programmers. </p>
+</li>
+<li>
+<p>The generated code works at the sample level. It is therefore suited to implement low-level DSP functions like recursive filters. Moreover the code can be easily embedded. It is self-contained and doesn't depend of any DSP library or runtime system. It has a very deterministic behavior and a constant memory footprint. </p>
+</li>
+<li>
+<p>The semantic of <span class="smallcaps">Faust</span> is simple and well defined. This is not just of academic interest. It allows the <span class="smallcaps">Faust</span> compiler to be <strong>semantically driven</strong>. Instead of compiling a program literally, it compiles the mathematical function it denotes. This feature is useful for example to promote components reuse while preserving optimal performance.  </p>
+</li>
+<li>
+<p><span class="smallcaps">Faust</span> is a textual language but nevertheless block-diagram oriented. It actually combines two approaches: <em>functional programming</em> and <em>algebraic block-diagrams</em>. The key idea is to view block-diagram construction as function composition. For that purpose, <span class="smallcaps">Faust</span> relies on a <strong>block-diagram algebra</strong> of five composition operations (<span class="lstinline">: , ~ &lt;: :&gt;</span>).</p>
+</li>
+<li>
+<p>Thanks to the notion of <em>architecture</em>, <span class="smallcaps">Faust</span> programs can be easily deployed on a large variety of audio platforms and plugin formats without any change to the <span class="smallcaps">Faust</span> code.</p>
+</li>
+</ul>
+<h2 id="signal-processor-semantic">Signal Processor Semantic</h2>
+<p>A <span class="smallcaps">Faust</span> program describes a <strong>signal processor</strong>. 
+The role of a <em>signal processor</em> is to transforms a (possibly empty) group  of <strong>input signals</strong> in order to produce a (possibly empty) group of <strong>output signals</strong>. 
+Most audio equipments can be modeled as <strong>signal processors</strong>. 
+They have audio inputs, audio outputs as well as control signals interfaced with sliders, knobs, vu-meters, etc. </p>
+<p>More precisely :</p>
+<ul>
+<li>A <strong>signal</strong> <script type="math/tex">s</script> is a discrete function of time <script type="math/tex">s:\mathbb{Z}\rightarrow\mathbb{R}</script>.</li>
+</ul>
+<div class="marginpar"><span class="smallcaps">Faust</span> considers two type of signals: **integer signals** (\(s:\mathbb{Z}\rightarrow\mathbb{Z}\)) and **floating point signals** (\(s:\mathbb{Z}\rightarrow\mathbb{Q}\)) Exchanges with the outside world are, by convention, made using floating point signals. The full range is represented by sample values between -1.0 and +1.0.
+</div>
+<p>The value of a signal <script type="math/tex">s</script> at time <script type="math/tex">t</script> is written <script type="math/tex">s(t)</script>. The values of signals are usually needed starting from time <script type="math/tex">0</script>. But to take into account <strong>delay operations</strong>, negative times are possible and are always mapped to zeros. Therefore for any <span class="smallcaps">Faust</span> signal <script type="math/tex">s</script> we have <script type="math/tex">\forall t<0, s(t)=0</script>. In operational terms this corresponds to assuming that all delay lines are signals initialized with <script type="math/tex">0</script>s.</p>
+<ul>
+<li>
+<p>The set of all possible  signals is <script type="math/tex">\mathbb{S}=\mathbb{Z}\rightarrow\mathbb{R}</script>.</p>
+</li>
+<li>
+<p>A group of <script type="math/tex">n</script> signals (a <strong>n</strong>-tuple of signals) is written
+<script type="math/tex">(s_{1},\ldots,s_{n})\in \mathbb{S}^{n}</script>.
+The <strong>empty tuple</strong>, single element of <script type="math/tex">\mathbb{S}^{0}</script> is notated  <script type="math/tex">()</script>.</p>
+</li>
+<li>
+<p>A <strong>signal processors</strong> <script type="math/tex">p</script>, is a function from
+<strong>n</strong>-tuples of signals to <strong>m</strong>-tuples of signals
+<script type="math/tex">p:\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}</script>. The set <script type="math/tex">\mathbb{P}=\bigcup_{n,m}\mathbb{S}^{n}\rightarrow\mathbb{S}^{m}</script> is the
+set of all possible signal processors.</p>
+</li>
+</ul>
+<p>As an example, let's express the semantic of the <span class="smallcaps">Faust</span> primitive <span class="lstinline">+</span>. Like any <span class="smallcaps">Faust</span> expression, it is a signal processor. Its signature is <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}</script>. It takes two input signals <script type="math/tex">X_0</script> and <script type="math/tex">X_1</script> and produce an output signal <script type="math/tex">Y</script> such that <script type="math/tex">Y(t) = X_0(t)+X_1(t)</script>. </p>
+<p>Numbers are signal processors too. For example the number <script type="math/tex">3</script> has signature  <script type="math/tex">\mathbb{S}^{0}\rightarrow\mathbb{S}</script>.  It takes no input signals and produce an output signal <script type="math/tex">Y</script> such that <script type="math/tex">Y(t) = 3</script>. </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020-2022 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

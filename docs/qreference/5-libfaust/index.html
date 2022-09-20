@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> Embedding the Faust  compiler using libfaust - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/debugging/" class="dropdown-item">Debugging the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/remote/" class="dropdown-item">Remote compilation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/community/" class="dropdown-item">Community</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/julia/" class="dropdown-item">Using Faust in Julia</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/box-api/" class="dropdown-item">Using the box API</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/unity/" class="dropdown-item">Unity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Quick Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../1-introduction/" class="dropdown-item"> Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../2-install/" class="dropdown-item"> Compiling and installing Faust</a>
+</li>
+                                    
+<li>
+    <a href="../3-syntax/" class="dropdown-item"> Faust syntax</a>
+</li>
+                                    
+<li>
+    <a href="../4-compiler/" class="dropdown-item"> Invoking the Faust compiler</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active"> Embedding the Faust  compiler using libfaust</a>
+</li>
+                                    
+<li>
+    <a href="../6-audio/" class="dropdown-item"> Architecture files</a>
+</li>
+                                    
+<li>
+    <a href="../7-osc/" class="dropdown-item"> OSC support</a>
+</li>
+                                    
+<li>
+    <a href="../8-http/" class="dropdown-item"> HTTP support</a>
+</li>
+                                    
+<li>
+    <a href="../9-midi/" class="dropdown-item"> MIDI support</a>
+</li>
+                                    
+<li>
+    <a href="../10-poly/" class="dropdown-item"> Polyphonic support</a>
+</li>
+                                    
+<li>
+    <a href="../11-codegeneration/" class="dropdown-item"> Controlling the code generation</a>
+</li>
+                                    
+<li>
+    <a href="../12-mdoc/" class="dropdown-item"> Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../13-acknowledgments/" class="dropdown-item"> Acknowledgments</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#embedding-the-faust-compiler-using-libfaust" class="nav-link">Embedding the Faust  compiler using libfaust</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#dynamic-compilation-chain" class="nav-link">Dynamic compilation chain</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#llvm" class="nav-link">LLVM</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#compiling-in-memory" class="nav-link">Compiling in memory</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#savingrestoring-the-factory" class="nav-link">Saving/restoring the factory</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#additional-functions" class="nav-link">Additional functions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-the-libfaust-library" class="nav-link">Using the libfaust library</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#use-case-examples" class="nav-link">Use case examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<script src='/rail/railroad-diagrams.js'></script>
+
+<h1 id="embedding-the-faust-compiler-using-libfaust">Embedding the <span class="smallcaps">Faust</span>  compiler using libfaust</h1>
+<p><a name="libfaust"></a></p>
+<p>The dynamic compilation chain allows developers to embed the <span class="smallcaps">Faust</span> compiler technology directly in their application or plugins. Thanks to the awesome LLVM technology combined with libfaust, the library version of the <span class="smallcaps">Faust</span> compiler, <span class="smallcaps">Faust</span> DSP programs can directly be compiled and executed on the fly at full speed.</p>
+<h2 id="dynamic-compilation-chain">Dynamic compilation chain</h2>
+<p>The <span class="smallcaps">Faust</span> compiler uses an intermediate FIR representation (<span class="smallcaps">Faust</span> Imperative Representation), which can be translated to several output languages. The FIR language describes the computation performed on the samples in a generic manner. It contains primitives to read and write variables and arrays, do arithmetic operations, and define the necessary control structures (for and while loops, if structure etc.). </p>
+<p>To generate various output languages, several backends have been developed: for C, C++, Java, JavaScript, asm.js, and LLVM IR. The native LLVM based compilation chain is particularly interesting: it provides direct compilation of a DSP source into executable code in memory, bypassing the external compiler requirement.</p>
+<h2 id="llvm">LLVM</h2>
+<p>LLVM (formerly Low Level Virtual Machine) is a compiler infrastructure, designed for compile-time, link-time, run-time optimization of programs written in arbitrary programming languages. Executable code is produced dynamically using a {\it Just In Time} compiler from a specific code representation, called LLVM IR. Clang, the LLVM native C/C++/Objective- C compiler is a front-end for LLVM Compiler. It can, for instance, convert a C or C++ source file into LLVM IR code. Domain-specific languages like <span class="smallcaps">Faust</span> can easily target the LLVM IR. This has been done by developing an LLVM IR backend in the <span class="smallcaps">Faust</span> compiler.</p>
+<h2 id="compiling-in-memory">Compiling in memory</h2>
+<p>The complete chain goes from the <span class="smallcaps">Faust</span> DSP source code, compiled in LLVM IR using the LLVM backend, to finally produce the executable code using the LLVM JIT. All steps take place in memory, getting rid of the classical file based approaches. Pointers to executable functions can be retrieved from the resulting LLVM module and the code directly called with the appropriate parameters.</p>
+<p>The <span class="smallcaps">Faust</span> compiler has been packaged as an embeddable library called libfaust, published with an associated API that imitates the concept of oriented-object languages, like C++. Given a <span class="smallcaps">Faust</span> source code (as a file or a string), calling the <span class="lstinline">createDSPFactoryXXX</span> function runs the compilation chain (<span class="smallcaps">Faust</span> + LLVM JIT) and generates the {\it prototype} of the class, as a <span class="lstinline">llvm_dsp_factory</span> pointer.</p>
+<pre><code>class llvm_dsp_factory {
+
+ public: 
+
+    /* Return Factory name */
+    std::string getName();
+
+    /* Return Factory LLVM target */
+    std::string getTarget();
+
+    /* Return Factory SHA key */
+    std::string getSHAKey();
+
+    /* Return Factory expanded DSP code */
+    std::string getDSPCode();
+
+    /* Create a new DSP instance, to be deleted with C++ 'delete' */
+    llvm_dsp* createDSPInstance();
+
+    /* Set a custom memory manager to be used when creating instances */
+    void setMemoryManager(dsp_memory_manager* manager);
+
+    /* Return the currently set custom memory manager */
+    dsp_memory_manager* getMemoryManager();
+};
+
+</code></pre>
+<p>Note that the library keeps an internal cache of all allocated factories so that the compilation of the same DSP code, that is same source code and same set of {\it normalized} (= sorted in a canonical order) compilations options, will return the same (reference counted) factory pointer. You will have to explicitly use <span class="lstinline">deleteDSPFactory</span> to properly decrement the reference counter when the factory is no more needed. You can get a unique SHA1 key of the created factory using its <span class="lstinline">getSHAKey</span> method.</p>
+<p>Next, the <span class="lstinline">createDSPInstance</span> function, corresponding to the <span class="lstinline">new className</span> of C++, instantiates a <span class="lstinline">llvm_dsp</span> pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, use <span class="lstinline">delete</span> to destroy the dsp instance.</p>
+<pre><code>class llvm_dsp : public dsp {
+
+ public:
+
+    int getNumInputs();    
+    int getNumOutputs();
+
+    void buildUserInterface(UI* ui_interface);
+
+    int getSampleRate();
+
+    void init(int samplingRate);  
+    void instanceInit(int samplingRate);
+    void instanceConstants(int samplingRate);
+    void instanceResetUserInterface();  
+    void instanceClear();
+
+    llvm_dsp* clone();
+
+    void metadata(Meta* m);
+
+    void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs);
+};
+</code></pre>
+<p>Since <span class="lstinline">llvm_dsp</span> is a subclass of the dsp base class, an object of this type can be used with all already available audio and UI classes, in essence reusing all architecture files already developed for the static C++ class compilation scheme (like OSCUI, httpdUI interfaces etc.), look at Developing a new architecture file section.</p>
+<h2 id="savingrestoring-the-factory">Saving/restoring the factory</h2>
+<p>After the DSP factory has been compiled, your application or plugin may want to save/restore it in order to save <span class="smallcaps">Faust</span> to LLVM IR compilation or even JIT compilation time at next use. To get the internal factory compiled code, several functions are available:</p>
+<ul>
+<li><span class="lstinline">writeDSPFactoryToIR</span> allows to get the DSP factory LLVM IR (in textual format) as a string, <span class="lstinline">writeDSPFactoryToIRFile</span> allows to save the DSP factory LLVM IR (in textual format) in a file,</li>
+<li><span class="lstinline">writeDSPFactoryToBitcode</span> allows to get the DSP factory LLVM IR (in binary format) as a string, <span class="lstinline">writeDSPFactoryToBitcodeFile</span> allows to save the DSP factory LLVM IR (in binary format) in a file,</li>
+<li><span class="lstinline">writeDSPFactoryToMachine</span> allows to get the DSP factory executable machine code as a string, <span class="lstinline">writeDSPFactoryToMachineFile</span> allows to save the DSP factory executable machine code in a file.</li>
+</ul>
+<p>To re-create a DSP factory from a previously saved code, several functions are available:</p>
+<ul>
+<li><span class="lstinline">readDSPFactoryFromIR</span> allows to create a DSP factory from a string containing the LLVM IR (in textual format), <span class="lstinline">readDSPFactoryFromIRFile</span> allows to create a DSP factory from a file containing the LLVM IR (in textual format),</li>
+<li><span class="lstinline">readDSPFactoryFromBitcode</span> allows to create a DSP factory from a string containing the LLVM IR (in binary format), <span class="lstinline">readDSPFactoryFromBitcodeFile</span> allows to create a DSP factory from a file containing the LLVM IR (in binary format),</li>
+<li><span class="lstinline">readDSPFactoryFromMachine</span> allows to create a DSP factory from a string containing the executable machine code, <span class="lstinline">readDSPFactoryFromMachineFile</span> allows to create a DSP factory from a file containing the executable machine code.</li>
+</ul>
+<h2 id="additional-functions">Additional functions</h2>
+<p>Some additional functions are available in the libfaust API:</p>
+<p><span class="lstinline">expandDSPFromString/expandDSPFromFile</span> creates a self-contained DSP source string where all needed librairies have been included. All compilations options are normalized and included as a comment in the expanded string,
+<span class="lstinline">generateAuxFilesFromString/generateAuxFilesFromFile</span>: from a DSP source string or file, generates auxiliary files: SVG, XML, ps... depending of the argv parameters.</p>
+<h2 id="using-the-libfaust-library">Using the libfaust library</h2>
+<p>The libfaust library is part of the <span class="smallcaps">Faust</span> tree. You'll have to compile and install it. Then look at the installed <span class="lstinline">faust/dsp/llvm-dsp.h</span> header for a complete description of the API. Note that <span class="lstinline">faust/dsp/llvm-c-dsp.h</span> is a pure C version of the same API. The additional functions are available in the <span class="lstinline">faust/dsp/libfaust.h</span> header and their C version is in <span class="lstinline">faust/dsp/libfaust-c.h</span>.</p>
+<h2 id="use-case-examples">Use case examples</h2>
+<p>The dynamic compilation chain has been used in several projects:</p>
+<ul>
+<li>FaustLive, an integrated IDE for <span class="smallcaps">Faust</span> development</li>
+<li>Faustgen, an external object for Cycling Max/MSP language</li>
+<li>Csound6, see this demo video</li>
+<li>LibAudioStream, a framework to manipulate audio ressources through the concept of streams</li>
+<li>Oliver Larkin JUCE framework integration and pMix2 project</li>
+<li>an experimental version of Antescofo</li>
+<li>FaucK: the combination of the Chuck language and <span class="smallcaps">Faust</span> </li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020-2022 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

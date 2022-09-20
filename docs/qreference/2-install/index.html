@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> Compiling and installing Faust - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/debugging/" class="dropdown-item">Debugging the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/remote/" class="dropdown-item">Remote compilation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/community/" class="dropdown-item">Community</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/julia/" class="dropdown-item">Using Faust in Julia</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/box-api/" class="dropdown-item">Using the box API</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/unity/" class="dropdown-item">Unity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Quick Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../1-introduction/" class="dropdown-item"> Introduction</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active"> Compiling and installing Faust</a>
+</li>
+                                    
+<li>
+    <a href="../3-syntax/" class="dropdown-item"> Faust syntax</a>
+</li>
+                                    
+<li>
+    <a href="../4-compiler/" class="dropdown-item"> Invoking the Faust compiler</a>
+</li>
+                                    
+<li>
+    <a href="../5-libfaust/" class="dropdown-item"> Embedding the Faust  compiler using libfaust</a>
+</li>
+                                    
+<li>
+    <a href="../6-audio/" class="dropdown-item"> Architecture files</a>
+</li>
+                                    
+<li>
+    <a href="../7-osc/" class="dropdown-item"> OSC support</a>
+</li>
+                                    
+<li>
+    <a href="../8-http/" class="dropdown-item"> HTTP support</a>
+</li>
+                                    
+<li>
+    <a href="../9-midi/" class="dropdown-item"> MIDI support</a>
+</li>
+                                    
+<li>
+    <a href="../10-poly/" class="dropdown-item"> Polyphonic support</a>
+</li>
+                                    
+<li>
+    <a href="../11-codegeneration/" class="dropdown-item"> Controlling the code generation</a>
+</li>
+                                    
+<li>
+    <a href="../12-mdoc/" class="dropdown-item"> Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../13-acknowledgments/" class="dropdown-item"> Acknowledgments</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#compiling-and-installing-faust" class="nav-link">Compiling and installing Faust</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#organization-of-the-distribution" class="nav-link">Organization of the distribution</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#compilation" class="nav-link">Compilation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#compilation-of-the-examples" class="nav-link">Compilation of the examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<script src='/rail/railroad-diagrams.js'></script>
+
+<h1 id="compiling-and-installing-faust">Compiling and installing <span class="smallcaps">Faust</span></h1>
+<p><a name="install"></a></p>
+<p>The <span class="smallcaps">Faust</span> source distribution <span class="lstinline">faust-2.46.1.tar.gz</span> can be downloaded from GitHub (<a href="https://github.com/grame-cncm/faust/releases">https://github.com/grame-cncm/faust/releases</a>).</p>
+<h2 id="organization-of-the-distribution">Organization of the distribution</h2>
+<p>The first thing is to decompress the downloaded archive. </p>
+<pre><code>    tar xzf faust-2.46.1.tar.gz
+</code></pre>
+<p>The resulting <span class="lstinline">faust-2.46.1/</span> folder should contain the following elements:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="lstinline">architecture/</span></td>
+<td><span class="smallcaps">Faust</span> libraries and architecture files</td>
+</tr>
+<tr>
+<td><span class="lstinline">benchmark</span></td>
+<td>tools to measure the efficiency of the generated code</td>
+</tr>
+<tr>
+<td><span class="lstinline">compiler/</span></td>
+<td>sources of the <span class="smallcaps">Faust</span> compiler</td>
+</tr>
+<tr>
+<td><span class="lstinline">examples/</span></td>
+<td>examples of <span class="smallcaps">Faust</span> programs</td>
+</tr>
+<tr>
+<td><span class="lstinline">syntax-highlighting/</span>&amp;    support for syntax highlighting for several editors</td>
+<td></td>
+</tr>
+<tr>
+<td><span class="lstinline">documentation/</span></td>
+<td><span class="smallcaps">Faust</span>'s documentation, including this manual</td>
+</tr>
+<tr>
+<td><span class="lstinline">tools/</span></td>
+<td>tools to produce audio applications and plugins</td>
+</tr>
+<tr>
+<td><span class="lstinline">COPYING</span></td>
+<td>license information</td>
+</tr>
+<tr>
+<td><span class="lstinline">Makefile</span></td>
+<td>Makefile used to build and install <span class="smallcaps">Faust</span></td>
+</tr>
+<tr>
+<td><span class="lstinline">README</span></td>
+<td>instructions on how to build and install <span class="smallcaps">Faust</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="compilation">Compilation</h2>
+<p><span class="smallcaps">Faust</span> has no dependencies outside standard libraries. Therefore the compilation should be straightforward. There is no configuration phase, to compile the <span class="smallcaps">Faust</span> compiler simply do :</p>
+<pre><code>    cd faust-2.46.1/
+    make
+</code></pre>
+<p>If the compilation was successful you can test the compiler before installing it:</p>
+<pre><code>    [cd faust-2.46.1/]
+    ./build/bin/faust -v
+</code></pre>
+<p>It should output:</p>
+<pre><code>FAUST Version 2.46.1
+Embedded backends: 
+   DSP to C
+   DSP to C++
+   DSP to CSharp
+   DSP to DLang
+   DSP to Java
+   DSP to Julia
+   DSP to old C++
+   DSP to Rust
+   DSP to SOUL
+   DSP to WebAssembly (wast/wasm)
+Copyright (C) 2002-2022, GRAME - Centre National de Creation Musicale. All rights reserved. 
+</code></pre>
+<p>Then you can also try to compile one of the examples :</p>
+<pre><code>    [cd faust-2.46.1/]
+    ./build/bin/faust examples/generator/noise.dsp
+</code></pre>
+<p>It should produce some C++ code on the standard output.</p>
+<h2 id="installation">Installation</h2>
+<p>You can install <span class="smallcaps">Faust</span> with:</p>
+<pre><code>    [cd faust-2.46.1/]
+    sudo make install
+</code></pre>
+<p>or</p>
+<pre><code>    [cd faust-2.46.1/]
+    su
+    make install
+</code></pre>
+<p>depending on your system.</p>
+<h2 id="compilation-of-the-examples">Compilation of the examples</h2>
+<p>Once <span class="smallcaps">Faust</span> correctly installed, you can have a look at the provided examples in the <span class="lstinline">examples/</span> folder. </p>
+<p>You can use any of the <span class="lstinline">faust2...</span> script installed on your system (go in <span class="lstinline">/tools/faust2appls</span> to get an exhaustive list) to compile the Faust codes available in this folder. For example, if you're a Mac user and you want to turn <span class="lstinline">filtering/vcfWahLab.dsp</span> into a standalone CoreAudio application with a QT interface, just run:</p>
+<p><span class="lstinline">faust2caqt filtering/vcfWahLab.dsp</span></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020-2022 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

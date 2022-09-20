@@ -1,0 +1,4 @@
+ComplexDiagram(
+	NonTerminal('identifier')
+).addTo()
+

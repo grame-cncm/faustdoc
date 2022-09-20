@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title> Faust syntax - Faust Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="/css/quickref.css" rel="stylesheet">
+        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../manual/introduction/" class="dropdown-item">Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/quick-start/" class="dropdown-item">Quick start</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/options/" class="dropdown-item">Compiler Options</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/debugging/" class="dropdown-item">Debugging the Code</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/remote/" class="dropdown-item">Remote compilation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/osc/" class="dropdown-item">OSC Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/http/" class="dropdown-item">HTTP Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/community/" class="dropdown-item">Community</a>
+</li>
+                                    
+<li>
+    <a href="../../manual/faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                                    
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                                    
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/julia/" class="dropdown-item">Using Faust in Julia</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/box-api/" class="dropdown-item">Using the box API</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
+</li>
+                                    
+<li>
+    <a href="../../tutorials/unity/" class="dropdown-item">Unity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                                    
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Quick Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../1-introduction/" class="dropdown-item"> Introduction</a>
+</li>
+                                    
+<li>
+    <a href="../2-install/" class="dropdown-item"> Compiling and installing Faust</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active"> Faust syntax</a>
+</li>
+                                    
+<li>
+    <a href="../4-compiler/" class="dropdown-item"> Invoking the Faust compiler</a>
+</li>
+                                    
+<li>
+    <a href="../5-libfaust/" class="dropdown-item"> Embedding the Faust  compiler using libfaust</a>
+</li>
+                                    
+<li>
+    <a href="../6-audio/" class="dropdown-item"> Architecture files</a>
+</li>
+                                    
+<li>
+    <a href="../7-osc/" class="dropdown-item"> OSC support</a>
+</li>
+                                    
+<li>
+    <a href="../8-http/" class="dropdown-item"> HTTP support</a>
+</li>
+                                    
+<li>
+    <a href="../9-midi/" class="dropdown-item"> MIDI support</a>
+</li>
+                                    
+<li>
+    <a href="../10-poly/" class="dropdown-item"> Polyphonic support</a>
+</li>
+                                    
+<li>
+    <a href="../11-codegeneration/" class="dropdown-item"> Controlling the code generation</a>
+</li>
+                                    
+<li>
+    <a href="../12-mdoc/" class="dropdown-item"> Mathematical Documentation</a>
+</li>
+                                    
+<li>
+    <a href="../13-acknowledgments/" class="dropdown-item"> Acknowledgments</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div class="container">
+            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#faust-syntax" class="nav-link">Faust syntax</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#faust-program" class="nav-link">Faust program</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#a-simple-program" class="nav-link">A Simple Program</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#statements" class="nav-link">Statements</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#declarations" class="nav-link">Declarations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#imports" class="nav-link">Imports</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#documentation" class="nav-link">Documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#definitions" class="nav-link">Definitions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#simple-definitions" class="nav-link">Simple Definitions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#function-definitions" class="nav-link">Function Definitions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#definitions-with-pattern-matching" class="nav-link">Definitions with pattern matching</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#variants" class="nav-link">Variants</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#expressions" class="nav-link">Expressions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#constant-numerical-expressions" class="nav-link">Constant Numerical Expressions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#diagram-expressions" class="nav-link">Diagram Expressions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#diagram-composition-operations" class="nav-link">Diagram composition operations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#inputs-and-outputs-of-an-expression" class="nav-link">Inputs and outputs of an expression</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#iterations" class="nav-link">Iterations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#infix-notation" class="nav-link">Infix Notation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#comparison-operators" class="nav-link">Comparison Operators</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#math-operators" class="nav-link">Math Operators</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#bitwise-operators" class="nav-link">Bitwise operators</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#delay-operators" class="nav-link">Delay operators</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#prefix-notation" class="nav-link">Prefix Notation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#partial-application" class="nav-link">Partial Application</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#time-expressions" class="nav-link">Time expressions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#environment-expressions" class="nav-link">Environment expressions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#with" class="nav-link">With</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#letrec" class="nav-link">Letrec</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#environment" class="nav-link">Environment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#access" class="nav-link">Access</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#library" class="nav-link">Library</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#component" class="nav-link">Component</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#explicit-substitution" class="nav-link">Explicit substitution</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#foreign-expressions" class="nav-link">Foreign expressions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#foreign-function-declaration" class="nav-link">Foreign function declaration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#foreign-variables-and-constants" class="nav-link">Foreign variables and constants</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#include-file" class="nav-link">Include file</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#library-file" class="nav-link">Library file</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#applications-and-abstractions" class="nav-link">Applications and Abstractions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#abstractions" class="nav-link">Abstractions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#applications" class="nav-link">Applications</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#pattern-matching" class="nav-link">Pattern Matching</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#primitives" class="nav-link">Primitives</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#numbers" class="nav-link">Numbers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#route-primitive" class="nav-link">Route Primitive</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#waveforms-primitive" class="nav-link">Waveforms Primitive</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#soundfiles-primitive" class="nav-link">Soundfiles Primitive</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#c-equivalent-primitives" class="nav-link">C-equivalent primitives</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#mathh-equivalent-primitives" class="nav-link">math.h-equivalent primitives</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#delay-table-selector-primitives" class="nav-link">Delay, Table, Selector primitives</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#user-interface-elements" class="nav-link">User Interface Elements</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#labels" class="nav-link">Labels</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#attach" class="nav-link">Attach</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9 main-container" role="main">
+
+<script src='/rail/railroad-diagrams.js'></script>
+
+<h1 id="faust-syntax"><span class="smallcaps">Faust</span> syntax</h1>
+<p><a name="syntax"></a></p>
+<p>This section describes the syntax of <span class="smallcaps">Faust</span>. Figure <a href="../3-syntax#fig-syntax">fig-syntax</a> gives an overview of the various concepts and where they are defined in this section. 
+<a name="fig-syntax"></a>
+<img alt="fig-syntax" src="../illustrations/syntax-chart.png" />
+<span class='caption'>Overview of <span class="smallcaps">Faust</span> syntax</span></p>
+<p>As we will see, <em>definitions</em> and <em>expressions</em> have a central role.</p>
+<h2 id="faust-program"><span class="smallcaps">Faust</span> program</h2>
+<p>A <span class="smallcaps">Faust</span> program is essentially a list of <em>statements</em>. These statements can be <em>declarations</em>, <em>imports</em>, <em>definitions</em> and <em>documentation tags</em>, with optional C++ style (//... and /<em>...</em>/) comments.</p>
+<div class="rail">
+<span class="railtitle">program</span>
+<br /><script>
+ComplexDiagram(
+    OneOrMore (NonTerminal('statement'))
+).addTo()
+
+</script>
+</div>
+
+<h3 id="a-simple-program">A Simple Program</h3>
+<p>Here is a short <span class="smallcaps">Faust</span> program that implements of a simple noise generator. It exhibits various kind of statements: two <em>declarations</em>, an <em>import</em>, a <em>comment</em> and a <em>definition</em>. We will see later on <em>documentation</em> statements (<a href="../3-syntax#sec-documentation">sec-documentation</a>).</p>
+<pre><code>declare name       &quot;noise&quot;;
+declare copyright  &quot;(c)GRAME 2006&quot;;
+
+import(&quot;music.lib&quot;);
+
+// noise level controlled by a slider
+process = noise * vslider(&quot;volume&quot;, 0, 0, 1, 0.1);
+</code></pre>
+<p>The keyword <span class="lstinline">process</span> is the equivalent of <span class="lstinline">main</span> in C/C++. Any <span class="smallcaps">Faust</span> program, to be valid, must at least define <span class="lstinline">process</span>.</p>
+<h2 id="statements">Statements</h2>
+<p>The <em>statements</em> of a <span class="smallcaps">Faust</span> program are of four kinds: <em>metadata declarations</em>, <em>file imports</em>,  <em>definitions</em> and <em>documentation</em>. All statements but documentation end with a semicolon (<span class="lstinline">;</span>). </p>
+<div class="rail">
+<span class="railtitle">statement</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, NonTerminal('declaration'), NonTerminal('fileimport'), NonTerminal('definition'), NonTerminal('documentation'))
+).addTo()
+
+</script>
+</div>
+
+<h3 id="declarations">Declarations</h3>
+<p>Meta-data declarations (for example <span class="lstinline">declare name "noise";</span>) are optional and typically used to document a <span class="smallcaps">Faust</span> project. </p>
+<div class="rail">
+<span class="railtitle">declaration</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("declare", NonTerminal('key'), NonTerminal('string'), ';')
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">key</span>
+<br /><script>
+ComplexDiagram(
+    NonTerminal('identifier')
+).addTo()
+
+</script>
+</div>
+
+<p>Contrary to regular comments, these declarations will appear in the C++ code generated by the compiler. A good practice is to start a <span class="smallcaps">Faust</span> program with some standard declarations:</p>
+<pre><code>declare name &quot;MyProgram&quot;;
+declare author &quot;MySelf&quot;;
+declare copyright &quot;MyCompany&quot;;
+declare version &quot;1.00&quot;;
+declare license &quot;BSD&quot;; 
+</code></pre>
+<h3 id="imports">Imports</h3>
+<p>File imports allow to import definitions from other source files.  </p>
+<div class="rail">
+<span class="railtitle">fileimport</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("import", '(', NonTerminal('filename'), ')', ';')
+).addTo()
+
+</script>
+</div>
+
+<p>For example <span class="lstinline">import("maths.lib");</span> imports the definitions of the <span class="lstinline">maths.lib</span> library, a set of additional mathematical functions provided as foreign functions.</p>
+<h3 id="documentation">Documentation</h3>
+<p><a name="sec-documentation"></a></p>
+<p>Documentation statements are optional and typically used to control the generation of the mathematical documentation of a <span class="smallcaps">Faust</span> program. This documentation system is detailed chapter \ref{chapter-mdoc}. In this section we will essentially describe the documentation statements syntax.</p>
+<p>A documentation statement starts with an opening <span class="lstinline">&lt;mdoc&gt;</span> tag and ends with a closing <span class="lstinline">&lt;/mdoc&gt;</span> tag. Free text content, typically in LaTeX format, can be placed in between these two tags. </p>
+<div class="rail">
+<span class="railtitle">documentation</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("<mdoc>", OneOrMore (Choice (0, NonTerminal('freetext'), NonTerminal('equation'), NonTerminal('diagram'), NonTerminal('metadata'), NonTerminal('notice'), NonTerminal('listing'))), "</mdoc>")
+).addTo()
+
+</script>
+</div>
+
+<p>Moreover, optional sub-tags can be inserted in the text content itself to require the generation, at the insertion point, of mathematical <em>equations</em>, graphical <em>block-diagrams</em>, <span class="smallcaps">Faust</span> source code <em>listing</em> and explanation <em>notice</em>.</p>
+<div class="rail">
+<span class="railtitle">equation</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("<equation>", NonTerminal('expression'), "</equation>")
+).addTo()
+
+</script>
+</div>
+
+<p>The generation of the mathematical equations of a <span class="smallcaps">Faust</span> expression can be requested by placing this expression between an opening <span class="lstinline">&lt;equation&gt;</span> and a closing <span class="lstinline">&lt;/equation&gt;</span> tag. The expression is evaluated within the lexical context of the <span class="smallcaps">Faust</span> program.</p>
+<div class="rail">
+<span class="railtitle">diagram</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("<diagram>", NonTerminal('expression'), "</diagram>")
+).addTo()
+
+</script>
+</div>
+
+<p>Similarly, the generation of the graphical block-diagram of a <span class="smallcaps">Faust</span> expression can be requested by placing this expression between an opening <span class="lstinline">&lt;diagram&gt;</span> and a closing <span class="lstinline">&lt;/diagram&gt;</span> tag. The expression is evaluated within the lexical context of the <span class="smallcaps">Faust</span> program.</p>
+<div class="rail">
+<span class="railtitle">metadata</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("<metadata>", NonTerminal('keyword'), "</metadata>")
+).addTo()
+
+</script>
+</div>
+
+<p>The <span class="lstinline">&lt;metadata&gt;</span> tags allow to reference <span class="smallcaps">Faust</span> metadatas (cf. declarations), calling the corresponding keyword.</p>
+<div class="rail">
+<span class="railtitle">notice</span>
+<br /><script>
+ComplexDiagram(
+    "<notice />"
+).addTo()
+
+</script>
+</div>
+
+<p>The <span class="lstinline">&lt;notice /&gt;</span> empty-element tag is used to generate the conventions used in the mathematical equations.</p>
+<div class="rail">
+<span class="railtitle">listing</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("<listing", NonTerminal('listingattribute*'), " />")
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">listingattribute</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (Choice (0, "mdoctags", "dependencies", "distributed"), "=", Choice (0, '"true"', '"false"'))
+).addTo()
+
+</script>
+</div>
+
+<p>The <span class="lstinline">&lt;listing /&gt;</span> empty-element tag is used to generate the listing of the <span class="smallcaps">Faust</span> program. Its three attributes <span class="lstinline">mdoctags</span>, <span class="lstinline">dependencies</span> and <span class="lstinline">distributed</span> enable or disable respectively <span class="lstinline">&lt;mdoc&gt;</span> tags, other files dependencies and distribution of interleaved faust code between <span class="lstinline"><mdoc></span> sections.</p>
+<h2 id="definitions">Definitions</h2>
+<p>A <em>definition</em> associates an identifier with an expression it stands for. </p>
+<p>Definitions are essentially a convenient shortcut avoiding to type long expressions. During compilation, more precisely during the evaluation stage, identifiers are replaced by their definitions. It is therefore always equivalent to use an identifier or directly its definition. Please note that multiple definitions of a same identifier are not allowed, unless it is a pattern matching based definition.</p>
+<h3 id="simple-definitions">Simple Definitions</h3>
+<p>The syntax of a simple definition is:</p>
+<div class="rail">
+<span class="railtitle">definition</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('identifier'), '=', NonTerminal('expression'), ';')
+).addTo()
+
+</script>
+</div>
+
+<p>For example here is the definition of <span class="lstinline">random</span>, a simple pseudo-random number generator:</p>
+<pre><code> random = +(12345) ~ *(1103515245);
+</code></pre>
+<h3 id="function-definitions">Function Definitions</h3>
+<p>Definitions with formal parameters correspond to functions definitions.</p>
+<div class="rail">
+<span class="railtitle">fdefinition</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('identifier'), '(', OneOrMore (NonTerminal('parameter'), ','), ')', '=', NonTerminal('expression'), ';')
+).addTo()
+
+</script>
+</div>
+
+<p>For example the definition of <span class="lstinline">linear2db</span>, a function that converts linear values to decibels, is :</p>
+<pre><code> linear2db(x) = 20*log10(x);
+</code></pre>
+<p>Please note that this notation is only a convenient alternative to the direct use of <em>lambda-abstractions</em> (also called anonymous functions). The following is an equivalent definition of <span class="lstinline">linear2db</span> using a lambda-abstraction:</p>
+<pre><code> linear2db = \(x).(20*log10(x));
+</code></pre>
+<h3 id="definitions-with-pattern-matching">Definitions with pattern matching</h3>
+<p>Moreover, formal parameters can also be full expressions representing patterns. </p>
+<div class="rail">
+<span class="railtitle">pdefinition</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('identifier'), '(', OneOrMore (NonTerminal('pattern'), ','), ')', '=', NonTerminal('expression'), ';')
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">pattern</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, NonTerminal('ident'), NonTerminal('expression'))
+).addTo()
+
+</script>
+</div>
+
+<p>This powerful mechanism allows to algorithmically create and manipulate block diagrams expressions. Let's say that you want to describe a function to duplicate an expression several times in parallel:</p>
+<pre><code> duplicate(1,x) = x;
+ duplicate(n,x) = x, duplicate(n-1,x);
+</code></pre>
+<p>Please note that this last definition is a convenient alternative to the more verbose :</p>
+<pre><code> duplicate = case { 
+               (1,x) =&gt; x; 
+               (n,x) =&gt; duplicate(n-1,x); 
+             };
+</code></pre>
+<p>Here is another example to count the number of elements of a list. Please note that we simulate lists using parallel composition : (1,2,3,5,7,11). The main limitation of this approach is that there is no empty list. Moreover lists of only one element are represented by this element :</p>
+<pre><code> count((x,xs)) = 1+count(xs);
+ count(x) = 1;
+</code></pre>
+<p>If we now write <span class="lstinline">count(duplicate(10,666))</span> the expression will be evaluated to <span class="lstinline">10</span>.</p>
+<p>Please note that the order of pattern matching rules matters. The more specific rules must precede the more general rules. When this order is not respected, as in :</p>
+<pre><code> count(x) = 1;
+ count((x,xs)) = 1+count(xs);
+</code></pre>
+<p>the first rule will always match and the second rule will never be called.</p>
+<p>Please note that number arguments in pattern matching rules are typically <em>constant numerical expressions</em>, so can be the result of more complex expressions involving computations done at compile-time.</p>
+<h3 id="variants">Variants</h3>
+<p>Some statements (imports, definitions) can be preceded by a variantlist, composed of variants which can be <em>singleprecision</em>, <em>doubleprecision</em>, <em>quadprecision</em> or <em>fixedpointprecision</em> This allows some imports and definitions to be effective only for a (or several) specific float precision option in the compiler (that is either <span class="lstinline">-single</span>, <span class="lstinline">-double</span>, <span class="lstinline">-quad</span> or <span class="lstinline">-fx</span> respectively). A typical use-case is the definition of floating point constants in the maths.lib library with the following lines:</p>
+<pre><code>
+singleprecision MAX = 3.402823466e+38;
+doubleprecision MAX = 1.7976931348623158e+308;
+
+</code></pre>
+<h2 id="expressions">Expressions</h2>
+<p>Despite its textual syntax, <span class="smallcaps">Faust</span> is conceptually a block-diagram language. <span class="smallcaps">Faust</span> expressions represent DSP block-diagrams and are assembled from primitive ones using various <em>composition</em> operations. More traditional <em>numerical</em> expressions in infix notation are also possible. Additionally <span class="smallcaps">Faust</span> provides time based expressions, like delays, expressions related to lexical environments, expressions to interface with foreign function and lambda expressions.</p>
+<div class="rail">
+<span class="railtitle">expression</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, NonTerminal('diagram'), NonTerminal('insouts'), NonTerminal('numerical'), NonTerminal('time'), NonTerminal('lexical'), NonTerminal('foreign'), NonTerminal('lambda'))
+).addTo()
+
+</script>
+</div>
+
+<h3 id="constant-numerical-expressions">Constant Numerical Expressions</h3>
+<p>Some language primitives (like <em>rdtable</em>, <em>rwtable</em>, <em>hslider</em> etc.) take constant numbers as some of their parameters. This is the case also for expressions using pattern matching techniques. Those numbers can be directly given in the code, but can also be computed by more complex expressions which have to produce numbers at compile time. We will refer to them as <em>constant numerical expressions</em> in the documentation.</p>
+<h3 id="diagram-expressions">Diagram Expressions</h3>
+<p>Diagram expressions are assembled from primitive ones using either binary composition operations or high level iterative constructions.</p>
+<div class="rail">
+<span class="railtitle">diagramexp</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, NonTerminal('diagcomposition'), NonTerminal('diagiteration'))
+).addTo()
+
+</script>
+</div>
+
+<h4 id="diagram-composition-operations">Diagram composition operations</h4>
+<p>Five binary <strong>composition operations</strong> are available to combine block-diagrams: <em>recursion</em>, <em>parallel</em>, <em>sequential</em>, <em>split</em> and <em>merge</em> composition. One can think of each of these composition operations as a particular way to connect two block diagrams. </p>
+<div class="rail">
+<span class="railtitle">diagcomposition</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('expression'), Choice (0, NonTerminal('~'), ',', ':', '<:', ':>'), NonTerminal('expression'))
+).addTo()
+
+</script>
+</div>
+
+<p>To describe precisely how these connections are done, we have to introduce some notation.  The number of inputs and outputs of a bloc-diagram <script type="math/tex">A</script> are notated <script type="math/tex">\mathrm{inputs}(A)</script> and <script type="math/tex">\mathrm{outputs}(A)</script> . The inputs and outputs themselves are respectively notated : <script type="math/tex">[0]A</script>, <script type="math/tex">[1]A</script>, <script type="math/tex">[2]A</script>, <script type="math/tex">\ldots</script> and <script type="math/tex">A[0]</script>, <script type="math/tex">A[1]</script>, <script type="math/tex">A[2]</script>, etc.. </p>
+<p>For each composition operation between two block-diagrams <script type="math/tex">A</script> and <script type="math/tex">B</script> we will describe the connections <script type="math/tex">A[i]\rightarrow [j]B</script> that are created and the constraints on their relative numbers of inputs and outputs.</p>
+<p>The priority and associativity of this five operations are given table <a href="../3-syntax#table-composition">table-composition</a>. Please note that a higher priority value means a higher priority in the evaluation order. There is a companion table <a href="../3-syntax#infix-comparison-priority">infix-comparison-priority</a> that gives the associativity of each numerical operator in infix expressions.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Pri.</strong></td>
+<td><strong>Assoc.</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ <script type="math/tex">\sim</script>\ <span class="roman"><em>expression</em></span></td>
+<td>4</td>
+<td>left</td>
+<td>recursive composition</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ ,\ <span class="roman"><em>expression</em></span></td>
+<td>3</td>
+<td>right</td>
+<td>parallel composition</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ :\ <span class="roman"><em>expression</em></span></td>
+<td>2</td>
+<td>right</td>
+<td>sequential composition</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ &lt;:\ <span class="roman"><em>expression</em></span></td>
+<td>1</td>
+<td>right</td>
+<td>split composition</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ :&gt;\ <span class="roman"><em>expression</em></span></td>
+<td>1</td>
+<td>right</td>
+<td>merge composition</td>
+</tr>
+<tr>
+<td><a name="table-composition"></a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class='caption'>Block-Diagram composition operation priorities</span></p>
+<div class="paragraph">Parallel Composition</div>
+<p>The <strong>parallel composition</strong>  <span class="lstinline">(A,B)</span> (figure <a href="../3-syntax#figure-par1">figure-par1</a>) is probably the simplest one. It places the two block-diagrams one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of <script type="math/tex">A</script> and <script type="math/tex">B</script>. The outputs of the resulting block-diagram are the outputs of <script type="math/tex">A</script> and <script type="math/tex">B</script>. </p>
+<p><strong>Parallel composition</strong> is an associative operation : <script type="math/tex">(A,(B,C))</script> and <script type="math/tex">((A,B),C)</script> are equivalents. When no parenthesis are used : <span class="lstinline">A,B,C,D</span>, <span class="smallcaps">Faust</span> uses right associativity and therefore build internally the expression <script type="math/tex">(A,(B,(C,D)))</script>. This organization is important to know when using pattern matching techniques on parallel compositions. </p>
+<p><a name="figure-par1"></a>
+<img alt="figure-par1" src="../images/par1.png" />
+<span class='caption'>Example of parallel composition  <span class="lstinline">(10,*)</span></span></p>
+<div class="paragraph">Sequential Composition</div>
+<p>The <strong>sequential composition</strong>  <script type="math/tex">A:B</script> (figure <a href="../3-syntax#figure-seq1">figure-seq1</a>) expects:
+<script type="math/tex; mode=display">
+\mathrm{outputs}(A)=\mathrm{inputs}(B)
+</script>
+It connects each output of  <script type="math/tex">A</script> to the corresponding input of <script type="math/tex">B</script>: 
+<script type="math/tex; mode=display">
+A[i]\rightarrow[i]B
+</script>
+</p>
+<p><a name="figure-seq1"></a>
+<img alt="figure-seq1" src="../images/seq1.png" />
+<span class='caption'>Example of sequential composition  <span class="lstinline">((*,/):+)</span> </span></p>
+<p><strong>Sequential composition</strong> is an associative operation : <script type="math/tex">(A:(B:C))</script> and <script type="math/tex">((A:B):C)</script> are equivalents. When no parenthesis are used, like in <script type="math/tex">A:B:C:D</script>, <span class="smallcaps">Faust</span> uses right associativity and therefore build internally the expression <script type="math/tex">(A:(B:(C:D)))</script>.</p>
+<div class="paragraph">Split Composition</div>
+<p>The <strong>split composition</strong>  <script type="math/tex">A<:B</script> (figure <a href="../3-syntax#figure-split1">figure-split1</a>) operator is used to distribute the outputs
+of <script type="math/tex">A</script> to the inputs of <script type="math/tex">B</script>.</p>
+<p><a name="figure-split1"></a>
+<img alt="figure-split1" src="../images/split1.png" />
+<span class='caption'>example of split composition   <span class="lstinline">((10,20) &lt;: (+,*,/))</span></span></p>
+<p>
+<script type="math/tex; mode=display">
+</script>
+Each input <script type="math/tex">i</script> of <script type="math/tex">B</script> is connected to the output <script type="math/tex">i \bmod k</script> of <script type="math/tex">A</script> : 
+<script type="math/tex; mode=display">
+</script>
+</p>
+<div class="paragraph">Merge Composition</div>
+<p>The <strong>merge composition</strong>  <script type="math/tex">A:>B</script> (figure <a href="../3-syntax#figure-merge1">figure-merge1</a>) is the dual of the <strong>split composition</strong>. The number of outputs of <script type="math/tex">A</script> must be a multiple of the number of inputs of <script type="math/tex">B</script> : 
+<script type="math/tex; mode=display">
+</script>
+Each output <script type="math/tex">i</script> of <script type="math/tex">A</script> is connected to the input <script type="math/tex">i \bmod k</script> of <script type="math/tex">B</script> : 
+<script type="math/tex; mode=display">
+</script>
+The <script type="math/tex">k</script> incoming signals of an input of <script type="math/tex">B</script> are summed together.</p>
+<p><a name="figure-merge1"></a>
+<img alt="figure-merge1" src="../images/merge1.png" />
+<span class='caption'>example of merge composition <span class="lstinline">((10,20,30,40) :&gt; *)</span></span></p>
+<div class="paragraph">Recursive Composition</div>
+<p>The <strong>recursive composition</strong> <span class="lstinline">A~B</span> (figure <a href="../3-syntax#figure-rec1">figure-rec1</a>) is used to create cycles in the block-diagram in order to express recursive computations. It is the most complex operation in terms of connections.</p>
+<p>To be applicable it requires that :
+<script type="math/tex; mode=display">
+</script>
+Each input of <script type="math/tex">B</script> is connected to the corresponding output of <script type="math/tex">A</script> via an implicit 1-sample delay : 
+<script type="math/tex; mode=display">
+A[i]\stackrel{Z^{-1}}{\rightarrow}[i]B
+</script>
+and each output of <script type="math/tex">B</script> is connected to the corresponding input of <script type="math/tex">A</script>:
+<script type="math/tex; mode=display">
+B[i]\rightarrow [i]A
+</script>
+</p>
+<p>The inputs of the resulting block diagram are the remaining unconnected inputs of <script type="math/tex">A</script>. The outputs are all the outputs of <script type="math/tex">A</script>.</p>
+<p><a name="figure-rec1"></a>
+<img alt="figure-rec1" src="../images/rec1.png" />
+<span class='caption'>example of recursive composition <span class="lstinline">+(12345) ~ *(1103515245)</span></span></p>
+<h4 id="inputs-and-outputs-of-an-expression">Inputs and outputs of an expression</h4>
+<p>These two constructions can be used to know at compile time the number of inputs and outputs of any Faust expression. </p>
+<div class="rail">
+<span class="railtitle">insouts</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, Sequence ("inputs", '(', NonTerminal('expression'), ')'), Sequence ("outputs", '(', NonTerminal('expression'), ')'))
+).addTo()
+
+</script>
+</div>
+
+<p>They are useful to define high order functions and build algorithmically complex block-diagrams. Here is an example to automatically reverse the order of the outputs of an expression.</p>
+<pre><code>Xo(expr) = expr &lt;: par(i,n,selector(n-i-1,n)) 
+         with { n=outputs(expr); };
+</code></pre>
+<p>And the inputs of an expression :</p>
+<pre><code>Xi(expr) = bus(n) &lt;: par(i,n,selector(n-i-1,n)) : expr 
+         with { n=inputs(expr); };
+</code></pre>
+<p>For example <span class="lstinline">Xi(-)</span> will reverse the order of the two inputs of the substraction.</p>
+<h4 id="iterations">Iterations</h4>
+<p>Iterations are analogous to <span class="lstinline">for(...)</span> loops and provide a convenient way to automate some complex block-diagram constructions. </p>
+<div class="rail">
+<span class="railtitle">diagiteration</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, Sequence ("par", '(', NonTerminal('ident'), ',', NonTerminal('numiter'), ',', NonTerminal('expression'), ')'), Sequence ("seq", '(', NonTerminal('ident'), ',', NonTerminal('numiter'), ',', NonTerminal('expression'), ')'), Sequence ("sum", '(', NonTerminal('ident'), ',', NonTerminal('numiter'), ',', NonTerminal('expression'), ')'), Sequence ("prod", '(', NonTerminal('ident'), ',', NonTerminal('numiter'), ',', NonTerminal('expression'), ')'))
+).addTo()
+
+</script>
+</div>
+
+<p>The following example shows the usage of  <span class="lstinline">seq</span> to create a 10-bands filter:</p>
+<pre><code>process  =  seq(i, 10, 
+                vgroup(&quot;band %i&quot;, 
+                    bandfilter( 1000*(1+i) ) 
+                ) 
+            );
+</code></pre>
+<div class="rail">
+<span class="railtitle">numiter</span>
+<br /><script>
+ComplexDiagram(
+    NonTerminal('expression')
+).addTo()
+
+</script>
+</div>
+<p>The number of iterations must be a constant expression. </p>
+<h3 id="infix-notation">Infix Notation</h3>
+<div class="marginpar">Infix notation is commonly used in mathematics. It consists in placing the operand between the arguments as in \(2+3\)}Besides its algebra-based core syntax, Faust provides some syntax extensions, in particular the familiar \emph{infix notation
+</div>
+<p>. For example if you want to multiply two numbers, let say <span class="lstinline">2</span> and <span class="lstinline">3</span>, you can write directly <span class="lstinline">2<em>3</span> instead of the equivalent core-syntax expression <span class="lstinline">2,3:</em></span>.</p>
+<p>The <strong>infix notation</strong> is not limited to numbers or numerical expressions. Arbitrary expressions <span class="lstinline">A</span> and <span class="lstinline">B</span> can be used, provided that <span class="lstinline">A,B</span> has exactly two outputs. For example you can write <span class="lstinline"><em>/2</span>. It is equivalent to <span class="lstinline"></em>,2:/</span> which divides the incoming signal by <span class="lstinline">2</span>. </p>
+<p>Examples of equivalences are given table <a href="../3-syntax#tab-infixrules">tab-infixrules</a>.</p>
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="center"></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right"><span class="lstinline">2-3</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">2,3 : -</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">2*3</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">2,3 : *</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">_@7</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">_,7 : @</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">_/2</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">_,2 : /</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">A&lt;B</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">A,B : &lt;</span></td>
+</tr>
+<tr>
+<td align="right"><a name="tab-infixrules"></a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class='caption'>Infix and core syntax equivalences</span></p>
+<p>In case of doubts on the meaning of an infix expression, for example <span class="lstinline">_<em><em></span>, it is useful to translate it to its core syntax equivalent, here <span class="lstinline"></em>,_:</em></span>, which is equivalent to <span class="lstinline">*</span>.</p>
+<p>Built-in primitives that can be used in infix notation are called <strong>infix operators</strong> and are listed in this section. Please note that a more detailed description of these operators is available section <a href="../3-syntax#primitives">primitives</a>. </p>
+<h4 id="comparison-operators">Comparison Operators</h4>
+<p>Comparison operators compare two signals and produce a signal that is 1 when the comparison is true and 0 when the comparison is false. </p>
+<div class="rail">
+<span class="railtitle">comparison</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('expression'), Choice (0, '<', '<=', '>', '>=', '==', '!='), NonTerminal('expression'))
+).addTo()
+
+</script>
+</div>
+
+<p>The priority and associativity of the comparison operators is given table <a href="../3-syntax#infix-comparison-priority">infix-comparison-priority</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Pri.</strong></td>
+<td><strong>Assoc.</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ &lt;\ <span class="roman"><em>expression</em></span></td>
+<td>5</td>
+<td>left</td>
+<td>less than</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ &lt;=\ <span class="roman"><em>expression</em></span></td>
+<td>5</td>
+<td>left</td>
+<td>less or equal</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ !=\ <span class="roman"><em>expression</em></span></td>
+<td>5</td>
+<td>left</td>
+<td>different</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ &gt;=\ <span class="roman"><em>expression</em></span></td>
+<td>5</td>
+<td>left</td>
+<td>greater or equal</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ &gt;\ <span class="roman"><em>expression</em></span></td>
+<td>5</td>
+<td>left</td>
+<td>greater than</td>
+</tr>
+<tr>
+<td><a name="infix-comparison-priority"></a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class='caption'>Comparison operators priorities in infix expressions</span></p>
+<h4 id="math-operators">Math Operators</h4>
+<p>Math operators combine two signals and produce a resulting signal by applying a numerical operation on each sample. </p>
+<div class="rail">
+<span class="railtitle">math</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('expression'), Choice (0, '+', '-', '*', '/', '%', NonTerminal('⋀')), NonTerminal('expression'))
+).addTo()
+
+</script>
+</div>
+
+<p>The priority and associativity of the math operators is given table <a href="../3-syntax#infix-math-priority">infix-math-priority</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Pri.</strong></td>
+<td><strong>Assoc.</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ +\ <span class="roman"><em>expression</em></span></td>
+<td>6</td>
+<td>left</td>
+<td>addition</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ -\ <span class="roman"><em>expression</em></span></td>
+<td>6</td>
+<td>left</td>
+<td>subtraction</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ *\ <span class="roman"><em>expression</em></span></td>
+<td>7</td>
+<td>left</td>
+<td>multiplication</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ /\ <span class="roman"><em>expression</em></span></td>
+<td>7</td>
+<td>left</td>
+<td>division</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ %\ <span class="roman"><em>expression</em></span></td>
+<td>7</td>
+<td>left</td>
+<td>modulo</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ \^\ <span class="roman"><em>expression</em></span></td>
+<td>8</td>
+<td>left</td>
+<td>power</td>
+</tr>
+<tr>
+<td><a name="infix-math-priority"></a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class='caption'>Math operators priorities in infix expressions</span></p>
+<h4 id="bitwise-operators">Bitwise operators</h4>
+<p>Bitwise operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. </p>
+<div class="rail">
+<span class="railtitle">bitwise</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('expression'), Choice (0, NonTerminal('|'), NonTerminal('&'), 'xor', '<<', '>>'), NonTerminal('expression'))
+).addTo()
+
+</script>
+</div>
+
+<p>The priority and associativity of the bitwise operators is given table <a href="../3-syntax#infix-bitwise-priority">infix-bitwise-priority</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Pri.</strong></td>
+<td><strong>Assoc.</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ |\ <span class="roman"><em>expression</em></span></td>
+<td>6</td>
+<td>left</td>
+<td>bitwise or</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\</td>
+<td>\ <span class="roman"><em>expression</em></span></td>
+<td>7</td>
+<td>left</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ xor\ <span class="roman"><em>expression</em></span></td>
+<td>7</td>
+<td>left</td>
+<td>bitwise xor</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ &lt;&lt;\ <span class="roman"><em>expression</em></span></td>
+<td>7</td>
+<td>left</td>
+<td>bitwise left shift</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ &gt;&gt;\ <span class="roman"><em>expression</em></span></td>
+<td>7</td>
+<td>left</td>
+<td>bitwise right shift</td>
+</tr>
+<tr>
+<td><a name="infix-bitwise-priority"></a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class='caption'>Bitwise operators priorities in infix expressions</span></p>
+<h4 id="delay-operators">Delay operators</h4>
+<p>Delay operators combine two signals and produce a resulting signal by applying a bitwise operation on each sample. </p>
+<div class="rail">
+<span class="railtitle">delay</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, Sequence (NonTerminal('expression'), NonTerminal('@'), NonTerminal('expression')), Sequence (NonTerminal('expression'), NonTerminal(''')))
+).addTo()
+
+</script>
+</div>
+
+<p>The delay operator <span class="lstinline">@</span> allows to delay left handside expression by the amount defined by the right handside expression. The unary operator "'" delays the left handside expression by one sample.  </p>
+<p>The priority and associativity of the delay operators is given table <a href="../3-syntax#infix-delay-priority">infix-delay-priority</a>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Pri.</strong></td>
+<td><strong>Assoc.</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span>\ @\ <span class="roman"><em>expression</em></span></td>
+<td>9</td>
+<td>left</td>
+<td>variable delay</td>
+</tr>
+<tr>
+<td><span class="roman"><em>expression</em></span> \'</td>
+<td>10</td>
+<td>left</td>
+<td>one-sample delay</td>
+</tr>
+<tr>
+<td><a name="infix-delay-priority"></a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class='caption'>Delay operators priorities in infix expressions</span></p>
+<h3 id="prefix-notation">Prefix Notation</h3>
+<p>Beside <strong>infix notation</strong>, it is also possible to use <strong>prefix notation</strong>. 
+The <strong>prefix notation</strong> is the usual mathematical notation for functions <script type="math/tex">f(x,y,z,\ldots)</script>, but extended to <strong>infix operators</strong>. </p>
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="center"></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right"><span class="lstinline">*(2,3)</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">2,3 : *</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">@(_,7)</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">_,7 : @</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">/(_,2)</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">_,2 : /</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">&lt;(A,B)</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">A,B : &lt;</span></td>
+</tr>
+<tr>
+<td align="right"><a name="tab-prefixrules"></a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class='caption'>Prefix to core syntax translation rules</span></p>
+<p>It consists in first having the operator, for example <span class="lstinline">/</span>, followed by its arguments between parentheses: <span class="lstinline">/(2,3)</span> (see table <a href="../3-syntax#tab-prefixrules">tab-prefixrules</a>). </p>
+<h4 id="partial-application">Partial Application</h4>
+<p>The <strong>partial application</strong> notation is a variant of <strong>prefix notation</strong> in which not all arguments are given. For instance  <span class="lstinline">/(2)</span> (divide by 2), <span class="lstinline">^(3)</span>  (rise to the cube) and <span class="lstinline">@(512)</span> (delay by 512 samples) are examples of partial applications where only one argument is given. The result of a partial application is a function that "waits" for the remaining arguments. </p>
+<p>When doing partial application with an <strong>infix operator</strong>, it is important to note that the supplied argument is not the first argument, but always the second one, as summarized table <a href="../3-syntax#tab-partialrules">tab-partialrules</a>. </p>
+<table>
+<thead>
+<tr>
+<th align="right"></th>
+<th align="center"></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right"><span class="lstinline">+(C)</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">_,C:*</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">-(C)</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">_,C:-</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">&lt;(C)</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">_,C:&lt;</span></td>
+</tr>
+<tr>
+<td align="right"><span class="lstinline">/(C)</span></td>
+<td align="center">
+<script type="math/tex">\equiv</script>
+</td>
+<td><span class="lstinline">_,C:/</span></td>
+</tr>
+<tr>
+<td align="right"><a name="tab-partialrules"></a></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class='caption'>Partial application of infix operators</span></p>
+<p>For commutative operations that doesn't matter. But for non-commutative ones, it is more ``natural'' to fix the second argument.  We use divide by 2 (<span class="lstinline">/(2)</span>) or rise to the cube (<span class="lstinline">^(3)</span>) more often than the other way around.</p>
+<p>Please note that this rule only applies to infix operators, not other primitives or functions. If you partially apply a regular function to a single argument, it will correspond to the first parameter.</p>
+<h3 id="time-expressions">Time expressions</h3>
+<p>Time expressions are used to express delays. The notation <span class="lstinline">X@10</span> represent the signal <span class="lstinline">X</span> delayed by 10 samples. The notation "X'" represent the signal X delayed by one sample and is therefore equivalent to <span class="lstinline">X@1</span>.</p>
+<div class="rail">
+<span class="railtitle">time</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, Sequence (NonTerminal('expression'), NonTerminal('@'), NonTerminal('expression')), Sequence (NonTerminal('expression'), NonTerminal(''')))
+).addTo()
+
+</script>
+</div>
+
+<p>The delay (automatically promoted to <em>int</em>) don't have to be fixed, but it must be positive and bounded. The values of a slider are perfectly acceptable as in the following example:</p>
+<pre><code>process = _ @ hslider(&quot;delay&quot;,0, 0, 100, 1);
+</code></pre>
+<h3 id="environment-expressions">Environment expressions</h3>
+<p><span class="smallcaps">Faust</span> is a lexically scoped language. The meaning of a <span class="smallcaps">Faust</span> expression is determined by its context of definition (its lexical environment) and not by its context of use. </p>
+<p>To keep their original meaning, <span class="smallcaps">Faust</span> expressions are bounded to their lexical environment in structures called <em>closures</em>. The following constructions allow to explicitly create and access such environments. Moreover they provide powerful means to reuse existing code and promote modular design.</p>
+<div class="rail">
+<span class="railtitle">envexp</span>
+<br /><script>
+
+</script>
+</div>
+
+<h4 id="with">With</h4>
+<p>The <span class="lstinline">with</span> construction allows to specify a <em>local environment</em>, a private list of definition that will be used to evaluate the left hand expression</p>
+<div class="rail">
+<span class="railtitle">withexpression</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('expression'), 'with', NonTerminal('{'), NonTerminal('definition+'), NonTerminal('}'))
+).addTo()
+
+</script>
+</div>
+
+<p>In the following example :</p>
+<pre><code>pink = f : + ~ g with {
+    f(x) = 0.04957526213389*x 
+         - 0.06305581334498*x' 
+         + 0.01483220320740*x'';
+    g(x) = 1.80116083982126*x 
+         - 0.80257737639225*x';
+};
+</code></pre>
+<p>the definitions of <span class="lstinline">f(x)</span> and <span class="lstinline">g(x)</span> are local to <span class="lstinline">f : + ~ g</span>.</p>
+<p>Please note that <span class="lstinline">with</span> is left associative and has the lowest priority:</p>
+<ul>
+<li><span class="lstinline">f : + ~ g with {...}</span> is equivalent to <span class="lstinline">(f : + ~ g)  with {...}</span>. </li>
+<li><span class="lstinline">f : + ~ g with {...} with {...}</span> is equivalent to <span class="lstinline">((f : + ~ g)  with {...})  with {...}</span>. </li>
+</ul>
+<h4 id="letrec">Letrec</h4>
+<p>The <span class="lstinline">letrec</span> construction is somehow similar to <span class="lstinline">with</span>, but for   <strong>difference equations</strong> instead of regular definitions. It allows to easily express groups of mutually recursive signals, for example:
+x(t)&amp;=&amp;y(t-1)+10;
+y(t)&amp;=&amp;x(t-1)-1;
+as <span class="lstinline">E letrec { 'x = y+10; 'y = x-1; }</span> </p>
+<p>The syntax is defined by the following rules:</p>
+<div class="rail">
+<span class="railtitle">letrecexpression</span>
+<br /><script>
+
+</script>
+</div>
+
+<p>Please remarks the special notation <span class="lstinline">'x=y+10</span> instead of <span class="lstinline">x=y'+10</span>. It makes syntactically impossible to write non-sensical equations like <span class="lstinline">x=x+1</span>.</p>
+<p>Here is a more involved example. Let say we want to define an envelop generator with an attack time, a release time and a gate signal. A possible definition is the following:</p>
+<pre><code>ar(a,r,g) = v
+  letrec {
+    'n = (n+1) * (g&lt;=g');
+    'v = max(0, v + (n&lt;a)/a - (n&gt;=a)/r) * (g&lt;=g');
+  };
+</code></pre>
+<p>With the following semantics for <script type="math/tex">n(t)</script> and <script type="math/tex">v(t)</script>:
+    n(t)&amp;=&amp;(n(t-1)+1) * (g(t) &lt;= g(t-1))
+    v(t)&amp;=&amp; max(0, v(t-1) + (n(t-1)<a(t))/a(t) 
+                          &-& (n(t-1)>=a(t))/r(t)) * (g(t)&lt;=g(t-1))</p>
+<p>In order to factor some expressions common to several recursive definitions, we can use the clause <span class="lstinline">where</span> followed by one or more definitions. These definitions will only be visible to the recursive equations of the <span class="lstinline">letrec</span>, but not to the outside world, unlike the recursive definitions themselves.</p>
+<p>For instance in the previous example we can factorize <span class="lstinline">(g&lt;=g)</span> leading to the following expression:</p>
+<pre><code>    ar(a,r,g) = v
+      letrec {
+        'n = (n+1) * c;
+        'v = max(0, v + (n&lt;a)/a - (n&gt;=a)/r) * c;
+        where
+         c = g&lt;=g';
+      };
+</code></pre>
+<p>Please note that <span class="lstinline">letrec</span> is essentially syntactic sugar.</p>
+<p>Here is an example of 'letrec':</p>
+<pre><code>    x,y  letrec {
+         x = defx;
+         y = defy;
+         z = defz;
+        where
+         f = deff;
+         g = defg;
+      };
+</code></pre>
+<p>and its translation as done internally by the compiler:</p>
+<pre><code>    x,y  with {
+         x = BODY : _,!,!;
+         y = BODY : !,_,!;
+         z = BODY : !,!,_;
+         BODY = \(x,y,z).((defx,defy,defz) with {f=deff; g=defg;}) ~ (_,_,_);
+      };
+</code></pre>
+<h4 id="environment">Environment</h4>
+<p>The <span class="lstinline">environment</span> construction allows to create an explicit environment. It is like a <span class="lstinline">with</span>, but without the left hand expression. It is a convenient way to group together related definitions, to isolate groups of definitions and to create a name space hierarchy. </p>
+<div class="rail">
+<span class="railtitle">environment</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ('environment', NonTerminal('{'), NonTerminal('definition+'), NonTerminal('}'))
+).addTo()
+
+</script>
+</div>
+
+<p>In the following example an <span class="lstinline">environment</span> construction is used to group together some constant definitions :</p>
+<pre><code>constant = environment {
+    pi = 3.14159;
+    e = 2,718;
+    ...
+};
+</code></pre>
+<p>The  <span class="lstinline">.</span> construction allows to access the definitions of an environment (see next paragraph).</p>
+<h4 id="access">Access</h4>
+<p>Definitions inside an environment can be accessed using 
+the '.' construction. </p>
+<div class="rail">
+<span class="railtitle">access</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('expression'), '.', NonTerminal('ident'))
+).addTo()
+
+</script>
+</div>
+
+<p>For example <span class="lstinline">constant.pi</span> refers to the definition of <span class="lstinline">pi</span> in the above <span class="lstinline">constant</span> environment.</p>
+<p>Please note that environment don't have to be named. We could have written directly 
+<span class="lstinline">environment{pi = 3.14159; e = 2,718;....}.pi</span></p>
+<h4 id="library">Library</h4>
+<p>The <span class="lstinline">library</span> construct allows to create an environment by reading the definitions from a file.</p>
+<div class="rail">
+<span class="railtitle">library</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ('library', '(', NonTerminal('filename'), ')')
+).addTo()
+
+</script>
+</div>
+
+<p>For example <span class="lstinline">library("miscfilter.lib")</span> represents the environment 
+obtained by reading the file "miscfilter.lib". It works like <span class="lstinline">import("miscfilter.lib")</span> but all the read definitions are stored in a new separate lexical environment. Individual definitions can be accessed as described in the previous paragraph. For example <span class="lstinline">library("miscfilter.lib").lowpass</span> denotes the function <span class="lstinline">lowpass</span> as defined in the file <span class="lstinline">"miscfilter.lib"</span>.</p>
+<p>To avoid name conflicts when importing libraries it is recommended to prefer <span class="lstinline">library</span> to <span class="lstinline">import</span>. So instead of :</p>
+<pre><code>import(&quot;miscfilter.lib&quot;);
+  ...
+...lowpass....
+    ...
+};
+</code></pre>
+<p>the following will ensure an absence of conflicts : </p>
+<pre><code>fl = library(&quot;miscfilter.lib&quot;);
+  ...
+...fl.lowpass....
+    ...
+};
+</code></pre>
+<h4 id="component">Component</h4>
+<p>The <span class="lstinline">component(...)</span> construction allows to reuse a full <span class="smallcaps">Faust</span> program as a simple expression.</p>
+<div class="rail">
+<span class="railtitle">component</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ('component', '(', NonTerminal('filename'), ')')
+).addTo()
+
+</script>
+</div>
+
+<p>For example <span class="lstinline">component("freeverb.dsp")</span> denotes the signal processor defined in file "freeverb.dsp". </p>
+<p>Components can be used within expressions like in: </p>
+<pre><code> ...component(&quot;karplus32.dsp&quot;):component(&quot;freeverb.dsp&quot;)... 
+</code></pre>
+<p>Please note that <span class="lstinline">component("freeverb.dsp")</span> is equivalent to <span class="lstinline">library("freeverb.dsp").process</span>.</p>
+<h4 id="explicit-substitution">Explicit substitution</h4>
+<p>Explicit substitution can be used to customize a component or any expression with a lexical environment by replacing some of its internal definitions, without having to modify it.</p>
+<div class="rail">
+<span class="railtitle">explicitsubst</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('expression'), "[", NonTerminal('definition+'), "]")
+).addTo()
+
+</script>
+</div>
+
+<p>For example we can create a customized version of <span class="lstinline">component("freeverb.dsp")</span>, with a different definition of <span class="lstinline">foo(x)</span>, by writing :</p>
+<pre><code>...component(&quot;freeverb.dsp&quot;)[foo(x) = ...;]...
+};
+</code></pre>
+<h3 id="foreign-expressions">Foreign expressions</h3>
+<p>Reference to external (foreign) C <em>functions</em>, <em>variables</em> and <em>constants</em> can be introduced using the <em>foreign expressions</em> mechanism.</p>
+<div class="rail">
+<span class="railtitle">foreignexp</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, Sequence ('ffunction', '(', NonTerminal('signature'), ',', NonTerminal('includefile'), ',', NonTerminal('library'), ')'), Sequence ('fvariable', '(', NonTerminal('type'), NonTerminal('identifier'), ',', NonTerminal('includefile'), ')'), Sequence ('fconstant', '(', NonTerminal('type'), NonTerminal('identifier'), ',', NonTerminal('includefile'), ')'))
+).addTo()
+
+</script>
+</div>
+
+<h4 id="foreign-function-declaration">Foreign function declaration</h4>
+<p>An external C function is declared by indicating its name and signature as well as the required include file.
+The file <span class="lstinline">"maths.lib"</span> of the <span class="smallcaps">Faust</span> distribution contains several foreign function definitions, for example the inverse hyperbolic sine function <span class="lstinline">asinh</span> is defined as follows</p>
+<pre><code>    asinh = ffunction(float asinhf|asinh|asinhl (float), &lt;math.h&gt;, &quot;&quot;);
+</code></pre>
+<p>The signature part of a foreign function, <span class="lstinline">float asinhf|asinh|asinhl (float)</span> in our previous example, describes the prototype of the C function: its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the <span class="lstinline">asinh</span> function is called <span class="lstinline">asinhf</span> in single precision, <span class="lstinline">asinh</span> in double precision and <span class="lstinline">asinhl</span> in quad precision. This is why the three names are provided in the signature.</p>
+<div class="rail">
+<span class="railtitle">signature</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('type'), NonTerminal('funnames'), '(', OneOrMore (NonTerminal('argtype'), ','), ')')
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">funnames</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('identifier'), Optional  ( Sequence ('|', NonTerminal('identifier'))), Optional  ( Sequence ('|', NonTerminal('identifier'))))
+).addTo()
+
+</script>
+</div>
+
+<p>Foreign functions generally expect a precise type: (<em>int</em> or <em>float</em>) for their parameters. Note that currently only numerical functions involving scalar parameters are allowed. No vectors, tables or data structures can be passed as parameters or returned. During the compilation if the type of an argument is not the same as the type of the parameter, it is automatically converted to the expected one.</p>
+<p>Some foreign functions are polymorphic and can accept either <em>int</em> or <em>float</em> arguments. In this case, the polymorphism can be indicated by using the type <em>any</em> instead or int or float. Here is an example the C function <em>sizeof</em> that returns the size of its argument:</p>
+<pre><code>    sizeof = ffunction(int sizeof(any), &quot;&quot;,&quot;&quot;);
+</code></pre>
+<div class="rail">
+<span class="railtitle">type</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, 'int', 'float')
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">argtype</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, 'int', 'float', 'any')
+).addTo()
+
+</script>
+</div>
+
+<p>Foreign functions with input parameters are considered pure math functions. They are therefore considered free of side effects and called only when their parameters change (that is at the rate of the fastest parameter). </p>
+<p>Exceptions are functions with no input parameters. A typical example is the C <span class="lstinline">rand()</span> function. In this case the compiler generates code to call the function at sample rate.</p>
+<h4 id="foreign-variables-and-constants">Foreign variables and constants</h4>
+<p>External variables and constants can also be declared with a similar syntax. In the same <span class="lstinline">"maths.lib"</span> file, the definition of the sampling rate constant <span class="lstinline">SR</span> and the definition of the block-size variable <span class="lstinline">BS</span> can be found :</p>
+<pre><code>SR    = min(192000.0, 
+          max(1.0, 
+            fconstant(int fSamplingFreq, &lt;math.h&gt;)));
+BS    = fvariable(int count, &lt;math.h&gt;);
+</code></pre>
+<p>Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are only computed once, during the initialization period. </p>
+<p>Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.</p>
+<h4 id="include-file">Include file</h4>
+<p>In declaring foreign functions one has also to specify the include file. It allows the <span class="smallcaps">Faust</span> compiler to add the corresponding <span class="lstinline">#include...</span> in the generated code.</p>
+<div class="rail">
+<span class="railtitle">includefile</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, Sequence ('<', NonTerminal('char+'), '>'), Sequence ('"', NonTerminal('char+'), '"'))
+).addTo()
+
+</script>
+</div>
+
+<h4 id="library-file">Library file</h4>
+<p>In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the <span class="smallcaps">Faust</span> compiler to (possibly) automatically link the library. Note that this feature is only used with the LLVM backend in 'libfaust' dynamic library model.</p>
+<h3 id="applications-and-abstractions">Applications and Abstractions</h3>
+<p><em>Abstractions</em> and <em>applications</em> are fundamental programming constructions directly inspired by the Lambda-Calculus. These constructions provide powerful ways to describe and transform block-diagrams algorithmically.</p>
+<div class="rail">
+<span class="railtitle">progexp</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, NonTerminal('abstraction'), NonTerminal('application'))
+).addTo()
+
+</script>
+</div>
+
+<h4 id="abstractions">Abstractions</h4>
+<p>Abstractions correspond to functions definitions and allow to generalize a block-diagram by <em>making variable</em> some of its parts. </p>
+<div class="rail">
+<span class="railtitle">abstraction</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, NonTerminal('lambdaabstraction'), NonTerminal('patternabstraction'))
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">lambdaabstraction</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('\'), '(', OneOrMore (NonTerminal('ident'), ','), ')', '.', '(', NonTerminal('expression'), ')')
+).addTo()
+
+</script>
+</div>
+
+<p>Let's say you want to transform a stereo reverb, <span class="lstinline">freeverb</span> for instance, into a mono effect. You can write the following expression: </p>
+<pre><code>    _ &lt;: freeverb :&gt; _ 
+</code></pre>
+<p>The incoming mono signal is splitted to feed the two input channels of the reverb, while the two output channels of the reverb are mixed together to produce the resulting mono output.</p>
+<p>Imagine now that you are interested in transforming other stereo effects. It can be interesting to generalize this principle by making <span class="lstinline">freeverb</span> a variable: </p>
+<pre><code>    \(freeverb).(_ &lt;: freeverb :&gt; _)
+</code></pre>
+<p>The resulting abstraction can then be applied to transform other effects. Note that if <span class="lstinline">freeverb</span> is a perfectly valid variable name, a more neutral name would probably be easier to read like:</p>
+<pre><code>    \(fx).(_ &lt;: fx :&gt; _)
+</code></pre>
+<p>Moreover it could be convenient to give a name to this abstraction:</p>
+<pre><code>    mono = \(fx).(_ &lt;: fx :&gt; _);
+</code></pre>
+<p>Or even use a more traditional, but equivalent, notation:</p>
+<pre><code>    mono(fx) = _ &lt;: fx :&gt; _;
+</code></pre>
+<h4 id="applications">Applications</h4>
+<p>Applications correspond to function calls and allow to replace the variable parts of an abstraction with the specified arguments.</p>
+<div class="rail">
+<span class="railtitle">application</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('expression'), '(', OneOrMore (NonTerminal('expression'), ','), ')')
+).addTo()
+
+</script>
+</div>
+
+<p>For example you can apply the previous abstraction to transform your stereo harmonizer:</p>
+<pre><code>    mono(harmonizer)
+</code></pre>
+<p>The compiler will start by replacing <span class="lstinline">mono</span> by its definition:</p>
+<pre><code>    \(fx).(_ &lt;: fx :&gt; _)(harmonizer)
+</code></pre>
+<p>Whenever the <span class="smallcaps">Faust</span> compiler find an application of an abstraction it replaces<div class="marginpar">Replacing the <strong>variable part</strong> with the argument is called <script type="math/tex">\beta</script>-reduction in Lambda-Calculus} the \emph{variable part
+</div> with the argument. The resulting expression is as expected:</p>
+<pre><code>    (_ &lt;: harmonizer :&gt; _)
+</code></pre>
+<h4 id="pattern-matching">Pattern Matching</h4>
+<p>Pattern matching rules provide an effective way to analyze and transform block-diagrams algorithmically.</p>
+<div class="rail">
+<span class="railtitle">patternabstraction</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("case", NonTerminal('{'), OneOrMore (NonTerminal('rule')), NonTerminal('}'))
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">Rule</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ('(', OneOrMore (NonTerminal('pattern'), ','), ')', "=>", NonTerminal('expression'), ';')
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">Pattern</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, NonTerminal('ident'), NonTerminal('expression'))
+).addTo()
+
+</script>
+</div>
+
+<p>For example <span class="lstinline">case{ (x:y) =&gt; y:x; (x) =&gt; x; }</span> contains two rules. The first one will match a sequential expression and invert the two part. The second one will match all remaining expressions and leave it untouched. Therefore the application:</p>
+<pre><code>case{(x:y) =&gt; y:x; (x) =&gt; x;}(freeverb:harmonizer)
+</code></pre>
+<p>will produce:</p>
+<pre><code>    (harmonizer:freeverb)
+</code></pre>
+<p>Please note that patterns are evaluated before the pattern matching operation. Therefore only variables that appear free in the pattern are binding variables during pattern matching. </p>
+<h2 id="primitives">Primitives</h2>
+<p><a name="primitives"></a>
+The primitive signal processing operations represent the built-in functionalities of <span class="smallcaps">Faust</span>, that is the atomic operations on signals provided by the language. All these primitives denote <strong>signal processors</strong>, functions transforming <strong>input signals</strong> into <strong>output signals</strong>.</p>
+<div class="rail">
+<span class="railtitle">primitive</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, NonTerminal('number'), NonTerminal('route'), NonTerminal('waveform'), NonTerminal('soundfile'), NonTerminal('cprimitive'), NonTerminal('mathprimitive'), NonTerminal('delayandtables'), NonTerminal('uielements'))
+).addTo()
+
+</script>
+</div>
+
+<h3 id="numbers">Numbers</h3>
+<p><span class="smallcaps">Faust</span> considers two types of numbers: <em>integers</em> and <em>floats</em>. Integers are implemented as signed 32-bits integers, and floats are implemented either with a simple, double or extended precision depending of the compiler options. Floats are available in decimal or scientific notation. </p>
+<div class="rail">
+<span class="railtitle">int</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (Optional  ( Choice (0, '+', '-')), NonTerminal('digit+'))
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">float</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (Optional  ( Choice (0, '+', '-')), Choice (0, Sequence (NonTerminal('digit+'), '.', NonTerminal('digit*')), Sequence (NonTerminal('digit*'), '.', NonTerminal('digit+'))), Optional  ( NonTerminal('exponent')))
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">exponent</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ('e', Optional  ( Choice (0, '+', '-')), NonTerminal('digit+'))
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">digit</span>
+<br /><script>
+ComplexDiagram(
+    "0--9"
+).addTo()
+
+</script>
+</div>
+
+<p>Like any other <span class="smallcaps">Faust</span> expression, numbers are signal processors. For example the number <script type="math/tex">0.95</script> is a signal processor of type <script type="math/tex">\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}</script> that transforms an empty tuple of signals <script type="math/tex">()</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=0.95</script>.</p>
+<p>Operations on <em>integer</em> numbers follow the standard C semantic for <span class="lstinline">+, -, *</span> operations and can possibly overflow if the result cannot be represented as a  32-bits integer. The <span class="lstinline">/</span> operation is treated separately and cast both of its arguments to floats before doing the division, and thus the result takes the float type.</p>
+<h3 id="route-primitive">Route Primitive</h3>
+<p>The  <span class="lstinline">route</span> primitive facilitates the routing of signals in Faust. It has the following syntax:</p>
+<pre><code>route(A,B,a,b,c,d,...)
+route(A,B,(a,b),(c,d),...)
+</code></pre>
+<p>where:</p>
+<ul>
+<li><span class="lstinline">A</span> is the number of input signals, as a <em>constant numerical expression</em>, automatically promoted to <em>int</em></li>
+<li><span class="lstinline">B</span> is the number of output signals, as a <em>constant numerical expression</em>, automatically promoted to <em>int</em></li>
+<li><span class="lstinline">a,b / (a,b)</span> is an input/output pair, as <em>constant numerical expressions</em>, automatically promoted to <em>int</em></li>
+</ul>
+<p>Inputs are numbered from <span class="lstinline">1</span> to <span class="lstinline">A</span> and outputs are numbered from <span class="lstinline">1</span> to <span class="lstinline">B</span>. There can be any number of input/output pairs after the declaration of <span class="lstinline">A</span> and <span class="lstinline">B</span>.</p>
+<p>For example, crossing two signals can be carried out with:</p>
+<pre><code>process = route(2,2,1,2,2,1);
+</code></pre>
+<p>In that case, <span class="lstinline">route</span> has 2 inputs and 2 outputs. The first input (1) is connected to the second output (2) and the second input (2) is connected to the first output (1).</p>
+<p>Note that parenthesis can be optionally used to define a pair, so the previous example can also be written as:</p>
+<pre><code>process = route(2,2,(1,2),(2,1));
+</code></pre>
+<p>More complex expressions can be written using algorithmic constructions, like the following one to cross N signals:</p>
+<pre><code>// cross 10 signals: 
+// input 0 -&gt; output 10, 
+// input 1 -&gt; output 9, 
+// ..., 
+// input 9 -&gt; output 0
+
+N = 10;
+r = route(N,N,par(i,N,(i+1,N-i)));
+
+process = r;
+</code></pre>
+<h3 id="waveforms-primitive">Waveforms Primitive</h3>
+<p>A waveform is a fixed periodic signal defined by a list of samples as literal numbers. A waveform has two outputs. The first output is constant and indicates the size (number of samples) of the period. The second output is the periodic signal itself. </p>
+<div class="rail">
+<span class="railtitle">waveform</span>
+<br /><script>
+ComplexDiagram(
+    Sequence ("waveform", NonTerminal('{'), OneOrMore (NonTerminal('number'), ','), NonTerminal('}'))
+).addTo()
+
+</script>
+</div>
+
+<p>For example <span class="lstinline">waveform {0,1,2,3}</span> produces two outputs, the constant signal 4 and the periodic signal <span class="lstinline">0,1,2,3,0,1,2,3,0,1</span>\ldots. </p>
+<p>Please note that <span class="lstinline">waveform</span> works nicely with <span class="lstinline">rdtable</span>. Its first output, known at compile time, gives the size of the table, while the second signal gives the content of the table. Here is an example:</p>
+<pre><code>process = waveform {10,20,30,40,50,60,70}, %(7)~+(3) : rdtable;
+</code></pre>
+<h3 id="soundfiles-primitive">Soundfiles Primitive</h3>
+<p>The  <span class="lstinline">soundfile("label[url:{</span>path1';'path2';'path3';}]", n)' primitive allows access to a list of externally defined sound resources, described as the list of their filename, or complete paths. The <span class="lstinline">soundfile("label[url:path]", n)</span> , or <span class="lstinline">soundfile("label", n)</span> (where label is used as the soundfile path) simplified syntax allows to use a single file. </p>
+<p>A soundfile has:</p>
+<ul>
+<li>two inputs: the sound number (as a integer between 0 and 255, automatically promoted to <em>int</em>), and the read index in the sound (automatically promoted to <em>int</em>, which will access the last sample of the sound if the read index is greater than the sound length)</li>
+<li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate in frames</li>
+<li><span class="lstinline">n</span> several more outputs for the sound channels themselves, as a integer <em>constant numerical expression</em></li>
+</ul>
+<p>If more outputs than the actual number of channels in the soundfile are used, the sound channels will be automatically duplicated up to the wanted number of outputs (so for instance if a stereo sound is used with four output channels, the same group of two channels will be duplicated).</p>
+<p>If the soundfile cannot be loaded for whatever reason, a default sound with one channel, a length of 1024 frames and null outputs (with samples of value 0) will be used. Note also that soundfiles are entirely loaded in memory by the architecture file, so that the read index signal can access any sample.</p>
+<p>Specialized architecture files are responsible to load the actual soundfile. The <span class="lstinline">SoundUI</span> C++ class located in the <span class="lstinline">faust/gui/SoundUI.h</span> file implements the <span class="lstinline">void addSoundfile(label, url, sf_zone)</span> method, which loads the actual soundfiles using the {\it libsndfile} library, or possibly specific audio file loading code (in the case of the JUCE framework for instance), and set up the <span class="lstinline">sf_zone</span> sound memory pointers. </p>
+<p>Note that a special architecture file can perfectly decide to access and use sound resources created by another means (that is, not directly loaded from a soundfile). For instance a mapping between labels and sound resources defined in memory could be used, with some additional code in charge to actually setup all sound memory pointers when <span class="lstinline">void addSoundfile(label, url, sf_zone)</span> is called by the <span class="lstinline">buidUserInterface</span> mechanism.</p>
+<h3 id="c-equivalent-primitives">C-equivalent primitives</h3>
+<p>Most <span class="smallcaps">Faust</span> primitives are analogue to their C counterpart but adapted to signal processing.
+For example <span class="lstinline">+</span> is a function of type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> that transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)</script>. The function <span class="lstinline">-</span> has type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> and transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)-x_{2}(t)</script>. </p>
+<p>Please be aware that the unary <span class="lstinline">-</span> only exists in a limited form<div class="marginpar">Warning: unlike other programming languages the unary operatior <span class="lstinline">-</span> only exists in limited form in <span class="smallcaps">Faust</span>
+</div>. It can be used with numbers: <span class="lstinline">-0.5</span> and variables: <span class="lstinline">-myvar</span>, but not with expressions surrounded by parenthesis, because in this case it represents a partial application.  For instance   <span class="lstinline">-(a * b)</span> is a partial application. It is syntactic sugar for <span class="lstinline">_,(a * b) : -</span>. If you want to negate a complex term in parenthesis, you'll have to use <span class="lstinline">0 - (a * b)</span> instead.</p>
+<p>The primitives may use the int type for their arguments, but will automatically use the float type when the actual computation requires it. For instance <span class="lstinline">1/2</span> using int type arguments will correctly result in <span class="lstinline">0.5</span> in float type. Logical and shift primitives use the int type.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td>
+<script type="math/tex">n</script>
+</td>
+<td>
+<script type="math/tex">\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>integer number: <script type="math/tex">y(t)=n</script>
+</td>
+</tr>
+<tr>
+<td>
+<script type="math/tex">n.m</script>
+</td>
+<td>
+<script type="math/tex">\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>floating point number: <script type="math/tex">y(t)=n.m</script>
+</td>
+</tr>
+<tr>
+<td>_</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>identity function: <script type="math/tex">y(t)=x(t)</script>
+</td>
+</tr>
+<tr>
+<td>!</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{0}</script>
+</td>
+<td>cut function: <script type="math/tex">\forall x\in\mathbb{S},(x)\rightarrow ()</script>
+</td>
+</tr>
+<tr>
+<td>int</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>cast into an int signal: <script type="math/tex">y(t)=(int)x(t)</script>
+</td>
+</tr>
+<tr>
+<td>float</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>cast into an float signal: <script type="math/tex">y(t)=(float)x(t)</script>
+</td>
+</tr>
+<tr>
+<td>+</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>addition: <script type="math/tex">y(t)=x_{1}(t)+x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>-</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>subtraction: <script type="math/tex">y(t)=x_{1}(t)-x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>*</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>multiplication: <script type="math/tex">y(t)=x_{1}(t)*x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>
+<script type="math/tex">\land</script>
+</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>power: <script type="math/tex">y(t)=x_{1}(t)^{x_{2}(t)}</script>
+</td>
+</tr>
+<tr>
+<td>/</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>division: <script type="math/tex">y(t)=x_{1}(t)/x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>%</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>modulo: <script type="math/tex">y(t)=x_{1}(t)%x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>bitwise AND: <script type="math/tex">y(t)=x_{1}(t)&x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>|</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>bitwise OR: <script type="math/tex">y(t)=x_{1}(t)\|x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>xor</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>bitwise XOR: <script type="math/tex">y(t)=x_{1}(t)\land x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>arith. shift left: <script type="math/tex">y(t)=x_{1}(t) << x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>arith. shift right: <script type="math/tex">y(t)=x_{1}(t) >> x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>less than: <script type="math/tex">y(t)=x_{1}(t) < x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>less or equal: <script type="math/tex">y(t)=x_{1}(t) <= x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>greater than: <script type="math/tex">y(t)=x_{1}(t) > x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>greater or equal: <script type="math/tex">y(t)=x_{1}(t) >= x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>==</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>equal: <script type="math/tex">y(t)=x_{1}(t) == x_{2}(t)</script>
+</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>different: <script type="math/tex">y(t)=x_{1}(t) != x_{2}(t)</script>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mathh-equivalent-primitives">math.h-equivalent primitives</h3>
+<p>Most of the C math.h functions are also built-in as primitives (the others are defined as external functions in file maths.lib). 
+The primitives may use the int type for their arguments, but will automatically use the float type when the actual computation requires it.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td>acos</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>arc cosine: <script type="math/tex">y(t)=\mathrm{acosf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>asin</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>arc sine: <script type="math/tex">y(t)=\mathrm{asinf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>atan</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>arc tangent: <script type="math/tex">y(t)=\mathrm{atanf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>atan2</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>arc tangent: <script type="math/tex">y(t)=\mathrm{atan2f}(x_{1}(t), x_{2}(t))</script>
+</td>
+</tr>
+<tr>
+<td>cos</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>cosine: <script type="math/tex">y(t)=\mathrm{cosf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>sin</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>sine: <script type="math/tex">y(t)=\mathrm{sinf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>tan</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>tangent: <script type="math/tex">y(t)=\mathrm{tanf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>exp</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>base-e exponential: <script type="math/tex">y(t)=\mathrm{expf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>log</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>base-e logarithm: <script type="math/tex">y(t)=\mathrm{logf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>log10</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>base-10 logarithm: <script type="math/tex">y(t)=\mathrm{log10f}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>pow</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>power: <script type="math/tex">y(t)=\mathrm{powf}(x_{1}(t),x_{2}(t))</script>
+</td>
+</tr>
+<tr>
+<td>sqrt</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>square root: <script type="math/tex">y(t)=\mathrm{sqrtf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>abs</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>absolute value (int): <script type="math/tex">y(t)=\mathrm{abs}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>absolute value (float): <script type="math/tex">y(t)=\mathrm{fabsf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>min</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>minimum: <script type="math/tex">y(t)=\mathrm{min}(x_{1}(t),x_{2}(t))</script>
+</td>
+</tr>
+<tr>
+<td>max</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>maximum: <script type="math/tex">y(t)=\mathrm{max}(x_{1}(t),x_{2}(t))</script>
+</td>
+</tr>
+<tr>
+<td>fmod</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>float modulo: <script type="math/tex">y(t)=\mathrm{fmodf}(x_{1}(t),x_{2}(t))</script>
+</td>
+</tr>
+<tr>
+<td>remainder</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>float remainder: <script type="math/tex">y(t)=\mathrm{remainderf}(x_{1}(t),x_{2}(t))</script>
+</td>
+</tr>
+<tr>
+<td>floor</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>largest int <script type="math/tex">\leq</script>: <script type="math/tex">y(t)=\mathrm{floorf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>ceil</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>smallest int <script type="math/tex">\geq</script>: <script type="math/tex">y(t)=\mathrm{ceilf}(x(t))</script>
+</td>
+</tr>
+<tr>
+<td>rint</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>closest int: <script type="math/tex">y(t)=\mathrm{rintf}(x(t))</script>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="delay-table-selector-primitives">Delay, Table, Selector primitives</h3>
+<p>The following primitives allow to define fixed delays, read-only and read-write tables and 2 or 3-ways selectors (see figure <a href="../3-syntax#fig-delays">fig-delays</a>).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td>mem</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>1-sample delay:  <script type="math/tex">y(t+1)=x(t),y(0)=0</script>
+</td>
+</tr>
+<tr>
+<td>prefix</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>1-sample delay:   <script type="math/tex">y(t+1)=x_{2}(t),y(0)=x_{1}(0)</script>
+</td>
+</tr>
+<tr>
+<td>@</td>
+<td>
+<script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>fixed delay:     <script type="math/tex">y(t+x_{2}(t))=x_{1}(t), y(t<x_{2}(t))=0</script>
+</td>
+</tr>
+<tr>
+<td>rdtable</td>
+<td>
+<script type="math/tex">\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>read-only table: <script type="math/tex">y(t)=T[r(t)]</script>
+</td>
+</tr>
+<tr>
+<td>rwtable</td>
+<td>
+<script type="math/tex">\mathbb{S}^{5}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>read-write table:    <script type="math/tex">T[w(t)]=c(t); y(t)=T[r(t)]</script>
+</td>
+</tr>
+<tr>
+<td>select2</td>
+<td>
+<script type="math/tex">\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>select between 2 signals:    <script type="math/tex">T[]={x_{0}(t),x_{1}(t)}; y(t)=T[s(t)]</script>
+</td>
+</tr>
+<tr>
+<td>select3</td>
+<td>
+<script type="math/tex">\mathbb{S}^{4}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>select between 3 signals:    <script type="math/tex">T[]={x_{0}(t),x_{1}(t),x_{2}(t)}; y(t)=T[s(t)]</script>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a name="fig-delays"></a>
+<img alt="fig-delays" src="../illustrations/faust-diagram6.png" />
+<span class='caption'>Delays, tables and selectors primitives </span></p>
+<p>The size input of <em>rdtable</em> and <em>rwtable</em> are integer <em>constant numerical expressions</em> automatically promoted to <em>int</em>, and the read and write indexes are also automatically promoted to <em>int</em>. The delay value is automatically promoted to <em>int</em>.</p>
+<h3 id="user-interface-elements">User Interface Elements</h3>
+<p><span class="smallcaps">Faust</span> user interface widgets allow an abstract description of the user interface from within the <span class="smallcaps">Faust</span> code. This description is
+independent of any GUI toolkits. It is based on <strong>buttons</strong>, <strong>checkboxes</strong>, <strong>sliders</strong>, etc. that are grouped together 
+vertically and horizontally using appropriate grouping schemes.</p>
+<p>All these GUI elements produce signals. A button for example (see figure <a href="../3-syntax#fig-button">fig-button</a>) produces a signal which is 1 when the button is pressed and 0 otherwise. These signals can be freely combined with other audio signals. </p>
+<p><a name="fig-button"></a>
+<img alt="fig-button" src="../illustrations/button.png" />
+<span class='caption'>User Interface Button</span></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Syntax</strong></td>
+<td><strong>Example</strong></td>
+</tr>
+<tr>
+<td>button(<span class="roman"><em>str</em></span>)</td>
+<td>button("play")</td>
+</tr>
+<tr>
+<td>checkbox(<span class="roman"><em>str</em></span>)</td>
+<td>checkbox("mute")</td>
+</tr>
+<tr>
+<td>vslider(<span class="roman"><em>str</em></span>,<span class="roman"><em>cur</em></span>,<span class="roman"><em>min</em></span>,<span class="roman"><em>max</em></span>,<span class="roman"><em>step</em></span>)</td>
+<td>vslider("vol",50,0,100,1)</td>
+</tr>
+<tr>
+<td>hslider(<span class="roman"><em>str</em></span>,<span class="roman"><em>cur</em></span>,<span class="roman"><em>min</em></span>,<span class="roman"><em>max</em></span>,<span class="roman"><em>step</em></span>)</td>
+<td>hslider("vol",0.5,0,1,0.01)</td>
+</tr>
+<tr>
+<td>nentry(<span class="roman"><em>str</em></span>,<span class="roman"><em>cur</em></span>,<span class="roman"><em>min</em></span>,<span class="roman"><em>max</em></span>,<span class="roman"><em>step</em></span>)</td>
+<td>nentry("freq",440,0,8000,1)</td>
+</tr>
+<tr>
+<td>vgroup(<span class="roman"><em>str</em></span>,<span class="roman"><em>block-diagram</em></span>)</td>
+<td>vgroup("reverb", \ldots)</td>
+</tr>
+<tr>
+<td>hgroup(<span class="roman"><em>str</em></span>,<span class="roman"><em>block-diagram</em></span>)</td>
+<td>hgroup("mixer", \ldots)</td>
+</tr>
+<tr>
+<td>tgroup(<span class="roman"><em>str</em></span>,<span class="roman"><em>block-diagram</em></span>)</td>
+<td>tgroup("parametric", \ldots)</td>
+</tr>
+<tr>
+<td>vbargraph(<span class="roman"><em>str</em></span>,<span class="roman"><em>min</em></span>,<span class="roman"><em>max</em></span>)</td>
+<td>vbargraph("input",0,100)</td>
+</tr>
+<tr>
+<td>hbargraph(<span class="roman"><em>str</em></span>,<span class="roman"><em>min</em></span>,<span class="roman"><em>max</em></span>)</td>
+<td>hbargraph("signal",0,1.0)</td>
+</tr>
+<tr>
+<td>attach</td>
+<td>attach(x, vumeter(x))</td>
+</tr>
+</tbody>
+</table>
+<p>All numerical parameters (like {\it cur}, {\it min}, {\it max}, {\it step}) are <em>constant numerical expressions</em>.</p>
+<h4 id="labels">Labels</h4>
+<p>Every user interface widget has a label (a string) that identifies it and informs the user of its purpose. There are three important mechanisms associated with labels (and coded inside the string): <em>variable parts</em>, <em>pathnames</em> and <em>metadata</em>.</p>
+<div class="paragraph">Variable parts.</div>
+<p>Labels can contain variable parts. These variable parts are indicated by the sign '%' followed by the name of a variable. During compilation each label is processed in order to replace the variable parts by the value of the variable. 
+For example <span class="lstinline">par(i,8,hslider("Voice %i", 0.9, 0, 1, 0.01))</span> creates 8 different sliders in parallel :</p>
+<pre><code>hslider(&quot;Voice 0&quot;, 0.9, 0, 1, 0.01),
+hslider(&quot;Voice 1&quot;, 0.9, 0, 1, 0.01),
+...
+hslider(&quot;Voice 7&quot;, 0.9, 0, 1, 0.01).
+</code></pre>
+<p>while <span class="lstinline">par(i,8,hslider("Voice", 0.9, 0, 1, 0.01))</span> would have created only one slider and duplicated its output 8 times.</p>
+<p>The variable part can have an optional format digit. 
+For example <span class="lstinline">"Voice %2i"</span> would indicate to use two digit when inserting the value of i in the string.</p>
+<p>An escape mechanism is provided.
+If the sign <span class="lstinline">%</span> is followed by itself, it will be included in the resulting string.
+For example <span class="lstinline">"feedback (%%)"</span> will result in <span class="lstinline">"feedback (%)"</span>.</p>
+<p>The variable name can be enclosed in curly brackets to clearly separate it from the rest of the string, as in <span class="lstinline">par(i,8,hslider("Voice %{i}", 0.9, 0, 1, 0.01))</span>.</p>
+<div class="paragraph">Pathnames.</div>
+<p>Thanks to horizontal, vertical and tabs groups, user interfaces have a hierarchical structure analog to a hierarchical file system. Each widget has an associated <em>pathname</em> obtained by concatenating the labels of all its surrounding groups with its own label.</p>
+<p>In the following example:</p>
+<pre><code>hgroup(&quot;Foo&quot;,
+    ...
+    vgroup(&quot;Faa&quot;, 
+        ...
+        hslider(&quot;volume&quot;,...)
+        ...
+    )
+    ...
+)
+</code></pre>
+<p>the volume slider has pathname <span class="lstinline">/h:Foo/v:Faa/volume</span>.</p>
+<p>In order to give more flexibility to the design of user interfaces, it is possible to explicitly specify the absolute or relative pathname of a widget directly in its label. </p>
+<p>In our previous example the pathname of:</p>
+<pre><code>    hslider(&quot;../volume&quot;,...)
+</code></pre>
+<p>would have been <span class="lstinline">"/h:Foo/volume"</span>, while the pathname of:</p>
+<pre><code>    hslider(&quot;t:Fii/volume&quot;,...)
+</code></pre>
+<p>would have been: 
+<span class="lstinline">"/h:Foo/v:Faa/t:Fii/volume"</span>.</p>
+<p>The grammar for labels with pathnames is the following:</p>
+<div class="rail">
+<span class="railtitle">label</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (NonTerminal('path'), NonTerminal('name'))
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">path</span>
+<br /><script>
+ComplexDiagram(
+    Sequence (Optional  ( '/'), Optional  ( OneOrMore (Sequence (NonTerminal('folder'), '/'))))
+).addTo()
+
+</script>
+</div>
+
+<div class="rail">
+<span class="railtitle">folder</span>
+<br /><script>
+ComplexDiagram(
+    Choice (0, "..", Sequence (Choice (0, "h:", "v:", "t:"), NonTerminal('name')))
+).addTo()
+
+</script>
+</div>
+
+<div class="paragraph">Metadata</div>
+<p>Widget labels can contain metadata enclosed in square brackets. These metadata associate a key with a value and are used to provide additional information to the architecture file.  They are typically used to improve the look and feel of the user interface. 
+The <span class="smallcaps">Faust</span> code:</p>
+<pre><code>process = *(hslider(&quot;foo [key1: val 1][key2: val 2]&quot;, 
+                    0, 0, 1, 0.1));
+</code></pre>
+<p>will produce and the corresponding C++ code:</p>
+<pre><code>class mydsp : public dsp {
+    ...
+    virtual void buildUserInterface(UI* interface) {
+      interface-&gt;openVerticalBox(&quot;m&quot;);
+      interface-&gt;declare(&amp;fslider0, &quot;key1&quot;, &quot;val 1&quot;);
+      interface-&gt;declare(&amp;fslider0, &quot;key2&quot;, &quot;val 2&quot;);
+      interface-&gt;addHorizontalSlider(&quot;foo&quot;, 
+        &amp;fslider0, 0.0f, 0.0f, 1.0f, 0.1f);
+      interface-&gt;closeBox();
+    }
+...
+};
+</code></pre>
+<p>All the metadata are removed from the label by the compiler and 
+transformed in calls to the <span class="lstinline">UI::declare()</span> method. All these 
+<span class="lstinline">UI::declare()</span> calls will always take place before the <span class="lstinline">UI::AddSomething()</span> 
+call that creates the User Interface element. This allows the 
+<span class="lstinline">UI::AddSomething()</span>  method to make full use of the available metadata.</p>
+<p>It is the role of the architecture file to decide what to do with these 
+metadata. The <span class="lstinline">jack-qt.cpp</span> architecture file for example implements the 
+following:
+- <span class="lstinline">"...[style:knob]..."</span> creates a rotating knob instead of a regular 
+slider or nentry.
+- <span class="lstinline">"...[style:led]..."</span> in a bargraph's label creates a small LED instead 
+of a full bargraph
+- <span class="lstinline">"...[unit:dB]..."</span> in a bargraph's label creates a more realistic 
+bargraph with colors ranging from green to red depending of the level of 
+the value
+- <span class="lstinline">"...[unit:xx]..."</span> in a widget postfixes the value displayed with xx
+- <span class="lstinline">"...[tooltip:bla bla]..."</span> add a tooltip to the widget
+- <span class="lstinline">"...[osc:/address min max]..."</span> Open Sound Control message alias</p>
+<p>Moreover starting a label with a number option like in <span class="lstinline">"[1]..."</span> provides
+a convenient means to control the alphabetical order of the widgets.</p>
+<h4 id="attach">Attach</h4>
+<p>The <span class="lstinline">attach</span> primitive takes two input signals and produce one output signal which is a copy of the first input. The role of <span class="lstinline">attach</span> is to force its second input signal to be compiled with the first one. From a mathematical point of view <span class="lstinline">attach(x,y)</span> is equivalent to <span class="lstinline">1<em>x+0</em>y</span>, which is in turn equivalent to <span class="lstinline">x</span>, but it tells the compiler not to optimize-out <span class="lstinline">y</span>.</p>
+<p>To illustrate this role let say that we want to develop a mixer application with a vumeter for each input signals. Such vumeters can be easily coded in <span class="smallcaps">Faust</span> using an envelop detector connected to a bargraph. The problem is that these envelop signals have no role in the output signals. Using <span class="lstinline">attach(x,vumeter(x))</span> one can tell the compiler that when <span class="lstinline">x</span> is compiled <span class="lstinline">vumeter(x)</span> should also be compiled. </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2020-2022 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
