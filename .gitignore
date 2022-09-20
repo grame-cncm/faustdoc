@@ -35,6 +35,7 @@ mkdocs/docs/tutorials/*.md
 mkdocs/docs/tutorials/*/exfaust*
 mkdocs/docs/workshops/*.md
 mkdocs/docs/workshops/*/exfaust*
+mkdocs/docs/qreference/
 
 mkdocs/docs/rail/[0-9]*
 
@@ -55,3 +56,4 @@ src/examples/reverb.md
 src/examples/SAM.md
 src/examples/smartKeyboard.md
 src/examples/spat.md
+src/examples/quantizing.md
