@@ -224,7 +224,7 @@ import("stdfaust.lib");
 
 //----------------------------------------------------------------------
 // partial(f,n);
-// f = fréquence en Hz
+// f = frequence en Hz
 // n = numero du partiel en partant de 1
 partial(n,f) = os.osc(f*n) * hslider("partial %n", 0.25, 0, 1, 0.01);
 
