@@ -41,9 +41,10 @@ help:
 
 ####################################################################
 
-images : $(OUTDIR)/illustrations $(OUTDIR)/images
+images : $(OUTDIR)/illustrations $(OUTDIR)/images $(OUTDIR)/graphs
 	cp ../illustrations/*.png $(OUTDIR)/illustrations
 	cp ../images/*.png $(OUTDIR)/images
+	cp ../graphs/*.png $(OUTDIR)/graphs
 
 menu:
 	cat menu.txt | sed -e 's/\\faust/Faust/' | sed -e 's/: *\(.*\)/: qreference\/\1.md/'
@@ -66,6 +67,8 @@ rail: $(JSRAIL) tools/rail2js $(RAILOUT)
 $(OUTDIR):
 	mkdir $(OUTDIR)
 $(OUTDIR)/illustrations:
+	mkdir $@
+$(OUTDIR)/graphs:
 	mkdir $@
 $(OUTDIR)/images:
 	mkdir $@
