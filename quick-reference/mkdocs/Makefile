@@ -24,6 +24,7 @@ all:
 	$(MAKE) md
 	$(MAKE) rail
 	$(MAKE) css
+	$(MAKE) images
 
 
 ####################################################################
@@ -39,6 +40,10 @@ help:
 	@echo "  menu     : produce items for mkdocs.yml menu"
 
 ####################################################################
+
+images : $(OUTDIR)/illustrations $(OUTDIR)/images
+	cp ../illustrations/*.png $(OUTDIR)/illustrations
+	cp ../images/*.png $(OUTDIR)/images
 
 menu:
 	cat menu.txt | sed -e 's/\\faust/Faust/' | sed -e 's/: *\(.*\)/: qreference\/\1.md/'
@@ -60,6 +65,10 @@ rail: $(JSRAIL) tools/rail2js $(RAILOUT)
 
 $(OUTDIR):
 	mkdir $(OUTDIR)
+$(OUTDIR)/illustrations:
+	mkdir $@
+$(OUTDIR)/images:
+	mkdir $@
 $(JSRAIL):
 	mkdir $(JSRAIL)
 	
