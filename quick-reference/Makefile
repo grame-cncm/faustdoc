@@ -32,7 +32,7 @@ mkdocs:
 	$(MAKE) -C mkdocs
 
 menu: 
-	$(MAKE) -C menu
+	$(MAKE) -C mkdocs menu
 
 
 faust-quick-reference.pdf: faust-quick-reference.tex $(CHAPTERS)

@@ -1,6 +1,6 @@
 %---------------------------------------------------
 \chapter{Architecture files} 
-\label{sec:audio}
+\label{audio}
 %---------------------------------------------------
 
 A \faust program describes a \emph{signal processor}, a pure computation that maps \emph{input signals} to \emph{output signals}. It says nothing about audio drivers or GUI toolkits. This missing information is provided by \emph{architecture files}. 
@@ -138,7 +138,8 @@ Pure 			& Linux, Mac OS X, Windows \\
 
 
 %---------------------------------------------------
-\section{UI architecture modules} \label{sec:gui}
+\section{UI architecture modules} 
+\label{gui}
 %---------------------------------------------------
 
 A UI architecture module links user actions (via graphic widgets, command line parameters, OSC messages, etc.) with the \faust program to control. 
@@ -209,7 +210,7 @@ class UI
 
 %---------------------------------------------------
 \subsection{Active widgets}
-\label{sec:awidget}
+\label{awidget}
 Active widgets are graphical elements that control a parameter value. They are initialized with the widget name and a pointer to the linked value, using the FAUSTFLOAT macro type (defined at compile time as either float or double).
 The widget currently considered are \code{Button},  \code{CheckButton},  \code{VerticalSlider},  \code{HorizontalSlider} and  \code{NumEntry}. \\
 A GUI architecture must implement a method \\
@@ -218,7 +219,7 @@ Additional parameters are available for \code{Slider} and \code{NumEntry}: the \
 
 %---------------------------------------------------
 \subsection{Passive widgets}
-\label{sec:pwidget}
+\label{pwidget}
 Passive widgets are graphical elements that reflect values. Similarly to active widgets, they are initialized with the widget name and a pointer to the linked value.
 The widget currently considered are  \code{HorizontalBarGraph} and  \code{VerticalBarGraph}. \\
 A UI architecture must implement a method \\
@@ -227,7 +228,7 @@ Additional parameters are available, depending on the passive widget type.
 
 %---------------------------------------------------
 \subsection{Widgets layout}
-\label{sec:wlayout}
+\label{wlayout}
 Generally, a  GUI is hierarchically organized into boxes and/or tab boxes. 
 A UI architecture must support the following methods to setup this hierarchy : \\
 \htab\code{openTabBox(const char* label)} \\
@@ -247,8 +248,8 @@ console & a textual command line UI \\
 GTKUI & a GTK-based GUI \\
 QTGUI & a multi-platform QT-based GUI \\
 FUI & a file-based UI to store and recall modules states \\
-OSCUI & OSC control (see section \ref{sec:osc}) \\
-httpdUI & HTTP control (see section \ref{sec:http}) \\
+OSCUI & OSC control (see section \ref{osc}) \\
+httpdUI & HTTP control (see section \ref{http}) \\
 ...  & ... \\
 \hline
 \end{tabular}
@@ -259,11 +260,11 @@ httpdUI & HTTP control (see section \ref{sec:http}) \\
 
 %---------------------------------------------------
 \subsection{Metadata}
-\label{sec:metadata}
+\label{metadata}
 The \faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a \code{declare} method taking as argument, a pointer to the widget associated zone, the metadata key and value: \\
 \htab\code{declare(FAUSTFLOAT* zone, const char* key, const char* value)} \\
 
-Here is the table of currently supported general medatada (look at section \ref{sec:osc} for OSC specific metadata and section \ref{sec:midi} for MIDI specific metadata):
+Here is the table of currently supported general medatada (look at section \ref{osc} for OSC specific metadata and section \ref{midi} for MIDI specific metadata):
 
 %%Table \ref{tab:uiarch} gives some of the UI architectures currently available.
 \begin{table}[htp]
@@ -303,7 +304,7 @@ Some typical example where several metadata are defined could be:
 
 %---------------------------------------------------
 \section{Developing a new architecture file}
-\label{sec:architecture}
+\label{architecture}
 
 Developing a new architecture file typically means writing a generic C++ file, that will be populated with the actual output of the \faust compiler, in order to produce a complete C++ file, ready to be compiled as a standalone application or plugin. 
 

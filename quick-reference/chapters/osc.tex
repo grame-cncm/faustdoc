@@ -1,6 +1,6 @@
 %---------------------------------------------------
 \chapter{OSC support} 
-\label{sec:osc}
+\label{osc}
 %---------------------------------------------------
 
 Most \faust architectures provide Open Sound Control (OSC) support \footnote{The implementation is based internally on the \emph{oscpack} library by Ross Bencina}. This allows \faust applications to be remotely controlled from any OSC capable application, programming language, or hardware device. OSC support can be activated using the 
@@ -450,7 +450,7 @@ Note that to save space on the screen, the \code{/Polyphonic/VoiceX/xxx} syntax 
 %
 %%---------------------------------------------------
 %\subsection{OSC GUI architecture module}
-%\label{sec:oscgui}
+%\label{oscgui}
 %
 %The OSC UI architecture transforms each UI active widget addition into an \code{addnode} call, ignores the passive widgets and transforms container calls (\code{openXxxBox, closeBox}) into \code{opengroup} and \code{closegroup} calls.
 %
@@ -529,7 +529,7 @@ Note that to save space on the screen, the \code{/Polyphonic/VoiceX/xxx} syntax 
 %
 %%---------------------------------------------------
 %\subsection{OSC message aliases}
-%\label{sec:oscaudio}
+%\label{oscaudio}
 %Alias is a metadata-based mechanism allowing to map arbitrary incoming OSC messages to program parameters. 
 %%%This is  convenient when one has no control on the OSC messages emitted. 
 %Some remote controllers, like TouchOSC on Android, can only transmit predefined messages, for example \lstinline'/1/push1 1.000000' when push button 1 is pressed, \lstinline'/accxyz -0.421380 0.268151 9.232041' for the x, y and z accelerometers, \lstinline'/1/fader1 0.563994' when fader 1 is moved, etc. 
@@ -580,7 +580,7 @@ Note that to save space on the screen, the \code{/Polyphonic/VoiceX/xxx} syntax 
 %
 %%---------------------------------------------------
 %\subsection{OSC audio architecture}
-%\label{sec:oscaudio}
+%\label{oscaudio}
 %
 %The OSC audio architecture implements an audio architecture where audio inputs and outputs are replaced by OSC messages. Using this architecture, a \faust module accepts arbitrary data streams on its root OSC address, and handles this input stream as interleaved signals. Thus, each incoming OSC packet addressed to a module root triggers a computation loop, where as many values as the number of incoming frames are computed.
 %
