@@ -52,6 +52,7 @@ help:
 	@echo "  md       : build the md files"
 	@echo "  svg      : build the svg files"
 	@echo "             the 'svg' target should be the last target called"
+	@echo "  qref     : build the quick reference section"
 	@echo "  options  : build the compiler options page"
 	@echo "  tools    : build the faust tools page"
 	@echo "  examples : build the faust examples page"
@@ -77,6 +78,7 @@ serve:
 all:
 	$(MAKE) examples
 	$(MAKE) md
+	$(MAKE) qref
 	$(MAKE) options
 	$(MAKE) tools
 	$(MAKE) svg
@@ -91,6 +93,9 @@ clean:
 ####################################################################
 # building md and svg files
 md : $(MD)
+
+qref :
+	make -C quick-reference 
 
 options: $(DOCDIR)/manual/options.md
 
