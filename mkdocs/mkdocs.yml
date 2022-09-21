@@ -59,20 +59,6 @@ nav:
       - ' 2020-04-10 Faust 101 ': workshops/2020-04-10-faust-101.md
       - ' 2020-04-10 Faust & JUCE ': workshops/2020-04-10-faust-juce.md
       - ' 2020-11-21 Faust & VCV Rack ': workshops/2020-11-21-faust-vcvrack.md
-    - Quick Reference:
-        - ' Introduction': qreference/1-introduction.md
-        - ' Compiling and installing Faust': qreference/2-install.md
-        - ' Faust syntax': qreference/3-syntax.md
-        - ' Invoking the Faust compiler': qreference/4-compiler.md
-        - ' Embedding the Faust  compiler using libfaust': qreference/5-libfaust.md
-        - ' Architecture files': qreference/6-audio.md
-        - ' OSC support': qreference/7-osc.md
-        - ' HTTP support': qreference/8-http.md
-        - ' MIDI support': qreference/9-midi.md
-        - ' Polyphonic support': qreference/10-poly.md
-        - ' Controlling the code generation': qreference/11-codegeneration.md
-        - ' Mathematical Documentation': qreference/12-mdoc.md
-        - ' Acknowledgments': qreference/13-acknowledgments.md 
     - About: about.md
 
 theme: 
