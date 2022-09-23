@@ -48,7 +48,10 @@ EOL		[\x0a\x0d]
 ":" 	return DEF;
 ";" 	return ENDEXPR;
 
-{SPACE}+			;   /* eat up space */
+"\\" 				; /* ignore CR */
+"()" 				; /* ignore () */
+
+{SPACE}+			; /* eat up space */
 
 .		return ERROR;	/* any extra text generates errors */
 
