@@ -848,7 +848,9 @@ as \lstinline|E letrec { 'x = y+10; 'y = x-1; }|
 The syntax is defined by the following rules:
 \begin{rail}
 	letrecexpression : expression 'letrec' \\ lbrace (diffequation+) (() | 'where' (definition+)) rbrace;
-diffequation :    kot ident '=' expression ';';  
+\end{rail}
+\begin{rail}
+	diffequation :    kot ident '=' expression ';';  
 \end{rail}
 
 Please remarks the special notation \lstinline|'x=y+10| instead of \lstinline|x=y'+10|. It makes syntactically impossible to write non-sensical equations like \lstinline|x=x+1|.
