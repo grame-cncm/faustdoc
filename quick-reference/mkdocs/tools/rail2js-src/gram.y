@@ -25,7 +25,7 @@ extern char* yytext;
 %token IDENTIFIER
 %token NUMBER
 %token STRING
-%token OPENGROUP CLOSEGROUP OPENANN CLOSEANN CHOICE LOOP DEF ERROR ENDEXPR
+%token OPENGROUP CLOSEGROUP OPENANN CLOSEANN CHOICE LOOP DEF ERROR ENDEXPR SKIP
 
 %right CHOICE  CLOSEGROUP OPENGROUP
 %left IDENTIFIER
@@ -60,6 +60,7 @@ expression: nodename		{ $$ = $1; }
 nodename: IDENTIFIER	{ $$ = new TNode (kNonTerminal, yytext); 	if (TRACE) cerr << "nodename non term " << yytext << endl; }
 	| STRING			{ $$ = new TNode (kTerminal, yytext); 		if (TRACE) cerr << "nodename term " << yytext << endl; }
 	| NUMBER			{ $$ = new TNode (kTerminal, yytext); 		if (TRACE) cerr << "nodename number " << yytext << endl; }
+	| SKIP				{ $$ = new TNode (kTerminal, "Skip()"); 	if (TRACE) cerr << "nodename Skip() " << yytext << endl; }
 	;
 	
 annotation: OPENANN nodename CLOSEANN 	{ $2->fType = kAnnotation; $$ = $2; if (TRACE) cerr << "annotation " << endl; }

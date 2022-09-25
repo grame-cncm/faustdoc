@@ -47,9 +47,9 @@ EOL		[\x0a\x0d]
 "+" 	return LOOP;
 ":" 	return DEF;
 ";" 	return ENDEXPR;
+"()" 	return SKIP; 
 
 "\\" 				; /* ignore CR */
-"()" 				; /* ignore () */
 
 {SPACE}+			; /* eat up space */
 
