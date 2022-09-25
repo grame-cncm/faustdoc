@@ -236,7 +236,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
     fInput0 = &fInput0_ptr[index];
     fOutput0 = &fOutput0_ptr[index];
     int count = 32;
-    /* Recursive loop 0 */
+    /* Vectorizable loop 0 */
     /* Pre code */
     iYec0_idx = ((iYec0_idx + iYec0_idx_save) & 2047);
     /* Compute code */
@@ -272,7 +272,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
     fInput0 = &fInput0_ptr[index];
     fOutput0 = &fOutput0_ptr[index];
     int count = (fullcount - index);
-    /* Recursive loop 0 */
+    /* Vectorizable loop 0 */
     /* Pre code */
     iYec0_idx = ((iYec0_idx + iYec0_idx_save) & 2047);
     /* Compute code */

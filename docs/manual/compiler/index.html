@@ -544,7 +544,7 @@ process = RMS(1000);
     fInput0 = &amp;fInput0_ptr[index];
     fOutput0 = &amp;fOutput0_ptr[index];
     int count = 32;
-    /* Recursive loop 0 */
+    /* Vectorizable loop 0 */
     /* Pre code */
     iYec0_idx = ((iYec0_idx + iYec0_idx_save) &amp; 2047);
     /* Compute code */
@@ -580,7 +580,7 @@ process = RMS(1000);
     fInput0 = &amp;fInput0_ptr[index];
     fOutput0 = &amp;fOutput0_ptr[index];
     int count = (fullcount - index);
-    /* Recursive loop 0 */
+    /* Vectorizable loop 0 */
     /* Pre code */
     iYec0_idx = ((iYec0_idx + iYec0_idx_save) &amp; 2047);
     /* Compute code */
@@ -915,13 +915,16 @@ void computeThread(int num_thread) {
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+                <div id="mkdocs-search-results"></div>
             </div>
             <div class="modal-footer">
             </div>

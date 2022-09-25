@@ -1,4 +1,0 @@
-ComplexDiagram(
-	NonTerminal('expression')
-).addTo()
-
