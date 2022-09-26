@@ -1441,8 +1441,10 @@ static void bench(dsp* dsp, const string& name)
     measure_dsp mes(dsp, 1024, 5);
     // Measure the CPU use
     mes.measure();
+    // Returns the Megabytes/seconds and relative standard deviation values
+    std::pair<double, double> res = mes.getStats(); 
     // Print the stats
-    cout << name << " CPU use : " << mes.getStats() 
+    cout << name << " MBytes/sec : " << res.first 
          << " " << "(DSP CPU % : " << (mes.getCPULoad() * 100) << ")" << endl;
 }
 ```
@@ -1450,17 +1452,16 @@ static void bench(dsp* dsp, const string& name)
 Defined in the `faust/dsp/dsp-optimizer.h` file, the `dsp_optimizer` class uses the libfaust library and its LLVM backend to dynamically compile DSP objects produced with different Faust compiler options, and then measure their DSP CPU. Here is a C++ code example of its use: 
 
 ```c++
-static void dynamic_bench(const string& dsp_source)
+static void dynamic_bench(const string& in_filename)
 {
-    // Init the DSP optimizer with the dsp_source to compile 
-    // (either the filename or source code string)
-    dsp_optimizer optimizer(dsp_source, "/usr/local/share/faust", "", 1024);
+    // Init the DSP optimizer with the in_filename to compile 
+    dsp_optimizer optimizer(in_filename, 0, nullptr, "", 1024);
     // Discover the best set of parameters
-    pair<double, vector<string>> res = optimizer.findOptimizedParameters();
+    tuple<double, double, double, TOption> res = optimizer.findOptimizedParameters();
     cout << "Best value for '" << in_filename << "' is : " 
-         << res.first << " MBytes/sec with ";
-    for (size_t i = 0; i < res.second.size(); i++) {
-        cout << res.second[i] << " ";
+         << get<0>(res) << " MBytes/sec with ";
+    for (size_t i = 0; i < get<3>(res).size(); i++) {
+        cout << get<3>(res)[i] << " ";
     }
     cout << endl;
 }

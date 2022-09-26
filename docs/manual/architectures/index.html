@@ -1838,23 +1838,24 @@ DSP.memoryDestroy();
     measure_dsp mes(dsp, 1024, 5);
     // Measure the CPU use
     mes.measure();
+    // Returns the Megabytes/seconds and relative standard deviation values
+    std::pair&lt;double, double&gt; res = mes.getStats(); 
     // Print the stats
-    cout &lt;&lt; name &lt;&lt; &quot; CPU use : &quot; &lt;&lt; mes.getStats() 
+    cout &lt;&lt; name &lt;&lt; &quot; MBytes/sec : &quot; &lt;&lt; res.first 
          &lt;&lt; &quot; &quot; &lt;&lt; &quot;(DSP CPU % : &quot; &lt;&lt; (mes.getCPULoad() * 100) &lt;&lt; &quot;)&quot; &lt;&lt; endl;
 }
 </code></pre>
 <p>Defined in the <code>faust/dsp/dsp-optimizer.h</code> file, the <code>dsp_optimizer</code> class uses the libfaust library and its LLVM backend to dynamically compile DSP objects produced with different Faust compiler options, and then measure their DSP CPU. Here is a C++ code example of its use: </p>
-<pre><code class="language-c++">static void dynamic_bench(const string&amp; dsp_source)
+<pre><code class="language-c++">static void dynamic_bench(const string&amp; in_filename)
 {
-    // Init the DSP optimizer with the dsp_source to compile 
-    // (either the filename or source code string)
-    dsp_optimizer optimizer(dsp_source, &quot;/usr/local/share/faust&quot;, &quot;&quot;, 1024);
+    // Init the DSP optimizer with the in_filename to compile 
+    dsp_optimizer optimizer(in_filename, 0, nullptr, &quot;&quot;, 1024);
     // Discover the best set of parameters
-    pair&lt;double, vector&lt;string&gt;&gt; res = optimizer.findOptimizedParameters();
+    tuple&lt;double, double, double, TOption&gt; res = optimizer.findOptimizedParameters();
     cout &lt;&lt; &quot;Best value for '&quot; &lt;&lt; in_filename &lt;&lt; &quot;' is : &quot; 
-         &lt;&lt; res.first &lt;&lt; &quot; MBytes/sec with &quot;;
-    for (size_t i = 0; i &lt; res.second.size(); i++) {
-        cout &lt;&lt; res.second[i] &lt;&lt; &quot; &quot;;
+         &lt;&lt; get&lt;0&gt;(res) &lt;&lt; &quot; MBytes/sec with &quot;;
+    for (size_t i = 0; i &lt; get&lt;3&gt;(res).size(); i++) {
+        cout &lt;&lt; get&lt;3&gt;(res)[i] &lt;&lt; &quot; &quot;;
     }
     cout &lt;&lt; endl;
 }
