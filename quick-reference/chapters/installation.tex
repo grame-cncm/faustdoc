@@ -2,15 +2,15 @@
 \label{install}
 
 
-The \faust source distribution \lstinline'faust-2.46.1.tar.gz' can be downloaded from GitHub (\myurl{https://github.com/grame-cncm/faust/releases}).
+The \faust source distribution \lstinline'faust-2.50.5.tar.gz' can be downloaded from GitHub (\myurl{https://github.com/grame-cncm/faust/releases}).
 
 \section{Organization of the distribution}
 The first thing is to decompress the downloaded archive. 
 \begin{lstlisting}
-	tar xzf faust-2.46.1.tar.gz
+	tar xzf faust-2.50.5.tar.gz
 \end{lstlisting}
 
-The resulting \lstinline'faust-2.46.1/' folder should contain the following elements:
+The resulting \lstinline'faust-2.50.5/' folder should contain the following elements:
 
 \begin{tabular}{ll}
 	\lstinline'architecture/' 		&\faust libraries and architecture files\\
@@ -28,18 +28,18 @@ The resulting \lstinline'faust-2.46.1/' folder should contain the following elem
 \section{Compilation}
 \faust has no dependencies outside standard libraries. Therefore the compilation should be straightforward. There is no configuration phase, to compile the \faust compiler simply do :
 \begin{lstlisting}
-	cd faust-2.46.1/
+	cd faust-2.50.5/
 	make
 \end{lstlisting}
 
 If the compilation was successful you can test the compiler before installing it:
 \begin{lstlisting}
-	[cd faust-2.46.1/]
+	[cd faust-2.50.5/]
 	./build/bin/faust -v
 \end{lstlisting}
 It should output:
 \begin{lstlisting}
-FAUST Version 2.46.1
+FAUST Version 2.50.5
 Embedded backends: 
    DSP to C
    DSP to C++
@@ -56,7 +56,7 @@ Copyright (C) 2002-2022, GRAME - Centre National de Creation Musicale. All right
 
 Then you can also try to compile one of the examples :
 \begin{lstlisting}
-	[cd faust-2.46.1/]
+	[cd faust-2.50.5/]
 	./build/bin/faust examples/generator/noise.dsp
 \end{lstlisting}
 It should produce some C++ code on the standard output.
@@ -64,12 +64,12 @@ It should produce some C++ code on the standard output.
 \section{Installation}
 You can install \faust with:
 \begin{lstlisting}
-	[cd faust-2.46.1/]
+	[cd faust-2.50.5/]
 	sudo make install
 \end{lstlisting}
 or
 \begin{lstlisting}
-	[cd faust-2.46.1/]
+	[cd faust-2.50.5/]
 	su
 	make install
 \end{lstlisting}
