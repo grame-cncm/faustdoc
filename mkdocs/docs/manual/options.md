@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.41.1
+## FAUST compiler version 2.50.5
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -39,6 +39,7 @@ usage : faust [options] file1 [file2 ...].
   -light      --light-mode                do not generate the entire DSP API.
   -clang      --clang                     when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
   -nvi        --no-virtual                when compiled with the C++ backend, does not add the 'virtual' keyword.
+  -fp         --full-parentheses          always add parentheses around binops 
   -exp10      --generate-exp10            pow(10,x) replaced by possibly faster exp10(x).
   -os         --one-sample                generate one sample computation (same as -os0).
   -os0        --one-sample0               generate one sample computation (0 = separated control).
@@ -71,11 +72,11 @@ usage : faust [options] file1 [file2 ...].
   -fm <file>  --fast-math <file>          use optimized versions of mathematical functions implemented in <file>, use 'faust/dsp/fastmath.cpp' when file is 'def'.
   -mapp       --math-approximation        simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
   -ns <name>  --namespace <name>          generate C++ or D code in a namespace <name>.
-  -vhdl       --vhdl                      output vhdl file.
-  -vhdl-trace --vhdl-trace                activate trace.
+  -vhdl          --vhdl                   output vhdl file.
+  -vhdl-trace    --vhdl-trace             activate trace.
   -vhdl-type 0|1 --vhdl-type 0|1          sample format 0 = sfixed (default), 1 = float.
-  -vhdl-msb <n>                           MSB number of bits.
-  -vhdl-lsb <n>                           LSB number of bits.
+  -vhdl-msb <n>  --vhdl-msb <n>           MSB number of bits.
+  -vhdl-lsb <n>  --vhdl-lsb <n>           LSB number of bits.
   -wi <n>     --widening-iterations <n>   number of iterations before widening in signal bounding.
   -ni <n>     --narrowing-iterations <n>  number of iterations before stopping narrowing in signal bounding.
 ~~~
