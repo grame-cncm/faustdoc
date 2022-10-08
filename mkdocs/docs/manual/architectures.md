@@ -2230,6 +2230,9 @@ FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using 
 #### [Faustwatch](https://github.com/hrtlacek/faustTools)
 At the moment there is one tool present, faustwatch.py. Faustwatch is a tool that observes a .dsp file used by the dsp language Faust. 
 
+#### [faustWidgets](https://github.com/hrtlacek/faustWidgets)
+Creates interactive widgets inside jupyter notebooks from Faust dsp files and produces a (customizable) plot. 
+
 #### [Faust Synth](https://github.com/anwaldt/py2faust_synth)
 This is an example project for controlling a synth, programmed and compiled with Faust, through a Python script. The synth runs as a JACK client on Linux systems and the output is automatically recorded by jack_capture.
 
