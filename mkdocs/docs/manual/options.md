@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.50.6
+## FAUST compiler version 2.51.0
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -29,7 +29,7 @@ usage : faust [options] file1 [file2 ...].
 ---------------------------------------
 ~~~faust-options
   -lang <lang> --language                 select output language,
-                                          'lang' should be c, cpp (default), csharp, dlang, fir, interp, java, julia, llvm, ocpp, rust, soul or wast/wasm.
+                                          'lang' should be c, cpp (default), csharp, dlang, fir, interp, java, jax, julia, llvm, ocpp, rust, soul or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.

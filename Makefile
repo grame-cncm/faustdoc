@@ -28,7 +28,7 @@ EXOUT    := $(GEN:%=%.md)
 
 GENERATED := $(shell find $(DOCDIR) -type d -name "exfaust*")
 #TOOLS    := $(wildcard $(FAUSTDIR)/tools/faust2appls/faust2*)
-IGNORED := "atomsnippets|dummy|faust2eps|firefox|graph|jackinternal|javaswing|mathviewer|faust2md|octave|owl|faust2pdf|faust2png|faust2pure|faust2ros|faust2sig|supercollider|faust2svg|faust2teensy|faust2vst|faust2w32|faust2w64|faust2winunity|faust2au|faust2sc.py|faust2sublimecompletions|faust2tidalcycles|faust2msp|faust2caqtios"
+IGNORED := "atomsnippets|dummy|faust2eps|firefox|graph|jackinternal|javaswing|mathviewer|faust2md|octave|owl|faust2pdf|faust2png|faust2pure|faust2ros|faust2sig|supercollider|faust2svg|faust2vst|faust2w32|faust2w64|faust2winunity|faust2au|faust2sc.py|faust2sublimecompletions|faust2tidalcycles|faust2msp|faust2caqtios"
 TOOLS    := $(shell find $(FAUSTDIR)/tools/faust2appls -name "faust2*" | egrep -v $(IGNORED) | sort)
 
 EDITOR   := https://faustide.grame.fr/

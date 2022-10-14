@@ -494,6 +494,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2teensy" class="nav-link">faust2teensy</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2unity" class="nav-link">faust2unity</a>
               <ul class="nav flex-column">
               </ul>
@@ -1284,6 +1288,17 @@ Options:
    -juce : to create a JUCE project
    -dsp : to create a 'dsp' compatible subclass
    -play : to start the 'soul' runtime with the generated SOUL file
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2teensy">faust2teensy</h2>
+<pre class=faust-tools>
+FAUST2TEENSY HELP
+faust2teensy can be used to fully program the Teensy microcontroller and to generate DSP objects compatible with the Teensy audio library. In both cases, we strongly recommend to use the Teensy 3.6 which hosts an FPU (i.e., the Teensy 3.2 doesn't have one). 
+Options:
+   -lib : generates a package containing an object compatible with the Teensy audio library.
+   -midi : activates MIDI control
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
