@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Making a Sine Oscillator From Scratch - Faust Documentation</title>
+        <title>Using Faust in Cmajor - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -217,7 +217,7 @@
 </li>
                                     
 <li>
-    <a href="./" class="dropdown-item active">Making a Sine Oscillator From Scratch</a>
+    <a href="../basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
                                     
 <li>
@@ -237,7 +237,7 @@
 </li>
                                     
 <li>
-    <a href="../cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
+    <a href="./" class="dropdown-item active">Using Faust in Cmajor</a>
 </li>
                                 </ul>
                             </li>
@@ -296,34 +296,46 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#making-a-sine-oscillator-from-scratch-and-additive-synthesis" class="nav-link">Making a Sine Oscillator From Scratch and Additive Synthesis</a>
+            <li class="nav-item" data-level="1"><a href="#using-faust-in-cmajor" class="nav-link">Using Faust in Cmajor</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#goals" class="nav-link">Goals</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#sine-function-in-faust" class="nav-link">Sine Function in Faust</a>
+            <li class="nav-item" data-level="4"><a href="#who-is-this-tutorial-for" class="nav-link">Who is this tutorial for?</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#implementing-a-phasor" class="nav-link">Implementing a Phasor</a>
+            <li class="nav-item" data-level="4"><a href="#installing-the-required-packages" class="nav-link">Installing the required packages</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#generating-a-sine-wave" class="nav-link">Generating a Sine Wave</a>
+            <li class="nav-item" data-level="2"><a href="#using-command-line-tools" class="nav-link">Using command line tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#generating-cmajor-code" class="nav-link">Generating Cmajor code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#additive-synthesis" class="nav-link">Additive Synthesis</a>
+            <li class="nav-item" data-level="3"><a href="#looking-at-the-generated-code" class="nav-link">Looking at the generated code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#making-a-synthesizer" class="nav-link">Making a Synthesizer</a>
+            <li class="nav-item" data-level="3"><a href="#using-the-faust2cmajor-tool" class="nav-link">Using the faust2cmajor tool</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#turn-it-into-an-android-app" class="nav-link">Turn it Into an Android App</a>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide" class="nav-link">Using the Faust Web IDE</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#generating-the-cmajor-output" class="nav-link">Generating the Cmajor output</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generating-the-cmajor-output-in-polyphonic-mode" class="nav-link">Generating the Cmajor output in polyphonic mode</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generating-the-cmajor-output-in-polyphonic-mode-with-a-global-effect" class="nav-link">Generating the Cmajor output in polyphonic mode with a global effect</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -333,334 +345,167 @@
 </div></div>
                     <div class="col-md-9 main-container" role="main">
 
-<h1 id="making-a-sine-oscillator-from-scratch-and-additive-synthesis">Making a Sine Oscillator From Scratch and Additive Synthesis</h1>
-<h2 id="goals">Goals</h2>
-<ul>
-<li>Implementing a sine oscillator from scratch in Faust</li>
-<li>Understand the relation between the sine function and the generated sound</li>
-<li>Use multiple sine oscillator to implement an additive synthesizer</li>
-<li>Use <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/smartKeyboard">SmartKeyboard</a> to produce polyphonic mobile apps to control this synth</li>
-</ul>
-<h2 id="sine-function-in-faust">Sine Function in Faust</h2>
-<ul>
-<li>The sine function in Faust works like on a calculator:</li>
-</ul>
+<h1 id="using-faust-in-cmajor">Using Faust in Cmajor</h1>
+<p>In this tutorial, we present how <a href="https://faust.grame.fr">Faust</a> can be used with <a href="https://cmajor.dev">Cmajor</a>, a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. Compiling Faust DSP to cmajor code will allow to take profit of hundreds of DSP building blocks implemented in the <a href="https://faustlibraries.grame.fr">Faust Libraries</a>, ready to use <a href="https://faustdoc.grame.fr/examples/ambisonics/">Examples</a>, any DSP program developed in more than 120 projects listed in the <a href="https://faust.grame.fr/community/made-with-faust/">Powered By Faust</a> page, or Faust DSP programs found on the net.</p>
+<h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
+<p>The <a href="#using-command-line-tools">first section</a> assumes a working <a href="https://github.com/grame-cncm/faust">Faust</a> compiler installed on the machine, so is more designed for regular Faust users. The <a href="#using-the-faust-web-ide">second section</a> is better suited for Cmajor users who want to discover Faust.  </p>
+<h4 id="installing-the-required-packages">Installing the required packages</h4>
+<p>Download the <a href="https://github.com/SoundStacks/cmajor/releases"><strong>cmaj</strong> package</a> and install to have it in your PATH. </p>
+<h2 id="using-command-line-tools">Using command line tools</h2>
+<h3 id="generating-cmajor-code">Generating Cmajor code</h3>
+<p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed the <strong>faust</strong> compiler</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
 <pre><code>
-process = sin(0);
+import(&quot;stdfaust.lib&quot;);
+
+vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
+freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
 
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust0/exfaust0.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/cmajor/exfaust0/exfaust0.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
-<p>will output <code>0</code>.</p>
-<blockquote>
-<p>To verify this, you could click on the truck (export function) in the <a href="https://faustide.grame.fr">Faust Online IDE</a> and then choose <code>misc/csv</code> to get a table containing the first <em>n</em> samples output by the program.</p>
-</blockquote>
+<p>The Cmajor code can be generated using:</p>
+<pre><code class="language-bash">faust -lang cmajor osc.dsp -o osc.cmajor
+</code></pre>
+<p>This will generate a <code>mydsp</code> processor with a set of methods to manipulate it. This API basically mimics the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h">one defined for the C++ backend</a>. </p>
+<h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
+<p>The generated code contains <code>input event</code> definition for the three sliders defined in the DSP source code:</p>
+<pre><code>input event float32 eventfHslider1 [[ name: &quot;freq1&quot;, group: &quot;/v:Oscillator/freq1&quot;, min: 20.0f, max: 3000.0f, init: 1000.0f, step: 1.0f, meta_unit0: &quot;Hz&quot; ]];
+input event float32 eventfHslider2 [[ name: &quot;freq2&quot;, group: &quot;/v:Oscillator/freq2&quot;, min: 20.0f, max: 3000.0f, init: 200.0f, step: 1.0f, meta_unit1: &quot;Hz&quot; ]];
+input event float32 eventfHslider0 [[ name: &quot;volume&quot;, group: &quot;/v:Oscillator/volume&quot;, min: 0.0f, max: 1.0f, init: 0.5f, step: 0.01f ]];
+</code></pre>
+<p>The needed <code>main</code> function executes the DSP sample generation code:</p>
+<pre><code>void main()
+{
+    // DSP loop running forever...
+    loop
+    {
+        if (fUpdated) { fUpdated = false; control(); }
+
+        // Computes one sample
+        fRec1[0] = fControl[1] + fRec1[1] - floor (fControl[1] + fRec1[1]);
+        output0 &lt;- float32 (fControl[0] * ftbl0mydspSIG0.at (int32 (65536.0f * fRec1[0])));
+        fRec2[0] = fControl[2] + fRec2[1] - floor (fControl[2] + fRec2[1]);
+        output1 &lt;- float32 (fControl[0] * ftbl0mydspSIG0.at (int32 (65536.0f * fRec2[0])));
+        fRec1[1] = fRec1[0];
+        fRec2[1] = fRec2[0];
+
+        // Moves all streams forward by one 'tick'
+        advance();
+    }
+}
+</code></pre>
+<p>Note that the generated code uses the so-called <a href="https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code">scalar code generation model</a>, the default one, where the compiled sample generation code is inlined on the Cmajor <code>loop</code> block. </p>
+<p>The resulting file is self-contained and so can directly be compiled and executed using the <strong>cmaj</strong> program:</p>
+<pre><code class="language-bash">cmaj play osc.cmajor
+</code></pre>
+<p>The three declared sliders are automatically created and can be used to change the two channels frequencies and their volume.</p>
+<p>The Cmajor processor code can directly be used in a more complex Cmajor program, possibly connected to other Faust generated or Cmajor hand-written processors. Note that the generated processor name can simply be changed using the Faust compiler <code>-cn &lt;name&gt;</code> option, so that several Faust generated processors can be distinguished by their names:</p>
+<pre><code class="language-bash">faust -lang cmajor -cn osc osc.dsp -o osc.cmajor
+</code></pre>
+<h3 id="using-the-faust2cmajor-tool">Using the faust2cmajor tool</h3>
+<p>The <a href="https://github.com/SoundStacks/faust/tree/cmajor/architecture/cmajor#faust2cmajor">faust2cmajor</a> tool allows to automate calling the Faust compiler with the right options and interacting with the <strong>cmaj</strong> program:</p>
+<pre><code class="language-bash">faust2cmajor -h
+Usage: faust2cmajor [options] [Faust options] &lt;file.dsp&gt;
+Compiles Faust programs to Cmajor
+Options:
+-midi : activates MIDI control
+-nvoices &lt;num&gt; : produces a polyphonic DSP with &lt;num&gt; voices, ready to be used with MIDI events
+-effect &lt;effect.dsp&gt; : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+-effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp&gt;, ready to be used with MIDI or OSC
+-juce : to create a JUCE project
+-dsp : to create a 'dsp' compatible subclass
+-play : to start the 'cmaj' runtime with the generated Cmajor file
+Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</code></pre>
+<p>So the following command:</p>
+<pre><code class="language-bash">faust2cmajor -play osc.dsp 
+</code></pre>
+<p>Will directly compile the <code>osc.dsp</code> file, generate the <code>osc.cmajor</code> and <code>osc.cmajorpatch</code> files:</p>
+<pre><code>{
+    &quot;CmajorVersion&quot;: 1,
+    &quot;ID&quot;: &quot;grame.cmajor.osc&quot;,
+    &quot;version&quot;: &quot;1.0&quot;,
+    &quot;name&quot;: &quot;osc&quot;,
+    &quot;description&quot;: &quot;Cmajor example&quot;,
+    &quot;category&quot;: &quot;synth&quot;,
+    &quot;manufacturer&quot;: &quot;GRAME&quot;,
+    &quot;website&quot;: &quot;https://faust.grame.fr&quot;,
+    &quot;isInstrument&quot;: false,
+    &quot;source&quot;: &quot;osc.cmajor&quot;
+}
+</code></pre>
+<p>And activate the <strong>cmaj</strong> program to run the processor. </p>
+<p>The following <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">polyphonic ready instrument</a> DSP can be converted to a MIDI ready cmajor instrument:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
-process = sin(ma.PI/2);
+process = organ, organ
+with {
+    decimalpart(x) = x-int(x);
+    phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
+    osc(f) = sin(2 * ma.PI * phasor(f));
+    freq = nentry(&quot;freq&quot;, 100, 100, 3000, 0.01);
+    gate = button(&quot;gate&quot;);
+    gain = nentry(&quot;gain&quot;, 0.5, 0, 1, 0.01);
+    organ = gate * (osc(freq) * gain + osc(2 * freq) * gain);
+};
 
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/cmajor/exfaust1/exfaust1.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
-<p>will output <code>1</code>.</p>
-<blockquote>
-<p>Note that <code>stdfaust.lib</code> is imported here in order to use <code>ma.pi</code>. </p>
-</blockquote>
+<p>The following command then opens the <strong>cmaj</strong> program and MDI events can be sent to control the instrument:</p>
+<pre><code class="language-bash">faust2cmajor -play -midi -nvoices 16 organ.dsp 
+</code></pre>
+<p>Note that the generated GUI is empty, since the generated processor cannot automatically reflects its controls in the main graph.</p>
+<p>The following <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">polyphonic ready instrument</a> DSP, with an integrated effect, can be converted to a MIDI ready cmajor instrument:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
-process = sin(2*ma.PI);
+process = pm.clarinet_ui_MIDI &lt;: _,_;
+effect = dm.freeverb_demo;
 
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/cmajor/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
-<p>will output <code>0</code>.</p>
-<!-- May be give a few more example with 3pi, 4pi, etc. -->
-
-<h2 id="implementing-a-phasor">Implementing a Phasor</h2>
-<ul>
-<li>What is needed to "print" a full sine wave? <ul>
-<li>-&gt; We need to create a series of numbers (vector) going from 0 to 2pi, in other words, draw a line.</li>
-</ul>
-</li>
-<li>First let's create a "counter" in Faust:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
-
-<pre><code>
-process = +(1) ~ _;
-
+<p>The following command then opens the <strong>cmaj</strong> program and MDI events can be sent to control the instrument:</p>
+<pre><code class="language-bash">faust2cmajor -play -midi -nvoices 16 -effect auto clarinet.dsp 
 </code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<blockquote>
-<p>Don't forget that you can always print the output of a Faust program by using the in the <a href="https://faustide.grame.fr">Faust Online IDE</a> <code>misc/csv</code></p>
-</blockquote>
-<ul>
-<li>The current counter counts one by one. Instead we'd like to count slower 0.01
-by 0.01.</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
-
-<pre><code>
-process = +(0.01) ~ _;
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<ul>
-<li>Now, we want to reset the counter back to 0 when it reaches 1. This can be
-done easily using the <code>ma.frac</code> function:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-process = +(0.01) ~ ma.frac;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<blockquote>
-<p>Note the use of <code>ma.frac</code> in the loop here to prevent numerical errors.</p>
-</blockquote>
-<ul>
-<li>Try to run the program (play button in the editor) and it should make sound! What are we generating here?<ul>
-<li>-&gt; A <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a>. </li>
-</ul>
-</li>
-<li>How do we change the pitch of the sawtooth wave? <ul>
-<li>-&gt; We should increment the counter faster or slower. Try different values (e.g., 0.001, 0.1, etc.).</li>
-</ul>
-</li>
-<li>Instead of controlling the increment of the counter, we'd like to control the
-frequency of the sawtooth wave.  <!-- What's a frequency? Show how it impacts the generated wave.--></li>
-<li>To do that, we need to know the number of values of the wave processed by the
-computer in one second. That's what we call the <a href="https://en.wikipedia.org/wiki/Sampling_(signal_processing)">sampling rate</a>. <!-- INSIST ON WHAT IT IS.--> This value changes in function of the context of the program so it can be retrieved with <code>ma.SR</code>. </li>
-<li>A sampling rate of 44100 corresponds to a frequency of 44100Hz. If we want a
-frequency of 440, what increment do we need to put in our counter?<ul>
-<li>-&gt; <code>freq/ma.SR</code></li>
-</ul>
-</li>
-<li>In the end, we get:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = 440;
-process = (+(freq/ma.SR) ~ ma.frac);
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<ul>
-<li>A this point feel free to plot the output of the Faust program using <code>misc/csv</code> in the export function of the online editor.</li>
-<li>The <code>freq</code> parameter can be controlled dynamically:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;freq&quot;,440,50,2000,0.01);
-process = (+(freq/ma.SR) ~ ma.frac);
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<ul>
-<li>The code can be cleaned up by placing our phasor in a function:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq&quot;,440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
-process = phasor(f);
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="generating-a-sine-wave">Generating a Sine Wave</h2>
-<ul>
-<li>Almost there! Now we want our phasor to go from 0 to 2pi so that we can plug
-it to the <code>sin</code> function:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq&quot;,440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
-osc(freq) = sin(phasor(freq)*2*ma.PI);
-process = osc(f);
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust9/exfaust9.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<p>Note that we created an <code>osc</code> function in order to have a cleaner code.</p>
-<h2 id="additive-synthesis">Additive Synthesis</h2>
-<ul>
-<li>A sine wave generates what we call a <a href="https://en.wikipedia.org/wiki/Pure_tone">pure tone</a>. More complex sounds can be produced by adding multiple sine waves together to create <a href="https://en.wikipedia.org/wiki/Harmonic">harmonics</a>. The frequency and the gain of each harmonic will determine the <a href="https://en.wikipedia.org/wiki/Timbre">timbre of the sound</a>. Using this technique, it is possible to "sculpt" a sound.</li>
-<li>A simple organ synthesizer can be implemented using additive synthesis:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq&quot;,440,50,2000,0.01);
-phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
-osc(freq) = sin(phasor(freq)*2*ma.PI);
-organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
-process = organ(f);
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust10/exfaust10.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<ul>
-<li>This is what we call a <a href="https://en.wikipedia.org/wiki/Harmonic_series_(mathematics)">harmonic series</a>.</li>
-</ul>
-<h2 id="making-a-synthesizer">Making a Synthesizer</h2>
-<ul>
-<li>In order to use this synthesizer with a keyboard, we need to be able to turn the sound on and off and also to control its volume:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq&quot;,440,50,2000,0.01);
-g = hslider(&quot;gain&quot;,1,0,1,0.01);
-t = button(&quot;gate&quot;);
-phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
-osc(freq) = sin(phasor(freq)*2*ma.PI);
-organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
-process = organ(f)*g*t;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust11/exfaust11.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<ul>
-<li>An envelope could be added to make it sound more natural:</li>
-</ul>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq&quot;,440,50,2000,0.01);
-g = hslider(&quot;gain&quot;,1,0,1,0.01);
-t = si.smoo(button(&quot;gate&quot;));
-phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
-osc(freq) = sin(phasor(freq)*2*ma.PI);
-organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
-process = organ(f)*g*t;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/basic-osc/exfaust12/exfaust12.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<ul>
-<li>This synth can be controlled with a MIDI keyboard.</li>
-</ul>
-<h2 id="turn-it-into-an-android-app">Turn it Into an Android App</h2>
-<ul>
-<li>Use the export function of the Faust editor and choose <code>android/smartkeyb</code> install the app on the phone and have fun!</li>
-<li>This could also be turned into an app always making sound and controllable with accelerometers:</li>
-</ul>
-<pre><code>import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq[acc: 0 0 -10 0 10]&quot;,1000,50,2000,0.01) : si.smoo;
-phasor(freq) = (+(freq/ma.SR) ~ ma.frac);
-osc(freq) = sin(phasor(freq)*2*ma.PI);
-organ(freq) = (osc(freq) + osc(freq*2) + osc(freq*3))/3;
-process = organ(f);
-</code></pre>
-<ul>
-<li>In that case, export with <code>android/android</code>.</li>
-</ul></div>
+<p>Here again the generated GUI is empty.</p>
+<h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
+<p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Cmajor code.</p>
+<h3 id="generating-the-cmajor-output">Generating the Cmajor output</h3>
+<p>The output as a Cmajor program can directly be generated using the <em>Platform = source</em> and <em>Architecture = cmajor</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The program can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Getting%20Started.md#generating-c-and-wasm-code">converted as a JUCE plugin</a>.</p>
+<p><img src="img/export.png" class="mx-auto d-block" width="40%">
+<center><em>Exporting the code</em></center></p>
+<h3 id="generating-the-cmajor-output-in-polyphonic-mode">Generating the Cmajor output in polyphonic mode</h3>
+<p>DSP programs following the polyphonic <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> can be generated using the <em>Platform = source</em> and <em>Architecture = cmajor-poly</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Getting%20Started.md#generating-c-and-wasm-code">converted as a JUCE plugin</a>.</p>
+<h3 id="generating-the-cmajor-output-in-polyphonic-mode-with-a-global-effect">Generating the Cmajor output in polyphonic mode with a global effect</h3>
+<p>DSP programs following the polyphonic <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> with and an <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a> can be generated using the <em>Platform = source</em> and <em>Architecture = cmajor-poly-effect</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Getting%20Started.md#generating-c-and-wasm-code">converted as a JUCE plugin</a>.</p></div>
             </div>
         </div>
 
