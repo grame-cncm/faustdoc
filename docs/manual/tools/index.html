@@ -235,10 +235,6 @@
 <li>
     <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
 </li>
-                                    
-<li>
-    <a href="../../tutorials/cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
-</li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -526,9 +522,10 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="faust2-tools"><code>faust2[...]</code> Tools</h1>
-<p>While in its most <em>primitive</em> form, Faust is distributed as a command-line compiler, a wide range of tools have been developed around it in the course of the past few years. Their variety and their function might be hard to grab at first. This sort chapter provides an overview of their role and will hopefully help you decide which one is better suited for your personal use. </p>
-<p>The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools names are in the form <code>faust2xx</code> where <code>xx</code> is the target architecture.</p>
-<p>Use <code>-h</code> or <code>-help</code> to get more information on each specific script options. Additional  Faust compiler options (like <code>-vec -lv 0 -I /path/to/lib</code>) can be given. For scripts that combines Faust and the C++ compiler, you can possibly use the  <code>CXXFLAGS</code> environment variable to give additional options to the C++ compiler.</p>
+<p>While in its most <em>primitive</em> form, Faust is distributed as a command-line compiler, a wide range of tools have been developed around it in the course of the past few years. Their variety and their function might be hard to grab at first. This description provides an overview of their role and will hopefully help you decide which one is better suited for your personal use. </p>
+<p>The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools names are in the form <code>faust2xx</code> where <code>xx</code> is the target architecture. </p>
+<p>Use <code>-h</code> or <code>-help</code> to get more information on each specific script options, the supported platforms and possibly the required packages. Additional  Faust compiler options (like <code>-vec -lv 0 -I /path/to/lib</code>) can be given. For scripts that combines Faust and the C++ compiler, you can possibly use the  <code>CXXFLAGS</code> environment variable to give additional options to the C++ compiler.</p>
+<p>Note that some of the tools are somewhat <em>meta</em> tools when they are based on a framework that itself can generate several formats later on. This is the case of the <code>faust2juce</code> script for instance.</p>
 <p>Note that using <code>-inj &lt;f&gt;</code> option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base <code>dsp</code> class, the <code>faust2xx</code> scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures. </p>
 <h2 id="faust2alqt">faust2alqt</h2>
 <pre class=faust-tools>
@@ -725,12 +722,6 @@ Options:
 
 <h2 id="faust2cpalrust">faust2cpalrust</h2>
 <pre class=faust-tools>
-Usage: faust2cpalrust [options] [Faust options] &lt;file.dsp>
-Require: CPAL
-Compiles Faust programs to CPAL and Rust binary
-Options:
-   -source : only generates the source project.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2csound">faust2csound</h2>
@@ -1068,7 +1059,7 @@ Options:
    -filter &lt;filter> : use a filter for upsampling or downsampling [0..4]
    -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -native : to compile for the native CPU (otherwise the 'generic' mode is used by default)
-   -universal : to generate a arm/intel external
+   -universal : to generate a universal (arm/intel) external
    -nopatch : to deactivate patch generation
    -nopost : to disable Faust messages to Max console
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
