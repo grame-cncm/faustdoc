@@ -88,7 +88,7 @@ faust -lang cmajor -cn osc osc.dsp -o osc.cmajor
 
 ### Using the faust2cmajor tool
 
-The [faust2cmajor](https://github.com/SoundStacks/faust/tree/cmajor/architecture/cmajor#faust2cmajor) tool allows to automate calling the Faust compiler with the right options and interacting with the **cmaj** program:
+The [faust2cmajor](https://github.com/grame-cncm/faust/tree/master-dev/architecture/cmajor#faust2cmajor) tool allows to automate calling the Faust compiler with the right options and interacting with the **cmaj** program:
 
 ```bash
 faust2cmajor -h
