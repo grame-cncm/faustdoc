@@ -200,7 +200,7 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -234,6 +234,10 @@
                                     
 <li>
     <a href="../signal-api/" class="dropdown-item">Using the signal API</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Using Faust in Cmajor</a>
 </li>
                                 </ul>
                             </li>
@@ -495,13 +499,13 @@ effect = dm.freeverb_demo;
 <h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
 <p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Cmajor code.</p>
 <h3 id="generating-the-cmajor-output">Generating the Cmajor output</h3>
-<p>The output as a Cmajor program can directly be generated using the <em>Platform = source</em> and <em>Architecture = cmajor</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The program can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Getting%20Started.md#generating-c-and-wasm-code">converted as a JUCE plugin</a>.</p>
+<p>The output as a Cmajor program can directly be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The program can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p>
 <p><img src="img/export.png" class="mx-auto d-block" width="40%">
 <center><em>Exporting the code</em></center></p>
 <h3 id="generating-the-cmajor-output-in-polyphonic-mode">Generating the Cmajor output in polyphonic mode</h3>
-<p>DSP programs following the polyphonic <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> can be generated using the <em>Platform = source</em> and <em>Architecture = cmajor-poly</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Getting%20Started.md#generating-c-and-wasm-code">converted as a JUCE plugin</a>.</p>
+<p>DSP programs following the polyphonic <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> can be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor-poly</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p>
 <h3 id="generating-the-cmajor-output-in-polyphonic-mode-with-a-global-effect">Generating the Cmajor output in polyphonic mode with a global effect</h3>
-<p>DSP programs following the polyphonic <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> with and an <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a> can be generated using the <em>Platform = source</em> and <em>Architecture = cmajor-poly-effect</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Getting%20Started.md#generating-c-and-wasm-code">converted as a JUCE plugin</a>.</p></div>
+<p>DSP programs following the polyphonic <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> with and an <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a> can be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor-poly-effect</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p></div>
             </div>
         </div>
 
