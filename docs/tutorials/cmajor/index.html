@@ -452,7 +452,7 @@ Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler document
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
-process = organ, organ
+process = organ &lt;: _,_
 with {
     decimalpart(x) = x-int(x);
     phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
@@ -460,8 +460,9 @@ with {
     freq = nentry(&quot;freq&quot;, 100, 100, 3000, 0.01);
     gate = button(&quot;gate&quot;);
     gain = nentry(&quot;gain&quot;, 0.5, 0, 1, 0.01);
-    organ = gate * (osc(freq) * gain + osc(2 * freq) * gain);
+    organ = en.adsr(0.1, 0.1, 0.7, 0.25, gate) * (osc(freq) * gain + osc(2*freq)*0.5 * gain);
 };
+
 
 </code></pre>
 
