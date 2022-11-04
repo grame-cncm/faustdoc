@@ -191,3 +191,9 @@ DSP programs following the polyphonic [freq/gate/gain convention](https://faustd
 
 DSP programs following the polyphonic [freq/gate/gain convention](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) with and an [integrated effect](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer) can be generated using the *Platform = cmajor* and *Architecture = cmajor-poly-effect* export options. The resulting *foo* folder is self-contained, containing the `foo.cmajor` and `foo.cmajorpatch` files. The instrument can be executed using `cmaj play foo/foo.cmajorpatch` command and played with a MIDI device or possibly [converted as a JUCE plugin](https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md).
 
+
+### Generating the Cmajor output from a Faust DSP program found in the web
+
+Faust DSP programs found on the Web can also be converted, for instance the [fverb](https://faust.grame.fr/community/made-with-faust/#fverb) listed on the [Powered By Faust](https://faust.grame.fr/community/made-with-faust/) page. 
+
+The DSP content can simply be loaded with the following URL: [https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp](https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp), using the `https://faustide.grame.fr/?code=URL` syntax, tested in the Faust Web IDE, then converted in a Cmajor program as already showed.
