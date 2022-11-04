@@ -14,7 +14,7 @@ Download the [**cmaj** package](https://github.com/SoundStacks/cmajor/releases) 
 
 ### Generating Cmajor code
 
-Assuming you've [compiled and installed the **faust** compiler](https://github.com/grame-cncm/faust/wiki/BuildingSimple), starting from the following DSP **osc.dsp** program:
+Assuming you've [installed the **faust** compiler](https://faust.grame.fr/downloads/), starting from the following DSP **osc.dsp** program:
 
 <!-- faust-run -->
 ```
