@@ -349,7 +349,7 @@
 }
 </code></pre>
 <p>where only one of the <em>then</em> or <em>else</em> branch will be effectively computed, thus saving CPU. Note that this behaviour <strong>should not be misused</strong> to avoid doing some computations ! </p>
-<p>If computing both branches is really desired, the <code>-sts (--strict-select)</code> option can be used to force the computation of both branches by putting them in local variables, as shown in the following <em>generated with <code>-sts</code></em> code version of the same DSP code:</p>
+<p>If computing both branches is really desired, the <code>-sts (--strict-select)</code> option can be used to force their computation by putting them in local variables, as shown in the following <em>generated with <code>-sts</code></em> code version of the same DSP code:</p>
 <pre><code class="language-c++">for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
     iRec0[0] = iRec0[1] + 1;
     float fThen0 = std::cos(std::sin(std::cos(std::sin(float(input0[i0])))));
