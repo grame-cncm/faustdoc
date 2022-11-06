@@ -155,7 +155,7 @@ faust2cmajor -play -midi -nvoices 16 organ.dsp
 
 Note that the generated GUI is empty, since the generated processor cannot automatically reflects its controls in the main graph.
 
-The following [polyphonic ready instrument](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer) DSP, with an integrated effect, can be converted to a MIDI ready cmajor instrument:
+The following polyphonic ready instrument DSP, with an [integrated effect](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer), can be converted to a MIDI ready cmajor instrument:
 
 <!-- faust-run -->
 ```
