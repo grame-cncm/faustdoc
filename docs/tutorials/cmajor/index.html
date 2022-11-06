@@ -320,6 +320,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#generating-the-cmajor-output-using-faustremote" class="nav-link">Generating the Cmajor output using faustremote</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide" class="nav-link">Using the Faust Web IDE</a>
@@ -501,6 +505,11 @@ effect = dm.freeverb_demo;
 <pre><code class="language-bash">faust2cmajor -play -midi -nvoices 16 -effect auto clarinet.dsp 
 </code></pre>
 <p>Here again the generated GUI is empty.</p>
+<h3 id="generating-the-cmajor-output-using-faustremote">Generating the Cmajor output using faustremote</h3>
+<p>An possibility is to use the <a href="https://faustdoc.grame.fr/manual/remote/">faustremote</a> script to convert a local DSP with the following commands:</p>
+<pre><code class="language-bash">faustremote cmajor cmajor foo.dsp
+unzip binary.zip
+</code></pre>
 <h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
 <p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Cmajor code.</p>
 <h3 id="generating-the-cmajor-output">Generating the Cmajor output</h3>

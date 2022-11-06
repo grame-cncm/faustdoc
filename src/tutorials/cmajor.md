@@ -166,11 +166,22 @@ effect = dm.freeverb_demo;
 <!-- /faust-run -->
 
 The following command then opens the **cmaj** program and MDI events can be sent to control the instrument:
+
 ```bash
 faust2cmajor -play -midi -nvoices 16 -effect auto clarinet.dsp 
 ```
 
 Here again the generated GUI is empty.
+
+
+### Generating the Cmajor output using faustremote
+
+An possibility is to use the [faustremote](https://faustdoc.grame.fr/manual/remote/) script to convert a local DSP with the following commands:
+
+```bash
+faustremote cmajor cmajor foo.dsp
+unzip binary.zip
+```
 
 ## Using the Faust Web IDE
 
