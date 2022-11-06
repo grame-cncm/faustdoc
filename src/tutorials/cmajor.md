@@ -173,10 +173,9 @@ faust2cmajor -play -midi -nvoices 16 -effect auto clarinet.dsp
 
 Here again the generated GUI is empty.
 
-
 ### Generating the Cmajor output using faustremote
 
-An possibility is to use the [faustremote](https://faustdoc.grame.fr/manual/remote/) script to convert a local DSP with the following commands:
+A possibility is to use the [faustremote](https://faustdoc.grame.fr/manual/remote/) script to convert a local DSP with the following commands:
 
 ```bash
 faustremote cmajor cmajor foo.dsp
