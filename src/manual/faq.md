@@ -4,13 +4,15 @@
 
 The semantics of Faust is always strict. That's why there is no real `if` in Faust. And that's why the `ba.if` in the library (based on `select2` ) can be misleading. 
 
-Concerning the way `select2` is compiled, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if.  For example:
+Concerning the way `select2` is compiled, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:
+
 ```
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
 ```
+
 is compiled in C/C++ as:
 
-```
+```c++
 for (int i = 0; (i < count); i = (i + 1)) {
     fRec0[0] = (fRec0[1] + (3.0f * float(input0[i])));
     fRec1[0] = (fRec1[1] + (7.0f * float(input1[i])));
@@ -20,20 +22,39 @@ for (int i = 0; (i < count); i = (i + 1)) {
 }
 ```
 
-When stateless expressions are used, their proper computation if forced by putting them in local variables, as in the following example:
-```
-process = select2(button("choose"), sin:cos, cos:sin);
-```
-which is compiled in C/C++ as:
+When stateless expressions are used, they are by default generated using a *non-strict* conditional expression. For instance the following DSP code:
 
 ```
-for (int i0 = 0; (i0 < count); i0 = (i0 + 1)) {
-    float fThen0 = std::cos(std::sin(float(input0[i0])));
-    float fElse0 = std::sin(std::cos(float(input1[i0])));
-    output0[i0] = FAUSTFLOAT((iSlow0 ? fElse0 : fThen0));
+process = select2((+(1)~_)%10, sin:cos:sin:cos, cos:sin:cos:sin);
+```
+
+is compiled in C/C++ as:
+
+```c++
+for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+    iRec0[0] = iRec0[1] + 1;
+    output0[i0] = FAUSTFLOAT(((iRec0[0] % 10) 
+        ? std::sin(std::cos(std::sin(std::cos(float(input1[i0]))))) 
+        : std::cos(std::sin(std::cos(std::sin(float(input0[i0])))))));
+    iRec0[1] = iRec0[0];
 }
 ```
-to therefore preserve the strict semantic, even if a non-strict `(cond) ? then : else` form is finally generated to produce the result of the `select2` expression.
+
+where only one of the *then* or *else* branch will be effectively computed, thus saving CPU. Note that this behaviour **should not be misused** to avoid doing some computations ! 
+
+If computing both branches is really needed, like for [debugging purposes](https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime) (testing if there is no division by 0, or producing `INF` or `NaN` values), the `-sts (--strict-select)` option can be used to force the computation of both branches by putting them in local variables, as shown in the following *generated with `-sts`* code version of the same DSP code:
+
+```c++
+for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+    iRec0[0] = iRec0[1] + 1;
+    float fThen0 = std::cos(std::sin(std::cos(std::sin(float(input0[i0])))));
+    float fElse0 = std::sin(std::cos(std::sin(std::cos(float(input1[i0])))));
+    output0[i0] = FAUSTFLOAT(((iRec0[0] % 10) ? fElse0 : fThen0));
+    iRec0[1] = iRec0[0];
+}
+```
+
+to therefore preserve the strict semantic, even if a non-strict `(cond) ? then : else` form is used to produce the result of the `select2` expression.
 
 Thus `select2` cannot be used to **avoid computing something**. For computations that need to avoid some values or ranges (like doing  `val/0` that would return `INF`, or `log` of a negative value that would return `NaN`), the solution is to use  `min` and  `max` to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write `1/max(epsilon, x)`.
 
