@@ -970,7 +970,7 @@ In the following example an `environment` construction is used to group together
 ```
 constant = environment {
   pi = 3.14159;
-  e = 2,718;
+  e = 2.718;
   ...
 };
 ```
@@ -988,7 +988,7 @@ For example `constant.pi` refers to the definition of `pi` in the `constant` env
 Note that environments don't have to be named. We could have written directly: 
 
 ```
-environment{pi = 3.14159; e = 2,718;....}.pi
+environment{pi = 3.14159; e = 2.718; ... }.pi
 ```
 
 #### `library` Expression

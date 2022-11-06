@@ -2139,7 +2139,7 @@ v(t) = max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1)
 <p>In the following example an <code>environment</code> construction is used to group together some constant definitions :</p>
 <pre><code>constant = environment {
   pi = 3.14159;
-  e = 2,718;
+  e = 2.718;
   ...
 };
 </code></pre>
@@ -2149,7 +2149,7 @@ v(t) = max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1)
 <p><img src="img/access.svg" class="mx-auto d-block"></p>
 <p>For example <code>constant.pi</code> refers to the definition of <code>pi</code> in the <code>constant</code> environment <a href="#environment-expression">defined above</a>.</p>
 <p>Note that environments don't have to be named. We could have written directly: </p>
-<pre><code>environment{pi = 3.14159; e = 2,718;....}.pi
+<pre><code>environment{pi = 3.14159; e = 2.718; ... }.pi
 </code></pre>
 <h4 id="library-expression"><code>library</code> Expression</h4>
 <p>The <code>library</code> construct allows to create an environment by reading the definitions from a file.</p>
