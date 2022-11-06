@@ -207,3 +207,5 @@ DSP programs following the polyphonic [freq/gate/gain convention](https://faustd
 Faust DSP programs found on the Web can also be converted, for instance the [fverb](https://faust.grame.fr/community/made-with-faust/#fverb) listed on the [Powered By Faust](https://faust.grame.fr/community/made-with-faust/) page. 
 
 The DSP content can simply be loaded with the following URL: [https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp](https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp), using the `https://faustide.grame.fr/?code=URL` syntax, tested in the Faust Web IDE, then converted in a Cmajor program as already showed.
+
+Examples of the [faustplayground](https://faustplayground.grame.fr/) platform can be [found here](https://github.com/grame-cncm/faustplayground/tree/master/faust-modules) and possibly converted.
