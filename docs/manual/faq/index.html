@@ -349,7 +349,7 @@
 }
 </code></pre>
 <p>where only one of the <em>then</em> or <em>else</em> branch will be effectively computed, thus saving CPU. Note that this behaviour <strong>should not be misused</strong> to avoid doing some computations ! </p>
-<p>If computing both branches is really needed, like for <a href="https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime">debugging purposes</a> (testing if there is no division by 0, or producing <code>INF</code> or <code>NaN</code> values), the <code>-sts (--strict-select)</code> option can be used to force the computation of both branches by putting them in local variables, as shown in the following <em>generated with <code>-sts</code></em> code version of the same DSP code:</p>
+<p>If computing both branches is really desired, the <code>-sts (--strict-select)</code> option can be used to force the computation of both branches by putting them in local variables, as shown in the following <em>generated with <code>-sts</code></em> code version of the same DSP code:</p>
 <pre><code class="language-c++">for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
     iRec0[0] = iRec0[1] + 1;
     float fThen0 = std::cos(std::sin(std::cos(std::sin(float(input0[i0])))));
@@ -358,7 +358,8 @@
     iRec0[1] = iRec0[0];
 }
 </code></pre>
-<p>to therefore preserve the strict semantic, even if a non-strict <code>(cond) ? then : else</code> form is used to produce the result of the <code>select2</code> expression.</p>
+<p>to therefore preserve the strict semantic, even if a non-strict <code>(cond) ? then : else</code> form is used to produce the result of the <code>select2</code> expression. </p>
+<p>This can be helpful for <a href="https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime">debugging purposes</a> like testing if there is no division by 0, or producing <code>INF</code> or <code>NaN</code> values. The <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">interp-tracer</a> can be used for that by adding  the <code>-sts</code> option.</p>
 <p>So again remember that <code>select2</code> cannot be used to <strong>avoid computing something</strong>. For computations that need to avoid some values or ranges (like doing  <code>val/0</code> that would return <code>INF</code>, or <code>log</code> of a negative value that would return <code>NaN</code>), the solution is to use  <code>min</code> and  <code>max</code> to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write <code>1/max(epsilon, x)</code>.</p>
 <h2 id="pattern-matching-and-lists">Pattern matching and lists</h2>
 <p>Strictly speaking, there are no lists in Faust. For example the expression <code>()</code> or <code>NIL</code> in Lisp, which indicates an empty list, does not exist in Faust. Similarly, the distinction in Lisp between the number <code>3</code> and the list with only one element <code>(3)</code> does not exist in Faust. </p>

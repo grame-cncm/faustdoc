@@ -42,7 +42,7 @@ for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 
 where only one of the *then* or *else* branch will be effectively computed, thus saving CPU. Note that this behaviour **should not be misused** to avoid doing some computations ! 
 
-If computing both branches is really needed, like for [debugging purposes](https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime) (testing if there is no division by 0, or producing `INF` or `NaN` values), the `-sts (--strict-select)` option can be used to force the computation of both branches by putting them in local variables, as shown in the following *generated with `-sts`* code version of the same DSP code:
+If computing both branches is really desired, the `-sts (--strict-select)` option can be used to force the computation of both branches by putting them in local variables, as shown in the following *generated with `-sts`* code version of the same DSP code:
 
 ```c++
 for (int i0 = 0; i0 < count; i0 = i0 + 1) {
@@ -54,7 +54,9 @@ for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 }
 ```
 
-to therefore preserve the strict semantic, even if a non-strict `(cond) ? then : else` form is used to produce the result of the `select2` expression.
+to therefore preserve the strict semantic, even if a non-strict `(cond) ? then : else` form is used to produce the result of the `select2` expression. 
+
+ This can be helpful for [debugging purposes](https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime) like testing if there is no division by 0, or producing `INF` or `NaN` values. The [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) can be used for that by adding  the `-sts` option.
 
 So again remember that `select2` cannot be used to **avoid computing something**. For computations that need to avoid some values or ranges (like doing  `val/0` that would return `INF`, or `log` of a negative value that would return `NaN`), the solution is to use  `min` and  `max` to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write `1/max(epsilon, x)`.
 
