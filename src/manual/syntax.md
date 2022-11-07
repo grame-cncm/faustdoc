@@ -1241,9 +1241,9 @@ route(A,B,(a,b),(c,d),...)
 ```
 where:
 
-* `A` is the number of input signals, as a integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
-* `B` is the number of output signals, as a integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
-* `a,b / (a,b)` is an input/output pair, as integer [constant numerical expressions](#constant-numerical-expressions), automatically promoted to *int*
+* `A` is the number of input signals, as an integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
+* `B` is the number of output signals, as an integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
+* `a,b / (a,b)` is an input/output pair, as integers [constant numerical expressions](#constant-numerical-expressions), automatically promoted to *int*
 
 Inputs are numbered from 1 to `A` and outputs are numbered from 1 to `B`. There can be any number of input/output pairs after the declaration of `A` and `B`.
 
