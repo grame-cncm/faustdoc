@@ -414,12 +414,19 @@ input event float32 eventfHslider0 [[ name: &quot;volume&quot;, group: &quot;/v:
 }
 </code></pre>
 <p>Note that the generated code uses the so-called <a href="https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code">scalar code generation model</a>, the default one, where the compiled sample generation code is inlined on the Cmajor <code>loop</code> block. </p>
-<p>The resulting file is self-contained and so can directly be compiled and executed using the <strong>cmaj</strong> program:</p>
-<pre><code class="language-bash">cmaj play osc.cmajorpatch
+<p>We cannot directly play the generated <code>osc.cmajor</code> file since the <strong>cmaj</strong> program expects a <code>osc.cmajorpatch</code> to execute. A simple solution is to use the following command:</p>
+<pre><code class="language-bash">cmaj create --name=osc osc 
+</code></pre>
+<p>to create an  <code>osc</code>  folder with default  <code>osc.cmajor</code> and <code>osc.cmajorpatch</code> files. Then using the command:</p>
+<pre><code class="language-bash">faust -lang cmajor osc.dsp -o osc/osc.cmajor
+</code></pre>
+<p>allows to simply replace the default <code>osc.cmajor</code> with our own Faust generated version.</p>
+<p>The patchfile can now be compiled and executed using the <strong>cmaj</strong> program:</p>
+<pre><code class="language-bash">cmaj play osc/osc.cmajorpatch
 </code></pre>
 <p>The three declared sliders are automatically created and can be used to change the two channels frequencies and their volume.</p>
 <p>The Cmajor processor code can directly be used in a more complex Cmajor program, possibly connected to other Faust generated or Cmajor hand-written processors. Note that the generated processor name can simply be changed using the Faust compiler <code>-cn &lt;name&gt;</code> option, so that several Faust generated processors can be distinguished by their names:</p>
-<pre><code class="language-bash">faust -lang cmajor -cn osc osc.dsp -o osc.cmajor
+<pre><code class="language-bash">faust -lang cmajor -cn osc osc.dsp -o osc/osc.cmajor
 </code></pre>
 <h3 id="using-the-faust2cmajor-tool">Using the faust2cmajor tool</h3>
 <p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/cmajor#faust2cmajor">faust2cmajor</a> tool allows to automate calling the Faust compiler with the right options and interacting with the <strong>cmaj</strong> program:</p>

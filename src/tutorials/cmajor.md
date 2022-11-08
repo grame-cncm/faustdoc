@@ -72,10 +72,24 @@ void main()
 
 Note that the generated code uses the so-called [scalar code generation model](https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code), the default one, where the compiled sample generation code is inlined on the Cmajor `loop` block. 
 
-The resulting file is self-contained and so can directly be compiled and executed using the **cmaj** program:
+We cannot directly play the generated `osc.cmajor` file since the **cmaj** program expects a `osc.cmajorpatch` to execute. A simple solution is to use the following command:
 
 ```bash
-cmaj play osc.cmajorpatch
+cmaj create --name=osc osc 
+```
+
+to create an  `osc`  folder with default  `osc.cmajor` and `osc.cmajorpatch` files. Then using the command:
+
+```bash
+faust -lang cmajor osc.dsp -o osc/osc.cmajor
+```
+
+allows to simply replace the default `osc.cmajor` with our own Faust generated version.
+
+The patchfile can now be compiled and executed using the **cmaj** program:
+
+```bash
+cmaj play osc/osc.cmajorpatch
 ```
 
 The three declared sliders are automatically created and can be used to change the two channels frequencies and their volume.
@@ -83,7 +97,7 @@ The three declared sliders are automatically created and can be used to change t
 The Cmajor processor code can directly be used in a more complex Cmajor program, possibly connected to other Faust generated or Cmajor hand-written processors. Note that the generated processor name can simply be changed using the Faust compiler `-cn <name>` option, so that several Faust generated processors can be distinguished by their names:
 
 ```bash
-faust -lang cmajor -cn osc osc.dsp -o osc.cmajor
+faust -lang cmajor -cn osc osc.dsp -o osc/osc.cmajor
 ```
 
 ### Using the faust2cmajor tool
