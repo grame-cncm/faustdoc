@@ -75,7 +75,7 @@ Note that the generated code uses the so-called [scalar code generation model](h
 The resulting file is self-contained and so can directly be compiled and executed using the **cmaj** program:
 
 ```bash
-cmaj play osc.cmajor
+cmaj play osc.cmajorpatch
 ```
 
 The three declared sliders are automatically created and can be used to change the two channels frequencies and their volume.
