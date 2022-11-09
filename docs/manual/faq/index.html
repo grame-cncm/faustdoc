@@ -300,6 +300,34 @@
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#does-select2-behaves-as-a-standard-cc-like-if" class="nav-link">Does select2 behaves as a standard C/C++ like if ?</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#strict-vs-lazy-semantics" class="nav-link">Strict vs Lazy semantics</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#but-things-are-a-little-bit-more-complex" class="nav-link">But things are a little bit more complex...</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#what-properties-does-the-faust-compiler-and-generated-code-have-in-progress" class="nav-link">What properties does the Faust compiler and generated code have ? (In progress)</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#compiler" class="nav-link">Compiler</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generated-code" class="nav-link">Generated code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#memory-footprint" class="nav-link">Memory footprint</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#cpu-footprint" class="nav-link">CPU footprint</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#pattern-matching-and-lists" class="nav-link">Pattern matching and lists</a>
@@ -323,11 +351,22 @@
 
 <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
 <h2 id="does-select2-behaves-as-a-standard-cc-like-if">Does select2 behaves as a standard C/C++ like if ?</h2>
-<p>The semantics of Faust is always strict. That's why there is no real <code>if</code> in Faust. And that's why the <code>ba.if</code> in the library (based on <code>select2</code> ) can be misleading. </p>
-<p>Concerning the way <code>select2</code> is compiled, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:</p>
+<p>The short answer is <strong>no</strong>, <code>select2</code> doesn't behave like the <code>if-then-else</code> of a traditional programming language, nor does <code>ba.if</code> of the standard library. To understand why, think of <code>select2</code> as the tuner of a radio, it selects what you listen, but does not prevent the various radio stations from broadcasting. Actually, <code>select2</code> could be easily redefined in Faust as:</p>
+<pre><code>select2(i, x, y) = (1-i) * x + i * y;
+</code></pre>
+<h3 id="strict-vs-lazy-semantics">Strict vs Lazy semantics</h3>
+<p>In computer science terminology, <code>select2(i,x,y)</code> has so-called <em>strict</em> semantics. This means that its three arguments <code>i</code>, <code>x</code>, <code>y</code> are always evaluated before select2 itself is executed, in other words, even if <code>x</code> or <code>y</code> is not selected. The standard C/C++ <code>if-then-else</code> has <em>lazy</em> semantics. The <em>condition</em> is always executed, but depending of the value of the <em>condition</em>, only the <em>then</em> or the <em>else</em> branch is executed. </p>
+<p>The <em>strict</em> semantics of <code>select2</code> means that you cannot use it to prevent a division by 0 in an expression, or the square root of a negative number, etc... For example, the following code will not prevent a division by 0 error:</p>
+<pre><code>select2(x == 0, 1/x, 10000); 
+</code></pre>
+<p>You cannot use <code>ba.if</code> either because it is implemented using <code>select2</code> and has the same strict semantics. Therefore the following code will not prevent a division by 0 error:</p>
+<pre><code>ba.if(x == 0, 10000, 1/x);
+</code></pre>
+<h3 id="but-things-are-a-little-bit-more-complex">But things are a little bit more complex...</h3>
+<p>Concerning the way <code>select2</code> is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:</p>
 <pre><code>process = button(&quot;choose&quot;), (*(3) : +~_), (*(7):+~_) : select2;
 </code></pre>
-<p>is compiled in C/C++ as:</p>
+<p>is compiled in C/C++ as, when <code>fRec0[0]</code> and <code>fRec1[0]</code> contains the computation of each branch:</p>
 <pre><code class="language-c++">for (int i = 0; (i &lt; count); i = (i + 1)) {
     fRec0[0] = (fRec0[1] + (3.0f * float(input0[i])));
     fRec1[0] = (fRec1[1] + (7.0f * float(input1[i])));
@@ -336,7 +375,8 @@
     fRec1[1] = fRec1[0];
 }
 </code></pre>
-<p>When stateless expressions are used, they are by default generated using a <em>non-strict</em> conditional expression. For instance the following DSP code:</p>
+<p>For code optimization strategies, the generated code is not <em>fully</em> strict on <code>select2</code>. When Faust produces C++ code, the C++ compiler can decide to <em>avoid the execution of the stateless part of the signal that is not selected</em> (and not needed elsewhere). This doesn't change the semantics of the output signal, but it changes the strictness of the code if a division by 0 would have been executed in the stateless part. When stateless expressions are used, they are by default generated using a <em>non-strict</em> conditional expression. </p>
+<p>For instance the following DSP code:</p>
 <pre><code>process = select2((+(1)~_)%10, sin:cos:sin:cos, cos:sin:cos:sin);
 </code></pre>
 <p>is compiled in C/C++ as:</p>
@@ -348,7 +388,7 @@
     iRec0[1] = iRec0[0];
 }
 </code></pre>
-<p>where only one of the <em>then</em> or <em>else</em> branch will be effectively computed, thus saving CPU. Note that this behaviour <strong>should not be misused</strong> to avoid doing some computations ! </p>
+<p>where only one of the <em>then</em> or <em>else</em> branch will be effectively computed, thus saving CPU. </p>
 <p>If computing both branches is really desired, the <code>-sts (--strict-select)</code> option can be used to force their computation by putting them in local variables, as shown in the following <em>generated with <code>-sts</code></em> code version of the same DSP code:</p>
 <pre><code class="language-c++">for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
     iRec0[0] = iRec0[1] + 1;
@@ -361,6 +401,19 @@
 <p>to therefore preserve the strict semantic, even if a non-strict <code>(cond) ? then : else</code> form is used to produce the result of the <code>select2</code> expression. </p>
 <p>This can be helpful for <a href="https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime">debugging purposes</a> like testing if there is no division by 0, or producing <code>INF</code> or <code>NaN</code> values. The <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">interp-tracer</a> can be used for that by adding  the <code>-sts</code> option.</p>
 <p>So again remember that <code>select2</code> cannot be used to <strong>avoid computing something</strong>. For computations that need to avoid some values or ranges (like doing  <code>val/0</code> that would return <code>INF</code>, or <code>log</code> of a negative value that would return <code>NaN</code>), the solution is to use  <code>min</code> and  <code>max</code> to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write <code>1/max(epsilon, x)</code>.</p>
+<h2 id="what-properties-does-the-faust-compiler-and-generated-code-have-in-progress">What properties does the Faust compiler and generated code have ? (In progress)</h2>
+<h3 id="compiler">Compiler</h3>
+<p>The compiler itself is <a href="https://en.wikipedia.org/wiki/Turing_completeness">turing complete</a> because it contains a pattern matching meta-programming model. Thus a Faust DSP program can loop at compile time. For instance the following:</p>
+<pre><code>foo = foo;
+process = foo;
+</code></pre>
+<p>will loop and hopefully end with the message: <em>ERROR : after 400 evaluation steps, the compiler has detected an endless evaluation cycle of 2 steps</em> because the compiler contains some infinite loop detection mechanisms.</p>
+<h3 id="generated-code">Generated code</h3>
+<p>The generated code computes the sample in a <em>finite number</em> of operations, thus a DSP program that would loop infinitely cannot be written. This is of course a limitation because certain classes of algorithms cannot be expressed (<strong>TODO</strong>: Newton approximation used in diode VA model). But on the contrary it gives a strong garanty on the upper bound of CPU cost that is quite interesting to have when deploying a program in a real-time audio context.</p>
+<h3 id="memory-footprint">Memory footprint</h3>
+<p>The DSP memory footprint is perfectly known at compile time, so the generated code always consume a finite amount of memory. Moreover the standard deployement model is to allocate the DSP a load time, init it with a given sample-rate, then execute the DSP code, be repeatedly calling the <code>compute</code> function to process audio buffers.</p>
+<h3 id="cpu-footprint">CPU footprint</h3>
+<p>Since the generated code computes the sample in a <em>finite number</em> of operations, the CPU use as an upper bound which is a very helpful property swhen deploying a program in a real-time audio context. Read the <a href="#does-select2-behaves-as-a-standard-cc-like-if">Does select2 behaves as a standard C/C++ like if ?</a> for some subtle issues concerning the <code>select2</code> primitive.</p>
 <h2 id="pattern-matching-and-lists">Pattern matching and lists</h2>
 <p>Strictly speaking, there are no lists in Faust. For example the expression <code>()</code> or <code>NIL</code> in Lisp, which indicates an empty list, does not exist in Faust. Similarly, the distinction in Lisp between the number <code>3</code> and the list with only one element <code>(3)</code> does not exist in Faust. </p>
 <p>However, list operations can be simulated (in part) using the parallel binary composition operation <code>,</code> and pattern matching. The parallel composition operation is right-associative. This means that the expression <code>(1,2,3,4)</code> is just a simplified form of the fully parenthesized expression <code>(1,(2,(3,4)))</code>. The same is true for <code>(1,2,(3,4))</code> which is also a simplified form of the same fully parenthesized expression <code>(1,(2,(3,4)))</code>. </p>

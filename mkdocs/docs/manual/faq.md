@@ -2,15 +2,37 @@
 
 ## Does select2 behaves as a standard C/C++ like if ?
 
-The semantics of Faust is always strict. That's why there is no real `if` in Faust. And that's why the `ba.if` in the library (based on `select2` ) can be misleading. 
+The short answer is **no**, `select2` doesn't behave like the `if-then-else` of a traditional programming language, nor does `ba.if` of the standard library. To understand why, think of `select2` as the tuner of a radio, it selects what you listen, but does not prevent the various radio stations from broadcasting. Actually, `select2` could be easily redefined in Faust as:
+   
+```
+select2(i, x, y) = (1-i) * x + i * y;
+```
 
-Concerning the way `select2` is compiled, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:
+### Strict vs Lazy semantics
+
+In computer science terminology, `select2(i,x,y)` has so-called *strict* semantics. This means that its three arguments `i`, `x`, `y` are always evaluated before select2 itself is executed, in other words, even if `x` or `y` is not selected. The standard C/C++ `if-then-else` has *lazy* semantics. The *condition* is always executed, but depending of the value of the *condition*, only the *then* or the *else* branch is executed. 
+
+The *strict* semantics of `select2` means that you cannot use it to prevent a division by 0 in an expression, or the square root of a negative number, etc... For example, the following code will not prevent a division by 0 error:
+  
+```
+select2(x == 0, 1/x, 10000); 
+```
+
+You cannot use `ba.if` either because it is implemented using `select2` and has the same strict semantics. Therefore the following code will not prevent a division by 0 error:
+    
+```
+ba.if(x == 0, 10000, 1/x);
+```
+
+### But things are a little bit more complex...
+
+Concerning the way `select2` is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:
 
 ```
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
 ```
 
-is compiled in C/C++ as:
+is compiled in C/C++ as, when `fRec0[0]` and `fRec1[0]` contains the computation of each branch:
 
 ```c++
 for (int i = 0; (i < count); i = (i + 1)) {
@@ -22,7 +44,9 @@ for (int i = 0; (i < count); i = (i + 1)) {
 }
 ```
 
-When stateless expressions are used, they are by default generated using a *non-strict* conditional expression. For instance the following DSP code:
+For code optimization strategies, the generated code is not *fully* strict on `select2`. When Faust produces C++ code, the C++ compiler can decide to *avoid the execution of the stateless part of the signal that is not selected* (and not needed elsewhere). This doesn't change the semantics of the output signal, but it changes the strictness of the code if a division by 0 would have been executed in the stateless part. When stateless expressions are used, they are by default generated using a *non-strict* conditional expression. 
+
+For instance the following DSP code:
 
 ```
 process = select2((+(1)~_)%10, sin:cos:sin:cos, cos:sin:cos:sin);
@@ -40,7 +64,7 @@ for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 }
 ```
 
-where only one of the *then* or *else* branch will be effectively computed, thus saving CPU. Note that this behaviour **should not be misused** to avoid doing some computations ! 
+where only one of the *then* or *else* branch will be effectively computed, thus saving CPU. 
 
 If computing both branches is really desired, the `-sts (--strict-select)` option can be used to force their computation by putting them in local variables, as shown in the following *generated with `-sts`* code version of the same DSP code:
 
@@ -59,6 +83,33 @@ to therefore preserve the strict semantic, even if a non-strict `(cond) ? then :
 This can be helpful for [debugging purposes](https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime) like testing if there is no division by 0, or producing `INF` or `NaN` values. The [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) can be used for that by adding  the `-sts` option.
 
 So again remember that `select2` cannot be used to **avoid computing something**. For computations that need to avoid some values or ranges (like doing  `val/0` that would return `INF`, or `log` of a negative value that would return `NaN`), the solution is to use  `min` and  `max` to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write `1/max(epsilon, x)`.
+
+
+## What properties does the Faust compiler and generated code have ? (In progress)
+
+### Compiler
+
+The compiler itself is [turing complete](https://en.wikipedia.org/wiki/Turing_completeness) because it contains a pattern matching meta-programming model. Thus a Faust DSP program can loop at compile time. For instance the following:
+
+```
+foo = foo;
+process = foo;
+```
+
+will loop and hopefully end with the message: *ERROR : after 400 evaluation steps, the compiler has detected an endless evaluation cycle of 2 steps* because the compiler contains some infinite loop detection mechanisms.
+
+### Generated code
+
+The generated code computes the sample in a *finite number* of operations, thus a DSP program that would loop infinitely cannot be written. This is of course a limitation because certain classes of algorithms cannot be expressed (**TODO**: Newton approximation used in diode VA model). But on the contrary it gives a strong garanty on the upper bound of CPU cost that is quite interesting to have when deploying a program in a real-time audio context.
+
+### Memory footprint
+
+The DSP memory footprint is perfectly known at compile time, so the generated code always consume a finite amount of memory. Moreover the standard deployement model is to allocate the DSP a load time, init it with a given sample-rate, then execute the DSP code, be repeatedly calling the `compute` function to process audio buffers.
+
+### CPU footprint  
+
+Since the generated code computes the sample in a *finite number* of operations, the CPU use as an upper bound which is a very helpful property swhen deploying a program in a real-time audio context. Read the [Does select2 behaves as a standard C/C++ like if ?](#does-select2-behaves-as-a-standard-cc-like-if) for some subtle issues concerning the `select2` primitive.
+
 
 ## Pattern matching and lists
 

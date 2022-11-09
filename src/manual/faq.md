@@ -2,7 +2,7 @@
 
 ## Does select2 behaves as a standard C/C++ like if ?
 
-The short answer is **no**, `select2` doesn't behave like the `if-then-else` of a traditional programming language, nor does `ba.if` of the standard library. To understand why think of `select2` as the tuner of a radio, it selects what you listen, but does not prevent the various radio stations from broadcasting. Actually, `select2` could be easily redefined in Faust as:
+The short answer is **no**, `select2` doesn't behave like the `if-then-else` of a traditional programming language, nor does `ba.if` of the standard library. To understand why, think of `select2` as the tuner of a radio, it selects what you listen, but does not prevent the various radio stations from broadcasting. Actually, `select2` could be easily redefined in Faust as:
    
 ```
 select2(i, x, y) = (1-i) * x + i * y;
@@ -26,7 +26,7 @@ ba.if(x == 0, 10000, 1/x);
 
 ### But things are a little bit more complex...
 
-Concerning the way `select2` is compiled, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:
+Concerning the way `select2` is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:
 
 ```
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
@@ -85,7 +85,7 @@ This can be helpful for [debugging purposes](https://faustdoc.grame.fr/manual/de
 So again remember that `select2` cannot be used to **avoid computing something**. For computations that need to avoid some values or ranges (like doing  `val/0` that would return `INF`, or `log` of a negative value that would return `NaN`), the solution is to use  `min` and  `max` to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write `1/max(epsilon, x)`.
 
 
-## What properties does the Faust compiler and generated code have ? TO COMPLETE
+## What properties does the Faust compiler and generated code have ? (In progress)
 
 ### Compiler
 
@@ -100,7 +100,7 @@ will loop and hopefully end with the message: *ERROR : after 400 evaluation step
 
 ### Generated code
 
-The generated code computes the sample in a *finite number* of operations, thus a DSP program that would loop infinitely cannot be written. This is of course a limitation because certain classes of algorithms cannot be expressed (TODO: Newton approximation in Diode VA model). But on the contrary it gives a strong garanty on the upper bound of CPU cost that is quite interesting to have when deploying a program in a real-time audio context.
+The generated code computes the sample in a *finite number* of operations, thus a DSP program that would loop infinitely cannot be written. This is of course a limitation because certain classes of algorithms cannot be expressed (**TODO**: Newton approximation used in diode VA model). But on the contrary it gives a strong garanty on the upper bound of CPU cost that is quite interesting to have when deploying a program in a real-time audio context.
 
 ### Memory footprint
 
