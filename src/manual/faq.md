@@ -44,7 +44,7 @@ for (int i = 0; (i < count); i = (i + 1)) {
 }
 ```
 
-For code optimization strategies, the generated code is not *fully* strict on `select2`. When Faust produces C++ code, the C++ compiler can decide to avoid the execution of the stateless part of the signal that is not selected (and not needed elsewhere). This doesn't change the semantics of the output signal, but it changes the strictness of the code if a division by 0 would have been executed in the stateless part. When stateless expressions are used, they are by default generated using a *non-strict* conditional expression. 
+For code optimization strategies, the generated code is not *fully* strict on `select2`. When Faust produces C++ code, the C++ compiler can decide to *avoid the execution of the stateless part of the signal that is not selected* (and not needed elsewhere). This doesn't change the semantics of the output signal, but it changes the strictness of the code if a division by 0 would have been executed in the stateless part. When stateless expressions are used, they are by default generated using a *non-strict* conditional expression. 
 
 For instance the following DSP code:
 
