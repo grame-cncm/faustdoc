@@ -87,7 +87,9 @@ So again remember that `select2` cannot be used to **avoid computing something**
 
 ## What properties does the Faust compiler and generated code have ? TO COMPLETE
 
-### The compiler itself is [turing complete](https://en.wikipedia.org/wiki/Turing_completeness) because it contains a pattern matching meta-programming model. Thus a Faust DSP program can loop at compile time. For instance the following:
+### Compiler
+
+The compiler itself is [turing complete](https://en.wikipedia.org/wiki/Turing_completeness) because it contains a pattern matching meta-programming model. Thus a Faust DSP program can loop at compile time. For instance the following:
 
 ```
 foo = foo;
