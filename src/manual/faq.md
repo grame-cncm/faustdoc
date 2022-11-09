@@ -32,7 +32,7 @@ Concerning the way `select2` is compiled, the strict semantic is always preserve
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
 ```
 
-is compiled in C/C++ as, when `fRec0[0]` and `fRec1[0]` contains the computsation of each branch:
+is compiled in C/C++ as, when `fRec0[0]` and `fRec1[0]` contains the computation of each branch:
 
 ```c++
 for (int i = 0; (i < count); i = (i + 1)) {
