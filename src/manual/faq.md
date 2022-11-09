@@ -18,7 +18,7 @@ The *strict* semantics of `select2` means that you cannot use it to prevent a di
 select2(x == 0, 1/x, 10000); 
 ```
 
-You cannot use `ba.if` either because it is implemented using select2 and has the same strict semantics. Therefore the following code will not prevent a division by 0 error:
+You cannot use `ba.if` either because it is implemented using `select2` and has the same strict semantics. Therefore the following code will not prevent a division by 0 error:
     
 ```
 ba.if(x == 0, 10000, 1/x);
@@ -32,7 +32,7 @@ Concerning the way `select2` is compiled, the strict semantic is always preserve
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
 ```
 
-is compiled in C/C++ as:
+is compiled in C/C++ as, when `fRec0[0]` and `fRec1[0]` contains the computsation of each branch:
 
 ```c++
 for (int i = 0; (i < count); i = (i + 1)) {
