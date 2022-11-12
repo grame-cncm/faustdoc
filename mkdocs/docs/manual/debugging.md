@@ -92,7 +92,9 @@ Starting with version 2.37.0, mathematical functions which have a finite domain 
 
 #### The interp-tracer tool
 
-The `interp-tracer` tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically `FP_SUBNORMAL`, `FP_INFINITE` and `FP_NAN` values, or `INTEGER_OVERFLOW`, `CAST_INT_OVERFLOW`  and `DIV_BY_ZERO` operations, or `LOAD/STORE` errors. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer).
+The  **interp-tracer** tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically `FP_SUBNORMAL`, `FP_INFINITE` and `FP_NAN` values, or `INTEGER_OVERFLOW`, `CAST_INT_OVERFLOW`  and `DIV_BY_ZERO` operations, or `LOAD/STORE` errors. 
+
+See the [complete documentation](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) and the [Advanced debugging with interp-tracer](https://faustdoc.grame.fr/tutorials/debugging/) tutorial.
 
 #### The faust2caqt tool
 
