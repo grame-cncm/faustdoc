@@ -26,13 +26,13 @@ ba.if(x == 0, 10000, 1/x);
 
 ### But things are a little bit more complex...
 
-Concerning the way `select2` is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:
+Concerning the way `select2` is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the DSP code:
 
 ```
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
 ```
 
-is compiled in C/C++ as, when `fRec0[0]` and `fRec1[0]` contains the computation of each branch:
+is compiled as the following piece in C/C++, where `fRec0[0]` and `fRec1[0]` contains the computation of each branch:
 
 ```c++
 for (int i = 0; (i < count); i = (i + 1)) {
@@ -96,11 +96,11 @@ foo = foo;
 process = foo;
 ```
 
-will loop and hopefully end with the message: *ERROR : after 400 evaluation steps, the compiler has detected an endless evaluation cycle of 2 steps* because the compiler contains some infinite loop detection mechanisms.
+will loop and hopefully end with the message: *ERROR : after 400 evaluation steps, the compiler has detected an endless evaluation cycle of 2 steps* because the compiler contains an infinite loop detection heuristic.
 
 ### Generated code
 
-The generated code computes the sample in a *finite number* of operations, thus a DSP program that would loop infinitely cannot be written. This is of course a limitation because certain classes of algorithms cannot be expressed (**TODO**: Newton approximation used in diode VA model). But on the contrary it gives a strong garanty on the upper bound of CPU cost that is quite interesting to have when deploying a program in a real-time audio context.
+The generated code computes the sample in a *finite number* of operations, thus a DSP program that would loop infinitely cannot be written. It means the generated code is not turing complete. This is of course a limitation because certain classes of algorithms cannot be expressed (**TODO**: Newton approximation used in diode VA model). But on the contrary it gives a strong garanty on the upper bound of CPU cost that is quite interesting to have when deploying a program in a real-time audio context.
 
 ### Memory footprint
 
@@ -108,7 +108,7 @@ The DSP memory footprint is perfectly known at compile time, so the generated co
 
 ### CPU footprint  
 
-Since the generated code computes the sample in a *finite number* of operations, the CPU use as an upper bound which is a very helpful property swhen deploying a program in a real-time audio context. Read the [Does select2 behaves as a standard C/C++ like if ?](#does-select2-behaves-as-a-standard-cc-like-if) for some subtle issues concerning the `select2` primitive.
+Since the generated code computes the sample in a *finite number* of operations, the CPU use has an upper bound which is a very helpful property when deploying a program in a real-time audio context. Read the [Does select2 behaves as a standard C/C++ like if ?](#does-select2-behaves-as-a-standard-cc-like-if) for some subtle issues concerning the `select2` primitive.
 
 
 ## Pattern matching and lists
@@ -163,7 +163,7 @@ process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 <img src="group1.png" class="mx-auto d-block" width="50%">
 <center>*Shared freq1 and freq2 controllers*</center>
 
-So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path, be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for `freq2` .
+So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path (like `/foo/Freq1` and `/foo/Freq2`), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for `freq2` .
 
 Now if some grouping mecanism is used to better control the UI rendering, as in the following DSP code: 
 
@@ -176,12 +176,12 @@ freq2 = hslider("Freq2", 500, 200, 2000, 0.01);
 process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", os.osc(freq1) + os.triangle(freq2));
 ```
 
-The `freq1` and  `freq2` controllers now don't have the same path in each group, and so four separated controllers and UI items are finally created. 
+The `freq1` and  `freq2` controllers now don't have the same path in each group (like `/foo/Voice1/Freq1` and `/foo/Voice1/Freq2` in the first group,f and `/foo/Voice2/Freq1` and `/foo/Voice2/Freq2` in the second group), and so four separated controllers and UI items are finally created. 
 
 <img src="group2.png" class="mx-auto d-block" width="60%">
 <center>*Four freq1 and freq2 controllers*</center>
 
-Using the relative pathname as explained in [Labels as Pathnames](https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames) possibly allows us to move `freq1` one step higher in the hierarchical structure, thus having again a unique path and controller: 
+Using the relative pathname as explained in [Labels as Pathnames](https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames) possibly allows us to move `freq1` one step higher in the hierarchical structure, thus having again a unique path (like `/debug/Freq1`) and controller: 
 
 ```
 import("stdfaust.lib");
