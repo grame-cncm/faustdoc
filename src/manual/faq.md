@@ -32,7 +32,7 @@ Concerning the way `select2` is compiled by the Faust compiler, the strict seman
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
 ```
 
-is compiled as the following piece in C/C++, where `fRec0[0]` and `fRec1[0]` contains the computation of each branch:
+is compiled as the following C++ code, where `fRec0[0]` and `fRec1[0]` contains the computation of each branch:
 
 ```c++
 for (int i = 0; (i < count); i = (i + 1)) {

@@ -1,6 +1,8 @@
 # Advanced debugging with interp-tracer
 
 Some general informations are [given here](https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code) on how to debug the Faust DSP code. This tutorial aims to better explain how the [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) tool can be used to debug code at runtime.  
+
+
 The **interp-tracer** tool runs and instruments the compiled program (precisely the `compute` method) using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.
 
 ##  Debugging of out-of-domain computation 
@@ -36,7 +38,7 @@ Stack [Int: 0] [REAL: -4,605170]
 -------- Interpreter 'NaN' trace end --------
 ```
 
-The trace contains the stack of Faust Byte Code (FBC) instructions executed by the interpreter, with the latest instruction executed before the actual error, here the `kLogf` operation. Name of fields in the DSP structure are also visible, here `fHslider0`. Looking at the generated C++ can help understanding the control flow:
+The trace contains the stack of Faust Byte Code (FBC) instructions executed by the interpreter, with the latest instructions executed before the actual error, here the `kLogf` operation. Name of fields in the DSP structure are also visible, here `fHslider0`. Looking at the generated C++ can help understand the control flow:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
@@ -67,7 +69,9 @@ INT memory: 3
 
 ##  Debugging the select2 primitive
 
-The `select2` primitive has a stric semantic, but the code optimization strategies, the generated code [is not fully strict]( https://faustdoc.grame.fr/manual/faq/#does-select2-behaves-as-a-standard-cc-like-if). For the follwing DSP program:
+The `select2` primitive has a stric semantic, but for code optimization strategies, the generated code [is not fully strict]( https://faustdoc.grame.fr/manual/faq/#does-select2-behaves-as-a-standard-cc-like-if). 
+
+For the following DSP program:
 
 ```
 process = select2(button("gate"), branch1, branch2)
@@ -77,7 +81,7 @@ with {
 };
 ```
 
-generated with C++ is using the `((cond) ? then : else)` form which actually only computes one of the *then* or *else* branch depending of the `button("gate")` condition: 
+the generated  C++ is using the `((cond) ? then : else)` form which actually only computes one of the *then* or *else* branch depending of the `button("gate")` condition: 
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 

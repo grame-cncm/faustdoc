@@ -239,6 +239,10 @@
 <li>
     <a href="../../tutorials/cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
 </li>
+                                    
+<li>
+    <a href="../../tutorials/debugging/" class="dropdown-item">Advanced debugging with interp-tracer</a>
+</li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -363,10 +367,10 @@
 <pre><code>ba.if(x == 0, 10000, 1/x);
 </code></pre>
 <h3 id="but-things-are-a-little-bit-more-complex">But things are a little bit more complex...</h3>
-<p>Concerning the way <code>select2</code> is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the following DSP code:</p>
+<p>Concerning the way <code>select2</code> is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the DSP code:</p>
 <pre><code>process = button(&quot;choose&quot;), (*(3) : +~_), (*(7):+~_) : select2;
 </code></pre>
-<p>is compiled in C/C++ as, when <code>fRec0[0]</code> and <code>fRec1[0]</code> contains the computation of each branch:</p>
+<p>is compiled as the following C++ code, where <code>fRec0[0]</code> and <code>fRec1[0]</code> contains the computation of each branch:</p>
 <pre><code class="language-c++">for (int i = 0; (i &lt; count); i = (i + 1)) {
     fRec0[0] = (fRec0[1] + (3.0f * float(input0[i])));
     fRec1[0] = (fRec1[1] + (7.0f * float(input1[i])));
@@ -407,13 +411,13 @@
 <pre><code>foo = foo;
 process = foo;
 </code></pre>
-<p>will loop and hopefully end with the message: <em>ERROR : after 400 evaluation steps, the compiler has detected an endless evaluation cycle of 2 steps</em> because the compiler contains some infinite loop detection mechanisms.</p>
+<p>will loop and hopefully end with the message: <em>ERROR : after 400 evaluation steps, the compiler has detected an endless evaluation cycle of 2 steps</em> because the compiler contains an infinite loop detection heuristic.</p>
 <h3 id="generated-code">Generated code</h3>
-<p>The generated code computes the sample in a <em>finite number</em> of operations, thus a DSP program that would loop infinitely cannot be written. This is of course a limitation because certain classes of algorithms cannot be expressed (<strong>TODO</strong>: Newton approximation used in diode VA model). But on the contrary it gives a strong garanty on the upper bound of CPU cost that is quite interesting to have when deploying a program in a real-time audio context.</p>
+<p>The generated code computes the sample in a <em>finite number</em> of operations, thus a DSP program that would loop infinitely cannot be written. It means the generated code is not turing complete. This is of course a limitation because certain classes of algorithms cannot be expressed (<strong>TODO</strong>: Newton approximation used in diode VA model). But on the contrary it gives a strong garanty on the upper bound of CPU cost that is quite interesting to have when deploying a program in a real-time audio context.</p>
 <h3 id="memory-footprint">Memory footprint</h3>
 <p>The DSP memory footprint is perfectly known at compile time, so the generated code always consume a finite amount of memory. Moreover the standard deployement model is to allocate the DSP a load time, init it with a given sample-rate, then execute the DSP code, be repeatedly calling the <code>compute</code> function to process audio buffers.</p>
 <h3 id="cpu-footprint">CPU footprint</h3>
-<p>Since the generated code computes the sample in a <em>finite number</em> of operations, the CPU use as an upper bound which is a very helpful property swhen deploying a program in a real-time audio context. Read the <a href="#does-select2-behaves-as-a-standard-cc-like-if">Does select2 behaves as a standard C/C++ like if ?</a> for some subtle issues concerning the <code>select2</code> primitive.</p>
+<p>Since the generated code computes the sample in a <em>finite number</em> of operations, the CPU use has an upper bound which is a very helpful property when deploying a program in a real-time audio context. Read the <a href="#does-select2-behaves-as-a-standard-cc-like-if">Does select2 behaves as a standard C/C++ like if ?</a> for some subtle issues concerning the <code>select2</code> primitive.</p>
 <h2 id="pattern-matching-and-lists">Pattern matching and lists</h2>
 <p>Strictly speaking, there are no lists in Faust. For example the expression <code>()</code> or <code>NIL</code> in Lisp, which indicates an empty list, does not exist in Faust. Similarly, the distinction in Lisp between the number <code>3</code> and the list with only one element <code>(3)</code> does not exist in Faust. </p>
 <p>However, list operations can be simulated (in part) using the parallel binary composition operation <code>,</code> and pattern matching. The parallel composition operation is right-associative. This means that the expression <code>(1,2,3,4)</code> is just a simplified form of the fully parenthesized expression <code>(1,(2,(3,4)))</code>. The same is true for <code>(1,2,(3,4))</code> which is also a simplified form of the same fully parenthesized expression <code>(1,(2,(3,4)))</code>. </p>
@@ -447,7 +451,7 @@ process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 </code></pre>
 <p><img src="group1.png" class="mx-auto d-block" width="50%">
 <center><em>Shared freq1 and freq2 controllers</em></center></p>
-<p>So even if  <code>freq1</code> and  <code>freq2</code> controllers are used as parameters at four different places, <code>freq1</code> used in <code>os.osc(freq1)</code> and <code>os.square(freq1)</code> will have the same path, be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for <code>freq2</code> .</p>
+<p>So even if  <code>freq1</code> and  <code>freq2</code> controllers are used as parameters at four different places, <code>freq1</code> used in <code>os.osc(freq1)</code> and <code>os.square(freq1)</code> will have the same path (like <code>/foo/Freq1</code> and <code>/foo/Freq2</code>), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for <code>freq2</code> .</p>
 <p>Now if some grouping mecanism is used to better control the UI rendering, as in the following DSP code: </p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 
@@ -456,10 +460,10 @@ freq2 = hslider(&quot;Freq2&quot;, 500, 200, 2000, 0.01);
 
 process = hgroup(&quot;Voice1&quot;, os.osc(freq1) + os.square(freq2)), hgroup(&quot;Voice2&quot;, os.osc(freq1) + os.triangle(freq2));
 </code></pre>
-<p>The <code>freq1</code> and  <code>freq2</code> controllers now don't have the same path in each group, and so four separated controllers and UI items are finally created. </p>
+<p>The <code>freq1</code> and  <code>freq2</code> controllers now don't have the same path in each group (like <code>/foo/Voice1/Freq1</code> and <code>/foo/Voice1/Freq2</code> in the first group,f and <code>/foo/Voice2/Freq1</code> and <code>/foo/Voice2/Freq2</code> in the second group), and so four separated controllers and UI items are finally created. </p>
 <p><img src="group2.png" class="mx-auto d-block" width="60%">
 <center><em>Four freq1 and freq2 controllers</em></center></p>
-<p>Using the relative pathname as explained in <a href="https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames">Labels as Pathnames</a> possibly allows us to move <code>freq1</code> one step higher in the hierarchical structure, thus having again a unique path and controller: </p>
+<p>Using the relative pathname as explained in <a href="https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames">Labels as Pathnames</a> possibly allows us to move <code>freq1</code> one step higher in the hierarchical structure, thus having again a unique path (like <code>/debug/Freq1</code>) and controller: </p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 
 freq1 = hslider(&quot;../Freq1&quot;, 500, 200, 2000, 0.01);

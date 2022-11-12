@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>13 acknowledgments - Faust Documentation</title>
+        <title>Advanced debugging with interp-tracer - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -200,7 +200,7 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -209,39 +209,39 @@
 </li>
                                     
 <li>
-    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+    <a href="../teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+    <a href="../esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+    <a href="../basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+    <a href="../summation/" class="dropdown-item">RMS and Summation in Faust</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/julia/" class="dropdown-item">Using Faust in Julia</a>
+    <a href="../julia/" class="dropdown-item">Using Faust in Julia</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/box-api/" class="dropdown-item">Using the box API</a>
+    <a href="../box-api/" class="dropdown-item">Using the box API</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
+    <a href="../signal-api/" class="dropdown-item">Using the signal API</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
+    <a href="../cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/debugging/" class="dropdown-item">Advanced debugging with interp-tracer</a>
+    <a href="./" class="dropdown-item active">Advanced debugging with interp-tracer</a>
 </li>
                                 </ul>
                             </li>
@@ -300,8 +300,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#acknowledgments" class="nav-link">Acknowledgments</a>
+            <li class="nav-item" data-level="1"><a href="#advanced-debugging-with-interp-tracer" class="nav-link">Advanced debugging with interp-tracer</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#debugging-of-out-of-domain-computation" class="nav-link">Debugging of out-of-domain computation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#debugging-the-select2-primitive" class="nav-link">Debugging the select2 primitive</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -309,64 +317,90 @@
 </div></div>
                     <div class="col-md-9 main-container" role="main">
 
-<script src='/rail/railroad-diagrams.js'></script>
-
-<h1 id="acknowledgments">Acknowledgments</h1>
-<p><a name="acknowledgments"></a></p>
-<p>Many persons are contributing to the <span class="smallcaps">Faust</span> project, by providing code for the compiler, architecture files, libraries, examples, documentation, scripts, bug reports, ideas, etc. We would like in particular to thank:</p>
-<ul>
-<li>Fons Adriaensen   </li>
-<li>Karim Barkati</li>
-<li>J\'er\^ome Barth\'elemy</li>
-<li>Tim Blechmann</li>
-<li>Tiziano Bole  </li>
-<li>Alain Bonardi</li>
-<li>Thomas Charbonnel</li>
-<li>Raffaele Ciavarella</li>
-<li>Julien Colafrancesco</li>
-<li>Damien Cramet</li>
-<li>Sarah Denoux</li>
-<li>\'Etienne Gaudrin</li>
-<li>Olivier Guillerminet</li>
-<li>Pierre Guillot</li>
-<li>Albert Gr\"af</li>
-<li>Pierre Jouvelot</li>
-<li>Stefan Kersten</li>
-<li>Victor Lazzarini</li>
-<li>Matthieu Leberre</li>
-<li>Mathieu Leroi</li>
-<li>Fernando Lopez-Lezcano</li>
-<li>Kjetil Matheussen</li>
-<li>Hermann Meyer</li>
-<li>Romain Michon</li>
-<li>R\'emy Muller</li>
-<li>Eliott Paris</li>
-<li>Reza Payami</li>
-<li>Laurent Pottier</li>
-<li>Sampo Savolainen</li>
-<li>Nicolas Scaringella</li>
-<li>Anne Sedes</li>
-<li>Priyanka Shekar</li>
-<li>Stephen Sinclair</li>
-<li>Travis Skare</li>
-<li>Julius Smith</li>
-<li>Mike Solomon</li>
-<li>Michael Wilson</li>
-</ul>
-<p>as well as our colleagues at GRAME:</p>
-<ul>
-<li>Dominique Fober</li>
-<li>Christophe Lebreton</li>
-<li>St\'ephane Letz</li>
-<li>Romain Michon</li>
-</ul>
-<p>We would like also to thank for their financial support:</p>
-<ul>
-<li>the French Ministry of Culture</li>
-<li>the Rh\^one-Alpes Region</li>
-<li>the City of Lyon</li>
-<li>the French National Research Agency (<span class="smallcaps">ANR</span> )</li>
-</ul></div>
+<h1 id="advanced-debugging-with-interp-tracer">Advanced debugging with interp-tracer</h1>
+<p>Some general informations are <a href="https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code">given here</a> on how to debug the Faust DSP code. This tutorial aims to better explain how the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">interp-tracer</a> tool can be used to debug code at runtime.  </p>
+<p>The <strong>interp-tracer</strong> tool runs and instruments the compiled program (precisely the <code>compute</code> method) using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.</p>
+<h2 id="debugging-of-out-of-domain-computation">Debugging of out-of-domain computation</h2>
+<p>Using the <code>-trace 4</code>option allows to exit at first error and write FBC (Faust Byte Code) trace as a <code>DumpCode-foo.txt</code> file, and the program memory layout as <code>DumpMem-fooXXX.txt</code> file. </p>
+<p>The following <code>debug.dsp</code> DSP program:</p>
+<pre><code>process = hslider(&quot;foo&quot;, 0.5, -1, 1, 0.01) : log; 
+</code></pre>
+<p>will produce out-of-domain values as soon at the slider value is 0 or below, with the following trace written on the console:</p>
+<pre><code>-------- Interpreter 'NaN' trace start --------
+opcode 202 kLogf int 0 real 0 offset1 -1 offset2 -1
+Stack [Int: 0] [REAL: 0,000000]
+opcode 2 kLoadReal int 0 real 0 offset1 1 offset2 0 name fHslider0
+Stack [Int: 0] [REAL: -4,605170]
+opcode 279 kCondBranch int 0 real 0 offset1 0 offset2 0
+Stack [Int: 16] [REAL: -4,605170]
+opcode 46 kLTInt int 0 real 0 offset1 -1 offset2 -1
+Stack [Int: 0] [REAL: -4,605170]
+opcode 3 kLoadInt int 0 real 0 offset1 2 offset2 0 name i0
+Stack [Int: 1] [REAL: -4,605170]
+opcode 3 kLoadInt int 0 real 0 offset1 1 offset2 0 name count
+Stack [Int: 16] [REAL: -4,605170]
+opcode 7 kStoreInt int 0 real 0 offset1 2 offset2 0 name i0
+Stack [Int: 1] [REAL: -4,605170]
+opcode 33 kAddInt int 0 real 0 offset1 -1 offset2 -1
+Stack [Int: 0] [REAL: -4,605170]
+-------- Interpreter 'NaN' trace end --------
+</code></pre>
+<p>The trace contains the stack of Faust Byte Code (FBC) instructions executed by the interpreter, with the latest instructions executed before the actual error, here the <code>kLogf</code> operation. Name of fields in the DSP structure are also visible, here <code>fHslider0</code>. Looking at the generated C++ can help understand the control flow:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = std::log(float(fHslider0));
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        output0[i0] = FAUSTFLOAT(fSlow0);
+    }
+}
+</code></pre>
+<p>The generated <code>DumpMem-debug22419.txt</code> file contains the content of the interpreter Virtual Machine REAL (float/double depending of the <code>-single/-double</code> compilation option) memory array, and INT (integer) memory array.</p>
+<pre><code>DSP name: debug
+=================================
+REAL memory: 3
+0 defaultsound 0
+1 fHslider0 -0.01
+2 fSlow0 -4.60517
+=================================
+INT memory: 3
+0  44100
+1 count 16
+2 i0 16
+</code></pre>
+<h2 id="debugging-the-select2-primitive">Debugging the select2 primitive</h2>
+<p>The <code>select2</code> primitive has a stric semantic, but for code optimization strategies, the generated code <a href="https://faustdoc.grame.fr/manual/faq/#does-select2-behaves-as-a-standard-cc-like-if">is not fully strict</a>. </p>
+<p>For the following DSP program:</p>
+<pre><code>process = select2(button(&quot;gate&quot;), branch1, branch2)
+with {
+    branch1 = (hslider(&quot;foo&quot;, 0.5, 0, 1, 0.01):log);
+    branch2 = (hslider(&quot;bar&quot;, 0.5, -1, 1, 0.01):sqrt);
+};
+</code></pre>
+<p>the generated  C++ is using the <code>((cond) ? then : else)</code> form which actually only computes one of the <em>then</em> or <em>else</em> branch depending of the <code>button("gate")</code> condition: </p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = ((int(float(fButton0))) ? std::sqrt(float(fHslider1)) : std::log(float(fHslider0)));
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        output0[i0] = FAUSTFLOAT(fSlow0);
+    }
+}
+</code></pre>
+<p>Thus executing it with <code>interp -trace 4 debug.dsp</code> allows to detect one falling branch when the condition is in a given state. To force computation of both branches, the <code>-sts (--strict-select)</code> option can be used. The generated C++ is now:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    float fThen0 = std::log(float(fHslider0));
+    float fElse0 = std::sqrt(float(fHslider1));
+    float fSlow0 = ((int(float(fButton0))) ? fElse0 : fThen0);
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        output0[i0] = FAUSTFLOAT(fSlow0);
+    }
+}
+</code></pre>
+<p>where intermediate <code>fThen0</code> and <code>fElse0</code> created variables force the actual computation of both branches. Then executing <code>interp -trace 4 -sts debug.dsp</code> will reveal the out-of-bounds calculation on both branches, for both states of the condition. </p>
+<p>Obviously, these detected errors must then be corrected by carefully checking signal range, like verifying the min/max values in <code>vslider/hslider/nentry</code> user-interface items.</p></div>
             </div>
         </div>
 
