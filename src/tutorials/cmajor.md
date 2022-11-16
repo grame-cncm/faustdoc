@@ -222,4 +222,6 @@ Faust DSP programs found on the Web can also be converted, for instance the [fve
 
 The DSP content can simply be loaded with the following URL: [https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp](https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp), using the `https://faustide.grame.fr/?code=URL` syntax, tested in the Faust Web IDE, then converted in a Cmajor program as already showed.
 
-Examples of the [faustplayground](https://faustplayground.grame.fr/) platform can be [found here](https://github.com/grame-cncm/faustplayground/tree/master/faust-modules) and possibly converted.
+Basic [Examples](https://faustdoc.grame.fr/examples/ambisonics/) have been compiled to Cmajor [here](rsrc/examples-cmajor.zip).
+
+Examples of the [faustplayground](https://faustplayground.grame.fr/) platform can be [found here](https://github.com/grame-cncm/faustplayground/tree/master/faust-modules) and possibly converted. They have been compiled to Cmajor [here](rsrc/faust-modules-cmajor.zip).
