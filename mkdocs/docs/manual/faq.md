@@ -163,7 +163,7 @@ process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 <img src="group1.png" class="mx-auto d-block" width="50%">
 <center>*Shared freq1 and freq2 controllers*</center>
 
-So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path (like `/foo/Freq1` and `/foo/Freq2`), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for `freq2` .
+So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path (like `/foo/Freq1` and `/foo/Freq2`), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for `freq2`.
 
 Now if some grouping mecanism is used to better control the UI rendering, as in the following DSP code: 
 

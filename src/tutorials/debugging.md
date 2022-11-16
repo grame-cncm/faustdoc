@@ -110,5 +110,5 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 ```
 
 where intermediate `fThen0` and `fElse0` created variables force the actual computation of both branches. Then executing `interp -trace 4 -sts debug.dsp` will reveal the out-of-bounds calculation on both branches, for both states of the condition. 
-
+ 
 Obviously, these detected errors must then be corrected by carefully checking signal range, like verifying the min/max values in `vslider/hslider/nentry` user-interface items.

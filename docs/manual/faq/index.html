@@ -451,7 +451,7 @@ process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 </code></pre>
 <p><img src="group1.png" class="mx-auto d-block" width="50%">
 <center><em>Shared freq1 and freq2 controllers</em></center></p>
-<p>So even if  <code>freq1</code> and  <code>freq2</code> controllers are used as parameters at four different places, <code>freq1</code> used in <code>os.osc(freq1)</code> and <code>os.square(freq1)</code> will have the same path (like <code>/foo/Freq1</code> and <code>/foo/Freq2</code>), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for <code>freq2</code> .</p>
+<p>So even if  <code>freq1</code> and  <code>freq2</code> controllers are used as parameters at four different places, <code>freq1</code> used in <code>os.osc(freq1)</code> and <code>os.square(freq1)</code> will have the same path (like <code>/foo/Freq1</code> and <code>/foo/Freq2</code>), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for <code>freq2</code>.</p>
 <p>Now if some grouping mecanism is used to better control the UI rendering, as in the following DSP code: </p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 
