@@ -1,6 +1,6 @@
 # Using Faust in Cmajor
 
-In this tutorial, we present how [Faust](https://faust.grame.fr) can be used with [Cmajor](https://cmajor.dev), a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. Compiling Faust DSP to cmajor code will allow to take profit of hundreds of DSP building blocks implemented in the [Faust Libraries](https://faustlibraries.grame.fr), ready to use [Examples](https://faustdoc.grame.fr/examples/ambisonics/), any DSP program developed in more than 120 projects listed in the [Powered By Faust](https://faust.grame.fr/community/made-with-faust/) page, or Faust DSP programs found on the net.
+In this tutorial, we present how [Faust](https://faust.grame.fr) can be used with [Cmajor](https://cmajor.dev), a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. Compiling Faust DSP to cmajor code will allow to take profit of hundreds of DSP building blocks implemented in the [Faust Libraries](https://faustlibraries.grame.fr), ready to use [Examples](https://faustdoc.grame.fr/examples/ambisonics/), any DSP program developed in more than 120 projects listed in the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page, or Faust DSP programs found on the net.
 
 #### Who is this tutorial for?
 
@@ -220,7 +220,7 @@ DSP programs following the polyphonic [freq/gate/gain convention](https://faustd
 
 Faust DSP programs found on the Web can also be converted:
 
-- for instance the [fverb](https://faust.grame.fr/community/made-with-faust/#fverb) listed on the [Powered By Faust](https://faust.grame.fr/community/made-with-faust/) page. The DSP content can simply be loaded using the `https://faustide.grame.fr/?code=URL` syntax, so
+- for instance the [fverb](https://faust.grame.fr/community/powered-by-faust/#fverb) listed on the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page. The DSP content can simply be loaded using the `https://faustide.grame.fr/?code=URL` syntax, so
 with the following URL: [https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp](https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp), tested in the Faust Web IDE, then converted in a Cmajor program as already showed
 
 - basic [Examples](https://faustdoc.grame.fr/examples/ambisonics/) have been compiled to Cmajor [here](rsrc/examples-cmajor.zip)
