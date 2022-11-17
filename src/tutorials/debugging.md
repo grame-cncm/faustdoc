@@ -67,7 +67,7 @@ INT memory: 3
 
 ## Debugging rdtable and rwtable primitives
 
-The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size has to be known at compile time, but since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table can be generated. They will typically cause memory access crashes at runtime!
+The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size has to be known at compile time, but since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table can be generated. **They will typically cause memory access crashes at runtime!**
 
 
 For the following DSP table.dsp program:
@@ -98,7 +98,7 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-with incorrect table access code in `compute` method. Executing `interp -trace 4 table.dsp` generates the following trace on the console:
+with incorrect table access code in `compute` method, where the `iTemp0` read and write index may exceed the table size of 16. Executing `interp -trace 4 table.dsp` generates the following trace on the console:
 
 ```
 -------- Interpreter crash trace start --------
@@ -122,7 +122,7 @@ opcode 1 kInt32Value int 32 real 0 offset1 -1 offset2 -1
 -------- Interpreter crash trace end --------
 ```
 
-The [-ct option](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) can be used to check table index range and generate safe code. The same DSP code now generates:
+The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option can be used to check table index range and generate safe code. The same DSP code now generates:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
@@ -138,7 +138,7 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-and the `interp -trace 4 -ct table.dsp` will now executes normally.
+where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range. The `interp -trace 4 -ct table.dsp` command will now executes normally.
 
 ##  Debugging the select2 primitive
 

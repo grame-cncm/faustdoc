@@ -314,7 +314,7 @@
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#debugging-at-compile-time" class="nav-link">Debugging at compile time</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#the-ct-and-cat-options" class="nav-link">The -ct and -cat options</a>
+            <li class="nav-item" data-level="4"><a href="#the-ct-option" class="nav-link">The -ct option</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -418,8 +418,8 @@ Field = fRec3 size = 2 r_count = 4 w_count = 2
 <p>The Faust compiler gives error messages when the written code is not syntactically or semantically correct, and the interval computation system on signals is supposed to <em>detect possible problematic computations at compile time</em>, and refuse to compile the corresponding DSP code.  But <em>the interval calculation is currently quite imperfect</em>, can misbehave, and possibly allow problematic code <em>that can even possibly crash at runtime</em> to be generated. The typical case is when producing indexes to access <code>rdtable/rwtable</code> or delay lines, <em>that may trigger memory access crashes</em>.</p>
 <p>Several strategies have been developed to help programmers better understand their written DSP code, and possibly analyse it, both at compile time and runtime.</p>
 <h3 id="debugging-at-compile-time">Debugging at compile time</h3>
-<h4 id="the-ct-and-cat-options">The -ct and -cat options</h4>
-<p>Using the <code>-ct</code> and  <code>-cat</code> compilation options allows to check table index range, by verifying that the actual signal range is compatible with the actual table size. Note that since the interval calculation is  imperfect, you may see <em>false positives</em> especially when using recursive signals where the interval calculation system will typically produce <em>[-inf, inf]</em> range, which is not precise enough to correctly describe the real signal range. </p>
+<h4 id="the-ct-option">The -ct option</h4>
+<p>Using the <code>-ct</code> compilation option allows to check table index range. It verifies that the signal range is compatible with the  table size, and generate safe read and write indexes access code, by forcing them to stay in a given <code>[0.. size-1]</code> range. Note that since the signal interval calculation is imperfect, you may see <em>false positives</em> especially when using recursive signals where the interval calculation system will typically produce <em>[-inf, inf]</em> range, which is not precise enough to correctly describe the real signal range. </p>
 <h4 id="the-me-option">The -me option</h4>
 <p>Starting with version 2.37.0, mathematical functions which have a finite domain (like <code>sqrt</code> defined for positive or null values, or <code>asin</code> defined for values in the [-1..1] range) are <em>checked at compile time</em> when they <em>actually compute values at that time</em>, and <em>raise an error</em> if the program tries to compute an out-of-domain value.  If those functions appear in the generated code, their domain of use can also be checked (using the interval computation system) and  the <code>-me</code> option <em>will display warnings</em> if the domain of use is incorrect. Note that again because of the imperfect interval computation system, <em>false positives</em> may appear and should be checked.</p>
 <h3 id="debugging-at-runtime">Debugging at runtime</h3>

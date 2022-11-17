@@ -302,7 +302,11 @@
             
             <li class="nav-item" data-level="1"><a href="#advanced-debugging-with-interp-tracer" class="nav-link">Advanced debugging with interp-tracer</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#debugging-of-out-of-domain-computation" class="nav-link">Debugging of out-of-domain computation</a>
+            <li class="nav-item" data-level="2"><a href="#debugging-of-out-of-domain-computations" class="nav-link">Debugging of out-of-domain computations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#debugging-rdtable-and-rwtable-primitives" class="nav-link">Debugging rdtable and rwtable primitives</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -318,9 +322,9 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="advanced-debugging-with-interp-tracer">Advanced debugging with interp-tracer</h1>
-<p>Some general informations are <a href="https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code">given here</a> on how to debug the Faust DSP code. This tutorial aims to better explain how the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">interp-tracer</a> tool can be used to debug code at runtime.  </p>
-<p>The <strong>interp-tracer</strong> tool runs and instruments the compiled program (precisely the <code>compute</code> method) using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.</p>
-<h2 id="debugging-of-out-of-domain-computation">Debugging of out-of-domain computation</h2>
+<p>Some general informations are <a href="https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code">given here</a> on how to debug the Faust DSP code. This tutorial aims to better explain how the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">interp-tracer</a> tool can be used to debug code at runtime.<br />
+The <strong>interp-tracer</strong> tool runs and instruments the compiled program (precisely the <code>compute</code> method) using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.</p>
+<h2 id="debugging-of-out-of-domain-computations">Debugging of out-of-domain computations</h2>
 <p>Using the <code>-trace 4</code>option allows to exit at first error and write FBC (Faust Byte Code) trace as a <code>DumpCode-foo.txt</code> file, and the program memory layout as <code>DumpMem-fooXXX.txt</code> file. </p>
 <p>The following <code>debug.dsp</code> DSP program:</p>
 <pre><code>process = hslider(&quot;foo&quot;, 0.5, -1, 1, 0.01) : log; 
@@ -368,6 +372,65 @@ INT memory: 3
 1 count 16
 2 i0 16
 </code></pre>
+<h2 id="debugging-rdtable-and-rwtable-primitives">Debugging rdtable and rwtable primitives</h2>
+<p>The <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a> primitive uses a read index, and the <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rwtable</a> primitive uses a read index and a write index. The table size has to be known at compile time, but since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table can be generated. <strong>They will typically cause memory access crashes at runtime!</strong></p>
+<p>For the following DSP table.dsp program:</p>
+<pre><code>process = rwtable(SIZE, 0.0, rdx, _, wdx)
+with {
+    SIZE = 16;
+    integrator = +(1) ~ _;
+    rdx = integrator%(SIZE*2);
+    wdx = integrator%(SIZE*2);
+};
+</code></pre>
+<p>the generated code is:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        iRec0[0] = iRec0[1] + 1;
+        int iTemp0 = iRec0[0] % 32;
+        ftbl0[iTemp0] = float(input0[i0]);
+        output0[i0] = FAUSTFLOAT(ftbl0[iTemp0]);
+        iRec0[1] = iRec0[0];
+    }
+}
+</code></pre>
+<p>with incorrect table access code in <code>compute</code> method, where the <code>iTemp0</code> read and write index may exceed the table size of 16. Executing <code>interp -trace 4 table.dsp</code> generates the following trace on the console:</p>
+<pre><code>-------- Interpreter crash trace start --------
+assertStoreRealHeap array: fIntHeapSize 17 index 16 size 16 name ftbl0
+Stack [Int: 16] [REAL: 0,000000]
+opcode 3 kLoadInt int 0 real 0 offset1 7 offset2 0 name iTemp0
+Stack [Int: 15] [REAL: 0,000000]
+opcode 24 kLoadInput int 0 real 0 offset1 0 offset2 0
+Stack [Int: 16] [REAL: 0,000000]
+opcode 3 kLoadInt int 0 real 0 offset1 6 offset2 0 name i0
+Stack [Int: 16] [REAL: 0,000000]
+opcode 7 kStoreInt int 0 real 0 offset1 7 offset2 0 name iTemp0
+Stack [Int: 16] [REAL: 0,000000]
+opcode 41 kRemInt int 0 real 0 offset1 -1 offset2 -1
+Stack [Int: 0] [REAL: 0,000000]
+opcode 11 kLoadIndexedInt int 0 real 0 offset1 0 offset2 2 name iRec0
+Stack [Int: 0] [REAL: 0,000000]
+opcode 1 kInt32Value int 0 real 0 offset1 -1 offset2 -1
+Stack [Int: 0] [REAL: 0,000000]
+opcode 1 kInt32Value int 32 real 0 offset1 -1 offset2 -1
+-------- Interpreter crash trace end --------
+</code></pre>
+<p>The <a href="https://faustdoc.grame.fr/manual/debugging/#the-ct-option">-ct</a> option can be used to check table index range and generate safe code. The same DSP code now generates:</p>
+<pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        iRec0[0] = iRec0[1] + 1;
+        int iTemp0 = std::max&lt;int&gt;(0, std::min&lt;int&gt;(iRec0[0] % 32, 15));
+        ftbl0[iTemp0] = float(input0[i0]);
+        output0[i0] = FAUSTFLOAT(ftbl0[iTemp0]);
+        iRec0[1] = iRec0[0];
+    }
+}
+</code></pre>
+<p>where the <code>iTemp0</code> read and write index is now constrained to stay in the <em>[0..15]</em> range. The <code>interp -trace 4 -ct table.dsp</code> command will now executes normally.</p>
 <h2 id="debugging-the-select2-primitive">Debugging the select2 primitive</h2>
 <p>The <code>select2</code> primitive has a stric semantic, but for code optimization strategies, the generated code <a href="https://faustdoc.grame.fr/manual/faq/#does-select2-behaves-as-a-standard-cc-like-if">is not fully strict</a>. </p>
 <p>For the following DSP program:</p>
