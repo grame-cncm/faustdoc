@@ -1,11 +1,9 @@
 # Advanced debugging with interp-tracer
 
 Some general informations are [given here](https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code) on how to debug the Faust DSP code. This tutorial aims to better explain how the [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) tool can be used to debug code at runtime.  
-
-
 The **interp-tracer** tool runs and instruments the compiled program (precisely the `compute` method) using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.
 
-##  Debugging of out-of-domain computation 
+##  Debugging of out-of-domain computations 
 
 Using the `-trace 4`option allows to exit at first error and write FBC (Faust Byte Code) trace as a `DumpCode-foo.txt` file, and the program memory layout as `DumpMem-fooXXX.txt` file. 
 
@@ -66,6 +64,81 @@ INT memory: 3
 1 count 16
 2 i0 16
 ```
+
+## Debugging rdtable and rwtable primitives
+
+The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size has to be known at compile time, but since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table can be generated. They will typically cause memory access crashes at runtime!
+
+
+For the following DSP table.dsp program:
+
+```
+process = rwtable(SIZE, 0.0, rdx, _, wdx)
+with {
+    SIZE = 16;
+    integrator = +(1) ~ _;
+    rdx = integrator%(SIZE*2);
+    wdx = integrator%(SIZE*2);
+};
+```
+
+the generated code is:
+
+```C++
+virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        iRec0[0] = iRec0[1] + 1;
+        int iTemp0 = iRec0[0] % 32;
+        ftbl0[iTemp0] = float(input0[i0]);
+        output0[i0] = FAUSTFLOAT(ftbl0[iTemp0]);
+        iRec0[1] = iRec0[0];
+    }
+}
+```
+
+with incorrect table access code in `compute` method. Executing `interp -trace 4 table.dsp` generates the following trace on the console:
+
+```
+-------- Interpreter crash trace start --------
+assertStoreRealHeap array: fIntHeapSize 17 index 16 size 16 name ftbl0
+Stack [Int: 16] [REAL: 0,000000]
+opcode 3 kLoadInt int 0 real 0 offset1 7 offset2 0 name iTemp0
+Stack [Int: 15] [REAL: 0,000000]
+opcode 24 kLoadInput int 0 real 0 offset1 0 offset2 0
+Stack [Int: 16] [REAL: 0,000000]
+opcode 3 kLoadInt int 0 real 0 offset1 6 offset2 0 name i0
+Stack [Int: 16] [REAL: 0,000000]
+opcode 7 kStoreInt int 0 real 0 offset1 7 offset2 0 name iTemp0
+Stack [Int: 16] [REAL: 0,000000]
+opcode 41 kRemInt int 0 real 0 offset1 -1 offset2 -1
+Stack [Int: 0] [REAL: 0,000000]
+opcode 11 kLoadIndexedInt int 0 real 0 offset1 0 offset2 2 name iRec0
+Stack [Int: 0] [REAL: 0,000000]
+opcode 1 kInt32Value int 0 real 0 offset1 -1 offset2 -1
+Stack [Int: 0] [REAL: 0,000000]
+opcode 1 kInt32Value int 32 real 0 offset1 -1 offset2 -1
+-------- Interpreter crash trace end --------
+```
+
+The [-ct option](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) can be used to check table index range and generate safe code. The same DSP code now generates:
+
+```C++
+virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        iRec0[0] = iRec0[1] + 1;
+        int iTemp0 = std::max<int>(0, std::min<int>(iRec0[0] % 32, 15));
+        ftbl0[iTemp0] = float(input0[i0]);
+        output0[i0] = FAUSTFLOAT(ftbl0[iTemp0]);
+        iRec0[1] = iRec0[0];
+    }
+}
+```
+
+and the `interp -trace 4 -ct table.dsp` will now executes normally.
 
 ##  Debugging the select2 primitive
 
