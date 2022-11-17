@@ -3,7 +3,7 @@
 Some general informations are [given here](https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code) on how to debug the Faust DSP code. This tutorial aims to better explain how the [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) tool can be used to debug code at runtime.  
 The **interp-tracer** tool runs and instruments the compiled program (precisely the `compute` method) using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.
 
-##  Debugging of out-of-domain computations 
+##  Debugging out-of-domain computations 
 
 Using the `-trace 4`option allows to exit at first error and write FBC (Faust Byte Code) trace as a `DumpCode-foo.txt` file, and the program memory layout as `DumpMem-fooXXX.txt` file. 
 
