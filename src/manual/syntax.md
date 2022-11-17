@@ -1086,7 +1086,7 @@ The signature part of a foreign function, `float asinhf|asinh|asinhl(float)` in 
 
 Foreign functions generally expect a precise type: `int` or `float`  for their parameters.  Note that currently only numerical functions involving simple `int` and `float` parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.
 
-Some foreign functions are polymorphic and can accept either int or float arguments. In this case, the polymorphism can be indicated by using the type `any` instead or `int` or `float`. Here is an example the C function sizeof that returns the size of its argument:
+Some foreign functions are polymorphic and can accept either int or float arguments. In this case, the polymorphism can be indicated by using the type `any` instead or `int` or `float`. Here is as an example the C function `sizeof` that returns the size of its argument:
 
 ```
 sizeof = ffunction(int sizeof(any), "","");

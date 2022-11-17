@@ -2212,7 +2212,7 @@ define function with variables with a predefined value, etc. -->
 <p><img src="img/signature.svg" class="mx-auto d-block"></p>
 <h4 id="types">Types</h4>
 <p>Foreign functions generally expect a precise type: <code>int</code> or <code>float</code>  for their parameters.  Note that currently only numerical functions involving simple <code>int</code> and <code>float</code> parameters are allowed currently in Faust. No vectors, tables or data structures can be passed as parameters or returned.</p>
-<p>Some foreign functions are polymorphic and can accept either int or float arguments. In this case, the polymorphism can be indicated by using the type <code>any</code> instead or <code>int</code> or <code>float</code>. Here is an example the C function sizeof that returns the size of its argument:</p>
+<p>Some foreign functions are polymorphic and can accept either int or float arguments. In this case, the polymorphism can be indicated by using the type <code>any</code> instead or <code>int</code> or <code>float</code>. Here is as an example the C function <code>sizeof</code> that returns the size of its argument:</p>
 <pre><code>sizeof = ffunction(int sizeof(any), &quot;&quot;,&quot;&quot;);
 </code></pre>
 <p>Foreign functions with input parameters are considered pure math functions. They are therefore considered free of side effects and called only when their parameters change (that is at the rate of the fastest parameter). </p>

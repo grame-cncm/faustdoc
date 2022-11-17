@@ -1066,7 +1066,7 @@ funnames : identifier (| '|' identifier) (| '|' identifier);
 
 Foreign functions generally expect a precise type: (\textit{int} or \textit{float}) for their parameters. Note that currently only numerical functions involving scalar parameters are allowed. No vectors, tables or data structures can be passed as parameters or returned. During the compilation if the type of an argument is not the same as the type of the parameter, it is automatically converted to the expected one.
 
-Some foreign functions are polymorphic and can accept either \textit{int} or \textit{float} arguments. In this case, the polymorphism can be indicated by using the type \textit{any} instead or int or float. Here is an example the C function \textit{sizeof} that returns the size of its argument:
+Some foreign functions are polymorphic and can accept either \textit{int} or \textit{float} arguments. In this case, the polymorphism can be indicated by using the type \textit{any} instead or int or float. Here is as an example the C function \textit{sizeof} that returns the size of its argument:
 
 \begin{lstlisting}
 	sizeof = ffunction(int sizeof(any), "","");
