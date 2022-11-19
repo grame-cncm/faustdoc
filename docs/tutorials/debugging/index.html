@@ -323,7 +323,7 @@
 
 <h1 id="advanced-debugging-with-interp-tracer">Advanced debugging with interp-tracer</h1>
 <p>Some general informations are <a href="https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code">given here</a> on how to debug the Faust DSP code. This tutorial aims to better explain how the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">interp-tracer</a> tool can be used to debug code at runtime.<br />
-The <strong>interp-tracer</strong> tool runs and instruments the compiled program (precisely the <code>compute</code> method) using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.</p>
+The <strong>interp-tracer</strong> tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.</p>
 <h2 id="debugging-out-of-domain-computations">Debugging out-of-domain computations</h2>
 <p>Using the <code>-trace 4</code>option allows to exit at first error and write FBC (Faust Byte Code) trace as a <code>DumpCode-foo.txt</code> file, and the program memory layout as <code>DumpMem-fooXXX.txt</code> file. </p>
 <p>The following <code>debug.dsp</code> DSP program:</p>
