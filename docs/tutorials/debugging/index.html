@@ -373,8 +373,8 @@ INT memory: 3
 2 i0 16
 </code></pre>
 <h2 id="debugging-rdtable-and-rwtable-primitives">Debugging rdtable and rwtable primitives</h2>
-<p>The <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a> primitive uses a read index, and the <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rwtable</a> primitive uses a read index and a write index. The table size is known at compile time, and read/write index have to stay inside the table to avoid  memory access crashes at runtime. </p>
-<p>But since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table could be generated. The <a href="https://faustdoc.grame.fr/manual/debugging/#the-ct-option">-ct</a> option can be used to check table index range and generate safe code. </p>
+<p>The <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a> primitive uses a read index, and the <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rwtable</a> primitive uses a read index and a write index. The table size is known at compile time, and read/write indexes must stay inside the table to avoid  memory access crashes at runtime. </p>
+<p>But since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table could be generated. The <a href="https://faustdoc.grame.fr/manual/debugging/#the-ct-option">-ct</a> option can be used to check table index range and generate safe table access code. </p>
 <p>For the following DSP table.dsp program:</p>
 <pre><code>process = rwtable(SIZE, 0.0, rdx, _, wdx)
 with {
@@ -384,7 +384,7 @@ with {
     wdx = integrator%(SIZE*2);
 };
 </code></pre>
-<p>the generated code is whith <code>-ct 0</code> will produce:</p>
+<p>the generated code with the  <code>-ct 0</code> option will produce:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
     FAUSTFLOAT* input0 = inputs[0];
     FAUSTFLOAT* output0 = outputs[0];
@@ -397,7 +397,7 @@ with {
     }
 }
 </code></pre>
-<p>with incorrect table access code in <code>compute</code> method, where the <code>iTemp0</code> read and write index may exceed the table size of 16. Executing <code>interp -trace 4 -ct 0 table.dsp</code> generates the following trace on the console:</p>
+<p>with incorrect table access code in <code>compute</code> method, where the <code>iTemp0</code> read and write indexes may exceed the table size of 16. Executing <code>interp -trace 4 -ct 0 table.dsp</code> generates the following trace on the console:</p>
 <pre><code>-------- Interpreter crash trace start --------
 assertStoreRealHeap array: fIntHeapSize 17 index 16 size 16 name ftbl0
 Stack [Int: 16] [REAL: 0,000000]
@@ -431,9 +431,10 @@ opcode 1 kInt32Value int 32 real 0 offset1 -1 offset2 -1
     }
 }
 </code></pre>
-<p>where the <code>iTemp0</code> read and write index is now constrained to stay in the <em>[0..15]</em> range. The range test code checks if the read or write index interval is inside the <em>[0..size-1]</em> range, and only generates constraining code when needed. Using the <code>wall</code> options allows to print table access warning on the console. <strong>Note that <code>-ct 1</code> option is the default, so safe code is always generated:</strong> </p>
+<p>where the <code>iTemp0</code> read and write index is now constrained to stay in the <em>[0..15]</em> range. The range test code checks if the read or write index interval is inside the <em>[0..size-1]</em> range, and only generates constraining code when needed. Using the <code>-wall</code> option allows to print table access warning on the console. <strong>Note that <code>-ct 1</code> option is the default, so safe code is always generated.</strong> </p>
 <p>The <code>interp -trace 4 -ct 1 -wall table.dsp</code> command will now executes normally and print the following warning trace in the console:</p>
-<pre><code>
+<pre><code>item: WARNING : RDTbl read index [0:32] is outside of table size (16) in read(write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0]),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32)
+item: WARNING : WRTbl read index [0:32] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0])
 </code></pre>
 <h2 id="debugging-the-select2-primitive">Debugging the select2 primitive</h2>
 <p>The <code>select2</code> primitive has a stric semantic, but for code optimization strategies, the generated code <a href="https://faustdoc.grame.fr/manual/faq/#does-select2-behaves-as-a-standard-cc-like-if">is not fully strict</a>. </p>
