@@ -67,9 +67,9 @@ INT memory: 3
 
 ## Debugging rdtable and rwtable primitives
 
-The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size is known at compile time, and read/write indexes must stay inside the table to avoid  memory access crashes at runtime. 
+The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size is known at compile time, and read/write indexes must stay inside the table to avoid memory access crashes at runtime. 
 
-But since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table could be generated. The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option can be used to check table index range and generate safe table access code. 
+The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option can be used to check table index range and generate safe table access code. 
 
 For the following DSP table.dsp program:
 
@@ -83,7 +83,7 @@ with {
 };
 ```
 
-the generated code with the  `-ct 0` option will produce:
+the generated code with the `-ct 0` option will produce:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
@@ -99,7 +99,7 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-with incorrect table access code in `compute` method, where the `iTemp0` read and write indexes may exceed the table size of 16. Executing `interp -trace 4 -ct 0 table.dsp` generates the following trace on the console:
+with incorrect table access code in `compute` method, where the `iTemp0` read and write indexes may exceed the table size of 16. Executing `interp -trace 4 -ct 0 table.dsp` generates the following trace on the console, showing memory read/write access errors:
 
 ```
 -------- Interpreter crash trace start --------
@@ -123,7 +123,7 @@ opcode 1 kInt32Value int 32 real 0 offset1 -1 offset2 -1
 -------- Interpreter crash trace end --------
 ```
 
-With `-ct 1` option, the generated code is now:
+With the `-ct 1` option, the generated code is now:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
@@ -139,16 +139,78 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range. The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. Using the `-wall` option allows to print table access warning on the console. **Note that `-ct 1` option is the default, so safe code is always generated.** 
+where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range and the code will not crash at runtime anymmore.
 
-The `interp -trace 4 -ct 1 -wall table.dsp` command will now executes normally and print the following warning trace in the console:
+The DSP program was indeed incorrect with the indexes wrapping at 32 samples boundaries. It can be rewritten as:
 
 ```
-item: WARNING : RDTbl read index [0:32] is outside of table size (16) in read(write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0]),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32)
-item: WARNING : WRTbl write index [0:32] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0])
+process = rwtable(SIZE, 0.0, rdx, _, wdx)
+with {
+    SIZE = 16;
+    index = (+(1) : %(SIZE)) ~ _;
+    rdx = index;
+    wdx = index;
+};
 ```
 
-**Note that the index constraining code may be unneeded in practice, if the index value always stay in the table range. So the generated code might just be useless ! ** If one is absolutely sure of the *stay in range* property, then it can of course be deactivated using `-ct 0` and the generated code will be faster. The hope is to improve the signal interval calculation model, so that the index constraining code will not be needed anymore.
+and the generated C++ code with the `-ct 1` option (and using the `-wall`option to print warning messages on the console) is now:
+
+```C++
+virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        iRec0[0] = (iRec0[1] + 1) % 16;
+        int iTemp0 = std::max<int>(0, std::min<int>(iRec0[0], 15));
+        ftbl0[iTemp0] = float(input0[i0]);
+        output0[i0] = FAUSTFLOAT(ftbl0[iTemp0]);
+        iRec0[1] = iRec0[0];
+    }
+}
+```
+
+with the warning messages:
+
+```
+WARNING : RDTbl read index [0:inf] is outside of table size (16) in read(write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0]),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0)
+WARNING : WRTbl write index [0:inf] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0])
+```
+
+The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. **But since the signal interval calculation is currently imperfect, uneeded range constraining code might be generated !**. This is actually the case in the generated code, and this can be tested using `interp -trace 4 -ct 0 table.dsp` that does not show any problem.
+
+**If one is absolutely sure of the *stay in range* property, then adding constraining code can be deactivated using `-ct 0` and the generated code will be faster.** The hope is to improve the signal interval calculation model, so that the index constraining code will not be needed anymore.
+
+Note that the DSP program can be rewritten this way:
+
+```
+process = rwtable(SIZE, 0.0, rdx, _, wdx)
+with {
+    SIZE = 16;
+    index = (+(1) ~ _) : %(SIZE);
+    rdx = index;
+    wdx = index;
+};
+```
+
+in this case the signal interval is correct and the generated C++ code is now:
+
+```C++
+virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        iRec0[0] = iRec0[1] + 1;
+        int iTemp0 = iRec0[0] % 16;
+        ftbl0[iTemp0] = float(input0[i0]);
+        output0[i0] = FAUSTFLOAT(ftbl0[iTemp0]);
+        iRec0[1] = iRec0[0];
+    }
+}
+```
+
+without any added range constraining code.
+
+**Note that `-ct 1` option is the default, so safe code is always generated.** 
 
 ##  Debugging the select2 primitive
 
