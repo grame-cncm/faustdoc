@@ -67,7 +67,9 @@ INT memory: 3
 
 ## Debugging rdtable and rwtable primitives
 
-The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size has to be known at compile time, but since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table could be generated and cause memory access crashes at runtime. The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option can be used to check table index range and generate safe code. 
+The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size is known at compile time, and read/write index have to stay inside the table to avoid  memory access crashes at runtime. 
+
+But since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table could be generated. The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option can be used to check table index range and generate safe code. 
 
 For the following DSP table.dsp program:
 
@@ -137,7 +139,12 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range. The `interp -trace 4 -ct 1 table.dsp` command will now executes normally. **Note that `-ct 1` option is the default, so safe code is always generated.**
+where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range. The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. Using the `wall` options allows to print table access warning on the console. **Note that `-ct 1` option is the default, so safe code is always generated:** 
+
+The `interp -trace 4 -ct 1 -wall table.dsp` command will now executes normally and print the following warning trace in the console:
+```
+
+```
 
 ##  Debugging the select2 primitive
 
