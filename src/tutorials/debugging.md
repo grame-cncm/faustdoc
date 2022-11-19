@@ -145,8 +145,10 @@ The `interp -trace 4 -ct 1 -wall table.dsp` command will now executes normally a
 
 ```
 item: WARNING : RDTbl read index [0:32] is outside of table size (16) in read(write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0]),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32)
-item: WARNING : WRTbl read index [0:32] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0])
+item: WARNING : WRTbl write index [0:32] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0])
 ```
+
+**Note that the index constraining code may be unneeded in practice, if the index value always stay in the table range. So the generated code might just be useless ! ** If one is absolutely sure of the *stay in range* property, then it can of course be deactivated using `-ct 0` and the generated code will be faster. The hope is to improve the signal interval calculation model, so that the index constraining code will not be needed anymore.
 
 ##  Debugging the select2 primitive
 
