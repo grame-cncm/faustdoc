@@ -176,7 +176,7 @@ WARNING : RDTbl read index [0:inf] is outside of table size (16) in read(write(T
 WARNING : WRTbl write index [0:inf] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0])
 ```
 
-The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. **But since the signal interval calculation is currently imperfect, uneeded range constraining code might be generated !**. This is actually the case in the generated code, and this can be tested using `interp -trace 4 -ct 0 table.dsp` that does not show any problem.
+The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. **But since the signal interval calculation is currently imperfect, uneeded range constraining code might be generated !** This is actually the case in the generated code, and can be tested using `interp -trace 4 -ct 0 table.dsp`, that does not generate constraining code, but does not show any problem.
 
 **If one is absolutely sure of the *stay in range* property, then adding constraining code can be deactivated using `-ct 0` and the generated code will be faster.** The hope is to improve the signal interval calculation model, so that the index constraining code will not be needed anymore.
 

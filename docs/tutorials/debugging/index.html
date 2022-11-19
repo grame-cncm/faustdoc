@@ -458,7 +458,7 @@ with {
 <pre><code>WARNING : RDTbl read index [0:inf] is outside of table size (16) in read(write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0]),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0)
 WARNING : WRTbl write index [0:inf] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0])
 </code></pre>
-<p>The range test code checks if the read or write index interval is inside the <em>[0..size-1]</em> range, and only generates constraining code when needed. <strong>But since the signal interval calculation is currently imperfect, uneeded range constraining code might be generated !</strong>. This is actually the case in the generated code, and this can be tested using <code>interp -trace 4 -ct 0 table.dsp</code> that does not show any problem.</p>
+<p>The range test code checks if the read or write index interval is inside the <em>[0..size-1]</em> range, and only generates constraining code when needed. <strong>But since the signal interval calculation is currently imperfect, uneeded range constraining code might be generated !</strong> This is actually the case in the generated code, and can be tested using <code>interp -trace 4 -ct 0 table.dsp</code>, that does not generate constraining code, but does not show any problem.</p>
 <p><strong>If one is absolutely sure of the <em>stay in range</em> property, then adding constraining code can be deactivated using <code>-ct 0</code> and the generated code will be faster.</strong> The hope is to improve the signal interval calculation model, so that the index constraining code will not be needed anymore.</p>
 <p>Note that the DSP program can be rewritten this way:</p>
 <pre><code>process = rwtable(SIZE, 0.0, rdx, _, wdx)
