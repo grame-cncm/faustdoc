@@ -142,8 +142,10 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range. The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. Using the `wall` options allows to print table access warning on the console. **Note that `-ct 1` option is the default, so safe code is always generated:** 
 
 The `interp -trace 4 -ct 1 -wall table.dsp` command will now executes normally and print the following warning trace in the console:
-```
 
+```
+item: WARNING : RDTbl read index [0:32] is outside of table size (16) in read(write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0]),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32)
+item: WARNING : WRTbl read index [0:32] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = (proj0(W0)'+1)))@0%32,IN[0])
 ```
 
 ##  Debugging the select2 primitive
