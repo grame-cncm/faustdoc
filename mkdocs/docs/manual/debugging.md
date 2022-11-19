@@ -82,7 +82,9 @@ Several strategies have been developed to help programmers better understand the
 
 #### The -ct option
 
-Using the `-ct` compilation option allows to check table index range and generate safe table access code. It verifies that the signal range is compatible with the  table size, and if needed, generate safe read and write indexes access code, by constraining them to stay in a given `[0.. size-1]` range. Note that since the signal interval calculation is imperfect, you may see *false positives* especially when using recursive signals where the interval calculation system will typically produce *[-inf, inf]* range, which is not precise enough to correctly describe the real signal range. 
+Using the `-ct` compilation option allows to check table index range and generate safe table access code. It verifies that the signal range is compatible with the  table size, and if needed, generate safe read and write indexes access code, by constraining them to stay in a given `[0.. size-1]` range. 
+
+Note that since the signal interval calculation is imperfect, you may see *false positives*, and uneeded range constraining code might be generated, especially when using recursive signals where the interval calculation system will typically produce *[-inf, inf]* range, which is not precise enough to correctly describe the real signal range.  
 
 #### The -me option
 
