@@ -67,8 +67,7 @@ INT memory: 3
 
 ## Debugging rdtable and rwtable primitives
 
-The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size has to be known at compile time, but since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table can be generated. **They will typically cause memory access crashes at runtime!**
-
+The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size has to be known at compile time, but since the signal interval calculation is imperfect, invalid programs reading or writing outside of the table could be generated and cause memory access crashes at runtime. The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option can be used to check table index range and generate safe code. 
 
 For the following DSP table.dsp program:
 
@@ -82,7 +81,7 @@ with {
 };
 ```
 
-the generated code is:
+the generated code is whith `-ct 0` will produce:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
@@ -98,7 +97,7 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-with incorrect table access code in `compute` method, where the `iTemp0` read and write index may exceed the table size of 16. Executing `interp -trace 4 table.dsp` generates the following trace on the console:
+with incorrect table access code in `compute` method, where the `iTemp0` read and write index may exceed the table size of 16. Executing `interp -trace 4 -ct 0 table.dsp` generates the following trace on the console:
 
 ```
 -------- Interpreter crash trace start --------
@@ -122,7 +121,7 @@ opcode 1 kInt32Value int 32 real 0 offset1 -1 offset2 -1
 -------- Interpreter crash trace end --------
 ```
 
-The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option can be used to check table index range and generate safe code. The same DSP code now generates:
+With `-ct 1` option, the generated code is now:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
@@ -138,7 +137,7 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range. The `interp -trace 4 -ct table.dsp` command will now executes normally.
+where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range. The `interp -trace 4 -ct 1 table.dsp` command will now executes normally. **Note that `-ct 1` option is the default, so safe code is always generated.**
 
 ##  Debugging the select2 primitive
 
