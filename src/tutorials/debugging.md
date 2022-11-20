@@ -99,7 +99,7 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-with incorrect table access code in `compute` method, where the `iTemp0` read and write indexes may exceed the table size of 16. Executing `interp -trace 4 -ct 0 table.dsp` generates the following trace on the console, showing memory read/write access errors:
+with incorrect table access code in `compute` method, where the `iTemp0` read and write indexes may exceed the table size of 16. Executing `interp-tracer -trace 4 -ct 0 table.dsp` generates the following trace on the console, showing memory read/write access errors:
 
 ```
 -------- Interpreter crash trace start --------
@@ -176,7 +176,7 @@ WARNING : RDTbl read index [0:inf] is outside of table size (16) in read(write(T
 WARNING : WRTbl write index [0:inf] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0])
 ```
 
-The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. **But since the signal interval calculation is currently imperfect, uneeded range constraining code might be generated !** This is actually the case in the generated code, and can be tested using `interp -trace 4 -ct 0 table.dsp`, that does not generate constraining code, but does not show any problem.
+The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. **But since the signal interval calculation is currently imperfect, uneeded range constraining code might be generated !** This is actually the case in the generated code, and can be tested using `interp-tracer -trace 4 -ct 0 table.dsp`, that does not generate constraining code, but does not show any problem.
 
 **If one is absolutely sure of the *stay in range* property, then adding constraining code can be deactivated using `-ct 0` and the generated code will be faster.** The hope is to improve the signal interval calculation model, so that the index constraining code will not be needed anymore.
 
@@ -239,7 +239,7 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-Thus executing it with `interp -trace 4 debug.dsp` allows to detect one falling branch when the condition is in a given state. To force computation of both branches, the `-sts (--strict-select)` option can be used. The generated C++ is now:
+Thus executing it with `interp-tracer -trace 4 debug.dsp` allows to detect one falling branch when the condition is in a given state. To force computation of both branches, the `-sts (--strict-select)` option can be used. The generated C++ is now:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
@@ -254,6 +254,19 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-where intermediate `fThen0` and `fElse0` created variables force the actual computation of both branches. Then executing `interp -trace 4 -sts debug.dsp` will reveal the out-of-bounds calculation on both branches, for both states of the condition. 
+where intermediate `fThen0` and `fElse0` created variables force the actual computation of both branches. Then executing `interp-tracer -trace 4 -sts debug.dsp` will reveal the out-of-bounds calculation on both branches, for both states of the condition. 
+
+##  Debugging using test signals
+
+Effects DSP programs usually need to be fed with standardized test input signals to possibly trigger abnormal behavior.  The `interp-tracer`  tool has an `-input`  option to connect an `impulse` program (defined with the `process = 1-1';` ),  then a `noise` program (defined with the `import("stdfaust.lib"); process = no.noise;` ) to all inputs of the tested DSP. It has to be used with the `-trace 4` mode, so something like `interp-tracer -trace 4 -input debug.dsp`.
+
+More specialized test input signals can be used by directly modifying the  `debug.dsp` code. So writting something like:  `process = test_signal <: effect;` to connect a given mono `test_signal` to all inputs of the `effect` program.
+
+##  Correcting the program
  
-Obviously, these detected errors must then be corrected by carefully checking signal range, like verifying the min/max values in `vslider/hslider/nentry` user-interface items.
+ The `interp-tracer` tool helps finding programming errors. But obviously, the detected errors must then be corrected:
+ 
+ - by carefully checking signal range, like verifying the min/max values in `vslider/hslider/nentry` user-interface items
+ - by checking mathematical function domains 
+ - by checking indexes when using by `rdtable\rwtable` primitives
+ - ...
