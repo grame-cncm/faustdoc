@@ -849,7 +849,7 @@ process = @(hslider("delay",0,0,100,1));
 ```
 <!-- /faust-run -->
 
-`@` only allows for the implementation of integer delay. Thus, various fractional delay algorithms are implemented in [the Faust libraries](https://faustlibraries.grame.fr/).
+`@` only allows for the implementation of integer delay. Thus, various fractional delay algorithms are implemented in the Faust [delays.lib](https://faustlibraries.grame.fr/libs/delays/) library.
 
 ### Environment Expressions
 

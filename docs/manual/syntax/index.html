@@ -2034,7 +2034,7 @@ process = @(hslider(&quot;delay&quot;,0,0,100,1));
 </div>
 <!-- /faust-run -->
 
-<p><code>@</code> only allows for the implementation of integer delay. Thus, various fractional delay algorithms are implemented in <a href="https://faustlibraries.grame.fr/">the Faust libraries</a>.</p>
+<p><code>@</code> only allows for the implementation of integer delay. Thus, various fractional delay algorithms are implemented in the Faust <a href="https://faustlibraries.grame.fr/libs/delays/">delays.lib</a> library.</p>
 <h3 id="environment-expressions">Environment Expressions</h3>
 <p>Faust is a lexically scoped language. The meaning of a Faust expression is determined by its context of definition (its lexical environment) and not by its context of use. </p>
 <p>To keep their original meaning, Faust expressions are bounded to their lexical environment in structures called <em>closures</em>. The following constructions allow to explicitly create and access such environments. Moreover they provide powerful means to reuse existing code and promote modular design.</p>
