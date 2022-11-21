@@ -258,9 +258,9 @@ where intermediate `fThen0` and `fElse0` created variables force the actual comp
 
 ##  Debugging using test signals
 
-Effects DSP programs usually need to be fed with standardized test input signals to possibly trigger abnormal behavior.  The `interp-tracer`  tool has an `-input`  option to connect an `impulse` program (defined with the `process = 1-1';` ),  then a `noise` program (defined with the `import("stdfaust.lib"); process = no.noise;` ) to all inputs of the tested DSP. It has to be used with the `-trace 4` mode, so something like `interp-tracer -trace 4 -input debug.dsp`.
+Effects DSP programs usually need to be fed with standardized test input signals to possibly trigger abnormal behavior.  The `interp-tracer`  tool has an `-input`  option to connect an `impulse` program (defined with the `process = 1-1';` ),  then a `noise` program (defined with the `import("stdfaust.lib"); process = no.noise;` ) to all inputs of the tested DSP. So something like the `interp-tracer -trace 4 -input debug.dsp` command has to be used.
 
-More specialized test input signals can be used by directly modifying the  `debug.dsp` code. So writting something like:  `process = test_signal <: effect;` to connect a given mono `test_signal` to all inputs of the `effect` program.
+More specialized test input signals can be used by directly modifying the `debug.dsp` code, then running the DSP code normally (that is not using the `-input` option anymore). So writting something like:  `process = test_signal <: effect;` to connect a given mono `test_signal` to all inputs of the `effect` program.
 
 ##  Correcting the program
  
