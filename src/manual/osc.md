@@ -91,7 +91,8 @@ These OSC parameters can be changed from the command line using one of the follo
 * `-port number` sets the port number used by the application to receive messages.
 * `-outport number` sets the port number used by the application to transmit messages.
 * `-errport number` sets the port number used by the application to transmit error messages.
-* `-desthost host` sets the destination host for the messages sent by the application.
+* `-desthost host` sets the destination host for the messages sent by the application. Note that the destination address can be changed with the first incoming message: first received packet from another host sets the destination address 
+  to this host.
 * `-xmit 0|1|2` turns transmission OFF, ALL, or ALIAS (default OFF). When transmission is OFF, input elements can be controlled using their addresses or aliases (if present). When transmission is ALL, input elements can be controlled using their addresses or aliases (if present), user's actions and output elements (i.e., `bargraph`, etc.) are transmitted as OSC messages as well as aliases (if present). When transmission is ALIAS, input elements can only be controlled using their aliases, user's actions and output elements are transmitted as aliases only.
 * `-xmitfilter path` allows to filter output messages. Note that `path` can be a regular expression (like `/freeverb/Reverb1/*`).
 
@@ -432,8 +433,9 @@ process = no.noise * hslider("level[osc:/accxyz/0 0 9.81]",0,0,1,0.01);
 
 | Message | Description |
 | --- | --- |
-| `oscsend host port "/*" s hello` | discover if any OSC application is listening on port *p* |
-| `oscsend host port "/*" s get` | query OSC interface of application listening on port *p* |
+| `oscsend host port "/*" s hello` | discover if any OSC application is listening on port *port* |
+| `oscsend host port "/*" s get` | query OSC interface of application listening on port *port* |
+| `oscsend host port "/*" s json` | query JSON description of application listening on port *port* |
 
 ### Control Messages
 

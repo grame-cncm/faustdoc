@@ -17,23 +17,23 @@ Most \faust architectures provide Open Sound Control (OSC) support \footnote{The
 %\hline
 \\
 \emph{Linux}\\
-Alsa  			& GTK, Qt, Console		& yes\\
+Alsa  		& GTK, Qt, Console		& yes\\
 Jack 			& GTK, Qt, Console		& yes\\
-Netjack 			& GTK, Qt, Console & yes\\
+Netjack 		& GTK, Qt, Console 		& yes\\
 PortAudio 		& GTK, Qt				& yes\\
 %\hline
 \\
 \emph{Mac OS X} \\
 %\hline
-CoreAudio 		& Qt 			& yes\\
-Jack 			& Qt, Console & yes\\
-Netjack 			& Qt, Console & yes\\
+CoreAudio 	& Qt 			& yes\\
+Jack 			& Qt, Console 	& yes\\
+Netjack 		& Qt, Console 	& yes\\
 PortAudio 		& Qt 			& yes\\
 %\hline
 \\
 \emph{Windows} \\
 %\hline
-Jack 			& Qt, Console & yes\\
+Jack 			& Qt, Console 	& yes\\
 PortAudio 		& Qt 			& yes\\
 %\hline
 \hline
@@ -42,7 +42,6 @@ PortAudio 		& Qt 			& yes\\
 \caption{\faust architectures with OSC support.}
 \label{tab:oscarch}
 \end{table}
-
 
 \section{A simple example}
 
@@ -87,7 +86,7 @@ These OSC parameters can be changed from the command line using one of the follo
 \item \lstinline'-port number' set the port number used by the application to receive messages.
 \item \lstinline'-outport number' set the port number used by the application to transmit messages.
 \item \lstinline'-errport number' set the port number used by the application to transmit error messages.
-\item \lstinline'-desthost host' set the destination host for the messages sent by the application.
+\item \lstinline'-desthost host' set the destination host for the messages sent by the application. Note that the destination address can be changed with the first incoming message: first received packet from another host sets the destination address to this host.
 \item \lstinline'-xmit 0|1|2' turn transmission OFF, ALL, or ALIAS (default OFF). When transmission is OFF, input elements can be controlled using their addresses or aliases (if present). When transmission is ALL, input elements can be controlled using their addresses or aliases (if present), user's actions and output elements (bargraph) are transmitted as OSC messages as well as aliases (if present). When transmission is ALIAS,  input elements can only be controlled using their aliases, user's actions and output elements (bargraph) are transmitted as aliases only.
 \item \lstinline'-xmitfilter path' allows to filter output messages. Note that 'path' can be a regular expression (like "/freeverb/Reverb1/*").
 \end{itemize}
@@ -148,8 +147,6 @@ As an answer of the osc messages  understood by the application, a full descript
 
 The root of the osc interface is \code{/noise}. Transmission is OFF, \code{xmit} is set to false. The destination host for sending messages is \code{"127.0.0.1"}, the output port is \code{5511} and the error port is \code{5512}. The application has only one user interface element: \code{/noise/level} with current value \code{0.0}, minimal value \code{0.0} and maximal value \code{1.0}.
 
-
-
 \section{Widget's OSC address}
 
 Each widget of an application has a unique OSC address obtained by concatenating the labels of it's surrounding groups with its own label. 
@@ -203,7 +200,6 @@ then a default vertical group is automatically create by the \faust compiler usi
 	T2: /mix4/input_3/mute  fff 0.0000 0.0000 1.0000
 \end{lstlisting}
 
- 
 \section{Controlling the application via OSC}
 
 We can control any user interface element of the application by sending one of the previously discovered messages. For example to set the noise level of the application to \code{0.2} we send:
@@ -398,8 +394,9 @@ As we can see TouchOSC send the x, y and z accelerometers in a single message, a
 \subsection*{Discovery messages}
 
 \begin{tabular}{ll}
-\lstinline'oscsend' \emph{host} \emph{port} \lstinline'"/*" s hello' & discover if any OSC application is listening on port $p$ \\
-\lstinline'oscsend' \emph{host} \emph{port} \lstinline'"/*" s get' & query OSC interface of application listening on port $p$
+\lstinline'oscsend' \emph{host} \emph{port} \lstinline'"/*" s hello' & discover if any OSC application is listening on port $port$ \\
+\lstinline'oscsend' \emph{host} \emph{port} \lstinline'"/*" s get' & query OSC interface of application listening on port $port$ \\
+\lstinline'oscsend' \emph{host} \emph{port} \lstinline'"/*" s json'  & query JSON description of application listening on port *port*
 \end{tabular}
 
 \subsection*{Control messages}
