@@ -535,7 +535,8 @@ process = no.noise*hslider(&quot;level&quot;,0,0,1,0.01);
 <li><code>-port number</code> sets the port number used by the application to receive messages.</li>
 <li><code>-outport number</code> sets the port number used by the application to transmit messages.</li>
 <li><code>-errport number</code> sets the port number used by the application to transmit error messages.</li>
-<li><code>-desthost host</code> sets the destination host for the messages sent by the application.</li>
+<li><code>-desthost host</code> sets the destination host for the messages sent by the application. Note that the destination address can be changed with the first incoming message: first received packet from another host sets the destination address 
+  to this host.</li>
 <li><code>-xmit 0|1|2</code> turns transmission OFF, ALL, or ALIAS (default OFF). When transmission is OFF, input elements can be controlled using their addresses or aliases (if present). When transmission is ALL, input elements can be controlled using their addresses or aliases (if present), user's actions and output elements (i.e., <code>bargraph</code>, etc.) are transmitted as OSC messages as well as aliases (if present). When transmission is ALIAS, input elements can only be controlled using their aliases, user's actions and output elements are transmitted as aliases only.</li>
 <li><code>-xmitfilter path</code> allows to filter output messages. Note that <code>path</code> can be a regular expression (like <code>/freeverb/Reverb1/*</code>).</li>
 </ul>
@@ -904,11 +905,15 @@ process = no.noise * hslider(&quot;level[osc:/accxyz/0 0 9.81]&quot;,0,0,1,0.01)
 <tbody>
 <tr>
 <td><code>oscsend host port "/*" s hello</code></td>
-<td>discover if any OSC application is listening on port <em>p</em></td>
+<td>discover if any OSC application is listening on port <em>port</em></td>
 </tr>
 <tr>
 <td><code>oscsend host port "/*" s get</code></td>
-<td>query OSC interface of application listening on port <em>p</em></td>
+<td>query OSC interface of application listening on port <em>port</em></td>
+</tr>
+<tr>
+<td><code>oscsend host port "/*" s json</code></td>
+<td>query JSON description of application listening on port <em>port</em></td>
 </tr>
 </tbody>
 </table>
