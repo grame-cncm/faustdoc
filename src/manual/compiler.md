@@ -42,7 +42,7 @@ Note that a wide range of [`faust2...` compilation scripts](https://faustdoc.gra
 
 ## Structure of the Generated Code
 
-A Faust DSP C++ class derives from the base `dsp` class defined as below (a similar structure is used for languages than C++):
+A Faust DSP C++ class derives from the base `dsp` class defined as below (a similar structure is used for languages other than C++):
 
 ```
 class dsp {
@@ -64,9 +64,9 @@ class dsp {
   virtual int getSampleRate() = 0;
   
   // Init methods
-  virtual void init(int samplingRate) = 0;
-  virtual void instanceInit(int samplingRate) = 0;
-  virtual void instanceConstants(int samplingRate) = 0;
+  virtual void init(int sample_rate) = 0;
+  virtual void instanceInit(int sample_rate) = 0;
+  virtual void instanceConstants(int sample_rate) = 0;
   virtual void instanceResetUserInterface() = 0;
   virtual void instanceClear() = 0;
   
@@ -76,10 +76,10 @@ class dsp {
   // Retrieve the global metadata of the Faust program
   virtual void metadata(Meta* m) = 0;
   
-  // Compute one audio frame
+  // Compute one audio buffer
   virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) = 0;
   
-  // Compute a time-stamped audio frame
+  // Compute a time-stamped audio buffer
   virtual void compute(double /*date_usec*/, int count, FAUSTFLOAT** inputs,
      FAUSTFLOAT** outputs) { compute(count, inputs, outputs); }
 };
@@ -91,7 +91,7 @@ Methods are filled by the compiler with the actual code. In the case of `noise.d
 class mydsp : public dsp {
   private:
   int iRec0[2];
-  int fSamplingFreq;
+  int fSampleRate;
   
   public:
   void metadata(Meta* m) { 
@@ -107,9 +107,9 @@ class mydsp : public dsp {
   virtual int getNumOutputs() {
     return 1;
   }
-  static void classInit(int samplingFreq) {}
-  virtual void instanceConstants(int samplingFreq) {
-    fSamplingFreq = samplingFreq;
+  static void classInit(int sample_rate) {}
+  virtual void instanceConstants(int sample_rate) {
+    fSampleRate = sample_rate;
   }
   virtual void instanceResetUserInterface() {}
   virtual void instanceClear() {
@@ -117,12 +117,12 @@ class mydsp : public dsp {
       iRec0[l0] = 0;
     }
   }
-  virtual void init(int samplingFreq) {
-    classInit(samplingFreq);
-    instanceInit(samplingFreq);
+  virtual void init(int sample_rate) {
+    classInit(sample_rate);
+    instanceInit(sample_rate);
   }
-  virtual void instanceInit(int samplingFreq) {
-    instanceConstants(samplingFreq);
+  virtual void instanceInit(int sample_rate) {
+    instanceConstants(sample_rate);
     instanceResetUserInterface();
     instanceClear();
   }
@@ -130,7 +130,7 @@ class mydsp : public dsp {
     return new mydsp();
   }
   virtual int getSampleRate() {
-    return fSamplingFreq;
+    return fSampleRate;
   }
   virtual void buildUserInterface(UI* ui_interface) {
     ui_interface->openVerticalBox("Noise");

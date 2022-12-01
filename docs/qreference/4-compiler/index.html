@@ -335,13 +335,11 @@ ComplexDiagram(
 
 <p>For example <span class="lstinline">faust noise.dsp</span> will compile <span class="lstinline">noise.dsp</span> and output the corresponding C++ code on the standard output.  The option <span class="lstinline">-o</span> allows to choose the output file: <span class="lstinline">faust noise.dsp -o noise.cpp</span>. The option <span class="lstinline">-a</span> allows to choose the architecture file: <span class="lstinline">faust -a alsa-gtk.cpp noise.dsp</span>. </p>
 <p>To compile a <span class="smallcaps">Faust</span> program into an ALSA application on Linux you can use the following commands: </p>
-<pre><code>    faust -a alsa-gtk.cpp noise.dsp -o noise.cpp
-    g++ -lpthread -lasound  
-        `pkg-config --cflags --libs gtk+-2.0` 
-        noise.cpp -o noise
+<pre><code>      faust -a alsa-gtk.cpp noise.dsp -o noise.cpp
+      g++ -lpthread -lasound  `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 </code></pre>
 <h2 id="structure-of-the-generated-code">Structure of the generated code</h2>
-<p>A <span class="smallcaps">Faust</span> DSP C++ class derives from the base <strong>dsp</strong> class defined as below:</p>
+<p>A <span class="smallcaps">Faust</span> DSP C++ class derives from the base <strong>dsp</strong> class defined as below (a similar structure is used for languages other than C++):</p>
 <pre><code>class dsp {
 
     public:
@@ -349,23 +347,37 @@ ComplexDiagram(
         dsp() {}
         virtual ~dsp() {}
 
+        // Returns the number of inputs of the Faust program
         virtual int getNumInputs() = 0;
+
+        // Returns the number of outputs of the Faust program
         virtual int getNumOutputs() = 0
+
+        // This method can be called to retrieve 
+        // the UI description of the Faust program
+        // and its associated fields
         virtual void buildUserInterface(UI* ui_interface) = 0;
 
+        // Returns the current sampling rate
         virtual int getSampleRate() = 0;
 
-        virtual void init(int samplingRate) = 0;
-        virtual void instanceInit(int samplingRate) = 0;
-        virtual void instanceConstants(int samplingRate) = 0;
+        // Init methods
+        virtual void init(int sample_rate) = 0;
+        virtual void instanceInit(int sample_rate) = 0;
+        virtual void instanceConstants(int sample_rate) = 0;
         virtual void instanceResetUserInterface() = 0;
         virtual void instanceClear() = 0;
 
+        // Returns a clone of the instance
         virtual dsp* clone() = 0;
 
+        // Retrieve the global metadata of the Faust program
         virtual void metadata(Meta* m) = 0;
 
+        // Compute one audio buffer
         virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) = 0;
+
+        // Compute a time-stamped audio buffer
         virtual void compute(double date_usec, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
         { 
             compute(count, inputs, outputs); 
@@ -382,12 +394,12 @@ ComplexDiagram(
 <pre><code>class mydsp : public dsp {
 
   private:
-    FAUSTFLOAT  fslider0;
-    int     iRec0[2];
-    int fSamplingFreq;
+      FAUSTFLOAT fslider0;
+      int iRec0[2];
+      int fSampleRate;
 
   public:
-    virtual void metadata(Meta* m) { 
+     virtual void metadata(Meta* m) { 
         m-&gt;declare(&quot;name&quot;, &quot;Noise&quot;);
         m-&gt;declare(&quot;version&quot;, &quot;1.1&quot;);
         m-&gt;declare(&quot;author&quot;, &quot;Grame&quot;);
@@ -397,10 +409,10 @@ ComplexDiagram(
 
     virtual int getNumInputs() { return 0; }
     virtual int getNumOutputs() { return 1; }
-    static void classInit(int samplingFreq) {
+    static void classInit(int sample_rate) {
     }
-    virtual void instanceConstants(int samplingFreq) {
-        fSamplingFreq = samplingFreq;
+    virtual void instanceConstants(int sample_rate) {
+        fSampleRate = sample_rate;
     }
     virtual void instanceResetUserInterface() {
         fslider0 = 0.5f;
@@ -408,12 +420,12 @@ ComplexDiagram(
     virtual void instanceClear() {
         for (int i=0; i&lt;2; i++) iRec0[i] = 0;
     }
-    virtual void init(int samplingFreq) {
-        classInit(samplingFreq);
-        instanceInit(samplingFreq);
+    virtual void init(int sample_rate) {
+        classInit(sample_rate);
+        instanceInit(sample_rate);
     }
-    virtual void instanceInit(int samplingFreq) {
-        instanceConstants(samplingFreq);
+    virtual void instanceInit(int sample_rate) {
+        instanceConstants(sample_rate);
         instanceResetUserInterface();
         instanceClear();
     }
@@ -421,7 +433,7 @@ ComplexDiagram(
         return new mydsp();
     }
     virtual int getSampleRate() {
-        return fSamplingFreq;
+        return fSampleRate;
     }
     virtual void buildUserInterface(UI* ui_interface) {
         ui_interface-&gt;openVerticalBox(&quot;Noise&quot;);
@@ -430,7 +442,7 @@ ComplexDiagram(
         ui_interface-&gt;closeBox();
     }
     virtual void compute (int count, FAUSTFLOAT** input, FAUSTFLOAT** output) {
-        float   fSlow0 = (4.656613e-10f * float(fslider0));
+        float fSlow0 = (4.656613e-10f * float(fslider0));
         FAUSTFLOAT* output0 = output[0];
         for (int i=0; i&lt;count; i++) {
             iRec0[0] = ((1103515245 * iRec0[1]) + 12345);

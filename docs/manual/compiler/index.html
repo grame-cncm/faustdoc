@@ -369,7 +369,7 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 </code></pre>
 <p>Note that a wide range of <a href="https://faustdoc.grame.fr/manual/tools/"><code>faust2...</code> compilation scripts</a> can be used to facilitate this operation by taking a Faust file and returning the corresponding binary for your platform.</p>
 <h2 id="structure-of-the-generated-code">Structure of the Generated Code</h2>
-<p>A Faust DSP C++ class derives from the base <code>dsp</code> class defined as below (a similar structure is used for languages than C++):</p>
+<p>A Faust DSP C++ class derives from the base <code>dsp</code> class defined as below (a similar structure is used for languages other than C++):</p>
 <pre><code>class dsp {
   public:
   dsp() {}
@@ -389,9 +389,9 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
   virtual int getSampleRate() = 0;
 
   // Init methods
-  virtual void init(int samplingRate) = 0;
-  virtual void instanceInit(int samplingRate) = 0;
-  virtual void instanceConstants(int samplingRate) = 0;
+  virtual void init(int sample_rate) = 0;
+  virtual void instanceInit(int sample_rate) = 0;
+  virtual void instanceConstants(int sample_rate) = 0;
   virtual void instanceResetUserInterface() = 0;
   virtual void instanceClear() = 0;
 
@@ -401,10 +401,10 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
   // Retrieve the global metadata of the Faust program
   virtual void metadata(Meta* m) = 0;
 
-  // Compute one audio frame
+  // Compute one audio buffer
   virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) = 0;
 
-  // Compute a time-stamped audio frame
+  // Compute a time-stamped audio buffer
   virtual void compute(double /*date_usec*/, int count, FAUSTFLOAT** inputs,
      FAUSTFLOAT** outputs) { compute(count, inputs, outputs); }
 };
@@ -413,7 +413,7 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 <pre><code>class mydsp : public dsp {
   private:
   int iRec0[2];
-  int fSamplingFreq;
+  int fSampleRate;
 
   public:
   void metadata(Meta* m) { 
@@ -429,9 +429,9 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
   virtual int getNumOutputs() {
     return 1;
   }
-  static void classInit(int samplingFreq) {}
-  virtual void instanceConstants(int samplingFreq) {
-    fSamplingFreq = samplingFreq;
+  static void classInit(int sample_rate) {}
+  virtual void instanceConstants(int sample_rate) {
+    fSampleRate = sample_rate;
   }
   virtual void instanceResetUserInterface() {}
   virtual void instanceClear() {
@@ -439,12 +439,12 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
       iRec0[l0] = 0;
     }
   }
-  virtual void init(int samplingFreq) {
-    classInit(samplingFreq);
-    instanceInit(samplingFreq);
+  virtual void init(int sample_rate) {
+    classInit(sample_rate);
+    instanceInit(sample_rate);
   }
-  virtual void instanceInit(int samplingFreq) {
-    instanceConstants(samplingFreq);
+  virtual void instanceInit(int sample_rate) {
+    instanceConstants(sample_rate);
     instanceResetUserInterface();
     instanceClear();
   }
@@ -452,7 +452,7 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
     return new mydsp();
   }
   virtual int getSampleRate() {
-    return fSamplingFreq;
+    return fSampleRate;
   }
   virtual void buildUserInterface(UI* ui_interface) {
     ui_interface-&gt;openVerticalBox(&quot;Noise&quot;);
