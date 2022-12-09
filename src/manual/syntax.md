@@ -3021,9 +3021,9 @@ process = os.sawtooth(freq);
 ```
 <!-- /faust-run -->
 
-#### `[hidden:xx]` Metadata
+#### `[hidden:0|1]` Metadata
 
-The `[hidden:xx]` metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a [motion sensor](#sensors-control-metadatas) or [OSC messages](../osc) and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using `faust2android` or `faust2ios`.
+The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a [motion sensor](#sensors-control-metadatas) or [OSC messages](../osc) and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using `faust2android` or `faust2ios`.
 
 **Compatibility**
 
