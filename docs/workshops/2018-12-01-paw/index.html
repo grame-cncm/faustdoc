@@ -493,7 +493,7 @@ process = osc(440);
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 decimalpart(x) = x-int(x);
-phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 osc(f) = phase(f) * 2 * ma.PI : sin;
 process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
         * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
@@ -509,11 +509,27 @@ process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1))
 
 <h2 id="improving-the-timbre">Improving the Timbre</h2>
 <p>Instead of playing pure sine waves tones, let's improve the timbre with simple additive synthesis:</p>
-<pre><code>timbre(f) = osc(f)*0.5 + osc(f*2)*0.25 + osc(f*3)*0.125;
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+decimalpart(x) = x-int(x);
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
+osc(f) = phase(f) * 2 * ma.PI : sin;
+timbre(f) = osc(f)*0.5 + osc(f*2)*0.25 + osc(f*3)*0.125;
 process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
         * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
         * (button(&quot;gate&quot;) : en.adsr(0.1,0.1,0.98,0.1));
+
 </code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust4/exfaust4.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
 <h2 id="running-as-a-polyphonic-midi-synth">Running as a Polyphonic MIDI Synth</h2>
 <p>To control the synthesizer using MIDI you need to use Chrome. The polyphonic MIDI mode is activated using the drop down menu <em>Poly Voices</em> on the left side of the editor. Choose <em>Computer Keyboard</em> as MIDI input to play notes with the computer keyboard, or plug a MIDI keyboard.</p>
 <h2 id="adding-a-global-effect">Adding a Global Effect</h2>
@@ -522,12 +538,12 @@ process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1))
 effect = dm.zita_light;
 </code></pre>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
 decimalpart(x) = x-int(x);
-phase(f) = f/ma.SR : (+ : decimalpart) ~ _ ;
+phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 timbre(f) = phase(f)*0.5 + phase(f*2)*0.25 + phase(f*3)*0.125;
 
 process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
@@ -539,7 +555,7 @@ effect = dm.zita_light;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust4/exfaust4.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run --></div>
