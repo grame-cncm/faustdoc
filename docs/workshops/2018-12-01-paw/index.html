@@ -424,7 +424,7 @@ where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</
 <p>From a mathematical point of view that would be perfectly correct, but we will accumulate rounding errors. To keep full precision it is better to place the decimal part operation inside the loop:</p>
 <pre><code>process = 0.125 : (+ : decimalpart) ~ _;
 </code></pre>
-<p>We can now listen the produced signal. Just copy and past <code>decimalpart</code> and <code>process</code> definitions into the <a href="https://fausteditor.grame.fr">Faust editor</a></p>
+<p>We can now listen the produced signal. Just copy and past <code>decimalpart</code> and <code>process</code> definitions into the <a href="https://faustide.grame.fr">Faust Web IDE</a>.</p>
 <h2 id="controlling-the-frequency-of-the-phase-signal">Controlling the Frequency of the Phase Signal</h2>
 <p>Let's first rearrange our code</p>
 <!-- faust-run -->
