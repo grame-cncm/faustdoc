@@ -418,7 +418,7 @@ where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</
 <p>Let's define a function to do that:</p>
 <pre><code>decimalpart(x) = x - int(x);
 </code></pre>
-<p>We can now use that function to transform our ramp into a sawtooth It is then tempting to write:</p>
+<p>We can now use that function to transform our ramp into a sawtooth. It is then tempting to write:</p>
 <pre><code>process = 0.125 : + ~ _ : decimalpart;
 </code></pre>
 <p>From a mathematical point of view that would be perfectly correct, but we will accumulate rounding errors. To keep full precision it is better to place the decimal part operation inside the loop:</p>
