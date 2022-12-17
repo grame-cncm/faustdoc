@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.51.0
+## FAUST compiler version 2.54.9
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -29,7 +29,7 @@ usage : faust [options] file1 [file2 ...].
 ---------------------------------------
 ~~~faust-options
   -lang <lang> --language                 select output language,
-                                          'lang' should be c, cpp (default), csharp, dlang, fir, interp, java, jax, julia, llvm, ocpp, rust, soul or wast/wasm.
+                                          'lang' should be c, cpp (default), cmajor, csharp, dlang, fir, interp, java, jax, julia, llvm, ocpp, rust or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.
@@ -47,6 +47,7 @@ usage : faust [options] file1 [file2 ...].
   -os2        --one-sample2               generate one sample computation (2 = separated control and DSP struct. Separation in short and long delay lines).
   -os3        --one-sample3               generate one sample computation (3 = like 2 but with external memory pointers kept in the DSP struct).
   -cm         --compute-mix               mix in outputs buffers.
+  -ct         --check-table               check rtable/rwtable index range and generate safe access code (0/1: 1 by default).
   -cn <name>  --class-name <name>         specify the name of the dsp class to be used instead of mydsp.
   -scn <name> --super-class-name <name>   specify the name of the super class to be used instead of dsp.
   -pn <name>  --process-name <name>       specify the name of the dsp entry-point instead of process.
@@ -54,9 +55,9 @@ usage : faust [options] file1 [file2 ...].
   -dlt <n>    --delay-line-threshold <n>  threshold between 'mask' and 'select' ring buffer implementation (default INT_MAX samples).
   -mem        --memory-manager            allocate static in global state using a custom memory manager.
   -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
-  -rui        --range-ui                  whether to generate code to limit vslider/hslider/nentry values in [min..max] range.
+  -rui        --range-ui                  whether to generate code to constraint vslider/hslider/nentry values in [min..max] range.
   -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compiling a dsp file.
-  -scal       --scalar                    generate non-vectorized code.
+  -scal       --scalar                    generate non-vectorized code (default).
   -inpl       --in-place                  generates code working when input and output buffers are the same (scalar mode only).
   -vec        --vectorize                 generate easier to vectorize code.
   -vs <n>     --vec-size <n>              size of the vector (default 32 samples).
@@ -109,9 +110,9 @@ usage : faust [options] file1 [file2 ...].
   -tg         --task-graph                print the internal task graph in dot format.
   -sg         --signal-graph              print the internal signal graph in dot format.
   -norm       --normalized-form           print signals in normalized form and exit.
-  -ct         --check-table               check table index range and exit at first failure.
-  -cat        --check-all-table           check all table index range.
   -me         --math-exceptions           check / for 0 as denominator and remainder, fmod, sqrt, log10, log, acos, asin functions domain.
+  -sts        --strict-select             generate strict code for 'selectX' even for stateless branches (both are computed).
+  -wall       --warning-all               print all warnings.
 ~~~
 ## Information options:
 ---------------------------------------
