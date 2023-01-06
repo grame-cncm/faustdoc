@@ -2224,11 +2224,11 @@ Tools to compare C++ and Rust  code generated from Faust.
 
 ### Python tools 
 
-#### [FAUSTPy](https://gitlab.com/adud2/faust-ctypes)
-A port of Marc Joliet's FaustPy from CFFI to Ctypes. Faust-Ctypes documentation is [available online](https://adud2.gitlab.io/faust-ctypes.
-
-#### [Faust Ctypes](https://github.com/marcecj/faust_python)
+#### [FAUSTPy](https://github.com/marcecj/faust_python)
 FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on [this fork](https://github.com/hrtlacek/faust_python).
+
+#### [Faust Ctypes]( https://gitlab.com/adud2/faust-ctypes)
+A port of Marc Joliet's FaustPy from CFFI to Ctypes. Faust-Ctypes documentation is [available online](https://adud2.gitlab.io/faust-ctypes).
 
 #### [An SCons Tool for FAUST](https://github.com/marcecj/scons_faust)
 This is an SCons tool for compiling FAUST programs. It adds various builders to your construction environment: Faust, FaustXML, FaustSVG, FaustSC, and FaustHaskell. Their behaviour can be modified by changing various construction variables (see "Usage" below).
