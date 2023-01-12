@@ -18,7 +18,7 @@ doubleprecision MAX = 1.7976931348623158e+308;
 ```
 
 ### A Simple Program
-Here is a short Faust program that implements of a simple noise generator (called from the `noises.lib` Faust library). It exhibits various kind of statements : two [*global metadata*](#global-metadata) declarations, an [*imports*](#imports), a *comment*, and a [*definition*](#definitions). We will study later how [*documentation statements*](#documentation-tags) work:
+Here is a short Faust program that implements of a simple noise generator (called from the `noises.lib` Faust library). It exhibits various kind of statements: two [*global metadata*](#global-metadata) declarations, an [*imports*](#imports), a *comment*, and a [*definition*](#definitions). We will study later how [*documentation statements*](#documentation-tags) work:
 
 <!-- faust-run -->
 ```
@@ -484,7 +484,7 @@ To be applicable, it requires that:
 
 $$\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)$$
 
-Each input of \(B\) is connected to the corresponding output of \(A\) via an implicit 1-sample delay :
+Each input of \(B\) is connected to the corresponding output of \(A\) via an implicit 1-sample delay:
 
 $$A[i]\stackrel{Z^{-1}}{\rightarrow}[i]B$$
 
@@ -551,7 +551,7 @@ with {
 };
 ```
 
-And the inputs of an expression :
+And the inputs of an expression:
 
 ```
 Xi(expr) = si.bus(n) <: par(i,n,ba.selector(n-i-1,n)) : expr 
@@ -863,7 +863,7 @@ To keep their original meaning, Faust expressions are bounded to their lexical e
 
 The `with` construction allows to specify a *local environment*: a private list of definition that will be used to evaluate the left hand expression.
 
-In the following example :
+In the following example:
 
 <!-- faust-run -->
 ```
@@ -965,7 +965,7 @@ The `environment` construction allows to create an explicit environment. It is l
 
 <img src="img/environment.svg" class="mx-auto d-block">
 
-In the following example an `environment` construction is used to group together some constant definitions :
+In the following example an `environment` construction is used to group together some constant definitions:
 
 ```
 constant = environment {
@@ -1000,7 +1000,7 @@ The `library` construct allows to create an environment by reading the definitio
 For example `library("filters.lib")` represents the [environment](#environment-expression) obtained by reading the file `filters.lib`. It works like `import("filters.lib")` but all the read definitions are stored in a new separate lexical environment. Individual definitions can be accessed as described in the previous paragraph. For example `library("filters.lib").lowpass` denotes the function `lowpass` as defined in the file `filters.lib`.
 
 To avoid name conflicts when importing libraries it is recommended to prefer 
-`library` to [`import`](#import). So instead of :
+`library` to [`import`](#import). So instead of:
 
 ```
 import("filters.lib");
@@ -1010,7 +1010,7 @@ import("filters.lib");
 };
 ```
 
-the following will ensure an absence of conflicts : 
+the following will ensure an absence of conflicts: 
 
 ```
 fl = library("filters.lib");
@@ -1076,7 +1076,7 @@ asinh = ffunction(float asinh (float), <math.h>, "");
 
 <!-- TODO: what happens for other languages than C? -->
 
-The signature part of a foreign function, `float asinhf|asinh|asinhl(float)` in our previous example, describes the prototype of the C function : its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the `asinh` function is called `asinhf` in single precision, `asinh` in double precision and `asinhl` in quad precision. This is why the three names are provided in the signature.
+The signature part of a foreign function, `float asinhf|asinh|asinhl(float)` in our previous example, describes the prototype of the C function: its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the `asinh` function is called `asinhf` in single precision, `asinh` in double precision and `asinhl` in quad precision. This is why the three names are provided in the signature.
 
 #### Signature
 
@@ -2688,7 +2688,7 @@ The variable name can be enclosed in curly brackets to clearly separate it from 
 
 Thanks to [horizontal](#hgroup-primitive), [vertical](#vgroup-primitive), and [tabs](#tgroup-primitive) groups, user interfaces have a hierarchical structure analog to a hierarchical file system. Each widget has an associated *path name* obtained by concatenating the labels of all its surrounding groups with its own label.
 
-In the following example :
+In the following example:
 
 ```
 hgroup("Foo",
