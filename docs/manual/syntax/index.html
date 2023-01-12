@@ -898,7 +898,7 @@ they are brought to the right section. -->
 doubleprecision MAX = 1.7976931348623158e+308;
 </code></pre>
 <h3 id="a-simple-program">A Simple Program</h3>
-<p>Here is a short Faust program that implements of a simple noise generator (called from the <code>noises.lib</code> Faust library). It exhibits various kind of statements : two <a href="#global-metadata"><em>global metadata</em></a> declarations, an <a href="#imports"><em>imports</em></a>, a <em>comment</em>, and a <a href="#definitions"><em>definition</em></a>. We will study later how <a href="#documentation-tags"><em>documentation statements</em></a> work:</p>
+<p>Here is a short Faust program that implements of a simple noise generator (called from the <code>noises.lib</code> Faust library). It exhibits various kind of statements: two <a href="#global-metadata"><em>global metadata</em></a> declarations, an <a href="#imports"><em>imports</em></a>, a <em>comment</em>, and a <a href="#definitions"><em>definition</em></a>. We will study later how <a href="#documentation-tags"><em>documentation statements</em></a> work:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
@@ -1404,7 +1404,7 @@ process = par(i,2,dm.zita_light) :&gt; par(i,2,ef.cubicnl(drive,offset));
 <p>
 <script type="math/tex; mode=display">\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)</script>
 </p>
-<p>Each input of <script type="math/tex">B</script> is connected to the corresponding output of <script type="math/tex">A</script> via an implicit 1-sample delay :</p>
+<p>Each input of <script type="math/tex">B</script> is connected to the corresponding output of <script type="math/tex">A</script> via an implicit 1-sample delay:</p>
 <p>
 <script type="math/tex; mode=display">A[i]\stackrel{Z^{-1}}{\rightarrow}[i]B</script>
 </p>
@@ -1481,7 +1481,7 @@ with {
   n = outputs(expr);
 };
 </code></pre>
-<p>And the inputs of an expression :</p>
+<p>And the inputs of an expression:</p>
 <pre><code>Xi(expr) = si.bus(n) &lt;: par(i,n,ba.selector(n-i-1,n)) : expr 
 with { 
   n = inputs(expr); 
@@ -2041,7 +2041,7 @@ process = @(hslider(&quot;delay&quot;,0,0,100,1));
 <p><img src="img/envexp.svg" class="mx-auto d-block"></p>
 <h4 id="with-expression"><code>with</code> Expression</h4>
 <p>The <code>with</code> construction allows to specify a <em>local environment</em>: a private list of definition that will be used to evaluate the left hand expression.</p>
-<p>In the following example :</p>
+<p>In the following example:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
 
@@ -2140,7 +2140,7 @@ v(t) = max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1)
 <h4 id="environment-expression"><code>environment</code> Expression</h4>
 <p>The <code>environment</code> construction allows to create an explicit environment. It is like a <a href="#with-expression">`with'</a>, but without the left hand expression. It is a convenient way to group together related definitions, to isolate groups of definitions and to create a name space hierarchy. </p>
 <p><img src="img/environment.svg" class="mx-auto d-block"></p>
-<p>In the following example an <code>environment</code> construction is used to group together some constant definitions :</p>
+<p>In the following example an <code>environment</code> construction is used to group together some constant definitions:</p>
 <pre><code>constant = environment {
   pi = 3.14159;
   e = 2.718;
@@ -2160,14 +2160,14 @@ v(t) = max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1)
 <p><img src="img/library.svg" class="mx-auto d-block"></p>
 <p>For example <code>library("filters.lib")</code> represents the <a href="#environment-expression">environment</a> obtained by reading the file <code>filters.lib</code>. It works like <code>import("filters.lib")</code> but all the read definitions are stored in a new separate lexical environment. Individual definitions can be accessed as described in the previous paragraph. For example <code>library("filters.lib").lowpass</code> denotes the function <code>lowpass</code> as defined in the file <code>filters.lib</code>.</p>
 <p>To avoid name conflicts when importing libraries it is recommended to prefer 
-<code>library</code> to <a href="#import"><code>import</code></a>. So instead of :</p>
+<code>library</code> to <a href="#import"><code>import</code></a>. So instead of:</p>
 <pre><code>import(&quot;filters.lib&quot;);
   ...
   ...lowpass....
   ...
 };
 </code></pre>
-<p>the following will ensure an absence of conflicts : </p>
+<p>the following will ensure an absence of conflicts: </p>
 <pre><code>fl = library(&quot;filters.lib&quot;);
   ...
 ...fl.lowpass....
@@ -2207,7 +2207,7 @@ define function with variables with a predefined value, etc. -->
 </code></pre>
 <!-- TODO: what happens for other languages than C? -->
 
-<p>The signature part of a foreign function, <code>float asinhf|asinh|asinhl(float)</code> in our previous example, describes the prototype of the C function : its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the <code>asinh</code> function is called <code>asinhf</code> in single precision, <code>asinh</code> in double precision and <code>asinhl</code> in quad precision. This is why the three names are provided in the signature.</p>
+<p>The signature part of a foreign function, <code>float asinhf|asinh|asinhl(float)</code> in our previous example, describes the prototype of the C function: its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the <code>asinh</code> function is called <code>asinhf</code> in single precision, <code>asinh</code> in double precision and <code>asinhl</code> in quad precision. This is why the three names are provided in the signature.</p>
 <h4 id="signature">Signature</h4>
 <p><img src="img/signature.svg" class="mx-auto d-block"></p>
 <h4 id="types">Types</h4>
@@ -4203,7 +4203,7 @@ process = par(i,8,hslider(&quot;Voice %i&quot;,0.9,0,1,0.01));
 <p>The variable name can be enclosed in curly brackets to clearly separate it from the rest of the string, as in <code>par(i,8,hslider("Voice %{i}", 0.9, 0, 1, 0.01))</code>.</p>
 <h4 id="labels-as-pathnames">Labels as Pathnames</h4>
 <p>Thanks to <a href="#hgroup-primitive">horizontal</a>, <a href="#vgroup-primitive">vertical</a>, and <a href="#tgroup-primitive">tabs</a> groups, user interfaces have a hierarchical structure analog to a hierarchical file system. Each widget has an associated <em>path name</em> obtained by concatenating the labels of all its surrounding groups with its own label.</p>
-<p>In the following example :</p>
+<p>In the following example:</p>
 <pre><code>hgroup(&quot;Foo&quot;,
     ...
     vgroup(&quot;Faa&quot;, 
