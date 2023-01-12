@@ -74,7 +74,7 @@ On a computer, doing a computation that is undefined in mathematics (like `val/0
 
 After being produced, those values can actually *contaminate* the following flow of computations (that is `Nan + any value = NaN` for instance) up to the point of producing incorrect indexes when used in array access, and causing memory access crashes.  
 
-The Faust compiler gives error messages when the written code is not syntactically or semantically correct, and the interval computation system on signals is supposed to *detect possible problematic computations at compile time*, and refuse to compile the corresponding DSP code.  But *the interval calculation is currently quite imperfect*, can misbehave, and possibly allow problematic code *that can even possibly crash at runtime* to be generated. The typical case is when producing indexes to access `rdtable/rwtable` or delay lines, *that may trigger memory access crashes*.
+The Faust compiler gives error messages when the written code is not syntactically or semantically correct, and the interval computation system on signals is supposed to detect possible problematic computations at compile time, and refuse to compile the corresponding DSP code.  But *the interval calculation is currently quite imperfect*, can misbehave, and possibly allow problematic code to be generated.
 
 Several strategies have been developed to help programmers better understand their written DSP code, and possibly analyse it, both at compile time and runtime.
 
