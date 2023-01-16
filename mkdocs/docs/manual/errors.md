@@ -6,7 +6,7 @@ Note that the current error messages system is still far from perfect, usually w
 
 ## Syntax errors
 
-Those error happens when the language syntax is not respected.
+Those error happens when the language syntax is not respected [TO COMPLETE]
 
 ## Box connection errors
 
@@ -134,11 +134,20 @@ ERROR : eval not a valid route expression (1)
 ERROR : eval not a valid route expression (2)
 ```
 
+[TO COMPLETE]
+
 ### Iterative constructions 
+
+## Signal related errors 
+
+[TO COMPLETE]
 
 ## Typing errors
 
+[TO COMPLETE]
+
 ### Automatic type promotion 
 
-## Pattern mathing errors 
+## Pattern matching errors 
 
+[TO COMPLETE]
