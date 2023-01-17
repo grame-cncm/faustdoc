@@ -2,6 +2,12 @@
 
 Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can include the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error.
 
+The compiler is organized in several steps:
+
+- starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an [Abstract Source Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)) which is here made of primitives in the *Box language*. A first class of errors messages are known as *syntax error* messages, like missing the `;` character to end a line.etc. 
+- an expression in the Box language is then evaluated to produce an expression in the *Signal language*. Signals as conceptually infinite streams of samples or control values. The box language actually implements the Faust [Block Diagram Algebra](https://hal.science/hal-02159011v1), and not following the connections rules will trigger a second class of errors messages, the *box connection errors*.
+- signal expressions are then optimized, type annotated (to associate an integer or real type with each signal, but also discovering when signals are to be computed: at init time, control-rate or sample-rate..) to produce a so-called *normal-form*. A third class of *typing error* can occur at this level, like using delays with a non-bounded size.etc. 
+
 Note that the current error messages system is still far from perfect, usually when the origin of the error in the DSP source cannot be properly traced. In this case the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box of a Signal) is printed.
 
 ## Syntax errors
@@ -149,5 +155,9 @@ ERROR : eval not a valid route expression (2)
 ### Automatic type promotion 
 
 ## Pattern matching errors 
+
+[TO COMPLETE]
+
+## Non coherent compiler options errors
 
 [TO COMPLETE]
