@@ -144,19 +144,63 @@ ERROR : eval not a valid route expression (2)
 
 ### Iterative constructions 
 
+## Pattern matching errors 
+
+Pattern matching mechanism allows to algorithmically create and manipulate block diagrams expressions. Since computation are done at compile time, and the 
+
+### Multiple symbol definition error
+
+This error happens when a symbol is defined several times in the DSP file:
+
+```
+ERROR : [file foo.dsp : N] : multiple definitions of symbol 'foo'
+```
+
+[TO COMPLETE]
+
 ## Signal related errors 
 
 [TO COMPLETE]
 
 ## Typing errors
 
+### Soundfile usage error 
+
+The soundfile primitive assumes that the part number stays in the [0..255] interval, so for instance the following code: 
+
+<!-- faust-run -->
+```
+process = _,0 : soundfile("foo.wav", 2);
+```
+<!-- /faust-run -->
+
+will produce the following error:
+
+```
+ERROR : out of range soundfile part number (interval(-1,1,-24) instead of interval(0,255)) in expression : length(soundfile("foo.wav"),IN[0])
+```
+
+### Delay primitive error
+
+The soundfile primitive assumes that the delay signal is bounded, so the following expression:
+
+<!-- faust-run -->
+```
+process = @(ba.time);
+```
+<!-- /faust-run -->
+
+will produce the following error:
+
+```
+ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+1)))@0+-1
+        used in delay expression : IN[0]@(proj0(letrec(W0 = (proj0(W0)'+1)))@0+-1)
+        (probably a recursive signal)
+```
+
 [TO COMPLETE]
 
 ### Automatic type promotion 
-
-## Pattern matching errors 
-
-[TO COMPLETE]
 
 ## Non coherent compiler options errors
 
