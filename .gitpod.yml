@@ -5,7 +5,11 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: |
+  - before: |
+      sudo apt-get update
+      sudo DEBIAN_FRONTEND=noninteractive apt-get -y install cmake flex
+    init: |
+      make -C faust install PREFIX=$HOME/.local
       make install
       make all
     command: |
