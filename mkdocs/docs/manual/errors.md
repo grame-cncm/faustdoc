@@ -1,12 +1,13 @@
 # Error messages
 
-Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can include the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error.
+Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can include the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error. They can occur at different stages in the compilation process.  
 
 The compiler is organized in several steps:
 
 - starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an [Abstract Source Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)) which is here made of primitives in the *Box language*. A first class of errors messages are known as *syntax error* messages, like missing the `;` character to end a line.etc. 
 - an expression in the Box language is then evaluated to produce an expression in the *Signal language*. Signals as conceptually infinite streams of samples or control values. The box language actually implements the Faust [Block Diagram Algebra](https://hal.science/hal-02159011v1), and not following the connections rules will trigger a second class of errors messages, the *box connection errors*.
-- signal expressions are then optimized, type annotated (to associate an integer or real type with each signal, but also discovering when signals are to be computed: at init time, control-rate or sample-rate..) to produce a so-called *normal-form*. A third class of *typing error* can occur at this level, like using delays with a non-bounded size.etc. 
+- the pattern matching meta language allows to algorithmically create and manipulate block diagrams expressions. So a third class of *pattern matching coding errors* can occur at this level. 
+- signal expressions are then optimized, type annotated (to associate an integer or real type with each signal, but also discovering when signals are to be computed: at init time, control-rate or sample-rate..) to produce a so-called *normal-form*. A fourth class of *typing error* can occur at this level, like using delays with a non-bounded size.etc. 
 
 Note that the current error messages system is still far from perfect, usually when the origin of the error in the DSP source cannot be properly traced. In this case the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box of a Signal) is printed.
 
@@ -43,7 +44,7 @@ process = A : B;
 will produce the following error message:
 
 ```
-ERROR in sequential composition A:B
+ERROR : sequential composition A:B
 The number of outputs [2] of A must be equal to the number of inputs [3] of B
 
 Here  A = _,_;
@@ -68,7 +69,7 @@ process = A <: B;
 will produce the following error message:
 
 ```
-ERROR in split composition A<:B
+ERROR : split composition A<:B
 The number of outputs [2] of A must be a divisor of the number of inputs [3] of B
 
 Here  A = _,_;
@@ -93,7 +94,7 @@ process = A :> B;
 will produce the following error message:
 
 ```
-ERROR in merge composition A:>B
+ERROR : merge composition A:>B
 The number of outputs [2] of A must be a multiple of the number of inputs [3] of B
 
 Here  A = _,_;
@@ -118,7 +119,7 @@ process = A ~ B;
 will produce the following error message:
 
 ```
-ERROR in recursive composition A~B
+ERROR : recursive composition A~B
 The number of outputs [2] of A must be at least the number of inputs [3] of B. The number of inputs [2] of A must be at least the number of outputs [3] of B. 
 
 Here  A = _,_;
@@ -146,7 +147,7 @@ ERROR : eval not a valid route expression (2)
 
 ## Pattern matching errors 
 
-Pattern matching mechanism allows to algorithmically create and manipulate block diagrams expressions. Since computation are done at compile time, and the 
+Pattern matching mechanism allows to algorithmically create and manipulate block diagrams expressions. Pattern matching coding errors can occur at this level. And since computation are done at compile time, and the pattern machine language is Turing complete, even infinite loops 
 
 ### Multiple symbol definition error
 
@@ -162,11 +163,17 @@ ERROR : [file foo.dsp : N] : multiple definitions of symbol 'foo'
 
 [TO COMPLETE]
 
+Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. 
+
+### Automatic type promotion 
+
+Some primitives (like [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive), [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive), [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive)...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of `int(exp)` is internally added and is not necessary in the source code. 
+
 ## Typing errors
 
 ### Soundfile usage error 
 
-The soundfile primitive assumes that the part number stays in the [0..255] interval, so for instance the following code: 
+The soundfile primitive assumes the part number to stay in the [0..255] interval, so for instance the following code: 
 
 <!-- faust-run -->
 ```
@@ -180,9 +187,41 @@ will produce the following error:
 ERROR : out of range soundfile part number (interval(-1,1,-24) instead of interval(0,255)) in expression : length(soundfile("foo.wav"),IN[0])
 ```
 
+### Modulo primitive error
+
+The modulo `%` assumes that the denominator is not 0, thus the following code:
+
+<!-- faust-run -->
+```
+process = _ % 0;
+```
+<!-- /faust-run -->
+
+will produce the following error:
+
+```
+ERROR : % by 0 in IN[0] % 0
+```
+
+### Division primitive error
+
+The division `/` assumes that the denominator is not 0, thus the following code:
+
+<!-- faust-run -->
+```
+process = _ / 0;
+```
+<!-- /faust-run -->
+
+will produce the following error:
+
+```
+ERROR : division by 0 in IN[0] / 0.0f
+```
+
 ### Delay primitive error
 
-The soundfile primitive assumes that the delay signal is bounded, so the following expression:
+The delay `@` primitive assumes that the delay signal value is bounded, so the following expression:
 
 <!-- faust-run -->
 ```
@@ -200,8 +239,6 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 
 [TO COMPLETE]
 
-### Automatic type promotion 
+## Compiler option errors
 
-## Non coherent compiler options errors
-
-[TO COMPLETE]
+All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors.
