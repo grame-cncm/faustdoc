@@ -75,7 +75,7 @@ A Faust generated program has to connect to a underlying audio layer. Depending 
 
 ### External and internal audio sample formats
 
-Audio samples are delivered by the underlying audio layer, typically as 32 bits `float` or 64 bits `double` values in the [-1..1] interval. Their format is defined with the `FAUSTFLOAT` macro implemented in the architecture file as `float` by default. The DSP audio samples format is choosen at compile time, with the `-single` (= default), `-double` or `quad` compilation option. 
+Audio samples are managed by the underlying audio layer, typically as 32 bits `float` or 64 bits `double` values in the *[-1..1]* interval. Their format is defined with the `FAUSTFLOAT` macro implemented in the architecture file as `float` by default. The DSP audio samples format is choosen at compile time, with the `-single` (= default), `-double` or `-quad` compilation option. Control parameters like buttons, sliders... also use the `FAUSTFLOAT` format.
 
 The `FAUSTFLOAT` is defined (*if not previously defined*) with the following code:
 

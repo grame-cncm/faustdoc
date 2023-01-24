@@ -308,6 +308,10 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#audio-architecture-modules" class="nav-link">Audio Architecture Modules</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#external-and-internal-audio-sample-formats" class="nav-link">External and internal audio sample formats</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="3"><a href="#connection-to-an-audio-driver-api" class="nav-link">Connection to an audio driver API</a>
               <ul class="nav flex-column">
               </ul>
@@ -717,6 +721,15 @@ struct UI {
 <li>applications typically use the OS audio driver API, which will be CoreAudio on macOS, ALSA on Linux, WASAPI on Windows for instance, or any kind of multi-platforms API like <a href="http://portaudio.com">PortAudio</a> or <a href="https://jackaudio.org">JACK</a>. In this case a subclass of the base class <code>audio</code> (see later) has to be written</li>
 <li>plugins (like <a href="https://www.steinberg.net/en/company/technologies/vst3.html">VST3</a>, <a href="https://developer.apple.com/documentation/audiounit">Audio Unit</a> or <a href="https://juce.com">JUCE</a> for instance) usually have to follow a more constrained API which imposes a <em>life cyle</em>, something like <em>loading/initializing/starting/running/stopping/unloading</em> sequence of operations. In this case the Faust generated module <em>new/init/compute/delete</em> methods have to be inserted in the plugin API, by calling each module function at the appropriate place.</li>
 </ul>
+<h3 id="external-and-internal-audio-sample-formats">External and internal audio sample formats</h3>
+<p>Audio samples are managed by the underlying audio layer, typically as 32 bits <code>float</code> or 64 bits <code>double</code> values in the <em>[-1..1]</em> interval. Their format is defined with the <code>FAUSTFLOAT</code> macro implemented in the architecture file as <code>float</code> by default. The DSP audio samples format is choosen at compile time, with the <code>-single</code> (= default), <code>-double</code> or <code>-quad</code> compilation option. Control parameters like buttons, sliders... also use the <code>FAUSTFLOAT</code> format.</p>
+<p>The <code>FAUSTFLOAT</code> is defined (<em>if not previously defined</em>) with the following code:</p>
+<pre><code class="language-c++">#ifndef FAUSTFLOAT
+#define FAUSTFLOAT float
+#endif
+</code></pre>
+<p>and the default internal format is <code>float</code>, so nothing special has to be done in the general case. But when the DSP is compiled using the <code>-double</code> option, the audio inputs/outputs buffers have to be <em>adapted</em>, with a <a href="https://github.com/grame-cncm/faust/blob/fcc51c12184b6e07ebdfc6fd51427ad1af498ac2/architecture/faust/dsp/dsp-adapter.h">dsp_sample_adapter</a> class, for instance like in the <a href="https://github.com/grame-cncm/faust/blob/07ce81dac88afe76475e93e797b94982c9298b58/tools/benchmark/dynamic-jack-gtk.cpp#L257">dynamic-jack-gt tool</a>.</p>
+<p>Note that an architecture may redefine <code>FAUSTFLOAT</code> in double, and have the complete audio chain running in double. This has to be done <em>before including</em> any architecture file that would define <code>FAUSTFLOAT</code> itself (because of the <code>#ifndef</code> logic). </p>
 <h3 id="connection-to-an-audio-driver-api">Connection to an audio driver API</h3>
 <p>An <em>audio driver architecture</em> typically connects a Faust program to the audio drivers. It is responsible for:</p>
 <ul>
