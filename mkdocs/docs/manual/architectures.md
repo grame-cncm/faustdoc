@@ -73,6 +73,22 @@ A Faust generated program has to connect to a underlying audio layer. Depending 
 - applications typically use the OS audio driver API, which will be CoreAudio on macOS, ALSA on Linux, WASAPI on Windows for instance, or any kind of multi-platforms API like [PortAudio](http://portaudio.com) or [JACK](https://jackaudio.org). In this case a subclass of the base class `audio` (see later) has to be written
 - plugins (like [VST3](https://www.steinberg.net/en/company/technologies/vst3.html), [Audio Unit](https://developer.apple.com/documentation/audiounit) or [JUCE](https://juce.com) for instance) usually have to follow a more constrained API which imposes a *life cyle*, something like *loading/initializing/starting/running/stopping/unloading* sequence of operations. In this case the Faust generated module *new/init/compute/delete* methods have to be inserted in the plugin API, by calling each module function at the appropriate place.
 
+### External and internal audio sample formats
+
+Audio samples are delivered by the underlying audio layer, typically as 32 bits `float` or 64 bits `double` values in the [-1..1] interval. Their format is defined with the `FAUSTFLOAT` macro implemented in the architecture file as `float` by default. The DSP audio samples format is choosen at compile time, with the `-single` (= default), `-double` or `quad` compilation option. 
+
+The `FAUSTFLOAT` is defined (*if not previously defined*) with the following code:
+
+```c++
+#ifndef FAUSTFLOAT
+#define FAUSTFLOAT float
+#endif
+```
+
+and the default internal format is `float`, so nothing special has to be done in the general case. But when the DSP is compiled using the `-double` option, the audio inputs/outputs buffers have to be *adapted*, with a [dsp_sample_adapter](https://github.com/grame-cncm/faust/blob/fcc51c12184b6e07ebdfc6fd51427ad1af498ac2/architecture/faust/dsp/dsp-adapter.h) class, for instance like in the [dynamic-jack-gt tool]( https://github.com/grame-cncm/faust/blob/07ce81dac88afe76475e93e797b94982c9298b58/tools/benchmark/dynamic-jack-gtk.cpp#L257).
+
+Note that an architecture may redefine `FAUSTFLOAT` in double, and have the complete audio chain running in double. This has to be done *before including* any architecture file that would define `FAUSTFLOAT` itself (because of the `#ifndef` logic). 
+
 ### Connection to an audio driver API
 
 An *audio driver architecture* typically connects a Faust program to the audio drivers. It is responsible for:
