@@ -124,10 +124,10 @@ process = waveform {10,20,30,40,50,60,70}, %(7)~+(3) : rdtable;
 \bigskip
 
 %--------------------------------------------------------------------------------------------------------------
-\subsection{Soundfiles Primitive}
+\subsection{Soundfile Primitive}
 %--------------------------------------------------------------------------------------------------------------
 
-The  \lstinline'soundfile("label[url:\{'path1';'path2';'path3';\}]", n)' primitive allows access to a list of externally defined sound resources, described as the list of their filename, or complete paths. The \lstinline'soundfile("label[url:path]", n)' , or \lstinline'soundfile("label", n)' (where label is used as the soundfile path) simplified syntax allows to use a single file. 
+The  \lstinline'soundfile("label[url:\{'path1';'path2';'path3';\}]", n)' primitive allows access to a list of externally defined sound resources, described as the list of their filename, or complete paths. The \lstinline'soundfile("label[url:path]", n)' , or \lstinline'soundfile("label", n)' (where label is used as the soundfile path) simplified syntax allows to use a single file. All sound resources are concatenated in a single data structure, and each item can be accessed and used independently.
 
 A soundfile has:
 
