@@ -17,9 +17,7 @@ Those error happens when the language syntax is not respected [TO COMPLETE]
 
 ## Box connection errors
 
-[Diagram expressions](https://faustdoc.grame.fr/manual/syntax/#diagram-expressions) express how block expressions can be combined to create new ones. The connection rules are precisely defined for each of them and have to be followed for the program to be correct.
-
-Remember the [operator priority](https://faustdoc.grame.fr/manual/syntax/#diagram-composition-operations) when writing more complex expressions.   
+[Diagram expressions](https://faustdoc.grame.fr/manual/syntax/#diagram-expressions) express how block expressions can be combined to create new ones. The connection rules are precisely defined for each of them and have to be followed for the program to be correct. Remember the [operator priority](https://faustdoc.grame.fr/manual/syntax/#diagram-composition-operations) when writing more complex expressions.   
 
 ### The five connections rules 
 
@@ -33,13 +31,11 @@ Combining two blocks `A` and `B` in parallel can never produce a box connection 
 
 Combining two blocks `A` and `B` in sequence will produce a box connection error if `outputs(A) != inputs(B)`. So for instance the following program:
 
-<!-- faust-run -->
 ```
 A = _,_;
 B = _,_,_;
 process = A : B;
 ```
-<!-- /faust-run -->
 
 will produce the following error message:
 
@@ -58,14 +54,11 @@ has 3 inputs
 
 Combining two blocks `A` and `B` with the split composition will produce a box connection error if the number of inputs of `B` is not a multiple of the number of outputs of `A`. So for instance the following program:
 
-<!-- faust-run -->
 ```
 A = _,_;
 B = _,_,_;
 process = A <: B;
 ```
-<!-- /faust-run -->
-
 will produce the following error message:
 
 ```
@@ -83,13 +76,11 @@ has 3 inputs
 
 Combining two blocks `A` and `B` with the merge composition will produce a box connection error if the number of outputs of `A` is not a multiple of the number of inputs of `B`. So for instance the following program:
 
-<!-- faust-run -->
 ```
 A = _,_;
 B = _,_,_;
 process = A :> B;
 ```
-<!-- /faust-run -->
 
 will produce the following error message:
 
@@ -108,13 +99,11 @@ has 3 inputs
 
 Combining two blocks `A` and `B` with the recursive composition will produce a box connection error if the number of outputs of `A` is less than the number of inputs of `B`, or the number of outputs of `B` is less than the number of inputs of `A` (that is the following $$\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)$$ connection rule is not respected). So for instance the following program:
 
-<!-- faust-run -->
 ```
 A = _,_;
 B = _,_,_;
 process = A ~ B;
 ```
-<!-- /faust-run -->
 
 will produce the following error message:
 
@@ -133,11 +122,10 @@ has 3 inputs and 3 outputs
 
 More complex routing between blocks can also be described using the `route` primitive. Two different errors can be produced in case of incorrect coding:  
 
-<!-- faust-run -->
 ```
 process = route(+,8.7,(0,0),(0,1));
 ```
-<!-- /faust-run -->
+will produce the following error message:
 
 ```
 ERROR : invalid route expression, first two parameters should be blocks producing a value, third parameter a list of input/output pairs : route(+,8.7f,0,0,0,1)
@@ -145,11 +133,10 @@ ERROR : invalid route expression, first two parameters should be blocks producin
 
 And the second one when the parameters are not actually numbers:  
 
-<!-- faust-run -->
 ```
 process = route(9,8.7f,0,0,0,button("foo"));
 ```
-<!-- /faust-run -->
+will produce the following error message:
 
 ```
 ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,0,0,button("foo"))
@@ -177,12 +164,10 @@ Since computation are done at compile time and the pattern machine language is T
 
 The following (somewhat *extreme*) code: 
 
-<!-- faust-run -->
 ```
 foo(x) = foo(x);
 process = foo;
 ```
-<!-- /faust-run -->
 
 will produce the following error:
 
@@ -208,12 +193,9 @@ Some primitives (like [route](https://faustdoc.grame.fr/manual/syntax/#route-pri
 
 The soundfile primitive assumes the part number to stay in the [0..255] interval, so for instance the following code: 
 
-<!-- faust-run -->
 ```
 process = _,0 : soundfile("foo.wav", 2);
 ```
-<!-- /faust-run -->
-
 will produce the following error:
 
 ```
@@ -224,11 +206,10 @@ ERROR : out of range soundfile part number (interval(-1,1,-24) instead of interv
 
 The delay `@` primitive assumes that the delay signal value is bounded, so the following expression:
 
-<!-- faust-run -->
 ```
+import("stdfaust.lib");
 process = @(ba.time);
 ```
-<!-- /faust-run -->
 
 will produce the following error:
 
@@ -243,17 +224,15 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 
 ## Mathematical functions out of domain errors
 
-Error messages will be produced when the mathematical functions are used outside of their domain, and if the problematic computation is done at compile time. If the out of domain computation may be done at runtime, then a warning can be produced using the `-me` option (see #warning-messages section).
+Error messages will be produced when the mathematical functions are used outside of their domain, and if the problematic computation is done at compile time. If the out of domain computation may be done at runtime, then a warning can be produced using the `-me` option (see [Warning messages](#warning-messages) section).
 
 ### Modulo primitive error
 
 The modulo `%` assumes that the denominator is not 0, thus the following code:
 
-<!-- faust-run -->
 ```
 process = _%0;
 ```
-<!-- /faust-run -->
 
 will produce the following error:
 
