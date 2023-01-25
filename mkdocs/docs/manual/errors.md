@@ -2,12 +2,12 @@
 
 Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can include the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error. They can occur at different stages in the compilation process.  
 
-The compiler is organized in several steps:
+The compiler is organized in several stages:
 
-- starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an [Abstract Source Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)) which is here made of primitives in the *Box language*. A first class of errors messages are known as *syntax error* messages, like missing the `;` character to end a line.etc. 
-- an expression in the Box language is then evaluated to produce an expression in the *Signal language*. Signals as conceptually infinite streams of samples or control values. The box language actually implements the Faust [Block Diagram Algebra](https://hal.science/hal-02159011v1), and not following the connections rules will trigger a second class of errors messages, the *box connection errors*.
+- starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an [Abstract Source Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)) made here of primitives in the *Box language*. A first class of errors messages are known as *syntax error* messages, like missing the `;` character to end a line.etc. 
+- an expression in the Box language is then evaluated to produce an expression in the *Signal language* where signals as conceptually infinite streams of samples or control values. The box language actually implements the Faust [Block Diagram Algebra](https://hal.science/hal-02159011v1), and not following the connections rules will trigger a second class of errors messages, the *box connection errors*.
 - the pattern matching meta language allows to algorithmically create and manipulate block diagrams expressions. So a third class of *pattern matching coding errors* can occur at this level. 
-- signal expressions are then optimized, type annotated (to associate an integer or real type with each signal, but also discovering when signals are to be computed: at init time, control-rate or sample-rate..) to produce a so-called *normal-form*. A fourth class of *typing error* can occur at this level, like using delays with a non-bounded size.etc. 
+- signal expressions are then optimized, type annotated (to associate an integer or real type with each signal, but also discovering when signals are to be computed: at init time, control-rate or sample-rate..) to produce a so-called *normal-form*. A fourth class of *typing error* can occur at this level, like using delays with a non-bounded size, etc.  
 
 Note that the current error messages system is still far from perfect, usually when the origin of the error in the DSP source cannot be properly traced. In this case the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box of a Signal) is printed.
 
@@ -131,14 +131,28 @@ has 3 inputs and 3 outputs
 
 #### Route connection errors
 
-More complex routing between blocks can also be described using the `route` primitive. A specific 
+More complex routing between blocks can also be described using the `route` primitive. Two different errors can be produced in case of incorrect coding:  
+
+<!-- faust-run -->
+```
+process = route(+,8.7,(0,0),(0,1));
+```
+<!-- /faust-run -->
 
 ```
-ERROR : eval not a valid route expression (1)
+ERROR : invalid route expression, first two parameters should be blocks producing a value, third parameter a list of input/output pairs : route(+,8.7f,0,0,0,1)
 ```
 
+And the second one when the parameters are not actually numbers:  
+
+<!-- faust-run -->
 ```
-ERROR : eval not a valid route expression (2)
+process = route(9,8.7f,0,0,0,button("foo"));
+```
+<!-- /faust-run -->
+
+```
+ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,0,0,button("foo"))
 ```
 
 [TO COMPLETE]
@@ -147,7 +161,7 @@ ERROR : eval not a valid route expression (2)
 
 ## Pattern matching errors 
 
-Pattern matching mechanism allows to algorithmically create and manipulate block diagrams expressions. Pattern matching coding errors can occur at this level. And since computation are done at compile time, and the pattern machine language is Turing complete, even infinite loops 
+Pattern matching mechanism allows to algorithmically create and manipulate block diagrams expressions. Pattern matching coding errors can occur at this level. 
 
 ### Multiple symbol definition error
 
@@ -157,13 +171,32 @@ This error happens when a symbol is defined several times in the DSP file:
 ERROR : [file foo.dsp : N] : multiple definitions of symbol 'foo'
 ```
 
-[TO COMPLETE]
+Since computation are done at compile time and the pattern machine language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.
+
+### Loop detection error
+
+The following (somewhat *extreme*) code: 
+
+<!-- faust-run -->
+```
+foo(x) = foo(x);
+process = foo;
+```
+<!-- /faust-run -->
+
+will produce the following error:
+
+```
+ERROR : stack overflow in eval
+```
+
+and similar kind of infinite loop errors can be produced with more complex code.
 
 ## Signal related errors 
 
 [TO COMPLETE]
 
-Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. 
+Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical function is checked are non allowed operations are signaled. 
 
 ### Automatic type promotion 
 
@@ -187,38 +220,6 @@ will produce the following error:
 ERROR : out of range soundfile part number (interval(-1,1,-24) instead of interval(0,255)) in expression : length(soundfile("foo.wav"),IN[0])
 ```
 
-### Modulo primitive error
-
-The modulo `%` assumes that the denominator is not 0, thus the following code:
-
-<!-- faust-run -->
-```
-process = _ % 0;
-```
-<!-- /faust-run -->
-
-will produce the following error:
-
-```
-ERROR : % by 0 in IN[0] % 0
-```
-
-### Division primitive error
-
-The division `/` assumes that the denominator is not 0, thus the following code:
-
-<!-- faust-run -->
-```
-process = _ / 0;
-```
-<!-- /faust-run -->
-
-will produce the following error:
-
-```
-ERROR : division by 0 in IN[0] / 0.0f
-```
-
 ### Delay primitive error
 
 The delay `@` primitive assumes that the delay signal value is bounded, so the following expression:
@@ -239,6 +240,33 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 
 [TO COMPLETE]
 
+
+## Mathematical functions out of domain errors
+
+Error messages will be produced when the mathematical functions are used outside of their domain, and if the problematic computation is done at compile time. If the out of domain computation may be done at runtime, then a warning can be produced using the `-me` option (see #warning-messages section).
+
+### Modulo primitive error
+
+The modulo `%` assumes that the denominator is not 0, thus the following code:
+
+<!-- faust-run -->
+```
+process = _%0;
+```
+<!-- /faust-run -->
+
+will produce the following error:
+
+```
+ERROR : % by 0 in IN[0] % 0
+```
+
+The same kind of errors will be produced for `acos`, `asin`, `fmod`, `log10`, `log`, `remainder` and `sqrt` functions.
+
 ## Compiler option errors
 
-All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors.
+All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins.
+
+# Warning messages
+
+Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the `-wall` compilation option. 
