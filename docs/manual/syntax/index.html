@@ -2403,7 +2403,7 @@ process = triangleOsc(f);
 <p>A <code>soundfile</code> has: </p>
 <ul>
 <li>two inputs: the sound number (as a integer between 0 and 255, automatically promoted to <em>int</em>), and the read index in the sound (automatically promoted to <em>int</em>, which will access the last sample of the sound if the read index is greater than the sound length)</li>
-<li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate</li>
+<li>two fixed outputs: the first one is the currently accessed sound length in samples, the second one is the currently accessed sound nominal sample rate in Hz</li>
 <li><code>n</code> several more outputs for the sound channels themselves, as a integer <a href="#constant-numerical-expressions">constant numerical expression</a></li>
 </ul>
 <!-- faust-run -->

@@ -133,7 +133,7 @@ A soundfile has:
 
 \begin{itemize} 
 \item two inputs: the sound number (as a integer between 0 and 255, automatically promoted to \textit{int}), and the read index in the sound (automatically promoted to \textit{int}, which will access the last sample of the sound if the read index is greater than the sound length)
-\item two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate in frames
+\item two fixed outputs: the first one is the currently accessed sound length in samples, the second one is the currently accessed sound nominal sample rate in Hz
 \item  \lstinline'n' several more outputs for the sound channels themselves, as a integer \textit{constant numerical expression}
 \end{itemize}
 
