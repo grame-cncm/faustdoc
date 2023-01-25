@@ -723,12 +723,12 @@ struct UI {
 </ul>
 <h3 id="external-and-internal-audio-sample-formats">External and internal audio sample formats</h3>
 <p>Audio samples are managed by the underlying audio layer, typically as 32 bits <code>float</code> or 64 bits <code>double</code> values in the <em>[-1..1]</em> interval. Their format is defined with the <code>FAUSTFLOAT</code> macro implemented in the architecture file as <code>float</code> by default. The DSP audio samples format is choosen at compile time, with the <code>-single</code> (= default), <code>-double</code> or <code>-quad</code> compilation option. Control parameters like buttons, sliders... also use the <code>FAUSTFLOAT</code> format.</p>
-<p>The <code>FAUSTFLOAT</code> is defined (<em>if not previously defined</em>) with the following code:</p>
+<p>The <code>FAUSTFLOAT</code> macro is written with the following code:</p>
 <pre><code class="language-c++">#ifndef FAUSTFLOAT
 #define FAUSTFLOAT float
 #endif
 </code></pre>
-<p>and the default internal format is <code>float</code>, so nothing special has to be done in the general case. But when the DSP is compiled using the <code>-double</code> option, the audio inputs/outputs buffers have to be <em>adapted</em>, with a <a href="https://github.com/grame-cncm/faust/blob/fcc51c12184b6e07ebdfc6fd51427ad1af498ac2/architecture/faust/dsp/dsp-adapter.h">dsp_sample_adapter</a> class, for instance like in the <a href="https://github.com/grame-cncm/faust/blob/07ce81dac88afe76475e93e797b94982c9298b58/tools/benchmark/dynamic-jack-gtk.cpp#L257">dynamic-jack-gt tool</a>.</p>
+<p>which gives it a value (<em>if not already defined</em>), and since the default internal format is <code>float</code>, nothing special has to be done in the general case. But when the DSP is compiled using the <code>-double</code> option, the audio inputs/outputs buffers have to be <em>adapted</em>, with a <a href="https://github.com/grame-cncm/faust/blob/fcc51c12184b6e07ebdfc6fd51427ad1af498ac2/architecture/faust/dsp/dsp-adapter.h">dsp_sample_adapter</a> class, for instance like in the <a href="https://github.com/grame-cncm/faust/blob/07ce81dac88afe76475e93e797b94982c9298b58/tools/benchmark/dynamic-jack-gtk.cpp">dynamic-jack-gt tool</a>.</p>
 <p>Note that an architecture may redefine <code>FAUSTFLOAT</code> in double, and have the complete audio chain running in double. This has to be done <em>before including</em> any architecture file that would define <code>FAUSTFLOAT</code> itself (because of the <code>#ifndef</code> logic). </p>
 <h3 id="connection-to-an-audio-driver-api">Connection to an audio driver API</h3>
 <p>An <em>audio driver architecture</em> typically connects a Faust program to the audio drivers. It is responsible for:</p>

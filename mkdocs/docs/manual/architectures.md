@@ -77,7 +77,7 @@ A Faust generated program has to connect to a underlying audio layer. Depending 
 
 Audio samples are managed by the underlying audio layer, typically as 32 bits `float` or 64 bits `double` values in the *[-1..1]* interval. Their format is defined with the `FAUSTFLOAT` macro implemented in the architecture file as `float` by default. The DSP audio samples format is choosen at compile time, with the `-single` (= default), `-double` or `-quad` compilation option. Control parameters like buttons, sliders... also use the `FAUSTFLOAT` format.
 
-The `FAUSTFLOAT` is defined (*if not previously defined*) with the following code:
+The `FAUSTFLOAT` macro is written with the following code:
 
 ```c++
 #ifndef FAUSTFLOAT
@@ -85,7 +85,7 @@ The `FAUSTFLOAT` is defined (*if not previously defined*) with the following cod
 #endif
 ```
 
-and the default internal format is `float`, so nothing special has to be done in the general case. But when the DSP is compiled using the `-double` option, the audio inputs/outputs buffers have to be *adapted*, with a [dsp_sample_adapter](https://github.com/grame-cncm/faust/blob/fcc51c12184b6e07ebdfc6fd51427ad1af498ac2/architecture/faust/dsp/dsp-adapter.h) class, for instance like in the [dynamic-jack-gt tool]( https://github.com/grame-cncm/faust/blob/07ce81dac88afe76475e93e797b94982c9298b58/tools/benchmark/dynamic-jack-gtk.cpp#L257).
+which gives it a value (*if not already defined*), and since the default internal format is `float`, nothing special has to be done in the general case. But when the DSP is compiled using the `-double` option, the audio inputs/outputs buffers have to be *adapted*, with a [dsp_sample_adapter](https://github.com/grame-cncm/faust/blob/fcc51c12184b6e07ebdfc6fd51427ad1af498ac2/architecture/faust/dsp/dsp-adapter.h) class, for instance like in the [dynamic-jack-gt tool]( https://github.com/grame-cncm/faust/blob/07ce81dac88afe76475e93e797b94982c9298b58/tools/benchmark/dynamic-jack-gtk.cpp).
 
 Note that an architecture may redefine `FAUSTFLOAT` in double, and have the complete audio chain running in double. This has to be done *before including* any architecture file that would define `FAUSTFLOAT` itself (because of the `#ifndef` logic). 
 
