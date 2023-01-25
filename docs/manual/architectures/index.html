@@ -723,7 +723,7 @@ struct UI {
 </ul>
 <h3 id="external-and-internal-audio-sample-formats">External and internal audio sample formats</h3>
 <p>Audio samples are managed by the underlying audio layer, typically as 32 bits <code>float</code> or 64 bits <code>double</code> values in the <em>[-1..1]</em> interval. Their format is defined with the <code>FAUSTFLOAT</code> macro implemented in the architecture file as <code>float</code> by default. The DSP audio samples format is choosen at compile time, with the <code>-single</code> (= default), <code>-double</code> or <code>-quad</code> compilation option. Control parameters like buttons, sliders... also use the <code>FAUSTFLOAT</code> format.</p>
-<p>The <code>FAUSTFLOAT</code> macro is written with the following code:</p>
+<p>By default, the <code>FAUSTFLOAT</code> macro is written with the following code:</p>
 <pre><code class="language-c++">#ifndef FAUSTFLOAT
 #define FAUSTFLOAT float
 #endif
