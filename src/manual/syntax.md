@@ -586,7 +586,7 @@ The use and role of [`par`](#par-iteration), [`seq`](#seq-iteration), [`sum`](#s
 The `par` iteration can be used to duplicate an expression in parallel. Just like other types of iterations in Faust: 
 
 * its first argument is a variable name containing the number of the current iteration (a bit like the variable that is usually named `i` in a for loop) starting at 0,
-* its second argument is the number of iterations,
+* its second argument is the number of iterations, as an integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
 * its third argument is the expression to be duplicated.
 
 **Example: Simple Additive Synthesizer**
