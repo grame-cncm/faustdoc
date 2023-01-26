@@ -120,7 +120,7 @@ has 3 inputs and 3 outputs
 
 #### Route connection errors
 
-More complex routing between blocks can also be described using the `route` primitive. Two different errors can be produced in case of incorrect coding:  
+More complex routing between blocks can also be described using the [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive) primitive. Two different errors can be produced in case of incorrect coding:  
 
 ```
 process = route(+,8.7,(0,0),(0,1));
@@ -141,8 +141,6 @@ will produce the following error message:
 ```
 ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,0,0,button("foo"))
 ```
-
-[TO COMPLETE]
 
 ### Iterative constructions 
 
