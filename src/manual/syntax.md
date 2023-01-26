@@ -610,7 +610,7 @@ process = par(i,nHarmonics,os.osc(freq*(i+1))) :> /(nHarmonics)*envelope;
 The `seq` iteration can be used to duplicate an expression in series. Just like other types of iterations in Faust: 
 
 * its first argument is a variable name containing the number of the current iteration (a bit like the variable that is usually named `i` in a for loop) starting at 0,
-* its second argument is the number of iterations,
+* its second argument is the number of iterations, as an integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
 * its third argument is the expression to be duplicated.
 
 **Example: Peak Equalizer**
@@ -642,7 +642,7 @@ Note that `i` is used here at each iteration to compute various elements and to 
 The `sum` iteration can be used to duplicate an expression as a sum. Just like other types of iterations in Faust: 
 
 * its first argument is a variable name containing the number of the current iteration (a bit like the variable that is usually named `i` in a for loop) starting at 0,
-* its second argument is the number of iterations,
+* its second argument is the number of iterations, as an integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
 * its third argument is the expression to be duplicated.
 
 **Example: Simple Additive Synthesizer**
@@ -668,7 +668,7 @@ process = sum(i,nHarmonics,os.osc(freq*(i+1)))/(nHarmonics)*envelope;
 The `prod` iteration can be used to duplicate an expression as a product. Just like other types of iterations in Faust: 
 
 * its first argument is a variable name containing the number of the current iteration (a bit like the variable that is usually named `i` in a for loop) starting at 0,
-* its second argument is the number of iterations,
+* its second argument is the number of iterations, as an integer [constant numerical expression](#constant-numerical-expressions), automatically promoted to *int*
 * its third argument is the expression to be duplicated.
 
 **Example: Amplitude Modulation Synthesizer**

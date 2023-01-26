@@ -1544,7 +1544,7 @@ process = par(i,nHarmonics,os.osc(freq*(i+1))) :&gt; /(nHarmonics)*envelope;
 <p>The <code>seq</code> iteration can be used to duplicate an expression in series. Just like other types of iterations in Faust: </p>
 <ul>
 <li>its first argument is a variable name containing the number of the current iteration (a bit like the variable that is usually named <code>i</code> in a for loop) starting at 0,</li>
-<li>its second argument is the number of iterations,</li>
+<li>its second argument is the number of iterations, as an integer <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
 <li>its third argument is the expression to be duplicated.</li>
 </ul>
 <p><strong>Example: Peak Equalizer</strong></p>
@@ -1580,7 +1580,7 @@ process = filterBank(nBands);
 <p>The <code>sum</code> iteration can be used to duplicate an expression as a sum. Just like other types of iterations in Faust: </p>
 <ul>
 <li>its first argument is a variable name containing the number of the current iteration (a bit like the variable that is usually named <code>i</code> in a for loop) starting at 0,</li>
-<li>its second argument is the number of iterations,</li>
+<li>its second argument is the number of iterations, as an integer <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
 <li>its third argument is the expression to be duplicated.</li>
 </ul>
 <p><strong>Example: Simple Additive Synthesizer</strong></p>
@@ -1610,7 +1610,7 @@ process = sum(i,nHarmonics,os.osc(freq*(i+1)))/(nHarmonics)*envelope;
 <p>The <code>prod</code> iteration can be used to duplicate an expression as a product. Just like other types of iterations in Faust: </p>
 <ul>
 <li>its first argument is a variable name containing the number of the current iteration (a bit like the variable that is usually named <code>i</code> in a for loop) starting at 0,</li>
-<li>its second argument is the number of iterations,</li>
+<li>its second argument is the number of iterations, as an integer <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
 <li>its third argument is the expression to be duplicated.</li>
 </ul>
 <p><strong>Example: Amplitude Modulation Synthesizer</strong></p>
