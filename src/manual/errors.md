@@ -4,11 +4,11 @@ Error messages are typically displayed in the form of compiler errors. They occu
 
 The compiler is organized in several stages:
 
-- starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an [Abstract Source Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)) made here of primitives in the *Box language*. A first class of errors messages are known as *syntax error* messages, like missing the `;` character to end a line.etc. 
+- starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an [Abstract Source Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)) made here of primitives in the *Box language*. A first class of errors messages are known as *syntax error* messages, like missing the `;` character to end a line, etc. 
 - an expression in the Box language is then evaluated to produce an expression in the *Signal language* where signals as conceptually infinite streams of samples or control values. The box language actually implements the Faust [Block Diagram Algebra](https://hal.science/hal-02159011v1), and not following the connections rules will trigger a second class of errors messages, the *box connection errors*. Other errors can be produced at this stage when parameters for some primitives are not of the correct type.  
 - the pattern matching meta language allows to algorithmically create and manipulate block diagrams expressions. So a third class of *pattern matching coding errors* can occur at this level. 
 - signal expressions are optimized, type annotated (to associate an integer or real type with each signal, but also discovering when signals are to be computed: at init time, control-rate or sample-rate..) to produce a so-called *normal-form*. A fourth class of *typing error* can occur at this level, like using delays with a non-bounded size, etc.  
-- signal expressions are then converted in FIR (Faust Imperative Representation), a representation for state based computation (memory access, arithmetic computations, control flow, etc.), to be converted into the final target language (like C/C++, LLVM IR, Rust, WebAssembly, etc.). A fith class of *backend errors* can occur at this level, like non supported compilation options for a given backend, etc.
+- signal expressions are then converted in FIR (Faust Imperative Representation), a representation for state based computation (memory access, arithmetic computations, control flow, etc.), to be converted into the final target language (like C/C++, LLVM IR, Rust, WebAssembly, etc.). A fifth class of *backend errors* can occur at this level, like non supported compilation options for a given backend, etc.
 
 Note that the current error messages system is still far from perfect, usually when the origin of the error in the DSP source cannot be properly traced. In this case the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box of a Signal) is printed.
 
@@ -147,8 +147,10 @@ ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,
 
 #### Table construction errors
 
-The [rdtable]§https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time, and 
+The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time 
 
+ [TO COMPLETE]
+ 
 ### Iterative constructions 
 
 [Iterations](https://faustdoc.grame.fr/manual/syntax/#iterations) are analogous to `for(...)` loops in other languages and provide a convenient way to automate some complex block-diagram constructions. All `par`, `seq`, `sum`, `prod` expressions have the same form, take an identifier as first parameter, a number of iteration as an integer constant numerical expression as second parameter, then an arbitrary block-diagram as third parameter.
@@ -212,7 +214,7 @@ and similar kind of infinite loop errors can be produced with more complex code.
 
 ## Signal related errors 
 
-Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical function is checked are non allowed operations are signaled. 
+Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical function is checked and non allowed operations are signaled. 
 
 ### Automatic type promotion 
 
@@ -274,13 +276,13 @@ The same kind of errors will be produced for `acos`, `asin`, `fmod`, `log10`, `l
 
 ## FIR and backends related errors 
 
-
-
 ```
 fun = ffunction(float fun (float), <fun.h>, "");
 process = fun;
 ```
-
+ 
+ [TO COMPLETE]
+ 
 ## Compiler option errors
 
 All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins.
