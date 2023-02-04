@@ -173,7 +173,7 @@ process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 <img src="group1.png" class="mx-auto d-block" width="50%">
 <center>*Shared freq1 and freq2 controllers*</center>
 
-So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path (like `/foo/Freq1` and `/foo/Freq2`), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for `freq2`.
+So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path (like `/foo/Freq1`), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for `freq2`.
 
 Now if some grouping mecanism is used to better control the UI rendering, as in the following DSP code: 
 
@@ -186,7 +186,7 @@ freq2 = hslider("Freq2", 500, 200, 2000, 0.01);
 process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", os.osc(freq1) + os.triangle(freq2));
 ```
 
-The `freq1` and  `freq2` controllers now don't have the same path in each group (like `/foo/Voice1/Freq1` and `/foo/Voice1/Freq2` in the first group,f and `/foo/Voice2/Freq1` and `/foo/Voice2/Freq2` in the second group), and so four separated controllers and UI items are finally created. 
+The `freq1` and  `freq2` controllers now don't have the same path in each group (like `/foo/Voice1/Freq1` and `/foo/Voice1/Freq2` in the first group, and `/foo/Voice2/Freq1` and `/foo/Voice2/Freq2` in the second group), and so four separated controllers and UI items are finally created. 
 
 <img src="group2.png" class="mx-auto d-block" width="60%">
 <center>*Four freq1 and freq2 controllers*</center>

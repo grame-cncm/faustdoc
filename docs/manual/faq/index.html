@@ -460,7 +460,7 @@ process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 </code></pre>
 <p><img src="group1.png" class="mx-auto d-block" width="50%">
 <center><em>Shared freq1 and freq2 controllers</em></center></p>
-<p>So even if  <code>freq1</code> and  <code>freq2</code> controllers are used as parameters at four different places, <code>freq1</code> used in <code>os.osc(freq1)</code> and <code>os.square(freq1)</code> will have the same path (like <code>/foo/Freq1</code> and <code>/foo/Freq2</code>), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for <code>freq2</code>.</p>
+<p>So even if  <code>freq1</code> and  <code>freq2</code> controllers are used as parameters at four different places, <code>freq1</code> used in <code>os.osc(freq1)</code> and <code>os.square(freq1)</code> will have the same path (like <code>/foo/Freq1</code>), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for <code>freq2</code>.</p>
 <p>Now if some grouping mecanism is used to better control the UI rendering, as in the following DSP code: </p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 
@@ -469,7 +469,7 @@ freq2 = hslider(&quot;Freq2&quot;, 500, 200, 2000, 0.01);
 
 process = hgroup(&quot;Voice1&quot;, os.osc(freq1) + os.square(freq2)), hgroup(&quot;Voice2&quot;, os.osc(freq1) + os.triangle(freq2));
 </code></pre>
-<p>The <code>freq1</code> and  <code>freq2</code> controllers now don't have the same path in each group (like <code>/foo/Voice1/Freq1</code> and <code>/foo/Voice1/Freq2</code> in the first group,f and <code>/foo/Voice2/Freq1</code> and <code>/foo/Voice2/Freq2</code> in the second group), and so four separated controllers and UI items are finally created. </p>
+<p>The <code>freq1</code> and  <code>freq2</code> controllers now don't have the same path in each group (like <code>/foo/Voice1/Freq1</code> and <code>/foo/Voice1/Freq2</code> in the first group, and <code>/foo/Voice2/Freq1</code> and <code>/foo/Voice2/Freq2</code> in the second group), and so four separated controllers and UI items are finally created. </p>
 <p><img src="group2.png" class="mx-auto d-block" width="60%">
 <center><em>Four freq1 and freq2 controllers</em></center></p>
 <p>Using the relative pathname as explained in <a href="https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames">Labels as Pathnames</a> possibly allows us to move <code>freq1</code> one step higher in the hierarchical structure, thus having again a unique path (like <code>/foo/Freq1</code>) and controller: </p>
