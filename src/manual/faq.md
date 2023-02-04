@@ -1,5 +1,14 @@
 # Frequently Asked Questions
 
+
+## When to use `int` or `float` cast ?
+
+The [Signal Processor Semantic](https://faustdoc.grame.fr/manual/introduction/#signal-processor-semantic) section explains what a Faust program describes. In particular Faust considers two type of signals: *integer signals* and *floating point signals*. Mathematical operations either occur in the domain of integer numbers, or in the domain of floating point numbers, depending of their types, read [here](https://faustdoc.grame.fr/manual/syntax/#numbers). Using explicit `int` or `float` cast may be needed to force a given computation to be done in the correct number domain.
+
+Some language primitives (like [par](https://faustdoc.grame.fr/manual/syntax/#parallel-composition), [seq](https://faustdoc.grame.fr/manual/syntax/#sequential-composition), [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive), [sndfile](https://faustdoc.grame.fr/manual/syntax/#soundfile-primitive), etc.) assume that their parameters have the integer type. In this case the compiler automatically does *type promotion* and there is no need to use `int` cast to have the argument be of the integer type (note that an uneeded cast will simply be ignored and will not add uneeded computation in the generated code). 
+
+User interface items produce *floating point signals*. Depending of their use later in the computed expression, using explicit `int` cast may be needed also to force a given computation to be done in the correct number domain.
+
 ## Does select2 behaves as a standard C/C++ like if ?
 
 The short answer is **no**, `select2` doesn't behave like the `if-then-else` of a traditional programming language, nor does `ba.if` of the standard library. To understand why, think of `select2` as the tuner of a radio, it selects what you listen, but does not prevent the various radio stations from broadcasting. Actually, `select2` could be easily redefined in Faust as:

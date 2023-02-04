@@ -302,6 +302,10 @@
             
             <li class="nav-item" data-level="1"><a href="#frequently-asked-questions" class="nav-link">Frequently Asked Questions</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#when-to-use-int-or-float-cast" class="nav-link">When to use int or float cast ?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#does-select2-behaves-as-a-standard-cc-like-if" class="nav-link">Does select2 behaves as a standard C/C++ like if ?</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#strict-vs-lazy-semantics" class="nav-link">Strict vs Lazy semantics</a>
@@ -354,6 +358,10 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+<h2 id="when-to-use-int-or-float-cast">When to use <code>int</code> or <code>float</code> cast ?</h2>
+<p>The <a href="https://faustdoc.grame.fr/manual/introduction/#signal-processor-semantic">Signal Processor Semantic</a> section explains what a Faust program describes. In particular Faust considers two type of signals: <em>integer signals</em> and <em>floating point signals</em>. Mathematical operations either occur in the domain of integer numbers, or in the domain of floating point numbers, depending of their types, read <a href="https://faustdoc.grame.fr/manual/syntax/#numbers">here</a>. Using explicit <code>int</code> or <code>float</code> cast may be needed to force a given computation to be done in the correct number domain.</p>
+<p>Some language primitives (like <a href="https://faustdoc.grame.fr/manual/syntax/#parallel-composition">par</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#sequential-composition">seq</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#route-primitive">route</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#soundfile-primitive">sndfile</a>, etc.) assume that their parameters have the integer type. In this case the compiler automatically does <em>type promotion</em> and there is no need to use <code>int</code> cast to have the argument be of the integer type (note that an uneeded cast will simply be ignored and will not add uneeded computation in the generated code). </p>
+<p>User interface items produce <em>floating point signals</em>. Depending of their use later in the computed expression, using explicit <code>int</code> cast may be needed also to force a given computation to be done in the correct number domain.</p>
 <h2 id="does-select2-behaves-as-a-standard-cc-like-if">Does select2 behaves as a standard C/C++ like if ?</h2>
 <p>The short answer is <strong>no</strong>, <code>select2</code> doesn't behave like the <code>if-then-else</code> of a traditional programming language, nor does <code>ba.if</code> of the standard library. To understand why, think of <code>select2</code> as the tuner of a radio, it selects what you listen, but does not prevent the various radio stations from broadcasting. Actually, <code>select2</code> could be easily redefined in Faust as:</p>
 <pre><code>select2(i, x, y) = (1-i) * x + i * y;
