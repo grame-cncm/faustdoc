@@ -1,6 +1,6 @@
 # Error messages
 
-Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can include the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error. They can occur at different stages in the compilation process.  
+Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can occur at different stages in the compilation process, possibly with the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error. 
 
 The compiler is organized in several stages:
 
@@ -144,12 +144,6 @@ will produce the following error message:
 ```
 ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,0,0,button("foo"))
 ```
-
-#### Table construction errors
-
-The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time 
-
- [TO COMPLETE]
  
 ### Iterative constructions 
 
@@ -220,9 +214,9 @@ Signal expressions are produced from box expressions, are type annotated and fin
 
 Some primitives (like [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive), [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive), [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive)...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of `int(exp)` is internally added and is not necessary in the source code. 
 
-## Typing errors
+### Typing errors
 
-### Soundfile usage error 
+#### Soundfile usage error 
 
 The soundfile primitive assumes the part number to stay in the [0..255] interval, so for instance the following code: 
 
@@ -254,6 +248,14 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 
 [TO COMPLETE]
 
+
+### Table construction errors
+
+The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time 
+
+ [TO COMPLETE]
+
+
 ## Mathematical functions out of domain errors
 
 Error messages will be produced when the mathematical functions are used outside of their domain, and if the problematic computation is done at compile time. If the out of domain computation may be done at runtime, then a warning can be produced using the `-me` option (see [Warning messages](#warning-messages) section).
@@ -274,10 +276,11 @@ ERROR : % by 0 in IN[0] % 0
 
 The same kind of errors will be produced for `acos`, `asin`, `fmod`, `log10`, `log`, `remainder` and `sqrt` functions.
 
+
 ## FIR and backends related errors 
 
 ```
-fun = ffunction(float fun (float), <fun.h>, "");
+fun = ffunction(float fun(float), <fun.h>, "");
 process = fun;
 ```
  
@@ -285,8 +288,9 @@ process = fun;
  
 ## Compiler option errors
 
-All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins.
+All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. For 
+
 
 # Warning messages
 
-Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the `-wall` compilation option. 
+Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the `-wall` compilation option. Mathematical out-of-domain error warning messages are displayed when both `-wall` and `-me` options are used.
