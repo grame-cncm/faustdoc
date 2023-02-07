@@ -194,6 +194,8 @@ The dynamic compilation chain has been used in several projects:
 
 * [fl-tui](https://gitlab.com/raoulhc/fl-tui) is a Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.
 
+* [faustlive-jack-rs](https://codeberg.org/obsoleszenz/faustlive-jack-rs) is another Rust wrapper for the Faust compiler, using [JACK](https://jackaudio.org) server for audio. It uses the libfaust LLVM C API.
+
 * [DawDreamer](https://github.com/DBraun/DawDreamer) is an audio-processing Python framework supporting core DAW features. It uses the libfaust LLVM C API.
 
 * [metaSurface64](https://github.com/dblanchemain/metaSurface) is a real-time continuous sound transformation control surface that features both its own loop generator for up to 64 voices and a multi-effects FX engine.  It uses the libfaust LLVM C++ API.

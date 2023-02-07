@@ -2238,6 +2238,14 @@ Proof of concept of drawing a UI with egui and [rust-faust](https://github.com/F
 
 Tools to compare C++ and Rust  code generated from Faust. 
 
+#### [fl-tui](https://gitlab.com/raoulhc/fl-tui) 
+
+Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.
+
+#### [faustlive-jack-rs](https://codeberg.org/obsoleszenz/faustlive-jack-rs)
+
+Another Rust wrapper for the Faust compiler, using [JACK](https://jackaudio.org) server for audio. It uses the libfaust LLVM C API.
+
 ### Python tools 
 
 #### [FAUSTPy](https://github.com/marcecj/faust_python)
