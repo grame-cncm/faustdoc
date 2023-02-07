@@ -487,7 +487,7 @@ deleteDSPFactory(m_factory);
 <li>
 <p><strong>Using other backends or generating auxiliary files</strong>. The <code>generateAuxFilesFromString</code> and <code>generateAuxFilesFromFile</code> functions taking a DSP source string or file can be used:</p>
 <ul>
-<li>to activate and use other backends (depending of which ones have been compiled in libfaust) to generate like C, C++, or SOUL code, etc. The <code>argv</code> parameter has to mimic the command line like for instance: <code>-lang cpp -vec -lv 1</code> to generate a C++ file in vector mode.</li>
+<li>to activate and use other backends (depending of which ones have been compiled in libfaust) to generate like C, C++, or Cmajor code, etc. The <code>argv</code> parameter has to mimic the command line like for instance: <code>-lang cpp -vec -lv 1</code> to generate a C++ file in vector mode.</li>
 <li>to generate auxiliary files which can be text files SVG, XML, ps, etc. The <code>argv</code> parameter has to mimic the command line like for instance: <code>-json</code> to generate a JSON file.</li>
 </ul>
 </li>
@@ -557,6 +557,9 @@ deleteDSPFactory(m_factory);
 </li>
 <li>
 <p><a href="https://gitlab.com/raoulhc/fl-tui">fl-tui</a> is a Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.</p>
+</li>
+<li>
+<p><a href="https://codeberg.org/obsoleszenz/faustlive-jack-rs">faustlive-jack-rs</a> is another Rust wrapper for the Faust compiler, using <a href="https://jackaudio.org">JACK</a> server for audio. It uses the libfaust LLVM C API.</p>
 </li>
 <li>
 <p><a href="https://github.com/DBraun/DawDreamer">DawDreamer</a> is an audio-processing Python framework supporting core DAW features. It uses the libfaust LLVM C API.</p>

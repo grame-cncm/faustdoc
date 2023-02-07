@@ -342,6 +342,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2cmajor" class="nav-link">faust2cmajor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2csound" class="nav-link">faust2csound</a>
               <ul class="nav flex-column">
               </ul>
@@ -487,10 +491,6 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#faust2sndfile" class="nav-link">faust2sndfile</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2soul" class="nav-link">faust2soul</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -721,6 +721,22 @@ Options:
    -me : to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow)
    -debug : to print all the build steps
    -nodeploy : skip self-contained application generation (using 'macdeployqt')
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2cmajor">faust2cmajor</h2>
+<pre class=faust-tools>
+Usage: faust2cmajor [options] [Faust options] &lt;file.dsp>
+Compiles Faust programs to Cmajor
+Options:
+   -midi : activates MIDI control
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
+   -juce : to create a JUCE project
+   -dsp : to create a 'dsp' compatible subclass
+   -test : to test the resulting patch with 'cmaj render'
+   -play : to start the 'cmaj' runtime with the generated Cmajor file
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
@@ -1264,21 +1280,6 @@ More information and tutorials at: https://ccrma.stanford.edu/~rmichon/smartKeyb
 Usage: faust2sndfile [Faust options] &lt;file.dsp>
 Require: libsndfile
 Process audio files with Faust DSP
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-</pre>
-
-<h2 id="faust2soul">faust2soul</h2>
-<pre class=faust-tools>
-Usage: faust2soul [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to SOUL
-Options:
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -juce : to create a JUCE project
-   -dsp : to create a 'dsp' compatible subclass
-   -play : to start the 'soul' runtime with the generated SOUL file
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 

@@ -586,6 +586,14 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#fl-tui" class="nav-link">fl-tui</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#faustlive-jack-rs" class="nav-link">faustlive-jack-rs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#python-tools" class="nav-link">Python tools</a>
@@ -1325,7 +1333,7 @@ public:
 <li>the<code>metadata(Meta* m)</code>method can be called with a <code>Meta</code> object to decode the instance global metadata (see next section)</li>
 </ul>
 <p>(note that <code>FAUSTFLOAT</code> label is typically defined to be the actual type of sample: either <code>float</code> or <code>double</code> using <code>#define FAUSTFLOAT float</code> in the code for instance).</p>
-<p>For a given compiled DSP program, the compiler will generate a <code>mydsp</code> subclass of <code>dsp</code> and fill the different methods (the actual name can be changed using the <code>-cn</code> option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a <code>llvm_dsp</code> typed object (defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h">llvm-dsp.h</a> file), a <code>soulpatch_dsp</code>  typed object (defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h">soulpatch-dsp.h</a> file) or an <code>interpreter_dsp</code> typed object (defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h">interpreter-dsp.h</a> file), ready to be used  with the <code>UI</code> and <code>audio</code>  C++ classes (like the C++ generated class). See the following class diagram:</p>
+<p>For a given compiled DSP program, the compiler will generate a <code>mydsp</code> subclass of <code>dsp</code> and fill the different methods (the actual name can be changed using the <code>-cn</code> option). For dynamic code producing backends like the LLVM IR, Cmajor or the Interpreter ones, the actual code (an LLVM module, a Cmajor module or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a <code>llvm_dsp</code> typed object (defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h">llvm-dsp.h</a> file), a <code>soulpatch_dsp</code>  typed object (defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h">soulpatch-dsp.h</a> file) or an <code>interpreter_dsp</code> typed object (defined in <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h">interpreter-dsp.h</a> file), ready to be used  with the <code>UI</code> and <code>audio</code>  C++ classes (like the C++ generated class). See the following class diagram:</p>
 <p><img src="img/DSPHierarchy.png" class="mx-auto d-block" width="85%"></p>
 <h3 id="global-dsp-metadata">Global DSP metadata</h3>
 <p>All global metadata declaration in Faust start with <code>declare</code>, followed by a key and a string. For example:</p>
@@ -1940,7 +1948,7 @@ FAUST_ADDHORIZONTALBARGRAPH("Vol", fHbargraph0, 0.0f, 1.0f);
 <p>The more sophisticated <code>FAUST_LIST_ACTIVES</code> and <code>FAUST_LIST_PASSIVES</code> macros can possibly be used to call any <code>p</code> function (defined elsewhere in the architecture file) on each item. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-static.cpp">minimal-static.cpp</a> file demonstrates this feature.</p>
 <h2 id="developing-a-new-architecture-file">Developing a New Architecture File</h2>
 <p>Developing a new architecture file typically means writing a generic file, that will be populated with the actual output of the Faust compiler, in order to produce a complete file, ready-to-be-compiled as a standalone application or plugin.</p>
-<p>The architecture to be used is specified at compile time with the <code>-a</code> option. It must contain the <code>&lt;&lt;includeIntrinsic&gt;&gt;</code> and <code>&lt;&lt;includeclass&gt;&gt;</code> lines that will be recognized by the Faust compiler, and replaced by the generated code. Here is an example in C++, but the same logic can be used with other languages producing textual outputs, like C, SOUL, Rust or Dlang.</p>
+<p>The architecture to be used is specified at compile time with the <code>-a</code> option. It must contain the <code>&lt;&lt;includeIntrinsic&gt;&gt;</code> and <code>&lt;&lt;includeclass&gt;&gt;</code> lines that will be recognized by the Faust compiler, and replaced by the generated code. Here is an example in C++, but the same logic can be used with other languages producing textual outputs, like C, Cmajor, Rust or Dlang.</p>
 <p>Look at the <code>minimal.cpp</code> example located in the architecture folder:</p>
 <pre><code class="language-c++">#include &lt;iostream&gt;
 
@@ -2267,7 +2275,7 @@ virtual void readFile(Soundfile* soundfile,
  delete sound_interface;
 </code></pre>
 <h2 id="other-languages-than-c">Other Languages Than C++</h2>
-<p>Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, SOUL and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:</p>
+<p>Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, Cmajor and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:</p>
 <ul>
 <li>the C backend needs additional <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/CGlue.h">CGlue.h</a> and <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/CInterface.h">CInterface.h</a> files, with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.c">minimal-c</a> file as a simple console mode example using them</li>
 <li>the Rust backend can be used with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs">minimal-rs</a> architecture, the more complex JACK <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/jack.rs">jack.rs</a> used in <code>faust2jackrust</code> script, or the PortAudio <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/portaudio.rs">portaudio.rs</a> used in <code>faust2portaudiorust</code> script</li>
@@ -2501,6 +2509,10 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <p>Proof of concept of drawing a UI with egui and <a href="https://github.com/Frando/rust-faust">rust-faust</a>.</p>
 <h4 id="rustfaustexperiments"><a href="https://github.com/bluenote10/RustFaustExperiments/tree/master/Benchmarks">RustFaustExperiments</a></h4>
 <p>Tools to compare C++ and Rust  code generated from Faust. </p>
+<h4 id="fl-tui"><a href="https://gitlab.com/raoulhc/fl-tui">fl-tui</a></h4>
+<p>Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.</p>
+<h4 id="faustlive-jack-rs"><a href="https://codeberg.org/obsoleszenz/faustlive-jack-rs">faustlive-jack-rs</a></h4>
+<p>Another Rust wrapper for the Faust compiler, using <a href="https://jackaudio.org">JACK</a> server for audio. It uses the libfaust LLVM C API.</p>
 <h3 id="python-tools">Python tools</h3>
 <h4 id="faustpy"><a href="https://github.com/marcecj/faust_python">FAUSTPy</a></h4>
 <p>FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on <a href="https://github.com/hrtlacek/faust_python">this fork</a>.</p>

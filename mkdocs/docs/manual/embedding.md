@@ -136,7 +136,7 @@ Some additional functions are available in the `libfaust` API:
 - **Expanding the DSP code**. The`expandDSPFromString`/`expandDSPFromFile` functions can be used to generate a self-contained DSP source string where all needed librairies have been included. All compilations options are normalized and included as a comment in the expanded string. This is a way to create self-contained version of DSP programs.
 
 - **Using other backends or generating auxiliary files**. The `generateAuxFilesFromString` and `generateAuxFilesFromFile` functions taking a DSP source string or file can be used:
-    - to activate and use other backends (depending of which ones have been compiled in libfaust) to generate like C, C++, or SOUL code, etc. The `argv` parameter has to mimic the command line like for instance: `-lang cpp -vec -lv 1` to generate a C++ file in vector mode.
+    - to activate and use other backends (depending of which ones have been compiled in libfaust) to generate like C, C++, or Cmajor code, etc. The `argv` parameter has to mimic the command line like for instance: `-lang cpp -vec -lv 1` to generate a C++ file in vector mode.
     - to generate auxiliary files which can be text files SVG, XML, ps, etc. The `argv` parameter has to mimic the command line like for instance: `-json` to generate a JSON file.
 
 ## Sample size adaptation

@@ -744,7 +744,7 @@ The dsp class is central to the Faust architecture design:
 
 (note that `FAUSTFLOAT` label is typically defined to be the actual type of sample: either `float` or `double` using `#define FAUSTFLOAT float` in the code for instance).
 
-For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, SOUL or the Interpreter ones, the actual code (an LLVM module, a SOUL module or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `soulpatch_dsp`  typed object (defined in the [soulpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio`  C++ classes (like the C++ generated class). See the following class diagram:
+For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, Cmajor or the Interpreter ones, the actual code (an LLVM module, a Cmajor module or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces  a `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `soulpatch_dsp`  typed object (defined in the [soulpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/soulpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio`  C++ classes (like the C++ generated class). See the following class diagram:
 
 <img src="img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
 
@@ -1544,7 +1544,7 @@ The more sophisticated `FAUST_LIST_ACTIVES` and `FAUST_LIST_PASSIVES` macros can
 
 Developing a new architecture file typically means writing a generic file, that will be populated with the actual output of the Faust compiler, in order to produce a complete file, ready-to-be-compiled as a standalone application or plugin.
 
-The architecture to be used is specified at compile time with the `-a` option. It must contain the `<<includeIntrinsic>>` and `<<includeclass>>` lines that will be recognized by the Faust compiler, and replaced by the generated code. Here is an example in C++, but the same logic can be used with other languages producing textual outputs, like C, SOUL, Rust or Dlang.
+The architecture to be used is specified at compile time with the `-a` option. It must contain the `<<includeIntrinsic>>` and `<<includeclass>>` lines that will be recognized by the Faust compiler, and replaced by the generated code. Here is an example in C++, but the same logic can be used with other languages producing textual outputs, like C, Cmajor, Rust or Dlang.
 
 Look at the `minimal.cpp` example located in the architecture folder:
 
@@ -1915,7 +1915,7 @@ The `SoundUI` architecture is then used the following way:
 
 ## Other Languages Than C++
 
-Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, SOUL and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:
+Most of the architecture files have been developed in C++ over the years. Thus they are ready to be used with the C++ backend and the one that generate C++ wrapped modules (like the LLVM, Cmajor and Interpreter backends). For other languages, specific architecture files have to be written. Here is the current situation for other backends:
 
 - the C backend needs additional [CGlue.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/CGlue.h) and [CInterface.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/CInterface.h) files, with the [minimal-c](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.c) file as a simple console mode example using them
 - the Rust backend can be used with the [minimal-rs](https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal.rs) architecture, the more complex JACK [jack.rs](https://github.com/grame-cncm/faust/blob/master-dev/architecture/jack.rs) used in `faust2jackrust` script, or the PortAudio [portaudio.rs](https://github.com/grame-cncm/faust/blob/master-dev/architecture/portaudio.rs) used in `faust2portaudiorust` script

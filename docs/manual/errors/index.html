@@ -334,10 +334,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#table-construction-errors" class="nav-link">Table construction errors</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#iterative-constructions" class="nav-link">Iterative constructions</a>
@@ -364,15 +360,19 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#typing-errors" class="nav-link">Typing errors</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#soundfile-usage-error" class="nav-link">Soundfile usage error</a>
+              <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#typing-errors" class="nav-link">Typing errors</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#soundfile-usage-error" class="nav-link">Soundfile usage error</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#delay-primitive-error" class="nav-link">Delay primitive error</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#table-construction-errors" class="nav-link">Table construction errors</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -407,7 +407,7 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="error-messages">Error messages</h1>
-<p>Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can include the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error. They can occur at different stages in the compilation process.  </p>
+<p>Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can occur at different stages in the compilation process, possibly with the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error. </p>
 <p>The compiler is organized in several stages:</p>
 <ul>
 <li>starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Source Tree</a>) made here of primitives in the <em>Box language</em>. A first class of errors messages are known as <em>syntax error</em> messages, like missing the <code>;</code> character to end a line, etc. </li>
@@ -503,9 +503,6 @@ has 3 inputs and 3 outputs
 <p>will produce the following error message:</p>
 <pre><code>ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,0,0,button(&quot;foo&quot;))
 </code></pre>
-<h4 id="table-construction-errors">Table construction errors</h4>
-<p>The <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The <a href="https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive">rwtable</a> primitive can be used to implement a read/write table. Both have a size computed at compiled time </p>
-<p>[TO COMPLETE]</p>
 <h3 id="iterative-constructions">Iterative constructions</h3>
 <p><a href="https://faustdoc.grame.fr/manual/syntax/#iterations">Iterations</a> are analogous to <code>for(...)</code> loops in other languages and provide a convenient way to automate some complex block-diagram constructions. All <code>par</code>, <code>seq</code>, <code>sum</code>, <code>prod</code> expressions have the same form, take an identifier as first parameter, a number of iteration as an integer constant numerical expression as second parameter, then an arbitrary block-diagram as third parameter.</p>
 <p>The example code:</p>
@@ -541,8 +538,8 @@ process = foo;
 <p>Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical function is checked and non allowed operations are signaled. </p>
 <h3 id="automatic-type-promotion">Automatic type promotion</h3>
 <p>Some primitives (like <a href="https://faustdoc.grame.fr/manual/syntax/#route-primitive">route</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive">rwtable</a>...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of <code>int(exp)</code> is internally added and is not necessary in the source code. </p>
-<h2 id="typing-errors">Typing errors</h2>
-<h3 id="soundfile-usage-error">Soundfile usage error</h3>
+<h3 id="typing-errors">Typing errors</h3>
+<h4 id="soundfile-usage-error">Soundfile usage error</h4>
 <p>The soundfile primitive assumes the part number to stay in the [0..255] interval, so for instance the following code: </p>
 <pre><code>process = _,0 : soundfile(&quot;foo.wav&quot;, 2);
 </code></pre>
@@ -560,6 +557,9 @@ process = @(ba.time);
         (probably a recursive signal)
 </code></pre>
 <p>[TO COMPLETE]</p>
+<h3 id="table-construction-errors">Table construction errors</h3>
+<p>The <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The <a href="https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive">rwtable</a> primitive can be used to implement a read/write table. Both have a size computed at compiled time </p>
+<p>[TO COMPLETE]</p>
 <h2 id="mathematical-functions-out-of-domain-errors">Mathematical functions out of domain errors</h2>
 <p>Error messages will be produced when the mathematical functions are used outside of their domain, and if the problematic computation is done at compile time. If the out of domain computation may be done at runtime, then a warning can be produced using the <code>-me</code> option (see <a href="#warning-messages">Warning messages</a> section).</p>
 <h3 id="modulo-primitive-error">Modulo primitive error</h3>
@@ -571,14 +571,14 @@ process = @(ba.time);
 </code></pre>
 <p>The same kind of errors will be produced for <code>acos</code>, <code>asin</code>, <code>fmod</code>, <code>log10</code>, <code>log</code>, <code>remainder</code> and <code>sqrt</code> functions.</p>
 <h2 id="fir-and-backends-related-errors">FIR and backends related errors</h2>
-<pre><code>fun = ffunction(float fun (float), &lt;fun.h&gt;, &quot;&quot;);
+<pre><code>fun = ffunction(float fun(float), &lt;fun.h&gt;, &quot;&quot;);
 process = fun;
 </code></pre>
 <p>[TO COMPLETE]</p>
 <h2 id="compiler-option-errors">Compiler option errors</h2>
-<p>All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins.</p>
+<p>All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. For </p>
 <h1 id="warning-messages">Warning messages</h1>
-<p>Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the <code>-wall</code> compilation option. </p></div>
+<p>Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the <code>-wall</code> compilation option. Mathematical out-of-domain error warning messages are displayed when both <code>-wall</code> and <code>-me</code> options are used.</p></div>
             </div>
         </div>
 

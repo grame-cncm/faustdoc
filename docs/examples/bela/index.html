@@ -386,6 +386,14 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#trill_simple_monophonic_keyboard" class="nav-link">trill_simple_monophonic_keyboard</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#trill_simple_polyphonic_keyboard" class="nav-link">trill_simple_polyphonic_keyboard</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -2687,6 +2695,106 @@ process = synth;
 
 
 <a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust20/exfaust20.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="trill_simple_monophonic_keyboard">trill_simple_monophonic_keyboard</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
+
+<pre><code>
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple synthetizer that use sy.dubDub of the standard Faust library.
+// The frequency is modulated by a 1 octave keyboard
+// The 2 filter's parameters are modulated by a 2d array (Trill Craft sensor)
+// A checkbox active the buffering of the parameters value.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Trill Sensor implementation:
+//
+// this sample use :
+//  - 1 craft sensor for the 1 octave keyboard and some control touch
+//  - 1 square sensor for the control of the 2 Filter parameters cut off frequency &amp; Q
+//
+import(&quot;stdfaust.lib&quot;);
+// Sensor Configuration //////////////////////////////////////////////////
+declare trill_mappings &quot;{ 'SQUARE' : {'0' : 40 } ; 'CRAFT' : {'0' : 48} }&quot;;             //i2c address for each trill sensor
+declare trill_settings &quot;{ 'CRAFT_0' : { 'prescaler' : 4 ; 'threshold' : 0.015 }}&quot;;      //sensibility settings for the crafts sensors
+
+// Parameter Configuration //////////////////////////////////////////////////
+//Monophonic keyboard
+nokey = hslider(&quot;note [TRILL:CRAFT_0 UP 15-27]&quot;, -1, -1, 11, 1);  //one octave keyboard   
+
+// Filter
+CUTOFF_MIN = 350; //minimum value of cut off frequency
+Q_MIN = 0.8;
+touchsqsensor = (button(&quot;touch[TRILL:SQUARE_LVL_0]&quot;) &gt; 0.1);    //square sensor pressed
+buffering = (checkbox(&quot;buffering[TRILL:CRAFT_0 PIN 0]&quot;) == 0);  //activation of buffering of the filter's parameters values
+ctfreq = hslider(&quot;cutoff freq [TRILL:SQUARE_XPOS_0]&quot;, CUTOFF_MIN, CUTOFF_MIN, 2000, 0.1) : ba.bypass1(buffering, max(CUTOFF_MIN, ba.sAndH(touchsqsensor))) : si.smoo;       //value of the trill x square sensor for cut off frequency
+q = hslider(&quot;Q [TRILL:SQUARE_YPOS_0]&quot;, Q_MIN, Q_MIN, 10, 0.001): ba.bypass1(buffering, max(Q_MIN, ba.sAndH(touchsqsensor))) : si.smoo;                                      //value of the trill y square sensor for Q
+
+// Process  //////////////////////////////////////////////////
+START_NOTE = 130.81; // C2
+freq = (START_NOTE * pow(2, (max(0, nokey) / 12)));
+gate = min(1, (nokey + 1));
+
+process = sy.dubDub(freq, ctfreq, q, gate) * 0.5;
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust21/exfaust21.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="trill_simple_polyphonic_keyboard">trill_simple_polyphonic_keyboard</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
+
+<pre><code>
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple synthetizer that use sy.dubDub of the standard Faust library.
+// The frequency is modulated by a 1 octave keyboard
+// The 2 filter's parameters are modulated by a 2d x/y sensor (Trill Craft sensor)
+// A checkbox active the buffering of the parameters value.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Trill Sensor implementation:
+//
+// this sample use :
+//  - 1 craft sensor for the 1 octave keyboard and some control touch
+//  - 1 square sensor for the control of the 2 Filter parameters cut off frequency &amp; Q
+//
+import(&quot;stdfaust.lib&quot;);
+// Sensor Configuration //////////////////////////////////////////////////
+declare trill_mappings &quot;{ 'SQUARE' : {'0' : 40 } ; 'CRAFT' : {'0' : 48} }&quot;;             //i2c address for each trill sensor
+declare trill_settings &quot;{ 'CRAFT_0' : { 'prescaler' : 4 ; 'threshold' : 0.015 }}&quot;;      //sensibility settings for the crafts sensors
+
+// Parameter Configuration //////////////////////////////////////////////////
+// Keyboard
+declare trill_keyboard &quot;{'CRAFT_0' : {'start_pin' : 15 ; 'end_pin' : 27 ; 'start_note' : {'C' : 2} }}&quot;; // the scale of the keyboard is chromatic by default. For another scale add the parameter 'scale' : {1 ; 1 ; 0.5 ; ...} with each space between the notes
+
+gate = button(&quot;gate&quot;);
+freq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
+gain = nentry(&quot;gain&quot;, 0.5, 0, 0.5, 0.01);          // Trill KEYBOARD
+
+// Filter
+CUTOFF_MIN = 350;
+Q_MIN = 0.8;
+touchsqsensor = (button(&quot;touch[TRILL:SQUARE_LVL_0]&quot;) &gt; 0.1);    //square sensor pressed
+buffering = (checkbox(&quot;buffering[TRILL:CRAFT_0 PIN 0]&quot;) == 0);  //activation of buffering of the filter's parameters values
+ctfreq = hslider(&quot;cutoff freq [TRILL:SQUARE_XPOS_0]&quot;, CUTOFF_MIN, CUTOFF_MIN, 2000, 0.1) : ba.bypass1(buffering, max(CUTOFF_MIN, ba.sAndH(touchsqsensor))) : si.smoo;       //value of the trill x square sensor for cut off frequency
+q = hslider(&quot;Q [TRILL:SQUARE_YPOS_0]&quot;, Q_MIN, Q_MIN, 10, 0.001): ba.bypass1(buffering, max(Q_MIN, ba.sAndH(touchsqsensor))) : si.smoo;                                      //value of the trill y square sensor for Q
+
+// Process  //////////////////////////////////////////////////
+process = sy.dubDub(freq, ctfreq, q, gate) * gain;
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust22/exfaust22.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run --></div>
