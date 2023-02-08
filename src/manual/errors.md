@@ -14,9 +14,98 @@ Note that the current error messages system is still far from perfect, usually w
 
 ## Syntax errors
 
-Those errors happen when the language syntax is not respected.
+Those errors happen when the language syntax is not respected. Here are some examples.
 
- [TO COMPLETE]
+The following program:
+
+```
+box1 = 1
+box2 = 2;
+process = box1,box2;
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 2 : ERROR : syntax error, unexpected IDENT
+```
+
+It means that an unexpected identifier as been found line 2 of the file test.dsp. Usually, this error is due to the absence of the semi-column `;` at the end of the previous line. 
+
+
+The following program:
+
+```
+t1 = _~(+(1);
+2 process = t1 / 2147483647;
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF
+
+```
+
+The parser finds the end of the definition (`;`) while searching a closing right parenthesis.
+
+The following program:
+
+```
+process = ffunction;
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF, expecting LPAR
+```
+
+The parser was expecting a left parenthesis. It identified a keyword of the language that requires arguments.
+
+The following program:
+
+```
+process = +)1);
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : syntax error, unexpected RPAR
+```
+
+The wrong parenthesis has been used.
+
+The following program:
+
+```
+process = <:+;
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : syntax error, unexpected SPLIT
+```
+
+The `<:` split operator is not correctly used, and should have been written `process = _<:+;`. 
+
+The following program:
+
+```
+process = foo;
+```
+
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : undefined symbol : foo
+```
+
+This happens when an undefined name is used.
+
 
 ## Box connection errors
 
@@ -24,7 +113,7 @@ Those errors happen when the language syntax is not respected.
 
 ### The five connections rules 
 
-A second categorie of error messages is returned when block expressions are not correctly connected. 
+A second category of error messages is returned when block expressions are not correctly connected. 
 
 #### Parallel connection
 
@@ -253,8 +342,20 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 
 The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time 
 
- [TO COMPLETE]
 
+The `rdtable` primitive assumes that the table content is produced by a processor with 0 input and one output, known at compiled time. So the following expression:
+
+```
+process = rdtable(9, +, 4);
+```
+
+will produce the following error, since the `+`is not of the correct type:
+
+```
+ERROR : checkInit failed for type RSEVN interval(-2,2,-24)
+```
+
+The same kind of errors will happen when read and write indexes are incorrectly defined in a `rwtable` primitive. 
 
 ## Mathematical functions out of domain errors
 
@@ -279,16 +380,19 @@ The same kind of errors will be produced for `acos`, `asin`, `fmod`, `log10`, `l
 
 ## FIR and backends related errors 
 
+Some primitives of the language are nor available in some backends.
+
 ```
 fun = ffunction(float fun(float), <fun.h>, "");
 process = fun;
 ```
  
- [TO COMPLETE]
  
 ## Compiler option errors
 
-All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. For 
+All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. 
+
+[TO COMPLETE]
 
 
 # Warning messages
