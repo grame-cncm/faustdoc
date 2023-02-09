@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Error messages - Faust Documentation</title>
+        <title>Error Messages - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -38,7 +38,7 @@
                             <li class="navitem">
                                 <a href="../.." class="nav-link">Home</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manual <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -51,11 +51,15 @@
 </li>
                                     
 <li>
-    <a href="../quick-start/" class="dropdown-item">Quick start</a>
+    <a href="../quick-start/" class="dropdown-item">Quick Start</a>
 </li>
                                     
 <li>
     <a href="../syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Error Messages</a>
 </li>
                                     
 <li>
@@ -91,7 +95,7 @@
 </li>
                                     
 <li>
-    <a href="../remote/" class="dropdown-item">Remote compilation</a>
+    <a href="../remote/" class="dropdown-item">Remote Compilation</a>
 </li>
                                     
 <li>
@@ -360,16 +364,16 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#typing-errors" class="nav-link">Typing errors</a>
+            <li class="nav-item" data-level="3"><a href="#parameter-range-errors" class="nav-link">Parameter range errors</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#soundfile-usage-error" class="nav-link">Soundfile usage error</a>
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#delay-primitive-error" class="nav-link">Delay primitive error</a>
+              <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#delay-primitive-error" class="nav-link">Delay primitive error</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#table-construction-errors" class="nav-link">Table construction errors</a>
@@ -418,12 +422,57 @@
 </ul>
 <p>Note that the current error messages system is still far from perfect, usually when the origin of the error in the DSP source cannot be properly traced. In this case the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box of a Signal) is printed.</p>
 <h2 id="syntax-errors">Syntax errors</h2>
-<p>Those errors happen when the language syntax is not respected.</p>
-<p>[TO COMPLETE]</p>
+<p>Those errors happen when the language syntax is not respected. Here are some examples.</p>
+<p>The following program:</p>
+<pre><code>box1 = 1
+box2 = 2;
+process = box1,box2;
+</code></pre>
+<p>will produce the following error message:</p>
+<pre><code>errors.dsp : 2 : ERROR : syntax error, unexpected IDENT
+</code></pre>
+<p>It means that an unexpected identifier as been found line 2 of the file test.dsp. Usually, this error is due to the absence of the semi-column <code>;</code> at the end of the previous line. </p>
+<p>The following program:</p>
+<pre><code>t1 = _~(+(1);
+2 process = t1 / 2147483647;
+</code></pre>
+<p>will produce the following error message:</p>
+<pre><code>errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF
+
+</code></pre>
+<p>The parser finds the end of the definition (<code>;</code>) while searching a closing right parenthesis.</p>
+<p>The following program:</p>
+<pre><code>process = ffunction;
+</code></pre>
+<p>will produce the following error message:</p>
+<pre><code>errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF, expecting LPAR
+</code></pre>
+<p>The parser was expecting a left parenthesis. It identified a keyword of the language that requires arguments.</p>
+<p>The following program:</p>
+<pre><code>process = +)1);
+</code></pre>
+<p>will produce the following error message:</p>
+<pre><code>errors.dsp : 1 : ERROR : syntax error, unexpected RPAR
+</code></pre>
+<p>The wrong parenthesis has been used.</p>
+<p>The following program:</p>
+<pre><code>process = &lt;:+;
+</code></pre>
+<p>will produce the following error message:</p>
+<pre><code>errors.dsp : 1 : ERROR : syntax error, unexpected SPLIT
+</code></pre>
+<p>The <code>&lt;:</code> split operator is not correctly used, and should have been written <code>process = _&lt;:+;</code>. </p>
+<p>The following program:</p>
+<pre><code>process = foo;
+</code></pre>
+<p>will produce the following error message:</p>
+<pre><code>errors.dsp : 1 : ERROR : undefined symbol : foo
+</code></pre>
+<p>This happens when an undefined name is used.</p>
 <h2 id="box-connection-errors">Box connection errors</h2>
 <p><a href="https://faustdoc.grame.fr/manual/syntax/#diagram-expressions">Diagram expressions</a> express how block expressions can be combined to create new ones. The connection rules are precisely defined for each of them and have to be followed for the program to be correct. Remember the <a href="https://faustdoc.grame.fr/manual/syntax/#diagram-composition-operations">operator priority</a> when writing more complex expressions.   </p>
 <h3 id="the-five-connections-rules">The five connections rules</h3>
-<p>A second categorie of error messages is returned when block expressions are not correctly connected. </p>
+<p>A second category of error messages is returned when block expressions are not correctly connected. </p>
 <h4 id="parallel-connection">Parallel connection</h4>
 <p>Combining two blocks <code>A</code> and <code>B</code> in parallel can never produce a box connection error since the 2 blocks are placed one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of <code>A</code> and <code>B</code>. The outputs of the resulting block-diagram are the outputs of <code>A</code> and <code>B</code>.</p>
 <h4 id="sequencial-connection-error">Sequencial connection error</h4>
@@ -523,7 +572,7 @@ has 3 inputs and 3 outputs
 <p>This error happens when a symbol is defined several times in the DSP file:</p>
 <pre><code>ERROR : [file foo.dsp : N] : multiple definitions of symbol 'foo'
 </code></pre>
-<p>Since computation are done at compile time and the pattern machine language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.</p>
+<p>Since computation are done at compile time and the pattern matching language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.</p>
 <h3 id="loop-detection-error">Loop detection error</h3>
 <p>The following (somewhat <em>extreme</em>) code: </p>
 <pre><code>foo(x) = foo(x);
@@ -535,10 +584,10 @@ process = foo;
 <p>and similar kind of infinite loop errors can be produced with more complex code.</p>
 <p>[TO COMPLETE]</p>
 <h2 id="signal-related-errors">Signal related errors</h2>
-<p>Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical function is checked and non allowed operations are signaled. </p>
+<p>Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical functions is checked and non allowed operations are signaled. </p>
 <h3 id="automatic-type-promotion">Automatic type promotion</h3>
 <p>Some primitives (like <a href="https://faustdoc.grame.fr/manual/syntax/#route-primitive">route</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive">rwtable</a>...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of <code>int(exp)</code> is internally added and is not necessary in the source code. </p>
-<h3 id="typing-errors">Typing errors</h3>
+<h3 id="parameter-range-errors">Parameter range errors</h3>
 <h4 id="soundfile-usage-error">Soundfile usage error</h4>
 <p>The soundfile primitive assumes the part number to stay in the [0..255] interval, so for instance the following code: </p>
 <pre><code>process = _,0 : soundfile(&quot;foo.wav&quot;, 2);
@@ -546,7 +595,7 @@ process = foo;
 <p>will produce the following error:</p>
 <pre><code>ERROR : out of range soundfile part number (interval(-1,1,-24) instead of interval(0,255)) in expression : length(soundfile(&quot;foo.wav&quot;),IN[0])
 </code></pre>
-<h3 id="delay-primitive-error">Delay primitive error</h3>
+<h4 id="delay-primitive-error">Delay primitive error</h4>
 <p>The delay <code>@</code> primitive assumes that the delay signal value is bounded, so the following expression:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 process = @(ba.time);
@@ -559,7 +608,13 @@ process = @(ba.time);
 <p>[TO COMPLETE]</p>
 <h3 id="table-construction-errors">Table construction errors</h3>
 <p>The <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The <a href="https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive">rwtable</a> primitive can be used to implement a read/write table. Both have a size computed at compiled time </p>
-<p>[TO COMPLETE]</p>
+<p>The <code>rdtable</code> primitive assumes that the table content is produced by a processor with 0 input and one output, known at compiled time. So the following expression:</p>
+<pre><code>process = rdtable(9, +, 4);
+</code></pre>
+<p>will produce the following error, since the <code>+</code>is not of the correct type:</p>
+<pre><code>ERROR : checkInit failed for type RSEVN interval(-2,2,-24)
+</code></pre>
+<p>The same kind of errors will happen when read and write indexes are incorrectly defined in a <code>rwtable</code> primitive. </p>
 <h2 id="mathematical-functions-out-of-domain-errors">Mathematical functions out of domain errors</h2>
 <p>Error messages will be produced when the mathematical functions are used outside of their domain, and if the problematic computation is done at compile time. If the out of domain computation may be done at runtime, then a warning can be produced using the <code>-me</code> option (see <a href="#warning-messages">Warning messages</a> section).</p>
 <h3 id="modulo-primitive-error">Modulo primitive error</h3>
@@ -571,12 +626,18 @@ process = @(ba.time);
 </code></pre>
 <p>The same kind of errors will be produced for <code>acos</code>, <code>asin</code>, <code>fmod</code>, <code>log10</code>, <code>log</code>, <code>remainder</code> and <code>sqrt</code> functions.</p>
 <h2 id="fir-and-backends-related-errors">FIR and backends related errors</h2>
+<p>Some primitives of the language are not available in some backends.</p>
+<p>The example code:</p>
 <pre><code>fun = ffunction(float fun(float), &lt;fun.h&gt;, &quot;&quot;);
 process = fun;
 </code></pre>
+<p>compiled with the wast/wasm backends using: <code>faust -lang wast errors.dsp</code> will produce the following error:</p>
+<p><code>ERROR : calling foreign function 'fun' is not allowed in this compilation mode</code></p>
+<p>and the same kind of errors would happen also with foreign variables or constants. </p>
 <p>[TO COMPLETE]</p>
 <h2 id="compiler-option-errors">Compiler option errors</h2>
-<p>All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. For </p>
+<p>All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. </p>
+<p>[TO COMPLETE]</p>
 <h1 id="warning-messages">Warning messages</h1>
 <p>Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the <code>-wall</code> compilation option. Mathematical out-of-domain error warning messages are displayed when both <code>-wall</code> and <code>-me</code> options are used.</p></div>
             </div>

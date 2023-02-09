@@ -14,9 +14,98 @@ Note that the current error messages system is still far from perfect, usually w
 
 ## Syntax errors
 
-Those errors happen when the language syntax is not respected.
+Those errors happen when the language syntax is not respected. Here are some examples.
 
- [TO COMPLETE]
+The following program:
+
+```
+box1 = 1
+box2 = 2;
+process = box1,box2;
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 2 : ERROR : syntax error, unexpected IDENT
+```
+
+It means that an unexpected identifier as been found line 2 of the file test.dsp. Usually, this error is due to the absence of the semi-column `;` at the end of the previous line. 
+
+
+The following program:
+
+```
+t1 = _~(+(1);
+2 process = t1 / 2147483647;
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF
+
+```
+
+The parser finds the end of the definition (`;`) while searching a closing right parenthesis.
+
+The following program:
+
+```
+process = ffunction;
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF, expecting LPAR
+```
+
+The parser was expecting a left parenthesis. It identified a keyword of the language that requires arguments.
+
+The following program:
+
+```
+process = +)1);
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : syntax error, unexpected RPAR
+```
+
+The wrong parenthesis has been used.
+
+The following program:
+
+```
+process = <:+;
+```
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : syntax error, unexpected SPLIT
+```
+
+The `<:` split operator is not correctly used, and should have been written `process = _<:+;`. 
+
+The following program:
+
+```
+process = foo;
+```
+
+
+will produce the following error message:
+
+```
+errors.dsp : 1 : ERROR : undefined symbol : foo
+```
+
+This happens when an undefined name is used.
+
 
 ## Box connection errors
 
@@ -24,7 +113,7 @@ Those errors happen when the language syntax is not respected.
 
 ### The five connections rules 
 
-A second categorie of error messages is returned when block expressions are not correctly connected. 
+A second category of error messages is returned when block expressions are not correctly connected. 
 
 #### Parallel connection
 
@@ -185,7 +274,7 @@ This error happens when a symbol is defined several times in the DSP file:
 ERROR : [file foo.dsp : N] : multiple definitions of symbol 'foo'
 ```
 
-Since computation are done at compile time and the pattern machine language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.
+Since computation are done at compile time and the pattern matching language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.
 
 ### Loop detection error
 
@@ -208,13 +297,13 @@ and similar kind of infinite loop errors can be produced with more complex code.
 
 ## Signal related errors 
 
-Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical function is checked and non allowed operations are signaled. 
+Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical functions is checked and non allowed operations are signaled. 
 
 ### Automatic type promotion 
 
 Some primitives (like [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive), [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive), [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive)...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of `int(exp)` is internally added and is not necessary in the source code. 
 
-### Typing errors
+### Parameter range errors
 
 #### Soundfile usage error 
 
@@ -229,7 +318,7 @@ will produce the following error:
 ERROR : out of range soundfile part number (interval(-1,1,-24) instead of interval(0,255)) in expression : length(soundfile("foo.wav"),IN[0])
 ```
 
-### Delay primitive error
+####  Delay primitive error
 
 The delay `@` primitive assumes that the delay signal value is bounded, so the following expression:
 
@@ -248,13 +337,24 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 
 [TO COMPLETE]
 
-
 ### Table construction errors
 
 The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time 
 
- [TO COMPLETE]
 
+The `rdtable` primitive assumes that the table content is produced by a processor with 0 input and one output, known at compiled time. So the following expression:
+
+```
+process = rdtable(9, +, 4);
+```
+
+will produce the following error, since the `+`is not of the correct type:
+
+```
+ERROR : checkInit failed for type RSEVN interval(-2,2,-24)
+```
+
+The same kind of errors will happen when read and write indexes are incorrectly defined in a `rwtable` primitive. 
 
 ## Mathematical functions out of domain errors
 
@@ -279,17 +379,29 @@ The same kind of errors will be produced for `acos`, `asin`, `fmod`, `log10`, `l
 
 ## FIR and backends related errors 
 
+Some primitives of the language are not available in some backends.
+
+The example code:
 ```
 fun = ffunction(float fun(float), <fun.h>, "");
 process = fun;
 ```
  
+ compiled with the wast/wasm backends using: `faust -lang wast errors.dsp` will produce the following error:
+ 
+ ```
+ERROR : calling foreign function 'fun' is not allowed in this compilation mode
+ ```
+ 
+ and the same kind of errors would happen also with foreign variables or constants. 
+ 
  [TO COMPLETE]
  
 ## Compiler option errors
 
-All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. For 
+All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. 
 
+[TO COMPLETE]
 
 # Warning messages
 

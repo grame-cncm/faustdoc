@@ -6,8 +6,9 @@ nav:
     - Manual: 
         - 'Introduction': manual/introduction.md
         - 'Overview of the Faust Universe': manual/overview.md
-        - 'Quick start': manual/quick-start.md
+        - 'Quick Start': manual/quick-start.md
         - 'Faust Syntax': manual/syntax.md
+        - 'Error Messages': manual/errors.md
         - 'Using the Compiler': manual/compiler.md
         - 'Compiler Options': manual/options.md
         - 'faust2[...] Tools': manual/tools.md
@@ -16,7 +17,7 @@ nav:
         - 'Optimizing the Code': manual/optimizing.md 
         - 'Debugging the Code': manual/debugging.md   
         - 'Deploying on the Web': manual/deploying.md
-        - 'Remote compilation': manual/remote.md
+        - 'Remote Compilation': manual/remote.md
         - 'Mathematical Documentation': manual/mathdoc.md
         - 'OSC Support': manual/osc.md
         - 'HTTP Support': manual/http.md

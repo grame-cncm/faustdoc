@@ -274,7 +274,7 @@ This error happens when a symbol is defined several times in the DSP file:
 ERROR : [file foo.dsp : N] : multiple definitions of symbol 'foo'
 ```
 
-Since computation are done at compile time and the pattern machine language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.
+Since computation are done at compile time and the pattern matching language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.
 
 ### Loop detection error
 
@@ -297,13 +297,13 @@ and similar kind of infinite loop errors can be produced with more complex code.
 
 ## Signal related errors 
 
-Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical function is checked and non allowed operations are signaled. 
+Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical functions is checked and non allowed operations are signaled. 
 
 ### Automatic type promotion 
 
 Some primitives (like [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive), [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive), [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive)...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of `int(exp)` is internally added and is not necessary in the source code. 
 
-### Typing errors
+### Parameter range errors
 
 #### Soundfile usage error 
 
@@ -318,7 +318,7 @@ will produce the following error:
 ERROR : out of range soundfile part number (interval(-1,1,-24) instead of interval(0,255)) in expression : length(soundfile("foo.wav"),IN[0])
 ```
 
-### Delay primitive error
+####  Delay primitive error
 
 The delay `@` primitive assumes that the delay signal value is bounded, so the following expression:
 
@@ -336,7 +336,6 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 ```
 
 [TO COMPLETE]
-
 
 ### Table construction errors
 
@@ -380,20 +379,29 @@ The same kind of errors will be produced for `acos`, `asin`, `fmod`, `log10`, `l
 
 ## FIR and backends related errors 
 
-Some primitives of the language are nor available in some backends.
+Some primitives of the language are not available in some backends.
 
+The example code:
 ```
 fun = ffunction(float fun(float), <fun.h>, "");
 process = fun;
 ```
  
+ compiled with the wast/wasm backends using: `faust -lang wast errors.dsp` will produce the following error:
+ 
+ ```
+ERROR : calling foreign function 'fun' is not allowed in this compilation mode
+ ```
+ 
+ and the same kind of errors would happen also with foreign variables or constants. 
+ 
+ [TO COMPLETE]
  
 ## Compiler option errors
 
 All compiler options cannot be used with all backends. Moreover, some compiler options can not be combined. These will typically trigger errors, before any compilation actually begins. 
 
 [TO COMPLETE]
-
 
 # Warning messages
 
