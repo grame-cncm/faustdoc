@@ -1071,7 +1071,7 @@ int iConst2;
 float* fRec1;
 ```
 
-The two  `fRec0` and  `fRec1` arrays are becoming pointers, and will be allocated elsewhere. 
+The two `fRec0` and `fRec1` arrays are becoming pointers, and will be allocated elsewhere. 
 
 An external memory manager is needed to interact with the DSP code. The proposed model does the following:
 
@@ -1133,7 +1133,7 @@ The C++ generated code now contains a new `memoryInfo` method, which interacts w
 static void memoryInfo() {
     fManager->begin(3);
     // mydsp
-    fManager->info(40, 9, 1);
+    fManager->info(56, 9, 1);
     // fRec0
     fManager->info(262144, 2, 1);
     // fRec1
@@ -1147,12 +1147,15 @@ Note that the memory layout information is also available in the JSON file gener
 
 ```json
 "memory_layout": [
-    {"size": 40, "reads": 9, "writes": 1},
-    {"size": 262144, "reads": 2, "writes": 1},
-    {"size": 262144, "reads": 2, "writes": 1}
+    { "name": "mydsp", "type": "kObj_ptr", "size": 0, "size_bytes": 56, "read": 9, "write": 1 },
+    { "name": "IOTA0", "type": "kInt32", "size": 1, "size_bytes": 4, "read": 7, "write": 1 },
+    { "name": "iConst1", "type": "kInt32", "size": 1, "size_bytes": 4, "read": 1, "write": 0 },
+    { "name": "fRec0", "type": "kFloat_ptr", "size": 65536, "size_bytes": 262144, "read": 2, "write": 1 },
+    { "name": "iConst2", "type": "kInt32", "size": 1, "size_bytes": 4, "read": 1, "write": 0 },
+    { "name": "fRec1", "type": "kFloat_ptr", "size": 65536, "size_bytes": 262144, "read": 2, "write": 1 }
 ]
 ```
-Finally the  `memoryCreate` and  `memoryDestroy` methods are generated. The `memoryCreate` method asks the memory manager to allocate the `fRec0` and `fRec1` buffers:
+Finally the `memoryCreate` and `memoryDestroy` methods are generated. The `memoryCreate` method asks the memory manager to allocate the `fRec0` and `fRec1` buffers:
 
 ```c++
 void memoryCreate() {
@@ -1161,7 +1164,7 @@ void memoryCreate() {
 }
 ```
 
-And  the `memoryDestroy` method asks the memory manager to destroy them:
+And the `memoryDestroy` method asks the memory manager to destroy them:
 
 ```c++
 virtual memoryDestroy() {
@@ -1278,7 +1281,7 @@ class mydsp : public dsp {
 }
 ```
 
-The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are generated as static global pointers. The `classInit`  method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. Finally the `init` method is now empty, since the architecture file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
+The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are generated as static global pointers. The `classInit` method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. Finally the `init` method is now empty, since the architecture file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
 
 The `memoryInfo` method now has the following shape, whith the two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables:
 
@@ -1294,9 +1297,9 @@ static void memoryInfo() {
     // ftbl1mydspSIG1
     fManager->info(28, 1, 0);
     // mydsp
-    fManager->info(12, 0, 0);
+    fManager->info(28, 0, 0);
     // iRec0
-    fManager->info(8, 4, 2);
+    fManager->info(8, 3, 2);
     fManager->end();
 }
 ```
