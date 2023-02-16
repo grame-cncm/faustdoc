@@ -1557,7 +1557,7 @@ FAUSTFLOAT fHslider1;
 int iConst2;
 float* fRec1;
 </code></pre>
-<p>The two  <code>fRec0</code> and  <code>fRec1</code> arrays are becoming pointers, and will be allocated elsewhere. </p>
+<p>The two <code>fRec0</code> and <code>fRec1</code> arrays are becoming pointers, and will be allocated elsewhere. </p>
 <p>An external memory manager is needed to interact with the DSP code. The proposed model does the following:</p>
 <ul>
 <li>in a first step the generated C++ code will inform the memory allocator about its needs in terms of 1) number of separated memory zones, with 2) their size 3) access characteristics, like number of Read and Write for each frame computation. This is done be generating an additional  static <code>memoryInfo</code> method </li>
@@ -1611,7 +1611,7 @@ float* fRec1;
 <pre><code class="language-c++">static void memoryInfo() {
     fManager-&gt;begin(3);
     // mydsp
-    fManager-&gt;info(40, 9, 1);
+    fManager-&gt;info(56, 9, 1);
     // fRec0
     fManager-&gt;info(262144, 2, 1);
     // fRec1
@@ -1622,18 +1622,21 @@ float* fRec1;
 <p>The <code>begin</code> method is first generated to inform that three separated memory zones will be needed. Then three consecutive calls to the <code>info</code> method are generated, one for the DSP object itself, one for each recursive delay array. The <code>end</code> method is then called to finish the memory layout description, and let the memory manager prepare the actual allocations. </p>
 <p>Note that the memory layout information is also available in the JSON file generated using the <code>-json</code> option, to possibly be used statically by the architecture machinery (that is at compile time). With the previous program, the memory layout section is:</p>
 <pre><code class="language-json">&quot;memory_layout&quot;: [
-    {&quot;size&quot;: 40, &quot;reads&quot;: 9, &quot;writes&quot;: 1},
-    {&quot;size&quot;: 262144, &quot;reads&quot;: 2, &quot;writes&quot;: 1},
-    {&quot;size&quot;: 262144, &quot;reads&quot;: 2, &quot;writes&quot;: 1}
+    { &quot;name&quot;: &quot;mydsp&quot;, &quot;type&quot;: &quot;kObj_ptr&quot;, &quot;size&quot;: 0, &quot;size_bytes&quot;: 56, &quot;read&quot;: 9, &quot;write&quot;: 1 },
+    { &quot;name&quot;: &quot;IOTA0&quot;, &quot;type&quot;: &quot;kInt32&quot;, &quot;size&quot;: 1, &quot;size_bytes&quot;: 4, &quot;read&quot;: 7, &quot;write&quot;: 1 },
+    { &quot;name&quot;: &quot;iConst1&quot;, &quot;type&quot;: &quot;kInt32&quot;, &quot;size&quot;: 1, &quot;size_bytes&quot;: 4, &quot;read&quot;: 1, &quot;write&quot;: 0 },
+    { &quot;name&quot;: &quot;fRec0&quot;, &quot;type&quot;: &quot;kFloat_ptr&quot;, &quot;size&quot;: 65536, &quot;size_bytes&quot;: 262144, &quot;read&quot;: 2, &quot;write&quot;: 1 },
+    { &quot;name&quot;: &quot;iConst2&quot;, &quot;type&quot;: &quot;kInt32&quot;, &quot;size&quot;: 1, &quot;size_bytes&quot;: 4, &quot;read&quot;: 1, &quot;write&quot;: 0 },
+    { &quot;name&quot;: &quot;fRec1&quot;, &quot;type&quot;: &quot;kFloat_ptr&quot;, &quot;size&quot;: 65536, &quot;size_bytes&quot;: 262144, &quot;read&quot;: 2, &quot;write&quot;: 1 }
 ]
 </code></pre>
-<p>Finally the  <code>memoryCreate</code> and  <code>memoryDestroy</code> methods are generated. The <code>memoryCreate</code> method asks the memory manager to allocate the <code>fRec0</code> and <code>fRec1</code> buffers:</p>
+<p>Finally the <code>memoryCreate</code> and <code>memoryDestroy</code> methods are generated. The <code>memoryCreate</code> method asks the memory manager to allocate the <code>fRec0</code> and <code>fRec1</code> buffers:</p>
 <pre><code class="language-c++">void memoryCreate() {
     fRec0 = static_cast&lt;float*&gt;(fManager-&gt;allocate(262144));
     fRec1 = static_cast&lt;float*&gt;(fManager-&gt;allocate(262144));
 }
 </code></pre>
-<p>And  the <code>memoryDestroy</code> method asks the memory manager to destroy them:</p>
+<p>And the <code>memoryDestroy</code> method asks the memory manager to destroy them:</p>
 <pre><code class="language-c++">virtual memoryDestroy() {
     fManager-&gt;destroy(fRec0);
     fManager-&gt;destroy(fRec1);
@@ -1731,7 +1734,7 @@ class mydsp : public dsp {
     ...
 }
 </code></pre>
-<p>The two <code>itbl0mydspSIG0</code> and <code>ftbl1mydspSIG1</code> tables are generated as static global pointers. The <code>classInit</code>  method uses the <code>fManager</code> object used to allocate tables. A new <code>classDestroy</code> method is generated to deallocate the tables. Finally the <code>init</code> method is now empty, since the architecture file is supposed to use the <code>classInit/classDestroy</code> method once to allocate and deallocate static tables, and the <code>instanceInit</code> method on each allocated DSP.</p>
+<p>The two <code>itbl0mydspSIG0</code> and <code>ftbl1mydspSIG1</code> tables are generated as static global pointers. The <code>classInit</code> method uses the <code>fManager</code> object used to allocate tables. A new <code>classDestroy</code> method is generated to deallocate the tables. Finally the <code>init</code> method is now empty, since the architecture file is supposed to use the <code>classInit/classDestroy</code> method once to allocate and deallocate static tables, and the <code>instanceInit</code> method on each allocated DSP.</p>
 <p>The <code>memoryInfo</code> method now has the following shape, whith the two <code>itbl0mydspSIG0</code> and <code>ftbl1mydspSIG1</code> tables:</p>
 <pre><code class="language-c++">static void memoryInfo() {
     fManager-&gt;begin(6);
@@ -1744,9 +1747,9 @@ class mydsp : public dsp {
     // ftbl1mydspSIG1
     fManager-&gt;info(28, 1, 0);
     // mydsp
-    fManager-&gt;info(12, 0, 0);
+    fManager-&gt;info(28, 0, 0);
     // iRec0
-    fManager-&gt;info(8, 4, 2);
+    fManager-&gt;info(8, 3, 2);
     fManager-&gt;end();
 }
 </code></pre>
