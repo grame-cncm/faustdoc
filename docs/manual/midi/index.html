@@ -410,7 +410,7 @@
 <p>This section provides a list of the most common metadata that can be used to configure of the MIDI behavior of a Faust program.</p>
 <p>Below, when a 7-bit MIDI parameter is used to drive a <a href="../syntax/#button-primitive">button</a> or a <a href="../syntax/#checkbox-primitive">checkbox</a>, its maximum value (127) maps to 1 ("on") while its minimum value (0) maps to 0 ("off").</p>
 <h3 id="midictrl-num-or-midictrl-num-chan-metadata"><code>[midi:ctrl num]</code> or <code>[midi:ctrl num chan]</code> Metadata</h3>
-<p>The <code>[midi:ctrl num]</code> metadata assigns MIDI CC (control) to a specific UI element. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:ctrl num]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:ctrl num chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only.</p>
+<p>The <code>[midi:ctrl num]</code> metadata assigns MIDI CC (control) to a specific UI element. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:ctrl num]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:ctrl num chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:ctrl num chan]&quot;,...);
 </code></pre>
@@ -438,7 +438,7 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h3 id="midikeyon-midikey-or-midikeyon-midikey-chan-metadata"><code>[midi:keyon midikey]</code> or <code>[midi:keyon midikey chan]</code> Metadata</h3>
-<p>The <code>[midi:keyon midikey]</code> metadata assigns the velocity value of a key-on MIDI message received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keyon midikey]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:keyon midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only.</p>
+<p>The <code>[midi:keyon midikey]</code> metadata assigns the velocity value of a key-on MIDI message received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keyon midikey]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:keyon midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:keyon midikey chan]&quot;,...);
 </code></pre>
@@ -466,7 +466,7 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h3 id="midikeyoff-midikey-or-midikeyoff-midikey-chan-metadata"><code>[midi:keyoff midikey]</code> or <code>[midi:keyoff midikey chan]</code> Metadata</h3>
-<p>The <code>[midi:keyoff midikey]</code> metadata assigns the velocity value of a key-off MIDI message received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keyoff midikey]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:keyoff midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only.</p>
+<p>The <code>[midi:keyoff midikey]</code> metadata assigns the velocity value of a key-off MIDI message received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keyoff midikey]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:keyoff midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:keyoff midikey chan]&quot;,...);
 </code></pre>
@@ -494,7 +494,7 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h3 id="midikey-midikey-or-midikey-midikey-chan-metadata"><code>[midi:key midikey]</code> or <code>[midi:key midikey chan]</code> Metadata</h3>
-<p>The <code>[midi:key midikey]</code> metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:midikey midikey]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:midikey midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only.</p>
+<p>The <code>[midi:key midikey]</code> metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:midikey midikey]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:midikey midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:key midikey chan]&quot;,...);
 </code></pre>
@@ -522,7 +522,7 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h3 id="midikeypress-midikey-or-midikeypress-midikey-chan-metadata"><code>[midi:keypress midikey]</code> or <code>[midi:keypress midikey chan]</code> Metadata</h3>
-<p>The <code>[midi:keypress midikey]</code> metadata assigns the pressure (after-touch) value of a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keypress midikey]</code> version can receive messages on all channels, will send on all channels. The second <code>[midi:keypress midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only.</p>
+<p>The <code>[midi:keypress midikey]</code> metadata assigns the pressure (after-touch) value of a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:keypress midikey]</code> version can receive messages on all channels, will send on all channels. The second <code>[midi:keypress midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:keypress midikey chan]&quot;,...);
 </code></pre>
@@ -550,7 +550,7 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h3 id="midichanpress-or-midichanpress-chan-metadata"><code>[midi:chanpress]</code> or <code>[midi:chanpress chan]</code> Metadata</h3>
-<p>The <code>[midi:chanpress]</code> metadata assigns the channel pressure value to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:chanpress]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:chanpress chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only.</p>
+<p>The <code>[midi:chanpress]</code> metadata assigns the channel pressure value to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:chanpress]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:chanpress chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:chanpress chan]&quot;,...);
 </code></pre>
@@ -577,7 +577,7 @@ process = os.sawtooth(440) * vol;
 <!-- /faust-run -->
 
 <h3 id="midipgm-or-midipgm-chan-metadata"><code>[midi:pgm]</code> or <code>[midi:pgm chan]</code> Metadata</h3>
-<p>The <code>[midi:pgm]</code> metadata assigns the program-change to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will use the UI element range. Only the values described in the UI element range will be used at reception, and can be sent. The first <code>[midi:pgm]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:pgm chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only.</p>
+<p>The <code>[midi:pgm]</code> metadata assigns the program-change to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will use the UI element range. Only the values described in the UI element range will be used at reception, and can be sent. The first <code>[midi:pgm]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:pgm chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = nentry(&quot;foo[midi:pgm chan]&quot;,...);
 </code></pre>
@@ -604,7 +604,7 @@ process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selec
 <!-- /faust-run -->
 
 <h3 id="midipitchwheel-or-midipitchwheel-chan-metadata"><code>[midi:pitchwheel]</code> or <code>[midi:pitchwheel chan]</code> Metadata</h3>
-<p>The <code>[midi:pitchwheel]</code> metadata assigns the pitch-wheel value to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 16383} range. When used with a button or a checkbox, 1 will be mapped to 16383, 0 will be mapped to 0. Pitch-wheel values are typically used to control tuning, mapping the {0, 16383} MIDI range to a {-semitone, semitone} range. The <code>ba.semi2ratio</code> function must be used to convert semitones in a frequency multiplicative ratio. The first <code>[midi:pitchwheel]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:pitchwheel chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only.</p>
+<p>The <code>[midi:pitchwheel]</code> metadata assigns the pitch-wheel value to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 16383} range. When used with a button or a checkbox, 1 will be mapped to 16383, 0 will be mapped to 0. Pitch-wheel values are typically used to control tuning, mapping the {0, 16383} MIDI range to a {-semitone, semitone} range. The <code>ba.semi2ratio</code> function must be used to convert semitones in a frequency multiplicative ratio. The first <code>[midi:pitchwheel]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:pitchwheel chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:pitchwheel chan]&quot;,...);
 </code></pre>
