@@ -2269,6 +2269,9 @@ Creates interactive widgets inside jupyter notebooks from Faust dsp files and pr
 #### [Faust Synth](https://github.com/anwaldt/py2faust_synth)
 This is an example project for controlling a synth, programmed and compiled with Faust, through a Python script. The synth runs as a JACK client on Linux systems and the output is automatically recorded by jack_capture.
 
+#### [DawDreamer](https://github.com/DBraun/DawDreamer) is an audio-processing Python framework supporting Faust and Faust's Box API.
+
+
 ### Julia tools 
 
 #### [Faust.jl](https://github.com/corajr/Faust.jl)
