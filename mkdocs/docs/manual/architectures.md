@@ -1447,7 +1447,7 @@ More complex custom memory allocators can be developed by refining this `malloc_
 In a multiple instances scheme, static data structures shared by all instances have to be allocated once at beginning using `mydsp::classInit`, and deallocated at the end using `mydsp::classDestroy`. Individual instances are then allocated with `mydsp::create()` and deallocated with `mydsp::destroy()`, possibly directly using regular `new/delete`, or using stack allocation as explained before.
 
 
-### Mesuring the DSP CPU
+### Measuring the DSP CPU
 
 The `measure_dsp` class defined in the `faust/dsp/dsp-bench.h` file allows to decorate a given DSP object and measure its `compute` method CPU consumption. Results are given in Megabytes/seconds (higher is better) and DSP CPU at 44,1 kHz. Here is a C++ code example of its use: 
 
