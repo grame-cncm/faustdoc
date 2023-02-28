@@ -12,11 +12,11 @@ In this tutorial, we'll show how to use the [Faust](https://faust.grame.fr) lang
 
 ## Installation
 
-Get the [binary version](https://vcvrack.com/Rack) for your OS here: https://vcvrack.com/Rack.
+Get the [binary version](https://vcvrack.com/Rack) for your OS here.
 
 ### Install the VCV Rack SDK
 
-From  [Plugin Development Tutorial page](https://vcvrack.com/manual/PluginDevelopmentTutorial) here: https://vcvrack.com/manual/ and the [SDK itself](https://vcvrack.com/downloads/) for your OS: https://vcvrack.com/downloads/.
+From [Plugin Development Tutorial page](https://vcvrack.com/manual/PluginDevelopmentTutorial) and the [SDK itself](https://vcvrack.com/downloads/) for your OS.
 
 Don't forget to setup the **RACK_DIR** variable: `export RACK_DIR=<Rack SDK folder>`. 
 
@@ -24,7 +24,7 @@ Don't forget to setup the **RACK_DIR** variable: `export RACK_DIR=<Rack SDK fold
 
 The Faust compiler can be embedded in applications or plugins using [libfaust](https://faustdoc.grame.fr/manual/embedding/), and DSP code can be edited and JIT compiled on the fly.
 
-You'll have to clone and compile the [GitHub project](https://github.com/VCVRack/VCV-Prototype/tree/faust) from here: https://github.com/VCVRack/VCV-Prototype/tree/faust. Be use to use the `faust` branch and follow the [explanations](https://github.com/VCVRack/VCV-Prototype/blob/faust/Faust.md) given here: https://github.com/VCVRack/VCV-Prototype/blob/faust/Faust.md.
+You'll have to clone and compile the [GitHub project](https://github.com/VCVRack/VCV-Prototype/tree/faust). Be use to use the `faust` branch and follow the [explanations](https://github.com/VCVRack/VCV-Prototype/blob/faust/Faust.md) given.
 
 **Then you should be ready for this workshop !** 
 
