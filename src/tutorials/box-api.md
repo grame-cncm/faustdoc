@@ -92,7 +92,7 @@ And additional usefull functions to be used later in the tutorial:
  *
  * @return the current runtime sample rate.
  */
-inline Box getSampleRate()
+inline Box SR()
 {
     return boxMin(boxReal(192000.0), 
                   boxMax(boxReal(1.0), 
@@ -106,7 +106,7 @@ inline Box getSampleRate()
  *
  * @return the current runtime buffer size.
  */
-inline Box getBufferSize()
+inline Box BS()
 {
     return boxFVar(SType::kSInt, "count", "<math.h>");
 }
@@ -529,17 +529,17 @@ In Faust, the underlying audio engine sample rate and buffer size  is accessed u
 
 ```C++
 // Reproduce the 'SR' definition in platform.lib 
-// SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, <dummy.h>)));
-inline Box getSampleRate()
+// SR = min(192000.0, max(1.0, fconstant(int fSampleFreq, <dummy.h>)));
+inline Box SR()
 {
     return boxMin(boxReal(192000.0), 
                   boxMax(boxReal(1.0), 
-                         boxFConst(SType::kSInt, "fSamplingFreq", "<math.h>")));
+                         boxFConst(SType::kSInt, "fSampleFreq", "<math.h>")));
 }
 
 // Reproduce the 'BS' definition in platform.lib 
 // BS = fvariable(int count, <dummy.h>);
-inline Signal getBufferSize()
+inline Signal BS()
 {
     return boxFVar(SType::kSInt, "count", "<math.h>");
 }
@@ -560,7 +560,7 @@ static void test11()
 {
     COMPILER
     (
-        Box box = boxPar(getSampleRate(), getBufferSize());
+        Box box = boxPar(SR(), BS());
 
         compile("test11", box);
     )
@@ -915,7 +915,7 @@ static Box decimalpart()
 
 static Box phasor(Box f)
 {
-    return boxSeq(boxDiv(f, getSampleRate()), 
+    return boxSeq(boxDiv(f, SR()), 
                   boxRec(boxSplit(boxAdd(), decimalpart()), boxWire()));
 }
 ```
@@ -1320,7 +1320,7 @@ static Box decimalpart()
 
 static Box phasor(Box f)
 {
-    return CboxSeq(CboxDivAux(f, getSampleRate()), 
+    return CboxSeq(CboxDivAux(f, SR()), 
                    CboxRec(CboxSplit(CboxAdd(), decimalpart()), CboxWire()));
 }
 

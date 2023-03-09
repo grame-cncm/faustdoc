@@ -92,7 +92,7 @@ And additional usefull functions to be used later in the tutorial:
  *
  * @return the current runtime sample rate.
  */
-inline Signal getSampleRate()
+inline Signal SR()
 {
     return sigMin(sigReal(192000.0), 
                   sigMax(sigReal(1.0), 
@@ -106,7 +106,7 @@ inline Signal getSampleRate()
  *
  * @return the current runtime buffer size.
  */
-inline Signal getBufferSize()
+inline Signal BS()
 {
     return sigFVar(SType::kSInt, "count", "<math.h>");
 }
@@ -495,7 +495,7 @@ virtual void buildUserInterface(UI* ui_interface)
 ```
 #### Defining recursive signals
 
-Recursive signals can be defined using the `sigRecursion` function and the `sigSelf` function to refer to the recursive signal itself. A one sample delay is automatically created to produce a valid computation. Here is a simple example:
+Recursive signals can be defined using the `sigRecursion` function to build the recursion, and the `sigSelf` function to refer to the recursive signal itself. A one sample delay is automatically created to produce a valid computation. Here is a simple example:
 
 <!-- faust-run -->
 ```
@@ -533,23 +533,77 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
+The same equivalent code can be defined using the more general `sigRecursionN` and  `sigSelfN` functions which allow to build a list of (possibly mutually dependent) recursive signals: 
+
+```C++
+static void test10bis()
+{
+    COMPILER
+    (
+        tvec signals;
+        Signal in1 = sigInput(0);
+        signals.push_back(sigRecursionN(sigAdd(sigSelfN(0), in1)));
+
+        compile("test10", signals);
+    )
+}
+```
+
+Here is a example defining mutually dependent recursive signals:
+
+```C++
+static void test10ter()
+{
+    COMPILER
+    (
+        Signal in0 = sigInput(0);
+        Signal in1 = sigInput(1);
+        tvec ins;
+        ins.push_back(sigAdd(sigMul(sigSelfN(1), sigReal(0.5)), in0));
+        ins.push_back(sigAdd(sigMul(sigSelfN(0), sigReal(0.9)), in1));
+        tvec outs = sigRecursionN(ins);
+
+        compile("test10ter", outs);
+    )
+}
+```
+
+With the following `compute` method:
+
+```C++
+virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* output0 = outputs[0];
+    FAUSTFLOAT* output1 = outputs[1];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        fRec0[0] = float(input0[i0]) + 0.5f * fRec1[1];
+        fRec1[0] = float(input1[i0]) + 0.9f * fRec0[1];
+        output0[i0] = FAUSTFLOAT(fRec0[0]);
+        output1[i0] = FAUSTFLOAT(fRec1[0]);
+        fRec0[1] = fRec0[0];
+        fRec1[1] = fRec1[0];
+    }
+}
+```
+
 #### Accessing the global context
 
 In Faust, the underlying audio engine sample rate and buffer size  is accessed using the foreign function and constant mechanism. The values can also be used in the signal language with the following helper functions: 
 
 ```C++
 // Reproduce the 'SR' definition in platform.lib 
-// SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, <dummy.h>)));
-inline Signal getSampleRate()
+// SR = min(192000.0, max(1.0, fconstant(int fSampleFreq, <dummy.h>)));
+inline Signal SR()
 {
     return sigMin(sigReal(192000.0), 
            sigMax(sigReal(1.0), 
-           sigFConst(SType::kSInt, "fSamplingFreq", "<dummy.h>")));
+           sigFConst(SType::kSInt, "fSampleFreq", "<dummy.h>")));
 }
 
 // Reproduce the 'BS' definition in platform.lib 
 // BS = fvariable(int count, <dummy.h>);
-inline Signal getBufferSize()
+inline Signal BS()
 {
     return sigFVar(SType::kSInt, "count", "<dummy.h>");
 }
@@ -571,8 +625,8 @@ static void test11()
     COMPILER
     (
         tvec signals;
-        signals.push_back(getSampleRate());
-        signals.push_back(getBufferSize());
+        signals.push_back(SR());
+        signals.push_back(BS());
 
         compile("test11", signals);
     )
@@ -887,7 +941,7 @@ static Signal decimalpart(Signal x)
 
 static Signal phasor(Signal f)
 {
-    return sigRecursion(decimalpart(sigAdd(sigSelf(), sigDiv(f, getSampleRate()))));
+    return sigRecursion(decimalpart(sigAdd(sigSelf(), sigDiv(f, SR()))));
 }
 ```
 And the main function combining them:
@@ -1245,7 +1299,7 @@ static Signal decimalpart(Signal x)
 
 static Signal phasor(Signal f)
 {
-    return CsigRecursion(decimalpart(CsigAdd(CsigSelf(), CsigDiv(f, getSampleRate()))));
+    return CsigRecursion(decimalpart(CsigAdd(CsigSelf(), CsigDiv(f, SR()))));
 }
 
 static void test1()
