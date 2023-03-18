@@ -2227,27 +2227,25 @@ Static metadata generator for Faust/C++. This program builds the metadata for a 
 
 [Julius Smith](https://ccrma.stanford.edu/~jos/) projects to facilitate the use of Faust generated  C++ code in JUCE projects. 
 
-### Rust tools 
+### Cmajor tools 
 
-#### [rust-faust](https://github.com/Frando/rust-faust)
+#### [Using Faust in Cmajor](https://faustdoc.grame.fr/tutorials/cmajor/)
 
-A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps
+A tutorial to show how Faust can be used with [Cmajor](https://cmajor.dev), a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. 
 
-#### [Faust egui](https://github.com/plule/faust-egui)
+### DLang tools 
 
-Proof of concept of drawing a UI with egui and [rust-faust](https://github.com/Frando/rust-faust).
+#### [Faust 2 Dplug Guide](https://github.com/Tonton-Blax/dplugfausttest)
+Explains how to use Faust in a [Dplug](https://dplug.org/) project.
 
-#### [RustFaustExperiments](https://github.com/bluenote10/RustFaustExperiments/tree/master/Benchmarks)
+### Julia tools 
 
-Tools to compare C++ and Rust  code generated from Faust. 
+#### [Faust.jl](https://github.com/corajr/Faust.jl)
+Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.
 
-#### [fl-tui](https://gitlab.com/raoulhc/fl-tui) 
+#### [Using Faust in Julia](https://faustdoc.grame.fr/tutorials/julia/). 
 
-Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.
-
-#### [faustlive-jack-rs](https://codeberg.org/obsoleszenz/faustlive-jack-rs)
-
-Another Rust wrapper for the Faust compiler, using [JACK](https://jackaudio.org) server for audio. It uses the libfaust LLVM C API.
+A tutorial to show how Faust can be used with [Julia](https://julialang.org), a high-level, general-purpose dynamic programming language with features well suited for numerical analysis and computational science.
 
 ### Python tools 
 
@@ -2272,16 +2270,27 @@ This is an example project for controlling a synth, programmed and compiled with
 #### [DawDreamer](https://github.com/DBraun/DawDreamer)
 DawDreamer is an audio-processing Python framework supporting Faust and Faust's Box API.
 
+### Rust tools 
 
-### Julia tools 
+#### [rust-faust](https://github.com/Frando/rust-faust)
 
-#### [Faust.jl](https://github.com/corajr/Faust.jl)
-Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.
+A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps
 
-### DLang tools 
+#### [Faust egui](https://github.com/plule/faust-egui)
 
-#### [Faust 2 Dplug Guide](https://github.com/Tonton-Blax/dplugfausttest)
-Explains how to use Faust in a [Dplug](https://dplug.org/) project.
+Proof of concept of drawing a UI with egui and [rust-faust](https://github.com/Frando/rust-faust).
+
+#### [RustFaustExperiments](https://github.com/bluenote10/RustFaustExperiments/tree/master/Benchmarks)
+
+Tools to compare C++ and Rust  code generated from Faust. 
+
+#### [fl-tui](https://gitlab.com/raoulhc/fl-tui) 
+
+Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.
+
+#### [faustlive-jack-rs](https://codeberg.org/obsoleszenz/faustlive-jack-rs)
+
+Another Rust wrapper for the Faust compiler, using [JACK](https://jackaudio.org) server for audio. It uses the libfaust LLVM C API.
 
 ### WebAssembly tools 
 

@@ -576,25 +576,29 @@
             </li>
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#rust-tools" class="nav-link">Rust tools</a>
+            <li class="nav-item" data-level="3"><a href="#cmajor-tools" class="nav-link">Cmajor tools</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#rust-faust" class="nav-link">rust-faust</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="4"><a href="#faust-egui" class="nav-link">Faust egui</a>
+            <li class="nav-item" data-level="4"><a href="#using-faust-in-cmajor" class="nav-link">Using Faust in Cmajor</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#rustfaustexperiments" class="nav-link">RustFaustExperiments</a>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#dlang-tools" class="nav-link">DLang tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#faust-2-dplug-guide" class="nav-link">Faust 2 Dplug Guide</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#fl-tui" class="nav-link">fl-tui</a>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#julia-tools" class="nav-link">Julia tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#faustjl" class="nav-link">Faust.jl</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#faustlive-jack-rs" class="nav-link">faustlive-jack-rs</a>
+            <li class="nav-item" data-level="4"><a href="#using-faust-in-julia" class="nav-link">Using Faust in Julia.</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -632,17 +636,25 @@
             </li>
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#julia-tools" class="nav-link">Julia tools</a>
+            <li class="nav-item" data-level="3"><a href="#rust-tools" class="nav-link">Rust tools</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#faustjl" class="nav-link">Faust.jl</a>
+            <li class="nav-item" data-level="4"><a href="#rust-faust" class="nav-link">rust-faust</a>
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#faust-egui" class="nav-link">Faust egui</a>
+              <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#dlang-tools" class="nav-link">DLang tools</a>
+            <li class="nav-item" data-level="4"><a href="#rustfaustexperiments" class="nav-link">RustFaustExperiments</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#faust-2-dplug-guide" class="nav-link">Faust 2 Dplug Guide</a>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#fl-tui" class="nav-link">fl-tui</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#faustlive-jack-rs" class="nav-link">faustlive-jack-rs</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -2513,17 +2525,17 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <p><a href="https://github.com/eyalamirmusic">Eyal Amir</a> tool to facilitate the use of Faust generated  C++ code in JUCE projects. </p>
 <h4 id="josmodules-and-jos_faust"><a href="https://github.com/josmithiii/JOSModules">JOSModules</a> and <a href="https://github.com/josmithiii/jos_faust">jos_faust</a></h4>
 <p><a href="https://ccrma.stanford.edu/~jos/">Julius Smith</a> projects to facilitate the use of Faust generated  C++ code in JUCE projects. </p>
-<h3 id="rust-tools">Rust tools</h3>
-<h4 id="rust-faust"><a href="https://github.com/Frando/rust-faust">rust-faust</a></h4>
-<p>A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps</p>
-<h4 id="faust-egui"><a href="https://github.com/plule/faust-egui">Faust egui</a></h4>
-<p>Proof of concept of drawing a UI with egui and <a href="https://github.com/Frando/rust-faust">rust-faust</a>.</p>
-<h4 id="rustfaustexperiments"><a href="https://github.com/bluenote10/RustFaustExperiments/tree/master/Benchmarks">RustFaustExperiments</a></h4>
-<p>Tools to compare C++ and Rust  code generated from Faust. </p>
-<h4 id="fl-tui"><a href="https://gitlab.com/raoulhc/fl-tui">fl-tui</a></h4>
-<p>Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.</p>
-<h4 id="faustlive-jack-rs"><a href="https://codeberg.org/obsoleszenz/faustlive-jack-rs">faustlive-jack-rs</a></h4>
-<p>Another Rust wrapper for the Faust compiler, using <a href="https://jackaudio.org">JACK</a> server for audio. It uses the libfaust LLVM C API.</p>
+<h3 id="cmajor-tools">Cmajor tools</h3>
+<h4 id="using-faust-in-cmajor"><a href="https://faustdoc.grame.fr/tutorials/cmajor/">Using Faust in Cmajor</a></h4>
+<p>A tutorial to show how Faust can be used with <a href="https://cmajor.dev">Cmajor</a>, a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. </p>
+<h3 id="dlang-tools">DLang tools</h3>
+<h4 id="faust-2-dplug-guide"><a href="https://github.com/Tonton-Blax/dplugfausttest">Faust 2 Dplug Guide</a></h4>
+<p>Explains how to use Faust in a <a href="https://dplug.org/">Dplug</a> project.</p>
+<h3 id="julia-tools">Julia tools</h3>
+<h4 id="faustjl"><a href="https://github.com/corajr/Faust.jl">Faust.jl</a></h4>
+<p>Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.</p>
+<h4 id="using-faust-in-julia"><a href="https://faustdoc.grame.fr/tutorials/julia/">Using Faust in Julia</a>.</h4>
+<p>A tutorial to show how Faust can be used with <a href="https://julialang.org">Julia</a>, a high-level, general-purpose dynamic programming language with features well suited for numerical analysis and computational science.</p>
 <h3 id="python-tools">Python tools</h3>
 <h4 id="faustpy"><a href="https://github.com/marcecj/faust_python">FAUSTPy</a></h4>
 <p>FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on <a href="https://github.com/hrtlacek/faust_python">this fork</a>.</p>
@@ -2539,12 +2551,17 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <p>This is an example project for controlling a synth, programmed and compiled with Faust, through a Python script. The synth runs as a JACK client on Linux systems and the output is automatically recorded by jack_capture.</p>
 <h4 id="dawdreamer"><a href="https://github.com/DBraun/DawDreamer">DawDreamer</a></h4>
 <p>DawDreamer is an audio-processing Python framework supporting Faust and Faust's Box API.</p>
-<h3 id="julia-tools">Julia tools</h3>
-<h4 id="faustjl"><a href="https://github.com/corajr/Faust.jl">Faust.jl</a></h4>
-<p>Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.</p>
-<h3 id="dlang-tools">DLang tools</h3>
-<h4 id="faust-2-dplug-guide"><a href="https://github.com/Tonton-Blax/dplugfausttest">Faust 2 Dplug Guide</a></h4>
-<p>Explains how to use Faust in a <a href="https://dplug.org/">Dplug</a> project.</p>
+<h3 id="rust-tools">Rust tools</h3>
+<h4 id="rust-faust"><a href="https://github.com/Frando/rust-faust">rust-faust</a></h4>
+<p>A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps</p>
+<h4 id="faust-egui"><a href="https://github.com/plule/faust-egui">Faust egui</a></h4>
+<p>Proof of concept of drawing a UI with egui and <a href="https://github.com/Frando/rust-faust">rust-faust</a>.</p>
+<h4 id="rustfaustexperiments"><a href="https://github.com/bluenote10/RustFaustExperiments/tree/master/Benchmarks">RustFaustExperiments</a></h4>
+<p>Tools to compare C++ and Rust  code generated from Faust. </p>
+<h4 id="fl-tui"><a href="https://gitlab.com/raoulhc/fl-tui">fl-tui</a></h4>
+<p>Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.</p>
+<h4 id="faustlive-jack-rs"><a href="https://codeberg.org/obsoleszenz/faustlive-jack-rs">faustlive-jack-rs</a></h4>
+<p>Another Rust wrapper for the Faust compiler, using <a href="https://jackaudio.org">JACK</a> server for audio. It uses the libfaust LLVM C API.</p>
 <h3 id="webassembly-tools">WebAssembly tools</h3>
 <h4 id="faust-loader"><a href="https://github.com/Smona/faust-loader">faust-loader</a></h4>
 <p>Import Faust .dsp files, and get back an AudioWorklet or ScriptProcessor node.</p>
