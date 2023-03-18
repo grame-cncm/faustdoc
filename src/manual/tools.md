@@ -12,14 +12,14 @@ Note that using `-inj <f>` option allows to inject a pre-existing C++ file (inst
 
 The `template-llvm.cpp` file that uses libfaust + LLVM backend to dynamically compile a foo.dsp file is an example of this approach. It has be used with the -inj option in `faust2xx` tools like:
  
- `faust2cagtk -inj template-llvm.cpp faust2cagtk-llvm.dsp` (a dummy DSP) to generate a monophonic 'faust2cagtk-llvm' application.
+ - `faust2cagtk -inj template-llvm.cpp faust2cagtk-llvm.dsp` (a dummy DSP) to generate a monophonic `faust2cagtk-llvm` application.
   
  or:
  
- `faust2cagtk -inj template-llvm.cpp -midi -nvoices 8 faust2cagtk-llvm.dsp`
- to generate a polyphonic (8 voices), MIDI controllable 'faust2cagtk-llvm' application.
+ - `faust2cagtk -inj template-llvm.cpp -midi -nvoices 8 faust2cagtk-llvm.dsp`
+ to generate a polyphonic (8 voices), MIDI controllable `faust2cagtk-llvm` application.
  
- Note that libfaust and LLVM libraries still have to be added at the link stage, so a *-dyn : create libfaust + LLVM backend dynamic version* option has been added to the `faust2cagtk` tool.
+ Note that libfaust and LLVM libraries still have to be added at the link stage, so a *-dyn : create libfaust + LLVM backend dynamic version* option has been added to the `faust2cagtk` tool and some others.
 
 
 

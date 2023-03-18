@@ -535,6 +535,16 @@
 <p>Use <code>-h</code> or <code>-help</code> to get more information on each specific script options, the supported platforms and possibly the required packages. Additional  Faust compiler options (like <code>-vec -lv 0 -I /path/to/lib</code>) can be given. For scripts that combines Faust and the C++ compiler, you can possibly use the  <code>CXXFLAGS</code> environment variable to give additional options to the C++ compiler.</p>
 <p>Note that some of the tools are somewhat <em>meta</em> tools when they are based on a framework that itself can generate several formats later on. This is the case of the <code>faust2juce</code> script for instance.</p>
 <p>Note that using <code>-inj &lt;f&gt;</code> option allows to inject a pre-existing C++ file (instead of compiling a dsp file) into the architecture files machinery. Assuming that the C++ file implements a subclass of the base <code>dsp</code> class, the <code>faust2xx</code> scripts can possibly be used to produce a ready-to-use application or plugin that can take profit of all already existing UI and audio architectures. </p>
+<p>The <code>template-llvm.cpp</code> file that uses libfaust + LLVM backend to dynamically compile a foo.dsp file is an example of this approach. It has be used with the -inj option in <code>faust2xx</code> tools like:</p>
+<ul>
+<li><code>faust2cagtk -inj template-llvm.cpp faust2cagtk-llvm.dsp</code> (a dummy DSP) to generate a monophonic <code>faust2cagtk-llvm</code> application.</li>
+</ul>
+<p>or:</p>
+<ul>
+<li><code>faust2cagtk -inj template-llvm.cpp -midi -nvoices 8 faust2cagtk-llvm.dsp</code>
+ to generate a polyphonic (8 voices), MIDI controllable <code>faust2cagtk-llvm</code> application.</li>
+</ul>
+<p>Note that libfaust and LLVM libraries still have to be added at the link stage, so a <em>-dyn : create libfaust + LLVM backend dynamic version</em> option has been added to the <code>faust2cagtk</code> tool and some others.</p>
 <h2 id="faust2alqt">faust2alqt</h2>
 <pre class=faust-tools>
 Usage: faust2alqt [options] [Faust options] &lt;file.dsp>
@@ -1289,8 +1299,7 @@ Process audio files with Faust DSP
 
 <h2 id="faust2teensy">faust2teensy</h2>
 <pre class=faust-tools>
-FAUST2TEENSY HELP
-faust2teensy can be used to fully program the Teensy microcontroller and to generate DSP objects compatible with the Teensy audio library. In both cases, we strongly recommend to use the Teensy 3.6 which hosts an FPU (i.e., the Teensy 3.2 doesn't have one). 
+faust2teensy [-lib] [-midi] [-nvoices &lt;num>] [Faust options (-vec -vs 8...)] &lt;file.dsp>
 Options:
    -lib : generates a package containing an object compatible with the Teensy audio library.
    -midi : activates MIDI control
