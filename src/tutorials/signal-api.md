@@ -549,7 +549,7 @@ static void test10bis()
 }
 ```
 
-Here is a example defining mutually dependent recursive signals:
+Here is an example of the definition of mutually dependent recursive signals:
 
 ```C++
 static void test10ter()
