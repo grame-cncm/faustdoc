@@ -2207,11 +2207,12 @@ define function with variables with a predefined value, etc. -->
 
 <h4 id="foreign-function-declaration">Foreign function declaration</h4>
 <p>An external C function is declared by indicating its name and signature as well as the required include file. The file <code>maths.lib</code> of the Faust distribution contains several foreign function definitions, for example the inverse hyperbolic sine function <a href="https://faustlibraries.grame.fr/libs/maths/#maasinh"><code>asinh</code></a> is defined as follows:</p>
-<pre><code>asinh = ffunction(float asinh (float), &lt;math.h&gt;, &quot;&quot;);
+<pre><code>asinh = ffunction(float asinhf|asinh|asinhl|asinfx(float), &lt;math.h&gt;, &quot;&quot;);
 </code></pre>
 <!-- TODO: what happens for other languages than C? -->
 
-<p>The signature part of a foreign function, <code>float asinhf|asinh|asinhl(float)</code> in our previous example, describes the prototype of the C function: its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the <code>asinh</code> function is called <code>asinhf</code> in single precision, <code>asinh</code> in double precision and <code>asinhl</code> in quad precision. This is why the three names are provided in the signature.</p>
+<p>The signature part of a foreign function, <code>float asinhf|asinh|asinhl|asinfx(float)</code> in our previous example, describes the prototype of the C function: its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double, quad or fixed-point), it is possible to give a different function name for each floating point precision using a signature with up to four function names. </p>
+<p>In our example, the <code>asinh</code> function is called <code>asinhf</code> in single precision, <code>asinh</code> in double precision, <code>asinhl</code> in quad precision and <code>asinfx</code> in fixed-point precision. This is why the four names are provided in the signature.</p>
 <h4 id="signature">Signature</h4>
 <p><img src="img/signature.svg" class="mx-auto d-block"></p>
 <h4 id="types">Types</h4>

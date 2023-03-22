@@ -1049,11 +1049,13 @@ An external C function is declared by indicating its name and signature as well 
 The file \lstinline'"maths.lib"' of the \faust distribution contains several foreign function definitions, for example the inverse hyperbolic sine function \lstinline'asinh' is defined as follows
 
 \begin{lstlisting}
-	asinh = ffunction(float asinhf|asinh|asinhl (float), <math.h>, "");
+	asinh = ffunction(float asinhf|asinh|asinhl|asinfx(float), <math.h>, "");
 \end{lstlisting}
 
 
-The signature part of a foreign function, \lstinline'float asinhf|asinh|asinhl (float)' in our previous example, describes the prototype of the C function: its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double and quad), it is possible to give a different function name for each floating point precision using a signature with up to three function names. In our example, the \lstinline'asinh' function is called \lstinline'asinhf' in single precision, \lstinline'asinh' in double precision and \lstinline'asinhl' in quad precision. This is why the three names are provided in the signature.
+The signature part of a foreign function, \lstinline'float asinhf|asinh|asinhl|asinfx(float)' in our previous example, describes the prototype of the C function: its return type, function names and list of parameter types. Because the name of the foreign function can possibly depend on the floating point precision in use (float, double, quad and fixed-point), it is possible to give a different function name for each floating point precision using a signature with up to four function names. 
+
+In our example, the \lstinline'asinh' function is called \lstinline'asinhf' in single precision, \lstinline'asinh' in double precision, \lstinline'asinhl' in quad precision, and \lstinline'asinhfx' in fixed-point precision. This is why the four names are provided in the signature.
 
 
 \begin{rail}
