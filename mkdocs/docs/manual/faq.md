@@ -93,8 +93,6 @@ This can be helpful for [debugging purposes](https://faustdoc.grame.fr/manual/de
 
 So again remember that `select2` cannot be used to **avoid computing something**. For computations that need to avoid some values or ranges (like doing  `val/0` that would return `INF`, or `log` of a negative value that would return `NaN`), the solution is to use  `min` and  `max` to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write `1/max(ma.EPSILON, x)`. 
 
-Note that `select2` is also typically used to compute  `rdtable/rwtable` access indexes. In this case computing an array *out-of-bound* index, if is not used later on, is not a problem. 
-
 ## What properties does the Faust compiler and generated code have ? [WIP]
 
 ### Compiler

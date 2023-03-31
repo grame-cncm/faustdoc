@@ -132,6 +132,10 @@ So to obtain the best performances in the generated code, all costly computation
 
 ### Computations Done *at Sample Rate* 
 
+#### Possibly deactivating table range check with -ct option
+
+The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option is activated by default (starting at Faust version 2.53.4), but can possibly be removed (using `-ct 0`) to speed up the code. Read [Debugging rdtable and rwtable primitives](https://faustdoc.grame.fr/tutorials/debugging/#debugging-rdtable-and-rwtable-primitives) for a complete description.
+
 #### Using Function Tabulation
 
 The use of `rdtable` kind of compilation done at init time can be simplified using the [ba.tabulate](https://faustlibraries.grame.fr/libs/basics/#batabulate) function to *tabulate* a given unary function `fun` on a given range. A table is created and filled with precomputed values, and can be used to compute `fun(x)` in a more efficient way (at the cost of additional  static memory needed for the table).
