@@ -314,6 +314,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#drumkit" class="nav-link">drumkit</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#matrix" class="nav-link">matrix</a>
               <ul class="nav flex-column">
               </ul>
@@ -469,9 +473,59 @@ process = vgroup(&quot;Audio Capture&quot;, capture : *(level));
 </div>
 <!-- /faust-run -->
 
-<h2 id="matrix">matrix</h2>
+<h2 id="drumkit">drumkit</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+
+//-------------------------------------------------
+//      A simple, fully generative
+//      drum machine
+//-------------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+drumkit(gate, ks, ss, hs) = k_seq, s_seq, h_seq :&gt; /(3)
+    with {
+        N = outputs(ks);
+        env = en.ar(0.001, 0.05);
+        kick(g) = g : env : *(os.osc(100));
+        snare(g) = g : env : *(no.noise : fi.low_shelf(-60, 3000));
+        hihat(g) = g : env : *(no.noise : fi.highpass(3, 10000));
+        sequencer(t) = t : ba.selectn(N, gate : ba.pulse_countup_loop(N - 1, 1)) : *(gate : mem);
+        k_seq = sequencer(ks) : kick;
+        s_seq = sequencer(ss) : snare;
+        h_seq = sequencer(hs) : hihat;
+    };
+
+drumkit_ui(n) = drumkit(attach(gate, nn), ks, ss, hs)
+    with {
+        gate = ba.pulse(ba.tempo(bpm));
+        ks = par(i, n, checkbox(&quot;v:Drum kit/h:[0]kick/%2i&quot;));
+        ss = par(i, n, checkbox(&quot;v:Drum kit/h:[1]snare/%2i&quot;));
+        hs = par(i, n, checkbox(&quot;v:Drum kit/h:[2]hihat/%2i&quot;));
+        bpm = hslider(&quot;v:Drum kit/[4]BPM&quot;, 350, 10, 800, 1);
+        mon = par(i, n, hbargraph(&quot;v:Drum kit/h:[3]seq/%2i[style:led]&quot;, 0, 1));
+        nn = 1 : ba.selectoutn(n, gate : ba.pulse_countup_loop(n - 1, 1)) : mon :&gt; _;
+    };
+
+drumkit_ui_demo = drumkit_ui(15) &lt;: (_, _);
+
+process = drumkit_ui_demo;
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="matrix">matrix</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;matrix&quot;;
@@ -495,14 +549,14 @@ process = Matrix(8, 8);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="miditester">midiTester</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;midiTester&quot;;
@@ -631,14 +685,14 @@ with {
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="statespace">statespace</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;statespace&quot;;
@@ -684,14 +738,14 @@ process = system;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust4/exfaust4.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="switcher">switcher</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;switcher&quot;;
@@ -720,14 +774,14 @@ process = switch(hslider(&quot;source 0 &lt;-&gt; source 1&quot;,0,0,1,1));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust5/exfaust5.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="tester">tester</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;tester&quot;;
@@ -769,14 +823,14 @@ process         = vgroup( &quot;Audio Tester&quot;,
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust6/exfaust6.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust7/exfaust7.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="tester2">tester2</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;tester2&quot;;
@@ -817,7 +871,7 @@ process     = vgroup(&quot;Stereo Audio Tester&quot;,
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust7/exfaust7.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust8/exfaust8.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run --></div>

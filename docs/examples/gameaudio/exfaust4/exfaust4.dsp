@@ -1,25 +1,29 @@
 
-//----------------------wind--------------------------
-// A very simple wind simulator, based on a filtered white noise
+//----------------------rain--------------------------
+// A very simple rain simulator
 //
 // #### Usage
 //
 // 
-//  wind(f) : _
+//  rain(d,l) : _,_
 // 
 //
 // Where:
 //
-// * f: is the force of the wind: between 0 and 1
+// * d: is the density of the rain: between 0 and 1
+// * l: is the level (volume) of the rain: between 0 and 1
 //
 //----------------------------------------------------------
 
 import("stdfaust.lib");
 
-wind(force) = no.multinoise(2) : par(i, 2, ve.moog_vcf_2bn(force,freq)) : par(i, 2, *(force))
+rain(density,level) = no.multinoise(2) : par(i, 2, drop) : par(i, 2, *(level))
 	with {
-		freq = (force*87)+1 : ba.pianokey2hz;
+		drop = _ <: @(1), (abs < density) : *;
 	};
 
-process = wind(hslider("v:wind/force",0.66,0,1,0.01) : si.smooth(0.997));
+process  = 	rain(
+				hslider("v:rain/density", 300, 0, 1000, 1) / 1000,
+				hslider("v:rain/volume", 0.5, 0, 1, 0.01)
+			);
 

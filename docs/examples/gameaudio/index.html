@@ -310,6 +310,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#door" class="nav-link">door</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#fire" class="nav-link">fire</a>
               <ul class="nav flex-column">
               </ul>
@@ -390,9 +394,81 @@ process = button(&quot;drop&quot;) : bubble(hslider(&quot;v:bubble/freq&quot;, 6
 </div>
 <!-- /faust-run -->
 
-<h2 id="fire">fire</h2>
+<h2 id="door">door</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+//----------------------------door--------------------------
+// door(force) : produces a creaking door sound,
+//                          based on examples
+//                          from the book &quot;Designing Sound&quot;
+//                                by Andy Farnell
+//
+// #### Usage
+//
+// 
+// door(force) : _
+// 
+//
+// Where:
+//
+// * force: a float value between 0 and 1
+//              (0.3 to 0.93 for best results)
+//
+// #### Examples
+//
+// 
+// door(hslider(&quot;force&quot;, 0, 0, 0.93, 0.001)) &lt;: _, _;
+// 
+//
+//------------------------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+stickslip(force) = metro : timer : *(1000) : min(100) : /(100) :
+                   sqrt &lt;: (+(0.1) : sqrt), (vline) : (*)
+    with {
+        swap(a, b) = (b, a);
+        metro = force : ba.line(ba.sec2samp(0.1)) : (step1 ~ _);
+        step1(t, s) = s &lt;: (&gt;(0.3)), (swap(1) : (-) &lt;:
+                   ((*(60) : +(3)), (*(6) : *(no.noise : abs : ba.sAndH(t)))) : (+)) : _, (/(1000) : ba.sec2samp : ba.pulse) : (*);
+        timer(s) = 1 : ba.pulse_countup(((s : mem) == 0)) : /(ma.SR) : ba.sAndH(s);
+        vline(s) = s &lt;: _, mem : (!=) : en.ar(0, s / 1000) &lt;: (*);
+    };
+
+wood1 = _ &lt;: ((fs, qs, si.bus(6)) : ro.interleave(6, 3) : par(i, 6, flt)), *(0.2) :&gt; _
+    with {
+        fs = (62.5, 125, 250, 395, 560, 790);
+        qs = (1, 1, 2, 2, 3, 3);
+        flt(f, q) = fi.resonbp(f, q, 1);
+    };
+
+wood2 = _ &lt;: (ds, si.bus(8)) : ro.interleave(8, 2) : par(i, 8, res) :&gt; fi.highpass(1, 125)
+    with {
+        res(b) = dfbe(b, 0.05);
+        ds = (4.52, 5.06, 6.27, 8, 5.48, 7.14, 10.12, 16);
+        dfbe(i, g) = ((+) : de.delay(ba.sec2samp(0.1), ba.sec2samp(i / 1000))) ~ (*(g));
+    };
+
+door(force) = stickslip(force) : wood1 : wood2 : *(0.2);
+
+process = door(force) &lt;: (_, _)
+    with {
+        force = button(&quot;door&quot;) : ba.impulsify : en.ar(2, 1.5) : *(0.61) : +(0.28);
+    };
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="fire">fire</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -445,14 +521,14 @@ process = checkbox(&quot;wet&quot;): fire;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="insects">insects</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -607,14 +683,14 @@ process = insects, background : ro.interleave(2, 2) : par(i, 2, sum(j, 2, _))
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="rain">rain</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
 //----------------------rain--------------------------
@@ -648,14 +724,14 @@ process  =  rain(
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="wind">wind</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 
 <pre><code>
 //----------------------wind--------------------------
@@ -685,7 +761,7 @@ process = wind(hslider(&quot;v:wind/force&quot;,0.66,0,1,0.01) : si.smooth(0.997
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust4/exfaust4.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/gameaudio/exfaust5/exfaust5.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run --></div>
