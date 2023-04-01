@@ -210,4 +210,4 @@ process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", o
 
 Assuming `F` is not an abstraction and has `n+m` inputs and `A` has `n` outputs, then we have the rewriting rule `F(A) ==> A,bus(m):F (with bus(1) = _ and bus(n+1) = _,bus(n))`
 
-There is an exception when F is a binary operation like `+,-,/,*`. In this case, the rewriting rule is `/(3) ==> _,3:/`. In other words, when we apply only one argument, it is the second one.
+There is an exception when `F` is a binary operation like `+,-,/,*`. In this case, the rewriting rule is `/(3) ==> _,3:/`. In other words, when we apply only one argument, it is the second one.

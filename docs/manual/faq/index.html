@@ -354,6 +354,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#what-are-the-rules-used-for-partial-application" class="nav-link">What are the rules used for partial application ?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -417,6 +421,7 @@
 <p>to therefore preserve the strict semantic, even if a non-strict <code>(cond) ? then : else</code> form is used to produce the result of the <code>select2</code> expression. </p>
 <p>This can be helpful for <a href="https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime">debugging purposes</a> like testing if there is no division by 0, or producing <code>INF</code> or <code>NaN</code> values. The <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">interp-tracer</a> can be used for that by adding  the <code>-sts</code> option.</p>
 <p>So again remember that <code>select2</code> cannot be used to <strong>avoid computing something</strong>. For computations that need to avoid some values or ranges (like doing  <code>val/0</code> that would return <code>INF</code>, or <code>log</code> of a negative value that would return <code>NaN</code>), the solution is to use  <code>min</code> and  <code>max</code> to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write <code>1/max(ma.EPSILON, x)</code>. </p>
+<p>Note that <code>select2</code> is also typically used to compute  <code>rdtable/rwtable</code> access indexes. In this case computing an array <em>out-of-bound</em> index, if is not used later on, is not a problem. </p>
 <h2 id="what-properties-does-the-faust-compiler-and-generated-code-have-wip">What properties does the Faust compiler and generated code have ? [WIP]</h2>
 <h3 id="compiler">Compiler</h3>
 <p>The compiler itself is <a href="https://en.wikipedia.org/wiki/Turing_completeness">turing complete</a> because it contains a pattern matching meta-programming model. Thus a Faust DSP program can loop at compile time. For instance the following:</p>
@@ -484,7 +489,10 @@ freq2 = hslider(&quot;Freq2&quot;, 500, 200, 2000, 0.01);
 process = hgroup(&quot;Voice1&quot;, os.osc(freq1) + os.square(freq2)), hgroup(&quot;Voice2&quot;, os.osc(freq1) + os.triangle(freq2));
 </code></pre>
 <p><img src="group3.png" class="mx-auto d-block" width="50%">
-<center><em>freq1 moved one step higher in the hierarchical structure</em></center></p></div>
+<center><em>freq1 moved one step higher in the hierarchical structure</em></center></p>
+<h2 id="what-are-the-rules-used-for-partial-application">What are the rules used for partial application ?</h2>
+<p>Assuming <code>F</code> is not an abstraction and has <code>n+m</code> inputs and <code>A</code> has <code>n</code> outputs, then we have the rewriting rule <code>F(A) ==&gt; A,bus(m):F (with bus(1) = _ and bus(n+1) = _,bus(n))</code></p>
+<p>There is an exception when <code>F</code> is a binary operation like <code>+,-,/,*</code>. In this case, the rewriting rule is <code>/(3) ==&gt; _,3:/</code>. In other words, when we apply only one argument, it is the second one.</p></div>
             </div>
         </div>
 
