@@ -338,6 +338,10 @@
             </li>
             <li class="nav-item" data-level="3"><a href="#computations-done-at-sample-rate" class="nav-link">Computations Done at Sample Rate</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#possibly-deactivating-table-range-check-with-ct-option" class="nav-link">Possibly deactivating table range check with -ct option</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#using-function-tabulation" class="nav-link">Using Function Tabulation</a>
               <ul class="nav flex-column">
               </ul>
@@ -488,6 +492,8 @@ process = *(smoother_vol);
 </code></pre>
 <p>So to obtain the best performances in the generated code, all costly computations have to be done on the control value (as much as possible, this may not always be the desirable behaviour), and <code>si.smoo</code> (or any function that moves the computation from control rate to sample rate) as the last operation. </p>
 <h3 id="computations-done-at-sample-rate">Computations Done <em>at Sample Rate</em></h3>
+<h4 id="possibly-deactivating-table-range-check-with-ct-option">Possibly deactivating table range check with -ct option</h4>
+<p>The <a href="https://faustdoc.grame.fr/manual/debugging/#the-ct-option">-ct</a> option is activated by default (starting at Faust version 2.53.4), but can possibly be removed (using <code>-ct 0</code>) to speed up the code. Read <a href="https://faustdoc.grame.fr/tutorials/debugging/#debugging-rdtable-and-rwtable-primitives">Debugging rdtable and rwtable primitives</a> for a complete description.</p>
 <h4 id="using-function-tabulation">Using Function Tabulation</h4>
 <p>The use of <code>rdtable</code> kind of compilation done at init time can be simplified using the <a href="https://faustlibraries.grame.fr/libs/basics/#batabulate">ba.tabulate</a> function to <em>tabulate</em> a given unary function <code>fun</code> on a given range. A table is created and filled with precomputed values, and can be used to compute <code>fun(x)</code> in a more efficient way (at the cost of additional  static memory needed for the table).</p>
 <h4 id="using-fast-math-functions">Using Fast Math Functions</h4>
