@@ -204,3 +204,10 @@ process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", o
 
 <img src="group3.png" class="mx-auto d-block" width="50%">
 <center>*freq1 moved one step higher in the hierarchical structure*</center>
+
+
+## What are the rules used for partial application ?
+
+Assuming `F` is not an abstraction and has `n+m` inputs and `A` has `n` outputs, then we have the rewriting rule `F(A) ==> A,bus(m):F (with bus(1) = _ and bus(n+1) = _,bus(n))`
+
+There is an exception when F is a binary operation like `+,-,/,*`. In this case, the rewriting rule is `/(3) ==> _,3:/`. In other words, when we apply only one argument, it is the second one.
