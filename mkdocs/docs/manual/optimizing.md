@@ -138,7 +138,7 @@ The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option is a
 
 #### Using Function Tabulation
 
-The use of `rdtable` kind of compilation done at init time can be simplified using the [ba.tabulate](https://faustlibraries.grame.fr/libs/basics/#batabulate) function to *tabulate* a given unary function `fun` on a given range. A table is created and filled with precomputed values, and can be used to compute `fun(x)` in a more efficient way (at the cost of additional  static memory needed for the table).
+The use of `rdtable` kind of compilation done at init time can be simplified using the [ba.tabulate](https://faustlibraries.grame.fr/libs/basics/#batabulate) or [ba.tabulate_chebychev](https://faustlibraries.grame.fr/libs/basics/#batabulate_chebychev) functions to *tabulate* a given unary function `fun` on a given range. A table is created and filled with precomputed values, and can be used to compute `fun(x)` in a more efficient way (at the cost of additional  static memory needed for the table).
 
 #### Using Fast Math Functions
 
