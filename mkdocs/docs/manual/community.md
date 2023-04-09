@@ -61,9 +61,9 @@ Sublime Text syntax file for the Faust programming language.
 
 Major Emacs mode for the Faust programming language, featuring syntax highlighting, automatic indentation and auto-completion.
 
-#### [Faustine](https://bitbucket.org/yphil/faustine/src/master/)
+#### [Faustine](https://github.com/emacsmirror/faustine)
 
-Faustine allows the edition of Faust code.
+Faustine allows the edition of Faust code using emacs.
 
 #### [faust neovim plugin](https://github.com/madskjeldgaard/faust-nvim)
 
