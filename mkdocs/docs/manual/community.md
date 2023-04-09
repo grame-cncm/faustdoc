@@ -51,7 +51,7 @@ A video about making an Eight Channel Mixer in the Faust IDE  by Julius Smith.
 
 #### [Syntax Highlighting Files](https://github.com/grame-cncm/faust/tree/master-dev/syntax-highlighting)
 
-This folder contains syntax highlighting files for various editors
+This folder contains syntax highlighting files for various editors.
 
 #### [Sublime Text syntax](https://github.com/nuchi/faust-sublime-syntax)
 
