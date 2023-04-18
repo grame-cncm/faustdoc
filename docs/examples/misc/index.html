@@ -310,6 +310,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#autopan" class="nav-link">autopan</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#capture" class="nav-link">capture</a>
               <ul class="nav flex-column">
               </ul>
@@ -361,70 +365,70 @@ declare author &quot;O. Guillerminet&quot;;
 declare license &quot;BSD&quot;;
 declare copyright &quot;(c) O. Guillerminet 2012&quot;;
 
-vbox =          vgroup(&quot;vbox&quot;, 
-                    checkbox(&quot;check1&quot;),
-                    checkbox(&quot;check2&quot;),
-                    nentry(&quot;knob0[style:knob]&quot;, 60, 0, 127, 0.1));
+vbox = vgroup(&quot;vbox&quot;, 
+    checkbox(&quot;check1&quot;),
+    checkbox(&quot;check2&quot;),
+     nentry(&quot;knob0[style:knob]&quot;, 60, 0, 127, 0.1));
 
-sliders =       hgroup(&quot;sliders&quot;,
-                    vslider(&quot;vslider1&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider2&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider3&quot;, 60, 0, 127, 0.1));
+sliders = hgroup(&quot;sliders&quot;,
+        vslider(&quot;vslider1&quot;, 60, 0, 127, 0.1),
+        vslider(&quot;vslider2&quot;, 60, 0, 127, 0.1),
+        vslider(&quot;vslider3&quot;, 60, 0, 127, 0.1));
 
-knobs =         hgroup(&quot;knobs&quot;,
-                    vslider(&quot;knob1[style:knob]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;knob2[style:knob]&quot;, 60, 0, 127, 0.1), 
-                    vslider(&quot;knob3[style:knob]&quot;, 60, 0, 127, 0.1));
+knobs = hgroup(&quot;knobs&quot;,
+        vslider(&quot;knob1[style:knob]&quot;, 60, 0, 127, 0.1),
+        vslider(&quot;knob2[style:knob]&quot;, 60, 0, 127, 0.1),
+        vslider(&quot;knob3[style:knob]&quot;, 60, 0, 127, 0.1));
 
-smallhbox1 =        hgroup(&quot;small box 1&quot;,
-                    vslider(&quot;vslider5 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider6 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;knob4[style:knob]&quot;, 60, 0, 127, 0.1),
-                    nentry(&quot;num1 [unit:f]&quot;, 60, 0, 127, 0.1),
-                    vbargraph(&quot;vbar1&quot;, 0, 127));
+smallhbox1 = hgroup(&quot;small box 1&quot;,
+            vslider(&quot;vslider5 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+            vslider(&quot;vslider6 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+            vslider(&quot;knob4[style:knob]&quot;, 60, 0, 127, 0.1),
+            nentry(&quot;num1 [unit:f]&quot;, 60, 0, 127, 0.1),
+            vbargraph(&quot;vbar1&quot;, 0, 127));
 
-smallhbox2 =        hgroup(&quot;small box 2&quot;,
-                    vslider(&quot;vslider7 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider8 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;knob5[style:knob]&quot;, 60, 0, 127, 0.1),
-                    nentry(&quot;num2 [unit:f]&quot;, 60, 0, 127, 0.1),
-                    vbargraph(&quot;vbar2&quot;, 0, 127));
+smallhbox2 = hgroup(&quot;small box 2&quot;,
+            vslider(&quot;vslider7 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+            vslider(&quot;vslider8 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+            vslider(&quot;knob5[style:knob]&quot;, 60, 0, 127, 0.1),
+            nentry(&quot;num2 [unit:f]&quot;, 60, 0, 127, 0.1),
+            vbargraph(&quot;vbar2&quot;, 0, 127));
 
-smallhbox3 =        hgroup(&quot;small box 3&quot;,
-                    vslider(&quot;vslider9 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;vslider10 [unit:m]&quot;, 60, 0, 127, 0.1),
-                    vslider(&quot;knob6[style:knob]&quot;, 60, 0, 127, 0.1),
-                    nentry(&quot;num3 [unit:f]&quot;, 60, 0, 127, 0.1),
-                    vbargraph(&quot;vbar3&quot;, 0, 127));
+smallhbox3 = hgroup(&quot;small box 3&quot;,
+            vslider(&quot;vslider9 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+            vslider(&quot;vslider10 [unit:m]&quot;, 60, 0, 127, 0.1),
+            vslider(&quot;knob6[style:knob]&quot;, 60, 0, 127, 0.1),
+            nentry(&quot;num3 [unit:f]&quot;, 60, 0, 127, 0.1),
+            vbargraph(&quot;vbar3&quot;, 0, 127));
 
-subhbox1 =      hgroup(&quot;sub box 1&quot;,
-                    smallhbox2,
-                    smallhbox3);
+subhbox1 = hgroup(&quot;sub box 1&quot;,
+        smallhbox2,
+        smallhbox3);
 
-vmisc =         vgroup(&quot;vmisc&quot;,
-                    vslider(&quot;vslider4 [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    button(&quot;button&quot;),
-                    hslider(&quot;hslider [unit:Hz]&quot;, 60, 0, 127, 0.1),
-                    smallhbox1,
-                    subhbox1,
-                    hbargraph(&quot;hbar&quot;, 0, 127));
+vmisc = vgroup(&quot;vmisc&quot;,
+        vslider(&quot;vslider4 [unit:Hz]&quot;, 60, 0, 127, 0.1),
+        button(&quot;button&quot;),
+        hslider(&quot;hslider [unit:Hz]&quot;, 60, 0, 127, 0.1),
+        smallhbox1,
+        subhbox1,
+        hbargraph(&quot;hbar&quot;, 0, 127));
 
-hmisc =         hgroup(&quot;hmisc&quot;,
-                    vslider(&quot;vslider4 [unit:f]&quot;, 60, 0, 127, 0.1),
-                    button(&quot;button&quot;),
-                    hslider(&quot;hslider&quot;, 60, 0, 127, 0.1),
-                    nentry(&quot;num [unit:f]&quot;, 60, 0, 127, 0.1),
-                    vbargraph(&quot;vbar&quot;, 0, 127),
-                    hbargraph(&quot;hbar&quot;, 0, 127));
+hmisc = hgroup(&quot;hmisc&quot;,
+        vslider(&quot;vslider4 [unit:f]&quot;, 60, 0, 127, 0.1),
+        button(&quot;button&quot;),
+        hslider(&quot;hslider&quot;, 60, 0, 127, 0.1),
+        nentry(&quot;num [unit:f]&quot;, 60, 0, 127, 0.1),
+        vbargraph(&quot;vbar&quot;, 0, 127),
+        hbargraph(&quot;hbar&quot;, 0, 127));
 
 //------------------------- Process --------------------------------
 
-process =       tgroup(&quot;grp 1&quot;,
-                    vbox,
-                    sliders,
-                    knobs,
-                    vmisc,
-                    hmisc);
+process = tgroup(&quot;grp 1&quot;,
+        vbox,
+        sliders,
+        knobs,
+        vmisc,
+        hmisc);
 
 
 </code></pre>
@@ -435,9 +439,82 @@ process =       tgroup(&quot;grp 1&quot;,
 </div>
 <!-- /faust-run -->
 
-<h2 id="capture">capture</h2>
+<h2 id="autopan">autopan</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+//--------------------------autopan----------------------------
+//
+// For a stereo input, adjust the left and right gains
+// according to rate-synced sine oscillators. This example is
+// reverse-engineered from Ableton Live's &quot;Auto Pan&quot; audio
+// effect. We don't implement the &quot;spin&quot; feature in which
+// the two LFOs could have different frequencies.
+// We also don't use other LFOs such as triangle/square/noise.
+//
+// #### Usage
+//
+// 
+// si.bus(2) : autopan(amount, rate, phase, shape) : si.bus(2)
+// 
+//
+// Where:
+//
+// * amount: adjusts the amount of LFO modulation that is
+//    applied to incoming signals
+// * rate: sets the frequency of the LFO in Hertz
+// * phase: adjusts the amount of the offset between the
+//    waveforms for the left and right channel. At 180,
+//    the LFOs will be perfectly out of phase. For other
+//    values, you will hear more moments where the
+//    overall volume is reduced
+// * shape: turning shape up pushes the waveforms to their
+//    upper and lower limits, &quot;hardening&quot; their shape
+//------------------------------------------------------------
+import(&quot;stdfaust.lib&quot;);
+
+autopan(amount, rate, phase, shape) = _*gainLeft, _*gainRight
+with {
+
+    // A saturator
+    // Assume x is a signal between -1 and 1. This function
+    // pushes the output towards -1 and 1. As the shape
+    // parameter goes from 0 to 1, an input sine will become
+    // closer to a square. If shape is zero, then the
+    // function doesn't change the input signal.
+    saturator(shape, x) = result
+    with {
+        // It's ok to replace tanh with another saturator
+        result = x, ma.tanh(x*10.) : it.interpolate_linear(shape);
+    };
+
+    phase2Gain(phase) = os.oscp(rate, phase)
+        : saturator(shape) // comment out this line to remove the saturator
+        : it.remap(-1., 1., 1.-amount, 1.);
+
+    gainLeft = 0. : phase2Gain;
+    gainRight = phase : ma.deg2rad : phase2Gain;
+};
+
+amount = hslider(&quot;[0]Amount[style:knob]&quot;, 0., 0., 1., .001);
+rate = hslider(&quot;[1]Rate[style:knob][unit:Hz][scale:log]&quot;, 1., .05, 90., .001);
+phase = hslider(&quot;[2]Phase[style:knob][unit:°]&quot;, 180., 0., 360., 15) : si.smoo;
+shape = hslider(&quot;[3]Shape[style:knob]&quot;, 0., 0., 1., 0.001) : si.smoo;
+
+process = hgroup(&quot;Auto Pan&quot;, autopan(amount, rate, phase, shape));
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="capture">capture</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;capture&quot;;
@@ -447,16 +524,16 @@ declare license     &quot;BSD&quot;;
 declare copyright   &quot;(c)GRAME 2006&quot;;
 
 //-------------------------------------------------
-//      Capture : record up to 8s of sound and
-//      playback the recorded sound in loop
+//       Capture : record up to 8s of sound and
+//        playback the recorded sound in loop
 //-------------------------------------------------
 
 import(&quot;stdfaust.lib&quot;);
 
-B = button(&quot;Capture&quot;);  // Capture sound while pressed
-I = int(B);             // convert button signal from float to integer
-R = (I-I') &lt;= 0;        // Reset capture when button is pressed
-D = (+(I):*(R))~_;      // Compute capture duration while button is pressed: 0..NNNN0..MMM
+B = button(&quot;Capture&quot;);    // Capture sound while pressed
+I = int(B);               // convert button signal from float to integer
+R = (I-I') &lt;= 0;          // Reset capture when button is pressed
+D = (+(I):*(R))~_;        // Compute capture duration while button is pressed: 0..NNNN0..MMM
 
 capture = *(B) : (+ : de.delay(8*65536, D-1)) ~ *(1.0-B);
 
@@ -468,20 +545,20 @@ process = vgroup(&quot;Audio Capture&quot;, capture : *(level));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="drumkit">drumkit</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
 
 //-------------------------------------------------
-//      A simple, fully generative
-//      drum machine
+//    A simple, fully generative
+//    drum machine
 //-------------------------------------------------
 
 import(&quot;stdfaust.lib&quot;);
@@ -518,21 +595,21 @@ process = drumkit_ui_demo;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="matrix">matrix</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
-declare name        &quot;matrix&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2006&quot;;
+declare name      &quot;matrix&quot;;
+declare version   &quot;1.0&quot;;
+declare author    &quot;Grame&quot;;
+declare license   &quot;BSD&quot;;
+declare copyright &quot;(c)GRAME 2006&quot;;
 
 //-----------------------------------------------
 // Audio Matrix : N inputs x M outputs
@@ -540,147 +617,11 @@ declare copyright   &quot;(c)GRAME 2006&quot;;
 
 import(&quot;stdfaust.lib&quot;);
 
-Fader(in)       = ba.db2linear(vslider(&quot;Input %in&quot;, -10, -96, 4, 0.1));
-Mixer(N,out)    = hgroup(&quot;Output %out&quot;, par(in, N, *(Fader(in)) ) :&gt; _ );
-Matrix(N,M)     = tgroup(&quot;Matrix %N x %M&quot;, par(in, N, _) &lt;: par(out, M, Mixer(N, out)));
+Fader(in)    = ba.db2linear(vslider(&quot;Input %in&quot;, -10, -96, 4, 0.1));
+Mixer(N,out) = hgroup(&quot;Output %out&quot;, par(in, N, *(Fader(in)) ) :&gt; _ );
+Matrix(N,M)  = tgroup(&quot;Matrix %N x %M&quot;, par(in, N, _) &lt;: par(out, M, Mixer(N, out)));
 
 process = Matrix(8, 8);
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="miditester">midiTester</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
-
-<pre><code>
-declare name        &quot;midiTester&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Vincent Rateau, GRAME&quot;;
-declare license     &quot;GPL v3&quot;;
-declare reference   &quot;www.sonejo.net&quot;;
-
-// FAUST MIDI TESTER
-
-process = _*0, (vgroup(&quot;FAUST MIDI TESTER&quot;, hgroup(&quot;[1]&quot;, controltester, controlchantester, noteontester, noteonchantester, noteofftester, noteoffchantester, keypresschantester, midiclocktester), hgroup(&quot;[2]&quot;, kattester, katchantester, pctester, pcchantester, chattester, chatchantester, pitchwheeltester, pitchwheelchantester) :&gt; _)) : attach;
-
-///////////////////////////
-
-//Ctrl tester (ctrl ): tester(midi in, midi out)
-controltester = vgroup(&quot;CTRL IN/OUT&quot;, valuetest(50,51), booltest(100,101))
-with {
-    valuetest(i,o) = hslider(&quot;Ctrl Value IN (Ctrl %i) [midi:ctrl %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Ctrl Value OUT (Ctrl %o) [midi:ctrl %o]&quot;, 0, 127);
-    booltest(i,o) = checkbox(&quot;Ctrl Bool IN (Ctrl %i) [midi:ctrl %i]&quot;) : hbargraph(&quot;Ctrl Bool OUT (Ctrl %o) [midi:ctrl %o]&quot;, 0, 1);
-};
-
-//Ctrl Chan tester (ctrl chan): tester(midi in, midi out)
-controlchantester = vgroup(&quot;CTRL CHAN IN/OUT&quot;, valuetest(50,2,74,3))
-with {
-    valuetest(i,ic,o,oc) = hslider(&quot;Ctrl Value IN (Ctrl %i Channel %ic) [midi:ctrl %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Ctrl Value OUT (Ctrl %o) Channel OUT(Chan %oc) [midi:ctrl %o %oc]&quot;, 0, 127);
-};
-
-//Note tester (keyon) : tester(midi in, midi out)
-noteontester = vgroup(&quot;NOTE ON IN/OUT&quot;, valuetest(50,51), booltest(100,101))
-with {
-    valuetest(i,o) = hslider(&quot;NoteOn Value IN (Note %i) [midi:keyon %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOn Value OUT (Note %o) [midi:keyon %o]&quot;, 0, 127);
-    booltest(i,o) = checkbox(&quot;NoteOn Bool IN (Note %i) [midi:keyon %i]&quot;) : hbargraph(&quot;NoteOn Bool OUT (Note %o) [midi:keyon %o]&quot;, 0, 1);
-};
-
-//Note Chan tester (keyon) : tester(midi in, midi out)
-noteonchantester = vgroup(&quot;NOTE ON CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
-with {
-    valuetest(i, ic, o, oc) = hslider(&quot;NoteOn Value IN (Note %i Channel %ic) [midi:keyon %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOn Value OUT (Note %o Chan %oc) [midi:keyon %o %oc]&quot;, 0, 127);
-    booltest(i, ic, o, oc) = checkbox(&quot;NoteOn Chan Bool IN (Note %i Channel %ic) [midi:keyon %i %ic]&quot;) : hbargraph(&quot;NoteOn Chan Bool OUT (Note %o Channel %oc) [midi:keyon %o %oc]&quot;, 0, 1);
-};
-
-//Note tester (keyoff) : tester(midi in, midi out)
-noteofftester = vgroup(&quot;NOTE OFF IN/OUT&quot;, valuetest(50,51), booltest(100,101))
-with {
-    valuetest(i,o) = hslider(&quot;NoteOff Value IN (Note %i) [midi:keyoff %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOff Value OUT (Note %o) [midi:keyoff %o]&quot;, 0, 127);
-    booltest(i,o) = checkbox(&quot;NoteOff Bool IN (Note %i) [midi:keyoff %i]&quot;) : hbargraph(&quot;NoteOff Bool OUT (Note %o) [midi:keyoff %o]&quot;, 0, 1);
-};
-
-//Note Chan tester (keyoff) : tester(midi in, midi out)
-noteoffchantester = vgroup(&quot;NOTE OFF CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
-with {
-    valuetest(i, ic, o, oc) = hslider(&quot;NoteOff Value IN (Note %i Channel %ic) [midi:keyoff %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOff Value OUT (Note %o Channel %oc) [midi:keyoff %o %oc]&quot;, 0, 127);
-    booltest(i, ic, o, oc) = checkbox(&quot;NoteOff Bool IN (Note %i Channel %ic) [midi:keyoff %i %ic]&quot;) : hbargraph(&quot;NoteOff Bool OUT (Note %o Channel %oc) [midi:keyoff %o %oc]&quot;, 0, 1);
-};
-
-//KeyPress Chan tester (keypress) : tester(midi in, midi out)
-keypresschantester = vgroup(&quot;KEY PRESS CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
-with {
-    valuetest(i, ic, o, oc) = hslider(&quot;Pressure Value IN (Note %i Channel %ic) [midi:keypress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note Value OUT (Note %o Channel %oc) [midi:keypress %o %oc]&quot;, 0, 127);
-    booltest(i, ic, o, oc) = checkbox(&quot;Pressure Bool IN (Note %i Channel %ic) [midi:keypress %i %ic]&quot;) : hbargraph(&quot;Pressure Bool OUT (Note %o Channel %oc) [midi:keypress %o %oc]&quot;, 0, 1);
-};
-
-//Midisync tester
-midiclocktester = vgroup(&quot;MIDI SYNC (IN)&quot;, clock, startstop)
-with {
-    clock = checkbox(&quot;MIDI clock signal [midi:clock]&quot;);
-    startstop = checkbox(&quot;MIDI START/STOP [midi:start] [midi:stop]&quot;);
-};
-
-//Key Aftertouch tester (keypress) : tester(midi in, midi out)
-kattester = vgroup(&quot;KEY AFTERTOUCH (KAT) IN/OUT&quot;,valuetest(50,51), booltest(100,101))
-with {
-    valuetest(i,o) = hslider(&quot;Note KAT Value IN (Note %i) [midi:keypress %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note KAT Value OUT (Note %o) [midi:keypress %o]&quot;, 0, 127);
-    booltest(i,o) = checkbox(&quot;Note KAT Bool IN (Note %i) [midi:keypress %i]&quot;) : hbargraph(&quot;Note KAT Bool OUT (Note %o) [midi:keypress %o]&quot;, 0, 1);
-};
-
-//Key Aftertouch tester (keypress) : tester(midi in, midi out)
-katchantester = vgroup(&quot;KEY AFTERTOUCH CHAN (KAT) IN/OUT&quot;,valuetest(50,2,51,3), booltest(100,2,101,3))
-with {
-    valuetest(i,ic,o,oc) = hslider(&quot;Note KAT Value IN (Note %i) (Chan %ic) [midi:keypress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note KAT Value OUT (Note %o) (Chan %oc) [midi:keypress %o %oc]&quot;, 0, 127);
-    booltest(i,ic,o,oc) = checkbox(&quot;Note KAT Bool IN (Note %i) (Chan %ic) [midi:keypress %i %ic]&quot;) : hbargraph(&quot;Note KAT Bool OUT (Note %o) (Chan %oc)[midi:keypress %o %oc]&quot;, 0, 1);
-};
-
-//ProgramChange tester (pgm) : tester(midi in, midi out)
-pctester = vgroup(&quot;PROGRAM CHANGE (PC) IN/OUT&quot;,valuetest(1,2), booltest(1,2))
-with {
-    valuetest(i,o) = hslider(&quot;ProgramChange Value IN (PC %i) [midi:pgm %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;ProgramChange Value OUT (PC %o) [midi:pgm %o]&quot;, 0, 127);
-    booltest(i,o) = checkbox(&quot;ProgramChange Bool IN (PC %i) [midi:pgm %i]&quot;) : hbargraph(&quot;ProgramChange Bool OUT (PC %o) [midi:pgm %o]&quot;, 0, 1);
-};
-
-//ProgramChange Chan tester (pgm) : tester(midi in, midi out)
-pcchantester = vgroup(&quot;PROGRAM CHANGE CHAN (PC) IN/OUT&quot;,valuetest(1, 2, 2, 3), booltest(1, 2, 2, 3))
-with {
-    valuetest(i,ic,o,oc) = hslider(&quot;ProgramChange Value IN (PC %i) (CHAN %ic) [midi:pgm %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;ProgramChange Value OUT (PC %o) (CHAN %oc) [midi:pgm %o %oc]&quot;, 0, 127);
-    booltest(i,ic,o,oc) = checkbox(&quot;ProgramChange Bool IN (PC %i) (CHAN %ic) [midi:pgm %i %ic]&quot;) : hbargraph(&quot;ProgramChange Bool OUT (PC %o) (CHAN %oc) [midi:pgm %o %oc]&quot;, 0, 1);
-};
-
-//Channel Aftertourch tester (chanpress) : tester(midi in, midi out)
-chattester = vgroup(&quot;CHANNEL AFTERTOUCH (CHAT) IN/OUT&quot;,valuetest(50,51), booltest(100,101))
-with {
-    valuetest(i,o) = hslider(&quot;Note CHAT Value IN (Note %i) [midi:chanpress %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note CHAT Value OUT (Note %o) [midi:chanpress %o]&quot;, 0, 127);
-    booltest(i,o) = checkbox(&quot;Note CHAT Bool IN (Note %i) [midi:chanpress %i]&quot;) : hbargraph(&quot;Note CHAT Bool OUT (Note %o) [midi:chanpress %o]&quot;, 0, 1);
-};
-
-//Channel Aftertourch tester (chanpress) : tester(midi in, midi out)
-chatchantester = vgroup(&quot;CHANNEL AFTERTOUCH CHAN (CHAT) IN/OUT&quot;,valuetest(50,2,51,3), booltest(100,2,101,3))
-with {
-    valuetest(i,ic,o,oc) = hslider(&quot;Note CHAT Chan Value IN (Note %i) (Chan %ic) [midi:chanpress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note CHAT Value OUT (Note %o) (Chan %oc) [midi:chanpress %o %oc]&quot;, 0, 127);
-    booltest(i,ic,o,oc) = checkbox(&quot;Note CHAT Bool IN (Note %i) (Chan %ic) [midi:chanpress %i %ic]&quot;) : hbargraph(&quot;Note CHAT Bool OUT (Note %o) (Chan %oc) [midi:chanpress %o %oc]&quot;, 0, 1);
-};
-
-//Pitchwheel tester (pitchwheel) : tester(midi in, midi out)
-pitchwheeltester = vgroup(&quot;PITCHWHEEL IN/OUT&quot;,valuetest, booltest)
-with {
-    valuetest = hslider(&quot;Pitchwheel Value IN  [midi:pitchwheel]&quot;, 0, -8192, 8191, 1) : hbargraph(&quot;Pitchwheel Value OUT[midi:pitchwheel]&quot;, -8192, 8191);
-    booltest = checkbox(&quot;Pitchwheel Bool IN [midi:pitchwheel]&quot;) : hbargraph(&quot;Pitchwheel Bool OUT [midi:pitchwheel]&quot;, 0, 1);
-};
-
-//Pitchwheel Chan tester (pitchwheel) : tester(midi in, midi out)
-pitchwheelchantester = vgroup(&quot;PITCHWHEEL CHAN IN/OUT&quot;,valuetest(2, 15), booltest(2, 15))
-with {
-    valuetest(ic, oc) = hslider(&quot;Pitchwheel Value IN (Chan %ic) [midi:pitchwheel %ic]&quot;, 0, -8192, 8191, 1) : hbargraph(&quot;Pitchwheel Value OUT (Chan %oc)[midi:pitchwheel %oc]&quot;, -8192, 8191);
-    booltest(ic, oc) = checkbox(&quot;Pitchwheel Bool IN (Chan %ic) [midi:pitchwheel %ic]&quot;) : hbargraph(&quot;Pitchwheel Bool OUT (Chan %oc) [midi:pitchwheel %oc]&quot;, 0, 1);
-};
 
 </code></pre>
 
@@ -690,9 +631,145 @@ with {
 </div>
 <!-- /faust-run -->
 
-<h2 id="statespace">statespace</h2>
+<h2 id="miditester">midiTester</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name      &quot;midiTester&quot;;
+declare version   &quot;1.0&quot;;
+declare author    &quot;Vincent Rateau, GRAME&quot;;
+declare license   &quot;GPL v3&quot;;
+declare reference &quot;www.sonejo.net&quot;;
+
+// FAUST MIDI TESTER
+
+process = _*0, (vgroup(&quot;FAUST MIDI TESTER&quot;, hgroup(&quot;[1]&quot;, controltester, controlchantester, noteontester, noteonchantester, noteofftester, noteoffchantester, keypresschantester, midiclocktester), hgroup(&quot;[2]&quot;, kattester, katchantester, pctester, pcchantester, chattester, chatchantester, pitchwheeltester, pitchwheelchantester) :&gt; _)) : attach;
+
+///////////////////////////
+
+// Ctrl tester (ctrl ): tester(midi in, midi out)
+controltester = vgroup(&quot;CTRL IN/OUT&quot;, valuetest(50,51), booltest(100,101))
+with {
+    valuetest(i,o) = hslider(&quot;Ctrl Value IN (Ctrl %i) [midi:ctrl %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Ctrl Value OUT (Ctrl %o) [midi:ctrl %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;Ctrl Bool IN (Ctrl %i) [midi:ctrl %i]&quot;) : hbargraph(&quot;Ctrl Bool OUT (Ctrl %o) [midi:ctrl %o]&quot;, 0, 1);
+};
+
+// Ctrl Chan tester (ctrl chan): tester(midi in, midi out)
+controlchantester = vgroup(&quot;CTRL CHAN IN/OUT&quot;, valuetest(50,2,74,3))
+with {
+    valuetest(i,ic,o,oc) = hslider(&quot;Ctrl Value IN (Ctrl %i Channel %ic) [midi:ctrl %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Ctrl Value OUT (Ctrl %o) Channel OUT(Chan %oc) [midi:ctrl %o %oc]&quot;, 0, 127);
+};
+
+// Note tester (keyon) : tester(midi in, midi out)
+noteontester = vgroup(&quot;NOTE ON IN/OUT&quot;, valuetest(50,51), booltest(100,101))
+with {
+    valuetest(i,o) = hslider(&quot;NoteOn Value IN (Note %i) [midi:keyon %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOn Value OUT (Note %o) [midi:keyon %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;NoteOn Bool IN (Note %i) [midi:keyon %i]&quot;) : hbargraph(&quot;NoteOn Bool OUT (Note %o) [midi:keyon %o]&quot;, 0, 1);
+};
+
+// Note Chan tester (keyon) : tester(midi in, midi out)
+noteonchantester = vgroup(&quot;NOTE ON CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
+with {
+    valuetest(i, ic, o, oc) = hslider(&quot;NoteOn Value IN (Note %i Channel %ic) [midi:keyon %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOn Value OUT (Note %o Chan %oc) [midi:keyon %o %oc]&quot;, 0, 127);
+    booltest(i, ic, o, oc) = checkbox(&quot;NoteOn Chan Bool IN (Note %i Channel %ic) [midi:keyon %i %ic]&quot;) : hbargraph(&quot;NoteOn Chan Bool OUT (Note %o Channel %oc) [midi:keyon %o %oc]&quot;, 0, 1);
+};
+
+// Note tester (keyoff) : tester(midi in, midi out)
+noteofftester = vgroup(&quot;NOTE OFF IN/OUT&quot;, valuetest(50,51), booltest(100,101))
+with {
+    valuetest(i,o) = hslider(&quot;NoteOff Value IN (Note %i) [midi:keyoff %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOff Value OUT (Note %o) [midi:keyoff %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;NoteOff Bool IN (Note %i) [midi:keyoff %i]&quot;) : hbargraph(&quot;NoteOff Bool OUT (Note %o) [midi:keyoff %o]&quot;, 0, 1);
+};
+
+// Note Chan tester (keyoff) : tester(midi in, midi out)
+noteoffchantester = vgroup(&quot;NOTE OFF CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
+with {
+    valuetest(i, ic, o, oc) = hslider(&quot;NoteOff Value IN (Note %i Channel %ic) [midi:keyoff %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;NoteOff Value OUT (Note %o Channel %oc) [midi:keyoff %o %oc]&quot;, 0, 127);
+    booltest(i, ic, o, oc) = checkbox(&quot;NoteOff Bool IN (Note %i Channel %ic) [midi:keyoff %i %ic]&quot;) : hbargraph(&quot;NoteOff Bool OUT (Note %o Channel %oc) [midi:keyoff %o %oc]&quot;, 0, 1);
+};
+
+// KeyPress Chan tester (keypress) : tester(midi in, midi out)
+keypresschantester = vgroup(&quot;KEY PRESS CHAN IN/OUT&quot;, valuetest(50, 2, 51, 3), booltest(50, 2, 101, 3))
+with {
+    valuetest(i, ic, o, oc) = hslider(&quot;Pressure Value IN (Note %i Channel %ic) [midi:keypress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note Value OUT (Note %o Channel %oc) [midi:keypress %o %oc]&quot;, 0, 127);
+    booltest(i, ic, o, oc) = checkbox(&quot;Pressure Bool IN (Note %i Channel %ic) [midi:keypress %i %ic]&quot;) : hbargraph(&quot;Pressure Bool OUT (Note %o Channel %oc) [midi:keypress %o %oc]&quot;, 0, 1);
+};
+
+// Midisync tester
+midiclocktester = vgroup(&quot;MIDI SYNC (IN)&quot;, clock, startstop)
+with {
+    clock = checkbox(&quot;MIDI clock signal [midi:clock]&quot;);
+    startstop = checkbox(&quot;MIDI START/STOP [midi:start] [midi:stop]&quot;);
+};
+
+// Key Aftertouch tester (keypress) : tester(midi in, midi out)
+kattester = vgroup(&quot;KEY AFTERTOUCH (KAT) IN/OUT&quot;,valuetest(50,51), booltest(100,101))
+with {
+    valuetest(i,o) = hslider(&quot;Note KAT Value IN (Note %i) [midi:keypress %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note KAT Value OUT (Note %o) [midi:keypress %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;Note KAT Bool IN (Note %i) [midi:keypress %i]&quot;) : hbargraph(&quot;Note KAT Bool OUT (Note %o) [midi:keypress %o]&quot;, 0, 1);
+};
+
+// Key Aftertouch tester (keypress) : tester(midi in, midi out)
+katchantester = vgroup(&quot;KEY AFTERTOUCH CHAN (KAT) IN/OUT&quot;,valuetest(50,2,51,3), booltest(100,2,101,3))
+with {
+    valuetest(i,ic,o,oc) = hslider(&quot;Note KAT Value IN (Note %i) (Chan %ic) [midi:keypress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note KAT Value OUT (Note %o) (Chan %oc) [midi:keypress %o %oc]&quot;, 0, 127);
+    booltest(i,ic,o,oc) = checkbox(&quot;Note KAT Bool IN (Note %i) (Chan %ic) [midi:keypress %i %ic]&quot;) : hbargraph(&quot;Note KAT Bool OUT (Note %o) (Chan %oc)[midi:keypress %o %oc]&quot;, 0, 1);
+};
+
+// ProgramChange tester (pgm) : tester(midi in, midi out)
+pctester = vgroup(&quot;PROGRAM CHANGE (PC) IN/OUT&quot;,valuetest(1,2), booltest(1,2))
+with {
+    valuetest(i,o) = hslider(&quot;ProgramChange Value IN (PC %i) [midi:pgm %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;ProgramChange Value OUT (PC %o) [midi:pgm %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;ProgramChange Bool IN (PC %i) [midi:pgm %i]&quot;) : hbargraph(&quot;ProgramChange Bool OUT (PC %o) [midi:pgm %o]&quot;, 0, 1);
+};
+
+// ProgramChange Chan tester (pgm) : tester(midi in, midi out)
+pcchantester = vgroup(&quot;PROGRAM CHANGE CHAN (PC) IN/OUT&quot;,valuetest(1, 2, 2, 3), booltest(1, 2, 2, 3))
+with {
+    valuetest(i,ic,o,oc) = hslider(&quot;ProgramChange Value IN (PC %i) (CHAN %ic) [midi:pgm %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;ProgramChange Value OUT (PC %o) (CHAN %oc) [midi:pgm %o %oc]&quot;, 0, 127);
+    booltest(i,ic,o,oc) = checkbox(&quot;ProgramChange Bool IN (PC %i) (CHAN %ic) [midi:pgm %i %ic]&quot;) : hbargraph(&quot;ProgramChange Bool OUT (PC %o) (CHAN %oc) [midi:pgm %o %oc]&quot;, 0, 1);
+};
+
+// Channel Aftertourch tester (chanpress) : tester(midi in, midi out)
+chattester = vgroup(&quot;CHANNEL AFTERTOUCH (CHAT) IN/OUT&quot;,valuetest(50,51), booltest(100,101))
+with {
+    valuetest(i,o) = hslider(&quot;Note CHAT Value IN (Note %i) [midi:chanpress %i]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note CHAT Value OUT (Note %o) [midi:chanpress %o]&quot;, 0, 127);
+    booltest(i,o) = checkbox(&quot;Note CHAT Bool IN (Note %i) [midi:chanpress %i]&quot;) : hbargraph(&quot;Note CHAT Bool OUT (Note %o) [midi:chanpress %o]&quot;, 0, 1);
+};
+
+// Channel Aftertourch tester (chanpress) : tester(midi in, midi out)
+chatchantester = vgroup(&quot;CHANNEL AFTERTOUCH CHAN (CHAT) IN/OUT&quot;,valuetest(50,2,51,3), booltest(100,2,101,3))
+with {
+    valuetest(i,ic,o,oc) = hslider(&quot;Note CHAT Chan Value IN (Note %i) (Chan %ic) [midi:chanpress %i %ic]&quot;, 60, 0, 127, 1) : hbargraph(&quot;Note CHAT Value OUT (Note %o) (Chan %oc) [midi:chanpress %o %oc]&quot;, 0, 127);
+    booltest(i,ic,o,oc) = checkbox(&quot;Note CHAT Bool IN (Note %i) (Chan %ic) [midi:chanpress %i %ic]&quot;) : hbargraph(&quot;Note CHAT Bool OUT (Note %o) (Chan %oc) [midi:chanpress %o %oc]&quot;, 0, 1);
+};
+
+// Pitchwheel tester (pitchwheel) : tester(midi in, midi out)
+pitchwheeltester = vgroup(&quot;PITCHWHEEL IN/OUT&quot;,valuetest, booltest)
+with {
+    valuetest = hslider(&quot;Pitchwheel Value IN  [midi:pitchwheel]&quot;, 0, -8192, 8191, 1) : hbargraph(&quot;Pitchwheel Value OUT[midi:pitchwheel]&quot;, -8192, 8191);
+    booltest = checkbox(&quot;Pitchwheel Bool IN [midi:pitchwheel]&quot;) : hbargraph(&quot;Pitchwheel Bool OUT [midi:pitchwheel]&quot;, 0, 1);
+};
+
+// Pitchwheel Chan tester (pitchwheel) : tester(midi in, midi out)
+pitchwheelchantester = vgroup(&quot;PITCHWHEEL CHAN IN/OUT&quot;,valuetest(2, 15), booltest(2, 15))
+with {
+    valuetest(ic, oc) = hslider(&quot;Pitchwheel Value IN (Chan %ic) [midi:pitchwheel %ic]&quot;, 0, -8192, 8191, 1) : hbargraph(&quot;Pitchwheel Value OUT (Chan %oc)[midi:pitchwheel %oc]&quot;, -8192, 8191);
+    booltest(ic, oc) = checkbox(&quot;Pitchwheel Bool IN (Chan %ic) [midi:pitchwheel %ic]&quot;) : hbargraph(&quot;Pitchwheel Bool OUT (Chan %oc) [midi:pitchwheel %oc]&quot;, 0, 1);
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust5/exfaust5.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="statespace">statespace</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;statespace&quot;;
@@ -738,14 +815,14 @@ process = system;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust5/exfaust5.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust6/exfaust6.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <h2 id="switcher">switcher</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 
 <pre><code>
 declare name        &quot;switcher&quot;;
@@ -762,62 +839,11 @@ declare copyright   &quot;(c)GRAME 2007&quot;;
 //-----------------------------------------------
 
 switch(c,x0,x1,y0,y1) = sel(c,x0,y0), sel(c,x1,y1)
-                            with { 
-                                sel(c,x,y) = (1-c)*x + c*y; 
-                            };
+                        with { 
+                            sel(c,x,y) = (1-c)*x + c*y; 
+                        };
 
 process = switch(hslider(&quot;source 0 &lt;-&gt; source 1&quot;,0,0,1,1));
-
-
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="tester">tester</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
-
-<pre><code>
-declare name        &quot;tester&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2006&quot;;
-
-//-----------------------------------------------
-// Tester : tests louspeakers
-// Send a test signal( sine, noise, pink) to one 
-// of 8 loudspeakers
-//-----------------------------------------------
-
-import(&quot;stdfaust.lib&quot;);
-
-// TODO: this should be rewritten with the pink noise function of noises.lib
-pink    = f : (+ ~ g) with {
-    f(x) = 0.04957526213389*x - 0.06305581334498*x' + 0.01483220320740*x'';
-    g(x) = 1.80116083982126*x - 0.80257737639225*x';
-};
-
-// User interface
-//----------------
-vol             = hslider(&quot;[2] volume [unit:dB]&quot;, -96, -96, 0, 1): ba.db2linear : si.smoo;
-freq            = hslider(&quot;[1] freq [unit:Hz]&quot;, 1000, 10, 20000, 1);
-dest            = hslider(&quot;[3] destination&quot;, 0, 0, 8, 1);
-
-testsignal      = os.osci(freq)*checkbox(&quot;sine wave&quot;)
-                + no.noise * checkbox(&quot;white noise&quot;)
-                + pink(no.noise) * ba.db2linear(20)  * checkbox(&quot;pink noise&quot;);
-
-process         = vgroup( &quot;Audio Tester&quot;, 
-                    testsignal*vol 
-                    &lt;: par(i, 8, *(dest==i)) 
-                  );
 
 
 </code></pre>
@@ -828,16 +854,62 @@ process         = vgroup( &quot;Audio Tester&quot;,
 </div>
 <!-- /faust-run -->
 
-<h2 id="tester2">tester2</h2>
+<h2 id="tester">tester</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 
 <pre><code>
-declare name        &quot;tester2&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2014&quot;;
+declare name      &quot;tester&quot;;
+declare version   &quot;1.0&quot;;
+declare author    &quot;Grame&quot;;
+declare license   &quot;BSD&quot;;
+declare copyright &quot;(c)GRAME 2006&quot;;
+
+//-----------------------------------------------
+// Tester : tests louspeakers
+// Send a test signal( sine, noise, pink) to one 
+// of 8 loudspeakers
+//-----------------------------------------------
+
+import(&quot;stdfaust.lib&quot;);
+
+// TODO: this should be rewritten with the pink noise function of noises.lib
+pink = f : (+ ~ g) with {
+    f(x) = 0.04957526213389*x - 0.06305581334498*x' + 0.01483220320740*x'';
+    g(x) = 1.80116083982126*x - 0.80257737639225*x';
+};
+
+// User interface
+//----------------
+vol  = hslider(&quot;[2] volume [unit:dB]&quot;, -96, -96, 0, 1): ba.db2linear : si.smoo;
+freq = hslider(&quot;[1] freq [unit:Hz]&quot;, 1000, 10, 20000, 1);
+dest = hslider(&quot;[3] destination&quot;, 0, 0, 8, 1);
+
+testsignal = os.osci(freq)*checkbox(&quot;sine wave&quot;)
+            + no.noise * checkbox(&quot;white noise&quot;)
+            + pink(no.noise) * ba.db2linear(20)  * checkbox(&quot;pink noise&quot;);
+
+process = vgroup(&quot;Audio Tester&quot;, testsignal*vol &lt;: par(i, 8, *(dest==i)));
+
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust8/exfaust8.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<h2 id="tester2">tester2</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+
+<pre><code>
+declare name      &quot;tester2&quot;;
+declare version   &quot;1.0&quot;;
+declare author    &quot;Grame&quot;;
+declare license   &quot;BSD&quot;;
+declare copyright &quot;(c)GRAME 2014&quot;;
 
 //-----------------------------------------------
 // Stereo Audio Tester : send a test signal (sine, 
@@ -846,7 +918,7 @@ declare copyright   &quot;(c)GRAME 2014&quot;;
 
 import(&quot;stdfaust.lib&quot;);
 
-pink    = f : (+ ~ g) with {
+pink = f : (+ ~ g) with {
     f(x) = 0.04957526213389*x - 0.06305581334498*x' + 0.01483220320740*x'';
     g(x) = 1.80116083982126*x - 0.80257737639225*x';
 };
@@ -860,18 +932,15 @@ freq = hslider(&quot;[1] freq [unit:Hz][scale:log]&quot;, 440, 40, 20000, 1);
 wave = nentry(&quot;[3] signal [style:menu{'white noise':0;'pink noise':1;'sine':2}]&quot;, 0, 0, 2, 1) : int;
 dest = nentry(&quot;[4] channel [style:radio{'none':0;'left':1;'right':2;'both':3}]&quot;, 0, 0, 3, 1) : int;
 
-testsignal  = no.noise, pink(no.noise), os.osci(freq): select3(wave);
+testsignal = no.noise, pink(no.noise), os.osci(freq): select3(wave);
 
-process     = vgroup(&quot;Stereo Audio Tester&quot;,
-                testsignal*vol 
-                &lt;: par(i, 2, *((dest &amp; (i+1)) != 0 : transition(4410))) 
-            );
+process = vgroup(&quot;Stereo Audio Tester&quot;, testsignal*vol &lt;: par(i, 2, *((dest &amp; (i+1)) != 0 : transition(4410))));
 
 
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust8/exfaust8.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/misc/exfaust9/exfaust9.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run --></div>
