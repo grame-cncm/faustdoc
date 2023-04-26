@@ -544,6 +544,14 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#additional-ressources" class="nav-link">Additional Ressources</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#preprocessing-tools" class="nav-link">Preprocessing tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#fpp" class="nav-link">fpp</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
             <li class="nav-item" data-level="3"><a href="#c-tools" class="nav-link">C++ tools</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#faust2hpp" class="nav-link">faust2hpp</a>
@@ -2510,6 +2518,9 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <p>The two needed <code>sound1.wav</code> and <code>sound2.wav</code> audio files are embedded in the generated external, loaded at init time (since the<code>buildUserInterface</code> method is automatically called), and the manually added C++ code will be executed to compute the spectrograms and play them. Finally by respecting the naming coherency for the fake <code>spectral.dsp</code> DSP program, the generated <code>spectral.cpp</code> C++ file, the automatically generated <code>spectral.maxpat</code> Max/MSP patch will be able to build the GUI with a ready-to-use slider.</p>
 <h2 id="additional-ressources">Additional Ressources</h2>
 <p>Several external projects are providing tools to arrange the way Faust source code is generated or used, in different languages.</p>
+<h3 id="preprocessing-tools">Preprocessing tools</h3>
+<h4 id="fpp"><a href="https://github.com/oleg-nesterov/fpp">fpp</a></h4>
+<p>fpp is a standalone Perl script with no dependencies which allows ANY C/C++ code in a Faust .dsp file as long as you are targeting C/C++ in scalar mode.</p>
 <h3 id="c-tools">C++ tools</h3>
 <p>Using and adapting the <code>dsp/UI/audio</code> model in a more sophisticated way, or integrating Faust generated C++ classes in others frameworks (like JUCE).</p>
 <h4 id="faust2hpp"><a href="https://github.com/resonantdsp/faust2hpp">faust2hpp</a></h4>
