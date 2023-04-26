@@ -2197,6 +2197,10 @@ The two needed `sound1.wav` and `sound2.wav` audio files are embedded in the gen
 
 Several external projects are providing tools to arrange the way Faust source code is generated or used, in different languages.
 
+## Preprocessing tools
+
+#### [fpp](https://github.com/oleg-nesterov/fpp) is a standalone Perl script with no dependencies which allows ANY C/C++ code in a Faust .dsp file as long as you are targeting C/C++ in scalar mode.
+
 ### C++ tools 
 Using and adapting the `dsp/UI/audio` model in a more sophisticated way, or integrating Faust generated C++ classes in others frameworks (like JUCE).
 
