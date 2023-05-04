@@ -1732,7 +1732,7 @@ process = 0 != 1;
 
 ### `math.h`-Equivalent Primitives
 
-Most of the C `math.h` functions are also built-in as primitives (the others are defined as external functions in file [`math.lib`](https://faustlibraries.grame.fr/libs/maths/)). The primitives may use the `int` type for their arguments, but will automatically use the `float` type when the actual computation requires it. 
+Most of the C `math.h` functions are also built-in as primitives (the others are defined as external functions in file [`maths.lib`](https://faustlibraries.grame.fr/libs/maths/)). The primitives may use the `int` type for their arguments, but will automatically use the `float` type when the actual computation requires it. 
 
 #### `acos` Primitive
 
