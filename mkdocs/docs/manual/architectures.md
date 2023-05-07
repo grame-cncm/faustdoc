@@ -2230,7 +2230,7 @@ Static metadata generator for Faust/C++. This program builds the metadata for a 
 
 [Eyal Amir](https://github.com/eyalamirmusic) tool to facilitate the use of Faust generated  C++ code in JUCE projects. 
 
-#### [JOSModules](https://github.com/josmithiii/JOSModules) and [jos_faust](https://github.com/josmithiii/jos_faust)
+#### [JOSModules](https://github.com/josmithiii/JOSModules) and [josm_faust](https://github.com/josmithiii/josm_faust#josm_faust)
 
 [Julius Smith](https://ccrma.stanford.edu/~jos/) projects to facilitate the use of Faust generated  C++ code in JUCE projects. 
 
@@ -2313,7 +2313,3 @@ This is a microservice that serves a single purpose: compiling Faust code that i
 #### [mosfez-faust](https://github.com/dxinteractive/mosfez-faust)
 Makes dynamic compilation of Faust on the web a little easier, and has a dev project to run values through dsp offline, and preview dsp live. It's an opinionated version of some parts of [Faust for webaudio](https://github.com/grame-cncm/faust/tree/master-dev/architecture/webaudio), mostly just the Web Assembly Faust compiler, wrapped up in a library with additional features. 
 
-### Dart tools 
-
-#### [flutter_faust_ffi](https://github.com/t2techno/flutter_faust_ffi)
-A basic flutter app as a proof of concept utilizing Faust's C API export with Dart's ffi methods to create cross-platform plug-ins.
