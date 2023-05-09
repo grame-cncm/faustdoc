@@ -333,12 +333,12 @@
 
 <h1 id="compiling-and-installing-faust">Compiling and installing <span class="smallcaps">Faust</span></h1>
 <p><a name="install"></a></p>
-<p>The <span class="smallcaps">Faust</span> source distribution <span class="lstinline">faust-2.54.9.tar.gz</span> can be downloaded from GitHub (<a href="https://github.com/grame-cncm/faust/releases">https://github.com/grame-cncm/faust/releases</a>).</p>
+<p>The <span class="smallcaps">Faust</span> source distribution <span class="lstinline">faust-2.59.5.tar.gz</span> can be downloaded from GitHub (<a href="https://github.com/grame-cncm/faust/releases">https://github.com/grame-cncm/faust/releases</a>).</p>
 <h2 id="organization-of-the-distribution">Organization of the distribution</h2>
 <p>The first thing is to decompress the downloaded archive. </p>
-<pre><code>    tar xzf faust-2.54.9.tar.gz
+<pre><code>    tar xzf faust-2.59.5.tar.gz
 </code></pre>
-<p>The resulting <span class="lstinline">faust-2.54.9/</span> folder should contain the following elements:</p>
+<p>The resulting <span class="lstinline">faust-2.59.5/</span> folder should contain the following elements:</p>
 <table>
 <thead>
 <tr>
@@ -391,15 +391,15 @@
 </table>
 <h2 id="compilation">Compilation</h2>
 <p><span class="smallcaps">Faust</span> has no dependencies outside standard libraries. Therefore the compilation should be straightforward. There is no configuration phase, to compile the <span class="smallcaps">Faust</span> compiler simply do :</p>
-<pre><code>    cd faust-2.54.9/
+<pre><code>    cd faust-2.59.5/
     make
 </code></pre>
 <p>If the compilation was successful you can test the compiler before installing it:</p>
-<pre><code>    [cd faust-2.54.9/]
+<pre><code>    [cd faust-2.59.5/]
     ./build/bin/faust -v
 </code></pre>
 <p>It should output:</p>
-<pre><code>FAUST Version 2.54.9
+<pre><code>FAUST Version 2.59.5
 Embedded backends: 
    DSP to C
    DSP to C++
@@ -412,20 +412,20 @@ Embedded backends:
    DSP to old C++
    DSP to Rust
    DSP to WebAssembly (wast/wasm)
-Copyright (C) 2002-2022, GRAME - Centre National de Creation Musicale. All rights reserved. 
+Copyright (C) 2002-2023, GRAME - Centre National de Creation Musicale. All rights reserved. 
 </code></pre>
 <p>Then you can also try to compile one of the examples :</p>
-<pre><code>    [cd faust-2.54.9/]
+<pre><code>    [cd faust-2.59.5/]
     ./build/bin/faust examples/generator/noise.dsp
 </code></pre>
 <p>It should produce some C++ code on the standard output.</p>
 <h2 id="installation">Installation</h2>
 <p>You can install <span class="smallcaps">Faust</span> with:</p>
-<pre><code>    [cd faust-2.54.9/]
+<pre><code>    [cd faust-2.59.5/]
     sudo make install
 </code></pre>
 <p>or</p>
-<pre><code>    [cd faust-2.54.9/]
+<pre><code>    [cd faust-2.59.5/]
     su
     make install
 </code></pre>
