@@ -306,7 +306,7 @@
             
             <li class="nav-item" data-level="1"><a href="#faust-compiler-options" class="nav-link">Faust Compiler Options</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2549" class="nav-link">FAUST compiler version 2.54.9</a>
+            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2595" class="nav-link">FAUST compiler version 2.59.5</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -350,7 +350,7 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="faust-compiler-options">Faust Compiler Options</h1>
-<h2 id="faust-compiler-version-2549">FAUST compiler version 2.54.9</h2>
+<h2 id="faust-compiler-version-2595">FAUST compiler version 2.59.5</h2>
 <pre><code class="language-faust-options">usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
     and fileN represents a Faust source file (.dsp extension).
@@ -362,7 +362,6 @@
   -A &lt;dir&gt;  --architecture-dir &lt;dir&gt;      add the directory &lt;dir&gt; to the architecture search path.
   -I &lt;dir&gt;  --import-dir &lt;dir&gt;            add the directory &lt;dir&gt; to the libraries search path.
   -L &lt;file&gt; --library &lt;file&gt;              link with the LLVM module &lt;file&gt;.
-  -t &lt;sec&gt;  --timeout &lt;sec&gt;               abort compilation after &lt;sec&gt; seconds (default 120).
 </code></pre>
 <h2 id="output-options">Output options:</h2>
 <hr />
@@ -386,7 +385,8 @@
   -light      --light-mode                do not generate the entire DSP API.
   -clang      --clang                     when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
   -nvi        --no-virtual                when compiled with the C++ backend, does not add the 'virtual' keyword.
-  -fp         --full-parentheses          always add parentheses around binops 
+  -fp         --full-parentheses          always add parentheses around binops.
+  -cir        --check-integer-range       check float to integer range conversion.
   -exp10      --generate-exp10            pow(10,x) replaced by possibly faster exp10(x).
   -os         --one-sample                generate one sample computation (same as -os0).
   -os0        --one-sample0               generate one sample computation (0 = separated control).
@@ -394,7 +394,7 @@
   -os2        --one-sample2               generate one sample computation (2 = separated control and DSP struct. Separation in short and long delay lines).
   -os3        --one-sample3               generate one sample computation (3 = like 2 but with external memory pointers kept in the DSP struct).
   -cm         --compute-mix               mix in outputs buffers.
-  -ct         --check-table               check rtable/rwtable index range and generate safe access code (0/1: 1 by default).
+  -ct         --check-table               check rtable/rwtable index range and generate safe access code [0/1: 1 by default].
   -cn &lt;name&gt;  --class-name &lt;name&gt;         specify the name of the dsp class to be used instead of mydsp.
   -scn &lt;name&gt; --super-class-name &lt;name&gt;   specify the name of the super class to be used instead of dsp.
   -pn &lt;name&gt;  --process-name &lt;name&gt;       specify the name of the dsp entry-point instead of process.
@@ -403,12 +403,13 @@
   -mem        --memory-manager            allocate static in global state using a custom memory manager.
   -ftz &lt;n&gt;    --flush-to-zero &lt;n&gt;         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
   -rui        --range-ui                  whether to generate code to constraint vslider/hslider/nentry values in [min..max] range.
+  -fui        --freeze-ui                 whether to freeze vslider/hslider/nentry to a given value (init value by default).
   -inj &lt;f&gt;    --inject &lt;f&gt;                inject source file &lt;f&gt; into architecture file instead of compiling a dsp file.
   -scal       --scalar                    generate non-vectorized code (default).
   -inpl       --in-place                  generates code working when input and output buffers are the same (scalar mode only).
   -vec        --vectorize                 generate easier to vectorize code.
   -vs &lt;n&gt;     --vec-size &lt;n&gt;              size of the vector (default 32 samples).
-  -lv &lt;n&gt;     --loop-variant &lt;n&gt;          [0:fastest (default), 1:simple].
+  -lv &lt;n&gt;     --loop-variant &lt;n&gt;          [0:fastest, fixed vector size and a remaining loop (default), 1:simple, variable vector size].
   -omp        --openmp                    generate OpenMP pragmas, activates --vectorize option.
   -pl         --par-loop                  generate parallel loops in --openmp mode.
   -sch        --scheduler                 generate tasks and use a Work Stealing scheduler, activates --vectorize option.
@@ -417,14 +418,15 @@
   -dfs        --deep-first-scheduling     schedule vector loops in deep first order.
   -g          --group-tasks               group single-threaded sequential tasks together when -omp or -sch is used.
   -fun        --fun-tasks                 separate tasks code as separated functions (in -vec, -sch, or -omp mode).
-  -fm &lt;file&gt;  --fast-math &lt;file&gt;          use optimized versions of mathematical functions implemented in &lt;file&gt;, use 'faust/dsp/fastmath.cpp' when file is 'def'.
+  -fm &lt;file&gt;  --fast-math &lt;file&gt;          use optimized versions of mathematical functions implemented in &lt;file&gt;, use 'faust/dsp/fastmath.cpp' when file is 'def', assume functions are defined in the architecture file when file is 'arch'.
   -mapp       --math-approximation        simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
   -ns &lt;name&gt;  --namespace &lt;name&gt;          generate C++ or D code in a namespace &lt;name&gt;.
   -vhdl          --vhdl                   output vhdl file.
   -vhdl-trace    --vhdl-trace             activate trace.
   -vhdl-type 0|1 --vhdl-type 0|1          sample format 0 = sfixed (default), 1 = float.
-  -vhdl-msb &lt;n&gt;  --vhdl-msb &lt;n&gt;           MSB number of bits.
-  -vhdl-lsb &lt;n&gt;  --vhdl-lsb &lt;n&gt;           LSB number of bits.
+  -vhdl-msb &lt;n&gt;  --vhdl-msb &lt;n&gt;           Most Significant Bit (MSB) position.
+  -vhdl-lsb &lt;n&gt;  --vhdl-lsb &lt;n&gt;           Less Significant Bit (LSB) position.
+  -fpga-mem &lt;n&gt;  --fpga-mem &lt;n&gt;           FPGA block ram max size, used in -os2/-os3 mode.
   -wi &lt;n&gt;     --widening-iterations &lt;n&gt;   number of iterations before widening in signal bounding.
   -ni &lt;n&gt;     --narrowing-iterations &lt;n&gt;  number of iterations before stopping narrowing in signal bounding.
 </code></pre>
@@ -439,6 +441,7 @@
   -mns &lt;n&gt;   --max-name-size &lt;n&gt;          threshold during block-diagram generation (default 40 char).
   -sn        --simple-names               use simple names (without arguments) during block-diagram generation.
   -blur      --shadow-blur                add a shadow blur to SVG boxes.
+  -sc        --scaled-svg                 automatic scalable SVG.
 </code></pre>
 <h2 id="math-doc-options">Math doc options:</h2>
 <hr />
@@ -457,6 +460,7 @@
   -me         --math-exceptions           check / for 0 as denominator and remainder, fmod, sqrt, log10, log, acos, asin functions domain.
   -sts        --strict-select             generate strict code for 'selectX' even for stateless branches (both are computed).
   -wall       --warning-all               print all warnings.
+  -t &lt;sec&gt;    --timeout &lt;sec&gt;             abort compilation after &lt;sec&gt; seconds (default 120).
 </code></pre>
 <h2 id="information-options">Information options:</h2>
 <hr />

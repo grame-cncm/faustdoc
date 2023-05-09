@@ -1,6 +1,6 @@
 # Using Faust in Cmajor
 
-In this tutorial, we present how [Faust](https://faust.grame.fr) can be used with [Cmajor](https://cmajor.dev), a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. Compiling Faust DSP to cmajor code will allow to take profit of hundreds of DSP building blocks implemented in the [Faust Libraries](https://faustlibraries.grame.fr), ready to use [Examples](https://faustdoc.grame.fr/examples/ambisonics/), any DSP program developed in more than 120 projects listed in the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page, or Faust DSP programs found on the net.
+In this tutorial, we present how [Faust](https://faust.grame.fr) can be used with [Cmajor](https://cmajor.dev), a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. Compiling Faust DSP to cmajor code will allow to take profit of hundreds of DSP building blocks implemented in the [Faust Libraries](https://faustlibraries.grame.fr), ready to use [Examples](https://faustdoc.grame.fr/examples/ambisonics/), any DSP program developed in more than 200 projects listed in the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page, or Faust DSP programs found on the net.
 
 #### Who is this tutorial for?
 
