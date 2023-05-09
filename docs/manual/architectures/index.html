@@ -688,6 +688,14 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#dart-tools" class="nav-link">Dart tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#flutter_faust_ffi" class="nav-link">flutter_faust_ffi</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -2582,7 +2590,10 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <h4 id="faust-compiler-microservice"><a href="https://github.com/Ameobea/web-synth/tree/master/faust-compiler#faust-compiler-microservice">Faust Compiler Microservice</a></h4>
 <p>This is a microservice that serves a single purpose: compiling Faust code that is sent to it into WebAssembly that can then be loaded and run natively from within the web synth application. It is written in go because go is supposed to be good for this sort of thing.</p>
 <h4 id="mosfez-faust"><a href="https://github.com/dxinteractive/mosfez-faust">mosfez-faust</a></h4>
-<p>Makes dynamic compilation of Faust on the web a little easier, and has a dev project to run values through dsp offline, and preview dsp live. It's an opinionated version of some parts of <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/webaudio">Faust for webaudio</a>, mostly just the Web Assembly Faust compiler, wrapped up in a library with additional features. </p></div>
+<p>Makes dynamic compilation of Faust on the web a little easier, and has a dev project to run values through dsp offline, and preview dsp live. It's an opinionated version of some parts of <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/webaudio">Faust for webaudio</a>, mostly just the Web Assembly Faust compiler, wrapped up in a library with additional features. </p>
+<h3 id="dart-tools">Dart tools</h3>
+<h4 id="flutter_faust_ffi"><a href="https://github.com/t2techno/flutter_faust_ffi">flutter_faust_ffi</a></h4>
+<p>A basic flutter app as a proof of concept utilizing Faust's C API export with Dart's ffi methods to create cross-platform plug-ins.</p></div>
             </div>
         </div>
 
