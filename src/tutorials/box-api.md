@@ -81,37 +81,6 @@ A macro to wrap all the needed steps:
 }                        \   
 ```
 
-And additional usefull functions to be used later in the tutorial: 
-
-```C++
-/**
- * Return the current runtime sample rate.
- *
- * Reproduce the 'SR' definition in platform.lib: 
- * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, <dummy.h>)));
- *
- * @return the current runtime sample rate.
- */
-inline Box SR()
-{
-    return boxMin(boxReal(192000.0), 
-                  boxMax(boxReal(1.0), 
-                  boxFConst(SType::kSInt, "fSamplingFreq", "<math.h>")));
-}
-
-/** 
- * Return the current runtime buffer size.
- *
- * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, <dummy.h>);
- *
- * @return the current runtime buffer size.
- */
-inline Box BS()
-{
-    return boxFVar(SType::kSInt, "count", "<math.h>");
-}
-```
-
 ### Examples 
 
 For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps). All C++ examples are defined in the [box-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.cpp) tool, to be compiled with `make box-tester` in the tools/benchmark folder.
@@ -525,7 +494,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Accessing the global context
 
-In Faust, the underlying audio engine sample rate and buffer size  is accessed using the foreign function and constant mechanism. The values can also be used in the box language with the following helper functions: 
+In Faust, the underlying audio engine sample rate and buffer size is accessed using the foreign function and constant mechanism. The values can also be used in the box language with the following helper functions: 
 
 ```C++
 // Reproduce the 'SR' definition in platform.lib 

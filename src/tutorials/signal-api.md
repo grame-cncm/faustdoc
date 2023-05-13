@@ -81,37 +81,6 @@ A macro to wrap all the needed steps:
 }                        \   
 ```
 
-And additional usefull functions to be used later in the tutorial: 
-
-```C++
-/**
- * Return the current runtime sample rate.
- *
- * Reproduce the 'SR' definition in platform.lib: 
- * SR = min(192000.0, max(1.0, fconstant(int fSamplingFreq, <math.h>)));
- *
- * @return the current runtime sample rate.
- */
-inline Signal SR()
-{
-    return sigMin(sigReal(192000.0), 
-                  sigMax(sigReal(1.0), 
-                         sigFConst(SType::kSInt, "fSamplingFreq", "<math.h>")));
-}
-
-/**
- * Return the current runtime buffer size.
- *
- * Reproduce the 'BS' definition in platform.lib: BS = fvariable(int count, <math.h>);
- *
- * @return the current runtime buffer size.
- */
-inline Signal BS()
-{
-    return sigFVar(SType::kSInt, "count", "<math.h>");
-}
-```
-
 ### Examples 
 
 For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C++ examples are defined in the [signal-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp) tool, to be compiled with `make signal-tester` in the tools/benchmark folder.
@@ -589,7 +558,7 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 
 #### Accessing the global context
 
-In Faust, the underlying audio engine sample rate and buffer size  is accessed using the foreign function and constant mechanism. The values can also be used in the signal language with the following helper functions: 
+In Faust, the underlying audio engine sample rate and buffer size is accessed using the foreign function and constant mechanism. The values can also be used in the signal language with the following helper functions: 
 
 ```C++
 // Reproduce the 'SR' definition in platform.lib 
