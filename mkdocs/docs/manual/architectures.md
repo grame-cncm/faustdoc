@@ -2234,6 +2234,9 @@ Static metadata generator for Faust/C++. This program builds the metadata for a 
 
 [Julius Smith](https://ccrma.stanford.edu/~jos/) projects to facilitate the use of Faust generated  C++ code in JUCE projects. 
 
+[Using Faust with the Arduino Audio Tools Library](https://www.pschatzmann.ch/home/2022/04/22/using-faust-dsp-with-my-arduino-audio-tools/)
+An alternative way to use the ESP32 board with Faust, possibly easier and more versatile than the examples mentioned on the [esp32 tutorial](https://faustdoc.grame.fr/tutorials/esp32/).
+
 ### Cmajor tools 
 
 #### [Using Faust in Cmajor](https://faustdoc.grame.fr/tutorials/cmajor/)
