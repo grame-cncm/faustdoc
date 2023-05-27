@@ -2303,6 +2303,10 @@ Rust wrapper for the Faust compiler. It uses the libfaust LLVM C API.
 
 Another Rust wrapper for the Faust compiler, using [JACK](https://jackaudio.org) server for audio. It uses the libfaust LLVM C API.
 
+#### [lowpass-lr4-faust-nih-plug](https://codeberg.org/obsoleszenz/lowpass-lr4-faust-nih-plug)
+
+A work-in-progress project to integrate Faust generated Rust code with [NIH-plug](https://github.com/robbert-vdh/nih-plug).
+
 ### WebAssembly tools 
 
 #### [faust-loader](https://github.com/Smona/faust-loader)
