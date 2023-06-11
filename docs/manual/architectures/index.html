@@ -1444,7 +1444,7 @@ process = no.noise;
 <p>In some cases control may be more finely interleaved with audio rendering, and some languages simply choose to interleave control and sample computation at sample level.</p>
 <p>Although the Faust language permits the description of sample level algorithms (i.e., like recursive filters, etc.), Faust generated DSP are usually computed by blocks. Underlying audio architectures give a fixed size buffer over and over to the DSP <code>compute</code> method which consumes and produces audio samples.</p>
 <h5 id="control-to-dsp-link">Control to DSP Link</h5>
-<p>In the current version of the Faust generated code, the primary connection point between the control interface and the DSP code is simply a memory zone. For control inputs, the architecture layer continuously write values in this zone, which is then <em>sampled</em> by the DSP code at the beginning of the compute method, and used with the same values during the entire call. Because of this simple control/DSP connexion mechanism, the <em>most recent value</em> is seen by the DSP code.</p>
+<p>In the current version of the Faust generated code, the primary connection point between the control interface and the DSP code is simply a memory zone. For control inputs, the architecture layer continuously write values in this zone, which is then <em>sampled</em> by the DSP code at the beginning of the <code>compute</code> method, and used with the same values throughout the call. Because of this simple control/DSP connexion mechanism, the <em>most recent value</em> is used by the DSP code.</p>
 <p>Similarly for control outputs , the DSP code inside the <code>compute</code> method possibly writes several values at the same memory zone, and the <em>last value</em> only will be seen by the control architecture layer when the method finishes.</p>
 <p>Although this behaviour is satisfactory for most use-cases, some specific usages need to handle the complete stream of control values with sample accurate timing. For instance keeping all control messages and handling them at their exact position in time is critical for proper MIDI clock synchronisation.</p>
 <h5 id="time-stamped-control">Time-Stamped Control</h5>
@@ -1462,6 +1462,7 @@ process = no.noise;
 </ul>
 <p><img src="img/compute_slices.png" class="mx-auto d-block" width="60%"></p>
 <p>Since time-stamped control messages from the previous audio block are used in the current block, control messages are aways handled with one audio buffer latency.</p>
+<p>Note that this slices based computation model can always be directly implemented on top of the underlying audio layer, without relying on the <code>timed_dsp</code> wrapper class. </p>
 <h5 id="typical-use-case">Typical Use-Case</h5>
 <p>A typical Faust program can use the <em>MIDI clock</em> command signal to possibly compute the Beat Per Minutes (BPM) information for any synchronization need it may have. </p>
 <p>Here is a simple example of a sinusoid generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:</p>

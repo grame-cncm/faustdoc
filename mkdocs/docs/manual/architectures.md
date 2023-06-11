@@ -842,7 +842,7 @@ Although the Faust language permits the description of sample level algorithms (
 
 ##### Control to DSP Link
 
-In the current version of the Faust generated code, the primary connection point between the control interface and the DSP code is simply a memory zone. For control inputs, the architecture layer continuously write values in this zone, which is then *sampled* by the DSP code at the beginning of the compute method, and used with the same values during the entire call. Because of this simple control/DSP connexion mechanism, the *most recent value* is seen by the DSP code.
+In the current version of the Faust generated code, the primary connection point between the control interface and the DSP code is simply a memory zone. For control inputs, the architecture layer continuously write values in this zone, which is then *sampled* by the DSP code at the beginning of the `compute` method, and used with the same values throughout the call. Because of this simple control/DSP connexion mechanism, the *most recent value* is used by the DSP code.
 
 Similarly for control outputs , the DSP code inside the `compute` method possibly writes several values at the same memory zone, and the *last value* only will be seen by the control architecture layer when the method finishes.
 
@@ -871,6 +871,8 @@ Since control values can change several times inside the same audio block, the D
 <img src="img/compute_slices.png" class="mx-auto d-block" width="60%">
 
 Since time-stamped control messages from the previous audio block are used in the current block, control messages are aways handled with one audio buffer latency.
+
+Note that this slices based computation model can always be directly implemented on top of the underlying audio layer, without relying on the `timed_dsp` wrapper class. 
 
 ##### Typical Use-Case
 
