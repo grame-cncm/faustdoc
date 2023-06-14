@@ -500,14 +500,14 @@ process = *(smoother_vol);
 <p>When costly math functions still appear in the sample rate code, the <code>-fm</code> <a href="https://faustdoc.grame.fr/manual/options/">compilation option</a> can possibly be used to replace the standard versions provided by the underlying OS (like <code>std::cos</code>, <code>std::tan</code>... in C++ for instance) with user defined ones (hopefully faster, but possibly less precise).</p>
 <h3 id="delay-lines-implementation-and-dsp-memory-size">Delay lines implementation and DSP memory size</h3>
 <p>The Faust compiler automatically allocates buffers for the delay lines. At each sample calculation, the delayed signal is written to a specific location (the <em>write</em> position) and read from another location (the <em>read</em> position), the <em>distance in samples</em> between the read and write indexes representing the delay itself.</p>
-<p>Two possible strategies for implementing delay lines are available: either the read and write indices themselves move along the delay line, or the read and write indices stay the same and the delay line memory is shifted after each sample computation. </p>
-<p>Two compiler options <code>-mcd &lt;n&gt;</code> (<code>--max-copy-delay</code>) and <code>-dlt &lt;n&gt;</code> (<code>--delay-line-threshold</code>) allow to play with the two strategies and even possibly combine them.</p>
-<p>For very short delay lines of up to two samples, the first strategy is implemented by manually shifting the buffer. Then a shifting loop is generated for delay from 2 up to <code>-mcd &lt;n&gt;</code> samples. </p>
+<p>There are two possible strategies for implementing delay lines: either the read and write indices move themselves along the delay line, or the read and write indices remain the same and the delay line memory is moved after each sample calculation.</p>
+<p>Two compiler options <code>-mcd &lt;n&gt;</code> (<code>-max-copy-delay</code>) and <code>-dlt &lt;n&gt;</code> (<code>--delay-line-threshold</code>) allow you to play with both strategies and even combine them.</p>
+<p>For very short delay lines of up to two samples, the first strategy is implemented by manually shifting the buffer. Then a shift loop is generated for delay from 2 up to <code>-mcd &lt;n&gt;</code> samples. </p>
 <p>For delays values bigger than <code>-mcd &lt;n&gt;</code> samples, the second strategy is implemented by:</p>
 <ul>
 <li>either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than <code>-dlt &lt;n&gt;</code> value.</li>
 <li>or using a <em>wrapping</em> index moved by an <em>if</em> based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then <code>-dlt &lt;n&gt;</code>. 
-In this case the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is the slowest but consume less memory. </li>
+ In this case the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is the slowest but consume less memory.  Here is a scheme explaing the mecanism:</li>
 </ul>
 <pre><code>[ shift buffer |-mcd &lt;N1&gt;| wrapping power-of-two buffer |-dlt &lt;N2&gt;| if based wrapping buffer ]
 </code></pre>
@@ -659,7 +659,7 @@ In this case the first method is faster but consumes more memory (since a delay 
     }
 }
 </code></pre>
-<p>Note that by default <code>-mcd 16</code> is <code>-dlt &lt;INT_MAX&gt;</code> values are used. Choosing values that use less memory can be particularly important in the context of embedded devices.</p>
+<p>Note that by default <code>-mcd 16</code> is <code>-dlt &lt;INT_MAX&gt;</code> values are used. Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the <code>-mcd</code> and <code>-dlt</code> options can help optimize CPU utilization.</p>
 <h3 id="managing-dsp-memory-layout">Managing DSP Memory Layout</h3>
 <p>On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the <code>-mem</code> compilation option and an <a href="https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager">adapted architecture file</a>.</p>
 <h2 id="optimizing-the-c-or-llvm-code">Optimizing the C++ or LLVM Code</h2>
