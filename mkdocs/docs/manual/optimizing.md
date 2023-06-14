@@ -154,9 +154,10 @@ Two compiler options `-mcd <n>` (`--max-copy-delay`) and `-dlt <n>` (`--delay-li
 
 For very short delay lines of up to two samples, the first strategy is implemented by manually shifting the buffer. Then a shifting loop is generated for delay from 2 up to `-mcd <n>` samples. 
 
-For delays values bigger than `-mcd <n>` samples`, the second strategy is implemented by:
-- either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than `-dlt <n>` value.
-- or using a *wrapping* index moved by an *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then `-dlt <n>`. 
+For delays values bigger than `-mcd <n>` samples, the second strategy is implemented by:
+
+ - either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than `-dlt <n>` value.
+ - or using a *wrapping* index moved by an *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then `-dlt <n>`. 
 In this case the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is the slowest but consume less memory. 
 
 ```
@@ -166,11 +167,10 @@ In this case the first method is faster but consumes more memory (since a delay 
 Here is an example of several delay lines in parallel:
 
 ```
-process = par(i, 10, @(i))  :> _;
+process = par(i, 10, @(i)) :> _;
 ```
 
-When compiled with `faust -mcd 20`, all delay line use the *shifted memory* second model:
-
+When compiled with `faust -mcd 20`, all delay lines use the *shifted memory* second model:
 
 ```c++
 virtual void compute(int count, 
@@ -228,7 +228,7 @@ virtual void compute(int count,
 }
 ```
 
-When compiled with `faust -mcd 0`, all delay line use the *wrapping index* first model with power-of-two size:
+When compiled with `faust -mcd 0`, all delay lines use the *wrapping index* first model with power-of-two size:
 
 ```c++
 virtual void compute(int count, 
@@ -299,7 +299,11 @@ virtual void compute(int count,
         fVec6[0] = float(input3[i0]);
         fVec7[0] = float(input2[i0]);
         fVec8[0] = float(input1[i0]);
-        output0[i0] = FAUSTFLOAT(fVec0[((fVec0_ridx_tmp0 < 0) ? fVec0_ridx_tmp0 + 10 : fVec0_ridx_tmp0)] + fVec1[((fVec1_ridx_tmp0 < 0) ? fVec1_ridx_tmp0 + 9 : fVec1_ridx_tmp0)] + fVec2[((fVec2_ridx_tmp0 < 0) ? fVec2_ridx_tmp0 + 8 : fVec2_ridx_tmp0)] + fVec3[(IOTA0 - 6) & 7] + fVec4[(IOTA0 - 5) & 7] + fVec5[(IOTA0 - 4) & 7] + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
+        output0[i0] = FAUSTFLOAT(fVec0[((fVec0_ridx_tmp0 < 0) ? fVec0_ridx_tmp0 + 10 : fVec0_ridx_tmp0)] 
+            + fVec1[((fVec1_ridx_tmp0 < 0) ? fVec1_ridx_tmp0 + 9 : fVec1_ridx_tmp0)] 
+            + fVec2[((fVec2_ridx_tmp0 < 0) ? fVec2_ridx_tmp0 + 8 : fVec2_ridx_tmp0)] 
+            + fVec3[(IOTA0 - 6) & 7] + fVec4[(IOTA0 - 5) & 7] + fVec5[(IOTA0 - 4) & 7] 
+            + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
         fVec0_widx_tmp = fVec0_widx_tmp + 1;
         fVec0_widx_tmp = ((fVec0_widx_tmp == 10) ? 0 : fVec0_widx_tmp);
         fVec0_widx = fVec0_widx_tmp;
