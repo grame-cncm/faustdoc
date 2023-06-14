@@ -144,14 +144,182 @@ The use of `rdtable` kind of compilation done at init time can be simplified usi
 
 When costly math functions still appear in the sample rate code, the `-fm` [compilation option](https://faustdoc.grame.fr/manual/options/) can possibly be used to replace the standard versions provided by the underlying OS (like `std::cos`, `std::tan`... in C++ for instance) with user defined ones (hopefully faster, but possibly less precise).
 
-### Managing DSP Memory Size
+### Delay lines implementation and DSP memory size
 
-The Faust compiler automatically allocates memory for delay-lines, represented as buffers with *wrapping* read/write indexes that continously loop inside the buffer. Several strategies can be used to implement the wrapping indexes:  
+The Faust compiler automatically allocates buffers for the delay lines. At each sample calculation, the delayed signal is written to a specific location (the *write* position) and read from another location (the *read* position), the *distance in samples* between the read and write indexes representing the delay itself.
 
-- arrays of power-of-two sizes can be accessed using mask based index computation which is the fastest method, but consumes more memory since a delay-line of a given size will be extended to the next power-of-two size
-- otherwise the *wrapping* index can be implemented with a *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it 
+Two possible strategies for implementing delay lines are available: either the read and write indices themselves move along the delay line, or the read and write indices stay the same and the delay line memory is shifted after each sample computation. 
 
-The `-dlt <n>`  (`--delay-line-threshold`) option allows to choose between the two available stategies. By default its value is INT_MAX thus all delay-lines are allocated using the first method. By choising a given value (in frames) for `-dlt`, all delay-lines with size bellow this value will be allocated using the first method (faster but consuming more memory), and other ones with the second method (slower but consuming less memory). Thus by gradually changing this `-dlt`  value in this continuum *faster/more memory up to slower/less memory*, the optimal choice can be done. **This option can be especially useful in embedded devices context.**
+Two compiler options `-mcd <n>` (`--max-copy-delay`) and `-dlt <n>` (`--delay-line-threshold`) allow to play with the two strategies and even possibly combine them.
+
+For very short delay lines of up to two samples, the first strategy is implemented by manually shifting the buffer. Then a shifting loop is generated for delay from 2 up to `-mcd <n>` samples. 
+
+For delays values bigger than `-mcd <n>` samples`, the second strategy is implemented by:
+- either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than `-dlt <n>` value.
+- or using a *wrapping* index moved by an *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then `-dlt <n>`. 
+In this case the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is the slowest but consume less memory. 
+
+```
+[ shift buffer |-mcd <N1>| wrapping power-of-two buffer |-dlt <N2>| if based wrapping buffer ]
+```
+
+Here is an example of several delay lines in parallel:
+
+```
+process = par(i, 10, @(i))  :> _;
+```
+
+When compiled with `faust -mcd 20`, all delay line use the *shifted memory* second model:
+
+
+```c++
+virtual void compute(int count, 
+    FAUSTFLOAT** RESTRICT inputs, 
+    FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* input2 = inputs[2];
+    FAUSTFLOAT* input3 = inputs[3];
+    FAUSTFLOAT* input4 = inputs[4];
+    FAUSTFLOAT* input5 = inputs[5];
+    FAUSTFLOAT* input6 = inputs[6];
+    FAUSTFLOAT* input7 = inputs[7];
+    FAUSTFLOAT* input8 = inputs[8];
+    FAUSTFLOAT* input9 = inputs[9];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        fVec0[0] = float(input9[i0]);
+        fVec1[0] = float(input8[i0]);
+        fVec2[0] = float(input7[i0]);
+        fVec3[0] = float(input6[i0]);
+        fVec4[0] = float(input5[i0]);
+        fVec5[0] = float(input4[i0]);
+        fVec6[0] = float(input3[i0]);
+        fVec7[0] = float(input2[i0]);
+        fVec8[0] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[9] + fVec1[8] + fVec2[7] + fVec3[6] + fVec4[5] 
+            + fVec5[4] + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
+        for (int j0 = 9; j0 > 0; j0 = j0 - 1) {
+            fVec0[j0] = fVec0[j0 - 1];
+        }
+        for (int j1 = 8; j1 > 0; j1 = j1 - 1) {
+            fVec1[j1] = fVec1[j1 - 1];
+        }
+        for (int j2 = 7; j2 > 0; j2 = j2 - 1) {
+            fVec2[j2] = fVec2[j2 - 1];
+        }
+        for (int j3 = 6; j3 > 0; j3 = j3 - 1) {
+            fVec3[j3] = fVec3[j3 - 1];
+        }
+        for (int j4 = 5; j4 > 0; j4 = j4 - 1) {
+            fVec4[j4] = fVec4[j4 - 1];
+        }
+        for (int j5 = 4; j5 > 0; j5 = j5 - 1) {
+            fVec5[j5] = fVec5[j5 - 1];
+        }
+        for (int j6 = 3; j6 > 0; j6 = j6 - 1) {
+            fVec6[j6] = fVec6[j6 - 1];
+        }
+        fVec7[2] = fVec7[1];
+        fVec7[1] = fVec7[0];
+        fVec8[1] = fVec8[0];
+    }
+}
+```
+
+When compiled with `faust -mcd 0`, all delay line use the *wrapping index* first model with power-of-two size:
+
+```c++
+virtual void compute(int count, 
+    FAUSTFLOAT** RESTRICT inputs, 
+    FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* input2 = inputs[2];
+    FAUSTFLOAT* input3 = inputs[3];
+    FAUSTFLOAT* input4 = inputs[4];
+    FAUSTFLOAT* input5 = inputs[5];
+    FAUSTFLOAT* input6 = inputs[6];
+    FAUSTFLOAT* input7 = inputs[7];
+    FAUSTFLOAT* input8 = inputs[8];
+    FAUSTFLOAT* input9 = inputs[9];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        fVec0[IOTA0 & 15] = float(input9[i0]);
+        fVec1[IOTA0 & 15] = float(input8[i0]);
+        fVec2[IOTA0 & 7] = float(input7[i0]);
+        fVec3[IOTA0 & 7] = float(input6[i0]);
+        fVec4[IOTA0 & 7] = float(input5[i0]);
+        fVec5[IOTA0 & 7] = float(input4[i0]);
+        fVec6[IOTA0 & 3] = float(input3[i0]);
+        fVec7[IOTA0 & 3] = float(input2[i0]);
+        fVec8[IOTA0 & 1] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[(IOTA0 - 9) & 15] + fVec1[(IOTA0 - 8) & 15] 
+            + fVec2[(IOTA0 - 7) & 7] + fVec3[(IOTA0 - 6) & 7] + fVec4[(IOTA0 - 5) & 7] 
+            + fVec5[(IOTA0 - 4) & 7] + fVec6[(IOTA0 - 3) & 3] + fVec7[(IOTA0 - 2) & 3] 
+            + float(input0[i0]) + fVec8[(IOTA0 - 1) & 1]);
+        IOTA0 = IOTA0 + 1;
+    }
+}
+```
+
+When compiled with `faust -mcd 4 -dlt 7`, a mixture of the three generation mmodel is used:
+
+```c++
+virtual void compute(int count, 
+    FAUSTFLOAT** RESTRICT inputs, 
+    FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* input2 = inputs[2];
+    FAUSTFLOAT* input3 = inputs[3];
+    FAUSTFLOAT* input4 = inputs[4];
+    FAUSTFLOAT* input5 = inputs[5];
+    FAUSTFLOAT* input6 = inputs[6];
+    FAUSTFLOAT* input7 = inputs[7];
+    FAUSTFLOAT* input8 = inputs[8];
+    FAUSTFLOAT* input9 = inputs[9];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        int fVec0_widx_tmp = fVec0_widx;
+        fVec0[fVec0_widx_tmp] = float(input9[i0]);
+        int fVec0_ridx_tmp0 = fVec0_widx - 9;
+        int fVec1_widx_tmp = fVec1_widx;
+        fVec1[fVec1_widx_tmp] = float(input8[i0]);
+        int fVec1_ridx_tmp0 = fVec1_widx - 8;
+        int fVec2_widx_tmp = fVec2_widx;
+        fVec2[fVec2_widx_tmp] = float(input7[i0]);
+        int fVec2_ridx_tmp0 = fVec2_widx - 7;
+        fVec3[IOTA0 & 7] = float(input6[i0]);
+        fVec4[IOTA0 & 7] = float(input5[i0]);
+        fVec5[IOTA0 & 7] = float(input4[i0]);
+        fVec6[0] = float(input3[i0]);
+        fVec7[0] = float(input2[i0]);
+        fVec8[0] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[((fVec0_ridx_tmp0 < 0) ? fVec0_ridx_tmp0 + 10 : fVec0_ridx_tmp0)] + fVec1[((fVec1_ridx_tmp0 < 0) ? fVec1_ridx_tmp0 + 9 : fVec1_ridx_tmp0)] + fVec2[((fVec2_ridx_tmp0 < 0) ? fVec2_ridx_tmp0 + 8 : fVec2_ridx_tmp0)] + fVec3[(IOTA0 - 6) & 7] + fVec4[(IOTA0 - 5) & 7] + fVec5[(IOTA0 - 4) & 7] + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
+        fVec0_widx_tmp = fVec0_widx_tmp + 1;
+        fVec0_widx_tmp = ((fVec0_widx_tmp == 10) ? 0 : fVec0_widx_tmp);
+        fVec0_widx = fVec0_widx_tmp;
+        fVec1_widx_tmp = fVec1_widx_tmp + 1;
+        fVec1_widx_tmp = ((fVec1_widx_tmp == 9) ? 0 : fVec1_widx_tmp);
+        fVec1_widx = fVec1_widx_tmp;
+        fVec2_widx_tmp = fVec2_widx_tmp + 1;
+        fVec2_widx_tmp = ((fVec2_widx_tmp == 8) ? 0 : fVec2_widx_tmp);
+        fVec2_widx = fVec2_widx_tmp;
+        IOTA0 = IOTA0 + 1;
+        for (int j0 = 3; j0 > 0; j0 = j0 - 1) {
+            fVec6[j0] = fVec6[j0 - 1];
+        }
+        fVec7[2] = fVec7[1];
+        fVec7[1] = fVec7[0];
+        fVec8[1] = fVec8[0];
+    }
+}
+```
+Note that by default `-mcd 16` is `-dlt <INT_MAX>` values are used. Choosing values that use less memory can be particularly important in the context of embedded devices.
 
 ### Managing DSP Memory Layout
 
