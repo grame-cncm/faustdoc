@@ -158,7 +158,7 @@ For very short delay lines of up to two samples, the first strategy is implement
 For delays values bigger than `-mcd <n>` samples, the second strategy is implemented by:
 
 - either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than `-dlt <n>` value.
-- or using a *wrapping* index moved by an *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then `-dlt <n>`. 
+- or using a wrapping index moved by an if based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then `-dlt <n>`. 
 
 In this strategy the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is  slower but consume less memory.  
 
@@ -201,33 +201,37 @@ virtual void compute(int count,
         fVec5[0] = float(input4[i0]);
         fVec6[0] = float(input3[i0]);
         fVec7[0] = float(input2[i0]);
-        fVec8[0] = float(input1[i0]);
-        output0[i0] = FAUSTFLOAT(fVec0[9] + fVec1[8] + fVec2[7] + fVec3[6] + fVec4[5] 
-            + fVec5[4] + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
-        for (int j0 = 9; j0 > 0; j0 = j0 - 1) {
+        fVec8[0] = float(input0[i0]);
+        fVec9[0] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[10] + fVec1[9] + fVec2[8] + fVec3[7] + fVec4[6] + fVec5[5] + fVec6[4] + fVec7[3] + fVec8[1] + fVec9[2]);
+        for (int j0 = 10; j0 > 0; j0 = j0 - 1) {
             fVec0[j0] = fVec0[j0 - 1];
         }
-        for (int j1 = 8; j1 > 0; j1 = j1 - 1) {
+        for (int j1 = 9; j1 > 0; j1 = j1 - 1) {
             fVec1[j1] = fVec1[j1 - 1];
         }
-        for (int j2 = 7; j2 > 0; j2 = j2 - 1) {
+        for (int j2 = 8; j2 > 0; j2 = j2 - 1) {
             fVec2[j2] = fVec2[j2 - 1];
         }
-        for (int j3 = 6; j3 > 0; j3 = j3 - 1) {
+        for (int j3 = 7; j3 > 0; j3 = j3 - 1) {
             fVec3[j3] = fVec3[j3 - 1];
         }
-        for (int j4 = 5; j4 > 0; j4 = j4 - 1) {
+        for (int j4 = 6; j4 > 0; j4 = j4 - 1) {
             fVec4[j4] = fVec4[j4 - 1];
         }
-        for (int j5 = 4; j5 > 0; j5 = j5 - 1) {
+        for (int j5 = 5; j5 > 0; j5 = j5 - 1) {
             fVec5[j5] = fVec5[j5 - 1];
         }
-        for (int j6 = 3; j6 > 0; j6 = j6 - 1) {
+        for (int j6 = 4; j6 > 0; j6 = j6 - 1) {
             fVec6[j6] = fVec6[j6 - 1];
         }
-        fVec7[2] = fVec7[1];
-        fVec7[1] = fVec7[0];
+        for (int j7 = 3; j7 > 0; j7 = j7 - 1) {
+            fVec7[j7] = fVec7[j7 - 1];
+        }
         fVec8[1] = fVec8[0];
+        fVec9[2] = fVec9[1];
+        fVec9[1] = fVec9[0];
+       
     }
 }
 ```
@@ -236,11 +240,11 @@ In this code example, the *very short delay lines of up to two samples by manual
 
 ```c++
 ...
-// Delay line of 2 samples
-fVec7[2] = fVec7[1];
-fVec7[1] = fVec7[0];
 // Delay line of 1 sample
 fVec8[1] = fVec8[0];
+// Delay line of 2 samples
+fVec9[2] = fVec9[1];
+fVec9[1] = fVec9[0];
 ...
 ```
 
@@ -248,12 +252,14 @@ and the *shift loop is generated for delay from 2 up to `-mcd <n>` samples*  met
 
 ```c++
 ...
-output0[i0] = FAUSTFLOAT(fVec0[9] + fVec1[8] + fVec2[7] + fVec3[6] + fVec4[5] 
-            + fVec5[4] + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
-for (int j0 = 9; j0 > 0; j0 = j0 - 1) {
+output0[i0] = FAUSTFLOAT(fVec0[10] + fVec1[9] + fVec2[8] + fVec3[7] + fVec4[6] 
+    + fVec5[5] + fVec6[4] + fVec7[3] + fVec8[1] + fVec9[2]);
+// Shift delay line of 10 samples
+for (int j0 = 10; j0 > 0; j0 = j0 - 1) {
     fVec0[j0] = fVec0[j0 - 1];
 }
-for (int j1 = 8; j1 > 0; j1 = j1 - 1) {
+// Shift delay line of 9 samples
+for (int j1 = 9; j1 > 0; j1 = j1 - 1) {
     fVec1[j1] = fVec1[j1 - 1];
 }
 ...
@@ -264,7 +270,7 @@ When compiled with `faust -mcd 0`, all delay lines use the *wrapping index* seco
 ```c++
 virtual void compute(int count, 
     FAUSTFLOAT** RESTRICT inputs, 
-    FAUSTFLOAT** RESTRICT outputs) 
+F   AUSTFLOAT** RESTRICT outputs) 
 {
     FAUSTFLOAT* input0 = inputs[0];
     FAUSTFLOAT* input1 = inputs[1];
@@ -280,21 +286,24 @@ virtual void compute(int count,
     for (int i0 = 0; i0 < count; i0 = i0 + 1) {
         fVec0[IOTA0 & 15] = float(input9[i0]);
         fVec1[IOTA0 & 15] = float(input8[i0]);
-        fVec2[IOTA0 & 7] = float(input7[i0]);
+        fVec2[IOTA0 & 15] = float(input7[i0]);
         fVec3[IOTA0 & 7] = float(input6[i0]);
         fVec4[IOTA0 & 7] = float(input5[i0]);
         fVec5[IOTA0 & 7] = float(input4[i0]);
-        fVec6[IOTA0 & 3] = float(input3[i0]);
+        fVec6[IOTA0 & 7] = float(input3[i0]);
         fVec7[IOTA0 & 3] = float(input2[i0]);
-        fVec8[IOTA0 & 1] = float(input1[i0]);
-        output0[i0] = FAUSTFLOAT(fVec0[(IOTA0 - 9) & 15] + fVec1[(IOTA0 - 8) & 15] 
-            + fVec2[(IOTA0 - 7) & 7] + fVec3[(IOTA0 - 6) & 7] + fVec4[(IOTA0 - 5) & 7] 
-            + fVec5[(IOTA0 - 4) & 7] + fVec6[(IOTA0 - 3) & 3] + fVec7[(IOTA0 - 2) & 3] 
-            + float(input0[i0]) + fVec8[(IOTA0 - 1) & 1]);
+        fVec8[IOTA0 & 1] = float(input0[i0]);
+        fVec9[IOTA0 & 3] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[(IOTA0 - 10) & 15] + fVec1[(IOTA0 - 9) & 15] 
+            + fVec2[(IOTA0 - 8) & 15] + fVec3[(IOTA0 - 7) & 7] + fVec4[(IOTA0 - 6) & 7]
+            + fVec5[(IOTA0 - 5) & 7] + fVec6[(IOTA0 - 4) & 7] + fVec7[(IOTA0 - 3) & 3] 
+            + fVec8[(IOTA0 - 1) & 1] + fVec9[(IOTA0 - 2) & 3]);
         IOTA0 = IOTA0 + 1;
     }
 }
 ```
+
+In this code example, several delay lines of various power-of-two size (2, 4, 8, 16) are generated. A unique continuously incremented `IOTA0` variable is shared between all delay lines. The *wrapping index* code is generated with this `(IOTA0 - 5) & 7` kind of code, with a `power-of-two - 1` mask (8 - 1 = 7 here). 
 
 When compiled with `faust -mcd 4 -dlt 7`, a mixture of the three generation strategies is used:
 
@@ -317,43 +326,51 @@ virtual void compute(int count,
     for (int i0 = 0; i0 < count; i0 = i0 + 1) {
         int fVec0_widx_tmp = fVec0_widx;
         fVec0[fVec0_widx_tmp] = float(input9[i0]);
-        int fVec0_ridx_tmp0 = fVec0_widx - 9;
+        int fVec0_ridx_tmp0 = fVec0_widx - 10;
         int fVec1_widx_tmp = fVec1_widx;
         fVec1[fVec1_widx_tmp] = float(input8[i0]);
-        int fVec1_ridx_tmp0 = fVec1_widx - 8;
+        int fVec1_ridx_tmp0 = fVec1_widx - 9;
         int fVec2_widx_tmp = fVec2_widx;
         fVec2[fVec2_widx_tmp] = float(input7[i0]);
-        int fVec2_ridx_tmp0 = fVec2_widx - 7;
-        fVec3[IOTA0 & 7] = float(input6[i0]);
+        int fVec2_ridx_tmp0 = fVec2_widx - 8;
+        int fVec3_widx_tmp = fVec3_widx;
+        fVec3[fVec3_widx_tmp] = float(input6[i0]);
+        int fVec3_ridx_tmp0 = fVec3_widx - 7;
         fVec4[IOTA0 & 7] = float(input5[i0]);
         fVec5[IOTA0 & 7] = float(input4[i0]);
-        fVec6[0] = float(input3[i0]);
+        fVec6[IOTA0 & 7] = float(input3[i0]);
         fVec7[0] = float(input2[i0]);
-        fVec8[0] = float(input1[i0]);
-        output0[i0] = FAUSTFLOAT(fVec0[((fVec0_ridx_tmp0 < 0) ? fVec0_ridx_tmp0 + 10 : fVec0_ridx_tmp0)] 
-            + fVec1[((fVec1_ridx_tmp0 < 0) ? fVec1_ridx_tmp0 + 9 : fVec1_ridx_tmp0)] 
-            + fVec2[((fVec2_ridx_tmp0 < 0) ? fVec2_ridx_tmp0 + 8 : fVec2_ridx_tmp0)] 
-            + fVec3[(IOTA0 - 6) & 7] + fVec4[(IOTA0 - 5) & 7] + fVec5[(IOTA0 - 4) & 7] 
-            + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
+        fVec8[0] = float(input0[i0]);
+        fVec9[0] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[((fVec0_ridx_tmp0 < 0) ? fVec0_ridx_tmp0 + 11 : fVec0_ridx_tmp0)] 
+            + fVec1[((fVec1_ridx_tmp0 < 0) ? fVec1_ridx_tmp0 + 10 : fVec1_ridx_tmp0)] 
+            + fVec2[((fVec2_ridx_tmp0 < 0) ? fVec2_ridx_tmp0 + 9 : fVec2_ridx_tmp0)] 
+            + fVec3[((fVec3_ridx_tmp0 < 0) ? fVec3_ridx_tmp0 + 8 : fVec3_ridx_tmp0)] 
+            + fVec4[(IOTA0 - 6) & 7] + fVec5[(IOTA0 - 5) & 7] + fVec6[(IOTA0 - 4) & 7] + fVec7[3] + fVec8[1] + fVec9[2]);
         fVec0_widx_tmp = fVec0_widx_tmp + 1;
-        fVec0_widx_tmp = ((fVec0_widx_tmp == 10) ? 0 : fVec0_widx_tmp);
+        fVec0_widx_tmp = ((fVec0_widx_tmp == 11) ? 0 : fVec0_widx_tmp);
         fVec0_widx = fVec0_widx_tmp;
         fVec1_widx_tmp = fVec1_widx_tmp + 1;
-        fVec1_widx_tmp = ((fVec1_widx_tmp == 9) ? 0 : fVec1_widx_tmp);
+        fVec1_widx_tmp = ((fVec1_widx_tmp == 10) ? 0 : fVec1_widx_tmp);
         fVec1_widx = fVec1_widx_tmp;
         fVec2_widx_tmp = fVec2_widx_tmp + 1;
-        fVec2_widx_tmp = ((fVec2_widx_tmp == 8) ? 0 : fVec2_widx_tmp);
+        fVec2_widx_tmp = ((fVec2_widx_tmp == 9) ? 0 : fVec2_widx_tmp);
         fVec2_widx = fVec2_widx_tmp;
+        fVec3_widx_tmp = fVec3_widx_tmp + 1;
+        fVec3_widx_tmp = ((fVec3_widx_tmp == 8) ? 0 : fVec3_widx_tmp);
+        fVec3_widx = fVec3_widx_tmp;
         IOTA0 = IOTA0 + 1;
         for (int j0 = 3; j0 > 0; j0 = j0 - 1) {
-            fVec6[j0] = fVec6[j0 - 1];
+            fVec7[j0] = fVec7[j0 - 1];
         }
-        fVec7[2] = fVec7[1];
-        fVec7[1] = fVec7[0];
         fVec8[1] = fVec8[0];
+        fVec9[2] = fVec9[1];
+        fVec9[1] = fVec9[0];
     }
 }
 ```
+
+In this code example, the *wrapping index moved by an if based method* can be recognized with the us of those `fVec0_ridx_tmp0` and `fVec0_widx_tmp0` kind of variables.
 
 Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the `-mcd` and `-dlt` options can help optimize CPU utilisation, to summarize:
 
