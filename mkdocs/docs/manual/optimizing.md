@@ -203,7 +203,8 @@ virtual void compute(int count,
         fVec7[0] = float(input2[i0]);
         fVec8[0] = float(input0[i0]);
         fVec9[0] = float(input1[i0]);
-        output0[i0] = FAUSTFLOAT(fVec0[10] + fVec1[9] + fVec2[8] + fVec3[7] + fVec4[6] + fVec5[5] + fVec6[4] + fVec7[3] + fVec8[1] + fVec9[2]);
+        output0[i0] = FAUSTFLOAT(fVec0[10] + fVec1[9] + fVec2[8] + fVec3[7] + fVec4[6] 
+            + fVec5[5] + fVec6[4] + fVec7[3] + fVec8[1] + fVec9[2]);
         for (int j0 = 10; j0 > 0; j0 = j0 - 1) {
             fVec0[j0] = fVec0[j0 - 1];
         }
@@ -270,7 +271,7 @@ When compiled with `faust -mcd 0`, all delay lines use the *wrapping index* seco
 ```c++
 virtual void compute(int count, 
     FAUSTFLOAT** RESTRICT inputs, 
-F   AUSTFLOAT** RESTRICT outputs) 
+    FAUSTFLOAT** RESTRICT outputs) 
 {
     FAUSTFLOAT* input0 = inputs[0];
     FAUSTFLOAT* input1 = inputs[1];
@@ -303,7 +304,7 @@ F   AUSTFLOAT** RESTRICT outputs)
 }
 ```
 
-In this code example, several delay lines of various power-of-two size (2, 4, 8, 16) are generated. A unique continuously incremented `IOTA0` variable is shared between all delay lines. The *wrapping index* code is generated with this `(IOTA0 - 5) & 7` kind of code, with a `power-of-two - 1` mask (8 - 1 = 7 here). 
+In this code example, several delay lines of various power-of-two size (2, 4, 8, 16) are generated. A unique continuously incremented `IOTA0` variable is shared between all delay lines. The *wrapping index* code is generated with this `(IOTA0 - 5) & 7` kind of code, with a power-of-two - 1 mask (so 8 - 1 = 7 here). 
 
 When compiled with `faust -mcd 4 -dlt 7`, a mixture of the three generation strategies is used:
 
@@ -370,7 +371,7 @@ virtual void compute(int count,
 }
 ```
 
-In this code example, the *wrapping index moved by an if based method* can be recognized with the us of those `fVec0_ridx_tmp0` and `fVec0_widx_tmp0` kind of variables.
+In this code example, the *wrapping index moved by an if based method* can be recognized with the use of those `fVec0_ridx_tmp0` and `fVec0_widx_tmp0` kind of variables.
 
 Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the `-mcd` and `-dlt` options can help optimize CPU utilisation, to summarize:
 

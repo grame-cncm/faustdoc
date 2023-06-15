@@ -507,14 +507,14 @@ or the read and write indices move themselves along the delay line (with two pos
 <p>For delays values bigger than <code>-mcd &lt;n&gt;</code> samples, the second strategy is implemented by:</p>
 <ul>
 <li>either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than <code>-dlt &lt;n&gt;</code> value.</li>
-<li>or using a <em>wrapping</em> index moved by an <em>if</em> based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then <code>-dlt &lt;n&gt;</code>. </li>
+<li>or using a wrapping index moved by an if based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then <code>-dlt &lt;n&gt;</code>. </li>
 </ul>
 <p>In this strategy the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is  slower but consume less memory.  </p>
 <p>Note that by default <code>-mcd 16</code> is <code>-dlt &lt;INT_MAX&gt;</code> values are used. Here is a scheme explaining the mecanism:</p>
 <pre><code>[ shift buffer |-mcd &lt;N1&gt;| wrapping power-of-two buffer |-dlt &lt;N2&gt;| if based wrapping buffer ]
 </code></pre>
-<p>Here is an example of  a Faust program with several delay lines in parallel, with three ways of compiling it:</p>
-<pre><code>process = par(i, 10, @(i)) :&gt; _;
+<p>Here is an example of  a Faust program with 10 delay lines in parallel, with three ways of compiling it:</p>
+<pre><code>process = par(i, 10, @(i+1)) :&gt; _;
 </code></pre>
 <p>When compiling with <code>faust -mcd 20</code>, since 20 is larger than the size of the largest delay line, all of them are compiled with the <em>shifted memory</em> strategy:</p>
 <pre><code class="language-c++">virtual void compute(int count, 
@@ -541,35 +541,63 @@ or the read and write indices move themselves along the delay line (with two pos
         fVec5[0] = float(input4[i0]);
         fVec6[0] = float(input3[i0]);
         fVec7[0] = float(input2[i0]);
-        fVec8[0] = float(input1[i0]);
-        output0[i0] = FAUSTFLOAT(fVec0[9] + fVec1[8] + fVec2[7] + fVec3[6] + fVec4[5] 
-            + fVec5[4] + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
-        for (int j0 = 9; j0 &gt; 0; j0 = j0 - 1) {
+        fVec8[0] = float(input0[i0]);
+        fVec9[0] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[10] + fVec1[9] + fVec2[8] + fVec3[7] + fVec4[6] 
+            + fVec5[5] + fVec6[4] + fVec7[3] + fVec8[1] + fVec9[2]);
+        for (int j0 = 10; j0 &gt; 0; j0 = j0 - 1) {
             fVec0[j0] = fVec0[j0 - 1];
         }
-        for (int j1 = 8; j1 &gt; 0; j1 = j1 - 1) {
+        for (int j1 = 9; j1 &gt; 0; j1 = j1 - 1) {
             fVec1[j1] = fVec1[j1 - 1];
         }
-        for (int j2 = 7; j2 &gt; 0; j2 = j2 - 1) {
+        for (int j2 = 8; j2 &gt; 0; j2 = j2 - 1) {
             fVec2[j2] = fVec2[j2 - 1];
         }
-        for (int j3 = 6; j3 &gt; 0; j3 = j3 - 1) {
+        for (int j3 = 7; j3 &gt; 0; j3 = j3 - 1) {
             fVec3[j3] = fVec3[j3 - 1];
         }
-        for (int j4 = 5; j4 &gt; 0; j4 = j4 - 1) {
+        for (int j4 = 6; j4 &gt; 0; j4 = j4 - 1) {
             fVec4[j4] = fVec4[j4 - 1];
         }
-        for (int j5 = 4; j5 &gt; 0; j5 = j5 - 1) {
+        for (int j5 = 5; j5 &gt; 0; j5 = j5 - 1) {
             fVec5[j5] = fVec5[j5 - 1];
         }
-        for (int j6 = 3; j6 &gt; 0; j6 = j6 - 1) {
+        for (int j6 = 4; j6 &gt; 0; j6 = j6 - 1) {
             fVec6[j6] = fVec6[j6 - 1];
         }
-        fVec7[2] = fVec7[1];
-        fVec7[1] = fVec7[0];
+        for (int j7 = 3; j7 &gt; 0; j7 = j7 - 1) {
+            fVec7[j7] = fVec7[j7 - 1];
+        }
         fVec8[1] = fVec8[0];
+        fVec9[2] = fVec9[1];
+        fVec9[1] = fVec9[0];
+
     }
 }
+</code></pre>
+<p>In this code example, the <em>very short delay lines of up to two samples by manually shifting the buffer</em> method can be seen in those lines:</p>
+<pre><code class="language-c++">...
+// Delay line of 1 sample
+fVec8[1] = fVec8[0];
+// Delay line of 2 samples
+fVec9[2] = fVec9[1];
+fVec9[1] = fVec9[0];
+...
+</code></pre>
+<p>and the <em>shift loop is generated for delay from 2 up to <code>-mcd &lt;n&gt;</code> samples</em>  method can be seen in those lines:</p>
+<pre><code class="language-c++">...
+output0[i0] = FAUSTFLOAT(fVec0[10] + fVec1[9] + fVec2[8] + fVec3[7] + fVec4[6] 
+    + fVec5[5] + fVec6[4] + fVec7[3] + fVec8[1] + fVec9[2]);
+// Shift delay line of 10 samples
+for (int j0 = 10; j0 &gt; 0; j0 = j0 - 1) {
+    fVec0[j0] = fVec0[j0 - 1];
+}
+// Shift delay line of 9 samples
+for (int j1 = 9; j1 &gt; 0; j1 = j1 - 1) {
+    fVec1[j1] = fVec1[j1 - 1];
+}
+...
 </code></pre>
 <p>When compiled with <code>faust -mcd 0</code>, all delay lines use the <em>wrapping index</em> second strategy with power-of-two size (since <code>-dlt &lt;INT_MAX&gt;</code> is used by default):</p>
 <pre><code class="language-c++">virtual void compute(int count, 
@@ -590,21 +618,23 @@ or the read and write indices move themselves along the delay line (with two pos
     for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
         fVec0[IOTA0 &amp; 15] = float(input9[i0]);
         fVec1[IOTA0 &amp; 15] = float(input8[i0]);
-        fVec2[IOTA0 &amp; 7] = float(input7[i0]);
+        fVec2[IOTA0 &amp; 15] = float(input7[i0]);
         fVec3[IOTA0 &amp; 7] = float(input6[i0]);
         fVec4[IOTA0 &amp; 7] = float(input5[i0]);
         fVec5[IOTA0 &amp; 7] = float(input4[i0]);
-        fVec6[IOTA0 &amp; 3] = float(input3[i0]);
+        fVec6[IOTA0 &amp; 7] = float(input3[i0]);
         fVec7[IOTA0 &amp; 3] = float(input2[i0]);
-        fVec8[IOTA0 &amp; 1] = float(input1[i0]);
-        output0[i0] = FAUSTFLOAT(fVec0[(IOTA0 - 9) &amp; 15] + fVec1[(IOTA0 - 8) &amp; 15] 
-            + fVec2[(IOTA0 - 7) &amp; 7] + fVec3[(IOTA0 - 6) &amp; 7] + fVec4[(IOTA0 - 5) &amp; 7] 
-            + fVec5[(IOTA0 - 4) &amp; 7] + fVec6[(IOTA0 - 3) &amp; 3] + fVec7[(IOTA0 - 2) &amp; 3] 
-            + float(input0[i0]) + fVec8[(IOTA0 - 1) &amp; 1]);
+        fVec8[IOTA0 &amp; 1] = float(input0[i0]);
+        fVec9[IOTA0 &amp; 3] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[(IOTA0 - 10) &amp; 15] + fVec1[(IOTA0 - 9) &amp; 15] 
+            + fVec2[(IOTA0 - 8) &amp; 15] + fVec3[(IOTA0 - 7) &amp; 7] + fVec4[(IOTA0 - 6) &amp; 7]
+            + fVec5[(IOTA0 - 5) &amp; 7] + fVec6[(IOTA0 - 4) &amp; 7] + fVec7[(IOTA0 - 3) &amp; 3] 
+            + fVec8[(IOTA0 - 1) &amp; 1] + fVec9[(IOTA0 - 2) &amp; 3]);
         IOTA0 = IOTA0 + 1;
     }
 }
 </code></pre>
+<p>In this code example, several delay lines of various power-of-two size (2, 4, 8, 16) are generated. A unique continuously incremented <code>IOTA0</code> variable is shared between all delay lines. The <em>wrapping index</em> code is generated with this <code>(IOTA0 - 5) &amp; 7</code> kind of code, with a power-of-two - 1 mask (so 8 - 1 = 7 here). </p>
 <p>When compiled with <code>faust -mcd 4 -dlt 7</code>, a mixture of the three generation strategies is used:</p>
 <pre><code class="language-c++">virtual void compute(int count, 
     FAUSTFLOAT** RESTRICT inputs, 
@@ -624,43 +654,50 @@ or the read and write indices move themselves along the delay line (with two pos
     for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
         int fVec0_widx_tmp = fVec0_widx;
         fVec0[fVec0_widx_tmp] = float(input9[i0]);
-        int fVec0_ridx_tmp0 = fVec0_widx - 9;
+        int fVec0_ridx_tmp0 = fVec0_widx - 10;
         int fVec1_widx_tmp = fVec1_widx;
         fVec1[fVec1_widx_tmp] = float(input8[i0]);
-        int fVec1_ridx_tmp0 = fVec1_widx - 8;
+        int fVec1_ridx_tmp0 = fVec1_widx - 9;
         int fVec2_widx_tmp = fVec2_widx;
         fVec2[fVec2_widx_tmp] = float(input7[i0]);
-        int fVec2_ridx_tmp0 = fVec2_widx - 7;
-        fVec3[IOTA0 &amp; 7] = float(input6[i0]);
+        int fVec2_ridx_tmp0 = fVec2_widx - 8;
+        int fVec3_widx_tmp = fVec3_widx;
+        fVec3[fVec3_widx_tmp] = float(input6[i0]);
+        int fVec3_ridx_tmp0 = fVec3_widx - 7;
         fVec4[IOTA0 &amp; 7] = float(input5[i0]);
         fVec5[IOTA0 &amp; 7] = float(input4[i0]);
-        fVec6[0] = float(input3[i0]);
+        fVec6[IOTA0 &amp; 7] = float(input3[i0]);
         fVec7[0] = float(input2[i0]);
-        fVec8[0] = float(input1[i0]);
-        output0[i0] = FAUSTFLOAT(fVec0[((fVec0_ridx_tmp0 &lt; 0) ? fVec0_ridx_tmp0 + 10 : fVec0_ridx_tmp0)] 
-            + fVec1[((fVec1_ridx_tmp0 &lt; 0) ? fVec1_ridx_tmp0 + 9 : fVec1_ridx_tmp0)] 
-            + fVec2[((fVec2_ridx_tmp0 &lt; 0) ? fVec2_ridx_tmp0 + 8 : fVec2_ridx_tmp0)] 
-            + fVec3[(IOTA0 - 6) &amp; 7] + fVec4[(IOTA0 - 5) &amp; 7] + fVec5[(IOTA0 - 4) &amp; 7] 
-            + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
+        fVec8[0] = float(input0[i0]);
+        fVec9[0] = float(input1[i0]);
+        output0[i0] = FAUSTFLOAT(fVec0[((fVec0_ridx_tmp0 &lt; 0) ? fVec0_ridx_tmp0 + 11 : fVec0_ridx_tmp0)] 
+            + fVec1[((fVec1_ridx_tmp0 &lt; 0) ? fVec1_ridx_tmp0 + 10 : fVec1_ridx_tmp0)] 
+            + fVec2[((fVec2_ridx_tmp0 &lt; 0) ? fVec2_ridx_tmp0 + 9 : fVec2_ridx_tmp0)] 
+            + fVec3[((fVec3_ridx_tmp0 &lt; 0) ? fVec3_ridx_tmp0 + 8 : fVec3_ridx_tmp0)] 
+            + fVec4[(IOTA0 - 6) &amp; 7] + fVec5[(IOTA0 - 5) &amp; 7] + fVec6[(IOTA0 - 4) &amp; 7] + fVec7[3] + fVec8[1] + fVec9[2]);
         fVec0_widx_tmp = fVec0_widx_tmp + 1;
-        fVec0_widx_tmp = ((fVec0_widx_tmp == 10) ? 0 : fVec0_widx_tmp);
+        fVec0_widx_tmp = ((fVec0_widx_tmp == 11) ? 0 : fVec0_widx_tmp);
         fVec0_widx = fVec0_widx_tmp;
         fVec1_widx_tmp = fVec1_widx_tmp + 1;
-        fVec1_widx_tmp = ((fVec1_widx_tmp == 9) ? 0 : fVec1_widx_tmp);
+        fVec1_widx_tmp = ((fVec1_widx_tmp == 10) ? 0 : fVec1_widx_tmp);
         fVec1_widx = fVec1_widx_tmp;
         fVec2_widx_tmp = fVec2_widx_tmp + 1;
-        fVec2_widx_tmp = ((fVec2_widx_tmp == 8) ? 0 : fVec2_widx_tmp);
+        fVec2_widx_tmp = ((fVec2_widx_tmp == 9) ? 0 : fVec2_widx_tmp);
         fVec2_widx = fVec2_widx_tmp;
+        fVec3_widx_tmp = fVec3_widx_tmp + 1;
+        fVec3_widx_tmp = ((fVec3_widx_tmp == 8) ? 0 : fVec3_widx_tmp);
+        fVec3_widx = fVec3_widx_tmp;
         IOTA0 = IOTA0 + 1;
         for (int j0 = 3; j0 &gt; 0; j0 = j0 - 1) {
-            fVec6[j0] = fVec6[j0 - 1];
+            fVec7[j0] = fVec7[j0 - 1];
         }
-        fVec7[2] = fVec7[1];
-        fVec7[1] = fVec7[0];
         fVec8[1] = fVec8[0];
+        fVec9[2] = fVec9[1];
+        fVec9[1] = fVec9[0];
     }
 }
 </code></pre>
+<p>In this code example, the <em>wrapping index moved by an if based method</em> can be recognized with the use of those <code>fVec0_ridx_tmp0</code> and <code>fVec0_widx_tmp0</code> kind of variables.</p>
 <p>Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the <code>-mcd</code> and <code>-dlt</code> options can help optimize CPU utilisation, to summarize:</p>
 <ul>
 <li>chosing a big <code>n</code> value for <code>-mcd n</code> will consume less memory but the shift loop will start to be time consuming wih big delay values. This model can sometimes be better suited if the C++ or LLVM compiler correctly auto-vectorizes the code and generates better-performing SIMD code.</li>
