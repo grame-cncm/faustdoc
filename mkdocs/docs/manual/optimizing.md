@@ -168,10 +168,10 @@ Note that by default `-mcd 16` is `-dlt <INT_MAX>` values are used. Here is a sc
 [ shift buffer |-mcd <N1>| wrapping power-of-two buffer |-dlt <N2>| if based wrapping buffer ]
 ```
 
-Here is an example of  a Faust program with several delay lines in parallel, with three ways of compiling it:
+Here is an example of  a Faust program with 10 delay lines in parallel, with three ways of compiling it:
 
 ```
-process = par(i, 10, @(i)) :> _;
+process = par(i, 10, @(i+1)) :> _;
 ```
 
 When compiling with `faust -mcd 20`, since 20 is larger than the size of the largest delay line, all of them are compiled with the *shifted memory* strategy:
@@ -230,6 +230,33 @@ virtual void compute(int count,
         fVec8[1] = fVec8[0];
     }
 }
+```
+
+In this code example, the *very short delay lines of up to two samples by manually shifting the buffer* method can be seen in those lines:
+
+```c++
+...
+// Delay line of 2 samples
+fVec7[2] = fVec7[1];
+fVec7[1] = fVec7[0];
+// Delay line of 1 sample
+fVec8[1] = fVec8[0];
+...
+```
+
+and the *shift loop is generated for delay from 2 up to `-mcd <n>` samples*  method can be seen in those lines:
+
+```c++
+...
+output0[i0] = FAUSTFLOAT(fVec0[9] + fVec1[8] + fVec2[7] + fVec3[6] + fVec4[5] 
+            + fVec5[4] + fVec6[3] + fVec7[2] + float(input0[i0]) + fVec8[1]);
+for (int j0 = 9; j0 > 0; j0 = j0 - 1) {
+    fVec0[j0] = fVec0[j0 - 1];
+}
+for (int j1 = 8; j1 > 0; j1 = j1 - 1) {
+    fVec1[j1] = fVec1[j1 - 1];
+}
+...
 ```
 
 When compiled with `faust -mcd 0`, all delay lines use the *wrapping index* second strategy with power-of-two size (since `-dlt <INT_MAX>` is used by default):
