@@ -354,6 +354,10 @@
             </li>
             <li class="nav-item" data-level="3"><a href="#delay-lines-implementation-and-dsp-memory-size" class="nav-link">Delay lines implementation and DSP memory size</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#delay-lines-in-recursive-signals" class="nav-link">Delay lines in recursive signals</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#managing-dsp-memory-layout" class="nav-link">Managing DSP Memory Layout</a>
@@ -705,6 +709,43 @@ for (int j1 = 9; j1 &gt; 0; j1 = j1 - 1) {
 <li>chosing a combinaison of  <code>-mcd n1</code>  and  <code>-dlt &lt;n2&gt;</code> can possibly be the model to chose when a lot of delay lines with different size are used in the DSP code.</li>
 </ul>
 <p>Using the benchmark tools <a href="#faustbench">faustbench</a> and <a href="#faustbench-llvm">faustbench-llvm</a> allow to refine the choice of compilation options.</p>
+<h4 id="delay-lines-in-recursive-signals">Delay lines in recursive signals</h4>
+<p>Here is an example of a Faust program with 10 recursive blocks in parallel, each using a delay line of increasing value:</p>
+<pre><code>process = par(i, 10, + ~ @(i+1)) :&gt; _;
+</code></pre>
+<p>Since a recursive signal uses a one-sample delay in its loop, a buffer is allocated to handle the delay. When a delay is added to the recursive signal, a single buffer is allocated to combine the two delay sources. The generated code using <code>faust -mcd 0</code> for instance is now:</p>
+<pre><code class="language-c++">virtual void compute(int count, 
+    FAUSTFLOAT** RESTRICT inputs, 
+    FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* input2 = inputs[2];
+    FAUSTFLOAT* input3 = inputs[3];
+    FAUSTFLOAT* input4 = inputs[4];
+    FAUSTFLOAT* input5 = inputs[5];
+    FAUSTFLOAT* input6 = inputs[6];
+    FAUSTFLOAT* input7 = inputs[7];
+    FAUSTFLOAT* input8 = inputs[8];
+    FAUSTFLOAT* input9 = inputs[9];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        fRec0[IOTA0 &amp; 3] = float(input0[i0]) + fRec0[(IOTA0 - 2) &amp; 3];
+        fRec1[IOTA0 &amp; 3] = float(input1[i0]) + fRec1[(IOTA0 - 3) &amp; 3];
+        fRec2[IOTA0 &amp; 7] = float(input2[i0]) + fRec2[(IOTA0 - 4) &amp; 7];
+        fRec3[IOTA0 &amp; 7] = float(input3[i0]) + fRec3[(IOTA0 - 5) &amp; 7];
+        fRec4[IOTA0 &amp; 7] = float(input4[i0]) + fRec4[(IOTA0 - 6) &amp; 7];
+        fRec5[IOTA0 &amp; 7] = float(input5[i0]) + fRec5[(IOTA0 - 7) &amp; 7];
+        fRec6[IOTA0 &amp; 15] = float(input6[i0]) + fRec6[(IOTA0 - 8) &amp; 15];
+        fRec7[IOTA0 &amp; 15] = float(input7[i0]) + fRec7[(IOTA0 - 9) &amp; 15];
+        fRec8[IOTA0 &amp; 15] = float(input8[i0]) + fRec8[(IOTA0 - 10) &amp; 15];
+        fRec9[IOTA0 &amp; 15] = float(input9[i0]) + fRec9[(IOTA0 - 11) &amp; 15];
+        output0[i0] = FAUSTFLOAT(fRec0[IOTA0 &amp; 3] + fRec1[IOTA0 &amp; 3] + fRec2[IOTA0 &amp; 7] + fRec3[IOTA0 &amp; 7] + fRec4[IOTA0 &amp; 7] + fRec5[IOTA0 &amp; 7] + fRec6[IOTA0 &amp; 15] + fRec7[IOTA0 &amp; 15] + fRec8[IOTA0 &amp; 15] + fRec9[IOTA0 &amp; 15]);
+        IOTA0 = IOTA0 + 1;
+    }
+}
+</code></pre>
+<p>with buffers named <code>fRecX</code>  instead of  <code>fVecX</code> in the previous example. The  <code>-mcd &lt;n&gt;</code>  and <code>-dlt &lt;n&gt;</code>  options can be used with the same purpose.</p>
 <h3 id="managing-dsp-memory-layout">Managing DSP Memory Layout</h3>
 <p>On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the <code>-mem</code> compilation option and an <a href="https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager">adapted architecture file</a>.</p>
 <h2 id="optimizing-the-c-or-llvm-code">Optimizing the C++ or LLVM Code</h2>

@@ -381,6 +381,52 @@ Choosing values that use less memory can be particularly important in the contex
 
 Using the benchmark tools [faustbench](#faustbench) and [faustbench-llvm](#faustbench-llvm) allow to refine the choice of compilation options.
 
+#### Delay lines in recursive signals
+
+Here is an example of a Faust program with 10 recursive blocks in parallel, each using a delay line of increasing value:
+
+```
+process = par(i, 10, + ~ @(i+1)) :> _;
+```
+
+Since a recursive signal uses a one-sample delay in its loop, a buffer is allocated to handle the delay. When a delay is added to the recursive signal, a single buffer is allocated to combine the two delay sources. The generated code using `faust -mcd 0` for instance is now:
+
+
+```c++
+virtual void compute(int count, 
+    FAUSTFLOAT** RESTRICT inputs, 
+    FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* input1 = inputs[1];
+    FAUSTFLOAT* input2 = inputs[2];
+    FAUSTFLOAT* input3 = inputs[3];
+    FAUSTFLOAT* input4 = inputs[4];
+    FAUSTFLOAT* input5 = inputs[5];
+    FAUSTFLOAT* input6 = inputs[6];
+    FAUSTFLOAT* input7 = inputs[7];
+    FAUSTFLOAT* input8 = inputs[8];
+    FAUSTFLOAT* input9 = inputs[9];
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        fRec0[IOTA0 & 3] = float(input0[i0]) + fRec0[(IOTA0 - 2) & 3];
+        fRec1[IOTA0 & 3] = float(input1[i0]) + fRec1[(IOTA0 - 3) & 3];
+        fRec2[IOTA0 & 7] = float(input2[i0]) + fRec2[(IOTA0 - 4) & 7];
+        fRec3[IOTA0 & 7] = float(input3[i0]) + fRec3[(IOTA0 - 5) & 7];
+        fRec4[IOTA0 & 7] = float(input4[i0]) + fRec4[(IOTA0 - 6) & 7];
+        fRec5[IOTA0 & 7] = float(input5[i0]) + fRec5[(IOTA0 - 7) & 7];
+        fRec6[IOTA0 & 15] = float(input6[i0]) + fRec6[(IOTA0 - 8) & 15];
+        fRec7[IOTA0 & 15] = float(input7[i0]) + fRec7[(IOTA0 - 9) & 15];
+        fRec8[IOTA0 & 15] = float(input8[i0]) + fRec8[(IOTA0 - 10) & 15];
+        fRec9[IOTA0 & 15] = float(input9[i0]) + fRec9[(IOTA0 - 11) & 15];
+        output0[i0] = FAUSTFLOAT(fRec0[IOTA0 & 3] + fRec1[IOTA0 & 3] + fRec2[IOTA0 & 7] + fRec3[IOTA0 & 7] + fRec4[IOTA0 & 7] + fRec5[IOTA0 & 7] + fRec6[IOTA0 & 15] + fRec7[IOTA0 & 15] + fRec8[IOTA0 & 15] + fRec9[IOTA0 & 15]);
+        IOTA0 = IOTA0 + 1;
+    }
+}
+```
+
+with buffers named `fRecX`  instead of  `fVecX` in the previous example. The  `-mcd <n>`  and `-dlt <n>`  options can be used with the same purpose.
+
 ### Managing DSP Memory Layout
 
 On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the `-mem` compilation option and an [adapted architecture file](https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager).
