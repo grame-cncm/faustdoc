@@ -168,7 +168,7 @@ Note that by default `-mcd 16` is `-dlt <INT_MAX>` values are used. Here is a sc
 [ shift buffer |-mcd <N1>| wrapping power-of-two buffer |-dlt <N2>| if based wrapping buffer ]
 ```
 
-Here is an example of  a Faust program with 10 delay lines in parallel, with three ways of compiling it:
+Here is an example of  a Faust program with 10 delay lines in parallel, with three ways of compiling it (using the defaut `-scalar` mode):
 
 ```
 process = par(i, 10, @(i+1)) :> _;
