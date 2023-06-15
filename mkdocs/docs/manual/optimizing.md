@@ -148,7 +148,8 @@ When costly math functions still appear in the sample rate code, the `-fm` [comp
 
 The Faust compiler automatically allocates buffers for the delay lines. At each sample calculation, the delayed signal is written to a specific location (the *write* position) and read from another location (the *read* position), the *distance in samples* between the read and write indexes representing the delay itself.
 
-There are two possible strategies for implementing delay lines: either the read and write indices move themselves along the delay line, or the read and write indices remain the same and the delay line memory is moved after each sample calculation.
+There are two possible strategies for implementing delay lines: either the read and write indices remain the same and the delay line memory is moved after each sample calculation, 
+or the read and write indices move themselves along the delay line (with two possible *wrapping index* methods). These multiple methods allow arbitration between memory consumption and the CPU cost of using the delay line.
 
 Two compiler options `-mcd <n>` (`-max-copy-delay`) and `-dlt <n>` (`--delay-line-threshold`) allow you to play with both strategies and even combine them.
 
@@ -156,21 +157,24 @@ For very short delay lines of up to two samples, the first strategy is implement
 
 For delays values bigger than `-mcd <n>` samples, the second strategy is implemented by:
 
- - either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than `-dlt <n>` value.
- - or using a *wrapping* index moved by an *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then `-dlt <n>`. 
- In this case the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is the slowest but consume less memory.  Here is a scheme explaing the mecanism:
+- either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than `-dlt <n>` value.
+- or using a *wrapping* index moved by an *if* based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then `-dlt <n>`. 
+
+In this strategy the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is  slower but consume less memory.  
+
+Note that by default `-mcd 16` is `-dlt <INT_MAX>` values are used. Here is a scheme explaining the mecanism:
 
 ```
 [ shift buffer |-mcd <N1>| wrapping power-of-two buffer |-dlt <N2>| if based wrapping buffer ]
 ```
 
-Here is an example of several delay lines in parallel:
+Here is an example of  a Faust program with several delay lines in parallel, with three ways of compiling it:
 
 ```
 process = par(i, 10, @(i)) :> _;
 ```
 
-When compiled with `faust -mcd 20`, all delay lines use the *shifted memory* second model:
+When compiling with `faust -mcd 20`, since 20 is larger than the size of the largest delay line, all of them are compiled with the *shifted memory* strategy:
 
 ```c++
 virtual void compute(int count, 
@@ -228,7 +232,7 @@ virtual void compute(int count,
 }
 ```
 
-When compiled with `faust -mcd 0`, all delay lines use the *wrapping index* first model with power-of-two size:
+When compiled with `faust -mcd 0`, all delay lines use the *wrapping index* second strategy with power-of-two size (since `-dlt <INT_MAX>` is used by default):
 
 ```c++
 virtual void compute(int count, 
@@ -265,7 +269,7 @@ virtual void compute(int count,
 }
 ```
 
-When compiled with `faust -mcd 4 -dlt 7`, a mixture of the three generation mmodel is used:
+When compiled with `faust -mcd 4 -dlt 7`, a mixture of the three generation strategies is used:
 
 ```c++
 virtual void compute(int count, 
@@ -323,7 +327,14 @@ virtual void compute(int count,
     }
 }
 ```
-Note that by default `-mcd 16` is `-dlt <INT_MAX>` values are used. Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the `-mcd` and `-dlt` options can help optimize CPU utilization.
+
+Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the `-mcd` and `-dlt` options can help optimize CPU utilisation, to summarize:
+
+-  chosing a big `n` value for `-mcd n` will consume less memory but the shift loop will start to be time consuming wih big delay values. This model can sometimes be better suited if the C++ or LLVM compiler correctly auto-vectorizes the code and generates better-performing SIMD code.
+- chosing `-mcd 0` will activate the  *wrapping index* second strategy for all delay lines in the DSP code, then  playing with `-dlt <n>` allows to arbitrate between the *faster but consuming more memory* method and *slower but consume less memory* method.
+-  chosing a combinaison of  `-mcd n1`  and  `-dlt <n2>` can possibly be the model to chose when a lot of delay lines with different size are used in the DSP code.
+
+Using the benchmark tools [faustbench](#faustbench) and [faustbench-llvm](#faustbench-llvm) allow to refine the choice of compilation options.
 
 ### Managing DSP Memory Layout
 
