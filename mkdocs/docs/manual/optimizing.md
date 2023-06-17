@@ -168,15 +168,38 @@ Note that by default `-mcd 16` is `-dlt <INT_MAX>` values are used. Here is a sc
 [ shift buffer |-mcd <N1>| wrapping power-of-two buffer |-dlt <N2>| if based wrapping buffer ]
 ```
 
-Here is an example of  a Faust program with 10 delay lines in parallel, with three ways of compiling it (using the defaut `-scalar` mode):
+Here is an example of  a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut `-scalar` mode):
 
-```
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+~~~
+
 process = par(i, 10, @(i+1)) :> _;
-```
+
+~~~
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
 
 When compiling with `faust -mcd 20`, since 20 is larger than the size of the largest delay line, all of them are compiled with the *shifted memory* strategy:
 
 ```c++
+...
+// The DSP memory layout
+float fVec0[11];
+float fVec1[10];
+float fVec2[9];
+float fVec3[8];
+float fVec4[7];
+float fVec5[6];
+float fVec6[5];
+float fVec7[4];
+float fVec8[2];
+float fVec9[3];
+int fSampleRate;
+...
 virtual void compute(int count, 
     FAUSTFLOAT** RESTRICT inputs, 
     FAUSTFLOAT** RESTRICT outputs) 
@@ -235,6 +258,7 @@ virtual void compute(int count,
        
     }
 }
+...
 ```
 
 In this code example, the *very short delay lines of up to two samples by manually shifting the buffer* method can be seen in those lines:
@@ -269,6 +293,21 @@ for (int j1 = 9; j1 > 0; j1 = j1 - 1) {
 When compiled with `faust -mcd 0`, all delay lines use the *wrapping index* second strategy with power-of-two size (since `-dlt <INT_MAX>` is used by default):
 
 ```c++
+...
+// The DSP memory layout
+int IOTA0;
+float fVec0[16];
+float fVec1[16];
+float fVec2[16];
+float fVec3[8];
+float fVec4[8];
+float fVec5[8];
+float fVec6[8];
+float fVec7[4];
+float fVec8[2];
+float fVec9[4];
+int fSampleRate;
+...
 virtual void compute(int count, 
     FAUSTFLOAT** RESTRICT inputs, 
     FAUSTFLOAT** RESTRICT outputs) 
@@ -302,6 +341,7 @@ virtual void compute(int count,
         IOTA0 = IOTA0 + 1;
     }
 }
+...
 ```
 
 In this code example, several delay lines of various power-of-two size (2, 4, 8, 16) are generated. A unique continuously incremented `IOTA0` variable is shared between all delay lines. The *wrapping index* code is generated with this `(IOTA0 - 5) & 7` kind of code, with a power-of-two - 1 mask (so 8 - 1 = 7 here). 
@@ -309,6 +349,25 @@ In this code example, several delay lines of various power-of-two size (2, 4, 8,
 When compiled with `faust -mcd 4 -dlt 7`, a mixture of the three generation strategies is used:
 
 ```c++
+// The DSP memory layout
+...
+int fVec0_widx;
+float fVec0[11];
+int fVec1_widx;
+float fVec1[10];
+int fVec2_widx;
+float fVec2[9];
+int fVec3_widx;
+float fVec3[8];
+int IOTA0;
+float fVec4[8];
+float fVec5[8];
+float fVec6[8];
+float fVec7[4];
+float fVec8[2];
+float fVec9[3];
+int fSampleRate;
+...
 virtual void compute(int count, 
     FAUSTFLOAT** RESTRICT inputs, 
     FAUSTFLOAT** RESTRICT outputs) 
@@ -369,6 +428,7 @@ virtual void compute(int count,
         fVec9[1] = fVec9[0];
     }
 }
+...
 ```
 
 In this code example, the *wrapping index moved by an if based method* can be recognized with the use of those `fVec0_ridx_tmp0` and `fVec0_widx_tmp0` kind of variables.
@@ -385,14 +445,38 @@ Using the benchmark tools [faustbench](#faustbench) and [faustbench-llvm](#faust
 
 Here is an example of a Faust program with 10 recursive blocks in parallel, each using a delay line of increasing value:
 
-```
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+~~~
+
 process = par(i, 10, + ~ @(i+1)) :> _;
-```
+
+~~~
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
 
 Since a recursive signal uses a one-sample delay in its loop, a buffer is allocated to handle the delay. When a delay is added to the recursive signal, a single buffer is allocated to combine the two delay sources. The generated code using `faust -mcd 0` for instance is now:
 
 
 ```c++
+...
+// The DSP memory layout
+int IOTA0;
+float fRec0[4];
+float fRec1[4];
+float fRec2[8];
+float fRec3[8];
+float fRec4[8];
+float fRec5[8];
+float fRec6[16];
+float fRec7[16];
+float fRec8[16];
+float fRec9[16];
+int fSampleRate;
+...
 virtual void compute(int count, 
     FAUSTFLOAT** RESTRICT inputs, 
     FAUSTFLOAT** RESTRICT outputs) 
@@ -423,6 +507,7 @@ virtual void compute(int count,
         IOTA0 = IOTA0 + 1;
     }
 }
+...
 ```
 
 with buffers named `fRecX`  instead of  `fVecX` in the previous example. The  `-mcd <n>`  and `-dlt <n>`  options can be used with the same purpose.
