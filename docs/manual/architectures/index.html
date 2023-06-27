@@ -1436,7 +1436,7 @@ process = no.noise;
 <li>the <code>dsp_sequencer</code> class combines two DSP in sequence, assuming that the number of outputs of the first DSP equals the number of input of the second one. It somewhat mimics the  <em>sequence</em> (that is<code>:</code> ) operator of the language by combining two separated C++ objects. Its <code>buildUserInterface</code> method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSPs can be individually controlled. Its <code>compute</code> method is overloaded to call each DSP <code>compute</code> in sequence, using an intermediate output buffer produced by first DSP as the input one given to the second DSP.</li>
 <li>the <code>dsp_parallelizer</code>  class combines two DSP in parallel. It somewhat mimics the  <em>parallel</em> (that is<code>,</code> ) operator of the language by combining two separated C++ objects. Its <code>getNumInputs/getNumOutputs</code> methods are overloaded by correctly reflecting the input/output of the resulting DSP as the sum of the two combined ones. Its <code>buildUserInterface</code> method is overloaded to group the two DSP in a tabgroup, so that control parameters of both DSP can be individually controlled. Its <code>compute</code> method is overloaded to call each DSP compute, where each DSP consuming and producing its own number of input/output audio buffers taken from the method parameters.</li>
 </ul>
-<p>This methology is followed to implement the three remaining composition operators (<em>split</em>, <em>merge</em>, <em>recussion</em>), which ends up with a C++ API to combine DSPs with the usual five operators: <code>createDSPSequencer</code>, <code>createDSPParallelizer</code>, <code>createDSPSplitter</code>, <code>createDSPMerger</code>, <code>createDSPRecursiver</code> to be used at C++ level to dynamically combine DSPs.</p>
+<p>This methology is followed to implement the three remaining composition operators (<em>split</em>, <em>merge</em>, <em>recursion</em>), which ends up with a C++ API to combine DSPs with the usual five operators: <code>createDSPSequencer</code>, <code>createDSPParallelizer</code>, <code>createDSPSplitter</code>, <code>createDSPMerger</code>, <code>createDSPRecursiver</code> to be used at C++ level to dynamically combine DSPs.</p>
 <p>Note that this idea of decorating or combining several C++  <code>dsp</code> objects can perfectly be extended in specific projects, to meet other needs: like muting some part of a graph of several DSPs for instance. But keep in mind that keeping the  <code>dsp</code> API then allows to take profit of all already available <code>UI</code> and <code>audio</code> based classes.</p>
 <h3 id="sample-accurate-control">Sample Accurate Control</h3>
 <p>DSP audio languages usually deal with several timing dimensions when treating control events and generating audio samples. For performance reasons, systems maintain separated audio rate for samples generation and control rate for asynchronous messages handling.</p>
@@ -2630,16 +2630,13 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
