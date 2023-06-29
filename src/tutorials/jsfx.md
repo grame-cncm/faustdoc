@@ -51,6 +51,7 @@ The generated code is fully self-contained and can be directly imported as a Rea
 
 At the top of the generated file, a few lines are dedicated to report file description and metadata.
 Then, the initialization starts with :  
+
 - Sliders
 - Inputs and outputs
 
@@ -236,6 +237,7 @@ This will allow your to download a `binary.zip` file, containing the resulting *
 As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some other might come in the future. 
 
 First, only three controls are available : 
+
 - sliders : hslider, vslider, nentry
 - button
 - checkbox
