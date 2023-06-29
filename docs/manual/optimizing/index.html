@@ -245,6 +245,10 @@
 </li>
                                     
 <li>
+    <a href="../../tutorials/jsfx/" class="dropdown-item">Using Faust in JSFX</a>
+</li>
+                                    
+<li>
     <a href="../../tutorials/debugging/" class="dropdown-item">Advanced debugging with interp-tracer</a>
 </li>
                                 </ul>
@@ -517,7 +521,7 @@ or the read and write indices move themselves along the delay line (with two pos
 <p>Note that by default <code>-mcd 16</code> is <code>-dlt &lt;INT_MAX&gt;</code> values are used. Here is a scheme explaining the mecanism:</p>
 <pre><code>[ shift buffer |-mcd &lt;N1&gt;| wrapping power-of-two buffer |-dlt &lt;N2&gt;| if based wrapping buffer ]
 </code></pre>
-<p>Here is an example of  a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut <code>-scalar</code> mode):</p>
+<p>Here is an example of a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut <code>-scalar</code> mode):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
