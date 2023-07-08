@@ -1386,7 +1386,7 @@ static void test3()
 }
 ```
 
-All presented C++ examples (as well as some more) are defined in the [box-tester-c](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.c) tool, to be compiled with `make box-tester-c` in the tools/benchmark folder.
+All presented C examples (as well as some more) are defined in the [box-tester-c](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.c) tool, to be compiled with `make box-tester-c` in the tools/benchmark folder.
 
  
 
