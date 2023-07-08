@@ -473,7 +473,7 @@
 }                        \   
 </code></pre>
 <h3 id="examples">Examples</h3>
-<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All C++ examples are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool, to be compiled with <code>make signal-tester</code> in the tools/benchmark folder.</p>
+<p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All presented C++ examples (as well as some more) are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool, to be compiled with <code>make signal-tester</code> in the tools/benchmark folder.</p>
 <h4 id="simple-constant-signal">Simple constant signal</h4>
 <p>Let's create a program generating the 0.5 constant value. Here is the Faust DSP code:</p>
 <!-- faust-run -->
@@ -1708,7 +1708,7 @@ static void test3()
     destroyLibContext();
 }
 </code></pre>
-<p>All C examples are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.c">signal-tester-c</a> tool, to be compiled with <code>make signal-tester-c</code> in the tools/benchmark folder.</p>
+<p>All presented C examples (as well as some more) are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.c">signal-tester-c</a> tool, to be compiled with <code>make signal-tester-c</code> in the tools/benchmark folder.</p>
 <h2 id="creating-a-signal-language-based-on-this-api">Creating a signal language based on this API</h2>
 <p>Generating complex expressions by directly using the signal API can quickly become really tricky and unpracticable. So a language <em>created on top</em> of the signal API is usually needed. This is exactly what the <em>Block Diagram Algebra</em> is all about, and the entire Faust language itself. </p>
 <p>But some other approaches can possibly be tested. The <a href="https://www.elementary.audio">Elementary audio language</a> for instance is built over a similar <a href="https://docs.elementary.audio/guides/making_sound">signal language</a> and uses JavaScript as the upper layer language to help create a complex list of output signals programmatically. Other approaches using graphical based tools could certainly be tested. </p></div>

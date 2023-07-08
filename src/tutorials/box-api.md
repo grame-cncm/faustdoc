@@ -83,7 +83,7 @@ A macro to wrap all the needed steps:
 
 ### Examples 
 
-For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps). All C++ examples are defined in the [box-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.cpp) tool, to be compiled with `make box-tester` in the tools/benchmark folder.
+For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation *propagate* step (so before any of the signal normalization steps). All presented C++ examples (as well as some more) are defined in the [box-tester](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.cpp) tool, to be compiled with `make box-tester` in the tools/benchmark folder.
 
 #### Expression generating constant signals 
 
@@ -1386,7 +1386,7 @@ static void test3()
 }
 ```
 
-All C examples are defined in the [box-tester-c](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.c) tool, to be compiled with `make box-tester-c` in the tools/benchmark folder.
+All presented C++ examples (as well as some more) are defined in the [box-tester-c](https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/box-tester.c) tool, to be compiled with `make box-tester-c` in the tools/benchmark folder.
 
  
 
