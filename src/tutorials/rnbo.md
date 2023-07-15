@@ -76,6 +76,19 @@ function dspsetup() {
 	for (let l2_re0_cb : Int = 0; (l2_re0_cb < 2); l2_re0_cb = (l2_re0_cb + 1)) {
 		iVec1_cb[l2_re0_cb] = 0;
 	}
+	for (let l3_re0_cb : Int = 0; (l3_re0_cb < 2); l3_re0_cb = (l3_re0_cb + 1)) {
+		iRec1_cb[l3_re0_cb] = 0;
+	}
+	for (let i1_re0_cb : Int = 0; (i1_re0_cb < 65536); i1_re0_cb = (i1_re0_cb + 1)) {
+		iVec1_cb[0] = 1;
+		iRec1_cb[0] = ((iVec1_cb[1] + iRec1_cb[1]) % 65536);
+		ftbl0mydspSIG0_cb[i1_re0_cb] = sin((9.587379924285257e-05 * iRec1_cb[0]));
+		iVec1_cb[1] = iVec1_cb[0];
+		iRec1_cb[1] = iRec1_cb[0];
+	}
+	fHslider0_cb = 0.0;
+	fHslider1_cb = 1e+03;
+	fHslider2_cb = 2e+02;
 	...
     ...   
 	fSampleRate_cb = samplerate();
