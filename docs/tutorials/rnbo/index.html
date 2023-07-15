@@ -328,6 +328,14 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#testting-the-generated-codebox-code" class="nav-link">Testting the generated codebox~ code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#known-issues" class="nav-link">Known issues</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -441,7 +449,14 @@ out2 = outputs[1];
 
 </code></pre>
 <p>Note that the generated code uses the so-called <a href="https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code">scalar code generation model</a>, the default one, where the compiled sample generation code is done in <code>compute</code>. </p>
-<p>To be tested, the generated code has to be pasted in a codebox~ item in a RNBO patch.</p></div>
+<h3 id="testting-the-generated-codebox-code">Testting the generated codebox~ code</h3>
+<p>To be tested, the generated code has to be pasted in a codebox~ component in an englobing RNBO patch.</p>
+<h3 id="known-issues">Known issues</h3>
+<p>This is a [Work In progess] and the generated code does not always work as expected:</p>
+<ul>
+<li>parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled</li>
+<li>beware, some DSP produce incorrect audio samples !</li>
+</ul></div>
             </div>
         </div>
 

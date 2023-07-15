@@ -125,4 +125,14 @@ out2 = outputs[1];
 
 Note that the generated code uses the so-called [scalar code generation model](https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code), the default one, where the compiled sample generation code is done in `compute`. 
 
-To be tested, the generated code has to be pasted in a codebox~ item in a RNBO patch.
+### Testting the generated codebox~ code
+
+To be tested, the generated code has to be pasted in a codebox~ component in an englobing RNBO patch.
+
+### Known issues
+
+This is a [Work In progess] and the generated code does not always work as expected:
+
+ - parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled
+ - beware, some DSP produce incorrect audio samples !
+
