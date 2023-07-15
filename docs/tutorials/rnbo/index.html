@@ -437,7 +437,7 @@ function dspsetup() {
     fConst3_cb = (1.0 / fConst0_cb);
 }
 </code></pre>
-<p>Parameters handling is separated in two functions: <code>control</code> is called each time a parameters has changed:</p>
+<p>Parameters handling is separated in two functions: <code>control</code> is called each time a parameter has changed:</p>
 <pre><code>// Control
 function control() {
     fControl_cb[0] = (fConst1_cb * pow(1e+01, (0.05 * fHslider0_cb)));
@@ -445,7 +445,7 @@ function control() {
     fControl_cb[2] = (fConst3_cb * fHslider2_cb);
 }
 </code></pre>
-<p>And the actual change is triggered when at least one parameters has changed, controlled by the state of <code>fUpdated</code>global variable:</p>
+<p>And the actual change is triggered when at least one parameter has changed, controlled by the state of <code>fUpdated</code>global variable:</p>
 <pre><code>// Update parameters
 function update(freq1,freq2,volume) {
     fUpdated = int(fUpdated) | (freq1 != fHslider1_cb); fHslider1_cb = freq1;

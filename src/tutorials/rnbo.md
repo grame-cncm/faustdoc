@@ -99,7 +99,7 @@ function dspsetup() {
 }
 ```
 
-Parameters handling is separated in two functions: `control` is called each time a parameters has changed:
+Parameters handling is separated in two functions: `control` is called each time a parameter has changed:
 
 ```
 // Control
@@ -110,7 +110,7 @@ function control() {
 }
 ```
 
-And the actual change is triggered when at least one parameters has changed, controlled by the state of `fUpdated`global variable:
+And the actual change is triggered when at least one parameter has changed, controlled by the state of `fUpdated`global variable:
 
 ```
 // Update parameters
