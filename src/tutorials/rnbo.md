@@ -45,7 +45,29 @@ The generated code contains a sequence of parameters definitions, with their min
 
 ```
 
-Next the DSP init code, which is added in [dspsetup](https://rnbo.cycling74.com/codebox#special-functions), only available in codebox~ where it will be called each time audio is turned on in Max (which is basically every time the audio state is toggled, or the sample rate or vector size is changed).
+Next the declaration of the DSP structure using the `@state` decorator, creating state that persists across the lifetime of the codebox object. Scalar and arrays with the proper type are created:
+
+```
+// Fields
+@state fSampleRate_cb : Int = 0;
+@state fConst1_cb : number = 0;
+@state fHslider0_cb : number = 0;
+@state fConst2_cb : number = 0;
+@state iVec0_cb = new FixedIntArray(2);
+@state fRec0_cb = new FixedDoubleArray(2);
+@state fConst3_cb : number = 0;
+@state fHslider1_cb : number = 0;
+@state fRec2_cb = new FixedDoubleArray(2);
+@state fHslider2_cb : number = 0;
+@state fRec3_cb = new FixedDoubleArray(2);
+@state iVec1_cb = new FixedIntArray(2);
+@state iRec1_cb = new FixedIntArray(2);
+@state ftbl0mydspSIG0_cb = new FixedDoubleArray(65536);
+@state fUpdated : Int = 0;
+@state fControl_cb = new FixedDoubleArray(3);
+```
+
+Next the DSP init code, which is added in [dspsetup](https://rnbo.cycling74.com/codebox#special-functions), only available in codebox~ where it will be called each time audio is turned on in Max (which is basically every time the audio state is toggled, or the sample rate or vector size is changed). Here the DSP state is initialized using the RNBO current sample rate: 
 
 ```
 // Init
@@ -54,14 +76,14 @@ function dspsetup() {
 	for (let l2_re0_cb : Int = 0; (l2_re0_cb < 2); l2_re0_cb = (l2_re0_cb + 1)) {
 		iVec1_cb[l2_re0_cb] = 0;
 	}
-	....
+	...
+    ...   
 	fSampleRate_cb = samplerate();
 	let fConst0_cb : number = min(1.92e+05, max(1.0, fSampleRate_cb));
 	fConst1_cb = (44.1 / fConst0_cb);
 	fConst2_cb = (1.0 - fConst1_cb);
 	fConst3_cb = (1.0 / fConst0_cb);
 }
-
 ```
 
 Parameters handling is separated in two functions: `control` is called each time a parameters has changed:
