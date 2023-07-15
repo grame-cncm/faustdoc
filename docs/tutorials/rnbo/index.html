@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>2 install - Faust Documentation</title>
+        <title>Using Faust in RNBO with codebox~ - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -204,7 +204,7 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -213,47 +213,47 @@
 </li>
                                     
 <li>
-    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+    <a href="../teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+    <a href="../esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+    <a href="../basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+    <a href="../summation/" class="dropdown-item">RMS and Summation in Faust</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/julia/" class="dropdown-item">Using Faust in Julia</a>
+    <a href="../julia/" class="dropdown-item">Using Faust in Julia</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/box-api/" class="dropdown-item">Using the box API</a>
+    <a href="../box-api/" class="dropdown-item">Using the box API</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
+    <a href="../signal-api/" class="dropdown-item">Using the signal API</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
+    <a href="../cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/jsfx/" class="dropdown-item">Using Faust in JSFX</a>
+    <a href="../jsfx/" class="dropdown-item">Using Faust in JSFX</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/rnbo/" class="dropdown-item">Using Faust in RNBO with codebox~</a>
+    <a href="./" class="dropdown-item active">Using Faust in RNBO with codebox~</a>
 </li>
                                     
 <li>
-    <a href="../../tutorials/debugging/" class="dropdown-item">Advanced debugging with interp-tracer</a>
+    <a href="../debugging/" class="dropdown-item">Advanced debugging with interp-tracer</a>
 </li>
                                 </ul>
                             </li>
@@ -312,22 +312,22 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#compiling-and-installing-faust" class="nav-link">Compiling and installing Faust</a>
+            <li class="nav-item" data-level="1"><a href="#using-faust-in-rnbo-with-codebox" class="nav-link">Using Faust in RNBO with codebox~</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#organization-of-the-distribution" class="nav-link">Organization of the distribution</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#compilation" class="nav-link">Compilation</a>
+            <li class="nav-item" data-level="4"><a href="#who-is-this-tutorial-for" class="nav-link">Who is this tutorial for?</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+            <li class="nav-item" data-level="2"><a href="#using-command-line-tools" class="nav-link">Using command line tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#generating-codebox-code" class="nav-link">Generating codebox~ code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#compilation-of-the-examples" class="nav-link">Compilation of the examples</a>
+            <li class="nav-item" data-level="3"><a href="#looking-at-the-generated-code" class="nav-link">Looking at the generated code</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -337,111 +337,111 @@
 </div></div>
                     <div class="col-md-9 main-container" role="main">
 
-<script src='/rail/railroad-diagrams.js'></script>
+<h1 id="using-faust-in-rnbo-with-codebox">Using Faust in RNBO with codebox~</h1>
+<p>In this tutorial, we present how <a href="https://faust.grame.fr">Faust</a> can be used with <a href="https://rnbo.cycling74.com">RNBO</a>, a library and toolchain that can take Max-like patches, export them as portable code, and directly compile that code to targets like a VST, a Max External, or a Raspberry Pi. DSP programs can be compiled to the internal <a href="https://rnbo.cycling74.com/codebox">codebox~</a> sample level scripting language.
+Compiling Faust DSP to codebox~ code will allow to take profit of hundreds of DSP building blocks implemented in the <a href="https://faustlibraries.grame.fr">Faust Libraries</a>, ready to use <a href="https://faustdoc.grame.fr/examples/ambisonics/">Examples</a>, any DSP program developed in more than 200 projects listed in the <a href="https://faust.grame.fr/community/powered-by-faust/">Powered By Faust</a> page, or Faust DSP programs found on the net.</p>
+<h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
+<p>The <a href="#using-command-line-tools">first section</a> assumes a working <a href="https://github.com/grame-cncm/faust">Faust</a> compiler installed on the machine, so is more designed for regular Faust users. The <a href="#using-the-faust-web-ide">second section</a> is better suited for Cmajor users who want to discover Faust [TODO].  </p>
+<h2 id="using-command-line-tools">Using command line tools</h2>
+<h3 id="generating-codebox-code">Generating codebox~ code</h3>
+<p>Assuming you've <a href="https://faust.grame.fr/downloads/">installed the <strong>faust</strong> compiler</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
-<h1 id="compiling-and-installing-faust">Compiling and installing <span class="smallcaps">Faust</span></h1>
-<p><a name="install"></a></p>
-<p>The <span class="smallcaps">Faust</span> source distribution <span class="lstinline">faust-2.60.3.tar.gz</span> can be downloaded from GitHub (<a href="https://github.com/grame-cncm/faust/releases">https://github.com/grame-cncm/faust/releases</a>).</p>
-<h2 id="organization-of-the-distribution">Organization of the distribution</h2>
-<p>The first thing is to decompress the downloaded archive. </p>
-<pre><code>    tar xzf faust-2.60.3.tar.gz
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
+freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+
 </code></pre>
-<p>The resulting <span class="lstinline">faust-2.60.3/</span> folder should contain the following elements:</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><span class="lstinline">architecture/</span></td>
-<td><span class="smallcaps">Faust</span> libraries and architecture files</td>
-</tr>
-<tr>
-<td><span class="lstinline">benchmark</span></td>
-<td>tools to measure the efficiency of the generated code</td>
-</tr>
-<tr>
-<td><span class="lstinline">compiler/</span></td>
-<td>sources of the <span class="smallcaps">Faust</span> compiler</td>
-</tr>
-<tr>
-<td><span class="lstinline">examples/</span></td>
-<td>examples of <span class="smallcaps">Faust</span> programs</td>
-</tr>
-<tr>
-<td><span class="lstinline">syntax-highlighting/</span>&amp;    support for syntax highlighting for several editors</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="lstinline">documentation/</span></td>
-<td><span class="smallcaps">Faust</span>'s documentation, including this manual</td>
-</tr>
-<tr>
-<td><span class="lstinline">tools/</span></td>
-<td>tools to produce audio applications and plugins</td>
-</tr>
-<tr>
-<td><span class="lstinline">COPYING</span></td>
-<td>license information</td>
-</tr>
-<tr>
-<td><span class="lstinline">Makefile</span></td>
-<td>Makefile used to build and install <span class="smallcaps">Faust</span></td>
-</tr>
-<tr>
-<td><span class="lstinline">README</span></td>
-<td>instructions on how to build and install <span class="smallcaps">Faust</span></td>
-</tr>
-</tbody>
-</table>
-<h2 id="compilation">Compilation</h2>
-<p><span class="smallcaps">Faust</span> has no dependencies outside standard libraries. Therefore the compilation should be straightforward. There is no configuration phase, to compile the <span class="smallcaps">Faust</span> compiler simply do :</p>
-<pre><code>    cd faust-2.60.3/
-    make
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>The codebox~ code can be generated using the following line (note the use of <code>-double</code> option, the default sample format in RNBO/codebox~):</p>
+<pre><code class="language-bash">faust -lang codebox -double osc.dsp -o osc.codebox
 </code></pre>
-<p>If the compilation was successful you can test the compiler before installing it:</p>
-<pre><code>    [cd faust-2.60.3/]
-    ./build/bin/faust -v
+<p>This will generate a serie of functions to init, update parameters and compute audio frames.</p>
+<h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
+<p>The generated code contains a sequence of parameters definitions, with their min/max, default values:</p>
+<pre><code>// Params
+@param({min: 2e+01, max: 3e+03}) freq1 = 1e+03;
+@param({min: 2e+01, max: 3e+03}) freq2 = 2e+02;
+@param({min: -96.0, max: 0.0}) volume = 0.0;
+
 </code></pre>
-<p>It should output:</p>
-<pre><code>FAUST Version 2.60.3
-Embedded backends: 
-   DSP to C
-   DSP to C++
-   DSP to Cmajor
-   DSP to CSharp
-   DSP to DLang
-   DSP to Java
-   DSP to JAX
-   DSP to Julia
-   DSP to old C++
-   DSP to Rust
-   DSP to WebAssembly (wast/wasm)
-Copyright (C) 2002-2023, GRAME - Centre National de Creation Musicale. All rights reserved. 
+<p>Next the DSP init code, which is added in <a href="https://rnbo.cycling74.com/codebox#special-functions">dspsetup</a>, only available in codebox~ where it will be called each time audio is turned on in Max (which is basically every time the audio state is toggled, or the sample rate or vector size is changed).</p>
+<pre><code>// Init
+function dspsetup() {
+    fUpdated = true;
+    for (let l2_re0_cb : Int = 0; (l2_re0_cb &lt; 2); l2_re0_cb = (l2_re0_cb + 1)) {
+        iVec1_cb[l2_re0_cb] = 0;
+    }
+    ....
+    fSampleRate_cb = samplerate();
+    let fConst0_cb : number = min(1.92e+05, max(1.0, fSampleRate_cb));
+    fConst1_cb = (44.1 / fConst0_cb);
+    fConst2_cb = (1.0 - fConst1_cb);
+    fConst3_cb = (1.0 / fConst0_cb);
+}
+
 </code></pre>
-<p>Then you can also try to compile one of the examples :</p>
-<pre><code>    [cd faust-2.60.3/]
-    ./build/bin/faust examples/generator/noise.dsp
+<p>Parameters handling is separated in two functions: <code>control</code> is called each time a parameters has changed:</p>
+<pre><code>// Control
+function control() {
+    fControl_cb[0] = (fConst1_cb * pow(1e+01, (0.05 * fHslider0_cb)));
+    fControl_cb[1] = (fConst3_cb * fHslider1_cb);
+    fControl_cb[2] = (fConst3_cb * fHslider2_cb);
+}
 </code></pre>
-<p>It should produce some C++ code on the standard output.</p>
-<h2 id="installation">Installation</h2>
-<p>You can install <span class="smallcaps">Faust</span> with:</p>
-<pre><code>    [cd faust-2.60.3/]
-    sudo make install
+<p>And the actual change is triggered when at least one parameters has changed, controlled by the state of <code>fUpdated</code>global variable:</p>
+<pre><code>// Update parameters
+function update(freq1,freq2,volume) {
+    fUpdated = int(fUpdated) | (freq1 != fHslider1_cb); fHslider1_cb = freq1;
+    fUpdated = int(fUpdated) | (freq2 != fHslider2_cb); fHslider2_cb = freq2;
+    fUpdated = int(fUpdated) | (volume != fHslider0_cb); fHslider0_cb = volume;
+    if (fUpdated) { fUpdated = false; control(); }
+}
 </code></pre>
-<p>or</p>
-<pre><code>    [cd faust-2.60.3/]
-    su
-    make install
+<p>Finally <code>compute</code> process the audio inputs and produces audio ouputs:</p>
+<pre><code>// Update parameters
+/ Compute one frame
+function compute() {
+    iVec0_cb[0] = 1;
+    fRec0_cb[0] = (fControl_cb[0] + (fConst2_cb * fRec0_cb[1]));
+    let iTemp0_cb : Int = (1 - iVec0_cb[1]);
+    let fTemp1_cb : number = ((iTemp0_cb) ? 0.0 : (fControl_cb[1] + fRec2_cb[1]));
+    fRec2_cb[0] = (fTemp1_cb - floor(fTemp1_cb));
+    output0_cb = (fRec0_cb[0] * ftbl0mydspSIG0_cb[max(0, min(int((65536.0 * fRec2_cb[0])), 65535))]);
+    let fTemp2_cb : number = ((iTemp0_cb) ? 0.0 : (fControl_cb[2] + fRec3_cb[1]));
+    fRec3_cb[0] = (fTemp2_cb - floor(fTemp2_cb));
+    output1_cb = (fRec0_cb[0] * ftbl0mydspSIG0_cb[max(0, min(int((65536.0 * fRec3_cb[0])), 65535))]);
+    iVec0_cb[1] = iVec0_cb[0];
+    fRec0_cb[1] = fRec0_cb[0];
+    fRec2_cb[1] = fRec2_cb[0];
+    fRec3_cb[1] = fRec3_cb[0];
+    return [output0_cb,output1_cb];
+}
 </code></pre>
-<p>depending on your system.</p>
-<h2 id="compilation-of-the-examples">Compilation of the examples</h2>
-<p>Once <span class="smallcaps">Faust</span> correctly installed, you can have a look at the provided examples in the <span class="lstinline">examples/</span> folder. </p>
-<p>You can use any of the <span class="lstinline">faust2...</span> script installed on your system (go in <span class="lstinline">/tools/faust2appls</span> to get an exhaustive list) to compile the Faust codes available in this folder. For example, if you're a Mac user and you want to turn <span class="lstinline">filtering/vcfWahLab.dsp</span> into a standalone CoreAudio application with a QT interface, just run:</p>
-<p><span class="lstinline">faust2caqt filtering/vcfWahLab.dsp</span></p></div>
+<p>With this code in place, the following sequence of operations is done at each sample:</p>
+<pre><code>// Update parameters
+update(freq1,freq2,volume);
+// Compute one frame
+outputs = compute();
+// Write the outputs
+out1 = outputs[0];
+out2 = outputs[1];
+
+</code></pre>
+<p>Note that the generated code uses the so-called <a href="https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code">scalar code generation model</a>, the default one, where the compiled sample generation code is done in <code>compute</code>. </p>
+<p>To be tested, the generated code has to be pasted in a codebox~ item in a RNBO patch.</p></div>
             </div>
         </div>
 
