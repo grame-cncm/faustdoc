@@ -5,7 +5,7 @@ Compiling Faust DSP to codebox~ code will allow to take profit of hundreds of DS
 
 #### Who is this tutorial for?
 
-The [first section](#using-command-line-tools) assumes a working [Faust](https://github.com/grame-cncm/faust) compiler installed on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) is better suited for Cmajor users who want to discover Faust [TODO].  
+The [first section](#using-command-line-tools) assumes a working [Faust](https://github.com/grame-cncm/faust) compiler installed on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) is better suited for RNBO users who want to discover Faust [TODO].  
 
 ## Using command line tools
 
@@ -171,3 +171,5 @@ This is a [Work In progress] and the generated code does not always work as expe
  - parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled
  - beware, some DSP produce incorrect audio samples !
 
+
+## Using the Faust Web IDE [TODO]
