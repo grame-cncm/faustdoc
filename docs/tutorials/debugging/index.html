@@ -369,7 +369,7 @@ opcode 33 kAddInt int 0 real 0 offset1 -1 offset2 -1
 Stack [Int: 0] [REAL: -4,605170]
 -------- Interpreter 'NaN' trace end --------
 </code></pre>
-<p>The trace contains the stack of Faust Byte Code (FBC) instructions executed by the interpreter, with the latest instructions executed before the actual error, here the <code>kLogf</code> operation. Name of fields in the DSP structure are also visible, here <code>fHslider0</code>. Looking at the generated C++ can help understand the control flow:</p>
+<p>The trace contains the stack of Faust Byte Code (FBC) instructions executed by the interpreter, with the latest instructions executed before the actual error, here the <code>kLogf</code> operation. The names of the fields in the DSP structure are also visible, here <code>fHslider0</code>. Looking at the generated C++ can help understand the control flow:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
 {
     FAUSTFLOAT* output0 = outputs[0];
@@ -379,7 +379,7 @@ Stack [Int: 0] [REAL: -4,605170]
     }
 }
 </code></pre>
-<p>The generated <code>DumpMem-debug22419.txt</code> file contains the content of the interpreter Virtual Machine REAL (float/double depending of the <code>-single/-double</code> compilation option) memory array, and INT (integer) memory array.</p>
+<p>The generated <code>DumpMem-debug22419.txt</code> file contains the content of the interpreter Virtual Machine REAL (float/double depending on the <code>-single/-double</code> compilation option) memory array, and INT (integer) memory array.</p>
 <pre><code>DSP name: debug
 =================================
 REAL memory: 3
@@ -417,7 +417,7 @@ with {
     }
 }
 </code></pre>
-<p>with incorrect table access code in <code>compute</code> method, where the <code>iTemp0</code> read and write indexes may exceed the table size of 16. Executing <code>interp-tracer -trace 4 -ct 0 table.dsp</code> generates the following trace on the console, showing memory read/write access errors:</p>
+<p>with incorrect table access code in the <code>compute</code> method, where the <code>iTemp0</code> read and write indexes may exceed the table size of 16. Executing <code>interp-tracer -trace 4 -ct 0 table.dsp</code> generates the following trace on the console, showing memory read/write access errors:</p>
 <pre><code>-------- Interpreter crash trace start --------
 assertStoreRealHeap array: fIntHeapSize 17 index 16 size 16 name ftbl0
 Stack [Int: 16] [REAL: 0,000000]
@@ -451,7 +451,7 @@ opcode 1 kInt32Value int 32 real 0 offset1 -1 offset2 -1
     }
 }
 </code></pre>
-<p>where the <code>iTemp0</code> read and write index is now constrained to stay in the <em>[0..15]</em> range and the code will not crash at runtime anymmore.</p>
+<p>where the <code>iTemp0</code> read and write index is now constrained to stay in the <em>[0..15]</em> range and the code will not crash at runtime anymore.</p>
 <p>The DSP program was indeed incorrect with the indexes wrapping at 32 samples boundaries. It can be rewritten as:</p>
 <pre><code>process = rwtable(SIZE, 0.0, rdx, _, wdx)
 with {
@@ -478,7 +478,7 @@ with {
 <pre><code>WARNING : RDTbl read index [0:inf] is outside of table size (16) in read(write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0]),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0)
 WARNING : WRTbl write index [0:inf] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0])
 </code></pre>
-<p>The range test code checks if the read or write index interval is inside the <em>[0..size-1]</em> range, and only generates constraining code when needed. <strong>But since the signal interval calculation is currently imperfect, uneeded range constraining code might be generated !</strong> This is actually the case in the generated code, and can be tested using <code>interp-tracer -trace 4 -ct 0 table.dsp</code>, that does not generate constraining code, but does not show any problem.</p>
+<p>The range test code checks if the read or write index interval is inside the <em>[0..size-1]</em> range, and only generates constraining code when needed. <strong>But since the signal interval calculation is currently imperfect, unneeded range constraining code might be generated !</strong> This is actually the case in the generated code, and can be tested using <code>interp-tracer -trace 4 -ct 0 table.dsp</code>, which does not generate constraining code, but does not show any problem.</p>
 <p><strong>If one is absolutely sure of the <em>stay in range</em> property, then adding constraining code can be deactivated using <code>-ct 0</code> and the generated code will be faster.</strong> The hope is to improve the signal interval calculation model, so that the index constraining code will not be needed anymore.</p>
 <p>Note that the DSP program can be rewritten this way:</p>
 <pre><code>process = rwtable(SIZE, 0.0, rdx, _, wdx)
@@ -505,7 +505,7 @@ with {
 <p>without any added range constraining code.</p>
 <p><strong>Note that <code>-ct 1</code> option is the default, so safe code is always generated.</strong> </p>
 <h2 id="debugging-the-select2-primitive">Debugging the select2 primitive</h2>
-<p>The <code>select2</code> primitive has a stric semantic, but for code optimization strategies, the generated code <a href="https://faustdoc.grame.fr/manual/faq/#does-select2-behaves-as-a-standard-cc-like-if">is not fully strict</a>. </p>
+<p>The <code>select2</code> primitive has a strict semantic, but for code optimization strategies, the generated code <a href="https://faustdoc.grame.fr/manual/faq/#does-select2-behaves-as-a-standard-cc-like-if">is not fully strict</a>. </p>
 <p>For the following DSP program:</p>
 <pre><code>process = select2(button(&quot;gate&quot;), branch1, branch2)
 with {
@@ -523,7 +523,7 @@ with {
     }
 }
 </code></pre>
-<p>Thus executing it with <code>interp-tracer -trace 4 debug.dsp</code> allows to detect one falling branch when the condition is in a given state. To force computation of both branches, the <code>-sts (--strict-select)</code> option can be used. The generated C++ is now:</p>
+<p>Thus executing it with <code>interp-tracer -trace 4 debug.dsp</code> allows it to detect one falling branch when the condition is in a given state. To force computation of both branches, the <code>-sts (--strict-select)</code> option can be used. The generated C++ is now:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
 {
     FAUSTFLOAT* output0 = outputs[0];
@@ -538,7 +538,7 @@ with {
 <p>where intermediate <code>fThen0</code> and <code>fElse0</code> created variables force the actual computation of both branches. Then executing <code>interp-tracer -trace 4 -sts debug.dsp</code> will reveal the out-of-bounds calculation on both branches, for both states of the condition. </p>
 <h2 id="debugging-using-test-signals">Debugging using test signals</h2>
 <p>Effects DSP programs usually need to be fed with standardized test input signals to possibly trigger abnormal behavior.  The <code>interp-tracer</code>  tool has an <code>-input</code>  option to connect an <code>impulse</code> program (defined with the <code>process = 1-1';</code> ),  then a <code>noise</code> program (defined with the <code>import("stdfaust.lib"); process = no.noise;</code> ) to all inputs of the tested DSP. So something like the <code>interp-tracer -trace 4 -input debug.dsp</code> command has to be used.</p>
-<p>More specialized test input signals can be used by directly modifying the <code>debug.dsp</code> code, then running the DSP code normally (that is not using the <code>-input</code> option anymore). So writting something like:  <code>process = test_signal &lt;: effect;</code> to connect a given mono <code>test_signal</code> to all inputs of the <code>effect</code> program.</p>
+<p>More specialized test input signals can be used by directly modifying the <code>debug.dsp</code> code, then running the DSP code normally (that is not using the <code>-input</code> option anymore). So writing something like:  <code>process = test_signal &lt;: effect;</code> to connect a given mono <code>test_signal</code> to all inputs of the <code>effect</code> program.</p>
 <h2 id="correcting-the-program">Correcting the program</h2>
 <p>The <code>interp-tracer</code> tool helps finding programming errors. But obviously, the detected errors must then be corrected:</p>
 <ul>
