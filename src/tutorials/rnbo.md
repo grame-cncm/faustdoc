@@ -31,7 +31,7 @@ The codebox~ code can be generated using the following line (note the use of `-d
 faust -lang codebox -double osc.dsp -o osc.codebox
 ```
 
-This will generate a serie of functions to init, update parameters and compute audio frames.
+This will generate a series of functions to init, update parameters and compute audio frames.
 
 ### Looking at the generated code
 
@@ -45,7 +45,7 @@ The generated code contains a sequence of parameters definitions, with their min
 
 ```
 
-Next the declaration of the DSP structure using the `@state` decorator, creating state that persists across the lifetime of the codebox object. Scalar and arrays with the proper type are created:
+Next the declaration of the DSP structure using the `@state` decorator, creating a state that persists across the lifetime of the codebox object. Scalar and arrays with the proper type are created:
 
 ```
 // Fields
@@ -160,7 +160,7 @@ out2 = outputs[1];
 
 Note that the generated code uses the so-called [scalar code generation model](https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code), the default one, where the compiled sample generation code is done in `compute`. 
 
-### Testting the generated codebox~ code
+### Testing the generated codebox~ code
 
 To be tested, the generated code has to be pasted in a codebox~ component in an englobing RNBO patch.
 
@@ -169,7 +169,7 @@ To be tested, the generated code has to be pasted in a codebox~ component in an 
 This is a [Work In progress] and the generated code does not always work as expected:
 
  - parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled
- - beware, some DSP produce incorrect audio samples !
+ - beware, some DSP produces incorrect audio samples !
 
 
 ## Using the Faust Web IDE [TODO]

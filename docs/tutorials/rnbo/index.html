@@ -328,7 +328,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#testting-the-generated-codebox-code" class="nav-link">Testting the generated codebox~ code</a>
+            <li class="nav-item" data-level="3"><a href="#testing-the-generated-codebox-code" class="nav-link">Testing the generated codebox~ code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -380,7 +380,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 <p>The codebox~ code can be generated using the following line (note the use of <code>-double</code> option, the default sample format in RNBO/codebox~):</p>
 <pre><code class="language-bash">faust -lang codebox -double osc.dsp -o osc.codebox
 </code></pre>
-<p>This will generate a serie of functions to init, update parameters and compute audio frames.</p>
+<p>This will generate a series of functions to init, update parameters and compute audio frames.</p>
 <h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
 <p>The generated code contains a sequence of parameters definitions, with their min/max, default values:</p>
 <pre><code>// Params
@@ -389,7 +389,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 @param({min: -96.0, max: 0.0}) volume = 0.0;
 
 </code></pre>
-<p>Next the declaration of the DSP structure using the <code>@state</code> decorator, creating state that persists across the lifetime of the codebox object. Scalar and arrays with the proper type are created:</p>
+<p>Next the declaration of the DSP structure using the <code>@state</code> decorator, creating a state that persists across the lifetime of the codebox object. Scalar and arrays with the proper type are created:</p>
 <pre><code>// Fields
 @state fSampleRate_cb : Int = 0;
 @state fConst1_cb : number = 0;
@@ -485,13 +485,13 @@ out2 = outputs[1];
 
 </code></pre>
 <p>Note that the generated code uses the so-called <a href="https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code">scalar code generation model</a>, the default one, where the compiled sample generation code is done in <code>compute</code>. </p>
-<h3 id="testting-the-generated-codebox-code">Testting the generated codebox~ code</h3>
+<h3 id="testing-the-generated-codebox-code">Testing the generated codebox~ code</h3>
 <p>To be tested, the generated code has to be pasted in a codebox~ component in an englobing RNBO patch.</p>
 <h3 id="known-issues">Known issues</h3>
 <p>This is a [Work In progress] and the generated code does not always work as expected:</p>
 <ul>
 <li>parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled</li>
-<li>beware, some DSP produce incorrect audio samples !</li>
+<li>beware, some DSP produces incorrect audio samples !</li>
 </ul>
 <h2 id="using-the-faust-web-ide-todo">Using the Faust Web IDE [TODO]</h2></div>
             </div>
