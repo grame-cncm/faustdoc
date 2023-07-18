@@ -382,12 +382,11 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 </code></pre>
 <p>This will generate a series of functions to init, update parameters and compute audio frames.</p>
 <h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
-<p>The generated code contains a sequence of parameters definitions, with their min/max, default values:</p>
+<p>The generated code contains a sequence of parameters definitions with their min, max, step and default values:</p>
 <pre><code>// Params
-@param({min: 2e+01, max: 3e+03}) freq1 = 1e+03;
-@param({min: 2e+01, max: 3e+03}) freq2 = 2e+02;
-@param({min: -96.0, max: 0.0}) volume = 0.0;
-
+@param({min: 2e+01, max: 3e+03, step: 0.1}) freq1 = 1e+03;
+@param({min: 2e+01, max: 3e+03, step: 0.1}) freq2 = 2e+02;
+@param({min: -96.0, max: 0.0, step: 0.1}) volume = 0.0;
 </code></pre>
 <p>Next the declaration of the DSP structure using the <code>@state</code> decorator, creating a state that persists across the lifetime of the codebox object. Scalar and arrays with the proper type are created:</p>
 <pre><code>// Fields
@@ -482,7 +481,6 @@ outputs = compute();
 // Write the outputs
 out1 = outputs[0];
 out2 = outputs[1];
-
 </code></pre>
 <p>Note that the generated code uses the so-called <a href="https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code">scalar code generation model</a>, the default one, where the compiled sample generation code is done in <code>compute</code>. </p>
 <h3 id="testing-the-generated-codebox-code">Testing the generated codebox~ code</h3>

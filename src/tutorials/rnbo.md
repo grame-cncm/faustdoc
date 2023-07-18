@@ -35,14 +35,13 @@ This will generate a series of functions to init, update parameters and compute 
 
 ### Looking at the generated code
 
-The generated code contains a sequence of parameters definitions, with their min/max, default values:
+The generated code contains a sequence of parameters definitions with their min, max, step and default values:
 
 ```
 // Params
-@param({min: 2e+01, max: 3e+03}) freq1 = 1e+03;
-@param({min: 2e+01, max: 3e+03}) freq2 = 2e+02;
-@param({min: -96.0, max: 0.0}) volume = 0.0;
-
+@param({min: 2e+01, max: 3e+03, step: 0.1}) freq1 = 1e+03;
+@param({min: 2e+01, max: 3e+03, step: 0.1}) freq2 = 2e+02;
+@param({min: -96.0, max: 0.0, step: 0.1}) volume = 0.0;
 ```
 
 Next the declaration of the DSP structure using the `@state` decorator, creating a state that persists across the lifetime of the codebox object. Scalar and arrays with the proper type are created:
@@ -155,7 +154,6 @@ outputs = compute();
 // Write the outputs
 out1 = outputs[0];
 out2 = outputs[1];
-
 ```
 
 Note that the generated code uses the so-called [scalar code generation model](https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code), the default one, where the compiled sample generation code is done in `compute`. 
@@ -170,6 +168,5 @@ This is a [Work In progress] and the generated code does not always work as expe
 
  - parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled
  - beware, some DSP produces incorrect audio samples !
-
 
 ## Using the Faust Web IDE [TODO]
