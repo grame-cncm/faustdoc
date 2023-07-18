@@ -164,7 +164,7 @@ To be tested, the generated code has to be pasted in a codebox~ component in an 
 
 ### Known issues
 
-This is a [Work In progress] and the generated code does not always work as expected:
+This is a [Work In Progress] and the generated code does not always work as expected:
 
  - parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled
  - beware, some DSP produces incorrect audio samples !
