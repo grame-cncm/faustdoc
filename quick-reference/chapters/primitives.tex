@@ -237,7 +237,8 @@ The primitives may use the \texttt{int} type for their arguments, but will autom
 
 \texttt{floor} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & largest int $\leq$: $y(t)=\mathrm{floorf}(x(t))$  \\
 \texttt{ceil} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & smallest int $\geq$: $y(t)=\mathrm{ceilf}(x(t))$  \\
-\texttt{rint} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & closest int: $y(t)=\mathrm{rintf}(x(t))$  \\
+\texttt{rint} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & closest int using the current rounding mode: $y(t)=\mathrm{rintf}(x(t))$  \\
+\texttt{round} & $\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ & nearest int value, regardless of the current rounding mode: $y(t)=\mathrm{rintf}(x(t))$  \\
 
 \hline
 \end{tabular}

@@ -2022,7 +2022,7 @@ process = 3.6 : ceil;
 
 #### `rint` Primitive
 
-Closest int can be expressed as `rint` in Faust. 
+Closest int (using the current rounding mode) can be expressed as `rint` in Faust. 
 
 * **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
 * **Mathematical Description:** \(y(t)=\mathrm{rintf}(x(t))\)
@@ -2032,6 +2032,21 @@ Closest int can be expressed as `rint` in Faust.
 <!-- faust-run -->
 ```
 process = 3.6 : rint;
+```
+<!-- /faust-run -->
+
+#### `round` Primitive
+
+Nearest int value (regardless of the current rounding mode) can be expressed as `round` in Faust. 
+
+* **Type:** \(\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}\) 
+* **Mathematical Description:** \(y(t)=\mathrm{roundf}(x(t))\)
+
+**Example**
+
+<!-- faust-run -->
+```
+process = 3.6 : round;
 ```
 <!-- /faust-run -->
 
