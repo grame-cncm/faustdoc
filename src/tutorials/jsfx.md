@@ -31,7 +31,8 @@ The JSFX code can be generated using
 faust -lang jsfx osc.dsp -o osc.jsfx 
 ```
 
-This will generate JSFX code that follows the standard JSFX file structure : 
+This will generate JSFX code that follows the standard JSFX file structure: 
+
 ```jsfx
 @init // init section
 
@@ -46,11 +47,10 @@ This code can be directly imported in Reaper or placed in Reaper Effects directo
 <img src="img/jsfx_reaper.png" class="mx-auto d-block" width="100%">
 <center>*Generated JSFX plugin in Reaper*</center>
 
-
 The generated code is fully self-contained and can be directly imported as a Reaper JSFX audio plugin, on any supported platform. 
 
 At the top of the generated file, a few lines are dedicated to report file description and metadata.
-Then, the initialization starts with :  
+Then, the initialization starts with:  
 
 - Sliders
 - Inputs and outputs
@@ -62,8 +62,8 @@ slider3:fHslider1=0<-96,0,0.1>hslider_volume0
 
 out_pin:output0
 out_pin:output1
-
 ```
+
 In JSFX, sliders are the only available controls that match Faust controls. It has been decided that buttons and checkboxes are thus represented as ***0-1*** sliders in JSFX. 
 
 Next, the `@init` section starts with all required functions - including math functions missing in JSFX and memory management functions.
@@ -71,7 +71,8 @@ These functions will always be included in generated JSFX code, since the rest o
 
 The `@init` section then defines a few constants (bitmasks for MIDI processing, and useful constants for processing like number of voices `nvoices`).
 The actual DSP part starts right after these constants. 
-Global tables are then allocated, here the table where sine waveform will be computed. 
+Global tables are then allocated, here the table where sine waveform will be computed: 
+
 ```
 ftbl0mydspSIG0 = MEMORY.alloc_memory(65536);
 ```
@@ -101,33 +102,37 @@ dsp.fSlow1 = 20;
 dsp.fSlow2 = 21;
 dsp.output0 = 22;
 dsp.output1 = 23;
-
 ```
 
 The next part consists in two functions used to create DSP objects, allocate their memory and initialize their states. One object represents one voice. If object has no `[nvoices]` metadata, or if `[nvoices:1]`, only one object will be created. The `create_instance` function allocates memory, then `init_instances` precomputes object state, including constants and everything that doesn't need to be computed at runtime. 
 
 At last, the `@init` section defines the `control` function. This function corresponds to the computation happening just before the audio loop in the C++ backend. These correspond to the computations related to controls and MIDI. 
+
 In JSFX sandboxed context, we don't need to call it on every loop, thus it has been pushed outside of `@block`. Moreover, this computation must be accessible from both `@slider` and `@block`. The current implementation will trigger a call to `control` function everytime a slider value changes, or everytime a MIDI input event happens. 
 
 
-By default, the `@block` section is empty. It will be filled with code if MIDI is somehow enabled :
-    * By associating MIDI input to a control in slider metadata `[keyon:64]`
-    * By setting polyphonic mode with `declare options ["nvoices:4"]` 
-The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named "freq", "key", "vel", "gain", "gate", and will convert the MIDI value to whatever it is supposed to represent : frequency for "freq", raw MIDI note number for "key" (...).  
+By default, the `@block` section is empty. It will be filled with code if MIDI is somehow enabled:
+
+ - by associating MIDI input to a control in slider metadata `[keyon:64]`
+ - by setting polyphonic mode with `declare options ["nvoices:4"]` 
+    
+The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named *freq*, *key*, *vel*, *gain*, *gate*, and will convert the MIDI value to whatever it is supposed to represent : frequency for "freq", raw MIDI note number for "key" (...).  
+
 The `@block` section contains a condition so that it will only call `control` function when MIDI events occur. 
 
 The ̀`@slider` section only calls `control`, and is itself only computed when a slider value changes.
 
 Finally, the `@sample` section is where the magic happens. It will loop through the different objects and compute the audio output. This section is represented in JSFX as a block of code called for every single sample. At the bottom of generated code, object outputs are summed in JSFX special variables `spl0`, `spl1` (...), which are the actual outputs of a JSFX plugin.
 
-### MIDI basic  example
+### MIDI basic example
 
 Basic MIDI inputs can be retrieved with controls (Faust sliders) if specific metadata are added to the control name.
-The available MIDI inputs are : 
-    - keyon
-    - keyoff
-    - key (both keyon and keyoff)
-    - ctrl
+The available MIDI inputs are: 
+
+ - keyon
+ - keyoff
+ - key (both keyon and keyoff)
+ - ctrl
 
 See [MIDI](https://faustdoc.grame.fr/manual/midi/) for more information about MIDI metadata syntax.
 
@@ -158,18 +163,17 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
         );
 );
 (midi_event > 0) ? (control());
-
 ```
-
 
 ### MIDI polyphonic example
 
-As explained in the [MIDI](https://faustdoc.grame.fr/manual/midi/) documentation, Faust supports MIDI polyphonic audio plugins. These plugins respond to MIDI note inputs with three different data : 
-    - key or frequency
-    - velocity or gain
-    - a gate used to trigger an envelope 
+As explained in the [MIDI](https://faustdoc.grame.fr/manual/midi/) documentation, Faust supports MIDI polyphonic audio plugins. These plugins respond to MIDI note inputs with three different data: 
 
-Be careful that "key" will be a value between 0-127 while frequency will be converted to cycle per seconds. Same mechanism applies to velocity (0-127) versus gain (0-1). 
+ - key or frequency
+ - velocity or gain
+ - a gate used to trigger an envelope 
+
+Be careful that *key* will be a value between 0-127 while frequency will be converted to cycle per seconds. Same mechanism applies to velocity (0-127) versus gain (0-1). 
 The following code shows the basic mechanism of MIDI polyphonic instrument that compiles for JSFX. 
 
 <!-- faust-run -->
@@ -188,9 +192,11 @@ process = os.osc(freq) * env * gain * 0.1;
 
 In this JSFX backend, polyphonic voices use a voice stealing mechanism, allowing a new voice to steal the oldest one if no voice is free. 
 
-The generated code contains a filled `@block` section that is used to look for MIDI input notes `midirecv`, thus performing expected actions : 
-    - a NOTE ON message looks for an available voice (or steals the oldest one if necessary) and sets its controls
-    - a NOTE OFF message looks for the voice that is playing its key to turn its gate off. 
+The generated code contains a filled `@block` section that is used to look for MIDI input notes `midirecv`, thus performing expected actions: 
+
+ - a NOTE ON message looks for an available voice (or steals the oldest one if necessary) and sets its controls
+ - a NOTE OFF message looks for the voice that is playing its key to turn its gate off. 
+    
     
 ```
 @block
@@ -224,7 +230,6 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
         ); // end of condition
 );
 (midi_event > 0) ? (control());
-
 ```
 
 ## Using the Faust Web IDE
@@ -236,11 +241,12 @@ This will allow your to download a `binary.zip` file, containing the resulting *
 
 As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some other might come in the future. 
 
-First, only three controls are available : 
+First, only three controls are available: 
 
-- sliders : hslider, vslider, nentry
-- button
-- checkbox
+ - sliders: hslider, vslider, nentry
+ - button
+ - checkbox
+ 
 All of these are mapped to sliders in JSFX. 
 
 On the MIDI side, this backend does not support program changes, neither channel press, or pitchweel. As described before, the available MIDI is key, keyon, keyoff, ctrl and polyphonic mode. 
