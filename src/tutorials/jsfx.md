@@ -116,7 +116,7 @@ By default, the `@block` section is empty. It will be filled with code if MIDI i
  - by associating MIDI input to a control in slider metadata `[keyon:64]`
  - by setting polyphonic mode with `declare options ["nvoices:4"]` 
     
-The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named *freq*, *key*, *vel*, *gain*, *gate*, and will convert the MIDI value to whatever it is supposed to represent : frequency for "freq", raw MIDI note number for "key" (...).  
+The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named *freq*, *key*, *vel*, *gain*, *gate*, and will convert the MIDI value to whatever it is supposed to represent: frequency for *freq*, raw MIDI note number for "key" (...).  
 
 The `@block` section contains a condition so that it will only call `control` function when MIDI events occur. 
 

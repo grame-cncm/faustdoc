@@ -446,7 +446,7 @@ dsp.output1 = 23;
 <li>by associating MIDI input to a control in slider metadata <code>[keyon:64]</code></li>
 <li>by setting polyphonic mode with <code>declare options ["nvoices:4"]</code> </li>
 </ul>
-<p>The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named <em>freq</em>, <em>key</em>, <em>vel</em>, <em>gain</em>, <em>gate</em>, and will convert the MIDI value to whatever it is supposed to represent : frequency for "freq", raw MIDI note number for "key" (...).  </p>
+<p>The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named <em>freq</em>, <em>key</em>, <em>vel</em>, <em>gain</em>, <em>gate</em>, and will convert the MIDI value to whatever it is supposed to represent: frequency for <em>freq</em>, raw MIDI note number for "key" (...).  </p>
 <p>The <code>@block</code> section contains a condition so that it will only call <code>control</code> function when MIDI events occur. </p>
 <p>The ̀<code>@slider</code> section only calls <code>control</code>, and is itself only computed when a slider value changes.</p>
 <p>Finally, the <code>@sample</code> section is where the magic happens. It will loop through the different objects and compute the audio output. This section is represented in JSFX as a block of code called for every single sample. At the bottom of generated code, object outputs are summed in JSFX special variables <code>spl0</code>, <code>spl1</code> (...), which are the actual outputs of a JSFX plugin.</p>
