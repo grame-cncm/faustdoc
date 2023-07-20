@@ -312,8 +312,36 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#using-faust-in-jsfx-wip" class="nav-link">Using Faust in JSFX [WIP]</a>
+            <li class="nav-item" data-level="1"><a href="#using-faust-in-jsfx" class="nav-link">Using Faust in JSFX</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#who-is-this-tutorial-for" class="nav-link">Who is this tutorial for?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-command-line-tools" class="nav-link">Using command line tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#generating-jsfx-code" class="nav-link">Generating JSFX code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#midi-basic-example" class="nav-link">MIDI basic example</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#midi-polyphonic-example" class="nav-link">MIDI polyphonic example</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide" class="nav-link">Using the Faust Web IDE</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#limitations" class="nav-link">Limitations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -321,8 +349,233 @@
 </div></div>
                     <div class="col-md-9 main-container" role="main">
 
-<h1 id="using-faust-in-jsfx-wip">Using Faust in JSFX [WIP]</h1>
-<p>In this tutorial, we present how <a href="https://faust.grame.fr">Faust</a> can be used with <a href="https://www.reaper.fm/sdk/js/js.php">JSFX</a>, a scripting language used in <a href="https://www.reaper.fm">Reaper</a>.</p></div>
+<h1 id="using-faust-in-jsfx">Using Faust in JSFX</h1>
+<p>In this tutorial, we present how <a href="https://faust.grame.fr">Faust</a> can be used with <a href="https://www.reaper.fm/sdk/js/js.php">JSFX</a>, a scripting language used in <a href="https://www.reaper.fm">Reaper</a>. The JSFX engine is integrated in Reaper by default, and can also be found as a plugin opcode for Csound, as well as a set of standalone projects : <a href="https://github.com/jpcima/ysfx">ysfx</a>, <a href="https://github.com/asb2m10/jsusfx/tree/bcc9cd7b910ee7bba5b4cd2649448ade2ec15712">jsusfx</a>. 
+The JSFX language is based on Cockos <a href="https://www.cockos.com/EEL2/">EEL2</a> open-source programming language.</p>
+<h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
+<p>The <a href="#using-command-line-tools">first section</a> assumes a working <a href="https://github.com/grame-cncm/faust">Faust compiler installed</a> on the machine, so is more designed for regular Faust users. The <a href="#using-the-faust-web-ide">second section</a> is better suited for JSFX users who want to discover Faust.  </p>
+<h2 id="using-command-line-tools">Using command line tools</h2>
+<h3 id="generating-jsfx-code">Generating JSFX code</h3>
+<p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed</a> the <strong>faust</strong> compiler from the <a href="https://github.com/grame-cncm/faust">master-dev branch</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
+freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/jsfx/exfaust0/exfaust0.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>The JSFX code can be generated using</p>
+<pre><code class="language-bash">faust -lang jsfx osc.dsp -o osc.jsfx 
+</code></pre>
+<p>This will generate JSFX code that follows the standard JSFX file structure: </p>
+<pre><code class="language-jsfx">@init // init section
+
+@block // control section 
+
+@slider // called when a control value changes
+
+@sample // audio computation section
+</code></pre>
+<p>This code can be directly imported in Reaper or placed in Reaper Effects directory. 
+<img src="img/jsfx_reaper.png" class="mx-auto d-block" width="100%">
+<center><em>Generated JSFX plugin in Reaper</em></center></p>
+<p>The generated code is fully self-contained and can be directly imported as a Reaper JSFX audio plugin, on any supported platform. </p>
+<p>At the top of the generated file, a few lines are dedicated to report file description and metadata.
+Then, the initialization starts with:  </p>
+<ul>
+<li>Sliders</li>
+<li>Inputs and outputs</li>
+</ul>
+<pre><code class="language-jsfx">slider1:fHslider0=1000&lt;20,3000,1&gt;hslider_freq10
+slider2:fHslider2=200&lt;20,3000,1&gt;hslider_freq20
+slider3:fHslider1=0&lt;-96,0,0.1&gt;hslider_volume0
+
+out_pin:output0
+out_pin:output1
+</code></pre>
+<p>In JSFX, sliders are the only available controls that match Faust controls. It has been decided that buttons and checkboxes are thus represented as <strong><em>0-1</em></strong> sliders in JSFX. </p>
+<p>Next, the <code>@init</code> section starts with all required functions - including math functions missing in JSFX and memory management functions.
+These functions will always be included in generated JSFX code, since the rest of the code requires it. </p>
+<p>The <code>@init</code> section then defines a few constants (bitmasks for MIDI processing, and useful constants for processing like number of voices <code>nvoices</code>).
+The actual DSP part starts right after these constants. 
+Global tables are then allocated, here the table where sine waveform will be computed: </p>
+<pre><code>ftbl0mydspSIG0 = MEMORY.alloc_memory(65536);
+</code></pre>
+<p>And the structure of our DSP class is defined. Since JSFX is not a real object oriented programming language, we use indexes inside memory chunks to access DSP object members. 
+Each object itself is represented as an address in JSFX preallocated memory. The <code>dsp.</code> fields indicate the position of members inside the object memory. </p>
+<pre><code>// DSP struct memory layout
+dsp.memory = MEMORY.alloc_memory(0);
+ddsp.size = 24;
+dsp.iVec1 = 0;
+dsp.fHslider0 = 2;
+dsp.fSampleRate = 3;
+dsp.fConst1 = 4;
+dsp.fRec1 = 5;
+dsp.fConst2 = 7;
+dsp.fConst3 = 8;
+dsp.fHslider1 = 9;
+dsp.fRec2 = 10;
+dsp.fHslider2 = 12;
+dsp.fRec3 = 13;
+dsp.iVec0 = 15;
+dsp.iRec0 = 17;
+dsp.fSlow0 = 19;
+dsp.fSlow1 = 20;
+dsp.fSlow2 = 21;
+dsp.output0 = 22;
+dsp.output1 = 23;
+</code></pre>
+<p>The next part consists in two functions used to create DSP objects, allocate their memory and initialize their states. One object represents one voice. If object has no <code>[nvoices]</code> metadata, or if <code>[nvoices:1]</code>, only one object will be created. The <code>create_instance</code> function allocates memory, then <code>init_instances</code> precomputes object state, including constants and everything that doesn't need to be computed at runtime. </p>
+<p>At last, the <code>@init</code> section defines the <code>control</code> function. This function corresponds to the computation happening just before the audio loop in the C++ backend. These correspond to the computations related to controls and MIDI. </p>
+<p>In JSFX sandboxed context, we don't need to call it on every loop, thus it has been pushed outside of <code>@block</code>. Moreover, this computation must be accessible from both <code>@slider</code> and <code>@block</code>. The current implementation will trigger a call to <code>control</code> function everytime a slider value changes, or everytime a MIDI input event happens. </p>
+<p>By default, the <code>@block</code> section is empty. It will be filled with code if MIDI is somehow enabled:</p>
+<ul>
+<li>by associating MIDI input to a control in slider metadata <code>[keyon:64]</code></li>
+<li>by setting polyphonic mode with <code>declare options ["nvoices:4"]</code> </li>
+</ul>
+<p>The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named <em>freq</em>, <em>key</em>, <em>vel</em>, <em>gain</em>, <em>gate</em>, and will convert the MIDI value to whatever it is supposed to represent : frequency for "freq", raw MIDI note number for "key" (...).  </p>
+<p>The <code>@block</code> section contains a condition so that it will only call <code>control</code> function when MIDI events occur. </p>
+<p>The ̀<code>@slider</code> section only calls <code>control</code>, and is itself only computed when a slider value changes.</p>
+<p>Finally, the <code>@sample</code> section is where the magic happens. It will loop through the different objects and compute the audio output. This section is represented in JSFX as a block of code called for every single sample. At the bottom of generated code, object outputs are summed in JSFX special variables <code>spl0</code>, <code>spl1</code> (...), which are the actual outputs of a JSFX plugin.</p>
+<h3 id="midi-basic-example">MIDI basic example</h3>
+<p>Basic MIDI inputs can be retrieved with controls (Faust sliders) if specific metadata are added to the control name.
+The available MIDI inputs are: </p>
+<ul>
+<li>keyon</li>
+<li>keyoff</li>
+<li>key (both keyon and keyoff)</li>
+<li>ctrl</li>
+</ul>
+<p>See <a href="https://faustdoc.grame.fr/manual/midi/">MIDI</a> for more information about MIDI metadata syntax.</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+declare options &quot;[midi:on]&quot;;
+import(&quot;stdfaust.lib&quot;);
+
+vel = hslider(&quot;vel[midi:ctrl 10]&quot;, 0, 0, 127, 1);
+freq = hslider(&quot;freq[midi:ctrl 11]&quot;, 50, 50, 1000, 0.1);
+
+process = os.osc(freq) * 0.1 * (vel / 127);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/jsfx/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>The generated code will contain a <code>@block</code> section that connects MIDI CC input (for CC 10 and 11) to relevant control values. </p>
+<pre><code class="language-jsfx">@block
+midi_event = 0;
+while (midirecv(mpos, msg1, msg2, msg3)) (
+        status = msg1&amp;0xF0;
+        channel = msg1&amp;0x0F;
+        (status == CC) ? (
+                midi_event += 1;
+                (msg2 == 0xa) ? (fHslider1 = midi_scale(msg3, 0.0000000000000000, 127.0000000000000000, 1.0000000000000000));
+                (msg2 == 0xb) ? (fHslider0 = midi_scale(msg3, 50.0000000000000000, 1000.0000000000000000, 0.1000000000000000));
+        );
+);
+(midi_event &gt; 0) ? (control());
+</code></pre>
+<h3 id="midi-polyphonic-example">MIDI polyphonic example</h3>
+<p>As explained in the <a href="https://faustdoc.grame.fr/manual/midi/">MIDI</a> documentation, Faust supports MIDI polyphonic audio plugins. These plugins respond to MIDI note inputs with three different data: </p>
+<ul>
+<li>key or frequency</li>
+<li>velocity or gain</li>
+<li>a gate used to trigger an envelope </li>
+</ul>
+<p>Be careful that <em>key</em> will be a value between 0-127 while frequency will be converted to cycle per seconds. Same mechanism applies to velocity (0-127) versus gain (0-1). 
+The following code shows the basic mechanism of MIDI polyphonic instrument that compiles for JSFX. </p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+declare options &quot;[nvoices:4]&quot;;
+import(&quot;stdfaust.lib&quot;);
+
+freq = hslider(&quot;freq&quot;, 0, 0, 10000, 0.1) : si.smoo;
+gain = hslider(&quot;gain&quot;, 0, 0, 1, 0.01) : si.smoo;
+gate = checkbox(&quot;gate&quot;);
+env = gate : en.asr(0.1, 0.5, 0.5);
+
+process = os.osc(freq) * env * gain * 0.1;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/jsfx/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>In this JSFX backend, polyphonic voices use a voice stealing mechanism, allowing a new voice to steal the oldest one if no voice is free. </p>
+<p>The generated code contains a filled <code>@block</code> section that is used to look for MIDI input notes <code>midirecv</code>, thus performing expected actions: </p>
+<ul>
+<li>a NOTE ON message looks for an available voice (or steals the oldest one if necessary) and sets its controls</li>
+<li>a NOTE OFF message looks for the voice that is playing its key to turn its gate off. </li>
+</ul>
+<pre><code>@block
+midi_event = 0;
+while (midirecv(mpos, msg1, msg2, msg3)) (
+        status = msg1&amp;0xF0;
+        channel = msg1&amp;0x0F;
+        (status == NOTE_ON) ? (
+                midi_event += 1;
+                voice_idx = get_oldest_voice();
+                sort_voices(voice_idx);
+                obj = get_dsp(voice_idx);
+                obj[dsp.key_id] = msg2;
+                obj[dsp.gate] = 1;
+                obj[dsp.fCheckbox0] = 1;
+                obj[dsp.fHslider1] = midi_scale(msg3, 0.0000000000000000, 1.0000000000000000, 0.0100000000000000);
+                obj[dsp.fHslider0] = limit(mtof(msg2), 0.0000000000000000, 10000.0000000000000000);
+        ); // NOTE ON condition off
+        (status == NOTE_OFF) ? (
+                midi_event += 1;
+                voice_idx = 0;
+                while(voice_idx &lt; nvoices) (
+                        obj = get_dsp(voice_idx);
+                        (obj[dsp.key_id] == msg2 &amp;&amp; obj[dsp.gate] &gt; 0) ? (
+                                obj[dsp.gate] = 0;
+                                obj[dsp.fCheckbox0] = 0;
+                                voice_idx = nvoices;
+                        );
+                        voice_idx += 1;
+                ); // end of while
+        ); // end of condition
+);
+(midi_event &gt; 0) ? (control());
+</code></pre>
+<h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
+<p>The JSFX backend is available on the <a href="https://faustide.grame.fr/">Faust web IDE</a>. In order to export a Faust program as JSFX code, you will need to click on the "export/compile to specific target" button (on the left side, below "Save as"). Then, you need to  choose <strong><em>jsfx</em></strong> both as the platform and architecture, and click <strong><em>compile</em></strong>.<br />
+This will allow your to download a <code>binary.zip</code> file, containing the resulting <strong><em>jsfx</em></strong> file and your original <strong><em>dsp</em></strong> file. </p>
+<h2 id="limitations">Limitations</h2>
+<p>As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some other might come in the future. </p>
+<p>First, only three controls are available: </p>
+<ul>
+<li>sliders: hslider, vslider, nentry</li>
+<li>button</li>
+<li>checkbox</li>
+</ul>
+<p>All of these are mapped to sliders in JSFX. </p>
+<p>On the MIDI side, this backend does not support program changes, neither channel press, or pitchweel. As described before, the available MIDI is key, keyon, keyoff, ctrl and polyphonic mode. </p></div>
             </div>
         </div>
 
