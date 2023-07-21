@@ -726,6 +726,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#round-primitive" class="nav-link">round Primitive</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#delay-primitives-and-modifiers" class="nav-link">Delay Primitives and Modifiers</a>
@@ -3439,7 +3443,7 @@ process = 3.6 : ceil;
 <!-- /faust-run -->
 
 <h4 id="rint-primitive"><code>rint</code> Primitive</h4>
-<p>Closest int can be expressed as <code>rint</code> in Faust. </p>
+<p>Closest int (using the current rounding mode) can be expressed as <code>rint</code> in Faust. </p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3461,6 +3465,29 @@ process = 3.6 : rint;
 </div>
 <!-- /faust-run -->
 
+<h4 id="round-primitive"><code>round</code> Primitive</h4>
+<p>Nearest int value (regardless of the current rounding mode) can be expressed as <code>round</code> in Faust. </p>
+<ul>
+<li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</li>
+<li><strong>Mathematical Description:</strong> <script type="math/tex">y(t)=\mathrm{roundf}(x(t))</script>
+</li>
+</ul>
+<p><strong>Example</strong></p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust80/exfaust80.svg" class="mx-auto d-block">
+
+<pre><code>
+process = 3.6 : round;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust80/exfaust80.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
 <!-- TODO: say something about the fact that things are expressed in core
 syntax -->
 
@@ -3476,7 +3503,7 @@ syntax -->
 </ul>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust80/exfaust80.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust81/exfaust81.svg" class="mx-auto d-block">
 
 <pre><code>
 process = mem;
@@ -3484,7 +3511,7 @@ process = mem;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust80/exfaust80.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust81/exfaust81.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3494,7 +3521,7 @@ process = mem;
 <p><code>'</code> can be used to apply a 1 sample delay to a signal in Faust. It can be seen as syntactic sugar to the <a href="#mem-primitive"><code>mem</code> primitive</a>. <code>'</code> is very convenient when implementing filters and can help significantly decrease the size of the Faust code.</p>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust81/exfaust81.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust82/exfaust82.svg" class="mx-auto d-block">
 
 <pre><code>
 process = _';
@@ -3502,7 +3529,7 @@ process = _';
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust81/exfaust81.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust82/exfaust82.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3525,7 +3552,7 @@ process = _';
 </ul>
 <p><strong>Example: Static N Samples Delay</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust82/exfaust82.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust83/exfaust83.svg" class="mx-auto d-block">
 
 <pre><code>
 N = 10;
@@ -3534,14 +3561,14 @@ process = @(N);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust82/exfaust82.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust83/exfaust83.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <p><strong>Example: Dynamic N Samples Delay</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust83/exfaust83.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust84/exfaust84.svg" class="mx-auto d-block">
 
 <pre><code>
 N = hslider(&quot;N&quot;,10,1,10,1);
@@ -3550,7 +3577,7 @@ process = @(N);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust83/exfaust83.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust84/exfaust84.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3578,7 +3605,7 @@ process = @(N);
 <p><strong>Example: Basic Triangle Wave Oscillator Using the <code>waveform</code> Primitive</strong></p>
 <p>In this example, a basic (and dirty) triangle wave-table is defined using the <a href="#waveform-primitive"><code>waveform</code></a>. It is then used with the <code>rdtable</code> primitive and a phasor to implement a triangle wave oscillator:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust84/exfaust84.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust85/exfaust85.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3590,7 +3617,7 @@ process = triangleOsc(f);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust84/exfaust84.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust85/exfaust85.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3598,7 +3625,7 @@ process = triangleOsc(f);
 <p><strong>Example: Basic Triangle Wave Oscillator Using the <code>sin</code> Primitive and a Timer</strong></p>
 <p>In this example, a sine table is implemented using the <a href="#sin-primitive"><code>sin</code></a> primitive and a timer (<a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>). The timer calls the <code>sin</code> function during the initialization step of the Faust program. It is then used with <code>rdtable</code> to implement a sine wave oscillator. </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust85/exfaust85.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust86/exfaust86.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3611,7 +3638,7 @@ process = triangleOsc(f);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust85/exfaust85.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust86/exfaust86.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3638,7 +3665,7 @@ process = triangleOsc(f);
 <p><strong>Example: Simple Looper</strong></p>
 <p>In this example, an input signal is written in the table when <code>record</code> is true (equal to 1). The read index is constantly updated to loop through the table. The table size is set to 48000, which corresponds to one second if the sampling rate is 48000 KHz. </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust86/exfaust86.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust87/exfaust87.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3653,7 +3680,7 @@ process = looper;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust86/exfaust86.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust87/exfaust87.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3688,7 +3715,7 @@ process = looper;
 <p><strong>Example: Signal Selector</strong></p>
 <p>The following example allows the user to choose between a sine and a sawtooth wave oscillator.  </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust87/exfaust87.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust88/exfaust88.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3699,14 +3726,14 @@ process = sig;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust87/exfaust87.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust88/exfaust88.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <p>Note that <code>select2</code> could be easily implemented from scratch in Faust:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust88/exfaust88.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust89/exfaust89.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3718,7 +3745,7 @@ process = sig;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust88/exfaust88.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust89/exfaust89.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3746,7 +3773,7 @@ process = sig;
 <p><strong>Example: Signal Selector</strong></p>
 <p>The following example allows the user to choose between a sine, a sawtooth and a triangle wave oscillator.  </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust89/exfaust89.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust90/exfaust90.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3757,14 +3784,14 @@ process = sig;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust89/exfaust89.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust90/exfaust90.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <p>Note that <code>select3</code> could be easily implemented from scratch in Faust using Boolean primitives:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust90/exfaust90.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust91/exfaust91.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3776,7 +3803,7 @@ process = sig;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust90/exfaust90.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust91/exfaust91.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3791,26 +3818,10 @@ from any GUI toolkits/frameworks and is purely abstract. Widgets can be
 <p><img src="img/button.svg" class="mx-auto d-block" width="50%"></p>
 <p>These signals can be freely combined with other audio signals. In fact, the following code is perfectly valid and will generate sound:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust91/exfaust91.svg" class="mx-auto d-block">
-
-<pre><code>
-process = button(&quot;DC&quot;);
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust91/exfaust91.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<p>Each primitive implements a specific UI element, but their appearance can also be completely modified using <a href="#metadata">metadata</a> (a little bit like HTML and CSS in the web). Therefore, <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, and <a href="#nentry-primitive"><code>nentry</code></a>) can for example be turned into a knob, a dropdown menu, etc. This concept is further developed in the <a href="#metadata">section on UI metadata</a>.</p>
-<p>Continuous UI elements (i.e., <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, and <a href="#nentry-primitive"><code>nentry</code></a>) must all declare a range for the parameter they're controlling. In some cases, this range is used during compilation to allocate memory and will impact the generated code. For example, in the case of:</p>
-<!-- faust-run -->
 <div class="faust-run"><img src="exfaust92/exfaust92.svg" class="mx-auto d-block">
 
 <pre><code>
-process = @(hslider(&quot;N&quot;,1,1,10,1));
+process = button(&quot;DC&quot;);
 
 </code></pre>
 
@@ -3820,9 +3831,25 @@ process = @(hslider(&quot;N&quot;,1,1,10,1));
 </div>
 <!-- /faust-run -->
 
-<p>a buffer of 10 samples will be allocated for the delay implemented with the <a href="#primitive"><code>@</code> primitive</a> while 20 samples will be allocated in the following example:</p>
+<p>Each primitive implements a specific UI element, but their appearance can also be completely modified using <a href="#metadata">metadata</a> (a little bit like HTML and CSS in the web). Therefore, <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, and <a href="#nentry-primitive"><code>nentry</code></a>) can for example be turned into a knob, a dropdown menu, etc. This concept is further developed in the <a href="#metadata">section on UI metadata</a>.</p>
+<p>Continuous UI elements (i.e., <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, and <a href="#nentry-primitive"><code>nentry</code></a>) must all declare a range for the parameter they're controlling. In some cases, this range is used during compilation to allocate memory and will impact the generated code. For example, in the case of:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust93/exfaust93.svg" class="mx-auto d-block">
+
+<pre><code>
+process = @(hslider(&quot;N&quot;,1,1,10,1));
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust93/exfaust93.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>a buffer of 10 samples will be allocated for the delay implemented with the <a href="#primitive"><code>@</code> primitive</a> while 20 samples will be allocated in the following example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust94/exfaust94.svg" class="mx-auto d-block">
 
 <pre><code>
 process = @(hslider(&quot;N&quot;,1,1,20,1));
@@ -3830,7 +3857,7 @@ process = @(hslider(&quot;N&quot;,1,1,20,1));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust93/exfaust93.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust94/exfaust94.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3846,7 +3873,7 @@ process = @(hslider(&quot;N&quot;,1,1,20,1));
 </ul>
 <p><strong>Example: Trigger</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust94/exfaust94.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust95/exfaust95.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3855,7 +3882,7 @@ process = no.noise*button(&quot;gate&quot;);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust94/exfaust94.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust95/exfaust95.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3871,7 +3898,7 @@ process = no.noise*button(&quot;gate&quot;);
 </ul>
 <p><strong>Example: Trigger</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust95/exfaust95.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust96/exfaust96.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3880,7 +3907,7 @@ process = no.noise*checkbox(&quot;gate&quot;);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust95/exfaust95.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust96/exfaust96.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3900,7 +3927,7 @@ process = no.noise*checkbox(&quot;gate&quot;);
 </ul>
 <p><strong>Example: Gain Control</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust96/exfaust96.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust97/exfaust97.svg" class="mx-auto d-block">
 
 <pre><code>
 gain = hslider(&quot;gain&quot;,0,0,1,0.01);
@@ -3909,7 +3936,7 @@ process = *(gain);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust96/exfaust96.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust97/exfaust97.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3917,7 +3944,7 @@ process = *(gain);
 <p><strong>Example: Additive Oscillator</strong></p>
 <p>Here is an example of a 3 oscillators instrument where the default frequency of each partial is <em>computed using a more complex <a href="#constant-numerical-expressions">constant numerical expression</a></em>.</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust97/exfaust97.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust98/exfaust98.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -3926,7 +3953,7 @@ process = par(i,3,os.osc(hslider(&quot;Freq%i&quot;, 200+i*400, 200, 2000, 1)));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust97/exfaust97.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust98/exfaust98.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3946,7 +3973,7 @@ process = par(i,3,os.osc(hslider(&quot;Freq%i&quot;, 200+i*400, 200, 2000, 1)));
 </ul>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust98/exfaust98.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust99/exfaust99.svg" class="mx-auto d-block">
 
 <pre><code>
 gain = vslider(&quot;gain&quot;,0,0,1,0.01);
@@ -3955,7 +3982,7 @@ process = *(gain);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust98/exfaust98.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust99/exfaust99.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -3975,7 +4002,7 @@ process = *(gain);
 </ul>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust99/exfaust99.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust100/exfaust100.svg" class="mx-auto d-block">
 
 <pre><code>
 gain = nentry(&quot;gain&quot;,0,0,1,0.01);
@@ -3984,7 +4011,7 @@ process = *(gain);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust99/exfaust99.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust100/exfaust100.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4002,7 +4029,7 @@ process = *(gain);
 <p><strong>Example</strong></p>
 <p>In the following example, the 2 UI elements controlling an oscillator are encapsulated in a group.</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust100/exfaust100.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust101/exfaust101.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4013,14 +4040,14 @@ process = hgroup(&quot;Oscillator&quot;,os.sawtooth(freq)*gain);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust100/exfaust100.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust101/exfaust101.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <p>Note that the <code>Oscillator</code> group can be placed in a function in case we'd like to add elements to it multiple times. </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust101/exfaust101.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust102/exfaust102.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4032,7 +4059,7 @@ process = os.sawtooth(freq)*gain;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust101/exfaust101.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust102/exfaust102.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4050,7 +4077,7 @@ process = os.sawtooth(freq)*gain;
 <p><strong>Example</strong></p>
 <p>In the following example, the 2 UI elements controlling an oscillator are encapsulated in a group.</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust102/exfaust102.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust103/exfaust103.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4061,14 +4088,14 @@ process = vgroup(&quot;Oscillator&quot;,os.sawtooth(freq)*gain);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust102/exfaust102.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust103/exfaust103.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <p>Note that the <code>Oscillator</code> group can be placed in a function in case we'd like to add elements to it multiple times. </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust103/exfaust103.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust104/exfaust104.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4080,7 +4107,7 @@ process = os.sawtooth(freq)*gain;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust103/exfaust103.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust104/exfaust104.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4098,7 +4125,7 @@ process = os.sawtooth(freq)*gain;
 <p><strong>Example</strong></p>
 <p>In the following example, the 2 UI elements controlling an oscillator are encapsulated in a group.</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust104/exfaust104.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust105/exfaust105.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4109,14 +4136,14 @@ process = tgroup(&quot;Oscillator&quot;,os.sawtooth(freq)*gain);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust104/exfaust104.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust105/exfaust105.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <p>Note that the <code>Oscillator</code> group can be placed in a function in case we'd like to add elements to it multiple times. </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust105/exfaust105.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust106/exfaust106.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4128,7 +4155,7 @@ process = os.sawtooth(freq)*gain;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust105/exfaust105.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust106/exfaust106.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4147,7 +4174,7 @@ process = os.sawtooth(freq)*gain;
 <p><strong>Example: Simple VU Meter</strong> </p>
 <p>A simple VU meter can be implemented using the <code>vbargraph</code> primitive:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust106/exfaust106.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust107/exfaust107.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4156,7 +4183,7 @@ process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level&quot;,-60,
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust106/exfaust106.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust107/exfaust107.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4176,7 +4203,7 @@ process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level&quot;,-60,
 <p><strong>Example: Simple VU Meter</strong> </p>
 <p>A simple VU meter can be implemented using the <code>hbargraph</code> primitive:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust107/exfaust107.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust108/exfaust108.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4185,7 +4212,7 @@ process = _ &lt;: attach(_,abs : ba.linear2db : hbargraph(&quot;Level&quot;,-60,
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust107/exfaust107.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust108/exfaust108.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4198,7 +4225,7 @@ process = _ &lt;: attach(_,abs : ba.linear2db : hbargraph(&quot;Level&quot;,-60,
 <h4 id="variable-parts-of-a-label">Variable Parts of a Label</h4>
 <p>Labels can contain variable parts. These are indicated with the sign <code>%</code> followed by the name of a variable. During compilation each label is processed in order to replace the variable parts by the value of the variable. For example:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust108/exfaust108.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust109/exfaust109.svg" class="mx-auto d-block">
 
 <pre><code>
 process = par(i,8,hslider(&quot;Voice %i&quot;,0.9,0,1,0.01));
@@ -4206,7 +4233,7 @@ process = par(i,8,hslider(&quot;Voice %i&quot;,0.9,0,1,0.01));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust108/exfaust108.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust109/exfaust109.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4256,7 +4283,7 @@ process = par(i,8,hslider(&quot;Voice %i&quot;,0.9,0,1,0.01));
 </table>
 <p>Hence, the example presented in the <a href="#hgroup-primitive">section on the <code>hgroup</code> primitive</a> can be rewritten as:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust109/exfaust109.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust110/exfaust110.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4267,7 +4294,7 @@ process = os.sawtooth(freq)*gain;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust109/exfaust109.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust110/exfaust110.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4284,7 +4311,7 @@ process = os.sawtooth(freq)*gain;
 <h4 id="smoothing">Smoothing</h4>
 <p>Despite the fact that the signal generated by user interface elements can be used in Faust with any other signals, UI elements run at a slower rate than the audio rate. This might be a source of clicking if the value of the corresponding parameter is modified while the program is running. This behavior is also amplified by the low resolution of signals generated by UI elements (as opposed to actual audio signals). For example, changing the value of the <code>freq</code> or <code>gain</code> parameters of the following code will likely create clicks (in the case of <code>gain</code>) or abrupt jumps (in the case of <code>freq</code>) in the signal:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust110/exfaust110.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust111/exfaust111.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4295,14 +4322,14 @@ process = os.osc(freq)*gain;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust110/exfaust110.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust111/exfaust111.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <p>This problem can be easily solved in Faust by using the <a href="https://faustlibraries.grame.fr/libs/signals/#sismoo"><code>si.smoo</code></a> function which implements an exponential smoothing by a unit-dc-gain one-pole lowpass with a pole at 0.999 (<code>si.smoo</code> is just sugar for <code>si.smooth(0.999)</code>). Therefore, the previous example can be rewritten as:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust111/exfaust111.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust112/exfaust112.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4313,7 +4340,7 @@ process = os.osc(freq)*gain;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust111/exfaust111.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust112/exfaust112.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4361,7 +4388,7 @@ freq = vslider(&quot;h:Oscillator/[0]freq&quot;,440,50,1000,0.1);
 <p>the <code>freq</code> parameter will be placed before <code>gain</code> despite the fact that <code>gain</code> is declared first.</p>
 <p>This system can be used to order groups as well. Ordering will be carried out on elements at the same level. For example:  </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust112/exfaust112.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust113/exfaust113.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4374,14 +4401,14 @@ process = os.sawtooth(freqS)*gainS + os.triangle(freqT)*gainT;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust112/exfaust112.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust113/exfaust113.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
 
 <p>Note that this could also be written as:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust113/exfaust113.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust114/exfaust114.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4397,7 +4424,7 @@ process = hgroup(&quot;Oscillators&quot;,
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust113/exfaust113.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust114/exfaust114.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4411,7 +4438,7 @@ process = hgroup(&quot;Oscillators&quot;,
 <p>The <code>[style:knob]</code> metadata turns any continuous UI element (i.e., <a href="#hslider-metadata"><code>hslider</code></a>, <a href="#vslider-metadata"><code>vslider</code></a>, <a href="#nentry-metadata"><code>nentry</code></a>) into a knob.</p>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust114/exfaust114.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust115/exfaust115.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4421,7 +4448,7 @@ process = os.sawtooth(freq);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust114/exfaust114.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust115/exfaust115.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4438,7 +4465,7 @@ process = os.sawtooth(freq);
 </ul>
 <p><strong>Example: Selector</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust115/exfaust115.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust116/exfaust116.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4448,7 +4475,7 @@ process = select2(s,no.noise,os.sawtooth(440));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust115/exfaust115.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust116/exfaust116.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4465,7 +4492,7 @@ process = select2(s,no.noise,os.sawtooth(440));
 </ul>
 <p><strong>Example: Selector</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust116/exfaust116.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust117/exfaust117.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4475,7 +4502,7 @@ process = select2(s,no.noise,os.sawtooth(440));
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust116/exfaust116.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust117/exfaust117.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4484,29 +4511,11 @@ process = select2(s,no.noise,os.sawtooth(440));
 <p>The <code>[style:led]</code> metadata turns a <a href="#vbargraph-metadata"><code>vbargraph</code></a> or a <a href="#hbargraph-metadata"><code>hbargraph</code></a> into a blinking LED (with varying intensity).</p>
 <p><strong>Example: Level Display</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust117/exfaust117.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[style:led]&quot;,-60,0));
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust117/exfaust117.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h4 id="stylenumerical-metadata"><code>[style:numerical]</code> Metadata</h4>
-<p>The <code>[style:numerical]</code> metadata turns a <a href="#vbargraph-metadata"><code>vbargraph</code></a> or a <a href="#hbargraph-metadata"><code>hbargraph</code></a> into a numerical zone (thus the bargraph itself is no more displayed).</p>
-<p><strong>Example: Level Display</strong></p>
-<!-- faust-run -->
 <div class="faust-run"><img src="exfaust118/exfaust118.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
-process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[style:numerical]&quot;,-60,0));
+process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[style:led]&quot;,-60,0));
 
 </code></pre>
 
@@ -4516,11 +4525,29 @@ process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[style:nume
 </div>
 <!-- /faust-run -->
 
+<h4 id="stylenumerical-metadata"><code>[style:numerical]</code> Metadata</h4>
+<p>The <code>[style:numerical]</code> metadata turns a <a href="#vbargraph-metadata"><code>vbargraph</code></a> or a <a href="#hbargraph-metadata"><code>hbargraph</code></a> into a numerical zone (thus the bargraph itself is no more displayed).</p>
+<p><strong>Example: Level Display</strong></p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust119/exfaust119.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[style:numerical]&quot;,-60,0));
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust119/exfaust119.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
 <h4 id="unitdb-metadata"><code>[unit:dB]</code> Metadata</h4>
 <p>The <code>[unit:dB]</code> metadata changes the unit of a <a href="#vbargraph-metadata"><code>vbargraph</code></a> or a <a href="#hbargraph-metadata"><code>hbargraph</code></a> to dB. This impacts its overall appearance by applying a rainbow color scheme, etc.</p>
 <p><strong>Example: Level Display</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust119/exfaust119.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust120/exfaust120.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4529,7 +4556,7 @@ process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[unit:dB]&q
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust119/exfaust119.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust120/exfaust120.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4545,7 +4572,7 @@ process = _ &lt;: attach(_,abs : ba.linear2db : vbargraph(&quot;Level[unit:dB]&q
 </ul>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust120/exfaust120.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust121/exfaust121.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4555,7 +4582,7 @@ process = os.sawtooth(freq);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust120/exfaust120.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust121/exfaust121.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4573,7 +4600,7 @@ process = os.sawtooth(freq);
 </ul>
 <p><strong>Example</strong></p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust121/exfaust121.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust122/exfaust122.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -4583,7 +4610,7 @@ process = os.sawtooth(freq);
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust121/exfaust121.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust122/exfaust122.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -4656,13 +4683,16 @@ process = os.sawtooth(freq);
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+                <div id="mkdocs-search-results"></div>
             </div>
             <div class="modal-footer">
             </div>

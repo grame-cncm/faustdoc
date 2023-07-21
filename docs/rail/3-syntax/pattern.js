@@ -1,4 +1,4 @@
 ComplexDiagram(
-	Choice (0, NonTerminal('ident'), NonTerminal('expression'))
+	Choice (0, NonTerminal('identifier'), NonTerminal('expression'))
 ).addTo()
 

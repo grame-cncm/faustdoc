@@ -168,7 +168,7 @@ Note that by default `-mcd 16` is `-dlt <INT_MAX>` values are used. Here is a sc
 [ shift buffer |-mcd <N1>| wrapping power-of-two buffer |-dlt <N2>| if based wrapping buffer ]
 ```
 
-Here is an example of a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut `-scalar` mode):
+Here is an example of  a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut `-scalar` mode):
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
