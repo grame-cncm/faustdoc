@@ -158,7 +158,7 @@ For very short delay lines of up to two samples, the first strategy is implement
 For delays values bigger than `-mcd <n>` samples, the second strategy is implemented by:
 
 - either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than `-dlt <n>` value.
-- or using a wrapping index moved by an if based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then `-dlt <n>`. 
+- or using a wrapping index moved by an if based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for delay values bigger than `-dlt <n>`. 
 
 In this strategy the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is  slower but consume less memory.  
 
