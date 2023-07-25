@@ -519,7 +519,7 @@ or the read and write indices move themselves along the delay line (with two pos
 <p>For delays values bigger than <code>-mcd &lt;n&gt;</code> samples, the second strategy is implemented by:</p>
 <ul>
 <li>either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than <code>-dlt &lt;n&gt;</code> value.</li>
-<li>or using a wrapping index moved by an if based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then <code>-dlt &lt;n&gt;</code>. </li>
+<li>or using a wrapping index moved by an if based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for delay values bigger than <code>-dlt &lt;n&gt;</code>. </li>
 </ul>
 <p>In this strategy the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is  slower but consume less memory.  </p>
 <p>Note that by default <code>-mcd 16</code> is <code>-dlt &lt;INT_MAX&gt;</code> values are used. Here is a scheme explaining the mecanism:</p>
@@ -957,16 +957,13 @@ struct mydsp : public dsp {
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>

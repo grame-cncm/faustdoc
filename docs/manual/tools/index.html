@@ -870,11 +870,11 @@ Environment variables:
   FAUSTARCH: specify the location of the Faust VST library files
     Default: /usr/local/share/faust
   QMAKE: specify the location of the qmake binary
-    Default: /opt/local/libexec/qt5/bin/qmake
+    Default: qmake
   SDK: specify the location of the VST SDK
-    Default: /usr/local/include/vstsdk2.4
+    Default: /usr/local/src/vstsdk
   SDKSRC: specify the location of the VST SDK sources
-    Default: /usr/local/include/vstsdk2.4/public.sdk/source/vst2.x
+    Default: /usr/local/src/vstsdk/public.sdk/source/vst2.x
 </pre>
 
 <h2 id="faust2feh">faust2feh</h2>
@@ -1067,7 +1067,7 @@ Environment variables:
   FAUSTLIB: specify the location of the Faust LV2 library files
     Default: /usr/local/share/faust
   QMAKE: specify the location of the qmake binary
-    Default: /opt/local/libexec/qt5/bin/qmake
+    Default: qmake
 </pre>
 
 <h2 id="faust2mathdoc">faust2mathdoc</h2>
@@ -1412,16 +1412,13 @@ Options:
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
