@@ -496,7 +496,7 @@ out2 = outputs[1];
 <li>beware, some DSP produces incorrect audio samples !</li>
 </ul>
 <h2 id="using-the-faust2rnbo-tool">Using the faust2rnbo tool</h2>
-<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the generated codebox code.</p>
+<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>).</p>
 <pre><code class="language-bash">faust2rnbo -h
 Usage: faust2rnbo [options] [Faust options] &lt;file.dsp&gt;
 Compiles Faust programs to RNBO

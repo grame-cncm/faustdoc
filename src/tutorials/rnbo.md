@@ -171,7 +171,7 @@ This is a [Work In Progress] and the generated code does not always work as expe
  
 ## Using the faust2rnbo tool
 
-The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch including the generated codebox code.
+The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)).
 
 ```bash
 faust2rnbo -h
