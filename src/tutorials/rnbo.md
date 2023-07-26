@@ -168,5 +168,27 @@ This is a [Work In Progress] and the generated code does not always work as expe
 
  - parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled
  - beware, some DSP produces incorrect audio samples !
+ 
+## Using the faust2rnbo tool
+
+The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch including the generated codebox code.
+
+```bash
+faust2rnbo -h
+Usage: faust2rnbo [options] [Faust options] <file.dsp>
+Compiles Faust programs to RNBO
+Options:
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+```
+
+The resulting patch contains an audio output (`ezdac~` object) that still have to be manually connected since audio outlets only appear after the JIT compilation step.
+
+So the following command:
+```bash
+faust2rnbo osc.dsp 
+```
+
+will directly compile the `osc.dsp` file and generate the `osc.maxpat` file.
+
 
 ## Using the Faust Web IDE [TODO]

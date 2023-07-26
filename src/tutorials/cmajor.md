@@ -124,7 +124,7 @@ So the following command:
 faust2cmajor -play osc.dsp 
 ```
 
-Will directly compile the `osc.dsp` file, generate the `osc.cmajor` and `osc.cmajorpatch` files:
+will directly compile the `osc.dsp` file, generate the `osc.cmajor` and `osc.cmajorpatch` files:
 
 ```
 {
