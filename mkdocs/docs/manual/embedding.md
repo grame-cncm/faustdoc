@@ -20,9 +20,10 @@ The  `libfaust` library exports the following API:
 - alternatively the `createCPPDSPFactoryFromBoxes`allows to create the factory from a box expression built with the [box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h)
 - alternatively the `createDSPFactoryFromSignals`allows to create the factory from a list of outputs signals built with the [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h)
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
-- `deleteDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. A unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
-- next, the `createDSPInstance` function (corresponding to the `new className` of C++) instantiates a `llvm_dsp` pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, `delete` can be used to destroy the dsp instance
+- next, the `createDSPInstance` function (corresponding to the `new className` of C++) instantiates a `llvm_dsp` pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, `delete` can be used to destroy the dsp instance. Note that an instance internally needs to access its associated factory during its entire lifetime.   
 - since `llvm_dsp` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
+- `deleteDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore, that is when all associated DSP instances have been properly destroyed
+- a unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
 
 #### Saving/restoring the factory
 
@@ -102,9 +103,10 @@ The interpreter backend API is similar to the LLVM backend API:
 - alternatively the `createInterpreterDSPFactoryFromBoxes` allows to create the factory from a box expression built with the [box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h)
 - alternatively the `createInterpreterDSPFactoryFromSignals` allows to create the factory from a list of outputs signals built with the [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h)
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
-- `deleteInterpreterDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore. A unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
-- next, the `createDSPInstance` method of the factory class, corresponding to the `new className` of C++, instantiates an `interpreter_dsp` pointer, to be used as any regular Faust compiled DSP object, run and controlled through its interface. The instance contains the interpreter virtual machine loaded with the compiled bytecode, to be executed for each method
+- next, the `createDSPInstance` method of the factory class, corresponding to the `new className` of C++, instantiates an `interpreter_dsp` pointer, to be used as any regular Faust compiled DSP object, run and controlled through its interface. The instance contains the interpreter virtual machine loaded with the compiled bytecode, to be executed for each method. When finished, `delete` can be used to destroy the dsp instance. Note that an instance internally needs to access its associated factory during its entire lifetime. 
 - since ``interpreter_dsp`` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](https://faustdoc.grame.fr/manual/architectures/) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
+- `deleteInterpreterDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore, that is when all associated DSP instances have been properly destroyed. 
+- a unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
 
 #### Saving/restoring the factory
 
