@@ -190,5 +190,6 @@ will directly compile the `osc.dsp` file and generate the `osc.maxpat` file.
 
 This is a [Work In Progress] and the generated code does not always work as expected:
 
- - because of several RBNO exported C++ code subtle semantic issues, some DSP produces incorrect audio samples
+ - some DSP programs are producing incorrect audio samples due to several subtle semantic issues caused by bugs in the RBNO C++ exported code.
+
 ## Using the Faust Web IDE [TODO]
