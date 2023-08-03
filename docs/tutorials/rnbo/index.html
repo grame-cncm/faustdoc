@@ -498,9 +498,12 @@ out2 = outputs[1];
 <h2 id="using-the-faust2rnbo-tool">Using the faust2rnbo tool</h2>
 <p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>).</p>
 <pre><code class="language-bash">faust2rnbo -h
-Usage: faust2rnbo [options] [Faust options] &lt;file.dsp&gt;
 Compiles Faust programs to RNBO
 Options:
+   -compile : to trigger C++ compilation at load time
+   -test : to generate special 'RB_XX' prefix for parameters (for testing)
+   -cpp_path : to set C++ export folder
+   -cpp_filename : to set C++ export filename
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </code></pre>
 <p>The resulting patch contains an audio output (<code>ezdac~</code> object) that still have to be manually connected since audio outlets only appear after the JIT compilation step.</p>

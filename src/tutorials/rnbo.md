@@ -175,9 +175,12 @@ The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architectur
 
 ```bash
 faust2rnbo -h
-Usage: faust2rnbo [options] [Faust options] <file.dsp>
 Compiles Faust programs to RNBO
 Options:
+   -compile : to trigger C++ compilation at load time
+   -test : to generate special 'RB_XX' prefix for parameters (for testing)
+   -cpp_path : to set C++ export folder
+   -cpp_filename : to set C++ export filename
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 ```
 
