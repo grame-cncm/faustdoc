@@ -160,17 +160,10 @@ Note that the generated code uses the so-called [scalar code generation model](h
 
 ### Testing the generated codebox~ code
 
-To be tested, the generated code has to be pasted in a codebox~ component in an englobing RNBO patch.
+To be tested, the generated code has to be pasted in a codebox~ component in an encompassing RNBO patch, with additional patching to add the needed audio inputs/outputs and control parameters. Thus a more integrated and simpler model is to use the **faust2rnbo** tool.  
 
-### Known issues
-
-This is a [Work In Progress] and the generated code does not always work as expected:
-
- - because of several RBNO exported C++ code subtle semantic issues, some DSP produces incorrect audio samples
- 
 ## Using the faust2rnbo tool
-
-The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)). Additional options are used to generate a special version of the RNBO patch used in the testing infrastructure.
+The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)). Needed audio inputs/ouputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.
 
 ```bash
 faust2rnbo -h
@@ -193,5 +186,9 @@ faust2rnbo osc.dsp
 
 will directly compile the `osc.dsp` file and generate the `osc.maxpat` file.
 
+### Known issues
 
+This is a [Work In Progress] and the generated code does not always work as expected:
+
+ - because of several RBNO exported C++ code subtle semantic issues, some DSP produces incorrect audio samples
 ## Using the Faust Web IDE [TODO]

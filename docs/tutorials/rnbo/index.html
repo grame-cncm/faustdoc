@@ -332,14 +332,14 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#known-issues" class="nav-link">Known issues</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#using-the-faust2rnbo-tool" class="nav-link">Using the faust2rnbo tool</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#known-issues" class="nav-link">Known issues</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide-todo" class="nav-link">Using the Faust Web IDE [TODO]</a>
@@ -488,14 +488,9 @@ out2 = outputs[1];
 </code></pre>
 <p>Note that the generated code uses the so-called <a href="https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code">scalar code generation model</a>, the default one, where the compiled sample generation code is done in <code>compute</code>. </p>
 <h3 id="testing-the-generated-codebox-code">Testing the generated codebox~ code</h3>
-<p>To be tested, the generated code has to be pasted in a codebox~ component in an englobing RNBO patch.</p>
-<h3 id="known-issues">Known issues</h3>
-<p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
-<ul>
-<li>because of several RBNO exported C++ code subtle semantic issues, some DSP produces incorrect audio samples</li>
-</ul>
+<p>To be tested, the generated code has to be pasted in a codebox~ component in an encompassing RNBO patch, with additional patching to add the needed audio inputs/outputs and control parameters. Thus a more integrated and simpler model is to use the <strong>faust2rnbo</strong> tool.  </p>
 <h2 id="using-the-faust2rnbo-tool">Using the faust2rnbo tool</h2>
-<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>). Additional options are used to generate a special version of the RNBO patch used in the testing infrastructure.</p>
+<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>). Needed audio inputs/ouputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.</p>
 <pre><code class="language-bash">faust2rnbo -h
 Usage: faust2rnbo [options] [Faust options] &lt;file.dsp&gt;
 Compiles Faust programs to RNBO patches
@@ -511,6 +506,11 @@ Options:
 <pre><code class="language-bash">faust2rnbo osc.dsp 
 </code></pre>
 <p>will directly compile the <code>osc.dsp</code> file and generate the <code>osc.maxpat</code> file.</p>
+<h3 id="known-issues">Known issues</h3>
+<p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
+<ul>
+<li>because of several RBNO exported C++ code subtle semantic issues, some DSP produces incorrect audio samples</li>
+</ul>
 <h2 id="using-the-faust-web-ide-todo">Using the Faust Web IDE [TODO]</h2></div>
             </div>
         </div>
