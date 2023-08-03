@@ -166,21 +166,21 @@ To be tested, the generated code has to be pasted in a codebox~ component in an 
 
 This is a [Work In Progress] and the generated code does not always work as expected:
 
- - parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled
- - beware, some DSP produces incorrect audio samples !
+ - because of several RBNO exported C++ code subtle semantic issues, some DSP produces incorrect audio samples
  
 ## Using the faust2rnbo tool
 
-The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)).
+The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)). Additional options are used to generate a special version of the RNBO patch used in the testing infrastructure.
 
 ```bash
 faust2rnbo -h
-Compiles Faust programs to RNBO
+Usage: faust2rnbo [options] [Faust options] <file.dsp>
+Compiles Faust programs to RNBO patches
 Options:
    -compile : to trigger C++ compilation at load time
    -test : to generate special 'RB_XX' prefix for parameters (for testing)
-   -cpp_path : to set C++ export folder
-   -cpp_filename : to set C++ export filename
+   -cpp_path <path> : to set C++ export folder
+   -cpp_filename <filename> : to set C++ export filename
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 ```
 

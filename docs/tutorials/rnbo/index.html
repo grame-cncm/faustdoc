@@ -492,18 +492,18 @@ out2 = outputs[1];
 <h3 id="known-issues">Known issues</h3>
 <p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
 <ul>
-<li>parameters handing is not yet fully functioning, in particular when DSP programs only outputting audio are compiled</li>
-<li>beware, some DSP produces incorrect audio samples !</li>
+<li>because of several RBNO exported C++ code subtle semantic issues, some DSP produces incorrect audio samples</li>
 </ul>
 <h2 id="using-the-faust2rnbo-tool">Using the faust2rnbo tool</h2>
-<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>).</p>
+<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>). Additional options are used to generate a special version of the RNBO patch used in the testing infrastructure.</p>
 <pre><code class="language-bash">faust2rnbo -h
-Compiles Faust programs to RNBO
+Usage: faust2rnbo [options] [Faust options] &lt;file.dsp&gt;
+Compiles Faust programs to RNBO patches
 Options:
    -compile : to trigger C++ compilation at load time
    -test : to generate special 'RB_XX' prefix for parameters (for testing)
-   -cpp_path : to set C++ export folder
-   -cpp_filename : to set C++ export filename
+   -cpp_path &lt;path&gt; : to set C++ export folder
+   -cpp_filename &lt;filename&gt; : to set C++ export filename
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </code></pre>
 <p>The resulting patch contains an audio output (<code>ezdac~</code> object) that still have to be manually connected since audio outlets only appear after the JIT compilation step.</p>
