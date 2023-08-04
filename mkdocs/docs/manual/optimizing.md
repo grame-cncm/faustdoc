@@ -665,4 +665,3 @@ On modern CPUs, compiling native code dedicated to the target processor is criti
 ### faust2object
 
 The `faust2object` tool  either uses the standard C++ compiler or the LLVM dynamic compilation chain (the [dynamic-faust](https://faustdoc.grame.fr/manual/optimizing/#dynamic-faust) tool) to compile a Faust DSP to object code files (.o) and wrapper C++ header files for different CPUs. The DSP name is used in the generated C++ and object code files, thus allowing to generate distinct versions of the code that can finally be linked together in a single binary. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faust2object).
-<script src="/faust-web-component.js" defer></script>

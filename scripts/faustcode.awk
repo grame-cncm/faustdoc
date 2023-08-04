@@ -32,10 +32,6 @@ BEGIN {
 	NL = "";
 }
 
-END {
-	print "<script src=\"/faust-web-component.js\" defer></script>";
-}
-
 ################# 
 /<!-- \/faust-run -->/ 	{
 	INFAUST = 0;
