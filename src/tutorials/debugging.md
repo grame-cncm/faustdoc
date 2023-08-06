@@ -1,7 +1,7 @@
 # Advanced debugging with interp-tracer
 
 Some general informations are [given here](https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code) on how to debug the Faust DSP code. This tutorial aims to better explain how the [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) tool can be used to debug code at runtime.  
-The **interp-tracer** tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW and DIV_BY_ZERO operations, or LOAD/STORE errors.
+The **interp-tracer** tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW, NEGATIVE_BITSHIFT and DIV_BY_ZERO operations, or LOAD/STORE errors.
 
 ##  Debugging out-of-domain computations 
 
