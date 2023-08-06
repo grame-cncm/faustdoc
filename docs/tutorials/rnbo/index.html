@@ -494,7 +494,7 @@ out2 = outputs[1];
 <h3 id="testing-the-generated-codebox-code">Testing the generated codebox~ code</h3>
 <p>To be tested, the generated code has to be pasted in a codebox~ component in an encompassing RNBO patch, with additional patching to add the needed audio inputs/outputs and control parameters. Thus a more integrated and simpler model is to use the <strong>faust2rnbo</strong> tool.  </p>
 <h2 id="using-the-faust2rnbo-tool">Using the faust2rnbo tool</h2>
-<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch containing a <code>rnbo~</code> object and including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>) as a subpatch. Needed audio inputs/ouputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.</p>
+<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch containing a <code>rnbo~</code> object and including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>) as a subpatch. Needed audio inputs/outputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.</p>
 <pre><code class="language-bash">faust2rnbo -h
 Usage: faust2rnbo [options] [Faust options] &lt;file.dsp&gt;
 Compiles Faust programs to RNBO patches
@@ -536,7 +536,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 </div>
 <!-- /faust-run -->
 
-<p>can now be controlled with  MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the <code>midiin/midiout</code> objects still have to be manually connected to the rnbo~ object since audio outlets only appear after the JIT compilation step.</p>
+<p>can now be controlled with  MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the <code>midiin/midiout</code> objects still have to be manually connected to the <code>rnbo~</code> object since audio outlets only appear after the JIT compilation step.</p>
 <h2 id="known-issues">Known issues</h2>
 <p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
 <ul>
