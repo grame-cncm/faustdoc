@@ -163,7 +163,7 @@ Note that the generated code uses the so-called [scalar code generation model](h
 To be tested, the generated code has to be pasted in a codebox~ component in an encompassing RNBO patch, with additional patching to add the needed audio inputs/outputs and control parameters. Thus a more integrated and simpler model is to use the **faust2rnbo** tool.  
 
 ## Using the faust2rnbo tool
-The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)) as a subpatch. Needed audio inputs/ouputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.
+The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch containing a `rnbo~` object and including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)) as a subpatch. Needed audio inputs/ouputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.
 
 ```bash
 faust2rnbo -h
@@ -178,7 +178,7 @@ Options:
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 ```
 
-The resulting patch contains an audio output (`ezdac~` object) that still have to be manually connected since audio outlets only appear after the JIT compilation step.
+The resulting patch contains an audio output (`ezdac~` object) that still has to be manually connected with the `rnbo~` object since audio outlets only appear after the JIT compilation step.
 
 So the following command:
 ```bash
@@ -207,7 +207,8 @@ process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 ```
 <!-- /faust-run -->
 
-can now be controlled with  MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency.
+can now be controlled with  MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the `midiin/midiout` objects still have to be manually connected to the rnbo~ object since audio outlets only appear after the JIT compilation step.
+
 
 ## Known issues
 
