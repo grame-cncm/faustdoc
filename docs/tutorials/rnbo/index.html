@@ -336,10 +336,14 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#using-the-faust2rnbo-tool" class="nav-link">Using the faust2rnbo tool</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#known-issues" class="nav-link">Known issues</a>
+            <li class="nav-item" data-level="3"><a href="#midi-control" class="nav-link">MIDI control</a>
               <ul class="nav flex-column">
               </ul>
             </li>
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#known-issues" class="nav-link">Known issues</a>
+              <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide-todo" class="nav-link">Using the Faust Web IDE [TODO]</a>
@@ -490,11 +494,12 @@ out2 = outputs[1];
 <h3 id="testing-the-generated-codebox-code">Testing the generated codebox~ code</h3>
 <p>To be tested, the generated code has to be pasted in a codebox~ component in an encompassing RNBO patch, with additional patching to add the needed audio inputs/outputs and control parameters. Thus a more integrated and simpler model is to use the <strong>faust2rnbo</strong> tool.  </p>
 <h2 id="using-the-faust2rnbo-tool">Using the faust2rnbo tool</h2>
-<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>). Needed audio inputs/ouputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.</p>
+<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo">faust2rnbo</a> tool transforms a Faust DSP program into a RNBO patch including the codebox code (generated using the <a href="https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox">codebox backend</a>) as a subpatch. Needed audio inputs/ouputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.</p>
 <pre><code class="language-bash">faust2rnbo -h
 Usage: faust2rnbo [options] [Faust options] &lt;file.dsp&gt;
 Compiles Faust programs to RNBO patches
 Options:
+   -midi : activates MIDI control
    -compile : to trigger C++ compilation at load time
    -test : to generate special 'RB_XX' prefix for parameters (for testing)
    -cpp_path &lt;path&gt; : to set C++ export folder
@@ -506,7 +511,33 @@ Options:
 <pre><code class="language-bash">faust2rnbo osc.dsp 
 </code></pre>
 <p>will directly compile the <code>osc.dsp</code> file and generate the <code>osc.maxpat</code> file.</p>
-<h3 id="known-issues">Known issues</h3>
+<h3 id="midi-control">MIDI control</h3>
+<p>Control of parameters with MIDI can be activated using the <code>-midi</code> option, or using the <a href="https://faustdoc.grame.fr/manual/midi/#configuring-midi-in-faust">declare options "[midi:on]";</a> syntax in the DSP code. The patch will then contain <code>midiin/midiout</code> objects at global level and specialized <code>ctlin/notein etc.</code> objects in the codebox subpatch with the appropriate <code>scale</code> object to map the MIDI message range on the target parameter range.</p>
+<p>So for instance the MIDI augmented example: </p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+declare options &quot;[midi:on]&quot;;
+
+vol = hslider(&quot;volume [unit:dB] [midi: ctrl 7]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider(&quot;freq1 [unit:Hz][midi: ctrl 1]&quot;, 1000, 20, 3000, 0.1);
+freq2 = hslider(&quot;freq2 [unit:Hz][midi: ctrl 2]&quot;, 200, 20, 3000, 0.1);
+
+process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>can now be controlled with  MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency.</p>
+<h2 id="known-issues">Known issues</h2>
 <p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
 <ul>
 <li>some DSP programs are producing incorrect audio samples due to several subtle semantic issues caused by bugs in the RBNO C++ exported code.</li>
