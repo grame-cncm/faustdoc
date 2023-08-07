@@ -568,7 +568,7 @@ master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
 <p>compiled with the command:</p>
 <pre><code class="language-bash">faust2rnbo -midi -nvoices 12 organ.dsp 
 </code></pre>
-<p>will create a <code>rnbo~</code> object with 12 voices, and with an <code>notein</code> object added in the subpatch correctly connected (possibly with additional mapping) to the appropriate freq/gain/gate aware parameters. </p>
+<p>will create a <code>rnbo~</code> object with 12 voices, and with a <code>notein</code> object added in the subpatch correctly connected to the appropriate <em>freq/gain/gate</em> aware parameters. Additional mapping depending of the <a href="https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters">convention used</a> to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed.</p>
 <p>In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. </p>
 <h2 id="known-issues">Known issues</h2>
 <p>This is a [Work In Progress] and the generated code does not always work as expected:</p>

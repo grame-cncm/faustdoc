@@ -231,7 +231,7 @@ compiled with the command:
 ```bash
 faust2rnbo -midi -nvoices 12 organ.dsp 
 ```
-will create a `rnbo~` object with 12 voices, and with an `notein` object added in the subpatch correctly connected (possibly with additional mapping) to the appropriate freq/gain/gate aware parameters. 
+will create a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatch correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed.
 
 In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. 
 
