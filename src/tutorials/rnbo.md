@@ -207,8 +207,33 @@ process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 ```
 <!-- /faust-run -->
 
-can now be controlled with  MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the `midiin/midiout` objects still have to be manually connected to the `rnbo~` object since audio outlets only appear after the JIT compilation step.
+can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the `midiin/midiout` objects still have to be manually connected to the `rnbo~` object since audio outlets only appear after the JIT compilation step.
 
+### Polyphonic instruments
+
+When the DSP follows the [polyphonic ready instrument](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) convention, it can be activated in MIDI controllable polyphonic mode. So the following DSP program:
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+
+process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)
+with {
+master = hslider("master [midi:ctrl 7]", 0.5, 0, 1, 0.01);
+    gain = hslider("gain", 0.5, 0, 1, 0.01);
+    freq = hslider("freq", 500, 200, 3000, 0.1);
+    voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
+};
+```
+<!-- /faust-run -->
+
+compiled with the command:
+```bash
+faust2rnbo -midi -nvoices 12 organ.dsp 
+```
+will create a `rnbo~` object with 12 voices, and with an `notein` object added in the subpatch correctly connected (possibly with additional mapping) to the appropriate freq/gain/gate aware parameters. 
+
+In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. 
 
 ## Known issues
 

@@ -340,6 +340,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#polyphonic-instruments" class="nav-link">Polyphonic instruments</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#known-issues" class="nav-link">Known issues</a>
@@ -536,7 +540,36 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 </div>
 <!-- /faust-run -->
 
-<p>can now be controlled with  MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the <code>midiin/midiout</code> objects still have to be manually connected to the <code>rnbo~</code> object since audio outlets only appear after the JIT compilation step.</p>
+<p>can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the <code>midiin/midiout</code> objects still have to be manually connected to the <code>rnbo~</code> object since audio outlets only appear after the JIT compilation step.</p>
+<h3 id="polyphonic-instruments">Polyphonic instruments</h3>
+<p>When the DSP follows the <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">polyphonic ready instrument</a> convention, it can be activated in MIDI controllable polyphonic mode. So the following DSP program:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = vgroup(&quot;Organ&quot;, voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button(&quot;gate&quot;))) * master &lt;: (_,_)
+with {
+master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
+    gain = hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
+    freq = hslider(&quot;freq&quot;, 500, 200, 3000, 0.1);
+    voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>compiled with the command:</p>
+<pre><code class="language-bash">faust2rnbo -midi -nvoices 12 organ.dsp 
+</code></pre>
+<p>will create a <code>rnbo~</code> object with 12 voices, and with an <code>notein</code> object added in the subpatch correctly connected (possibly with additional mapping) to the appropriate freq/gain/gate aware parameters. </p>
+<p>In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. </p>
 <h2 id="known-issues">Known issues</h2>
 <p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
 <ul>
