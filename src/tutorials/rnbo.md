@@ -231,9 +231,35 @@ compiled with the command:
 ```bash
 faust2rnbo -midi -nvoices 12 organ.dsp 
 ```
-will create a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatch correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed.
+will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatch correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed.
 
 In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. 
+
+### Polyphonic instruments with an effect
+
+The following polyphonic ready instrument DSP, with an [integrated effect](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer), can be converted to a polyphonic MIDI ready patch:
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+
+process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)
+with {
+master = hslider("master [midi:ctrl 7]", 0.5, 0, 1, 0.01);
+    gain = hslider("gain", 0.5, 0, 1, 0.01);
+    freq = hslider("freq", 500, 200, 3000, 0.1);
+    voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
+};
+
+effect = dm.freeverb_demo;
+```
+<!-- /faust-run -->
+
+To be compiled with the following:
+
+```bash
+faust2rnbo -midi -nvoices 16 -effect auto organ-effect.dsp 
+```
 
 ## Known issues
 

@@ -344,6 +344,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#polyphonic-instruments-with-an-effect" class="nav-link">Polyphonic instruments with an effect</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#known-issues" class="nav-link">Known issues</a>
@@ -568,8 +572,37 @@ master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
 <p>compiled with the command:</p>
 <pre><code class="language-bash">faust2rnbo -midi -nvoices 12 organ.dsp 
 </code></pre>
-<p>will create a <code>rnbo~</code> object with 12 voices, and with a <code>notein</code> object added in the subpatch correctly connected to the appropriate <em>freq/gain/gate</em> aware parameters. Additional mapping depending of the <a href="https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters">convention used</a> to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed.</p>
+<p>will create a patch containing a <code>rnbo~</code> object with 12 voices, and with a <code>notein</code> object added in the subpatch correctly connected to the appropriate <em>freq/gain/gate</em> aware parameters. Additional mapping depending of the <a href="https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters">convention used</a> to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed.</p>
 <p>In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. </p>
+<h3 id="polyphonic-instruments-with-an-effect">Polyphonic instruments with an effect</h3>
+<p>The following polyphonic ready instrument DSP, with an <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a>, can be converted to a polyphonic MIDI ready patch:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = vgroup(&quot;Organ&quot;, voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button(&quot;gate&quot;))) * master &lt;: (_,_)
+with {
+master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
+    gain = hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
+    freq = hslider(&quot;freq&quot;, 500, 200, 3000, 0.1);
+    voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
+};
+
+effect = dm.freeverb_demo;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust3/exfaust3.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>To be compiled with the following:</p>
+<pre><code class="language-bash">faust2rnbo -midi -nvoices 16 -effect auto organ-effect.dsp 
+</code></pre>
 <h2 id="known-issues">Known issues</h2>
 <p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
 <ul>
