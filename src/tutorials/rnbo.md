@@ -178,7 +178,10 @@ Options:
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 ```
 
-The resulting patch contains an audio output (`ezdac~` object) that still has to be manually connected with the `rnbo~` object since audio outlets only appear after the JIT compilation step.
+The resulting patch contains:
+
+ - an audio `adc~` input automatically connected to the `rnbo~` object (when the DSP has audio inputs)
+ - an audio `dac~` output automatically connected with the `rnbo~` object. 
 
 So the following command:
 ```bash
