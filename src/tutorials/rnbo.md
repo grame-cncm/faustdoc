@@ -163,7 +163,7 @@ Note that the generated code uses the so-called [scalar code generation model](h
 To be tested, the generated code has to be pasted in a codebox~ component in an encompassing RNBO patch, with additional patching to add the needed audio inputs/outputs and control parameters. Thus a more integrated and simpler model is to use the **faust2rnbo** tool.  
 
 ## Using the faust2rnbo tool
-The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch containing a `rnbo~` object and including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)) as a subpatch. Needed audio inputs/outputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure.
+The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch containing a `rnbo~` object and including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)) as a subpatch. Needed audio inputs/outputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure. The code is written in Python and uses the very powerful [py2max](https://github.com/shakfu/py2max) library to generate the maxpat JSON format.
 
 ```bash
 faust2rnbo -h
