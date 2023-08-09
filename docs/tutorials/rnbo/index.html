@@ -562,7 +562,7 @@ import(&quot;stdfaust.lib&quot;);
 
 process = vgroup(&quot;Organ&quot;, voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button(&quot;gate&quot;))) * master &lt;: (_,_)
 with {
-master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
+    master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
     gain = hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
     freq = hslider(&quot;freq&quot;, 500, 200, 3000, 0.1);
     voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
@@ -591,7 +591,7 @@ import(&quot;stdfaust.lib&quot;);
 
 process = vgroup(&quot;Organ&quot;, voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button(&quot;gate&quot;))) * master &lt;: (_,_)
 with {
-master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
+    master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
     gain = hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
     freq = hslider(&quot;freq&quot;, 500, 200, 3000, 0.1);
     voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
