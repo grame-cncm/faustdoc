@@ -508,6 +508,9 @@ Usage: faust2rnbo [options] [Faust options] &lt;file.dsp&gt;
 Compiles Faust programs to RNBO patches
 Options:
    -midi : activates MIDI control
+   -nvoices &lt;num&gt; : produces a polyphonic DSP with &lt;num&gt; voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp&gt; : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp&gt;, ready to be used with MIDI or OSC
    -compile : to trigger C++ compilation at load time
    -test : to generate special 'RB_XX' prefix for parameters (for testing)
    -cpp_path &lt;path&gt; : to set C++ export folder
