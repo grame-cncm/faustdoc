@@ -191,7 +191,15 @@ So the following command:
 faust2rnbo osc.dsp 
 ```
 
-will directly compile the `osc.dsp` file and generate the `osc.maxpat` file.
+will directly compile the `osc.dsp` file and generate the `osc.maxpat` file, that can be opened in Max/MSP, with the following user-interface:
+
+<img src="img/faust-rnbo1.png" class="mx-auto d-block" width="100%">
+<center>*Generated RNBO patch*</center>
+
+and with the `rnbo~` subpatcher containing the codebox object as well as the parameter control machinery:
+
+<img src="img/faust-rnbo2.png" class="mx-auto d-block" width="100%">
+<center>*RNBO subpatcher with parameter control machinery (after manual editing)*</center>
 
 ### MIDI control
 
@@ -215,6 +223,17 @@ process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 
 can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the `midiin/midiout` objects still have to be manually connected to the `rnbo~` object since audio outlets only appear after the JIT compilation step.
 
+So the following command:
+```bash
+faust2rnbo -midi osc.dsp 
+```
+
+will compile a `osc.maxpat` file containing additional `midiin/midiout` objects, with the following user-interface:
+
+<img src="img/faust-rnbo3.png" class="mx-auto d-block" width="100%">
+<center>*Generated RNBO patch with MIDI control*</center>
+
+
 ### Polyphonic instruments
 
 When the DSP follows the [polyphonic ready instrument](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) convention, it can be activated in MIDI controllable polyphonic mode. So the following DSP program:
@@ -237,7 +256,10 @@ compiled with the command:
 ```bash
 faust2rnbo -midi -nvoices 12 organ.dsp 
 ```
-will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatch correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed.
+will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatch correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed, with the generated user-interface:
+
+<img src="img/faust-rnbo4.png" class="mx-auto d-block" width="100%">
+<center>*Generated polyphonic RNBO patch with MIDI control*</center>
 
 In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. 
 
@@ -266,6 +288,11 @@ To be compiled with the following:
 ```bash
 faust2rnbo -midi -nvoices 16 -effect auto organ-effect.dsp 
 ```
+
+with the generated user-interface, containting the polyphonic DSP `rnbo~` object connected to the global effect `rnbo~` object:
+
+<img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
+<center>*Generated polyphonic RNBO patch connect to the global effect, with MIDI control*</center>
 
 ## Known issues
 
