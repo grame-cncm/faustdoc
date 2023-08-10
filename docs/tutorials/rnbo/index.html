@@ -556,7 +556,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 </div>
 <!-- /faust-run -->
 
-<p>can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the <code>midiin/midiout</code> objects still have to be manually connected to the <code>rnbo~</code> object since audio outlets only appear after the JIT compilation step.</p>
+<p>can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency.</p>
 <p>So the following command:</p>
 <pre><code class="language-bash">faust2rnbo -midi osc.dsp 
 </code></pre>

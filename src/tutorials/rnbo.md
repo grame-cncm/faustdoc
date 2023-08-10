@@ -221,7 +221,7 @@ process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 ```
 <!-- /faust-run -->
 
-can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Note that the `midiin/midiout` objects still have to be manually connected to the `rnbo~` object since audio outlets only appear after the JIT compilation step.
+can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency.
 
 So the following command:
 ```bash
