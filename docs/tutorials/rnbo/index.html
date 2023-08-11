@@ -513,6 +513,7 @@ Options:
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp&gt;, ready to be used with MIDI or OSC
    -compile : to trigger C++ compilation at load time
    -test : to generate special 'RB_XX' prefix for parameters (for testing)
+   -sp : to generate codebox subpatcher as a foo.rnbopat file (and possibly foo_effect.rnbopat)
    -cpp_path &lt;path&gt; : to set C++ export folder
    -cpp_filename &lt;filename&gt; : to set C++ export filename
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
@@ -531,6 +532,7 @@ Options:
 <p>and with the <code>rnbo~</code> subpatcher containing the codebox object as well as the parameter control machinery:</p>
 <p><img src="img/faust-rnbo2.png" class="mx-auto d-block" width="100%">
 <center><em>RNBO subpatcher with parameter control machinery (after manual editing)</em></center></p>
+<p>Note that the <code>rnbo~</code> object subpatcher can be generated using the <code>-sp</code> option and possibly used in other contexts as explained on <a href="https://rnbo.cycling74.com/learn/abstractions">this page</a>. So <code>faust2rnbo -sp osc.dsp</code> will create both <code>osc.maxpat</code> and <code>osc.rnbopat</code> files.</p>
 <h3 id="midi-control">MIDI control</h3>
 <p>Control of parameters with MIDI can be activated using the <code>-midi</code> option, or using the <a href="https://faustdoc.grame.fr/manual/midi/#configuring-midi-in-faust">declare options "[midi:on]";</a> syntax in the DSP code. The patch will then contain <code>midiin/midiout</code> objects at global level and specialized <code>ctlin/notein etc.</code> objects in the codebox subpatch with the appropriate <code>scale</code> object to map the MIDI message range on the target parameter range.</p>
 <p>So for instance the MIDI augmented example: </p>
@@ -621,11 +623,12 @@ effect = dm.freeverb_demo;
 <!-- /faust-run -->
 
 <p>To be compiled with the following:</p>
-<pre><code class="language-bash">faust2rnbo -midi -nvoices 16 -effect auto organ-effect.dsp 
+<pre><code class="language-bash">faust2rnbo -midi -nvoices 16 -effect auto organ2.dsp 
 </code></pre>
 <p>with the generated user-interface, containting the polyphonic DSP <code>rnbo~</code> object connected to the global effect <code>rnbo~</code> object:</p>
 <p><img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
 <center><em>Generated polyphonic RNBO patch connect to the global effect, with MIDI control</em></center></p>
+<p>Note that the two <code>rnbo~</code> object subpatcher can be generated using the <code>-sp</code>option. So <code>faust2rnbo -sp -midi -nvoices 16 -effect auto organ2.dsp</code> will create the <code>organ2.maxpat</code> file, and <code>organ2.rnbopat</code>, <code>organ2_effect.rnbopat</code> subpatcher files.</p>
 <h2 id="known-issues">Known issues</h2>
 <p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
 <ul>
