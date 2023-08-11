@@ -176,7 +176,7 @@ Options:
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in <file.dsp>, ready to be used with MIDI or OSC
    -compile : to trigger C++ compilation at load time
    -test : to generate special 'RB_XX' prefix for parameters (for testing)
-   -sp : to generate codebox subpatcher as a foo.rnbopat file (and possibly foo_effect.rnbopat)
+   -sp : to generate codebox subpatcher as a file.rnbopat file (and possibly file_effect.rnbopat)
    -cpp_path <path> : to set C++ export folder
    -cpp_filename <filename> : to set C++ export filename
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
