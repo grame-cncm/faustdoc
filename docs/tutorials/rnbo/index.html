@@ -544,7 +544,7 @@ import(&quot;stdfaust.lib&quot;);
 
 declare options &quot;[midi:on]&quot;;
 
-vol = hslider(&quot;volume [unit:dB] [midi: ctrl 7]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+vol = hslider(&quot;volume [unit:dB][midi: ctrl 7]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
 freq1 = hslider(&quot;freq1 [unit:Hz][midi: ctrl 1]&quot;, 1000, 20, 3000, 0.1);
 freq2 = hslider(&quot;freq2 [unit:Hz][midi: ctrl 2]&quot;, 200, 20, 3000, 0.1);
 
@@ -558,7 +558,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 </div>
 <!-- /faust-run -->
 
-<p>can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency.</p>
+<p>can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Modification done on the parameters in the GUI will be sent as MIDI output messages.</p>
 <p>So the following command:</p>
 <pre><code class="language-bash">faust2rnbo -midi osc.dsp 
 </code></pre>
@@ -627,7 +627,7 @@ effect = dm.freeverb_demo;
 </code></pre>
 <p>with the generated user-interface, containting the polyphonic DSP <code>rnbo~</code> object connected to the global effect <code>rnbo~</code> object:</p>
 <p><img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
-<center><em>Generated polyphonic RNBO patch connect to the global effect, with MIDI control</em></center></p>
+<center><em>Generated polyphonic RNBO patch connected to the global effect, with MIDI control</em></center></p>
 <p>Note that the two <code>rnbo~</code> object subpatcher can be generated using the <code>-sp</code>option. So <code>faust2rnbo -sp -midi -nvoices 16 -effect auto organ2.dsp</code> will create the <code>organ2.maxpat</code> file, and <code>organ2.rnbopat</code>, <code>organ2_effect.rnbopat</code> subpatcher files.</p>
 <h2 id="known-issues">Known issues</h2>
 <p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
