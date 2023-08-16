@@ -562,9 +562,12 @@ with {
 </div>
 <!-- /faust-run -->
 
-<p>compiled with <strong>faust2rnbo</strong> will create a patch with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), with the following subpatcher user-interface:</p>
+<p>compiled with <strong>faust2rnbo</strong> will create a subpatch with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), and the user-interface:</p>
 <p><img src="img/faust-rnbo2-bis.png" class="mx-auto d-block" width="100%">
-<center><em>RNBO subpatcher with additional audio ouput for bargraph</em></center></p>
+<center><em>RNBO subpatcher with additional audio outputs for bargraph</em></center></p>
+<p>and the main patch with parameters displaying the bargraph values:</p>
+<p><img src="img/faust-rnbo2-ter.png" class="mx-auto d-block" width="100%">
+<center><em>RNBO main patch displaying bargraph values</em></center></p>
 <h3 id="midi-control">MIDI control</h3>
 <p>Control of parameters with MIDI can be activated using the <code>-midi</code> option, or using the <a href="https://faustdoc.grame.fr/manual/midi/#configuring-midi-in-faust">declare options "[midi:on]";</a> syntax in the DSP code. The patch will then contain <code>midiin/midiout</code> objects at global level and specialized <code>ctlin/notein etc.</code> objects in the codebox subpatch with the appropriate <code>scale</code> object to map the MIDI message range on the target parameter range.</p>
 <p>So for instance the MIDI augmented example: </p>

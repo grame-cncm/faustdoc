@@ -225,11 +225,15 @@ with {
 ```
 <!-- /faust-run -->
 
-compiled with **faust2rnbo** will create a patch with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), with the following subpatcher user-interface:
+compiled with **faust2rnbo** will create a subpatch with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), and the user-interface:
 
 <img src="img/faust-rnbo2-bis.png" class="mx-auto d-block" width="100%">
-<center>*RNBO subpatcher with additional audio ouput for bargraph*</center>
+<center>*RNBO subpatcher with additional audio outputs for bargraph*</center>
 
+and the main patch with parameters displaying the bargraph values:
+
+<img src="img/faust-rnbo2-ter.png" class="mx-auto d-block" width="100%">
+<center>*RNBO main patch displaying bargraph values*</center>
 
 ### MIDI control
 
