@@ -336,6 +336,10 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#using-the-faust2rnbo-tool" class="nav-link">Using the faust2rnbo tool</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#bargraph-handling" class="nav-link">Bargraph handling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="3"><a href="#midi-control" class="nav-link">MIDI control</a>
               <ul class="nav flex-column">
               </ul>
@@ -533,11 +537,39 @@ Options:
 <p><img src="img/faust-rnbo2.png" class="mx-auto d-block" width="100%">
 <center><em>RNBO subpatcher with parameter control machinery (after manual editing)</em></center></p>
 <p>Note that the <code>rnbo~</code> object subpatcher can be generated using the <code>-sp</code> option and possibly used in other contexts as explained on <a href="https://rnbo.cycling74.com/learn/abstractions">this page</a>. So <code>faust2rnbo -sp osc.dsp</code> will create both <code>osc.maxpat</code> and <code>osc.rnbopat</code> files.</p>
+<h3 id="bargraph-handling">Bargraph handling</h3>
+<p>In Faust, bargraph are typically used to analyse audio signals where computed values are sent at control rate. This cannot be directly done in the RNBO model where only audio sigals can be sent from the codebox code. So additional audio outputs are created for bargraph, and will be sampled (using <code>snapshot~</code> and <code>change</code>) and be connected to <code>param</code> objects, like input controllers.</p>
+<p>So for instance the following example: </p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = vmeter,hmeter
+with {
+    vmeter(x) = attach(x, envelop(x) : vbargraph(&quot;vmeter dB [midi:ctrl 1]&quot;, -96, 10));
+    hmeter(x) = attach(x, envelop(x) : hbargraph(&quot;hmeter dB [midi:ctrl 2]&quot;, -96, 10));
+
+    envelop = abs : max(ba.db2linear(-96)) : ba.linear2db : min(10) : max ~ -(96.0/ma.SR);
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust1/exfaust1.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>compiled with <strong>faust2rnbo</strong> will create a patch with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), with the following subpatcher user-interface:</p>
+<p><img src="img/faust-rnbo2-bis.png" class="mx-auto d-block" width="100%">
+<center><em>RNBO subpatcher with additional audio ouput for bargraph</em></center></p>
 <h3 id="midi-control">MIDI control</h3>
 <p>Control of parameters with MIDI can be activated using the <code>-midi</code> option, or using the <a href="https://faustdoc.grame.fr/manual/midi/#configuring-midi-in-faust">declare options "[midi:on]";</a> syntax in the DSP code. The patch will then contain <code>midiin/midiout</code> objects at global level and specialized <code>ctlin/notein etc.</code> objects in the codebox subpatch with the appropriate <code>scale</code> object to map the MIDI message range on the target parameter range.</p>
 <p>So for instance the MIDI augmented example: </p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -553,7 +585,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust1/exfaust1.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust2/exfaust2.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -568,7 +600,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 <h3 id="polyphonic-instruments">Polyphonic instruments</h3>
 <p>When the DSP follows the <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">polyphonic ready instrument</a> convention, it can be activated in MIDI controllable polyphonic mode. So the following DSP program:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -584,7 +616,7 @@ with {
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust2/exfaust2.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust3/exfaust3.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->
@@ -599,7 +631,7 @@ with {
 <h3 id="polyphonic-instruments-with-an-effect">Polyphonic instruments with an effect</h3>
 <p>The following polyphonic ready instrument DSP, with an <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a>, can be converted to a polyphonic MIDI ready patch:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 
 <pre><code>
 import(&quot;stdfaust.lib&quot;);
@@ -617,7 +649,7 @@ effect = dm.freeverb_demo;
 </code></pre>
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust3/exfaust3.dsp" target="editor">
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust4/exfaust4.dsp" target="editor">
 <button type="button" class="btn btn-primary">Try it Yourself >></button></a>
 </div>
 <!-- /faust-run -->

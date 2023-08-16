@@ -163,6 +163,7 @@ Note that the generated code uses the so-called [scalar code generation model](h
 To be tested, the generated code has to be pasted in a codebox~ component in an encompassing RNBO patch, with additional patching to add the needed audio inputs/outputs and control parameters. Thus a more integrated and simpler model is to use the **faust2rnbo** tool.  
 
 ## Using the faust2rnbo tool
+
 The [faust2rnbo](https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp#faust2rnbo) tool transforms a Faust DSP program into a RNBO patch containing a `rnbo~` object and including the codebox code (generated using the [codebox backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/codebox)) as a subpatch. Needed audio inputs/outputs and parameters (with the proper name, default, min and max values) are automatically added in the patch. Additional options allow to generate a special version of the RNBO patch used in the testing infrastructure. The code is written in Python and uses the very powerful [py2max](https://github.com/shakfu/py2max) library to generate the maxpat JSON format.
 
 ```bash
@@ -204,6 +205,32 @@ and with the `rnbo~` subpatcher containing the codebox object as well as the par
 
 Note that the `rnbo~` object subpatcher can be generated using the `-sp` option and possibly used in other contexts as explained on [this page](https://rnbo.cycling74.com/learn/abstractions). So `faust2rnbo -sp osc.dsp` will create both `osc.maxpat` and `osc.rnbopat` files.
 
+### Bargraph handling
+
+In Faust, bargraph are typically used to analyse audio signals where computed values are sent at control rate. This cannot be directly done in the RNBO model where only audio sigals can be sent from the codebox code. So additional audio outputs are created for bargraph, and will be sampled (using `snapshot~` and `change`) and be connected to `param` objects, like input controllers.
+
+So for instance the following example: 
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+
+process = vmeter,hmeter
+with {
+    vmeter(x) = attach(x, envelop(x) : vbargraph("vmeter dB [midi:ctrl 1]", -96, 10));
+    hmeter(x) = attach(x, envelop(x) : hbargraph("hmeter dB [midi:ctrl 2]", -96, 10));
+
+    envelop = abs : max(ba.db2linear(-96)) : ba.linear2db : min(10) : max ~ -(96.0/ma.SR);
+};
+```
+<!-- /faust-run -->
+
+compiled with **faust2rnbo** will create a patch with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), with the following subpatcher user-interface:
+
+<img src="img/faust-rnbo2-bis.png" class="mx-auto d-block" width="100%">
+<center>*RNBO subpatcher with additional audio ouput for bargraph*</center>
+
+
 ### MIDI control
 
 Control of parameters with MIDI can be activated using the `-midi` option, or using the [declare options "[midi:on]";]( https://faustdoc.grame.fr/manual/midi/#configuring-midi-in-faust) syntax in the DSP code. The patch will then contain `midiin/midiout` objects at global level and specialized `ctlin/notein etc.` objects in the codebox subpatch with the appropriate `scale` object to map the MIDI message range on the target parameter range.
@@ -235,7 +262,6 @@ will compile a `osc.maxpat` file containing additional `midiin/midiout` objects,
 
 <img src="img/faust-rnbo3.png" class="mx-auto d-block" width="100%">
 <center>*Generated RNBO patch with MIDI control*</center>
-
 
 ### Polyphonic instruments
 

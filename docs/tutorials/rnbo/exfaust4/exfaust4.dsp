@@ -9,3 +9,5 @@ with {
     voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
 };
 
+effect = dm.freeverb_demo;
+

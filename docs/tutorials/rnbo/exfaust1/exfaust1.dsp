@@ -1,11 +1,11 @@
 
 import("stdfaust.lib");
 
-declare options "[midi:on]";
+process = vmeter,hmeter
+with {
+    vmeter(x) = attach(x, envelop(x) : vbargraph("vmeter dB [midi:ctrl 1]", -96, 10));
+    hmeter(x) = attach(x, envelop(x) : hbargraph("hmeter dB [midi:ctrl 2]", -96, 10));
 
-vol = hslider("volume [unit:dB][midi: ctrl 7]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
-freq1 = hslider("freq1 [unit:Hz][midi: ctrl 1]", 1000, 20, 3000, 0.1);
-freq2 = hslider("freq2 [unit:Hz][midi: ctrl 2]", 200, 20, 3000, 0.1);
-
-process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
+    envelop = abs : max(ba.db2linear(-96)) : ba.linear2db : min(10) : max ~ -(96.0/ma.SR);
+};
 
