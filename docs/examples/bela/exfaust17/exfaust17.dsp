@@ -1,81 +1,38 @@
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple synthetizer that use sy.dubDub of the standard Faust library.
+// The frequency is modulated by a 1 octave keyboard
+// The 2 filter's parameters are modulated by a 2d array (Trill Craft sensor)
+// A checkbox active the buffering of the parameters value.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Trill Sensor implementation:
+//
+// this sample use :
+//  - 1 craft sensor for the 1 octave keyboard and some control touch
+//  - 1 square sensor for the control of the 2 Filter parameters cut off frequency & Q
+//
 import("stdfaust.lib");
+// Sensor Configuration //////////////////////////////////////////////////
+declare trill_mappings "{ 'SQUARE' : {'0' : 40 } ; 'CRAFT' : {'0' : 48} }";             //i2c address for each trill sensor
+declare trill_settings "{ 'CRAFT_0' : { 'prescaler' : 4 ; 'threshold' : 0.015 }}";      //sensibility settings for the crafts sensors
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// A very simple subtractive synthesizer with 1 VCO 1 VCF.
-// The VCO Waveform is variable between Saw and Square
-// The frequency is modulated by an LFO
-// The envelope control volum and filter frequency
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-//
-// CC 70 : waveform (Saw to square)
-// CC 71 : Filter resonance (Q)
-// CC 74 : Filter Cutoff frequency
-// CC 79 : Filter keyboard tracking (0 to X2, default 1)
-// CC 75 : Filter Envelope Modulation
-//
-// Envelope
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-// CC 72 : Release
-//
-// CC 78 : LFO frequency (0.001Hz to 10Hz)
-// CC 1 : LFO Amplitude (Modulation)
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// HUI //////////////////////////////////////////////////
-// Keyboard
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
+// Parameter Configuration //////////////////////////////////////////////////
+//Monophonic keyboard
+nokey = hslider("note [TRILL:CRAFT_0 UP 15-27]", -1, -1, 11, 1);  //one octave keyboard   
 
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+// Filter
+CUTOFF_MIN = 350; //minimum value of cut off frequency
+Q_MIN = 0.8;
+touchsqsensor = (button("touch[TRILL:SQUARE_LVL_0]") > 0.1);    //square sensor pressed
+buffering = (checkbox("buffering[TRILL:CRAFT_0 PIN 0]") == 0);  //activation of buffering of the filter's parameters values
+ctfreq = hslider("cutoff freq [TRILL:SQUARE_XPOS_0]", CUTOFF_MIN, CUTOFF_MIN, 2000, 0.1) : ba.bypass1(buffering, max(CUTOFF_MIN, ba.sAndH(touchsqsensor))) : si.smoo;       //value of the trill x square sensor for cut off frequency
+q = hslider("Q [TRILL:SQUARE_YPOS_0]", Q_MIN, Q_MIN, 10, 0.001): ba.bypass1(buffering, max(Q_MIN, ba.sAndH(touchsqsensor))) : si.smoo;                                      //value of the trill y square sensor for Q
 
-// VCO
-wfFade = hslider("waveform[midi:ctrl 70]",0.5,0,1,0.001):si.smoo;
+// Process  //////////////////////////////////////////////////
+START_NOTE = 130.81; // C2
+freq = (START_NOTE * pow(2, (max(0, nokey) / 12)));
+gate = min(1, (nokey + 1));
 
-// VCF
-res = hslider("resonnance[midi:ctrl 71]",0.5,0,1,0.001):si.smoo;
-fr = hslider("fc[midi:ctrl 74]", 15, 15, 12000, 0.001):si.smoo;
-track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
-envMod = hslider("envMod[midi:ctrl 75]",50,0,100,0.01):si.smoo; 
-
-// ENV
-att = 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
-dec = 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
-sust = hslider("sustain[midi:ctrl 77]",0.1,0,1,0.001);
-rel = 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
-
-// LFO
-lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
-modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
-
-// PROCESS /////////////////////////////////////////////
-allfreq = (midifreq * bend) + LFO;
-// VCF
-cutoff = ((allfreq * track) + fr + (envMod * midigain * env)) : min(ma.SR/8);
-
-// VCO
-oscillo(f) = (os.sawtooth(f)*(1-wfFade))+(os.square(f)*wfFade);
-
-// VCA
-volume = midigain * env;
-
-// Enveloppe
-env = en.adsre(att,dec,sust,rel,midigate);
-
-// LFO
-LFO = os.lf_triangle(lfoFreq)*modwheel*10;
-
-// SYNTH ////////////////////////////////////////////////
-synth = (oscillo(allfreq) : ve.moog_vcf(res,cutoff)) * volume;
-
-// PROCESS /////////////////////////////////////////////
-process = synth;
-
+process = sy.dubDub(freq, ctfreq, q, gate) * 0.5;

@@ -1,71 +1,71 @@
 
-import("stdfaust.lib");
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
+// FROM FAUST DEMO
+// Designed to use the Analog Input for parameter controls.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// ANALOG IMPLEMENTATION:
 //
-// ANALOG_0	: Wave travelling
-// ANALOG_1	: LFO Frequency
-// ANALOG_2	: LFO Depth (wave travel modulation)
-// ANALOG_3	: Release
-//
-// MIDI:
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
+// ANALOG IN:
+// ANALOG 0	: Grain Size
+// ANALOG 1	: Speed
+// ANALOG 2	: Probability
+// (others analog inputs are not used)
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 0.5, 0, 1, 0.01);
 
-waveTravel = hslider("waveTravel[BELA: ANALOG_0]",0,0,1,0.01);
+process = vgroup("Granulator", environment {
+    declare name "Granulator";
+    declare author "Adapted from sfIter by Christophe Lebreton";
 
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+    /* =========== DESCRIPTION =============
 
-gFreq = midifreq * bend;
+    - The granulator takes very small parts of a sound, called GRAINS, and plays them at a varying speed
+    - Front = Medium size grains
+    - Back = short grains
+    - Left Slow rhythm
+    - Right = Fast rhythm
+    - Bottom = Regular occurrences
+    - Head = Irregular occurrences 
+    */
 
-// LFO
-lfoDepth = hslider("lfoDepth[BELA: ANALOG_2]",0,0.,1,0.001):si.smoo;
-lfoFreq = hslider("lfoFreq[BELA: ANALOG_1]",0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+    import("stdfaust.lib");
 
-volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
-volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
-volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
-volR = hslider("R[BELA: ANALOG_3]",0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
+    process = hgroup("Granulator", *(excitation : ampf));
 
-// Out amplitude
-vol = envelop * midigain;
+    excitation = noiseburst(gate,P) * (gain);
+    ampf = an.amp_follower_ud(duree_env,duree_env);
 
-WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
+    //----------------------- NOISEBURST ------------------------- 
 
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-    with {
-        coef = 3.14159 * ((nb-1)*0.5);
-        soustraction = select2( position>0, 0, (position/(nb-1)) );
-    };
+    noiseburst(gate,P) = no.noise : *(gate : trigger(P))
+        with { 
+            upfront(x) = (x-x') > 0;
+            decay(n,x) = x - (x>0)/n; 
+            release(n) = + ~ decay(n); 
+            trigger(n) = upfront : release(n) : > (0.0);
+        };
 
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-            + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-    with {
-        tablesize = 1024;
-        wt1 = WF(tablesize, 16);
-        wt2 = WF(tablesize, 8);
-        wt3 = WF(tablesize, 6);
-        wt4 = WF(tablesize, 4);
-        faze = int(os.phasor(tablesize,freq));
-    };
+    //-------------------------------------------------------------
 
-process = wfosc(gFreq) * vol;
+    P = freq; // fundamental period in samples
+    freq = hslider("[1]GrainSize[BELA: ANALOG_0]", 200, 5, 2205, 1);
+    // the frequency gives the white noise band width
+    Pmax = 4096; // maximum P (for de.delay-line allocation)
 
+    // PHASOR_BIN //////////////////////////////
+    phasor_bin(init) = (+(float(speed)/float(ma.SR)) : fmod(_,1.0)) ~ *(init);
+    gate = phasor_bin(1) : -(0.001) : pulsar;
+    gain = 1;
+                            
+    // PULSAR //////////////////////////////
+    // Pulsar allows to create a more or less random 'pulse'(proba).
+
+    pulsar = _ <: ((_<(ratio_env)) : @(100))*(proba>(_,abs(no.noise) : ba.latch)); 
+    speed = hslider("[2]Speed[BELA: ANALOG_1]", 10, 1, 20, 0.0001) : fi.lowpass(1,1);
+
+    ratio_env = 0.5;
+    fade = 0.5; // min > 0 to avoid division by 0
+
+    proba = hslider("[3]Probability[BELA: ANALOG_2]", 70, 50, 100, 1) * (0.01) : fi.lowpass(1,1);
+    duree_env = 1/(speed : /(ratio_env*(0.25)*fade));
+}.process);
 

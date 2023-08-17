@@ -1,6 +1,8 @@
 
-declare name "cryBaby";
-declare description "Application demonstrating the CryBaby wah pedal emulation";
+declare name "filterBank";
+declare description "Graphic Equalizer consisting of a filter-bank driving a bank of faders";
+
 import("stdfaust.lib");
-process = dm.crybaby_demo;
+
+process = dm.filterbank_demo;
 

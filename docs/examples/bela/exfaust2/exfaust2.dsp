@@ -1,61 +1,53 @@
 
-import("all.lib");
+import("stdfaust.lib");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Simple FM synthesizer.
-// 2 oscillators and FM feedback on modulant oscillator
+// Stereo Delay with feedback and crossfeedback (L to R and R to L feedback).
+// And pitch shifting on feedback.
+// A pre-delay without feedback is added for a wider stereo effect.
+//
+// Designed to use the Analog Input for parameters controls.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
 //
-// CC 1 : FM feedback on modulant oscillator.
-// CC 14 : Modulator frequency ratio.
+// ANALOG IN:
+// ANALOG 0	: Pre-Delay L
+// ANALOG 1	: Pre-Delay R
+// ANALOG 2	: Delay L
+// ANALOG 3	: Delay R
+// ANALOG 4	: Cross feedback
+// ANALOG 5	: Feedback
+// ANALOG 6	: Pitchshifter L
+// ANALOG 7	: Pitchshifter R
 //
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-// CC 72 : Release
+// Available by OSC : (see BELA console for precise adress)
+// Feedback filter:
+// crossLF : Crossfeedback Lowpass
+// crossHF : Crossfeedback Highpass
+// feedbLF : Feedback Lowpass
+// feedbHF : Feedback Highpass
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// GENERAL, Keyboard
-midigate = button("gate");
-midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-midigain = nentry("gain", 1, 0, 1, 0.01);
+preDelL	= ba.sec2samp(hslider("preDelL[BELA: ANALOG_0]", 1,0,2,0.001)):si.smoo;
+preDelR	= ba.sec2samp(hslider("preDelR[BELA: ANALOG_1]", 1,0,2,0.001)):si.smoo;
+delL	= ba.sec2samp(hslider("delL[BELA: ANALOG_2]", 1,0,2,0.001)):si.smoo;
+delR	= ba.sec2samp(hslider("delR[BELA: ANALOG_3]", 1,0,2,0.001)):si.smoo;
 
-// modwheel:
-feedb = (gFreq-1) * (hslider("feedb[midi:ctrl 1]", 0, 0, 1, 0.001) : si.smoo);
-modFreqRatio = hslider("ratio[midi:ctrl 14]",2,0,20,0.01) : si.smoo;
+crossLF	= hslider("crossLF", 12000, 20, 20000, 0.001);
+crossHF	= hslider("crossHF", 60, 20, 20000, 0.001);
+feedbLF	= hslider("feedbLF", 12000, 20, 20000, 0.001);
+feedbHF	= hslider("feedbHF", 60, 20, 20000, 0.001);
 
-// pitchwheel
-bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+CrossFeedb = hslider("CrossFeedb[BELA: ANALOG_4]", 0.0, 0., 1, 0.001):si.smoo;
+feedback = hslider("feedback[BELA: ANALOG_5]", 0.0, 0., 1, 0.001):si.smoo;
 
-gFreq = midifreq * bend;
+pitchL = hslider("shiftL[BELA: ANALOG_6]", 0,-12,12,0.001):si.smoo;
+pitchR = hslider("shiftR[BELA: ANALOG_7]", 0,-12,12,0.001):si.smoo;
 
-//=================================== Parameters Mapping =================================
-//========================================================================================
-// Same for volum & modulation:
-volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
-volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
-volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
-volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
+routeur(a,b,c,d) = ((a*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((b*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+c,
+					((b*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((a*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+d;
 
-// modulator frequency
-modFreq = gFreq*modFreqRatio;
-
-// modulation index
-FMdepth = envelop * 1000 * midigain;
-
-// Out amplitude
-vol = envelop;
-
-//============================================ DSP =======================================
-//========================================================================================
-
-FMfeedback(frq) = (+(_,frq):os.osci) ~ (*(feedb));
-FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
-
-process = FMall(gFreq) * vol;
+process = (de.sdelay(65536, 512,preDelL),de.sdelay(65536, 512,preDelR)):(routeur : de.sdelay(65536, 512,delL), de.sdelay(65536, 512,delR))~(ef.transpose(512, 256, pitchL), ef.transpose(512, 256, pitchR));
 

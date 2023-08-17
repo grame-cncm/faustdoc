@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/manual/tools/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>faust2[...] Tools - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -486,6 +486,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2rnbo" class="nav-link">faust2rnbo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2rpialsaconsole" class="nav-link">faust2rpialsaconsole</a>
               <ul class="nav flex-column">
               </ul>
@@ -555,843 +559,222 @@
 <p>Note that libfaust and LLVM libraries still have to be added at the link stage, so a <em>-dyn : create libfaust + LLVM backend dynamic version</em> option has been added to the <code>faust2cagtk</code> tool and some others.</p>
 <h2 id="faust2alqt">faust2alqt</h2>
 <pre class=faust-tools>
-Usage: faust2alqt [options] [Faust options] &lt;file.dsp>
-Target platform: Linux
-Require: Alsa, QT
-Compiles Faust programs to ALSA and QT
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -qrcode : activates QR code generation
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2alsa">faust2alsa</h2>
 <pre class=faust-tools>
-Usage: faust2alsa [options] [Faust options] &lt;file.dsp>
-Target platform: Linux
-Require: Alsa
-Compiles Faust programs to ALSA and GTK
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -qrcode : activates QR code generation
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2alsaconsole">faust2alsaconsole</h2>
 <pre class=faust-tools>
-Usage: faust2alsaconsole [options] [Faust options] &lt;file.dsp>
-Target platform: Linux
-Require: Alsa
-Compiles Faust programs to CLI and ALSA
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -arch32 : compiles a 32 bits binary
-   -arch64 : compiles a 64 bits binary
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2android">faust2android</h2>
 <pre class=faust-tools>
-Usage: faust2android [options] [Faust options] &lt;file.dsp>
-Target platform: Android
-Require: Android SDK
-Compile a Faust program to an Android app (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/android)
-Options:
-   -osc : activates OSC control
-   -source : creates an eclipse project of the app in the current directory.
-   -swig : regenerates the C++ and the JAVA interface for the native portion of the app.
-   -faust : only carries out the Faust compilation and install the generated C++ file in the JNI folder.
-   -reuse : preserves build directory and reuse it to speedup compilation.
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -install : once compilation is over, installs the generated apk on the Android device connected to the computer
-   -debug : activates verbose output
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2androidunity">faust2androidunity</h2>
 <pre class=faust-tools>
-Usage: faust2androidunity [options] [Faust options] &lt;file1.dsp> [&lt;file2.dsp>]
-Target platform: Android Unity
-Require: Android SDK Make sure the ANDROID_HOME environment variable is set to the sdk folder.
-Creates android libraries (armeabi-v7a and x86) for faust unity plugin.
-If you need other android architectures, open architecture/unity/Android/Application.mk and modify APP_ABI.
-See architecture/unity/README.md for more info (also available from the compile folder)
-Options:
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -android : creates also the c# and JSON files
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2api">faust2api</h2>
 <pre class=faust-tools>
-Usage: faust2api [options] [Faust options] &lt;file.dsp>
-faust2api can be used to generate Faust based dsp objects for various platforms (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/api):
-
-Output options:
-   -ios : generates an iOS API
-   -android : generates an Android API
-   -coreaudio : generates an OSX CoreAudio API
-   -alsa : generates an ALSA API
-   -jack : generates a JACK API
-   -portaudio : generates a PortAudio API
-   -rtaudio : generates an RTAudio API
-   -of : generates an openFrameworks API
-   -juce : generates a JUCE API
-   -dummy : generates a dummy audio API
-   -teensy : generates a Teensy API
-   -esp32 : generates a ESP32 API
-
-Global options:
-   -opt native|generic : activates the best compilation options for the native or generic CPU
-   -nvoices &lt;num> : creates a polyphonic object with &lt;num> voices
-   -effect &lt;effect.dsp> : adds an effect to the polyphonic synth (ignored if -nvoices is not specified)
-   -effect auto : adds an effect (extracted automatically from the dsp file) to the polyphonic synth (ignored if -nvoices is not specified)
-   -nodoc : prevents documentation from being generated
-   -nozip : prevents generated files to be put in a zip file
-   -target &lt;target> : sets a name of the target folder or the zip file. Defaults to "dsp-faust"
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-
-Android specific options:
-   -package : set the JAVA package name (e.g. '-package mypackage' will change the JAVA package name to 'mypackage.DspFaust'). The default package name is 'com.DspFaust.'
-   -soundfile : add built-in Soundfile support to the API
-
-Options supported by iOS, CoreAudio, ALSA, JACK, PortAudio, openFrameworks and JUCE
-   -midi : add built-in RtMidi support to the API
-   -osc : add built-in OSC support to the API
-   -soundfile : add built-in Soundfile support to the API
-
-JACK specific options
-   -build : build a ready to test binary
-   -dynamic : add libfaust/LLVM dynamic DSP compilation mode
 </pre>
 
 <h2 id="faust2bela">faust2bela</h2>
 <pre class=faust-tools>
-Usage: faust2bela [options] [Faust options] &lt;file.dsp>
-Target platform: Bela
-Compiles Faust programs to the BELA board
-Options:
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-Polyphonic mode means MIDI instrument with at least 1 voice. Use no arguments for a simple effect.
-   -gui : activates a self-hosted GUI interface. Requires to have libmicrohttpd and libHTTPDFaust installed.
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI
-   -tobela : to send C++ file into bela, and to run it
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2bench">faust2bench</h2>
 <pre class=faust-tools>
-Usage: faust2bench [Faust options] &lt;file.dsp>
-Compiles Faust programs to a benchmark executable
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2cagtk">faust2cagtk</h2>
 <pre class=faust-tools>
-Usage: faust2cagtk [options] [Faust options] &lt;file.dsp>
-Target platform: MacOS
-Require: GTK
-Compiles Faust programs to CoreAudio and GTK
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -dyn : create libfaust + LLVM backend dynamic version
-   -resample : to resample soundfiles to the audio driver sample rate.
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -preset &lt;directory> : add a preset manager on top of GUI and save the preset files in the given directory
-   -preset auto : add a preset manager on top of GUI and save the preset files in a system temporary directory
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2caqt">faust2caqt</h2>
 <pre class=faust-tools>
-Usage: faust2caqt [options] [Faust options] &lt;file.dsp>
-Target platform: MacOS
-Require: QT
-Compiles Faust programs to CoreAudio and QT
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -qrcode : activates QR code generation
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -opt native' to activate the best compilation options for the native CPU : 
-   -opt generic' to activate the best compilation options for a generic CPU : 
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -resample : to resample soundfiles to the audio driver sample rate
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -preset &lt;directory> : add a preset manager on top of GUI and save the preset files in the given directory
-   -preset auto : add a preset manager on top of GUI and save the preset files in a system temporary directory
-   -me : to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow)
-   -debug : to print all the build steps
-   -nodeploy : skip self-contained application generation (using 'macdeployqt')
-   -I include-path : add an include-directory to the generated Qt project for finding ffunction headers and such
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2cmajor">faust2cmajor</h2>
 <pre class=faust-tools>
-Usage: faust2cmajor [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to Cmajor (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/cmajor)
-Options:
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -juce : to create a JUCE project
-   -dsp : to create a 'dsp' compatible subclass
-   -test : to test the resulting patch with 'cmaj render'
-   -play : to start the 'cmaj' runtime with the generated Cmajor file
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2csound">faust2csound</h2>
 <pre class=faust-tools>
-Usage: faust2csound [options] [Faust options] &lt;file.dsp>
-Target platform: any
-Require: CSound Dev Kit
-Compiles a Faust program into a Csound opcode
-Options:
-   -arch32 : generates a 32 bit architecture.
-   -arch64 : generates a 64 bit architecture.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2csvplot">faust2csvplot</h2>
 <pre class=faust-tools>
-Usage: faust2csvplot [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to plotters, additional control parameters depend of the DSP, the following 5 options are given at runtime:
-   -dyn : create libfaust + LLVM backend dynamic version
-   -s &lt;n> : start at the sample number &lt;n> (default is 0)
-   -n &lt;n> : render &lt;n> samples (default is 16)
-   -r &lt;rate> : change the sample rate (default is 44100 Hz)
-   -bs &lt;buffer> : change the buffer size (default is 512 frames)
-Options:
-   -arch32 : generates a 32 bit architecture.
-   -arch64 : generates a 64 bit architecture.
-   -double : generates code with samples of type 'double'.
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2daisy">faust2daisy</h2>
 <pre class=faust-tools>
-faust2daisy [-patch] [-midi] [-nvoices &lt;num>] [-sr &lt;num>] [-bs &lt;num>] [-source] [Faust options (-vec -vs 8...)] &lt;file.dsp>
-Compiles Faust programs to Daisy boards (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/daisy)
-Options:
-   -patch : to compile for 4 ins/outs Patch (knob[1,2,3,4])
-   -pod : to compile for 2 ins/outs Pod (knob[1,3])
-   -patchsm : to compile for the Pod.init eurorack module
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -sr &lt;num> : to specify sample rate
-   -bs &lt;num> : to specify buffer size
-   -source : to only create the source folder
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-
 </pre>
 
 <h2 id="faust2dplug">faust2dplug</h2>
 <pre class=faust-tools>
-Usage: faust2dplug [options] [Faust options] &lt;file.dsp>
-Require: Dplug
-Compiles Faust programs to Dplug plugins
-Options:
-   -vendor &lt;My Company Name> : 
-   -vendorid &lt;FaUs> : 
-   -pluginid &lt;PlUg> : 
-   -homepage &lt;https://faust.grame.fr/> : 
-   -effectType &lt;effectDynamics> : 
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2dssi">faust2dssi</h2>
 <pre class=faust-tools>
-Usage: faust2dssi [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to dssi plugins
-Options:
-   -osc : activates OSC control
-   -arch32 : generates a 32 bit architecture.
-   -arch64 : generates a 64 bit architecture.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2esp32">faust2esp32</h2>
 <pre class=faust-tools>
-Usage: faust2esp32 [options] [Faust options] &lt;file.dsp> &lt;file.dsp>
-faust2esp32 can be used to fully program the ESP32 microncontroller and to generate DSP objects
-that can be integrated into any ESP32 project (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/esp32)
-Options:
-   -gramophone : generates for GRAME Gramophone
-   -multi : generate for GRAME Gramophone in multi DSP mode
-   -lib : generates a package containing an object compatible with any ESP32 project
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -main : add a 'main' entry point
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -wm8978, -es8388 or -ac101 : to choose codec driver
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2faustvst">faust2faustvst</h2>
 <pre class=faust-tools>
-Usage: faust2faustvst [options ...] &lt;file.dsp>
-Require: VST SDK
-Compiles Faust programs to VST plugins
-Options:
-   -gui : build the plugin GUI.
-   -keep : retain the build directory.
-   -nometa : ignore metadata (author information etc.) from the Faust source
-   -nomidicc : plugin doesn't process MIDI control data.
-   -notuning : disable the tuning control (instruments only).
-   -novoicectrls : no extra polyphony/tuning controls on GUI (instruments only)
-   -nvoices N : number of synth voices (instruments only; arg must be an integer)
-   -qt4, -qt5 : select the GUI toolkit (requires Qt4/5; implies -gui).
-   -style S :   select the stylesheet (arg must be Default, Blue, Grey or Salmon).
-Environment variables:
-  FAUSTINC: specify the location of the Faust include directory
-    Default: /usr/local/include
-  FAUSTARCH: specify the location of the Faust VST library files
-    Default: /usr/local/share/faust
-  QMAKE: specify the location of the qmake binary
-    Default: /opt/local/libexec/qt5/bin/qmake
-  SDK: specify the location of the VST SDK
-    Default: /usr/local/include/vstsdk2.4
-  SDKSRC: specify the location of the VST SDK sources
-    Default: /usr/local/include/vstsdk2.4/public.sdk/source/vst2.x
 </pre>
 
 <h2 id="faust2feh">faust2feh</h2>
 <pre class=faust-tools>
-Usage: faust2feh &lt;file.dsp>
-Compiles Faust programs to SVG and opens them with feh
 </pre>
 
 <h2 id="faust2gen">faust2gen</h2>
 <pre class=faust-tools>
-Usage: faust2gen [options] &lt;file.dsp>
-Require: Max/MSP SDK
-Compiles Faust programs to a fausgen~ patch
-Options:
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
 </pre>
 
 <h2 id="faust2ios">faust2ios</h2>
 <pre class=faust-tools>
-Usage: faust2ios [options] [Faust options] &lt;file.dsp>
-Target platform: iOS
-Compiles Faust programs to iOS applications
-Options:
-   -midi : activates MIDI control
-   -osc : activates OSC control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -xcode : to compile and keep the intermediate Xcode project
-   -xcodeproj : to produce the intermediate Xcode project
-   -archive : to generate the archive for Apple Store
-   -32bits : to compile 32 bits only binary
-   -noagc : to deactivate audio automatic gain control
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2jack">faust2jack</h2>
 <pre class=faust-tools>
-Usage: faust2jack [options] [Faust options] &lt;file.dsp>
-Target platform: Linux
-Require: Jack
-Compiles Faust programs to JACK and GTK
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -dyn : create libfaust + LLVM backend dynamic version
-   -resample : to resample soundfiles to the audio driver sample rate.
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -preset &lt;directory> : add a preset manager on top of GUI and save the preset files in the given directory
-   -preset auto : add a preset manager on top of GUI and save the preset files in a system temporary directory
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2jackconsole">faust2jackconsole</h2>
 <pre class=faust-tools>
-Usage: faust2jackconsole [options] [Faust options] &lt;file.dsp>
-Require: Jack
-Compiles Faust programs to CLI and JACK
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2jackrust">faust2jackrust</h2>
 <pre class=faust-tools>
-Usage: faust2jackrust [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to JACK and Rust binary
-Options:
-   -source : only generates the source project.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2jackserver">faust2jackserver</h2>
 <pre class=faust-tools>
-Usage: faust2jackserver [options] [Faust options] &lt;file.dsp>
-Require: Jack, QT
-Compiles Faust programs to JACK and QT (server mode)
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -qrcode : activates QR code generation
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2jaqt">faust2jaqt</h2>
 <pre class=faust-tools>
-Usage: faust2jaqt [options] [Faust options] &lt;file.dsp>
-Require: Jack, QT
-Compiles Faust programs to JACK and QT
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -qrcode : activates QR code generation
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -preset &lt;directory> : add a preset manager on top of GUI and save the preset files in the given directory
-   -preset auto : add a preset manager on top of GUI and save the preset files in a system temporary directory
-   -resample : to resample soundfiles to the audio driver sample rate.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2jaqtchain">faust2jaqtchain</h2>
 <pre class=faust-tools>
-Usage: faust2jaqtchain [options] [Faust options] &lt;file.dsp>
-Require: Jack, QT
-Compiles several Faust programs to JACK and QT
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2juce">faust2juce</h2>
 <pre class=faust-tools>
-Usage: faust2juce [options] [Faust options] &lt;file.dsp>
-Require: Juce
-Compiles Faust programs to JUCE standalones or plugins (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/juce)
-Options:
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -standalone : to produce a standalone project, otherwise a plugin project is generated
-   -vst2sdkdir &lt;folder> : to set directory to VST 2 SDK.
-   -jucemodulesdir &lt;folder> : to set JUCE modules directory to &lt;folder>, such as ~/JUCE/modules
-   -disable-splash-screen : to disable the JUCE splash screen (license is required).
-   -jsynth : to use JUCE polyphonic Synthesizer instead of Faust polyphonic code
-   -llvm : to use the LLVM compilation chain (OSX and Linux for now)
-   -magic : to generate a project using the PluginGuiMagic GUI builder
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2ladspa">faust2ladspa</h2>
 <pre class=faust-tools>
-Usage: faust2ladspa [options] [Faust options] &lt;file.dsp>
-Target platform: Linux
-Compiles Faust programs to LADSPA plugins
-Options:
-   -arch32 : generates a 32 bit architecture.
-   -arch64 : generates a 64 bit architecture.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2linuxunity">faust2linuxunity</h2>
 <pre class=faust-tools>
-Usage: faust2linuxunity [options] [Faust options] &lt;file.dsp>
-Target platform: Linux
-Require: Jack, Unity
-Compiles Faust programs to Linux x86_64 libraries suitable for the Unity environment
-Options:
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2lv2">faust2lv2</h2>
 <pre class=faust-tools>
--std=c++11 -fvisibility=hidden -O3
-Usage: faust2lv2 [options ...] &lt;file.dsp>
-Require: QT
-Compiles Faust programs to lv2 plugins
-Options:
-   -dyn-manifest : use dynamic manifests (requires LV2 host support).
-   -gui : build the plugin GUI (requires LV2 UI host support).
-   -keep : retain the build directory.
-   -nometa : ignore metadata (author information etc.) from the Faust source
-   -nomidicc : plugin doesn't process MIDI control data.
-   -notuning : disable the tuning control (instruments only).
-   -novoicectrls : no extra polyphony/tuning controls on GUI (instruments only)
-   -nvoices N : number of synth voices (instruments only; arg must be an integer)
-   -osx : -osx to compile on OSX
-   -qt4, -qt5 : select the GUI toolkit (requires Qt4/5; implies -gui)
-   -style S : select the stylesheet (arg must be Default, Blue, Grey or Salmon).
-Environment variables:
-  FAUSTINC: specify the location of the Faust include directory
-    Default: /usr/local/include/faust
-  FAUSTLIB: specify the location of the Faust LV2 library files
-    Default: /usr/local/share/faust
-  QMAKE: specify the location of the qmake binary
-    Default: /opt/local/libexec/qt5/bin/qmake
 </pre>
 
 <h2 id="faust2mathdoc">faust2mathdoc</h2>
 <pre class=faust-tools>
-Usage: faust2mathdoc [options] &lt;file.dsp>
-Require: svg2pdf pdflatex breqn
-Generate a full Faust documentation in a '*-mdoc' top directory
-Options:
-   -l LANG : LANG is usually a 2-lowercase-letters language name, like en, fr, or it.
-   -utf8 : force file.dsp to be recoded in UTF-8 before being processed
 </pre>
 
 <h2 id="faust2max6">faust2max6</h2>
 <pre class=faust-tools>
-Usage: faust2max6 [options] [Faust options] &lt;file.dsp>
-Require: Max/MSP SDK
-Compiles Faust programs to Max6 externals using double precision samples (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp)
-Options:
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -soundfile-dynamic : similar to -soundfile, but using the installed libsndfile (so possibly using dynamic link).
-   -opt native|generic : activates the best compilation options for the native or generic CPU.
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -us &lt;factor> : upsample the DSP by a factor
-   -ds &lt;factor> : downsample the DSP by a factor
-   -filter &lt;filter> : use a filter for upsampling or downsampling [0..4]
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -native : to compile for the native CPU (otherwise the 'generic' mode is used by default)
-   -universal : to generate a universal (arm/intel) external
-   -nopatch : to deactivate patch generation
-   -nopost : to disable Faust messages to Max console
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2minimal">faust2minimal</h2>
 <pre class=faust-tools>
-Usage: faust2minimal [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to a minimal executable
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2netjackconsole">faust2netjackconsole</h2>
 <pre class=faust-tools>
-Usage: faust2netjackconsole [options] [Faust options] &lt;file.dsp>
-Require: Jack
-Compiles Faust programs to NetJack
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2netjackqt">faust2netjackqt</h2>
 <pre class=faust-tools>
-Usage: faust2netjackqt [options] [Faust options] &lt;file.dsp>
-Require: Jack, QT
-Compiles Faust programs to NetJack and QT
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2nodejs">faust2nodejs</h2>
 <pre class=faust-tools>
-Usage: faust2nodejs [driver] [Faust options] &lt;file.dsp>
-Generate Faust-based nodejs native addons. The generated addons can embed most of the audio engines supported by Faust: ALSA, JACK, CoreAudio, RtAudio, PortAudio, etc. Since faust2nodejs essentially acts as a wrapper to faust2api, it offers the same features than this system (MIDI and OSC support, polyphony, separate effect file, etc.).
-
-The following drivers are available: -coreaudio // -alsa // -jack // -portaudio // -rtaudio // -dummy. For example, to create a native nodejs addon with a JACK audio engine, run: faust2nodjs -jack faustFile.dsp
-
-The following options are inherited directly from faust2api and can be used with faust2nodejs:
-Options:
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -source : generates the source of the addon without compiling it
-   -electronv &lt;VERSION> : allows to specify the current version of electron if generating an addon for this framework
-   -debug : prints compilation output
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2osxiosunity">faust2osxiosunity</h2>
 <pre class=faust-tools>
-Usage: faust2osxiosunity [options] [Faust options] &lt;file.dsp>
-Target platform: MacOSX
-Require: Unity
-Compiles Faust programs to OSX/iOS libraries suitable for the Unity environment
-Options:
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -ios :       create an iOS static library
-   -universal : generate a 64/32 bits external
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-See architecture/unity/README.md for more info.
 </pre>
 
 <h2 id="faust2paqt">faust2paqt</h2>
 <pre class=faust-tools>
-Usage: faust2paqt [options] [Faust options] &lt;file.dsp>
-Require: PortAudio, QT
-Compiles Faust programs to PortAudio and QT
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -qrcode : activates QR code generation
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -nodeploy : skip self-contained application generation (using 'macdeployqt')
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2plot">faust2plot</h2>
 <pre class=faust-tools>
-Usage: faust2plot [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to plotters, additional control parameters depend of the DSP, the following 4 options are given at runtime:
-   -dyn : create libfaust + LLVM backend dynamic version
-   -s &lt;n> : start at the sample number &lt;n> (default is 0)
-   -n &lt;n> : render &lt;n> samples (default is 16)
-   -r &lt;rate> : change the sample rate (default is 44100 Hz)
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2portaudiojulia">faust2portaudiojulia</h2>
 <pre class=faust-tools>
-Usage: faust2portaudiojulia [options] [Faust options] &lt;file.dsp>
-Require: PortAudio
-Compiles Faust programs to PortAudio and Julia binary
-   -osc : to activate OSC control on 5000 and 5001 ports
-   -play &lt;num> : to start the 'Julia' runtime with &lt;num> threads and the generated file.jl
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2portaudiorust">faust2portaudiorust</h2>
 <pre class=faust-tools>
-Usage: faust2portaudiorust [options] [Faust options] &lt;file.dsp>
-Require: PortAudio
-Compiles Faust programs to PortAudio and Rust binary
-Options:
-   -source : only generates the source project.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2raqt">faust2raqt</h2>
 <pre class=faust-tools>
-Usage: faust2raqt [options] [Faust options] &lt;file.dsp>
-Require: QT
-Compiles Faust programs to RtAudio and QT
-Options:
-   -httpd : activates HTTP control
-   -osc : activates OSC control
-   -midi : activates MIDI control
-   -qrcode : activates QR code generation
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   -nodeploy : skip self-contained application generation (using 'macdeployqt')
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2rnbo">faust2rnbo</h2>
+<pre class=faust-tools>
 </pre>
 
 <h2 id="faust2rpialsaconsole">faust2rpialsaconsole</h2>
 <pre class=faust-tools>
-Usage: faust2rpialsaconsole [options] [Faust options] &lt;file.dsp>
-Target platform: RaspberryPi
-Require: Alsa
-Compiles Faust programs to RaspberryPi - alsa console architecture
-Options:
-   -osc : activates OSC control
-   -httpd : activates HTTP control
-   -arch32 : generates a 32 bit architecture.
-   -arch64 : generates a 64 bit architecture.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2rpinetjackconsole">faust2rpinetjackconsole</h2>
 <pre class=faust-tools>
-Usage: faust2rpialsaconsole [options] [Faust options] &lt;file.dsp>
-Target platform: RaspberryPi
-Require: NetJack
-Compiles Faust programs to RaspberryPi - netjack-console architecture
-Options:
-   -osc : activates OSC control
-   -httpd : activates HTTP control
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2sam">faust2sam</h2>
 <pre class=faust-tools>
-Usage: faust2sam [options] [Faust options] &lt;file.dsp>
-Target platform: ADI SHARC Audio Module board
-Generates inline Faust objects for the ADI SHARC Audio Module board
-Options:
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2smartkeyb">faust2smartkeyb</h2>
 <pre class=faust-tools>
-FAUST2SMARTKEYB - MUSICAL MOBILE APP GENERATOR
-
-faust2smartkeyb takes a Faust code as its main argument and convert it into a ready-to-use app for Android or iOS. The only two required arguments of faust2smartkeyb are a Faust file and the target platform (-android or -ios):
-
-Usage: faust2smartkeyb [options] [Faust options] &lt;file.dsp>
-Target platform: iOS, Android
-Options:
-   -android : generates an Android app
-   -ios : generates an iOS app
-   -osc : activates OSC control
-   -debug : activate debug mode
-   -effect : allow to specify an effect Faust file (e.g., -effect myEffect.dsp)
-   -install : install the app on the connected device (Android only)
-   -nvoices : specify the max number of voices
-   -reuse : reuse the same project source
-   -source : only generate the source (no compilation)
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-More information and tutorials at: https://ccrma.stanford.edu/~rmichon/smartKeyboard
 </pre>
 
 <h2 id="faust2sndfile">faust2sndfile</h2>
 <pre class=faust-tools>
-Usage: faust2sndfile [Faust options] &lt;file.dsp>
-Require: libsndfile
-Process audio files with Faust DSP
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2teensy">faust2teensy</h2>
 <pre class=faust-tools>
-faust2teensy [-lib] [-midi] [-nvoices &lt;num>] [Faust options (-vec -vs 8...)] &lt;file.dsp>
-Options:
-   -lib : generates a package containing an object compatible with the Teensy audio library (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/teensy)
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2unity">faust2unity</h2>
 <pre class=faust-tools>
-Usage: faust2unity [options] [Faust options] &lt;file.dsp>
-Target platform: Android, Linux, MacOSX, iOS, Windows
-Require: Unity
-Generates a unity package (compressed .unitypackage folder) with all available architecture libraries for faust unity plugin and the C# files required. Use arguments to generate specific architectures (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/unity)
-Options:
-   -w32 : generates a Windows 32 bits library
-   -w64 : generates a Windows 64 bits library
-   -osx : generates a macOS library
-   -ios : generates an iOS library
-   -android : generates Android libraries (armeabi-v7a and x86).
-   -linux : generates a Linux library
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -source : generates the source files (uncompressed folder)
-   -unpacked : generates an unpacked folder with files organized like the Unity Asset hierarchy. Use this options to add specific files in the unity package (in the Assets folder, then use 'encoderunitypackage &lt;folder>' to compress and pack it.
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-See architecture/unity/README.md for more info.
 </pre>
 
 <h2 id="faust2vcvrack">faust2vcvrack</h2>
 <pre class=faust-tools>
-faust2vcvrack [-soundfile] [-source] [-nvoices &lt;num>] [Faust options] &lt;file.dsp>
-Compiles Faust programs to VCV Rack modules (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/vcvrack)
-   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
-   -source : to only create the source folder
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -version &lt;1|2> : to set the plugin version, 1 by default
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-
 </pre>
 
 <h2 id="faust2wasm">faust2wasm</h2>
 <pre class=faust-tools>
-Usage: faust2wasm [options] &lt;file.dsp>
-Compiles Faust programs to WASM modules
-Options:
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -opt : optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
-   -worklet : generates AudioWorklet compatible code
-   -wap : generates a WAP (Web Audio Plugin). This forces -worklet mode, and create additional files
-   -wap2 : generates a WAP V2 (Web Audio Plugin). This forces -worklet mode, and create additional files
-   -comb : combine several DSPs in a unique resulting 'comb.js' file, sharing the same Emscripten runtime
-   -emcc : compile C++ generated code to wasm with Emscripten, otherwise the internal wasm backend is used [experimental]
-   -npm : add a package.json file for npm package distribution
 </pre>
 
 <h2 id="faust2webaudiowasm">faust2webaudiowasm</h2>
 <pre class=faust-tools>
-Usage: faust2webaudiowasm [options] &lt;file.dsp>
-Compiles Faust programs to self-contained HTML pages with WASM
-Options:
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -opt : optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
-   -worklet : generates AudioWorklet compatible code
-   -links : add links to source code and SVG diagrams in the generated HTML file
-   -emcc : use the EMCC generated glue (mandatory when using 'soundfiles' in the DSP code) [experimental]
 </pre>
 
 <h2 id="faust2webaudiowast">faust2webaudiowast</h2>
 <pre class=faust-tools>
-Usage: faust2webaudiowast [options] &lt;file.dsp>
-Compiles Faust programs to self-contained HTML pages with WASM
-Options:
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   -opt : optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
-   -worklet : generates AudioWorklet compatible code
-   -links : add links to source code and SVG diagrams in the generated HTML file
-   -emcc : compile C++ generated code to wasm with Emscripten, otherwise the internal wasm backend is used
 </pre></div>
             </div>
         </div>
@@ -1416,16 +799,13 @@ Options:
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -1472,5 +852,6 @@ Options:
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

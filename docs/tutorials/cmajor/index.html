@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/tutorials/cmajor/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>Using Faust in Cmajor - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -380,21 +380,18 @@
 <p>Assuming you've <a href="https://faust.grame.fr/downloads/">installed the <strong>faust</strong> compiler</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
-freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
-freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
+vol = hslider("volume [unit:dB]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider("freq1 [unit:Hz]", 1000, 20, 3000, 1);
+freq2 = hslider("freq2 [unit:Hz]", 200, 20, 3000, 1);
 
-process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/cmajor/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -480,26 +477,23 @@ Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler document
 <p>The following <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">polyphonic ready instrument</a> DSP can be converted to a MIDI ready cmajor instrument:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-process = organ &lt;: _,_
+import("stdfaust.lib");
+process = organ <: _,_
 with {
     decimalpart(x) = x-int(x);
     phasor(f) = f/ma.SR : (+ : decimalpart) ~ _;
     osc(f) = sin(2 * ma.PI * phasor(f));
-    freq = nentry(&quot;freq&quot;, 100, 100, 3000, 0.01);
-    gate = button(&quot;gate&quot;);
-    gain = nentry(&quot;gain&quot;, 0.5, 0, 1, 0.01);
+    freq = nentry("freq", 100, 100, 3000, 0.01);
+    gate = button("gate");
+    gain = nentry("gain", 0.5, 0, 1, 0.01);
     organ = en.adsr(0.1, 0.1, 0.7, 0.25, gate) * (osc(freq) * gain + osc(2*freq)*0.5 * gain);
 };
 
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/cmajor/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -510,17 +504,14 @@ with {
 <p>The following polyphonic ready instrument DSP, with an <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a>, can be converted to a MIDI ready cmajor instrument:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-process = pm.clarinet_ui_MIDI &lt;: _,_;
+import("stdfaust.lib");
+process = pm.clarinet_ui_MIDI <: _,_;
 effect = dm.freeverb_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/cmajor/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -580,16 +571,13 @@ with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.git
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -636,5 +624,6 @@ with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.git
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

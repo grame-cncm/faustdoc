@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/examples/dynamic/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title> dynamic  - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -345,119 +345,104 @@
 <h2 id="compressor">compressor</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;compressor&quot;;
-declare version &quot;0.0&quot;;
-declare author &quot;JOS, revised by RM&quot;;
-declare description &quot;Compressor demo application&quot;;
+declare name "compressor";
+declare version "0.0";
+declare author "JOS, revised by RM";
+declare description "Compressor demo application";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = dm.compressor_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/dynamic/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="distortion">distortion</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;distortion&quot;;
-declare version &quot;0.0&quot;;
-declare author &quot;JOS, revised by RM&quot;;
-declare description &quot;Distortion demo application.&quot;;
+declare name "distortion";
+declare version "0.0";
+declare author "JOS, revised by RM";
+declare description "Distortion demo application.";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = dm.cubicnl_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/dynamic/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="gatecompressor">gateCompressor</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;gateCompressor&quot;;
+declare name "gateCompressor";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process =  
-    vgroup(&quot;[1]&quot;, dm.sawtooth_demo) &lt;:
-    vgroup(&quot;[2]&quot;, dm.gate_demo) : 
-    vgroup(&quot;[3]&quot;, dm.compressor_demo) :&gt;
-    vgroup(&quot;[4]&quot;, dm.spectral_level_demo) &lt;:
+    vgroup("[1]", dm.sawtooth_demo) <:
+    vgroup("[2]", dm.gate_demo) : 
+    vgroup("[3]", dm.compressor_demo) :>
+    vgroup("[4]", dm.spectral_level_demo) <:
     _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/dynamic/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="noisegate">noiseGate</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;noiseGate&quot;;
-declare version &quot;0.0&quot;;
-declare author &quot;JOS, revised by RM&quot;;
-declare description &quot;Gate demo application.&quot;;
+declare name "noiseGate";
+declare version "0.0";
+declare author "JOS, revised by RM";
+declare description "Gate demo application.";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = dm.gate_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/dynamic/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="volume">volume</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name        &quot;volume&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2006&quot;;
+declare name        "volume";
+declare version     "1.0";
+declare author      "Grame";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2006";
 
 //-----------------------------------------------
 //          Volume control in dB
 //-----------------------------------------------
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-gain = vslider(&quot;[1]&quot;, 0, -70, +4, 0.1) : ba.db2linear : si.smoo;
+gain = vslider("[1]", 0, -70, +4, 0.1) : ba.db2linear : si.smoo;
 
 process = *(gain);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/dynamic/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -483,16 +468,13 @@ process = *(gain);
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -539,5 +521,6 @@ process = *(gain);
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

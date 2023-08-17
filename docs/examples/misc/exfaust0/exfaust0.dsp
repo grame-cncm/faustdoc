@@ -1,73 +1,61 @@
 
-declare name "UITester";
-declare version "1.0";
-declare author "O. Guillerminet";
-declare license "BSD";
-declare copyright "(c) O. Guillerminet 2012";
+//--------------------------autopan----------------------------
+//
+// For a stereo input, adjust the left and right gains
+// according to rate-synced sine oscillators. This example is
+// reverse-engineered from Ableton Live's "Auto Pan" audio
+// effect. We don't implement the "spin" feature in which
+// the two LFOs could have different frequencies.
+// We also don't use other LFOs such as triangle/square/noise.
+//
+// #### Usage
+//
+// 
+// si.bus(2) : autopan(amount, rate, phase, shape) : si.bus(2)
+// 
+//
+// Where:
+//
+// * amount: adjusts the amount of LFO modulation that is
+//    applied to incoming signals
+// * rate: sets the frequency of the LFO in Hertz
+// * phase: adjusts the amount of the offset between the
+//    waveforms for the left and right channel. At 180,
+//    the LFOs will be perfectly out of phase. For other
+//    values, you will hear more moments where the
+//    overall volume is reduced
+// * shape: turning shape up pushes the waveforms to their
+//    upper and lower limits, "hardening" their shape
+//------------------------------------------------------------
+import("stdfaust.lib");
 
-vbox = vgroup("vbox", 
-    checkbox("check1"),
-    checkbox("check2"),
-     nentry("knob0[style:knob]", 60, 0, 127, 0.1));
+autopan(amount, rate, phase, shape) = _*gainLeft, _*gainRight
+with {
 
-sliders = hgroup("sliders",
-        vslider("vslider1", 60, 0, 127, 0.1),
-        vslider("vslider2", 60, 0, 127, 0.1),
-        vslider("vslider3", 60, 0, 127, 0.1));
+    // A saturator
+    // Assume x is a signal between -1 and 1. This function
+    // pushes the output towards -1 and 1. As the shape
+    // parameter goes from 0 to 1, an input sine will become
+    // closer to a square. If shape is zero, then the
+    // function doesn't change the input signal.
+    saturator(shape, x) = result
+    with {
+        // It's ok to replace tanh with another saturator
+        result = x, ma.tanh(x*10.) : it.interpolate_linear(shape);
+    };
 
-knobs = hgroup("knobs",
-        vslider("knob1[style:knob]", 60, 0, 127, 0.1),
-        vslider("knob2[style:knob]", 60, 0, 127, 0.1),
-        vslider("knob3[style:knob]", 60, 0, 127, 0.1));
+    phase2Gain(phase) = os.oscp(rate, phase)
+        : saturator(shape) // comment out this line to remove the saturator
+        : it.remap(-1., 1., 1.-amount, 1.);
 
-smallhbox1 = hgroup("small box 1",
-            vslider("vslider5 [unit:Hz]", 60, 0, 127, 0.1),
-            vslider("vslider6 [unit:Hz]", 60, 0, 127, 0.1),
-            vslider("knob4[style:knob]", 60, 0, 127, 0.1),
-            nentry("num1 [unit:f]", 60, 0, 127, 0.1),
-            vbargraph("vbar1", 0, 127));
+    gainLeft = 0. : phase2Gain;
+    gainRight = phase : ma.deg2rad : phase2Gain;
+};
 
-smallhbox2 = hgroup("small box 2",
-            vslider("vslider7 [unit:Hz]", 60, 0, 127, 0.1),
-            vslider("vslider8 [unit:Hz]", 60, 0, 127, 0.1),
-            vslider("knob5[style:knob]", 60, 0, 127, 0.1),
-            nentry("num2 [unit:f]", 60, 0, 127, 0.1),
-            vbargraph("vbar2", 0, 127));
+amount = hslider("[0]Amount[style:knob]", 0., 0., 1., .001);
+rate = hslider("[1]Rate[style:knob][unit:Hz][scale:log]", 1., .05, 90., .001);
+phase = hslider("[2]Phase[style:knob][unit:°]", 180., 0., 360., 15) : si.smoo;
+shape = hslider("[3]Shape[style:knob]", 0., 0., 1., 0.001) : si.smoo;
 
-smallhbox3 = hgroup("small box 3",
-            vslider("vslider9 [unit:Hz]", 60, 0, 127, 0.1),
-            vslider("vslider10 [unit:m]", 60, 0, 127, 0.1),
-            vslider("knob6[style:knob]", 60, 0, 127, 0.1),
-            nentry("num3 [unit:f]", 60, 0, 127, 0.1),
-            vbargraph("vbar3", 0, 127));
-
-subhbox1 = hgroup("sub box 1",
-        smallhbox2,
-        smallhbox3);
-
-vmisc = vgroup("vmisc",
-        vslider("vslider4 [unit:Hz]", 60, 0, 127, 0.1),
-        button("button"),
-        hslider("hslider [unit:Hz]", 60, 0, 127, 0.1),
-        smallhbox1,
-        subhbox1,
-        hbargraph("hbar", 0, 127));
-
-hmisc = hgroup("hmisc",
-        vslider("vslider4 [unit:f]", 60, 0, 127, 0.1),
-        button("button"),
-        hslider("hslider", 60, 0, 127, 0.1),
-        nentry("num [unit:f]", 60, 0, 127, 0.1),
-        vbargraph("vbar", 0, 127),
-        hbargraph("hbar", 0, 127));
-
-//------------------------- Process --------------------------------
-
-process = tgroup("grp 1",
-        vbox,
-        sliders,
-        knobs,
-        vmisc,
-        hmisc);
-
+process = hgroup("Auto Pan", autopan(amount, rate, phase, shape));
 

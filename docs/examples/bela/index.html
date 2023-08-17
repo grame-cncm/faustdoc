@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/examples/bela/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title> bela  - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -314,15 +314,15 @@
             
             <li class="nav-item" data-level="1"><a href="#bela" class="nav-link">bela</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#additivesynth" class="nav-link">AdditiveSynth</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#additivesynth_analog" class="nav-link">AdditiveSynth_Analog</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#fmsynth2" class="nav-link">FMSynth2</a>
+            <li class="nav-item" data-level="2"><a href="#additivesynth" class="nav-link">AdditiveSynth</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#crossdelay2" class="nav-link">crossDelay2</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -330,11 +330,15 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#fmsynth2_fx" class="nav-link">FMSynth2_FX</a>
+            <li class="nav-item" data-level="2"><a href="#fmsynth2" class="nav-link">FMSynth2</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#fmsynth2_fx_analog" class="nav-link">FMSynth2_FX_Analog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#fmsynth2_fx" class="nav-link">FMSynth2_FX</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -346,26 +350,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#wavesynth" class="nav-link">WaveSynth</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#wavesynth_analog" class="nav-link">WaveSynth_Analog</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#wavesynth_fx" class="nav-link">WaveSynth_FX</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#wavesynth_fx_analog" class="nav-link">WaveSynth_FX_Analog</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#crossdelay2" class="nav-link">crossDelay2</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#granulator" class="nav-link">granulator</a>
               <ul class="nav flex-column">
               </ul>
@@ -374,15 +358,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#simplefx" class="nav-link">simpleFX</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#simplefx_analog" class="nav-link">simpleFX_Analog</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#simplesynth" class="nav-link">simpleSynth</a>
+            <li class="nav-item" data-level="2"><a href="#simplefx" class="nav-link">simpleFX</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -390,11 +370,15 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#simplesynth_fx" class="nav-link">simpleSynth_FX</a>
+            <li class="nav-item" data-level="2"><a href="#simplesynth" class="nav-link">simpleSynth</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#simplesynth_fx_analog" class="nav-link">simpleSynth_FX_Analog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#simplesynth_fx" class="nav-link">simpleSynth_FX</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -406,6 +390,22 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#wavesynth_analog" class="nav-link">WaveSynth_Analog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#wavesynth" class="nav-link">WaveSynth</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#wavesynth_fx_analog" class="nav-link">WaveSynth_FX_Analog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#wavesynth_fx" class="nav-link">WaveSynth_FX</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -414,69 +414,12 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="bela">bela</h1>
-<h2 id="additivesynth">AdditiveSynth</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Additive synthesizer, must be used with OSC message to program sound.
-// It as 8 harmonics. Each have it's own volume envelop.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// OSC messages (see BELA console for precise adress)
-// For each harmonics (%rang indicate harmonic number, starting at 0) :
-// vol%rang : General Volume (vol0 control the volume of the fundamental)
-// A%rang : Attack
-// D%rang : Decay
-// S%rang : Sustain
-// R%rang : Release
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// GENERAL
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 10, 0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-partiel(rang) = os.oscrs(gFreq*(rang+1))*volume
-    with {
-        // UI
-        vol = hslider(&quot;vol%rang&quot;, 1, 0, 1, 0.001);
-
-        a = 0.01 * hslider(&quot;A%rang&quot;, 1, 0, 400, 0.001);
-        d = 0.01 * hslider(&quot;D%rang&quot;, 1, 0, 400, 0.001);
-        s = hslider(&quot;S%rang&quot;, 1, 0, 1, 0.001);
-        r = 0.01 * hslider(&quot;R%rang&quot;, 1, 0, 800, 0.001);
-
-        volume = ((en.adsr(a,d,s,r,midigate))*vol) : max(0) : min(1);
-    };
-
-process = par(i, 8, partiel(i)) :&gt; /(8);
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
 <h2 id="additivesynth_analog">AdditiveSynth_Analog</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -501,44 +444,225 @@ import(&quot;stdfaust.lib&quot;);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // GENERAL
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 10, 0.01);
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 10, 0.01);
 
 // pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
 gFreq = midifreq * bend;
 
 partiel(rang) = os.oscrs(gFreq*(rang+1))*volume
     with {
         // UI
-        vol = hslider(&quot;vol%rang[BELA: ANALOG_%rang]&quot;, 1, 0, 1, 0.001);
+        vol = hslider("vol%rang[BELA: ANALOG_%rang]", 1, 0, 1, 0.001);
 
-        a = 0.01 * hslider(&quot;A%rang&quot;, 1, 0, 400, 0.001);
-        d = 0.01 * hslider(&quot;D%rang&quot;, 1, 0, 400, 0.001);
-        s = hslider(&quot;S%rang&quot;, 1, 0, 1, 0.001);
-        r = 0.01 * hslider(&quot;R%rang&quot;, 1, 0, 800, 0.001);
+        a = 0.01 * hslider("A%rang", 1, 0, 400, 0.001);
+        d = 0.01 * hslider("D%rang", 1, 0, 400, 0.001);
+        s = hslider("S%rang", 1, 0, 1, 0.001);
+        r = 0.01 * hslider("R%rang", 1, 0, 800, 0.001);
 
         volume = ((en.adsr(a,d,s,r,midigate))*vol) : max(0) : min(1);
     };
 
-process = par(i, 8, partiel(i)) :&gt; /(8);
+process = par(i, 8, partiel(i)) :> /(8);
 
-</code></pre>
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
 
+<h2 id="additivesynth">AdditiveSynth</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Additive synthesizer, must be used with OSC message to program sound.
+// It as 8 harmonics. Each have it's own volume envelop.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// OSC messages (see BELA console for precise adress)
+// For each harmonics (%rang indicate harmonic number, starting at 0) :
+// vol%rang : General Volume (vol0 control the volume of the fundamental)
+// A%rang : Attack
+// D%rang : Decay
+// S%rang : Sustain
+// R%rang : Release
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 10, 0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+partiel(rang) = os.oscrs(gFreq*(rang+1))*volume
+    with {
+        // UI
+        vol = hslider("vol%rang", 1, 0, 1, 0.001);
+
+        a = 0.01 * hslider("A%rang", 1, 0, 400, 0.001);
+        d = 0.01 * hslider("D%rang", 1, 0, 400, 0.001);
+        s = hslider("S%rang", 1, 0, 1, 0.001);
+        r = 0.01 * hslider("R%rang", 1, 0, 800, 0.001);
+
+        volume = ((en.adsr(a,d,s,r,midigate))*vol) : max(0) : min(1);
+    };
+
+process = par(i, 8, partiel(i)) :> /(8);
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="crossdelay2">crossDelay2</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Stereo Delay with feedback and crossfeedback (L to R and R to L feedback).
+// And pitch shifting on feedback.
+// A pre-delay without feedback is added for a wider stereo effect.
+//
+// Designed to use the Analog Input for parameters controls.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// ANALOG IN:
+// ANALOG 0 : Pre-Delay L
+// ANALOG 1 : Pre-Delay R
+// ANALOG 2 : Delay L
+// ANALOG 3 : Delay R
+// ANALOG 4 : Cross feedback
+// ANALOG 5 : Feedback
+// ANALOG 6 : Pitchshifter L
+// ANALOG 7 : Pitchshifter R
+//
+// Available by OSC : (see BELA console for precise adress)
+// Feedback filter:
+// crossLF : Crossfeedback Lowpass
+// crossHF : Crossfeedback Highpass
+// feedbLF : Feedback Lowpass
+// feedbHF : Feedback Highpass
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+preDelL = ba.sec2samp(hslider("preDelL[BELA: ANALOG_0]", 1,0,2,0.001)):si.smoo;
+preDelR = ba.sec2samp(hslider("preDelR[BELA: ANALOG_1]", 1,0,2,0.001)):si.smoo;
+delL    = ba.sec2samp(hslider("delL[BELA: ANALOG_2]", 1,0,2,0.001)):si.smoo;
+delR    = ba.sec2samp(hslider("delR[BELA: ANALOG_3]", 1,0,2,0.001)):si.smoo;
+
+crossLF = hslider("crossLF", 12000, 20, 20000, 0.001);
+crossHF = hslider("crossHF", 60, 20, 20000, 0.001);
+feedbLF = hslider("feedbLF", 12000, 20, 20000, 0.001);
+feedbHF = hslider("feedbHF", 60, 20, 20000, 0.001);
+
+CrossFeedb = hslider("CrossFeedb[BELA: ANALOG_4]", 0.0, 0., 1, 0.001):si.smoo;
+feedback = hslider("feedback[BELA: ANALOG_5]", 0.0, 0., 1, 0.001):si.smoo;
+
+pitchL = hslider("shiftL[BELA: ANALOG_6]", 0,-12,12,0.001):si.smoo;
+pitchR = hslider("shiftR[BELA: ANALOG_7]", 0,-12,12,0.001):si.smoo;
+
+routeur(a,b,c,d) = ((a*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((b*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+c,
+                    ((b*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((a*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+d;
+
+process = (de.sdelay(65536, 512,preDelL),de.sdelay(65536, 512,preDelR)):(routeur : de.sdelay(65536, 512,delL), de.sdelay(65536, 512,delR))~(ef.transpose(512, 256, pitchL), ef.transpose(512, 256, pitchR));
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="fmsynth2_analog">FMSynth2_Analog</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("all.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple FM synthesizer.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_0 : Modulator frequency ratio
+// ANALOG_1 : Attack
+// ANALOG_2 : Decay/Release
+// ANALOG_3 : Sustain
+//
+// MIDI:
+// CC 1 : FM feedback on modulant oscillator.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// GENERAL, Keyboard
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 1, 0, 1, 0.01);
+
+// modwheel:
+feedb = (gFreq-1) * (hslider("feedb[midi:ctrl 1]", 0, 0, 1, 0.001) : si.smoo);
+modFreqRatio = hslider("ratio[BELA: ANALOG_0]",2,0,20,0.01) : si.smoo;
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+//=================================== Parameters Mapping =================================
+//========================================================================================
+// Same for volume & modulation:
+volA = hslider("A[BELA: ANALOG_1]",0.01,0.01,4,0.01);
+volDR = hslider("DR[BELA: ANALOG_2]",0.6,0.01,8,0.01);
+volS = hslider("S[BELA: ANALOG_3]",0.2,0,1,0.01);
+envelop = en.adsre(volA,volDR,volS,volDR,midigate);
+
+// modulator frequency
+modFreq = gFreq * modFreqRatio;
+
+// modulation index
+FMdepth = envelop * 1000 * midigain;
+
+// Out amplitude
+vol = envelop;
+
+//============================================ DSP =======================================
+//========================================================================================
+
+FMfeedback(frq) = (+(_,frq):os.osci) ~ (*(feedb));
+FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
+
+process = FMall(gFreq) * vol;
+
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="fmsynth2">FMSynth2</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;all.lib&quot;);
+import("all.lib");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -559,26 +683,26 @@ import(&quot;all.lib&quot;);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // GENERAL, Keyboard
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 1, 0, 1, 0.01);
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 1, 0, 1, 0.01);
 
 // modwheel:
-feedb = (gFreq-1) * (hslider(&quot;feedb[midi:ctrl 1]&quot;, 0, 0, 1, 0.001) : si.smoo);
-modFreqRatio = hslider(&quot;ratio[midi:ctrl 14]&quot;,2,0,20,0.01) : si.smoo;
+feedb = (gFreq-1) * (hslider("feedb[midi:ctrl 1]", 0, 0, 1, 0.001) : si.smoo);
+modFreqRatio = hslider("ratio[midi:ctrl 14]",2,0,20,0.01) : si.smoo;
 
 // pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
 gFreq = midifreq * bend;
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
-// Same for volum &amp; modulation:
-volA = hslider(&quot;A[midi:ctrl 73]&quot;,0.01,0.01,4,0.01);
-volD = hslider(&quot;D[midi:ctrl 76]&quot;,0.6,0.01,8,0.01);
-volS = hslider(&quot;S[midi:ctrl 77]&quot;,0.2,0,1,0.01);
-volR = hslider(&quot;R[midi:ctrl 72]&quot;,0.8,0.01,8,0.01);
+// Same for volum & modulation:
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
 envelop = en.adsre(volA,volD,volS,volR,midigate);
 
 // modulator frequency
@@ -598,243 +722,17 @@ FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
 
 process = FMall(gFreq) * vol;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="fmsynth2_analog">FMSynth2_Analog</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;all.lib&quot;);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple FM synthesizer.
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// ANALOG IMPLEMENTATION:
-//
-// ANALOG_0 : Modulator frequency ratio
-// ANALOG_1 : Attack
-// ANALOG_2 : Decay/Release
-// ANALOG_3 : Sustain
-//
-// MIDI:
-// CC 1 : FM feedback on modulant oscillator.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// GENERAL, Keyboard
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 1, 0, 1, 0.01);
-
-// modwheel:
-feedb = (gFreq-1) * (hslider(&quot;feedb[midi:ctrl 1]&quot;, 0, 0, 1, 0.001) : si.smoo);
-modFreqRatio = hslider(&quot;ratio[BELA: ANALOG_0]&quot;,2,0,20,0.01) : si.smoo;
-
-// pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-//=================================== Parameters Mapping =================================
-//========================================================================================
-// Same for volume &amp; modulation:
-volA = hslider(&quot;A[BELA: ANALOG_1]&quot;,0.01,0.01,4,0.01);
-volDR = hslider(&quot;DR[BELA: ANALOG_2]&quot;,0.6,0.01,8,0.01);
-volS = hslider(&quot;S[BELA: ANALOG_3]&quot;,0.2,0,1,0.01);
-envelop = en.adsre(volA,volDR,volS,volDR,midigate);
-
-// modulator frequency
-modFreq = gFreq * modFreqRatio;
-
-// modulation index
-FMdepth = envelop * 1000 * midigain;
-
-// Out amplitude
-vol = envelop;
-
-//============================================ DSP =======================================
-//========================================================================================
-
-FMfeedback(frq) = (+(_,frq):os.osci) ~ (*(feedb));
-FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
-
-process = FMall(gFreq) * vol;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="fmsynth2_fx">FMSynth2_FX</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;all.lib&quot;);
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple FM synthesizer.
-// 2 oscillators and FM feedback on modulant oscillator
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-//
-// CC 1     : FM feedback on modulant oscillator.
-// CC 14    : Modulator frequency ratio.
-//
-// CC 73    : Attack
-// CC 76    : Decay
-// CC 77    : Sustain
-// CC 72    : Release
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// GENERAL, Keyboard
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 1, 0, 1, 0.01);
-
-// modwheel:
-feedb = (gFreq-1) * (hslider(&quot;feedb[midi:ctrl 1]&quot;, 0, 0, 1, 0.001) : si.smoo);
-modFreqRatio = hslider(&quot;ratio[midi:ctrl 14]&quot;,2,0,20,0.01) : si.smoo;
-
-// pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-//=================================== Parameters Mapping =================================
-//========================================================================================
-// Same for volum &amp; modulation:
-volA = hslider(&quot;A[midi:ctrl 73]&quot;,0.01,0.01,4,0.01);
-volD = hslider(&quot;D[midi:ctrl 76]&quot;,0.6,0.01,8,0.01);
-volS = hslider(&quot;S[midi:ctrl 77]&quot;,0.2,0,1,0.01);
-volR = hslider(&quot;R[midi:ctrl 72]&quot;,0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// modulator frequency
-modFreq = gFreq*modFreqRatio;
-
-// modulation index
-FMdepth = envelop * 1000 * midigain;
-
-// Out amplitude
-vol = envelop;
-
-//============================================ DSP =======================================
-//========================================================================================
-
-FMfeedback(frq) = (+(_,frq):os.osci) ~ (* (feedb));
-FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
-
-//#################################################################################################//
-//##################################### EFFECT SECTION ############################################//
-//#################################################################################################//
-// Simple FX chain build for a mono synthesizer.
-// It control general volume and pan.
-// FX Chaine is:
-//      Drive
-//      Flanger
-//      Reverberation
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-// (All are available by OSC)
-//
-// CC 7 : Volume
-// CC 10 : Pan
-//
-// CC 92 : Distortion Drive
-//
-// CC 13 : Flanger Delay
-// CC 93 : Flanger Dry/Wet
-// CC 94 : Flanger Feedback
-//
-// CC 12 : Reverberation Room size
-// CC 91 : Reverberation Dry/Wet
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-volFX = hslider(&quot;volume[midi:ctrl 7]&quot;,1,0,1,0.001); // Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider(&quot;drive[midi:ctrl 92]&quot;,0.3,0,1,0.001);
-
-// Flanger
-curdel = hslider(&quot;flangDel[midi:ctrl 13]&quot;,4,0.001,10,0.001);
-fb = hslider(&quot;flangFeedback[midi:ctrl 94]&quot;,0.7,0,1,0.001);
-fldw = hslider(&quot;dryWetFlang[midi:ctrl 93]&quot;,0.5,0,1,0.001);
-flanger = efx
-    with {
-        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-        efx = _ &lt;: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-    };
-
-// Pannoramique:
-panno = _ : sp.panner(hslider(&quot;pan[midi:ctrl 10]&quot;,0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ &lt;: (*(g)*fixedgain,*(g)*fixedgain :
-    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider(&quot;Damp[midi:ctrl 95]&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[midi:ctrl 12]&quot;, 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo[midi:ctrl 90]&quot;,0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[midi:ctrl 91]&quot;, 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
-
-process = FMall(gFreq) * vol;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="fmsynth2_fx_analog">FMSynth2_FX_Analog</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;all.lib&quot;);
+import("all.lib");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -855,25 +753,25 @@ import(&quot;all.lib&quot;);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // GENERAL, Keyboard
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 1, 0, 1, 0.01);
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 1, 0, 1, 0.01);
 
 // modwheel:
-feedb = (gFreq-1) * (hslider(&quot;feedb[midi:ctrl 1]&quot;, 0, 0, 1, 0.001) : si.smoo);
-modFreqRatio = hslider(&quot;ratio[BELA: ANALOG_0]&quot;,2,0,20,0.01) : si.smoo;
+feedb = (gFreq-1) * (hslider("feedb[midi:ctrl 1]", 0, 0, 1, 0.001) : si.smoo);
+modFreqRatio = hslider("ratio[BELA: ANALOG_0]",2,0,20,0.01) : si.smoo;
 
 // pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
 gFreq = midifreq * bend;
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
-// Same for volume &amp; modulation:
-volA = hslider(&quot;A[BELA: ANALOG_1]&quot;,0.01,0.01,4,0.01);
-volDR = hslider(&quot;DR[BELA: ANALOG_2]&quot;,0.6,0.01,8,0.01);
-volS = hslider(&quot;S[BELA: ANALOG_3]&quot;,0.2,0,1,0.01);
+// Same for volume & modulation:
+volA = hslider("A[BELA: ANALOG_1]",0.01,0.01,4,0.01);
+volDR = hslider("DR[BELA: ANALOG_2]",0.6,0.01,8,0.01);
+volS = hslider("S[BELA: ANALOG_3]",0.2,0,1,0.01);
 envelop = en.adsre(volA,volDR,volS,volDR,midigate);
 
 // modulator frequency
@@ -927,28 +825,28 @@ FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // VOLUME:
-volFX = hslider(&quot;volume[midi:ctrl 7]&quot;,1,0,1,0.001); // Should be 7 according to MIDI CC norm.
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001); // Should be 7 according to MIDI CC norm.
 
 // EFFECTS /////////////////////////////////////////////
-drive = hslider(&quot;drive[BELA: ANALOG_4]&quot;,0.3,0,1,0.001);
+drive = hslider("drive[BELA: ANALOG_4]",0.3,0,1,0.001);
 
 // Flanger
-curdel = hslider(&quot;flangDel[midi:ctrl 13]&quot;,4,0.001,10,0.001);
-fb = hslider(&quot;flangFeedback[midi:ctrl 94]&quot;,0.7,0,1,0.001);
-fldw = hslider(&quot;dryWetFlang[BELA: ANALOG_5]&quot;,0.5,0,1,0.001);
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[BELA: ANALOG_5]",0.5,0,1,0.001);
 flanger = efx
     with {
         fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-        efx = _ &lt;: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+        efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
     };
 
 // Pannoramique:
-panno = _ : sp.panner(hslider(&quot;pan[midi:ctrl 10]&quot;,0.5,0,1,0.001)) : _,_;
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
 
 // REVERB (from freeverb_demo)
-reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
     re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
+    *(1-g), *(1-g) :> _,_
     with {
         scaleroom   = 0.28;
         offsetroom  = 0.7;
@@ -957,10 +855,10 @@ reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
         fixedgain   = 0.1;
         origSR = 44100;
 
-        damping = vslider(&quot;Damp[midi:ctrl 95]&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[BELA: ANALOG_7]&quot;, 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo[midi:ctrl 90]&quot;,0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[BELA: ANALOG_6]&quot;, 0.4, 0, 1, 0.001);
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.4, 0, 1, 0.001);
         // (g = Dry/Wet)
     };
 
@@ -977,20 +875,166 @@ effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
 process = FMall(gFreq) * vol;
 
 
-</code></pre>
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="fmsynth2_fx">FMSynth2_FX</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("all.lib");
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple FM synthesizer.
+// 2 oscillators and FM feedback on modulant oscillator
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 1     : FM feedback on modulant oscillator.
+// CC 14    : Modulator frequency ratio.
+//
+// CC 73    : Attack
+// CC 76    : Decay
+// CC 77    : Sustain
+// CC 72    : Release
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// GENERAL, Keyboard
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 1, 0, 1, 0.01);
+
+// modwheel:
+feedb = (gFreq-1) * (hslider("feedb[midi:ctrl 1]", 0, 0, 1, 0.001) : si.smoo);
+modFreqRatio = hslider("ratio[midi:ctrl 14]",2,0,20,0.01) : si.smoo;
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+//=================================== Parameters Mapping =================================
+//========================================================================================
+// Same for volum & modulation:
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// modulator frequency
+modFreq = gFreq*modFreqRatio;
+
+// modulation index
+FMdepth = envelop * 1000 * midigain;
+
+// Out amplitude
+vol = envelop;
+
+//============================================ DSP =======================================
+//========================================================================================
+
+FMfeedback(frq) = (+(_,frq):os.osci) ~ (* (feedb));
+FMall(f) = os.osci(f + (FMdepth*FMfeedback(f*modFreqRatio)));
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+// Simple FX chain build for a mono synthesizer.
+// It control general volume and pan.
+// FX Chaine is:
+//      Drive
+//      Flanger
+//      Reverberation
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+// (All are available by OSC)
+//
+// CC 7 : Volume
+// CC 10 : Pan
+//
+// CC 92 : Distortion Drive
+//
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001); // Should be 7 according to MIDI CC norm.
+
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
+
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+    with {
+        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+        efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+    };
+
+// Pannoramique:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
+
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
+    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+    *(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+process = FMall(gFreq) * vol;
+
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="fxchaine2">FXChaine2</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -1041,23 +1085,23 @@ pi = 4.0*atan(1.0);
 periodic  = 1;
 
 dmax = 8192;
-curdel = dmax * vslider(&quot;Delay[BELA: ANALOG_1]&quot;, 0.5, 0, 1, 1) : si.smooth(0.999);
+curdel = dmax * vslider("Delay[BELA: ANALOG_1]", 0.5, 0, 1, 1) : si.smooth(0.999);
 rateMax = 7.0; // Hz
 rateMin = 0.01;
 rateT60 = 0.15661;
 
-rate = vslider(&quot;Rate&quot;, 0.5, rateMin, rateMax, 0.0001): si.smooth(ba.tau2pole(rateT60/6.91));
-depth = vslider(&quot;Depth [BELA: ANALOG_0]&quot;, 0.5, 0, 1, 0.001) : si.smooth(ba.tau2pole(depthT60/6.91));
+rate = vslider("Rate", 0.5, rateMin, rateMax, 0.0001): si.smooth(ba.tau2pole(rateT60/6.91));
+depth = vslider("Depth [BELA: ANALOG_0]", 0.5, 0, 1, 0.001) : si.smooth(ba.tau2pole(depthT60/6.91));
 // (dept = dry/wet)
 
 depthT60 = 0.15661;
 delayPerVoice = 0.5*curdel/voices;
-sigma = delayPerVoice * vslider(&quot;Deviation&quot;,0.5,0,1,0.001) : si.smooth(0.999);
+sigma = delayPerVoice * vslider("Deviation",0.5,0,1,0.001) : si.smooth(0.999);
 
-do2 = depth;   // use when depth=1 means &quot;multivibrato&quot; effect (no original =&gt; all are modulated)
+do2 = depth;   // use when depth=1 means "multivibrato" effect (no original => all are modulated)
 
 chorus_stereo(dmax,curdel,rate,sigma,do2,voices) =
-      _,_ &lt;: *(1-do2),*(1-do2),(*(do2),*(do2) &lt;: par(i,voices,voice(i)):&gt;_,_) : ro.interleave(2,2) : +,+;
+      _,_ <: *(1-do2),*(1-do2),(*(do2),*(do2) <: par(i,voices,voice(i)):>_,_) : ro.interleave(2,2) : +,+;
       voice(i) = de.fdelay(dmax,min(dmax,del(i)))/(i+1)
     with {
        angle(i) = 2*pi*(i/2)/voices + (i%2)*pi/2;
@@ -1070,31 +1114,31 @@ chorus_stereo(dmax,curdel,rate,sigma,do2,voices) =
     };
 
 // PHASER (from demo lib.) /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-phaserSt = _,_ &lt;: _, _, phaser2_stereo : dry_wetST(dwPhaz)
+phaserSt = _,_ <: _, _, phaser2_stereo : dry_wetST(dwPhaz)
     with {
 
-        invert = checkbox(&quot;InvertSum&quot;);
-        vibr = checkbox(&quot;VibratoMode&quot;); // In this mode you can hear any &quot;Doppler&quot;
+        invert = checkbox("InvertSum");
+        vibr = checkbox("VibratoMode"); // In this mode you can hear any "Doppler"
 
         phaser2_stereo = pf.phaser2_stereo(Notches,width,frqmin,fratio,frqmax,speed,mdepth,fb,invert);
 
         Notches = 4; // Compile-time parameter: 2 is typical for analog phaser stomp-boxes
 
-        speed  = hslider(&quot;Speed&quot;, 0.5, 0, 10, 0.001);
-        depth  = hslider(&quot;NotchDepth&quot;, 1, 0, 1, 0.001);
-        fb     = hslider(&quot;Feedback&quot;, 0.7, -0.999, 0.999, 0.001);
+        speed  = hslider("Speed", 0.5, 0, 10, 0.001);
+        depth  = hslider("NotchDepth", 1, 0, 1, 0.001);
+        fb     = hslider("Feedback", 0.7, -0.999, 0.999, 0.001);
 
-        width  = hslider(&quot;NotchWidth&quot;,1000, 10, 5000, 1);
-        frqmin = hslider(&quot;MinNotch1&quot;,100, 20, 5000, 1);
-        frqmax = hslider(&quot;MaxNotch1&quot;,800, 20, 10000, 1) : max(frqmin);
-        fratio = hslider(&quot;NotchFreqRatio[BELA: ANALOG_3]&quot;,1.5, 1.1, 4, 0.001);
-        dwPhaz = vslider(&quot;dryWetPhaser[BELA: ANALOG_2]&quot;, 0.5, 0, 1, 0.001); 
+        width  = hslider("NotchWidth",1000, 10, 5000, 1);
+        frqmin = hslider("MinNotch1",100, 20, 5000, 1);
+        frqmax = hslider("MaxNotch1",800, 20, 10000, 1) : max(frqmin);
+        fratio = hslider("NotchFreqRatio[BELA: ANALOG_3]",1.5, 1.1, 4, 0.001);
+        dwPhaz = vslider("dryWetPhaser[BELA: ANALOG_2]", 0.5, 0, 1, 0.001); 
 
-        mdepth = select2(vibr,depth,2); // Improve &quot;ease of use&quot;
+        mdepth = select2(vibr,depth,2); // Improve "ease of use"
     };
 
 // DELAY (with feedback and crossfeeback) //////////////////////////////////////////////////////////////////////////////////////////////
-delay = ba.sec2samp(hslider(&quot;delay[BELA: ANALOG_5]&quot;, 1,0,2,0.001));
+delay = ba.sec2samp(hslider("delay[BELA: ANALOG_5]", 1,0,2,0.001));
 preDelL = delay/2;
 delL    = delay;
 delR    = delay;
@@ -1102,18 +1146,18 @@ delR    = delay;
 crossLF = 1200;
 
 CrossFeedb = 0.6;
-dwDel = vslider(&quot;dryWetDelay[BELA: ANALOG_4]&quot;, 0.5, 0, 1, 0.001);
+dwDel = vslider("dryWetDelay[BELA: ANALOG_4]", 0.5, 0, 1, 0.001);
 
 routeur(a,b,c,d) = ((a*CrossFeedb):fi.lowpass(2,crossLF))+c,
                     ((b*CrossFeedb):fi.lowpass(2,crossLF))+d;
 
-xdelay = _,_ &lt;: _,_,((de.sdelay(65536, 512,preDelL),_):
+xdelay = _,_ <: _,_,((de.sdelay(65536, 512,preDelL),_):
         (routeur : de.sdelay(65536, 512,delL) ,de.sdelay(65536, 512,delR)) ~ (_,_)) : dry_wetST(dwDel);
 
 // REVERB (from freeverb_demo) /////////////////////////////////////////////////////////////////////////////////////////////////////////
-reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
     re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
+    *(1-g), *(1-g) :> _,_
     with {
         scaleroom   = 0.28;
         offsetroom  = 0.7;
@@ -1122,10 +1166,10 @@ reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
         fixedgain   = 0.1;
         origSR = 44100;
 
-        damping = vslider(&quot;Damp&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[BELA: ANALOG_7]&quot;, 0.5, 0, 1, 0.001)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo&quot;,0.5,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[BELA: ANALOG_6]&quot;, 0.2, 0, 1, 0.001);
+        damping = vslider("Damp",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.5, 0, 1, 0.001)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo",0.5,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.2, 0, 1, 0.001);
         // (g = Dry/Wet)
     };
 
@@ -1136,19 +1180,16 @@ dry_wetST(dw,x1,x2,y1,y2) = (wet*y1 + dry*x1),(wet*y2 + dry*x2)
         dry = 1.0-wet;
     };
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="graingenerator">GrainGenerator</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Grain Generator.
@@ -1166,18 +1207,18 @@ dry_wetST(dw,x1,x2,y1,y2) = (wet*y1 + dry*x1),(wet*y2 + dry*x2)
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-import(&quot;all.lib&quot;);
+import("all.lib");
 
 // FOR 4 grains - MONO
 
 // UI //////////////////////////////////////////
-popul = 1 - hslider(&quot;population[BELA: ANALOG_0]&quot;, 1, 0, 1, 0.001);  // Coef 1 = maximum; 0 = almost nothing (0.95)
-taille = hslider(&quot;taille[BELA: ANALOG_1]&quot;, 100, 4, 200, 0.001 );    // Size in milliseconds
-decal = 1 - hslider(&quot;decal[BELA: ANALOG_2]&quot;,0,0,1,0.001);           // Read position compared to table write position
+popul = 1 - hslider("population[BELA: ANALOG_0]", 1, 0, 1, 0.001);  // Coef 1 = maximum; 0 = almost nothing (0.95)
+taille = hslider("taille[BELA: ANALOG_1]", 100, 4, 200, 0.001 );    // Size in milliseconds
+decal = 1 - hslider("decal[BELA: ANALOG_2]",0,0,1,0.001);           // Read position compared to table write position
 
-speed = hslider(&quot;speed[BELA: ANALOG_3]&quot;, 1, 0.125, 4, 0.001);
+speed = hslider("speed[BELA: ANALOG_3]", 1, 0.125, 4, 0.001);
 
-feedback = hslider(&quot;feedback[BELA: ANALOG_4]&quot;,0,0,2,0.001); 
+feedback = hslider("feedback[BELA: ANALOG_4]",0,0,2,0.001); 
 
 freq = 1000/taille;
 tmpTaille = taille*ma.SR/ 1000;
@@ -1186,24 +1227,24 @@ clocSize = int(tmpTaille + (tmpTaille*popul*10)); // duration between 2 clicks
 // CLK GENERAL /////////////////////////////////
 // 4 clicks for 4 grains generators.
 // (idem clk freq/4 and a counter...)
-detect1(x) = select2 (x &lt; 10, 0, 1);
-detect2(x) = select2 (x &gt; clocSize*1/3, 0, 1) : select2 (x &lt; (clocSize*1/3)+10, 0, _);
-detect3(x) = select2 (x &gt; clocSize*2/3, 0, 1) : select2 (x &lt; (clocSize*2/3)+10, 0, _);
-detect4(x) = select2 (x &gt; clocSize-10, 0, 1);
-cloc = (%(_,clocSize))~(+(1)) &lt;: (detect1: trig),(detect2: trig),(detect3: trig),(detect4: trig);
+detect1(x) = select2 (x < 10, 0, 1);
+detect2(x) = select2 (x > clocSize*1/3, 0, 1) : select2 (x < (clocSize*1/3)+10, 0, _);
+detect3(x) = select2 (x > clocSize*2/3, 0, 1) : select2 (x < (clocSize*2/3)+10, 0, _);
+detect4(x) = select2 (x > clocSize-10, 0, 1);
+cloc = (%(_,clocSize))~(+(1)) <: (detect1: trig),(detect2: trig),(detect3: trig),(detect4: trig);
 
 // SIGNAUX Ctrls Player ////////////////////////
-trig = _&lt;:_,mem: &gt;;
+trig = _<:_,mem: >;
 envelop = *(2*PI):+(PI):cos:*(0.5):+(0.5);
 
-rampe(f, t) = delta : (+ : select2(t,_,delta&lt;0) : max(0)) ~ _ : raz
+rampe(f, t) = delta : (+ : select2(t,_,delta<0) : max(0)) ~ _ : raz
     with {
-        raz(x) = select2 (x &gt; 1, x, 0);
+        raz(x) = select2 (x > 1, x, 0);
         delta = sh(f,t)/ma.SR;
         sh(x,t) = ba.sAndH(t,x);
     };
 
-rampe2(speed, t) = delta : (+ : select2(t,_,delta&lt;0) : max(0)) ~ _ 
+rampe2(speed, t) = delta : (+ : select2(t,_,delta<0) : max(0)) ~ _ 
     with {
         delta = sh(speed,t);
         sh(x,t) = ba.sAndH(t,x);
@@ -1229,7 +1270,7 @@ unGrain(input, clk) = (linrwtable(wf, rindex) : *(0.2 * EnvGrain))
 // LINEAR_INTERPOLATION_RWTABLE //////////////////////////////////
 // read rwtable with linear interpolation
 // wf : waveform to read (wf is defined by (size_buffer, init, windex, input))
-// x  : position to read (0 &lt;= x &lt; size(wf)) and float
+// x  : position to read (0 <= x < size(wf)) and float
 // nota: rwtable(size, init, windex, input, rindex)
 
 linrwtable(wf,x) = linterpolation(y0,y1,d)
@@ -1245,575 +1286,19 @@ linrwtable(wf,x) = linterpolation(y0,y1,d)
 // FINALISATION /////////////////////////////////////////////////////////////////////////////////////
 routeur(a, b, c, d, e) = a, b, a, c, a, d, a, e;
 
-processus = _, cloc : routeur : (unGrain, unGrain, unGrain, unGrain) :&gt; fi.dcblockerat(20);
+processus = _, cloc : routeur : (unGrain, unGrain, unGrain, unGrain) :> fi.dcblockerat(20);
 process = _,_: ((+(_,_) :processus) ~ (*(feedback))),((+(_,_) :processus) ~ (*(feedback)));
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="wavesynth">WaveSynth</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-//
-// CC 1 : LFO Depth (wave travel modulation)
-// CC 14 : LFO Frequency
-// CC 70 : Wave travelling
-//
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-// CC 72 : Release
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 1, 0.01);
-
-waveTravel = hslider(&quot;waveTravel [midi:ctrl]&quot;,0,0,1,0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-// LFO
-lfoDepth = hslider(&quot;lfoDepth[midi:ctrl 1]&quot;,0,0.,1,0.001):si.smoo;
-lfoFreq = hslider(&quot;lfoFreq[midi:ctrl 14]&quot;,0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
-
-volA = hslider(&quot;A[midi:ctrl 73]&quot;,0.01,0.01,4,0.01);
-volD = hslider(&quot;D[midi:ctrl 76]&quot;,0.6,0.01,8,0.01);
-volS = hslider(&quot;S[midi:ctrl 77]&quot;,0.2,0,1,0.01);
-volR = hslider(&quot;R[midi:ctrl 72]&quot;,0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// Out Amplitude
-vol = envelop * midigain;
-
-WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
-
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-with {
-    coef = 3.14159 * ((nb-1)*0.5);
-    soustraction = select2(position&gt;0, 0, (position/(nb-1)));
-};
-
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-                + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-with {
-    tablesize = 1024;
-    wt1 = WF(tablesize, 16);
-    wt2 = WF(tablesize, 8);
-    wt3 = WF(tablesize, 6);
-    wt4 = WF(tablesize, 4);
-    faze = int(os.phasor(tablesize,freq));
-};
-
-process = wfosc(gFreq) * vol;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="wavesynth_analog">WaveSynth_Analog</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// ANALOG IMPLEMENTATION:
-//
-// ANALOG_0 : Wave travelling
-// ANALOG_1 : LFO Frequency
-// ANALOG_2 : LFO Depth (wave travel modulation)
-// ANALOG_3 : Release
-//
-// MIDI:
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 1, 0.01);
-
-waveTravel = hslider(&quot;waveTravel[BELA: ANALOG_0]&quot;,0,0,1,0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-// LFO
-lfoDepth = hslider(&quot;lfoDepth[BELA: ANALOG_2]&quot;,0,0.,1,0.001):si.smoo;
-lfoFreq = hslider(&quot;lfoFreq[BELA: ANALOG_1]&quot;,0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
-
-volA = hslider(&quot;A[midi:ctrl 73]&quot;,0.01,0.01,4,0.01);
-volD = hslider(&quot;D[midi:ctrl 76]&quot;,0.6,0.01,8,0.01);
-volS = hslider(&quot;S[midi:ctrl 77]&quot;,0.2,0,1,0.01);
-volR = hslider(&quot;R[BELA: ANALOG_3]&quot;,0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// Out amplitude
-vol = envelop * midigain;
-
-WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
-
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-    with {
-        coef = 3.14159 * ((nb-1)*0.5);
-        soustraction = select2( position&gt;0, 0, (position/(nb-1)) );
-    };
-
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-            + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-    with {
-        tablesize = 1024;
-        wt1 = WF(tablesize, 16);
-        wt2 = WF(tablesize, 8);
-        wt3 = WF(tablesize, 6);
-        wt4 = WF(tablesize, 4);
-        faze = int(os.phasor(tablesize,freq));
-    };
-
-process = wfosc(gFreq) * vol;
-
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust9/exfaust9.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="wavesynth_fx">WaveSynth_FX</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-//
-// CC 1     : LFO Depth (wave travel modulation)
-// CC 14    : LFO Frequency
-// CC 70    : Wave travelling
-//
-// CC 73    : Attack
-// CC 76    : Decay
-// CC 77    : Sustain
-// CC 72    : Release
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 1, 0.01);
-
-waveTravel = hslider(&quot;waveTravel [midi:ctrl ]&quot;,0,0,1,0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-// LFO
-lfoDepth = hslider(&quot;lfoDepth[midi:ctrl 1]&quot;,0,0.,1,0.001):si.smoo;
-lfoFreq = hslider(&quot;lfoFreq[midi:ctrl 14]&quot;,0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
-
-volA = hslider(&quot;A[midi:ctrl 73]&quot;,0.01,0.01,4,0.01);
-volD = hslider(&quot;D[midi:ctrl 76]&quot;,0.6,0.01,8,0.01);
-volS = hslider(&quot;S[midi:ctrl 77]&quot;,0.2,0,1,0.01);
-volR = hslider(&quot;R[midi:ctrl 72]&quot;,0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// Out Amplitude
-vol = envelop * midigain;
-
-WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0 ))-2) -1.;
-
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-    with {
-        coef = 3.14159 * ((nb-1)*0.5);
-        soustraction = select2(position&gt;0, 0, (position/(nb-1)));
-    };
-
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-                + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-    with {
-        tablesize = 1024;
-        wt1 = WF(tablesize, 16);
-        wt2 = WF(tablesize, 8);
-        wt3 = WF(tablesize, 6);
-        wt4 = WF(tablesize, 4);
-        faze = int(os.phasor(tablesize,freq));
-    };
-
-//#################################################################################################//
-//##################################### EFFECT SECTION ############################################//
-//#################################################################################################//
-// Simple FX chaine build for a mono synthesizer.
-// It control general volume and pan.
-// FX Chaine is:
-//      Drive
-//      Flanger
-//      Reverberation
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-// (All are available by OSC)
-//
-// CC 7 : Volume
-// CC 10 : Pan
-//
-// CC 92 : Distortion Drive
-//
-// CC 13 : Flanger Delay
-// CC 93 : Flanger Dry/Wet
-// CC 94 : Flanger Feedback
-//
-// CC 12 : Reverberation Room size
-// CC 91 : Reverberation Dry/Wet
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-volFX = hslider(&quot;volume[midi:ctrl 7]&quot;,1,0,1,0.001);// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider(&quot;drive[midi:ctrl 92]&quot;,0.3,0,1,0.001);
-
-// Flanger
-curdel = hslider(&quot;flangDel[midi:ctrl 13]&quot;,4,0.001,10,0.001);
-fb = hslider(&quot;flangFeedback[midi:ctrl 94]&quot;,0.7,0,1,0.001);
-fldw = hslider(&quot;dryWetFlang[midi:ctrl 93]&quot;,0.5,0,1,0.001);
-flanger = efx
-    with {
-        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-        efx = _ &lt;: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-    };
-
-// Pannoramique:
-panno = _ : sp.panner(hslider(&quot;pan[midi:ctrl 10]&quot;,0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
-    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider(&quot;Damp[midi:ctrl 95]&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[midi:ctrl 12]&quot;, 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo[midi:ctrl 90]&quot;,0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[midi:ctrl 91]&quot;, 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
-
-process = wfosc(gFreq) * vol;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust10/exfaust10.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="wavesynth_fx_analog">WaveSynth_FX_Analog</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// ANALOG IMPLEMENTATION:
-//
-// ANALOG_0 : Wave travelling
-// ANALOG_1 : LFO Frequency
-// ANALOG_2 : LFO Depth (wave travel modulation)
-// ANALOG_3 : Release
-//
-// MIDI:
-// CC 73    : Attack
-// CC 76    : Decay
-// CC 77    : Sustain
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// GENERAL
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 1, 0.01);
-
-waveTravel = hslider(&quot;waveTravel[BELA: ANALOG_0]&quot;,0,0,1,0.01);
-
-// pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
-
-gFreq = midifreq * bend;
-
-// LFO
-lfoDepth = hslider(&quot;lfoDepth[BELA: ANALOG_2]&quot;,0,0.,1,0.001):si.smoo;
-lfoFreq = hslider(&quot;lfoFreq[BELA: ANALOG_1]&quot;,0.1,0.01,10,0.001):si.smoo;
-moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
-
-volA = hslider(&quot;A[midi:ctrl 73]&quot;,0.01,0.01,4,0.01);
-volD = hslider(&quot;D[midi:ctrl 76]&quot;,0.6,0.01,8,0.01);
-volS = hslider(&quot;S[midi:ctrl 77]&quot;,0.2,0,1,0.01);
-volR = hslider(&quot;R[BELA: ANALOG_3]&quot;,0.8,0.01,8,0.01);
-envelop = en.adsre(volA,volD,volS,volR,midigate);
-
-// Out amplitude
-vol = envelop * midigain;
-
-WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0 ))-2) -1.;
-
-// 4 WF maxi with this version:
-scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
-    with {
-        coef = 3.14159 * ((nb-1)*0.5);
-        soustraction = select2( position&gt;0, 0, (position/(nb-1)) );
-    };
-
-wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
-                + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
-    with {
-        tablesize = 1024;
-        wt1 = WF(tablesize, 16);
-        wt2 = WF(tablesize, 8);
-        wt3 = WF(tablesize, 6);
-        wt4 = WF(tablesize, 4);
-        faze = int(os.phasor(tablesize,freq));
-    };
-
-//#################################################################################################//
-//##################################### EFFECT SECTION ############################################//
-//#################################################################################################//
-//
-// Simple FX chaine build for a mono synthesizer.
-// It control general volume and pan.
-// FX Chaine is:
-//      Drive
-//      Flanger
-//      Reverberation
-//
-// This version use ANALOG IN to controle some of the parameters.
-// Other parameters continue to be available by MIDI or OSC.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// ANALOG IMPLEMENTATION:
-//
-// ANALOG_4 : Distortion Drive
-// ANALOG_5 : Flanger Dry/Wet
-// ANALOG_6 : Reverberation Dry/Wet
-// ANALOG_7 : Reverberation Room size
-//
-// MIDI:
-// CC 7 : Volume
-// CC 10 : Pan
-//
-// CC 13 : Flanger Delay
-// CC 13 : Flanger Delay
-// CC 94 : Flanger Feedback
-//
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-// 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-volFX = hslider(&quot;volume[midi:ctrl 7]&quot;,1,0,1,0.001);// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider(&quot;drive[BELA: ANALOG_4]&quot;,0.3,0,1,0.001);
-
-// Flanger
-curdel  = hslider(&quot;flangDel[midi:ctrl 13]&quot;,4,0.001,10,0.001);
-fb = hslider(&quot;flangFeedback[midi:ctrl 94]&quot;,0.7,0,1,0.001);
-fldw = hslider(&quot;dryWetFlang[BELA: ANALOG_5]&quot;,0.5,0,1,0.001);
-flanger = efx
-    with {
-        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-        efx = _ &lt;: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-    };
-
-// Panoramic:
-panno = _ : sp.panner(hslider(&quot;pan[midi:ctrl 10]&quot;,0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
-    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider(&quot;Damp[midi:ctrl 95]&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[BELA: ANALOG_7]&quot;, 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo[midi:ctrl 90]&quot;,0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[BELA: ANALOG_6]&quot;, 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
-
-process = wfosc(gFreq) * vol;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust11/exfaust11.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="crossdelay2">crossDelay2</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Stereo Delay with feedback and crossfeedback (L to R and R to L feedback).
-// And pitch shifting on feedback.
-// A pre-delay without feedback is added for a wider stereo effect.
-//
-// Designed to use the Analog Input for parameters controls.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// ANALOG IN:
-// ANALOG 0 : Pre-Delay L
-// ANALOG 1 : Pre-Delay R
-// ANALOG 2 : Delay L
-// ANALOG 3 : Delay R
-// ANALOG 4 : Cross feedback
-// ANALOG 5 : Feedback
-// ANALOG 6 : Pitchshifter L
-// ANALOG 7 : Pitchshifter R
-//
-// Available by OSC : (see BELA console for precise adress)
-// Feedback filter:
-// crossLF : Crossfeedback Lowpass
-// crossHF : Crossfeedback Highpass
-// feedbLF : Feedback Lowpass
-// feedbHF : Feedback Highpass
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-preDelL = ba.sec2samp(hslider(&quot;preDelL[BELA: ANALOG_0]&quot;, 1,0,2,0.001)):si.smoo;
-preDelR = ba.sec2samp(hslider(&quot;preDelR[BELA: ANALOG_1]&quot;, 1,0,2,0.001)):si.smoo;
-delL    = ba.sec2samp(hslider(&quot;delL[BELA: ANALOG_2]&quot;, 1,0,2,0.001)):si.smoo;
-delR    = ba.sec2samp(hslider(&quot;delR[BELA: ANALOG_3]&quot;, 1,0,2,0.001)):si.smoo;
-
-crossLF = hslider(&quot;crossLF&quot;, 12000, 20, 20000, 0.001);
-crossHF = hslider(&quot;crossHF&quot;, 60, 20, 20000, 0.001);
-feedbLF = hslider(&quot;feedbLF&quot;, 12000, 20, 20000, 0.001);
-feedbHF = hslider(&quot;feedbHF&quot;, 60, 20, 20000, 0.001);
-
-CrossFeedb = hslider(&quot;CrossFeedb[BELA: ANALOG_4]&quot;, 0.0, 0., 1, 0.001):si.smoo;
-feedback = hslider(&quot;feedback[BELA: ANALOG_5]&quot;, 0.0, 0., 1, 0.001):si.smoo;
-
-pitchL = hslider(&quot;shiftL[BELA: ANALOG_6]&quot;, 0,-12,12,0.001):si.smoo;
-pitchR = hslider(&quot;shiftR[BELA: ANALOG_7]&quot;, 0,-12,12,0.001):si.smoo;
-
-routeur(a,b,c,d) = ((a*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((b*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+c,
-                    ((b*CrossFeedb):fi.lowpass(2,crossLF):fi.highpass(2,crossHF))+((a*feedback):fi.lowpass(2,feedbLF):fi.highpass(2,feedbHF))+d;
-
-process = (de.sdelay(65536, 512,preDelL),de.sdelay(65536, 512,preDelR)):(routeur : de.sdelay(65536, 512,delL), de.sdelay(65536, 512,delR))~(ef.transpose(512, 256, pitchL), ef.transpose(512, 256, pitchR));
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust12/exfaust12.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="granulator">granulator</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 // FROM FAUST DEMO
 // Designed to use the Analog Input for parameter controls.
 //
@@ -1827,9 +1312,9 @@ process = (de.sdelay(65536, 512,preDelL),de.sdelay(65536, 512,preDelR)):(routeur
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-process = vgroup(&quot;Granulator&quot;, environment {
-    declare name &quot;Granulator&quot;;
-    declare author &quot;Adapted from sfIter by Christophe Lebreton&quot;;
+process = vgroup("Granulator", environment {
+    declare name "Granulator";
+    declare author "Adapted from sfIter by Christophe Lebreton";
 
     /* =========== DESCRIPTION =============
 
@@ -1842,9 +1327,9 @@ process = vgroup(&quot;Granulator&quot;, environment {
     - Head = Irregular occurrences 
     */
 
-    import(&quot;stdfaust.lib&quot;);
+    import("stdfaust.lib");
 
-    process = hgroup(&quot;Granulator&quot;, *(excitation : ampf));
+    process = hgroup("Granulator", *(excitation : ampf));
 
     excitation = noiseburst(gate,P) * (gain);
     ampf = an.amp_follower_ud(duree_env,duree_env);
@@ -1853,16 +1338,16 @@ process = vgroup(&quot;Granulator&quot;, environment {
 
     noiseburst(gate,P) = no.noise : *(gate : trigger(P))
         with { 
-            upfront(x) = (x-x') &gt; 0;
-            decay(n,x) = x - (x&gt;0)/n; 
+            upfront(x) = (x-x') > 0;
+            decay(n,x) = x - (x>0)/n; 
             release(n) = + ~ decay(n); 
-            trigger(n) = upfront : release(n) : &gt; (0.0);
+            trigger(n) = upfront : release(n) : > (0.0);
         };
 
     //-------------------------------------------------------------
 
     P = freq; // fundamental period in samples
-    freq = hslider(&quot;[1]GrainSize[BELA: ANALOG_0]&quot;, 200, 5, 2205, 1);
+    freq = hslider("[1]GrainSize[BELA: ANALOG_0]", 200, 5, 2205, 1);
     // the frequency gives the white noise band width
     Pmax = 4096; // maximum P (for de.delay-line allocation)
 
@@ -1874,29 +1359,26 @@ process = vgroup(&quot;Granulator&quot;, environment {
     // PULSAR //////////////////////////////
     // Pulsar allows to create a more or less random 'pulse'(proba).
 
-    pulsar = _ &lt;: ((_&lt;(ratio_env)) : @(100))*(proba&gt;(_,abs(no.noise) : ba.latch)); 
-    speed = hslider(&quot;[2]Speed[BELA: ANALOG_1]&quot;, 10, 1, 20, 0.0001) : fi.lowpass(1,1);
+    pulsar = _ <: ((_<(ratio_env)) : @(100))*(proba>(_,abs(no.noise) : ba.latch)); 
+    speed = hslider("[2]Speed[BELA: ANALOG_1]", 10, 1, 20, 0.0001) : fi.lowpass(1,1);
 
     ratio_env = 0.5;
-    fade = 0.5; // min &gt; 0 to avoid division by 0
+    fade = 0.5; // min > 0 to avoid division by 0
 
-    proba = hslider(&quot;[3]Probability[BELA: ANALOG_2]&quot;, 70, 50, 100, 1) * (0.01) : fi.lowpass(1,1);
+    proba = hslider("[3]Probability[BELA: ANALOG_2]", 70, 50, 100, 1) * (0.01) : fi.lowpass(1,1);
     duree_env = 1/(speed : /(ratio_env*(0.25)*fade));
 }.process);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust13/exfaust13.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="repeater">repeater</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 // REPEATER:
 // Freeze and repeat a small part of input signal 'n' times
 //
@@ -1909,48 +1391,48 @@ process = vgroup(&quot;Granulator&quot;, environment {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = _, _ , (pathClock : compteurUpReset: rampePlayer, _) : routageIO : rec_play_table , rec_play_table;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // General loop duration
-MasterTaille = hslider(&quot;MasterTaille[BELA: ANALOG_0]&quot;, 500, 200, 2000, 0.01);
+MasterTaille = hslider("MasterTaille[BELA: ANALOG_0]", 500, 200, 2000, 0.01);
 MasterClocSize = int(MasterTaille*ma.SR/1000);
 
 // Depth of repeat fragments
-taille = hslider(&quot;taille[BELA: ANALOG_1]&quot;, 50, 2, 200, 0.01);
+taille = hslider("taille[BELA: ANALOG_1]", 50, 2, 200, 0.01);
 clocSize = int(taille*ma.SR/1000);
 
 // Number of repeat fragments
-nbRepet = int(hslider(&quot;nbRepet[BELA: ANALOG_2]&quot;, 3, 1, 16, 1));
+nbRepet = int(hslider("nbRepet[BELA: ANALOG_2]", 3, 1, 16, 1));
 
-trig(x) = (x - x') &gt; 0;
+trig(x) = (x - x') > 0;
 
 // Counter between 0 and MasterClock, send 0 when it's between 0 and 200
 MasterClock = (%(_,MasterClocSize))~(+(1)) : detect1
     with 
     {
-        detect1(x) = select2(x &lt; 200, 0, 1);
+        detect1(x) = select2(x < 200, 0, 1);
     };
 
 // Counter between 0 and clocSize, send 0 when it's between 0 and 20
 SlaveClock(reset) = (%(_,clocSize))~(+(1):*(1-reset)) : detect2
     with 
     {
-        detect2(x) = select2(x &lt; 20, 0, 1);
+        detect2(x) = select2(x < 20, 0, 1);
     };
 
-pathClock = MasterClock &lt;: trig, _ : SlaveClock, _;
+pathClock = MasterClock <: trig, _ : SlaveClock, _;
 
 // Detect if reset is triggered or if nbRepet is reached
 compteurUpReset(in, reset) = ((reinitConditions : increment)~_), reset
     with 
     {
-        increment(b) = (ba.if(b&gt;0.5, 0, _))~(+(in:trig));
-        reinitConditions(d) = (ba.if (d&gt;nbRepet, 1, 0) : rSLatch + reset);
-        rSLatch(S) = _~(ba.if(reset&gt;0.5, 0, _) : ba.if(S&gt;0.5, 1, _));
+        increment(b) = (ba.if(b>0.5, 0, _))~(+(in:trig));
+        reinitConditions(d) = (ba.if (d>nbRepet, 1, 0) : rSLatch + reset);
+        rSLatch(S) = _~(ba.if(reset>0.5, 0, _) : ba.if(S>0.5, 1, _));
     };
 
 // Will be used for the read index of the rwtable
@@ -1975,114 +1457,17 @@ rec_play_table(input, inReadIndex, reset) = (rwtable(size, init, windex,input, i
         windex = (%(_,size))~(+(1)) : (*(1-reset)) : int;   
     };
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust14/exfaust14.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="simplefx">simpleFX</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
-
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple FX chaine build for a mono synthesizer.
-// It controle general volume and pan.
-// FX Chaine is:
-//      Drive
-//      Flanger
-//      Reverberation
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-// (All are available by OSC)
-//
-// CC 7  : Volume
-// CC 10 : Pan
-//
-// CC 92 : Distortion Drive
-//
-// CC 13 : Flanger Delay
-// CC 93 : Flanger Dry/Wet
-// CC 94 : Flanger Feedback
-//
-// CC 12 : Reverberation Room size
-// CC 91 : Reverberation Dry/Wet
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-vol = hslider(&quot;volume[midi:ctrl 7]&quot;,1,0,1,0.001);// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider(&quot;drive[midi:ctrl 92]&quot;,0.3,0,1,0.001);
-
-// Flanger
-curdel = hslider(&quot;flangDel[midi:ctrl 13]&quot;,4,0.001,10,0.001);
-fb = hslider(&quot;flangFeedback[midi:ctrl 94]&quot;,0.7,0,1,0.001);
-fldw = hslider(&quot;dryWetFlang[midi:ctrl 93]&quot;,0.5,0,1,0.001);
-flanger = efx
-    with {
-        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-        efx = _ &lt;: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-    };
-
-// Panoramique:
-panno = _ : sp.panner(hslider (&quot;pan[midi:ctrl 10]&quot;,0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ &lt;: (*(g)*fixedgain,*(g)*fixedgain :
-    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider(&quot;Damp[midi:ctrl 95]&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[midi:ctrl 12]&quot;, 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo[midi:ctrl 90]&quot;,0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[midi:ctrl 91]&quot;, 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effets = _ *(vol) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
-
-process = effets;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust15/exfaust15.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="simplefx_analog">simpleFX_Analog</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -2118,28 +1503,28 @@ import(&quot;stdfaust.lib&quot;);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // VOLUME:
-vol = hslider(&quot;volume[midi:ctrl 7]&quot;,1,0,1,0.001);   // Should be 7 according to MIDI CC norm.
+vol = hslider("volume[midi:ctrl 7]",1,0,1,0.001);   // Should be 7 according to MIDI CC norm.
 
 // EFFECTS /////////////////////////////////////////////
-drive = hslider(&quot;drive[BELA: ANALOG_4]&quot;,0.3,0,1,0.001);
+drive = hslider("drive[BELA: ANALOG_4]",0.3,0,1,0.001);
 
 // Flanger
-curdel = hslider(&quot;flangDel[midi:ctrl 13]&quot;,4,0.001,10,0.001);
-fb = hslider(&quot;flangFeedback[midi:ctrl 94]&quot;,0.7,0,1,0.001);
-fldw = hslider(&quot;dryWetFlang[BELA: ANALOG_5]&quot;,0.5,0,1,0.001);
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[BELA: ANALOG_5]",0.5,0,1,0.001);
 flanger = efx
     with {
         fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-        efx = _ &lt;: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+        efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
     };
 
 // Panoramic:
-panno = _ : sp.panner(hslider(&quot;pan[midi:ctrl 10]&quot;,0.5,0,1,0.001)) : _,_;
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
 
 // REVERB (from freeverb_demo)
-reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
     re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
+    *(1-g), *(1-g) :> _,_
     with {
         scaleroom   = 0.28;
         offsetroom  = 0.7;
@@ -2148,10 +1533,10 @@ reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
         fixedgain   = 0.1;
         origSR = 44100;
 
-        damping = vslider(&quot;Damp[midi:ctrl 95]&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[BELA: ANALOG_7]&quot;, 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo[midi:ctrl 90]&quot;,0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[BELA: ANALOG_6]&quot;, 0.4, 0, 1, 0.001);
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.4, 0, 1, 0.001);
         // (g = Dry/Wet)
     };
 
@@ -2167,113 +1552,108 @@ effets = _ *(vol) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
 
 process = effets;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust16/exfaust16.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
-<h2 id="simplesynth">simpleSynth</h2>
+<h2 id="simplefx">simpleFX</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-
+import("stdfaust.lib");
+//
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// A very simple subtractive synthesizer with 1 VCO 1 VCF.
-// The VCO Waveform is variable between Saw and Square
-// The frequency is modulated by an LFO
-// The envelope control volum and filter frequency
+// Simple FX chaine build for a mono synthesizer.
+// It controle general volume and pan.
+// FX Chaine is:
+//      Drive
+//      Flanger
+//      Reverberation
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MIDI IMPLEMENTATION:
+// (All are available by OSC)
 //
-// CC 70 : waveform (Saw to square)
-// CC 71 : Filter resonance (Q)
-// CC 74 : Filter Cutoff frequency
-// CC 79 : Filter keyboard tracking (0 to X2, default 1)
-// CC 75 : Filter Envelope Modulation
+// CC 7  : Volume
+// CC 10 : Pan
 //
-// Envelope
-// CC 73 : Attack
-// CC 76 : Decay
-// CC 77 : Sustain
-// CC 72 : Release
+// CC 92 : Distortion Drive
 //
-// CC 78 : LFO frequency (0.001Hz to 10Hz)
-// CC 1 : LFO Amplitude (Modulation)
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// HUI //////////////////////////////////////////////////
-// Keyboard
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
 
-// pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
+// VOLUME:
+vol = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
 
-// VCO
-wfFade = hslider(&quot;waveform[midi:ctrl 70]&quot;,0.5,0,1,0.001):si.smoo;
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
 
-// VCF
-res = hslider(&quot;resonnance[midi:ctrl 71]&quot;,0.5,0,1,0.001):si.smoo;
-fr = hslider(&quot;fc[midi:ctrl 74]&quot;, 15, 15, 12000, 0.001):si.smoo;
-track = hslider(&quot;tracking[midi:ctrl 79]&quot;, 1, 0, 2, 0.001);
-envMod = hslider(&quot;envMod[midi:ctrl 75]&quot;,50,0,100,0.01):si.smoo; 
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+    with {
+        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+        efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+    };
 
-// ENV
-att = 0.01 * (hslider(&quot;attack[midi:ctrl 73]&quot;,0.1,0.1,400,0.001));
-dec = 0.01 * (hslider(&quot;decay[midi:ctrl 76]&quot;,60,0.1,400,0.001));
-sust = hslider(&quot;sustain[midi:ctrl 77]&quot;,0.1,0,1,0.001);
-rel = 0.01 * (hslider(&quot;release[midi:ctrl 72]&quot;,100,0.1,400,0.001));
+// Panoramique:
+panno = _ : sp.panner(hslider ("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
 
-// LFO
-lfoFreq = hslider(&quot;lfoFreq[midi:ctrl 78]&quot;,6,0.001,10,0.001):si.smoo;
-modwheel = hslider(&quot;modwheel[midi:ctrl 1]&quot;,0,0,0.5,0.001):si.smoo;
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
+    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+    *(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
 
-// PROCESS /////////////////////////////////////////////
-allfreq = (midifreq * bend) + LFO;
-// VCF
-cutoff = ((allfreq * track) + fr + (envMod * midigain * env)) : min(ma.SR/8);
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
 
-// VCO
-oscillo(f) = (os.sawtooth(f)*(1-wfFade))+(os.square(f)*wfFade);
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
 
-// VCA
-volume = midigain * env;
+// ALL
+effets = _ *(vol) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
 
-// Enveloppe
-env = en.adsre(att,dec,sust,rel,midigate);
+process = effets;
 
-// LFO
-LFO = os.lf_triangle(lfoFreq)*modwheel*10;
-
-// SYNTH ////////////////////////////////////////////////
-synth = (oscillo(allfreq) : ve.moog_vcf(res,cutoff)) * volume;
-
-// PROCESS /////////////////////////////////////////////
-process = synth;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust17/exfaust17.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="simplesynth_analog">simpleSynth_Analog</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -2306,31 +1686,31 @@ import(&quot;stdfaust.lib&quot;);
 //
 // HUI //////////////////////////////////////////////////
 // Keyboard
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
 
 // pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
 // VCO
-wfFade = hslider(&quot;waveform[BELA: ANALOG_0]&quot;,0.5,0,1,0.001):si.smoo;
+wfFade = hslider("waveform[BELA: ANALOG_0]",0.5,0,1,0.001):si.smoo;
 
 // VCF
-res = hslider(&quot;resonnance[BELA: ANALOG_2]&quot;,0.5,0,1,0.001):si.smoo;
-fr = hslider(&quot;fc[BELA: ANALOG_1]&quot;, 15, 15, 12000, 0.001):si.smoo;
-track = hslider(&quot;tracking[midi:ctrl 79]&quot;, 1, 0, 2, 0.001);
-envMod = hslider(&quot;envMod[BELA: ANALOG_3]&quot;,50,0,100,0.01):si.smoo;
+res = hslider("resonnance[BELA: ANALOG_2]",0.5,0,1,0.001):si.smoo;
+fr = hslider("fc[BELA: ANALOG_1]", 15, 15, 12000, 0.001):si.smoo;
+track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
+envMod = hslider("envMod[BELA: ANALOG_3]",50,0,100,0.01):si.smoo;
 
 // ENV
-att = 0.01 * (hslider(&quot;attack[midi:ctrl 73]&quot;,0.1,0.1,400,0.001));
-dec = 0.01 * (hslider(&quot;decay[midi:ctrl 76]&quot;,60,0.1,400,0.001));
-sust = hslider(&quot;sustain[midi:ctrl 77]&quot;,0.2,0,1,0.001);
-rel = 0.01 * (hslider(&quot;release[midi:ctrl 72]&quot;,100,0.1,400,0.001));
+att = 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
+dec = 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
+sust = hslider("sustain[midi:ctrl 77]",0.2,0,1,0.001);
+rel = 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
 
 // LFO
-lfoFreq = hslider(&quot;lfoFreq[midi:ctrl 78]&quot;,6,0.001,10,0.001):si.smoo;
-modwheel = hslider(&quot;modwheel[midi:ctrl 1]&quot;,0,0,0.5,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
+modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
 
 // PROCESS /////////////////////////////////////////////
 allfreq = (midifreq * bend) + LFO;
@@ -2355,20 +1735,17 @@ synth = (oscillo(allfreq) : ve.moog_vcf(res,cutoff)) * volume;
 // PROCESS /////////////////////////////////////////////
 process = synth;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust18/exfaust18.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
-<h2 id="simplesynth_fx">simpleSynth_FX</h2>
+<h2 id="simplesynth">simpleSynth</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -2399,35 +1776,34 @@ import(&quot;stdfaust.lib&quot;);
 //
 // HUI //////////////////////////////////////////////////
 // Keyboard
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 0.5, 0.01);   // MIDI KEYBOARD
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
 
 // pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
 // VCO
-wfFade = hslider(&quot;waveform[midi:ctrl 70]&quot;,0.5,0,1,0.001):si.smoo;
+wfFade = hslider("waveform[midi:ctrl 70]",0.5,0,1,0.001):si.smoo;
 
 // VCF
-res = hslider(&quot;resonnance[midi:ctrl 71]&quot;,0.5,0,1,0.001):si.smoo;
-fr = hslider(&quot;fc[midi:ctrl 74]&quot;, 15, 15, 12000, 0.001):si.smoo;
-track = hslider(&quot;tracking[midi:ctrl 79]&quot;, 1, 0, 2, 0.001);
-envMod = hslider(&quot;envMod[midi:ctrl 75]&quot;,50,0,100,0.01):si.smoo; 
+res = hslider("resonnance[midi:ctrl 71]",0.5,0,1,0.001):si.smoo;
+fr = hslider("fc[midi:ctrl 74]", 15, 15, 12000, 0.001):si.smoo;
+track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
+envMod = hslider("envMod[midi:ctrl 75]",50,0,100,0.01):si.smoo; 
 
 // ENV
-att = 0.01 * (hslider(&quot;attack[midi:ctrl 73]&quot;,0.1,0.1,400,0.001));
-dec = 0.01 * (hslider(&quot;decay[midi:ctrl 76]&quot;,60,0.1,400,0.001));
-sust = hslider(&quot;sustain[midi:ctrl 77]&quot;,0.1,0,1,0.001);
-rel = 0.01 * (hslider(&quot;release[midi:ctrl 72]&quot;,100,0.1,400,0.001));
+att = 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
+dec = 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
+sust = hslider("sustain[midi:ctrl 77]",0.1,0,1,0.001);
+rel = 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
 
 // LFO
-lfoFreq = hslider(&quot;lfoFreq[midi:ctrl 78]&quot;,6,0.001,10,0.001):si.smoo;
-modwheel = hslider(&quot;modwheel[midi:ctrl 1]&quot;,0,0,0.5,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
+modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
 
 // PROCESS /////////////////////////////////////////////
 allfreq = (midifreq * bend) + LFO;
-
 // VCF
 cutoff = ((allfreq * track) + fr + (envMod * midigain * env)) : min(ma.SR/8);
 
@@ -2444,103 +1820,22 @@ env = en.adsre(att,dec,sust,rel,midigate);
 LFO = os.lf_triangle(lfoFreq)*modwheel*10;
 
 // SYNTH ////////////////////////////////////////////////
-synth = (oscillo(allfreq) :ve.moog_vcf(res,cutoff)) * volume;
-
-//#################################################################################################//
-//##################################### EFFECT SECTION ############################################//
-//#################################################################################################//
-// Simple FX chaine build for a mono synthesizer.
-// It controle general volume and pan.
-// FX Chaine is:
-//      Drive
-//      Flanger
-//      Reverberation
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// MIDI IMPLEMENTATION:
-// (All are available by OSC)
-//
-// CC 7 : Volume
-// CC 10 : Pan
-//
-// CC 92 : Distortion Drive
-//
-// CC 13 : Flanger Delay
-// CC 93 : Flanger Dry/Wet
-// CC 94 : Flanger Feedback
-//
-// CC 12 : Reverberation Room size
-// CC 91 : Reverberation Dry/Wet
-// CC 95 : Reverberation Damp
-// CC 90 : Reverberation Stereo Width
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// VOLUME:
-volFX = hslider(&quot;volume[midi:ctrl 7]&quot;,1,0,1,0.001);// Should be 7 according to MIDI CC norm.
-
-// EFFECTS /////////////////////////////////////////////
-drive = hslider(&quot;drive[midi:ctrl 92]&quot;,0.3,0,1,0.001);
-
-// Flanger
-curdel = hslider(&quot;flangDel[midi:ctrl 13]&quot;,4,0.001,10,0.001);
-fb = hslider(&quot;flangFeedback[midi:ctrl 94]&quot;,0.7,0,1,0.001);
-fldw = hslider(&quot;dryWetFlang[midi:ctrl 93]&quot;,0.5,0,1,0.001);
-flanger = efx
-    with {
-        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
-        efx = _ &lt;: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
-    };
-
-// Pannoramique:
-panno = _ : sp.panner(hslider(&quot;pan[midi:ctrl 10]&quot;,0.5,0,1,0.001)) : _,_;
-
-// REVERB (from freeverb_demo)
-reverb = _,_ &lt;: (*(g)*fixedgain,*(g)*fixedgain :
-    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
-    with {
-        scaleroom   = 0.28;
-        offsetroom  = 0.7;
-        allpassfeed = 0.5;
-        scaledamp   = 0.4;
-        fixedgain   = 0.1;
-        origSR = 44100;
-
-        damping = vslider(&quot;Damp[midi:ctrl 95]&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[midi:ctrl 12]&quot;, 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo[midi:ctrl 90]&quot;,0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[midi:ctrl 91]&quot;, 0.4, 0, 1, 0.001);
-        // (g = Dry/Wet)
-    };
-
-// Dry-Wet (from C. LEBRETON)
-dry_wet(dw,x,y) = wet*y + dry*x
-    with {
-        wet = 0.5*(dw+1.0);
-        dry = 1.0-wet;
-    };
-
-// ALL
-effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+synth = (oscillo(allfreq) : ve.moog_vcf(res,cutoff)) * volume;
 
 // PROCESS /////////////////////////////////////////////
 process = synth;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust19/exfaust19.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="simplesynth_fx_analog">simpleSynth_FX_Analog</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -2573,31 +1868,31 @@ import(&quot;stdfaust.lib&quot;);
 //
 // HUI //////////////////////////////////////////////////
 // Keyboard
-midigate = button(&quot;gate&quot;);
-midifreq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-midigain = nentry(&quot;gain&quot;, 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
 
 // pitchwheel
-bend = ba.semi2ratio(hslider(&quot;bend [midi:pitchwheel]&quot;,0,-2,2,0.01));
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
 // VCO
-wfFade = hslider(&quot;waveform[BELA: ANALOG_0]&quot;,0.5,0,1,0.001):si.smoo;
+wfFade = hslider("waveform[BELA: ANALOG_0]",0.5,0,1,0.001):si.smoo;
 
 // VCF
-res = hslider(&quot;resonnance[BELA: ANALOG_2]&quot;,0.5,0,1,0.001):si.smoo;
-fr = hslider(&quot;fc[BELA: ANALOG_1]&quot;, 15, 15, 12000, 0.001):si.smoo;
-track = hslider(&quot;tracking[midi:ctrl 79]&quot;, 1, 0, 2, 0.001);
-envMod = hslider(&quot;envMod[BELA: ANALOG_3]&quot;,50,0,100,0.01):si.smoo; 
+res = hslider("resonnance[BELA: ANALOG_2]",0.5,0,1,0.001):si.smoo;
+fr = hslider("fc[BELA: ANALOG_1]", 15, 15, 12000, 0.001):si.smoo;
+track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
+envMod = hslider("envMod[BELA: ANALOG_3]",50,0,100,0.01):si.smoo; 
 
 // ENV
-att = 0.01 * (hslider(&quot;attack[midi:ctrl 73]&quot;,0.1,0.1,400,0.001));
-dec = 0.01 * (hslider(&quot;decay[midi:ctrl 76]&quot;,60,0.1,400,0.001));
-sust = hslider (&quot;sustain[midi:ctrl 77]&quot;,0.2,0,1,0.001);
-rel = 0.01 * (hslider(&quot;release[midi:ctrl 72]&quot;,100,0.1,400,0.001));
+att = 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
+dec = 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
+sust = hslider ("sustain[midi:ctrl 77]",0.2,0,1,0.001);
+rel = 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
 
 // LFO
-lfoFreq = hslider(&quot;lfoFreq[midi:ctrl 78]&quot;,6,0.001,10,0.001):si.smoo;
-modwheel = hslider(&quot;modwheel[midi:ctrl 1]&quot;,0,0,0.5,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
+modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
 
 // PROCESS /////////////////////////////////////////////
 allfreq = (midifreq * bend) + LFO;
@@ -2655,29 +1950,29 @@ synth = (oscillo(allfreq) : ve.moog_vcf(res,cutoff)) * volume;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // VOLUME:
-volFX = hslider(&quot;volume[midi:ctrl 7]&quot;,1,0,1,0.001); // Should be 7 according to MIDI CC norm.
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001); // Should be 7 according to MIDI CC norm.
 
 // EFFECTS /////////////////////////////////////////////
-drive = hslider(&quot;drive[BELA: ANALOG_4]&quot;,0.3,0,1,0.001);
+drive = hslider("drive[BELA: ANALOG_4]",0.3,0,1,0.001);
 
 
 // Flanger
-curdel = hslider(&quot;flangDel[midi:ctrl 13]&quot;,4,0.001,10,0.001);
-fb = hslider(&quot;flangFeedback[midi:ctrl 94]&quot;,0.7,0,1,0.001);
-fldw = hslider(&quot;dryWetFlang[BELA: ANALOG_5]&quot;,0.5,0,1,0.001);
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[BELA: ANALOG_5]",0.5,0,1,0.001);
 flanger = efx
     with {
         fldel = (curdel + (os.lf_triangle(1) * 2)) : min(10);
-        efx = _ &lt;: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+        efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
     };
 
 // Panoramic:
-panno = _ : sp.panner(hslider(&quot;pan[midi:ctrl 10]&quot;,0.5,0,1,0.001)) : _,_;
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
 
 // REVERB (from freeverb_demo)
-reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
     re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
-    *(1-g), *(1-g) :&gt; _,_
+    *(1-g), *(1-g) :> _,_
     with {
         scaleroom   = 0.28;
         offsetroom  = 0.7;
@@ -2686,10 +1981,10 @@ reverb = _,_ &lt;: (*(g)*fixedgain, *(g)*fixedgain :
         fixedgain   = 0.1;
         origSR = 44100;
 
-        damping = vslider(&quot;Damp[midi:ctrl 95]&quot;,0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
-        combfeed = vslider(&quot;RoomSize[BELA: ANALOG_7]&quot;, 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
-        spatSpread = vslider(&quot;Stereo[midi:ctrl 90]&quot;,0.6,0,1,0.01)*46*ma.SR/origSR;
-        g = vslider(&quot;dryWetReverb[BELA: ANALOG_6]&quot;, 0.4, 0, 1, 0.001);
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.4, 0, 1, 0.001);
         // (g = Dry/Wet)
     };
 
@@ -2706,19 +2001,185 @@ effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
 // PROCESS /////////////////////////////////////////////
 process = synth;
 
-</code></pre>
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
 
+<h2 id="simplesynth_fx">simpleSynth_FX</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust20/exfaust20.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// A very simple subtractive synthesizer with 1 VCO 1 VCF.
+// The VCO Waveform is variable between Saw and Square
+// The frequency is modulated by an LFO
+// The envelope control volum and filter frequency
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 70 : waveform (Saw to square)
+// CC 71 : Filter resonance (Q)
+// CC 74 : Filter Cutoff frequency
+// CC 79 : Filter keyboard tracking (0 to X2, default 1)
+// CC 75 : Filter Envelope Modulation
+//
+// Envelope
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+// CC 72 : Release
+//
+// CC 78 : LFO frequency (0.001Hz to 10Hz)
+// CC 1 : LFO Amplitude (Modulation)
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// HUI //////////////////////////////////////////////////
+// Keyboard
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 0.5, 0.01);   // MIDI KEYBOARD
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+// VCO
+wfFade = hslider("waveform[midi:ctrl 70]",0.5,0,1,0.001):si.smoo;
+
+// VCF
+res = hslider("resonnance[midi:ctrl 71]",0.5,0,1,0.001):si.smoo;
+fr = hslider("fc[midi:ctrl 74]", 15, 15, 12000, 0.001):si.smoo;
+track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
+envMod = hslider("envMod[midi:ctrl 75]",50,0,100,0.01):si.smoo; 
+
+// ENV
+att = 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
+dec = 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
+sust = hslider("sustain[midi:ctrl 77]",0.1,0,1,0.001);
+rel = 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
+
+// LFO
+lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
+modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
+
+// PROCESS /////////////////////////////////////////////
+allfreq = (midifreq * bend) + LFO;
+
+// VCF
+cutoff = ((allfreq * track) + fr + (envMod * midigain * env)) : min(ma.SR/8);
+
+// VCO
+oscillo(f) = (os.sawtooth(f)*(1-wfFade))+(os.square(f)*wfFade);
+
+// VCA
+volume = midigain * env;
+
+// Enveloppe
+env = en.adsre(att,dec,sust,rel,midigate);
+
+// LFO
+LFO = os.lf_triangle(lfoFreq)*modwheel*10;
+
+// SYNTH ////////////////////////////////////////////////
+synth = (oscillo(allfreq) :ve.moog_vcf(res,cutoff)) * volume;
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+// Simple FX chaine build for a mono synthesizer.
+// It controle general volume and pan.
+// FX Chaine is:
+//      Drive
+//      Flanger
+//      Reverberation
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+// (All are available by OSC)
+//
+// CC 7 : Volume
+// CC 10 : Pan
+//
+// CC 92 : Distortion Drive
+//
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
+
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
+
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+    with {
+        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+        efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+    };
+
+// Pannoramique:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
+
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain,*(g)*fixedgain :
+    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+    *(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+// PROCESS /////////////////////////////////////////////
+process = synth;
+
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="trill_simple_monophonic_keyboard">trill_simple_monophonic_keyboard</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Simple synthetizer that use sy.dubDub of the standard Faust library.
@@ -2731,24 +2192,24 @@ process = synth;
 //
 // this sample use :
 //  - 1 craft sensor for the 1 octave keyboard and some control touch
-//  - 1 square sensor for the control of the 2 Filter parameters cut off frequency &amp; Q
+//  - 1 square sensor for the control of the 2 Filter parameters cut off frequency & Q
 //
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 // Sensor Configuration //////////////////////////////////////////////////
-declare trill_mappings &quot;{ 'SQUARE' : {'0' : 40 } ; 'CRAFT' : {'0' : 48} }&quot;;             //i2c address for each trill sensor
-declare trill_settings &quot;{ 'CRAFT_0' : { 'prescaler' : 4 ; 'threshold' : 0.015 }}&quot;;      //sensibility settings for the crafts sensors
+declare trill_mappings "{ 'SQUARE' : {'0' : 40 } ; 'CRAFT' : {'0' : 48} }";             //i2c address for each trill sensor
+declare trill_settings "{ 'CRAFT_0' : { 'prescaler' : 4 ; 'threshold' : 0.015 }}";      //sensibility settings for the crafts sensors
 
 // Parameter Configuration //////////////////////////////////////////////////
 //Monophonic keyboard
-nokey = hslider(&quot;note [TRILL:CRAFT_0 UP 15-27]&quot;, -1, -1, 11, 1);  //one octave keyboard   
+nokey = hslider("note [TRILL:CRAFT_0 UP 15-27]", -1, -1, 11, 1);  //one octave keyboard   
 
 // Filter
 CUTOFF_MIN = 350; //minimum value of cut off frequency
 Q_MIN = 0.8;
-touchsqsensor = (button(&quot;touch[TRILL:SQUARE_LVL_0]&quot;) &gt; 0.1);    //square sensor pressed
-buffering = (checkbox(&quot;buffering[TRILL:CRAFT_0 PIN 0]&quot;) == 0);  //activation of buffering of the filter's parameters values
-ctfreq = hslider(&quot;cutoff freq [TRILL:SQUARE_XPOS_0]&quot;, CUTOFF_MIN, CUTOFF_MIN, 2000, 0.1) : ba.bypass1(buffering, max(CUTOFF_MIN, ba.sAndH(touchsqsensor))) : si.smoo;       //value of the trill x square sensor for cut off frequency
-q = hslider(&quot;Q [TRILL:SQUARE_YPOS_0]&quot;, Q_MIN, Q_MIN, 10, 0.001): ba.bypass1(buffering, max(Q_MIN, ba.sAndH(touchsqsensor))) : si.smoo;                                      //value of the trill y square sensor for Q
+touchsqsensor = (button("touch[TRILL:SQUARE_LVL_0]") > 0.1);    //square sensor pressed
+buffering = (checkbox("buffering[TRILL:CRAFT_0 PIN 0]") == 0);  //activation of buffering of the filter's parameters values
+ctfreq = hslider("cutoff freq [TRILL:SQUARE_XPOS_0]", CUTOFF_MIN, CUTOFF_MIN, 2000, 0.1) : ba.bypass1(buffering, max(CUTOFF_MIN, ba.sAndH(touchsqsensor))) : si.smoo;       //value of the trill x square sensor for cut off frequency
+q = hslider("Q [TRILL:SQUARE_YPOS_0]", Q_MIN, Q_MIN, 10, 0.001): ba.bypass1(buffering, max(Q_MIN, ba.sAndH(touchsqsensor))) : si.smoo;                                      //value of the trill y square sensor for Q
 
 // Process  //////////////////////////////////////////////////
 START_NOTE = 130.81; // C2
@@ -2756,19 +2217,16 @@ freq = (START_NOTE * pow(2, (max(0, nokey) / 12)));
 gate = min(1, (nokey + 1));
 
 process = sy.dubDub(freq, ctfreq, q, gate) * 0.5;
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust21/exfaust21.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="trill_simple_polyphonic_keyboard">trill_simple_polyphonic_keyboard</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Simple synthetizer that use sy.dubDub of the standard Faust library.
@@ -2781,36 +2239,509 @@ process = sy.dubDub(freq, ctfreq, q, gate) * 0.5;
 //
 // this sample use :
 //  - 1 craft sensor for the 1 octave keyboard and some control touch
-//  - 1 square sensor for the control of the 2 Filter parameters cut off frequency &amp; Q
+//  - 1 square sensor for the control of the 2 Filter parameters cut off frequency & Q
 //
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 // Sensor Configuration //////////////////////////////////////////////////
-declare trill_mappings &quot;{ 'SQUARE' : {'0' : 40 } ; 'CRAFT' : {'0' : 48} }&quot;;             //i2c address for each trill sensor
-declare trill_settings &quot;{ 'CRAFT_0' : { 'prescaler' : 4 ; 'threshold' : 0.015 }}&quot;;      //sensibility settings for the crafts sensors
+declare trill_mappings "{ 'SQUARE' : {'0' : 40 } ; 'CRAFT' : {'0' : 48} }";             //i2c address for each trill sensor
+declare trill_settings "{ 'CRAFT_0' : { 'prescaler' : 4 ; 'threshold' : 0.015 }}";      //sensibility settings for the crafts sensors
 
 // Parameter Configuration //////////////////////////////////////////////////
 // Keyboard
-declare trill_keyboard &quot;{'CRAFT_0' : {'start_pin' : 15 ; 'end_pin' : 27 ; 'start_note' : {'C' : 2} }}&quot;; // the scale of the keyboard is chromatic by default. For another scale add the parameter 'scale' : {1 ; 1 ; 0.5 ; ...} with each space between the notes
+declare trill_keyboard "{'CRAFT_0' : {'start_pin' : 15 ; 'end_pin' : 27 ; 'start_note' : {'C' : 2} }}"; // the scale of the keyboard is chromatic by default. For another scale add the parameter 'scale' : {1 ; 1 ; 0.5 ; ...} with each space between the notes
 
-gate = button(&quot;gate&quot;);
-freq = nentry(&quot;freq[unit:Hz]&quot;, 440, 20, 20000, 1);
-gain = nentry(&quot;gain&quot;, 0.5, 0, 0.5, 0.01);          // Trill KEYBOARD
+gate = button("gate");
+freq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+gain = nentry("gain", 0.5, 0, 0.5, 0.01);          // Trill KEYBOARD
 
 // Filter
 CUTOFF_MIN = 350;
 Q_MIN = 0.8;
-touchsqsensor = (button(&quot;touch[TRILL:SQUARE_LVL_0]&quot;) &gt; 0.1);    //square sensor pressed
-buffering = (checkbox(&quot;buffering[TRILL:CRAFT_0 PIN 0]&quot;) == 0);  //activation of buffering of the filter's parameters values
-ctfreq = hslider(&quot;cutoff freq [TRILL:SQUARE_XPOS_0]&quot;, CUTOFF_MIN, CUTOFF_MIN, 2000, 0.1) : ba.bypass1(buffering, max(CUTOFF_MIN, ba.sAndH(touchsqsensor))) : si.smoo;       //value of the trill x square sensor for cut off frequency
-q = hslider(&quot;Q [TRILL:SQUARE_YPOS_0]&quot;, Q_MIN, Q_MIN, 10, 0.001): ba.bypass1(buffering, max(Q_MIN, ba.sAndH(touchsqsensor))) : si.smoo;                                      //value of the trill y square sensor for Q
+touchsqsensor = (button("touch[TRILL:SQUARE_LVL_0]") > 0.1);    //square sensor pressed
+buffering = (checkbox("buffering[TRILL:CRAFT_0 PIN 0]") == 0);  //activation of buffering of the filter's parameters values
+ctfreq = hslider("cutoff freq [TRILL:SQUARE_XPOS_0]", CUTOFF_MIN, CUTOFF_MIN, 2000, 0.1) : ba.bypass1(buffering, max(CUTOFF_MIN, ba.sAndH(touchsqsensor))) : si.smoo;       //value of the trill x square sensor for cut off frequency
+q = hslider("Q [TRILL:SQUARE_YPOS_0]", Q_MIN, Q_MIN, 10, 0.001): ba.bypass1(buffering, max(Q_MIN, ba.sAndH(touchsqsensor))) : si.smoo;                                      //value of the trill y square sensor for Q
 
 // Process  //////////////////////////////////////////////////
 process = sy.dubDub(freq, ctfreq, q, gate) * gain;
-</code></pre>
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="wavesynth_analog">WaveSynth_Analog</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_0 : Wave travelling
+// ANALOG_1 : LFO Frequency
+// ANALOG_2 : LFO Depth (wave travel modulation)
+// ANALOG_3 : Release
+//
+// MIDI:
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
+
+waveTravel = hslider("waveTravel[BELA: ANALOG_0]",0,0,1,0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[BELA: ANALOG_2]",0,0.,1,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[BELA: ANALOG_1]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[BELA: ANALOG_3]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+    with {
+        coef = 3.14159 * ((nb-1)*0.5);
+        soustraction = select2( position>0, 0, (position/(nb-1)) );
+    };
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+            + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+    with {
+        tablesize = 1024;
+        wt1 = WF(tablesize, 16);
+        wt2 = WF(tablesize, 8);
+        wt3 = WF(tablesize, 6);
+        wt4 = WF(tablesize, 4);
+        faze = int(os.phasor(tablesize,freq));
+    };
+
+process = wfosc(gFreq) * vol;
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/bela/exfaust22/exfaust22.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="wavesynth">WaveSynth</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 1 : LFO Depth (wave travel modulation)
+// CC 14 : LFO Frequency
+// CC 70 : Wave travelling
+//
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+// CC 72 : Release
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
+
+waveTravel = hslider("waveTravel [midi:ctrl]",0,0,1,0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[midi:ctrl 1]",0,0.,1,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[midi:ctrl 14]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out Amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+with {
+    coef = 3.14159 * ((nb-1)*0.5);
+    soustraction = select2(position>0, 0, (position/(nb-1)));
+};
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+                + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+with {
+    tablesize = 1024;
+    wt1 = WF(tablesize, 16);
+    wt2 = WF(tablesize, 8);
+    wt3 = WF(tablesize, 6);
+    wt4 = WF(tablesize, 4);
+    faze = int(os.phasor(tablesize,freq));
+};
+
+process = wfosc(gFreq) * vol;
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="wavesynth_fx_analog">WaveSynth_FX_Analog</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_0 : Wave travelling
+// ANALOG_1 : LFO Frequency
+// ANALOG_2 : LFO Depth (wave travel modulation)
+// ANALOG_3 : Release
+//
+// MIDI:
+// CC 73    : Attack
+// CC 76    : Decay
+// CC 77    : Sustain
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
+
+waveTravel = hslider("waveTravel[BELA: ANALOG_0]",0,0,1,0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[BELA: ANALOG_2]",0,0.,1,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[BELA: ANALOG_1]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[BELA: ANALOG_3]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0 ))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+    with {
+        coef = 3.14159 * ((nb-1)*0.5);
+        soustraction = select2( position>0, 0, (position/(nb-1)) );
+    };
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+                + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+    with {
+        tablesize = 1024;
+        wt1 = WF(tablesize, 16);
+        wt2 = WF(tablesize, 8);
+        wt3 = WF(tablesize, 6);
+        wt4 = WF(tablesize, 4);
+        faze = int(os.phasor(tablesize,freq));
+    };
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+//
+// Simple FX chaine build for a mono synthesizer.
+// It control general volume and pan.
+// FX Chaine is:
+//      Drive
+//      Flanger
+//      Reverberation
+//
+// This version use ANALOG IN to controle some of the parameters.
+// Other parameters continue to be available by MIDI or OSC.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_4 : Distortion Drive
+// ANALOG_5 : Flanger Dry/Wet
+// ANALOG_6 : Reverberation Dry/Wet
+// ANALOG_7 : Reverberation Room size
+//
+// MIDI:
+// CC 7 : Volume
+// CC 10 : Pan
+//
+// CC 13 : Flanger Delay
+// CC 13 : Flanger Delay
+// CC 94 : Flanger Feedback
+//
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+// 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
+
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[BELA: ANALOG_4]",0.3,0,1,0.001);
+
+// Flanger
+curdel  = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[BELA: ANALOG_5]",0.5,0,1,0.001);
+flanger = efx
+    with {
+        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+        efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+    };
+
+// Panoramic:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
+
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
+    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+    *(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[BELA: ANALOG_7]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[BELA: ANALOG_6]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+process = wfosc(gFreq) * vol;
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="wavesynth_fx">WaveSynth_FX</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 1     : LFO Depth (wave travel modulation)
+// CC 14    : LFO Frequency
+// CC 70    : Wave travelling
+//
+// CC 73    : Attack
+// CC 76    : Decay
+// CC 77    : Sustain
+// CC 72    : Release
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
+
+waveTravel = hslider("waveTravel [midi:ctrl ]",0,0,1,0.01);
+
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
+
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[midi:ctrl 1]",0,0.,1,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[midi:ctrl 14]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out Amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod ((1+(float(ba.time)*rang)/float(tablesize)), 4.0 ))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+    with {
+        coef = 3.14159 * ((nb-1)*0.5);
+        soustraction = select2(position>0, 0, (position/(nb-1)));
+    };
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+                + (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+    with {
+        tablesize = 1024;
+        wt1 = WF(tablesize, 16);
+        wt2 = WF(tablesize, 8);
+        wt3 = WF(tablesize, 6);
+        wt4 = WF(tablesize, 4);
+        faze = int(os.phasor(tablesize,freq));
+    };
+
+//#################################################################################################//
+//##################################### EFFECT SECTION ############################################//
+//#################################################################################################//
+// Simple FX chaine build for a mono synthesizer.
+// It control general volume and pan.
+// FX Chaine is:
+//      Drive
+//      Flanger
+//      Reverberation
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+// (All are available by OSC)
+//
+// CC 7 : Volume
+// CC 10 : Pan
+//
+// CC 92 : Distortion Drive
+//
+// CC 13 : Flanger Delay
+// CC 93 : Flanger Dry/Wet
+// CC 94 : Flanger Feedback
+//
+// CC 12 : Reverberation Room size
+// CC 91 : Reverberation Dry/Wet
+// CC 95 : Reverberation Damp
+// CC 90 : Reverberation Stereo Width
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// VOLUME:
+volFX = hslider("volume[midi:ctrl 7]",1,0,1,0.001);// Should be 7 according to MIDI CC norm.
+
+// EFFECTS /////////////////////////////////////////////
+drive = hslider("drive[midi:ctrl 92]",0.3,0,1,0.001);
+
+// Flanger
+curdel = hslider("flangDel[midi:ctrl 13]",4,0.001,10,0.001);
+fb = hslider("flangFeedback[midi:ctrl 94]",0.7,0,1,0.001);
+fldw = hslider("dryWetFlang[midi:ctrl 93]",0.5,0,1,0.001);
+flanger = efx
+    with {
+        fldel = (curdel + (os.lf_triangle(1) * 2) ) : min(10);
+        efx = _ <: _, pf.flanger_mono(10,fldel,1,fb,0) : dry_wet(fldw);
+    };
+
+// Pannoramique:
+panno = _ : sp.panner(hslider("pan[midi:ctrl 10]",0.5,0,1,0.001)) : _,_;
+
+// REVERB (from freeverb_demo)
+reverb = _,_ <: (*(g)*fixedgain, *(g)*fixedgain :
+    re.stereo_freeverb(combfeed, allpassfeed, damping, spatSpread)),
+    *(1-g), *(1-g) :> _,_
+    with {
+        scaleroom   = 0.28;
+        offsetroom  = 0.7;
+        allpassfeed = 0.5;
+        scaledamp   = 0.4;
+        fixedgain   = 0.1;
+        origSR = 44100;
+
+        damping = vslider("Damp[midi:ctrl 95]",0.5, 0, 1, 0.025)*scaledamp*origSR/ma.SR;
+        combfeed = vslider("RoomSize[midi:ctrl 12]", 0.7, 0, 1, 0.025)*scaleroom*origSR/ma.SR + offsetroom;
+        spatSpread = vslider("Stereo[midi:ctrl 90]",0.6,0,1,0.01)*46*ma.SR/origSR;
+        g = vslider("dryWetReverb[midi:ctrl 91]", 0.4, 0, 1, 0.001);
+        // (g = Dry/Wet)
+    };
+
+// Dry-Wet (from C. LEBRETON)
+dry_wet(dw,x,y) = wet*y + dry*x
+    with {
+        wet = 0.5*(dw+1.0);
+        dry = 1.0-wet;
+    };
+
+// ALL
+effect = _ *(volFX) : ef.cubicnl_nodc(drive, 0.1) : flanger : panno : reverb;
+
+process = wfosc(gFreq) * vol;
+
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -2836,16 +2767,13 @@ process = sy.dubDub(freq, ctfreq, q, gate) * gain;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -2892,5 +2820,6 @@ process = sy.dubDub(freq, ctfreq, q, gate) * gain;
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

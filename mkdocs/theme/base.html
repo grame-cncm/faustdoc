@@ -192,7 +192,7 @@
         {% if 'search' in config['plugins'] %}{%- include "search-modal.html" %}{% endif %}
         {%- include "keyboard-modal.html" %}
 
-        <script src="{{ 'faust-web-component.js'|url }}" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>
 {% if page and page.is_homepage %}

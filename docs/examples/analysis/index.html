@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/examples/analysis/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title> analysis  - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -314,11 +314,11 @@
             
             <li class="nav-item" data-level="1"><a href="#analysis" class="nav-link">analysis</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#fft" class="nav-link">FFT</a>
+            <li class="nav-item" data-level="2"><a href="#dbmeter" class="nav-link">dbmeter</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#dbmeter" class="nav-link">dbmeter</a>
+            <li class="nav-item" data-level="2"><a href="#fft" class="nav-link">FFT</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -342,23 +342,53 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="analysis">analysis</h1>
-<h2 id="fft">FFT</h2>
+<h2 id="dbmeter">dbmeter</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
+declare name        "dbmeter";
+declare version     "1.0";
+declare author      "Grame";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2006";
+
+//-------------------------------------------------
+// A dB Vumeter
+//-------------------------------------------------
+
+import("stdfaust.lib");
+
+process = hgroup("8 channels dB meter", par(i,8, vgroup("%i", vmeter(i) : null)))
+with {
+    null(x) = attach(0,x);
+    envelop = abs : max(ba.db2linear(-70)) : ba.linear2db : min(10)  : max ~ -(80.0/ma.SR);
+    vmeter(i, x) = attach(x, envelop(x) : vbargraph("chan %i[unit:dB]", -70, 10));
+    hmeter(i, x) = attach(x, envelop(x) : hbargraph("chan %i[unit:dB]", -70, 10));
+};
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="fft">FFT</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
+
 // Radix 2 FFT, decimation in time, real and imag parts interleaved
 
-declare name    &quot;FFT&quot;; // Faust Fourier Transform :-)
-declare author  &quot;JOS&quot;;
-declare license &quot;STK-4.3&quot;;
+declare name    "FFT"; // Faust Fourier Transform :-)
+declare author  "JOS";
+declare license "STK-4.3";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 N=32; // FFT size (power of 2)
 // Number of frequency bins (including dc and SR/2) is N/2+1
 
-No2 = N&gt;&gt;1;
+No2 = N>>1;
 signal = amp * cosine with {
   cosine = select2(k==0,
          select2(k==No2,
@@ -367,139 +397,94 @@ signal = amp * cosine with {
             ),
            1.0); // make sure phase is zero (freq jumps around)
   f(k) = float(k) * ma.SR / float(N); // only test FFT bin frequencies
-  k = hslider(&quot;[2] FFT Bin Number&quot;,N/4,0,No2,0.001) : int &lt;: _,dpy : attach;
-  dpy = hbargraph(&quot;[3] Measured FFT Bin Number&quot;,0,No2);
-  amp = hslider(&quot;[4] Amplitude&quot;,0.1,0,1,0.001);
+  k = hslider("[2] FFT Bin Number",N/4,0,No2,0.001) : int <: _,dpy : attach;
+  dpy = hbargraph("[3] Measured FFT Bin Number",0,No2);
+  amp = hslider("[4] Amplitude",0.1,0,1,0.001);
 };
 
-process = signal : dm.fft_spectral_level_demo(N) &lt;: _,_;
+process = signal : dm.fft_spectral_level_demo(N) <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="dbmeter">dbmeter</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
-
-<pre><code>
-declare name        &quot;dbmeter&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2006&quot;;
-
-//-------------------------------------------------
-// A dB Vumeter
-//-------------------------------------------------
-
-import(&quot;stdfaust.lib&quot;);
-
-process = hgroup(&quot;8 channels dB meter&quot;, par(i,8, vgroup(&quot;%i&quot;, vmeter(i) : null)))
-with {
-    null(x) = attach(0,x);
-    envelop = abs : max(ba.db2linear(-70)) : ba.linear2db : min(10)  : max ~ -(80.0/ma.SR);
-    vmeter(i, x) = attach(x, envelop(x) : vbargraph(&quot;chan %i[unit:dB]&quot;, -70, 10));
-    hmeter(i, x) = attach(x, envelop(x) : hbargraph(&quot;chan %i[unit:dB]&quot;, -70, 10));
-};
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="spectrallevel">spectralLevel</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;spectralLevel&quot;;
-declare version &quot;0.0&quot;;
-declare author &quot;JOS, revised by RM&quot;;
-declare description &quot;Demonstrates mth_octave_spectral_level in a standalone GUI.&quot;;
+declare name "spectralLevel";
+declare version "0.0";
+declare author "JOS, revised by RM";
+declare description "Demonstrates mth_octave_spectral_level in a standalone GUI.";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = dm.spectral_level_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="spectraltiltlab">spectralTiltLab</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 // example exercising filters.lib's spectral_tilt_demo
 
-declare name &quot;spectralTiltLab&quot;;
+declare name "spectralTiltLab";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 N = 10; // Number of pole-zero pairs to use
 
 process = sig(dm.sawtooth_demo) 
      : stg(ba.bypass1(bp,dm.spectral_tilt_demo(N)))
-    &lt;: sag(dm.spectral_level_demo) 
+    <: sag(dm.spectral_level_demo) 
 with {
-    bp = stg(checkbox(&quot;[0] Bypass Spectral Tilt&quot;));
+    bp = stg(checkbox("[0] Bypass Spectral Tilt"));
     stg(x) = vgroup(
-     &quot;[1] Spectral Tilt Filter [tooltip: See Faust's filters.lib for spectral_tilt_demo]&quot;,x);
+     "[1] Spectral Tilt Filter [tooltip: See Faust's filters.lib for spectral_tilt_demo]",x);
     sig(x) = vgroup(
-     &quot;[2] Test Signal [tooltip: See Faust's oscillator.lib for sawtooth_demo]&quot;,x);
+     "[2] Test Signal [tooltip: See Faust's oscillator.lib for sawtooth_demo]",x);
     sag(x) = vgroup(
-     &quot;[4] Spectrum Analyzer [tooltip: See Faust's filters.lib for spectral_level_demo]&quot;,x);
+     "[4] Spectrum Analyzer [tooltip: See Faust's filters.lib for spectral_level_demo]",x);
 };
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="vumeter">vumeter</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name        &quot;vumeter&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2006&quot;;
+declare name        "vumeter";
+declare version     "1.0";
+declare author      "Grame";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2006";
 
 //-------------------------------------------------
 // Simple vumeter
 //-------------------------------------------------
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = hmeter(0), hmeter(1)
 with {
-    vmeter(i, x) = attach(x, envelop(x) : vbargraph(&quot;chan %i[2][unit:dB]&quot;, -70, +5));
-    hmeter(i, x) = attach(x, envelop(x) : hbargraph(&quot;chan %i[2][unit:dB]&quot;, -70, +5));
+    vmeter(i, x) = attach(x, envelop(x) : vbargraph("chan %i[2][unit:dB]", -70, +5));
+    hmeter(i, x) = attach(x, envelop(x) : hbargraph("chan %i[2][unit:dB]", -70, +5));
     envelop = abs : max ~ -(1.0/ma.SR) : max(ba.db2linear(-70)) : ba.linear2db;
 };
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/analysis/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -525,16 +510,13 @@ with {
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -581,5 +563,6 @@ with {
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

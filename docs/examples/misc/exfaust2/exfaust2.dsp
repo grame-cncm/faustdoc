@@ -1,26 +1,38 @@
 
-declare name        "capture";
-declare version     "1.0";
-declare author      "Grame";
-declare license     "BSD";
-declare copyright   "(c)GRAME 2006";
 
 //-------------------------------------------------
-//       Capture : record up to 8s of sound and
-//        playback the recorded sound in loop
+//    A simple, fully generative
+//    drum machine
 //-------------------------------------------------
 
 import("stdfaust.lib");
 
-B = button("Capture");    // Capture sound while pressed
-I = int(B);               // convert button signal from float to integer
-R = (I-I') <= 0;          // Reset capture when button is pressed
-D = (+(I):*(R))~_;        // Compute capture duration while button is pressed: 0..NNNN0..MMM
+drumkit(gate, ks, ss, hs) = k_seq, s_seq, h_seq :> /(3)
+    with {
+        N = outputs(ks);
+        env = en.ar(0.001, 0.05);
+        kick(g) = g : env : *(os.osc(100));
+        snare(g) = g : env : *(no.noise : fi.low_shelf(-60, 3000));
+        hihat(g) = g : env : *(no.noise : fi.highpass(3, 10000));
+        sequencer(t) = t : ba.selectn(N, gate : ba.pulse_countup_loop(N - 1, 1)) : *(gate : mem);
+        k_seq = sequencer(ks) : kick;
+        s_seq = sequencer(ss) : snare;
+        h_seq = sequencer(hs) : hihat;
+    };
 
-capture = *(B) : (+ : de.delay(8*65536, D-1)) ~ *(1.0-B);
+drumkit_ui(n) = drumkit(attach(gate, nn), ks, ss, hs)
+    with {
+        gate = ba.pulse(ba.tempo(bpm));
+        ks = par(i, n, checkbox("v:Drum kit/h:[0]kick/%2i"));
+        ss = par(i, n, checkbox("v:Drum kit/h:[1]snare/%2i"));
+        hs = par(i, n, checkbox("v:Drum kit/h:[2]hihat/%2i"));
+        bpm = hslider("v:Drum kit/[4]BPM", 350, 10, 800, 1);
+        mon = par(i, n, hbargraph("v:Drum kit/h:[3]seq/%2i[style:led]", 0, 1));
+        nn = 1 : ba.selectoutn(n, gate : ba.pulse_countup_loop(n - 1, 1)) : mon :> _;
+    };
 
-level = hslider("level (db)", 0, -96, 4, 0.1) : ba.db2linear : si.smoo;
+drumkit_ui_demo = drumkit_ui(15) <: (_, _);
 
-process = vgroup("Audio Capture", capture : *(level));
+process = drumkit_ui_demo;
 
 

@@ -1,7 +1,7 @@
 
-declare name "oberheimBSF";
-declare description "Demonstration of the Oberheim generic multi-outputs Filter";
-declare author "Eric Tarr, GRAME";
+declare name "oberheimBPF";
+declare description "Demonstration of the Oberheim Band-Pass Filter";
+declare author "Eric Tarr";
 
 import("stdfaust.lib");
 
@@ -11,6 +11,5 @@ switch = checkbox("Saw/Noise");
 
 inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :> _; 
 
-// The BSF, BPF, HPF and LPF outputs are produced
-process = inputSignal : ve.oberheim(normFreq,Q);
+process = inputSignal : ve.oberheimBPF(normFreq,Q) <:_,_;
 

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/examples/smartKeyboard/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title> smartKeyboard  - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -382,11 +382,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#violin" class="nav-link">violin</a>
+            <li class="nav-item" data-level="2"><a href="#violin2" class="nav-link">violin2</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#violin2" class="nav-link">violin2</a>
+            <li class="nav-item" data-level="2"><a href="#violin" class="nav-link">violin</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -405,12 +405,12 @@
 <h2 id="acguitar">acGuitar</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //############################### acGuitar.dsp #################################
 // Faust instrument specifically designed for faust2smartkeyb where 6 virtual
 // nylon strings can be strummed and plucked using a dedicated keyboard. The
-// extra &quot;strumming keyboard&quot; could be easily replaced by an external strumming
+// extra "strumming keyboard" could be easily replaced by an external strumming
 // interface while the touch screen could keep being used to change the pitch
 // of the strings.
 //
@@ -437,7 +437,7 @@
 // MIT Licence: https://opensource.org/licenses/MIT
 //##############################################################################
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'7',
     'Max Keyboard Polyphony':'0',
     'Rounding Mode':'2',
@@ -468,59 +468,56 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 6 - Key 3 - Label':'S3',
     'Keyboard 6 - Key 4 - Label':'S4',
     'Keyboard 6 - Key 5 - Label':'S5'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // SMARTKEYBOARD PARAMS
-kbfreq(0) = hslider(&quot;kb0freq&quot;,164.8,20,10000,0.01);
-kbbend(0) = hslider(&quot;kb0bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(1) = hslider(&quot;kb1freq&quot;,220,20,10000,0.01);
-kbbend(1) = hslider(&quot;kb1bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(2) = hslider(&quot;kb2freq&quot;,293.7,20,10000,0.01);
-kbbend(2) = hslider(&quot;kb2bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(3) = hslider(&quot;kb3freq&quot;,392,20,10000,0.01);
-kbbend(3) = hslider(&quot;kb3bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(4) = hslider(&quot;kb4freq&quot;,493.9,20,10000,0.01);
-kbbend(4) = hslider(&quot;kb4bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(5) = hslider(&quot;kb5freq&quot;,659.2,20,10000,0.01);
-kbbend(5) = hslider(&quot;kb5bend&quot;,1,ma.EPSILON,10,0.01);
-kb6kstatus(0) = hslider(&quot;kb6k0status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
-kb6kstatus(1) = hslider(&quot;kb6k1status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
-kb6kstatus(2) = hslider(&quot;kb6k2status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
-kb6kstatus(3) = hslider(&quot;kb6k3status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
-kb6kstatus(4) = hslider(&quot;kb6k4status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
-kb6kstatus(5) = hslider(&quot;kb6k5status&quot;,0,0,1,1) &lt;: ==(1) | ==(4) : int;
+kbfreq(0) = hslider("kb0freq",164.8,20,10000,0.01);
+kbbend(0) = hslider("kb0bend",1,ma.EPSILON,10,0.01);
+kbfreq(1) = hslider("kb1freq",220,20,10000,0.01);
+kbbend(1) = hslider("kb1bend",1,ma.EPSILON,10,0.01);
+kbfreq(2) = hslider("kb2freq",293.7,20,10000,0.01);
+kbbend(2) = hslider("kb2bend",1,ma.EPSILON,10,0.01);
+kbfreq(3) = hslider("kb3freq",392,20,10000,0.01);
+kbbend(3) = hslider("kb3bend",1,ma.EPSILON,10,0.01);
+kbfreq(4) = hslider("kb4freq",493.9,20,10000,0.01);
+kbbend(4) = hslider("kb4bend",1,ma.EPSILON,10,0.01);
+kbfreq(5) = hslider("kb5freq",659.2,20,10000,0.01);
+kbbend(5) = hslider("kb5bend",1,ma.EPSILON,10,0.01);
+kb6kstatus(0) = hslider("kb6k0status",0,0,1,1) <: ==(1) | ==(4) : int;
+kb6kstatus(1) = hslider("kb6k1status",0,0,1,1) <: ==(1) | ==(4) : int;
+kb6kstatus(2) = hslider("kb6k2status",0,0,1,1) <: ==(1) | ==(4) : int;
+kb6kstatus(3) = hslider("kb6k3status",0,0,1,1) <: ==(1) | ==(4) : int;
+kb6kstatus(4) = hslider("kb6k4status",0,0,1,1) <: ==(1) | ==(4) : int;
+kb6kstatus(5) = hslider("kb6k5status",0,0,1,1) <: ==(1) | ==(4) : int;
 
 // MODEL PARAMETERS
 // strings length
 sl(i) = kbfreq(i)*kbbend(i) : pm.f2l : si.smoo;
 // pluck position is controlled by the x axis of the accel
 pluckPosition =
-    hslider(&quot;pluckPosition[acc: 1 0 -10 0 10]&quot;,0.5,0,1,0.01) : si.smoo;
+    hslider("pluckPosition[acc: 1 0 -10 0 10]",0.5,0,1,0.01) : si.smoo;
 
 // ASSEMBLING MODELS
 // number of strings
 nStrings = 6;
 guitar = par(i,nStrings,
-    kb6kstatus(i) : ba.impulsify : // using &quot;raw&quot; impulses to drive the models
-    pm.nylonGuitarModel(sl(i),pluckPosition)) :&gt; _;
+    kb6kstatus(i) : ba.impulsify : // using "raw" impulses to drive the models
+    pm.nylonGuitarModel(sl(i),pluckPosition)) :> _;
 
-process = guitar &lt;: _,_;
+process = guitar <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="bells">bells</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################ bells.dsp ###################################
 // Faust instrument specifically designed for faust2smartkeyb where the
 // physical models of 4 different bells can be played using screen pads. The
@@ -549,7 +546,7 @@ process = guitar &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //##############################################################################
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'2',
     'Max Keyboard Polyphony':'0',
     'Keyboard 0 - Number of Keys':'2',
@@ -568,17 +565,17 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 0 - Key 1 - Label':'French Bell',
     'Keyboard 1 - Key 0 - Label':'German Bell',
     'Keyboard 1 - Key 1 - Label':'Russian Bell'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // SMARTKEYBOARD PARAMS
-kb0k0status = hslider(&quot;kb0k0status&quot;,0,0,1,1) : min(1) : int;
-kb0k1status = hslider(&quot;kb0k1status&quot;,0,0,1,1) : min(1) : int;
-kb1k0status = hslider(&quot;kb1k0status&quot;,0,0,1,1) : min(1) : int;
-kb1k1status = hslider(&quot;kb1k1status&quot;,0,0,1,1) : min(1) : int;
-x = hslider(&quot;x&quot;,1,0,1,0.001);
-y = hslider(&quot;y&quot;,1,0,1,0.001);
+kb0k0status = hslider("kb0k0status",0,0,1,1) : min(1) : int;
+kb0k1status = hslider("kb0k1status",0,0,1,1) : min(1) : int;
+kb1k0status = hslider("kb1k0status",0,0,1,1) : min(1) : int;
+kb1k1status = hslider("kb1k1status",0,0,1,1) : min(1) : int;
+x = hslider("x",1,0,1,0.001);
+y = hslider("y",1,0,1,0.001);
 
 // MODEL PARAMETERS
 strikeCutoff = 6500;
@@ -598,23 +595,20 @@ bells =
     (kb0k0status : pm.strikeModel(10,strikeCutoff,strikeSharpness,strikeGain) : pm.englishBellModel(nModes,exPos,t60,1,3)) +
     (kb0k1status : pm.strikeModel(10,strikeCutoff,strikeSharpness,strikeGain) : pm.frenchBellModel(nModes,exPos,t60,1,3)) +
     (kb1k0status : pm.strikeModel(10,strikeCutoff,strikeSharpness,strikeGain) : pm.germanBellModel(nModes,exPos,t60,1,2.5)) +
-    (kb1k1status : pm.strikeModel(10,strikeCutoff,strikeSharpness,strikeGain) : pm.russianBellModel(nModes,exPos,t60,1,3)) :&gt; *(0.2);
+    (kb1k1status : pm.strikeModel(10,strikeCutoff,strikeSharpness,strikeGain) : pm.russianBellModel(nModes,exPos,t60,1,3)) :> *(0.2);
 
-process = bells &lt;: _,_;
+process = bells <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="bowed">bowed</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //##################################### bowed.dsp ########################################
 // Faust instrument specifically designed for faust2smartkeyb implementing a
 // non-polyphonic synthesizer (e.g., physical model; etc.) using a combination of
@@ -649,7 +643,7 @@ process = bells &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'5',
     'Max Keyboard Polyphony':'0',
     'Rounding Mode':'1',
@@ -673,25 +667,25 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 3 - Lowest Key':'76',
     'Keyboard 4 - Piano Keyboard':'0',
     'Keyboard 4 - Key 0 - Label':'Bow'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // parameters
-f = hslider(&quot;freq&quot;,400,50,2000,0.01);
-bend = hslider(&quot;bend&quot;,1,0,10,0.01);
-keyboard = hslider(&quot;keyboard&quot;,0,0,5,1) : int;
-key = hslider(&quot;key&quot;,0,0,18,1) : int;
-x = hslider(&quot;x&quot;,0.5,0,1,0.01) : si.smoo;
-y = hslider(&quot;y&quot;,0,0,1,0.01) : si.smoo;
+f = hslider("freq",400,50,2000,0.01);
+bend = hslider("bend",1,0,10,0.01);
+keyboard = hslider("keyboard",0,0,5,1) : int;
+key = hslider("key",0,0,18,1) : int;
+x = hslider("x",0.5,0,1,0.01) : si.smoo;
+y = hslider("y",0,0,1,0.01) : si.smoo;
 
 // mapping
 freq = f*bend;
 // dirty motion tracker
 velocity = x-x' : abs : an.amp_follower_ar(0.1,1) : *(8000) : min(1);
 
-// 4 &quot;strings&quot;
-synthSet = par(i,4,synth(localFreq(i),velocity)) :&gt; _
+// 4 "strings"
+synthSet = par(i,4,synth(localFreq(i),velocity)) :> _
 with{
     localFreq(i) = freq : ba.sAndH(keyboard == i) : si.smoo;
     synth(freq,velocity) = sy.fm((freq,freq + freq*modFreqRatio),index*velocity)*velocity
@@ -701,20 +695,17 @@ with{
     };
 };
 
-process = synthSet &lt;: _,_;
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+process = synthSet <: _,_;
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="brass">brass</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //############################### brass.dsp ###################################
 // Faust instrument specifically designed for faust2smartkeyb where a
 // trumpet physical model is controlled using some of the built-in sensors of
@@ -743,7 +734,7 @@ process = synthSet &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //##############################################################################
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'2',
     'Max Keyboard Polyphony':'0',
     'Keyboard 0 - Number of Keys':'1',
@@ -759,31 +750,31 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 1 - Key 0 - Label':'P1',
     'Keyboard 1 - Key 1 - Label':'P2',
     'Keyboard 1 - Key 2 - Label':'P3'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // SMARTKEYBOARD PARAMS
-kb0k0x = hslider(&quot;kb0k0x&quot;,0,0,1,1);
-kb1k0status = hslider(&quot;kb1k0status&quot;,0,0,1,1) : min(1) : int;
-kb1k1status = hslider(&quot;kb1k1status&quot;,0,0,1,1) : min(1) : int;
-kb1k2status = hslider(&quot;kb1k2status&quot;,0,0,1,1) : min(1) : int;
+kb0k0x = hslider("kb0k0x",0,0,1,1);
+kb1k0status = hslider("kb1k0status",0,0,1,1) : min(1) : int;
+kb1k1status = hslider("kb1k1status",0,0,1,1) : min(1) : int;
+kb1k2status = hslider("kb1k2status",0,0,1,1) : min(1) : int;
 
 // MODEL PARAMETERS
 // pressure is controlled by accelerometer
-pressure = hslider(&quot;pressure[acc: 1 1 -10 0 10]&quot;,0,0,1,0.01) : si.smoo;
+pressure = hslider("pressure[acc: 1 1 -10 0 10]",0,0,1,0.01) : si.smoo;
 breathGain = 0.005; breathCutoff = 2000;
 vibratoFreq = 5; vibratoGain = 0;
 //pitch when no pistons are pushed
 basePitch = 48; // C4
 // calculate pitch shift in function of piston combination
 pitchShift =
-  ((kb1k0status == 0) &amp; (kb1k1status == 1) &amp; (kb1k2status == 0))*(1) +
-  ((kb1k0status == 1) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0))*(2) +
-  ((kb1k0status == 1) &amp; (kb1k1status == 1) &amp; (kb1k2status == 0))*(3) +
-  ((kb1k0status == 0) &amp; (kb1k1status == 1) &amp; (kb1k2status == 1))*(4) +
-  ((kb1k0status == 1) &amp; (kb1k1status == 0) &amp; (kb1k2status == 1))*(5) +
-  ((kb1k0status == 1) &amp; (kb1k1status == 1) &amp; (kb1k2status == 1))*(6);
+  ((kb1k0status == 0) & (kb1k1status == 1) & (kb1k2status == 0))*(1) +
+  ((kb1k0status == 1) & (kb1k1status == 0) & (kb1k2status == 0))*(2) +
+  ((kb1k0status == 1) & (kb1k1status == 1) & (kb1k2status == 0))*(3) +
+  ((kb1k0status == 0) & (kb1k1status == 1) & (kb1k2status == 1))*(4) +
+  ((kb1k0status == 1) & (kb1k1status == 0) & (kb1k2status == 1))*(5) +
+  ((kb1k0status == 1) & (kb1k1status == 1) & (kb1k2status == 1))*(6);
 // tube length is calculated based on piston combination
 tubeLength = basePitch-pitchShift : ba.midikey2hz : pm.f2l : si.smoo;
 // lips tension is controlled using pad on screen
@@ -796,21 +787,18 @@ model =
     pm.blower(pressure,breathGain,breathCutoff,vibratoFreq,vibratoGain) :
   pm.brassModel(tubeLength,lipsTension,mute);
 
-process = model &lt;: _,_;
+process = model <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="clarinet">clarinet</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //############################### clarinet.dsp #################################
 // Faust instrument specifically designed for faust2smartkeyb where a
 // clarinet physical model is controlled by an interface implementing
@@ -841,7 +829,7 @@ process = model &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //##############################################################################
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'2',
     'Max Keyboard Polyphony':'0',
     'Keyboard 0 - Number of Keys':'4',
@@ -854,63 +842,63 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 1 - Send Key Status':'1',
     'Keyboard 0 - Key 3 - Label':'O+',
     'Keyboard 1 - Key 4 - Label':'O-'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // SMARTKEYBOARD PARAMS
-kb0k0status = hslider(&quot;kb0k0status&quot;,0,0,1,1) : min(1) : int;
-kb0k1status = hslider(&quot;kb0k1status&quot;,0,0,1,1) : min(1) : int;
-kb0k2status = hslider(&quot;kb0k2status&quot;,0,0,1,1) : min(1) : int;
-kb0k3status = hslider(&quot;kb0k3status&quot;,0,0,1,1) : min(1) : int;
-kb1k0status = hslider(&quot;kb1k0status&quot;,0,0,1,1) : min(1) : int;
-kb1k1status = hslider(&quot;kb1k1status&quot;,0,0,1,1) : min(1) : int;
-kb1k2status = hslider(&quot;kb1k2status&quot;,0,0,1,1) : min(1) : int;
-kb1k3status = hslider(&quot;kb1k3status&quot;,0,0,1,1) : min(1) : int;
-kb1k4status = hslider(&quot;kb1k4status&quot;,0,0,1,1) : min(1) : int;
+kb0k0status = hslider("kb0k0status",0,0,1,1) : min(1) : int;
+kb0k1status = hslider("kb0k1status",0,0,1,1) : min(1) : int;
+kb0k2status = hslider("kb0k2status",0,0,1,1) : min(1) : int;
+kb0k3status = hslider("kb0k3status",0,0,1,1) : min(1) : int;
+kb1k0status = hslider("kb1k0status",0,0,1,1) : min(1) : int;
+kb1k1status = hslider("kb1k1status",0,0,1,1) : min(1) : int;
+kb1k2status = hslider("kb1k2status",0,0,1,1) : min(1) : int;
+kb1k3status = hslider("kb1k3status",0,0,1,1) : min(1) : int;
+kb1k4status = hslider("kb1k4status",0,0,1,1) : min(1) : int;
 
 // MODEL PARAMETERS
-reedStiffness = hslider(&quot;reedStiffness[acc: 1 1 -10 0 10]&quot;,0,0,1,0.01) : si.smoo;
+reedStiffness = hslider("reedStiffness[acc: 1 1 -10 0 10]",0,0,1,0.01) : si.smoo;
 basePitch = 73; // C#4
-pitchShift = // calculate pitch shfit in function of &quot;keys&quot; combination
-  ((kb0k0status == 0) &amp; (kb0k1status == 1) &amp; (kb0k2status == 0) &amp;
-        (kb1k0status == 0) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0) &amp;
+pitchShift = // calculate pitch shfit in function of "keys" combination
+  ((kb0k0status == 0) & (kb0k1status == 1) & (kb0k2status == 0) &
+        (kb1k0status == 0) & (kb1k1status == 0) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-1) + // C
-    ((kb0k0status == 1) &amp; (kb0k1status == 0) &amp; (kb0k2status == 0) &amp;
-        (kb1k0status == 0) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 0) & (kb0k2status == 0) &
+        (kb1k0status == 0) & (kb1k1status == 0) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-2) + // B
-    ((kb0k0status == 1) &amp; (kb0k1status == 0) &amp; (kb0k2status == 1) &amp;
-        (kb1k0status == 0) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 0) & (kb0k2status == 1) &
+        (kb1k0status == 0) & (kb1k1status == 0) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-3) + // Bb
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 0) &amp;
-        (kb1k0status == 0) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 0) &
+        (kb1k0status == 0) & (kb1k1status == 0) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-4) + // A
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 0) &amp;
-        (kb1k0status == 1) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 0) &
+        (kb1k0status == 1) & (kb1k1status == 0) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-5) + // G#
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 1) &amp;
-        (kb1k0status == 0) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 1) &
+        (kb1k0status == 0) & (kb1k1status == 0) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-6) + // G
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 1) &amp;
-        (kb1k0status == 0) &amp; (kb1k1status == 1) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 1) &
+        (kb1k0status == 0) & (kb1k1status == 1) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-7) + // F#
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 1) &amp;
-        (kb1k0status == 1) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 1) &
+        (kb1k0status == 1) & (kb1k1status == 0) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-8) + // F
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 1) &amp;
-        (kb1k0status == 1) &amp; (kb1k1status == 1) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 1) &
+        (kb1k0status == 1) & (kb1k1status == 1) & (kb1k2status == 0) &
         (kb1k3status == 0))*(-9) + // E
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 1) &amp;
-        (kb1k0status == 1) &amp; (kb1k1status == 1) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 1) &
+        (kb1k0status == 1) & (kb1k1status == 1) & (kb1k2status == 0) &
         (kb1k3status == 1))*(-10) + // Eb
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 1) &amp;
-        (kb1k0status == 1) &amp; (kb1k1status == 1) &amp; (kb1k2status == 1) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 1) &
+        (kb1k0status == 1) & (kb1k1status == 1) & (kb1k2status == 1) &
         (kb1k3status == 0))*(-11) + // D
-    ((kb0k0status == 0) &amp; (kb0k1status == 0) &amp; (kb0k2status == 0) &amp;
-        (kb1k0status == 0) &amp; (kb1k1status == 0) &amp; (kb1k2status == 0) &amp;
+    ((kb0k0status == 0) & (kb0k1status == 0) & (kb0k2status == 0) &
+        (kb1k0status == 0) & (kb1k1status == 0) & (kb1k2status == 0) &
         (kb1k3status == 1))*(-12) + // C#
-    ((kb0k0status == 1) &amp; (kb0k1status == 1) &amp; (kb0k2status == 1) &amp;
-        (kb1k0status == 1) &amp; (kb1k1status == 1) &amp; (kb1k2status == 1) &amp;
+    ((kb0k0status == 1) & (kb0k1status == 1) & (kb0k2status == 1) &
+        (kb1k0status == 1) & (kb1k1status == 1) & (kb1k2status == 1) &
         (kb1k3status == 1))*(-13); // C
 octaveShiftUp = +(kb0k3status : ba.impulsify)~_; // counting up
 octaveShiftDown = +(kb1k4status : ba.impulsify)~_; // counting down
@@ -923,23 +911,20 @@ bellOpening = 0.5;
 model(pressure) = pm.clarinetModel(tubeLength,pressure,reedStiffness,bellOpening);
 
 // pressure is estimated from mic signal
-process = an.amp_follower_ud(0.02,0.02)*0.7 : model &lt;: _,_;
+process = an.amp_follower_ud(0.02,0.02)*0.7 : model <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="crazyguiro">crazyGuiro</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################### crazyGuiro.dsp #####################################
-// A simple smart phone &quot;Guiro&quot; where the touch screen is used to drive the instrument and
+// A simple smart phone "Guiro" where the touch screen is used to drive the instrument and
 // select its pitch and where the x and y axis of the accelerometer control the
 // resonance properties of the instrument.
 //
@@ -970,14 +955,14 @@ process = an.amp_follower_ud(0.02,0.02)*0.7 : model &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 
 //========================= Smart Keyboard Configuration =================================
 // 8 keyboards, each has 16 keys, none of them display key names.
 //========================================================================================
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'8',
     'Keyboard 0 - Number of Keys':'16',
     'Keyboard 1 - Number of Keys':'16',
@@ -995,7 +980,7 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 5 - Piano Keyboard':'0',
     'Keyboard 6 - Piano Keyboard':'0',
     'Keyboard 7 - Piano Keyboard':'0'
-}&quot;;
+}";
 
 
 //================================ Instrument Parameters =================================
@@ -1003,15 +988,15 @@ declare interface &quot;SmartKeyboard{
 //========================================================================================
 
 // the current keyboard
-keyboard = hslider(&quot;keyboard&quot;,0,0,2,1);
+keyboard = hslider("keyboard",0,0,2,1);
 // the current key of the current keyboard
-key = hslider(&quot;key&quot;,0,0,2,1);
+key = hslider("key",0,0,2,1);
 // the wet factor of the reverb
-wet = hslider(&quot;wet[acc: 0 0 -10 0 10]&quot;,0,0,1,0.01);
+wet = hslider("wet[acc: 0 0 -10 0 10]",0,0,1,0.01);
 // the resonance factor of the reverb
-res = hslider(&quot;res[acc: 1 0 -10 0 10]&quot;,0.5,0,1,0.01);
+res = hslider("res[acc: 1 0 -10 0 10]",0.5,0,1,0.01);
 // smart keyboard gate parameter
-gate = button(&quot;gate&quot;);
+gate = button("gate");
 
 
 //=================================== Parameters Mapping =================================
@@ -1031,23 +1016,20 @@ q = 8;
 //============================================ DSP =======================================
 //========================================================================================
 
-reverb(wet,res)  =  _ &lt;: *(1-wet),(*(wet) : re.mono_freeverb(res, 0.5, 0.5, 0)) :&gt; _;
+reverb(wet,res)  =  _ <: *(1-wet),(*(wet) : re.mono_freeverb(res, 0.5, 0.5, 0)) :> _;
 
-process = sy.popFilterDrum(drumResFreq,q,gate) : reverb(wet,res) &lt;: _,_;
+process = sy.popFilterDrum(drumResFreq,q,gate) : reverb(wet,res) <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="drums">drums</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //##################################### drums.dsp ########################################
 // Faust instrument specifically designed for faust2smartkeyb where 3 drums can
 // be controlled using pads. The X/Y postion of fingers is detected on each key
@@ -1081,7 +1063,7 @@ process = sy.popFilterDrum(drumResFreq,q,gate) : reverb(wet,res) &lt;: _,_;
 // Static mode is used so that keys don't change color when touched
 // Note labels are hidden
 // Piano Keyboard mode is deactivated so all the keys look the same
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'2',
     'Keyboard 0 - Number of Keys':'2',
     'Keyboard 1 - Number of Keys':'1',
@@ -1096,16 +1078,16 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 0 - Key 0 - Label':'High',
     'Keyboard 0 - Key 1 - Label':'Mid',
     'Keyboard 1 - Key 0 - Label':'Low'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // standard parameters
-gate = button(&quot;gate&quot;);
-x = hslider(&quot;x&quot;,1,0,1,0.001);
-y = hslider(&quot;y&quot;,1,0,1,0.001);
-keyboard = hslider(&quot;keyboard&quot;,0,0,1,1) : int;
-key = hslider(&quot;key&quot;,0,0,1,1) : int;
+gate = button("gate");
+x = hslider("x",1,0,1,0.001);
+y = hslider("y",1,0,1,0.001);
+keyboard = hslider("keyboard",0,0,1,1) : int;
+key = hslider("key",0,0,1,1) : int;
 
 drumModel = pm.djembe(rootFreq,exPos,strikeSharpness,gain,gate)
 with{
@@ -1121,21 +1103,18 @@ with{
     gain = 2;
 };
 
-process = drumModel &lt;: _,_;
+process = drumModel <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="dubdub">dubDub</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################### dubDub.dsp #####################################
 // A simple smartphone abstract instrument than can be controlled using the touch
 // screen and the accelerometers of the device.
@@ -1164,22 +1143,22 @@ process = drumModel &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-declare name &quot;dubDub&quot;;
+declare name "dubDub";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 //========================= Smart Keyboard Configuration =================================
 // (1 keyboards with 1 key configured as a pad.
 //========================================================================================
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'1',
     'Keyboard 0 - Number of Keys':'1',
     'Keyboard 0 - Piano Keyboard':'0',
     'Keyboard 0 - Static Mode':'1',
     'Keyboard 0 - Send X':'1',
     'Keyboard 0 - Send Y':'1'
-}&quot;;
+}";
 
 
 //================================ Instrument Parameters =================================
@@ -1187,15 +1166,15 @@ declare interface &quot;SmartKeyboard{
 //========================================================================================
 
 // SmartKeyboard X parameter
-x = hslider(&quot;x&quot;,0,0,1,0.01);
+x = hslider("x",0,0,1,0.01);
 // SmartKeyboard Y parameter
-y = hslider(&quot;y&quot;,0,0,1,0.01);
+y = hslider("y",0,0,1,0.01);
 // SmartKeyboard gate parameter
-gate = button(&quot;gate&quot;);
+gate = button("gate");
 // modulation frequency is controlled with the x axis of the accelerometer
-modFreq = hslider(&quot;modFeq[acc: 0 0 -10 0 10]&quot;,9,0.5,18,0.01);
+modFreq = hslider("modFeq[acc: 0 0 -10 0 10]",9,0.5,18,0.01);
 // general gain is controlled with the y axis of the accelerometer
-gain = hslider(&quot;gain[acc: 1 0 -10 0 10]&quot;,0.5,0,1,0.01);
+gain = hslider("gain[acc: 1 0 -10 0 10]",0.5,0,1,0.01);
 
 
 //=================================== Parameters Mapping =================================
@@ -1222,21 +1201,18 @@ generalGain = gain : ba.lin2LogGain : si.smoo;
 //============================================ DSP =======================================
 //========================================================================================
 
-process = sy.dubDub(freq,filterCutoff,q,gate)*generalGain &lt;: _,_;
+process = sy.dubDub(freq,filterCutoff,q,gate)*generalGain <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="elecguitar">elecGuitar</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################### elecGuitar.dsp #####################################
 // Faust instruments specifically designed for faust2smartkeyb where an electric
 // guitar physical model is controlled using an isomorphic keyboard. Rock on!
@@ -1244,10 +1220,10 @@ process = sy.dubDub(freq,filterCutoff,q,gate)*generalGain &lt;: _,_;
 // ## SmartKeyboard Use Strategy
 //
 // we want to create an isomorphic keyboard where each keyboard is monophonic and
-// implements a &quot;string&quot;. Keyboards should be one fourth apart from each other
+// implements a "string". Keyboards should be one fourth apart from each other
 // (more or less like on a guitar). We want to be able to slide between keyboards
 // (strum) to trigger a new note (voice) and we want new fingers on a keyboard to
-// &quot;steal&quot; the pitch from the previous finger (sort of hammer on).
+// "steal" the pitch from the previous finger (sort of hammer on).
 //
 // ## Compilation Instructions
 //
@@ -1268,7 +1244,7 @@ process = sy.dubDub(freq,filterCutoff,q,gate)*generalGain &lt;: _,_;
 //########################################################################################
 
 // Interface with 6 monophonic keyboards one fourth apart from each other
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'6',
     'Max Keyboard Polyphony':'1',
     'Keyboard 0 - Number of Keys':'13',
@@ -1284,16 +1260,16 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 4 - Lowest Key':'52',
     'Keyboard 5 - Lowest Key':'47',
     'Rounding Mode':'2'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // standard parameters
-f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = hslider(&quot;bend[midi:pitchwheel]&quot;,1,0,10,0.01) : si.polySmooth(gate,0.999,1);
-gain = hslider(&quot;gain&quot;,1,0,1,0.01);
-s = hslider(&quot;sustain[midi:ctrl 64]&quot;,0,0,1,1); // for sustain pedal
-t = button(&quot;gate&quot;);
+f = hslider("freq",300,50,2000,0.01);
+bend = hslider("bend[midi:pitchwheel]",1,0,10,0.01) : si.polySmooth(gate,0.999,1);
+gain = hslider("gain",1,0,1,0.01);
+s = hslider("sustain[midi:ctrl 64]",0,0,1,1); // for sustain pedal
+t = button("gate");
 
 // mapping params
 gate = t+s : min(1);
@@ -1303,21 +1279,18 @@ stringLength = freq : pm.f2l;
 pluckPosition = 0.8;
 mute = gate : si.polySmooth(gate,0.999,1);
 
-process = pm.elecGuitar(stringLength,pluckPosition,mute,gain,gate) &lt;: _,_;
+process = pm.elecGuitar(stringLength,pluckPosition,mute,gain,gate) <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="fm">fm</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //###################################### fm.dsp ##########################################
 // A simple smart phone percussion abstract sound toy based on an FM synth.
 //
@@ -1345,35 +1318,35 @@ process = pm.elecGuitar(stringLength,pluckPosition,mute,gain,gate) &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-declare name &quot;fm&quot;;
+declare name "fm";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 //========================= Smart Keyboard Configuration =================================
 // (1 keyboards with 1 key configured as a pad.
 //========================================================================================
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'1',
     'Keyboard 0 - Number of Keys':'1',
     'Keyboard 0 - Piano Keyboard':'0',
     'Keyboard 0 - Static Mode':'1',
     'Keyboard 0 - Send X':'1',
     'Keyboard 0 - Send Y':'1'
-}&quot;;
+}";
 
 //================================ Instrument Parameters =================================
 // Creates the connection between the synth and the mobile device
 //========================================================================================
 
 // SmartKeyboard X parameter
-x = hslider(&quot;x&quot;,0,0,1,0.01);
+x = hslider("x",0,0,1,0.01);
 // SmartKeyboard Y parameter
-y = hslider(&quot;y&quot;,0,0,1,0.01);
+y = hslider("y",0,0,1,0.01);
 // SmartKeyboard gate parameter
-gate = button(&quot;gate&quot;) ;
+gate = button("gate") ;
 // mode resonance duration is controlled with the x axis of the accelerometer
-modFreqRatio = hslider(&quot;res[acc: 0 0 -10 0 10]&quot;,1,0,2,0.01) : si.smoo;
+modFreqRatio = hslider("res[acc: 0 0 -10 0 10]",1,0,2,0.01) : si.smoo;
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
@@ -1397,19 +1370,16 @@ fmSynth = sy.fm((cFreq,modFreq),(modIndex))*(gate : si.smoo)*0.5;
 
 process = fmSynth;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust9/exfaust9.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="frog">frog</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################### frog.dsp #####################################
 // A simple smart phone abstract instrument than can be controlled using the touch
 // screen and the accelerometers of the device.
@@ -1438,35 +1408,35 @@ process = fmSynth;
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-declare name &quot;frog&quot;;
+declare name "frog";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 //========================= Smart Keyboard Configuration =================================
 // (1 keyboards with 1 key configured as a pad.
 //========================================================================================
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'1',
     'Keyboard 0 - Number of Keys':'1',
     'Keyboard 0 - Piano Keyboard':'0',
     'Keyboard 0 - Static Mode':'1',
     'Keyboard 0 - Send X':'1',
     'Keyboard 0 - Send Y':'1'
-}&quot;;
+}";
 
 //================================ Instrument Parameters =================================
 // Creates the connection between the synth and the mobile device
 //========================================================================================
 
 // SmartKeyboard X parameter
-x = hslider(&quot;x&quot;,0,0,1,0.01);
+x = hslider("x",0,0,1,0.01);
 // SmartKeyboard Y parameter
-y = hslider(&quot;y&quot;,0,0,1,0.01);
+y = hslider("y",0,0,1,0.01);
 // SmartKeyboard gate parameter
-gate = button(&quot;gate&quot;);
+gate = button("gate");
 // the cutoff frequency of the filter is controlled with the x axis of the accelerometer
-cutoff = hslider(&quot;cutoff[acc: 0 0 -10 0 10]&quot;,2500,50,5000,0.01);
+cutoff = hslider("cutoff[acc: 0 0 -10 0 10]",2500,50,5000,0.01);
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
@@ -1483,21 +1453,18 @@ filterCutoff = cutoff : si.smoo;
 //============================================ DSP =======================================
 //========================================================================================
 
-process = sy.dubDub(freq,filterCutoff,q,gate) &lt;: _,_;
+process = sy.dubDub(freq,filterCutoff,q,gate) <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust10/exfaust10.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="harp">harp</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //######################################## harp.dsp ######################################
 // A simple smart phone based harp (if we dare to call it like that). 
 //
@@ -1526,15 +1493,15 @@ process = sy.dubDub(freq,filterCutoff,q,gate) &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-declare name &quot;harp&quot;;
+declare name "harp";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 //========================= Smart Keyboard Configuration ================================= 
 // (8 keyboards with 16 keys configured as a pitch matrix.
 //========================================================================================
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'8',
     'Keyboard 0 - Number of Keys':'16',
     'Keyboard 1 - Number of Keys':'16',
@@ -1560,18 +1527,18 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 5 - Piano Keyboard':'0',
     'Keyboard 6 - Piano Keyboard':'0',
     'Keyboard 7 - Piano Keyboard':'0'
-}&quot;;
+}";
 
 //================================ Instrument Parameters =================================
 // Creates the connection between the synth and the mobile device
 //========================================================================================
 
 // the string resonance in second is controlled by the x axis of the accelerometer
-res = hslider(&quot;res[acc: 0 0 -10 0 10]&quot;,2,0.1,4,0.01);
+res = hslider("res[acc: 0 0 -10 0 10]",2,0.1,4,0.01);
 // Smart Keyboard frequency parameter
-freq = hslider(&quot;freq&quot;,400,50,2000,0.01);
+freq = hslider("freq",400,50,2000,0.01);
 // Smart Keyboard gate parameter
-gate = button(&quot;gate&quot;);
+gate = button("gate");
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
@@ -1583,19 +1550,16 @@ stringFreq = freq;
 
 process = sy.combString(freq,res,gate);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust11/exfaust11.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="midionly">midiOnly</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################### midiOnly.dsp ######################################
 // Faust instrument specifically designed for faust2smartkeyb implementing a MIDI
 // controllable app where the mobile device's touch screen is used to control
@@ -1627,7 +1591,7 @@ process = sy.combString(freq,res,gate);
 //########################################################################################
 
 // Interface with 4 polyphnic keyboards of 13 keys with the same config
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'1',
     'Keyboard 0 - Number of Keys':'2',
     'Keyboard 0 - Send Freq':'0',
@@ -1636,18 +1600,18 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 0 - Send Key X':'1',
     'Keyboard 0 - Key 0 - Label':'Mod Index',
     'Keyboard 0 - Key 1 - Label':'Mod Freq'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.001)) : si.polySmooth(gate,0.999,1);
-gain = hslider(&quot;gain&quot;,1,0,1,0.01);
-key = hslider(&quot;key&quot;,0,0,1,1) : int;
-kb0k0x = hslider(&quot;kb0k0x[midi:ctrl 1]&quot;,0.5,0,1,0.01) : si.smoo;
-kb0k1x = hslider(&quot;kb0k1x[midi:ctrl 1]&quot;,0.5,0,1,0.01) : si.smoo;
-s = hslider(&quot;sustain[midi:ctrl 64]&quot;,0,0,1,1);
-t = button(&quot;gate&quot;);
+f = hslider("freq",300,50,2000,0.01);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.001)) : si.polySmooth(gate,0.999,1);
+gain = hslider("gain",1,0,1,0.01);
+key = hslider("key",0,0,1,1) : int;
+kb0k0x = hslider("kb0k0x[midi:ctrl 1]",0.5,0,1,0.01) : si.smoo;
+kb0k1x = hslider("kb0k1x[midi:ctrl 1]",0.5,0,1,0.01) : si.smoo;
+s = hslider("sustain[midi:ctrl 64]",0,0,1,1);
+t = button("gate");
 
 // fomating parameters
 gate = t+s : min(1);
@@ -1657,21 +1621,18 @@ modFreqRatio = kb0k1x;
 
 envelope = gain*gate : si.smoo;
 
-process = sy.fm((freq,freq + freq*modFreqRatio),index*envelope)*envelope &lt;: _,_;
+process = sy.fm((freq,freq + freq*modFreqRatio),index*envelope)*envelope <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust12/exfaust12.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="multisynth">multiSynth</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################### multiSynth.dsp ######################################
 // Faust instrument specifically designed for faust2smartkeyb where 4 keyboards
 // are used to control 4 independent synths.
@@ -1700,7 +1661,7 @@ process = sy.fm((freq,freq + freq*modFreqRatio),index*envelope)*envelope &lt;: _
 //########################################################################################
 
 // Interface with 4 polyphnic keyboards of 13 keys with the same config
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'4',
     'Rounding Mode':'2',
     'Inter-Keyboard Slide':'0',
@@ -1716,18 +1677,18 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 1 - Send Y':'1',
     'Keyboard 2 - Send Y':'1',
     'Keyboard 3 - Send Y':'1'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // standard parameters
-f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.001)) : si.polySmooth(gate,0.999,1);
-gain = hslider(&quot;gain&quot;,1,0,1,0.01);
-s = hslider(&quot;sustain[midi:ctrl 64]&quot;,0,0,1,1); // for sustain pedal
-t = button(&quot;gate&quot;);
-y = hslider(&quot;y[midi:ctrl 1]&quot;,1,0,1,0.001) : si.smoo;
-keyboard = hslider(&quot;keyboard&quot;,0,0,3,1) : int;
+f = hslider("freq",300,50,2000,0.01);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.001)) : si.polySmooth(gate,0.999,1);
+gain = hslider("gain",1,0,1,0.01);
+s = hslider("sustain[midi:ctrl 64]",0,0,1,1); // for sustain pedal
+t = button("gate");
+y = hslider("y[midi:ctrl 1]",1,0,1,0.001) : si.smoo;
+keyboard = hslider("keyboard",0,0,3,1) : int;
 
 // fomating parameters
 gate = t+s : min(1);
@@ -1741,26 +1702,23 @@ oscilators(2) = os.square(freq);
 oscilators(3) = os.osc(freq);
 
 // oscs are selected in function of the current keyboard
-synths = par(i,4,select2(keyboard == i,0,oscilators(i))) :&gt; fi.lowpass(3,cutoff) : *(envelope)
+synths = par(i,4,select2(keyboard == i,0,oscilators(i))) :> fi.lowpass(3,cutoff) : *(envelope)
 with{
     envelope = gate*gain : si.smoo;
 };
 
-process = synths &lt;: _,_;
+process = synths <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust13/exfaust13.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="toy">toy</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //##################################### toy.dsp #######################################
 // Faust sound toy specifically designed for faust2smartkeyb where a funny
 // synth can be controlled using several fingers on the screen and the built-in
@@ -1802,7 +1760,7 @@ process = synths &lt;: _,_;
 // freq and bend are not computed
 // fingers are counted
 // voice is launched on startup
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'1',
     'Max Keyboard Polyphony':'0',
     'Keyboard 0 - Number of Keys':'1',
@@ -1811,17 +1769,17 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 0 - Piano Keyboard':'0',
     'Keyboard 0 - Send Numbered X':'1',
     'Keyboard 0 - Send Numbered Y':'1'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // parameters
-x0 = hslider(&quot;x0&quot;,0.5,0,1,0.01) : si.smoo;
-y0 = hslider(&quot;y0&quot;,0.5,0,1,0.01) : si.smoo;
-y1 = hslider(&quot;y1&quot;,0,0,1,0.01) : si.smoo;
-q = hslider(&quot;q[acc: 0 0 -10 0 10]&quot;,30,10,50,0.01) : si.smoo;
-del = hslider(&quot;del[acc: 0 0 -10 0 10]&quot;,0.5,0.01,1,0.01) : si.smoo;
-fb = hslider(&quot;fb[acc: 1 0 -10 0 10]&quot;,0.5,0,1,0.01) : si.smoo;
+x0 = hslider("x0",0.5,0,1,0.01) : si.smoo;
+y0 = hslider("y0",0.5,0,1,0.01) : si.smoo;
+y1 = hslider("y1",0,0,1,0.01) : si.smoo;
+q = hslider("q[acc: 0 0 -10 0 10]",30,10,50,0.01) : si.smoo;
+del = hslider("del[acc: 0 0 -10 0 10]",0.5,0.01,1,0.01) : si.smoo;
+fb = hslider("fb[acc: 1 0 -10 0 10]",0.5,0,1,0.01) : si.smoo;
 
 // mapping
 impFreq = 2 + x0*20;
@@ -1831,21 +1789,18 @@ resFreq = y0*3000+300;
 echo = +~(de.delay(65536,del*ma.SR)*fb);
 
 // putting it together
-process = os.lf_imptrain(impFreq) : fi.resonlp(resFreq,q,1) : echo : ef.cubicnl(y1,0)*0.95 &lt;: _,_;
+process = os.lf_imptrain(impFreq) : fi.resonlp(resFreq,q,1) : echo : ef.cubicnl(y1,0)*0.95 <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust14/exfaust14.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="trumpet">trumpet</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################### trumpet.dsp #####################################
 // A simple trumpet app... (for large screens).
 //
@@ -1866,9 +1821,9 @@ process = os.lf_imptrain(impFreq) : fi.resonlp(resFreq,q,1) : echo : ef.cubicnl(
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'5',
     'Max Keyboard Polyphony':'1',
     'Mono Mode':'1',
@@ -1888,15 +1843,15 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 2 - Send Y':'1',
     'Keyboard 3 - Send Y':'1',
     'Keyboard 4 - Send Y':'1',
-}&quot;;
+}";
 
 // standard parameters
-f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.001)) : si.polySmooth(gate,0.999,1);
-gain = hslider(&quot;gain&quot;,1,0,1,0.01);
-s = hslider(&quot;sustain[midi:ctrl 64]&quot;,0,0,1,1); // for sustain pedal
-t = button(&quot;gate&quot;);
-y = hslider(&quot;y[midi:ctrl 1]&quot;,1,0,1,0.001) : si.smoo;
+f = hslider("freq",300,50,2000,0.01);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.001)) : si.polySmooth(gate,0.999,1);
+gain = hslider("gain",1,0,1,0.01);
+s = hslider("sustain[midi:ctrl 64]",0,0,1,1); // for sustain pedal
+t = button("gate");
+y = hslider("y[midi:ctrl 1]",1,0,1,0.001) : si.smoo;
 
 // fomating parameters
 gate = t+s : min(1);
@@ -1904,21 +1859,18 @@ freq = f*bend;
 cutoff = y*4000+50;
 envelope = gate*gain : si.smoo;
 
-process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) &lt;: _,_;
+process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust15/exfaust15.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="turenas">turenas</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //################################### turenas.dsp ########################################
 // A simple smart phone percussion based on an additive synthesizer.
 //
@@ -1948,15 +1900,15 @@ process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-declare name &quot;turenas&quot;;
+declare name "turenas";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 //========================= Smart Keyboard Configuration =================================
 // (10 keyboards with 18 keys each configured as a pitch matrix.
 //========================================================================================
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'10',
     'Keyboard 0 - Number of Keys':'18',
     'Keyboard 1 - Number of Keys':'18',
@@ -1998,20 +1950,20 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 7 - Send X':'0',
     'Keyboard 8 - Send X':'0',
     'Keyboard 9 - Send X':'0'
-}&quot;;
+}";
 
 //================================ Instrument Parameters =================================
 // Creates the connection between the synth and the mobile device
 //========================================================================================
 
 // SmartKeyboard Y parameter
-y = hslider(&quot;y&quot;,0,0,1,0.01);
+y = hslider("y",0,0,1,0.01);
 // Smart Keyboard frequency parameter
-freq = hslider(&quot;freq&quot;,400,50,2000,0.01);
+freq = hslider("freq",400,50,2000,0.01);
 // SmartKeyboard gate parameter
-gate = button(&quot;gate&quot;);
+gate = button("gate");
 // mode resonance duration is controlled with the x axis of the accelerometer
-res = hslider(&quot;res[acc: 0 0 -10 0 10]&quot;,2.5,0.01,5,0.01);
+res = hslider("res[acc: 0 0 -10 0 10]",2.5,0.01,5,0.01);
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
@@ -2034,19 +1986,111 @@ modeRes = res : si.smoo;
 
 process = sy.additiveDrum(freq,modeFreqRatios,modeGains,0.8,0.001,modeRes,gate)*0.05;
 
-</code></pre>
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
 
+<h2 id="violin2">violin2</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust16/exfaust16.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+//############################### violin2.dsp ##################################
+// Faust instrument specifically designed for faust2smartkeyb where a
+// complete violin physical model can be played using the touch sceen
+// interface. Bowing is carried out by constantly moving a finger on the
+// y axis of a key.
+//
+// ## SmartKeyboard Use Strategy
+//
+// 4 keyboards are used to control the pitch of the 4 bowed strings. Strings
+// are connected to the virtual bow when they are touched.
+//
+// ## Compilation Instructions
+//
+// This Faust code will compile fine with any of the standard Faust targets.
+// However it was specifically designed to be used with faust2smartkeyb. For
+// best results, we recommend to use the following parameters to compile it:
+//
+// 
+// faust2smartkeyb [-ios/-android] -effect reverb.dsp violin.dsp
+// 
+//
+// ## Version/Licence
+//
+// Version 0.0, Aug. 2017
+// Copyright Romain Michon CCRMA (Stanford University)/GRAME 2017
+// MIT Licence: https://opensource.org/licenses/MIT
+//##############################################################################
+
+declare interface "SmartKeyboard{
+    'Number of Keyboards':'4',
+    'Max Keyboard Polyphony':'0',
+    'Rounding Mode':'2',
+    'Send Fingers Count':'1',
+    'Keyboard 0 - Number of Keys':'12',
+    'Keyboard 1 - Number of Keys':'12',
+    'Keyboard 2 - Number of Keys':'12',
+    'Keyboard 3 - Number of Keys':'12',
+    'Keyboard 0 - Lowest Key':'55',
+    'Keyboard 1 - Lowest Key':'62',
+    'Keyboard 2 - Lowest Key':'69',
+    'Keyboard 3 - Lowest Key':'76',
+    'Keyboard 0 - Send Keyboard Freq':'1',
+    'Keyboard 1 - Send Keyboard Freq':'1',
+    'Keyboard 2 - Send Keyboard Freq':'1',
+    'Keyboard 3 - Send Keyboard Freq':'1',
+    'Keyboard 0 - Send Y':'1',
+    'Keyboard 1 - Send Y':'1',
+    'Keyboard 2 - Send Y':'1',
+    'Keyboard 3 - Send Y':'1'
+}";
+
+import("stdfaust.lib");
+
+// SMARTKEYBOARD PARAMS
+kbfreq(0) = hslider("kb0freq",220,20,10000,0.01);
+kbbend(0) = hslider("kb0bend",1,ma.EPSILON,10,0.01);
+kbfreq(1) = hslider("kb1freq",330,20,10000,0.01);
+kbbend(1) = hslider("kb1bend",1,ma.EPSILON,10,0.01);
+kbfreq(2) = hslider("kb2freq",440,20,10000,0.01);
+kbbend(2) = hslider("kb2bend",1,ma.EPSILON,10,0.01);
+kbfreq(3) = hslider("kb3freq",550,20,10000,0.01);
+kbbend(3) = hslider("kb3bend",1,ma.EPSILON,10,0.01);
+kbfingers(0) = hslider("kb0fingers",0,0,10,1) : int;
+kbfingers(1) = hslider("kb1fingers",0,0,10,1) : int;
+kbfingers(2) = hslider("kb2fingers",0,0,10,1) : int;
+kbfingers(3) = hslider("kb3fingers",0,0,10,1) : int;
+y = hslider("y",0,0,1,1) : si.smoo;
+
+// MODEL PARAMETERS
+// strings lengths
+sl(i) = kbfreq(i)*kbbend(i) : pm.f2l : si.smoo;
+// string active only if fingers are touching the keyboard
+as(i) = kbfingers(i)>0;
+// retrieving finger displacement on screen (dirt simple)
+bowVel = y-y' : abs : *(3000) : min(1) : si.smoo;
+// bow position is constant but could be ontrolled by an external interface
+bowPos = 0.7;
+bowPress = 0.5;
+
+// ASSEMBLING MODELS
+// essentially 4 parallel violin strings
+model = par(i,4,pm.violinModel(sl(i),bowPress,bowVel*as(i),bowPos)) :> _;
+
+process = model <: _,_;
+
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="violin">violin</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //############################### violin.dsp ###################################
 // Faust instrument specifically designed for faust2smartkeyb where a
 // complete violin physical model can be played using the touch sceen
@@ -2078,7 +2122,7 @@ process = sy.additiveDrum(freq,modeFreqRatios,modeGains,0.8,0.001,modeRes,gate)*
 // MIT Licence: https://opensource.org/licenses/MIT
 //##############################################################################
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'5',
     'Max Keyboard Polyphony':'0',
     'Rounding Mode':'2',
@@ -2101,31 +2145,31 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 4 - Send Key Y':'1',
     'Keyboard 4 - Key 0 - Label':'Bow',
     'Keyboard 4 - Static Mode':'1'
-}&quot;;
+}";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // SMARTKEYBOARD PARAMS
-kbfreq(0) = hslider(&quot;kb0freq&quot;,220,20,10000,0.01);
-kbbend(0) = hslider(&quot;kb0bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(1) = hslider(&quot;kb1freq&quot;,330,20,10000,0.01);
-kbbend(1) = hslider(&quot;kb1bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(2) = hslider(&quot;kb2freq&quot;,440,20,10000,0.01);
-kbbend(2) = hslider(&quot;kb2bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(3) = hslider(&quot;kb3freq&quot;,550,20,10000,0.01);
-kbbend(3) = hslider(&quot;kb3bend&quot;,1,ma.EPSILON,10,0.01);
-kb4k0x = hslider(&quot;kb4k0x&quot;,0,0,1,1) : si.smoo;
-kb4k0y = hslider(&quot;kb4k0y&quot;,0,0,1,1) : si.smoo;
-kbfingers(0) = hslider(&quot;kb0fingers&quot;,0,0,10,1) : int;
-kbfingers(1) = hslider(&quot;kb1fingers&quot;,0,0,10,1) : int;
-kbfingers(2) = hslider(&quot;kb2fingers&quot;,0,0,10,1) : int;
-kbfingers(3) = hslider(&quot;kb3fingers&quot;,0,0,10,1) : int;
+kbfreq(0) = hslider("kb0freq",220,20,10000,0.01);
+kbbend(0) = hslider("kb0bend",1,ma.EPSILON,10,0.01);
+kbfreq(1) = hslider("kb1freq",330,20,10000,0.01);
+kbbend(1) = hslider("kb1bend",1,ma.EPSILON,10,0.01);
+kbfreq(2) = hslider("kb2freq",440,20,10000,0.01);
+kbbend(2) = hslider("kb2bend",1,ma.EPSILON,10,0.01);
+kbfreq(3) = hslider("kb3freq",550,20,10000,0.01);
+kbbend(3) = hslider("kb3bend",1,ma.EPSILON,10,0.01);
+kb4k0x = hslider("kb4k0x",0,0,1,1) : si.smoo;
+kb4k0y = hslider("kb4k0y",0,0,1,1) : si.smoo;
+kbfingers(0) = hslider("kb0fingers",0,0,10,1) : int;
+kbfingers(1) = hslider("kb1fingers",0,0,10,1) : int;
+kbfingers(2) = hslider("kb2fingers",0,0,10,1) : int;
+kbfingers(3) = hslider("kb3fingers",0,0,10,1) : int;
 
 // MODEL PARAMETERS
 // strings lengths
 sl(i) = kbfreq(i)*kbbend(i) : pm.f2l : si.smoo;
 // string active only if fingers are touching the keyboard
-as(i) = kbfingers(i)&gt;0;
+as(i) = kbfingers(i)>0;
 // bow pressure could also be controlled by an external parameter
 bowPress = kb4k0y;
 // retrieving finger displacement on screen (dirt simple)
@@ -2135,121 +2179,20 @@ bowPos = 0.7;
 
 // ASSEMBLING MODELS
 // essentially 4 parallel violin strings
-model = par(i,4,pm.violinModel(sl(i),bowPress,bowVel*as(i),bowPos)) :&gt; _;
+model = par(i,4,pm.violinModel(sl(i),bowPress,bowVel*as(i),bowPos)) :> _;
 
-process = model &lt;: _,_;
+process = model <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust17/exfaust17.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
-</div>
-<!-- /faust-run -->
-
-<h2 id="violin2">violin2</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
-
-<pre><code>
-//############################### violin2.dsp ##################################
-// Faust instrument specifically designed for faust2smartkeyb where a
-// complete violin physical model can be played using the touch sceen
-// interface. Bowing is carried out by constantly moving a finger on the
-// y axis of a key.
-//
-// ## SmartKeyboard Use Strategy
-//
-// 4 keyboards are used to control the pitch of the 4 bowed strings. Strings
-// are connected to the virtual bow when they are touched.
-//
-// ## Compilation Instructions
-//
-// This Faust code will compile fine with any of the standard Faust targets.
-// However it was specifically designed to be used with faust2smartkeyb. For
-// best results, we recommend to use the following parameters to compile it:
-//
-// 
-// faust2smartkeyb [-ios/-android] -effect reverb.dsp violin.dsp
-// 
-//
-// ## Version/Licence
-//
-// Version 0.0, Aug. 2017
-// Copyright Romain Michon CCRMA (Stanford University)/GRAME 2017
-// MIT Licence: https://opensource.org/licenses/MIT
-//##############################################################################
-
-declare interface &quot;SmartKeyboard{
-    'Number of Keyboards':'4',
-    'Max Keyboard Polyphony':'0',
-    'Rounding Mode':'2',
-    'Send Fingers Count':'1',
-    'Keyboard 0 - Number of Keys':'12',
-    'Keyboard 1 - Number of Keys':'12',
-    'Keyboard 2 - Number of Keys':'12',
-    'Keyboard 3 - Number of Keys':'12',
-    'Keyboard 0 - Lowest Key':'55',
-    'Keyboard 1 - Lowest Key':'62',
-    'Keyboard 2 - Lowest Key':'69',
-    'Keyboard 3 - Lowest Key':'76',
-    'Keyboard 0 - Send Keyboard Freq':'1',
-    'Keyboard 1 - Send Keyboard Freq':'1',
-    'Keyboard 2 - Send Keyboard Freq':'1',
-    'Keyboard 3 - Send Keyboard Freq':'1',
-    'Keyboard 0 - Send Y':'1',
-    'Keyboard 1 - Send Y':'1',
-    'Keyboard 2 - Send Y':'1',
-    'Keyboard 3 - Send Y':'1'
-}&quot;;
-
-import(&quot;stdfaust.lib&quot;);
-
-// SMARTKEYBOARD PARAMS
-kbfreq(0) = hslider(&quot;kb0freq&quot;,220,20,10000,0.01);
-kbbend(0) = hslider(&quot;kb0bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(1) = hslider(&quot;kb1freq&quot;,330,20,10000,0.01);
-kbbend(1) = hslider(&quot;kb1bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(2) = hslider(&quot;kb2freq&quot;,440,20,10000,0.01);
-kbbend(2) = hslider(&quot;kb2bend&quot;,1,ma.EPSILON,10,0.01);
-kbfreq(3) = hslider(&quot;kb3freq&quot;,550,20,10000,0.01);
-kbbend(3) = hslider(&quot;kb3bend&quot;,1,ma.EPSILON,10,0.01);
-kbfingers(0) = hslider(&quot;kb0fingers&quot;,0,0,10,1) : int;
-kbfingers(1) = hslider(&quot;kb1fingers&quot;,0,0,10,1) : int;
-kbfingers(2) = hslider(&quot;kb2fingers&quot;,0,0,10,1) : int;
-kbfingers(3) = hslider(&quot;kb3fingers&quot;,0,0,10,1) : int;
-y = hslider(&quot;y&quot;,0,0,1,1) : si.smoo;
-
-// MODEL PARAMETERS
-// strings lengths
-sl(i) = kbfreq(i)*kbbend(i) : pm.f2l : si.smoo;
-// string active only if fingers are touching the keyboard
-as(i) = kbfingers(i)&gt;0;
-// retrieving finger displacement on screen (dirt simple)
-bowVel = y-y' : abs : *(3000) : min(1) : si.smoo;
-// bow position is constant but could be ontrolled by an external interface
-bowPos = 0.7;
-bowPress = 0.5;
-
-// ASSEMBLING MODELS
-// essentially 4 parallel violin strings
-model = par(i,4,pm.violinModel(sl(i),bowPress,bowVel*as(i),bowPos)) :&gt; _;
-
-process = model &lt;: _,_;
-
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust18/exfaust18.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="vocal">vocal</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 //######################################## vocal.dsp #####################################
 // A funny vocal synth app...
 //
@@ -2270,9 +2213,9 @@ process = model &lt;: _,_;
 // MIT Licence: https://opensource.org/licenses/MIT
 //########################################################################################
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-declare interface &quot;SmartKeyboard{
+declare interface "SmartKeyboard{
     'Number of Keyboards':'1',
     'Max Keyboard Polyphony':'0',
     'Keyboard 0 - Number of Keys':'1',
@@ -2280,25 +2223,22 @@ declare interface &quot;SmartKeyboard{
     'Keyboard 0 - Static Mode':'1',
     'Keyboard 0 - Send X':'1',
     'Keyboard 0 - Piano Keyboard':'0'
-}&quot;;
+}";
 
 // standard parameters
-vowel = hslider(&quot;vowel[acc: 0 0 -10 0 10]&quot;,2,0,4,0.01) : si.smoo;
-x = hslider(&quot;x&quot;,0.5,0,1,0.01) : si.smoo;
-vibrato = hslider(&quot;vibrato[acc: 1 0 -10 0 10]&quot;,0.05,0,0.1,0.01);
-gain = hslider(&quot;gain&quot;,0.25,0,1,0.01);
+vowel = hslider("vowel[acc: 0 0 -10 0 10]",2,0,4,0.01) : si.smoo;
+x = hslider("x",0.5,0,1,0.01) : si.smoo;
+vibrato = hslider("vibrato[acc: 1 0 -10 0 10]",0.05,0,0.1,0.01);
+gain = hslider("gain",0.25,0,1,0.01);
 
 // fomating parameters
 freq = x*200 + 50;
 voiceFreq = freq*(os.osc(6)*vibrato+1);
 
-process = pm.SFFormantModelBP(1,vowel,0,voiceFreq,gain) &lt;: _,_;
+process = pm.SFFormantModelBP(1,vowel,0,voiceFreq,gain) <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/smartKeyboard/exfaust19/exfaust19.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -2324,16 +2264,13 @@ process = pm.SFFormantModelBP(1,vowel,0,voiceFreq,gain) &lt;: _,_;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -2380,5 +2317,6 @@ process = pm.SFFormantModelBP(1,vowel,0,voiceFreq,gain) &lt;: _,_;
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

@@ -1,6 +1,6 @@
 
-declare name "oberheimBPF";
-declare description "Demonstration of the Oberheim Band-Pass Filter";
+declare name "oberheimBSF";
+declare description "Demonstration of the Oberheim Band-Stop Filter";
 declare author "Eric Tarr";
 
 import("stdfaust.lib");
@@ -11,5 +11,5 @@ switch = checkbox("Saw/Noise");
 
 inputSignal = (no.noise*switch), (os.sawtooth(100)*(1-switch)) :> _; 
 
-process = inputSignal : ve.oberheimBPF(normFreq,Q) <:_,_;
+process = inputSignal : ve.oberheimBSF(normFreq,Q) <:_,_;
 

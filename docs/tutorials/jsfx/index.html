@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/tutorials/jsfx/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>Using Faust in JSFX - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -367,21 +367,18 @@ The JSFX language is based on Cockos <a href="https://www.cockos.com/EEL2/">EEL2
 <p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed</a> the <strong>faust</strong> compiler from the <a href="https://github.com/grame-cncm/faust">master-dev branch</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
-freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
-freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
+vol = hslider("volume [unit:dB]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider("freq1 [unit:Hz]", 1000, 20, 3000, 1);
+freq2 = hslider("freq2 [unit:Hz]", 200, 20, 3000, 1);
 
-process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/jsfx/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -470,21 +467,18 @@ The available MIDI inputs are: </p>
 <p>See <a href="https://faustdoc.grame.fr/manual/midi/">MIDI</a> for more information about MIDI metadata syntax.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare options &quot;[midi:on]&quot;;
-import(&quot;stdfaust.lib&quot;);
+declare options "[midi:on]";
+import("stdfaust.lib");
 
-vel = hslider(&quot;vel[midi:ctrl 10]&quot;, 0, 0, 127, 1);
-freq = hslider(&quot;freq[midi:ctrl 11]&quot;, 50, 50, 1000, 0.1);
+vel = hslider("vel[midi:ctrl 10]", 0, 0, 127, 1);
+freq = hslider("freq[midi:ctrl 11]", 50, 50, 1000, 0.1);
 
 process = os.osc(freq) * 0.1 * (vel / 127);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/jsfx/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -513,23 +507,20 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
 The following code shows the basic mechanism of the MIDI polyphonic instrument that compiles for JSFX. </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare options &quot;[nvoices:4]&quot;;
-import(&quot;stdfaust.lib&quot;);
+declare options "[nvoices:4]";
+import("stdfaust.lib");
 
-freq = hslider(&quot;freq&quot;, 0, 0, 10000, 0.1) : si.smoo;
-gain = hslider(&quot;gain&quot;, 0, 0, 1, 0.01) : si.smoo;
-gate = checkbox(&quot;gate&quot;);
+freq = hslider("freq", 0, 0, 10000, 0.1) : si.smoo;
+gain = hslider("gain", 0, 0, 1, 0.01) : si.smoo;
+gate = checkbox("gate");
 env = gate : en.asr(0.1, 0.5, 0.5);
 
 process = os.osc(freq) * env * gain * 0.1;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/jsfx/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -610,16 +601,13 @@ This will allow your to download a <code>binary.zip</code> file, containing the 
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -666,5 +654,6 @@ This will allow your to download a <code>binary.zip</code> file, containing the 
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

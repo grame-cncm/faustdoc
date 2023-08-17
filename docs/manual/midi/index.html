@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/manual/midi/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>MIDI Support - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -431,17 +431,14 @@
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by MIDI CC 11. When CC11=0, then the frequency is 200Hz, when CC11=127, then the frequency is 1000Hz.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;frequency[midi:ctrl 11]&quot;,200,50,1000,0.01) : si.smoo;
+import("stdfaust.lib");
+freq = hslider("frequency[midi:ctrl 11]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -459,17 +456,14 @@ process = os.sawtooth(freq);
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when a key-on message is sent. Therefore, the frequency will only be updated when MIDI key 62 is pressed.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;frequency[midi:keyon 62]&quot;,200,50,1000,0.01) : si.smoo;
+import("stdfaust.lib");
+freq = hslider("frequency[midi:keyon 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -487,17 +481,14 @@ process = os.sawtooth(freq);
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when a key-off message is sent. Therefore, the frequency will only be updated when MIDI key 62 is released.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;frequency[midi:keyoff 62]&quot;,200,50,1000,0.01) : si.smoo;
+import("stdfaust.lib");
+freq = hslider("frequency[midi:keyoff 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -515,17 +506,14 @@ process = os.sawtooth(freq);
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when key-on and key-off messages are sent. Therefore, the frequency will only be updated when MIDI key 62 is pressed and released.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;frequency[midi:key 62]&quot;,200,50,1000,0.01) : si.smoo;
+import("stdfaust.lib");
+freq = hslider("frequency[midi:key 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -543,17 +531,14 @@ process = os.sawtooth(freq);
 <p>In the following example, the frequency of a sawtooth wave oscillator is controlled by the pressure (after-touch) values received on key 62.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;frequency[midi:keypress 62]&quot;,200,50,1000,0.01) : si.smoo;
+import("stdfaust.lib");
+freq = hslider("frequency[midi:keypress 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -570,17 +555,14 @@ process = os.sawtooth(freq);
 <p>In the following example, the volume of a sawtooth wave oscillator is controlled by the channel pressure values.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-vol = hslider(&quot;volume[midi:chanpress]&quot;,0.5,0,1,0.01) : si.smoo;
+import("stdfaust.lib");
+vol = hslider("volume[midi:chanpress]",0.5,0,1,0.01) : si.smoo;
 process = os.sawtooth(440) * vol;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -597,17 +579,14 @@ process = os.sawtooth(440) * vol;
 <p>In the following example, the instrument will be choosen in the {0,3} range.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-inst = nentry(&quot;Instrument[midi:pgm]&quot;,0,0,3,1) : int;
+import("stdfaust.lib");
+inst = nentry("Instrument[midi:pgm]",0,0,3,1) : int;
 process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selectn(4,inst);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -624,17 +603,14 @@ process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selec
 <p>In the following example, the bend of a sawtooth wave oscillator is controlled by the pitch-wheel in the {-2, 2} semitone range, then converted as a frequency multiplicative ratio and multiplied by a given frequency.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-bend = ba.semi2ratio(hslider(&quot;frequency[midi:pitchwheel]&quot;,0,-2,2,0.01)) : si.smoo;
+import("stdfaust.lib");
+bend = ba.semi2ratio(hslider("frequency[midi:pitchwheel]",0,-2,2,0.01)) : si.smoo;
 process = os.sawtooth(440*bend);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -658,15 +634,15 @@ process = os.sawtooth(440*bend);
 <p>A typical Faust program will then use the MIDI clock stream to possibly compute the BPM information, or for any synchronization need it may have.  Here is a simple example of a sinus generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // square signal (1/0), changing state at each received clock
-clocker = checkbox(&quot;MIDI clock[midi:clock]&quot;);    
+clocker = checkbox("MIDI clock[midi:clock]");    
 
 // ON/OFF button controlled with MIDI start/stop messages
-play = checkbox(&quot;ON/OFF [midi:start] [midi:stop]&quot;);    
+play = checkbox("ON/OFF [midi:start] [midi:stop]");    
 
 // detect front
 front(x) = (x-x') != 0.0;      
@@ -676,11 +652,8 @@ freq(x) = (x-x@ma.SR) : + ~ _;
 
 process = os.osc(8*freq(front(clocker))) * play;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -700,19 +673,16 @@ process = os.osc(8*freq(front(clocker))) * play;
 <p>In the following example, the standard <code>freq</code>, <code>gain</code>, and <code>gate</code> parameters are used to implement a simple polyphonic synth.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;freq&quot;,200,50,1000,0.01);
-gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
-gate = button(&quot;gate&quot;);
+import("stdfaust.lib");
+freq = hslider("freq",200,50,1000,0.01);
+gain = hslider("gain",0.5,0,1,0.01);
+gate = button("gate");
 process = os.sawtooth(freq)*gain*gate;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust9/exfaust9.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -722,23 +692,20 @@ process = os.sawtooth(freq)*gain*gate;
 <p>In the next example, the standard <code>key</code>, <code>gain</code>, and <code>gate</code> parameters are used to implement a simple polyphonic synth with alternate tuning.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;key&quot;,60,36,96,1) : midikey2hz 
+import("stdfaust.lib");
+freq = hslider("key",60,36,96,1) : midikey2hz 
 with {
     // quarter tone tuning
     midikey2hz(mk) = 440.0*pow(2.0, (mk-69.0)/48.0); 
 }; 
-gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
-gate = button(&quot;gate&quot;);
+gain = hslider("gain",0.5,0,1,0.01);
+gate = button("gate");
 process = os.sawtooth(freq)*gain*gate;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust10/exfaust10.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -748,20 +715,17 @@ process = os.sawtooth(freq)*gain*gate;
 <p>The previous example can be slightly improved by adding an envelope generator and controlling it with <code>gain</code> and <code>gate</code>: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;freq&quot;,200,50,1000,0.01);
-gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
-gate = button(&quot;gate&quot;);
+import("stdfaust.lib");
+freq = hslider("freq",200,50,1000,0.01);
+gain = hslider("gain",0.5,0,1,0.01);
+gate = button("gate");
 envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
 process = os.sawtooth(freq)*envelope;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust11/exfaust11.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -774,21 +738,18 @@ process = os.sawtooth(freq)*envelope;
 <p>For example, the Faust program from the previous section could be modified such that: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare options &quot;[midi:on][nvoices:12]&quot;;
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;freq&quot;,200,50,1000,0.01);
-gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
-gate = button(&quot;gate&quot;);
+declare options "[midi:on][nvoices:12]";
+import("stdfaust.lib");
+freq = hslider("freq",200,50,1000,0.01);
+gain = hslider("gain",0.5,0,1,0.01);
+gate = button("gate");
 envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
 process = os.sawtooth(freq)*envelope;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust12/exfaust12.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -809,22 +770,19 @@ process = os.sawtooth(freq)*envelope;
 <p>For example, a simple reverb can be added to the previous example simply by writing:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare options &quot;[midi:on][nvoices:12]&quot;;
-import(&quot;stdfaust.lib&quot;);
-freq = hslider(&quot;freq&quot;,200,50,1000,0.01);
-gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
-gate = button(&quot;gate&quot;);
+declare options "[midi:on][nvoices:12]";
+import("stdfaust.lib");
+freq = hslider("freq",200,50,1000,0.01);
+gain = hslider("gain",0.5,0,1,0.01);
+gate = button("gate");
 envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
-process = os.sawtooth(freq)*envelope &lt;: _,_;
+process = os.sawtooth(freq)*envelope <: _,_;
 effect = dm.zita_light;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust13/exfaust13.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -843,24 +801,21 @@ freq = f*bend; // the &quot;final&quot; freq parameter to be used
 <p>Reusing the example from the previous section, we can implement a click-free polyphonic synthesizer with continuous pitch control:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare options &quot;[midi:on][nvoices:12]&quot;;
-import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
-gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
-gate = button(&quot;gate&quot;);
+declare options "[midi:on][nvoices:12]";
+import("stdfaust.lib");
+f = hslider("freq",300,50,2000,0.01);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
+gain = hslider("gain",0.5,0,1,0.01);
+gate = button("gate");
 freq = f*bend; 
 envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
-process = os.sawtooth(freq)*envelope &lt;: _,_;
+process = os.sawtooth(freq)*envelope <: _,_;
 effect = dm.zita_light;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust14/exfaust14.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -876,27 +831,24 @@ gate = t+s : min(1);
 <p>The simple synthesizer from the previous section (which is literally just a sawtooth oscillator) can be slightly improved by processing it with a dynamically-controlled lowpass filter:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare options &quot;[midi:on][nvoices:12]&quot;;
-import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
-gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
-s = hslider(&quot;sustain[midi:ctrl 64]&quot;,0,0,1,1);
-cutoff = hslider(&quot;cutoff[midi:ctrl 1]&quot;,1000,50,4000,0.01) : si.smoo;
-t = button(&quot;gate&quot;);
+declare options "[midi:on][nvoices:12]";
+import("stdfaust.lib");
+f = hslider("freq",300,50,2000,0.01);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
+gain = hslider("gain",0.5,0,1,0.01);
+s = hslider("sustain[midi:ctrl 64]",0,0,1,1);
+cutoff = hslider("cutoff[midi:ctrl 1]",1000,50,4000,0.01) : si.smoo;
+t = button("gate");
 freq = f*bend; 
 gate = t+s : min(1);
 envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
-process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) &lt;: _,_;
+process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) <: _,_;
 effect = dm.zita_light;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust15/exfaust15.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -904,28 +856,25 @@ effect = dm.zita_light;
 <p>Next we can add a global master, using the MIDI CC 7 standard volume control to change its level:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare options &quot;[midi:on][nvoices:12]&quot;;
-import(&quot;stdfaust.lib&quot;);
-f = hslider(&quot;freq&quot;,300,50,2000,0.01);
-bend = ba.semi2ratio(hslider(&quot;bend[midi:pitchwheel]&quot;,0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
-gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
-master = hslider(&quot;master[midi:ctrl 7]&quot;,0.5,0,1,0.01);
-s = hslider(&quot;sustain[midi:ctrl 64]&quot;,0,0,1,1);
-cutoff = hslider(&quot;cutoff[midi:ctrl 1]&quot;,1000,50,4000,0.01) : si.smoo;
-t = button(&quot;gate&quot;);
+declare options "[midi:on][nvoices:12]";
+import("stdfaust.lib");
+f = hslider("freq",300,50,2000,0.01);
+bend = ba.semi2ratio(hslider("bend[midi:pitchwheel]",0,-2,2,0.01)) : si.polySmooth(gate,0.999,1);
+gain = hslider("gain",0.5,0,1,0.01);
+master = hslider("master[midi:ctrl 7]",0.5,0,1,0.01);
+s = hslider("sustain[midi:ctrl 64]",0,0,1,1);
+cutoff = hslider("cutoff[midi:ctrl 1]",1000,50,4000,0.01) : si.smoo;
+t = button("gate");
 freq = f*bend; 
 gate = t+s : min(1);
 envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
-process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) * master &lt;: _,_;
+process = os.sawtooth(freq)*envelope : fi.lowpass(3,cutoff) * master <: _,_;
 effect = dm.zita_light;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/midi/exfaust16/exfaust16.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -953,16 +902,13 @@ effect = dm.zita_light;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -1009,5 +955,6 @@ effect = dm.zita_light;
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

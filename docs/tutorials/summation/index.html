@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/tutorials/summation/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>RMS and Summation in Faust - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -445,24 +445,24 @@
 <p>Using the Faust IDE, we can easily compare all these solutions. To encapsulate all the definitions and select the RMS implementation, we will use an environment. If you are not familiar with the concept of environment, it is a way to group definitions. </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = testsource &lt;: _, RMS(n).sliding, RMS(n).fixpoint, RMS(n).block, RMS(n).overlap(4)
+process = testsource <: _, RMS(n).sliding, RMS(n).fixpoint, RMS(n).block, RMS(n).overlap(4)
     with {
         n = 10000;
-        testsource = os.osc(40) * lfo(1) * hslider(&quot;level&quot;, 1, 0, 1, 0.01);
+        testsource = os.osc(40) * lfo(1) * hslider("level", 1, 0, 1, 0.01);
         lfo(f) = os.osc(f)/2+0.5;
     };
 
 RMS(n) = environment {
 
     // The 4 implementations to test
-    sliding    = horms(( _ &lt;: _, @(n) : - : +~_ ));
-    fixpoint   = horms(( float2fix(16) : _ &lt;: _, @(n) : -: +~_ : fix2float(16) ));
+    sliding    = horms(( _ <: _, @(n) : - : +~_ ));
+    fixpoint   = horms(( float2fix(16) : _ <: _, @(n) : -: +~_ : fix2float(16) ));
     block      = horms(( + ~ *(phase != 0) : capture(phase == (n-1)) ));
-    overlap(c) = horms(( + ~ *(phase%w != 0) &lt;: par(i, c, capture( phase == (w*(i+1) - 1) )) :&gt; _ with { w = n/c; } ));
+    overlap(c) = horms(( + ~ *(phase%w != 0) <: par(i, c, capture( phase == (w*(i+1) - 1) )) :> _ with { w = n/c; } ));
 
     // high order rms with summation function as parameter
     horms(summation) = S:M:R with {
@@ -480,11 +480,8 @@ RMS(n) = environment {
 
 };
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/summation/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -513,16 +510,13 @@ RMS(n) = environment {
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -569,5 +563,6 @@ RMS(n) = environment {
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>

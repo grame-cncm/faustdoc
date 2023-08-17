@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        
+        <link rel="canonical" href="https://ijc8.me/faustdoc/workshops/2018-12-01-paw/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title> 2018-12-01 PAW  - Faust Documentation</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
         <link href="/css/quickref.css" rel="stylesheet">
         <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/jquery-3.6.0.min.js" defer></script>
         <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
@@ -380,15 +380,12 @@
 <p>using the following Faust program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 process = 0.125 : + ~ _;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -441,17 +438,14 @@ where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</
 <p>Let's first rearrange our code:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 decimalpart(x) = x-int(x);
 phase = 0.125 : (+ : decimalpart) ~ _;
 process = phase;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -470,19 +464,16 @@ process = phase;
 <p>The next step is to transform above phase generator into a sine wave generator. We will use the <code>sin</code> primitive that computes the sine of x (measured in radians). Therefore we start for the phase signal, we multiply it by 2PI to obtain radiants, and compute the sine. The full program is the following:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 decimalpart(x) = x-int(x);
 phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 osc(f) = phase(f) * 2 * ma.PI : sin;
 process = osc(440);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -501,21 +492,18 @@ process = osc(440);
 <p>It is a good idea to also add an envelop generator. Here we will use a predefined ADSR in the Standard Faust library.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 decimalpart(x) = x-int(x);
 phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 osc(f) = phase(f) * 2 * ma.PI : sin;
-process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
-        * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
-        * (button(&quot;gate&quot;) : en.adsr(0.1,0.1,0.98,0.1));
+process = osc(hslider("freq", 440, 20, 10000, 1)) 
+        * hslider("gain", 0.5, 0, 1, 0.01) 
+        * (button("gate") : en.adsr(0.1,0.1,0.98,0.1));
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -523,22 +511,19 @@ process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1))
 <p>Instead of playing pure sine waves tones, let's improve the timbre with simple additive synthesis:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 decimalpart(x) = x-int(x);
 phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 osc(f) = phase(f) * 2 * ma.PI : sin;
 timbre(f) = osc(f)*0.5 + osc(f*2)*0.25 + osc(f*3)*0.125;
-process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
-        * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
-        * (button(&quot;gate&quot;) : en.adsr(0.1,0.1,0.98,0.1));
+process = timbre(hslider("freq", 440, 20, 10000, 1)) 
+        * hslider("gain", 0.5, 0, 1, 0.01) 
+        * (button("gate") : en.adsr(0.1,0.1,0.98,0.1));
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -551,24 +536,21 @@ effect = dm.zita_light;
 </code></pre>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 decimalpart(x) = x-int(x);
 phase(f) = f/ma.SR : (+ : decimalpart) ~ _;
 timbre(f) = phase(f)*0.5 + phase(f*2)*0.25 + phase(f*3)*0.125;
 
-process = timbre(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) 
-* hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) 
-* (button(&quot;gate&quot;) : en.adsr(0.1,0.1,0.98,0.1));
+process = timbre(hslider("freq", 440, 20, 10000, 1)) 
+* hslider("gain", 0.5, 0, 1, 0.01) 
+* (button("gate") : en.adsr(0.1,0.1,0.98,0.1));
 
 effect = dm.zita_light;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2018-12-01-paw/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -594,16 +576,13 @@ effect = dm.zita_light;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -650,5 +629,6 @@ effect = dm.zita_light;
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.25/dist/faust-web-component.js" defer></script>
     </body>
 </html>
