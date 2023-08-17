@@ -627,7 +627,7 @@ with {
 <p>compiled with the command:</p>
 <pre><code class="language-bash">faust2rnbo -midi -nvoices 12 organ.dsp 
 </code></pre>
-<p>will create a patch containing a <code>rnbo~</code> object with 12 voices, and with a <code>notein</code> object added in the subpatch correctly connected to the appropriate <em>freq/gain/gate</em> aware parameters. Additional mapping depending of the <a href="https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters">convention used</a> to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed, with the generated user-interface:</p>
+<p>will create a patch containing a <code>rnbo~</code> object with 12 voices, and with a <code>notein</code> object added in the subpatch correctly connected to the appropriate <em>freq/gain/gate</em> aware parameters. Additional mapping depending of the <a href="https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters">convention used</a> to describe the pitch (freq or key) or gain (gain or velocity) will be added when needed, with the generated user-interface:</p>
 <p><img src="img/faust-rnbo4.png" class="mx-auto d-block" width="100%">
 <center><em>Generated polyphonic RNBO patch with MIDI control</em></center></p>
 <p>In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. </p>

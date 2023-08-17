@@ -289,7 +289,7 @@ compiled with the command:
 ```bash
 faust2rnbo -midi -nvoices 12 organ.dsp 
 ```
-will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatch correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity)) will be added when needed, with the generated user-interface:
+will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatch correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity) will be added when needed, with the generated user-interface:
 
 <img src="img/faust-rnbo4.png" class="mx-auto d-block" width="100%">
 <center>*Generated polyphonic RNBO patch with MIDI control*</center>
