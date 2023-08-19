@@ -329,10 +329,4 @@ with the generated user-interface, containting the polyphonic DSP `rnbo~` object
 
 Note that the two `rnbo~` object subpatcher can be generated using the `-sp`option. So `faust2rnbo -sp -midi -nvoices 16 -effect auto organ2.dsp ` will create the `organ2.maxpat` file, and `organ2.rnbopat`, `organ2_effect.rnbopat` subpatcher files.
 
-## Known issues
-
-This is a [Work In Progress] and the generated code does not always work as expected:
-
- - some DSP programs are producing incorrect audio samples due to several subtle semantic issues caused by bugs in the RBNO C++ exported code.
-
 ## Using the Faust Web IDE [TODO]

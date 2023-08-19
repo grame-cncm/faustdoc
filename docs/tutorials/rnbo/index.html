@@ -354,10 +354,6 @@
             </li>
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#known-issues" class="nav-link">Known issues</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide-todo" class="nav-link">Using the Faust Web IDE [TODO]</a>
               <ul class="nav flex-column">
               </ul>
@@ -664,11 +660,6 @@ effect = dm.freeverb_demo;
 <p><img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
 <center><em>Generated polyphonic RNBO patch connected to the global effect, with MIDI control</em></center></p>
 <p>Note that the two <code>rnbo~</code> object subpatcher can be generated using the <code>-sp</code>option. So <code>faust2rnbo -sp -midi -nvoices 16 -effect auto organ2.dsp</code> will create the <code>organ2.maxpat</code> file, and <code>organ2.rnbopat</code>, <code>organ2_effect.rnbopat</code> subpatcher files.</p>
-<h2 id="known-issues">Known issues</h2>
-<p>This is a [Work In Progress] and the generated code does not always work as expected:</p>
-<ul>
-<li>some DSP programs are producing incorrect audio samples due to several subtle semantic issues caused by bugs in the RBNO C++ exported code.</li>
-</ul>
 <h2 id="using-the-faust-web-ide-todo">Using the Faust Web IDE [TODO]</h2></div>
             </div>
         </div>
