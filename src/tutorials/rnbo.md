@@ -201,9 +201,17 @@ will directly compile the `osc.dsp` file and generate the `osc.maxpat` file, tha
 and with the `rnbo~` subpatcher containing the codebox object as well as the parameter control machinery:
 
 <img src="img/faust-rnbo2.png" class="mx-auto d-block" width="100%">
-<center>*RNBO subpatcher with parameter control machinery (after manual editing)*</center>
+<center>*`rnbo~` subpatcher with parameter control machinery (after manual editing)*</center>
 
-Note that the `rnbo~` object subpatcher can be generated using the `-sp` option and possibly used in other contexts as explained on [this page](https://rnbo.cycling74.com/learn/abstractions). So `faust2rnbo -sp osc.dsp` will create both `osc.maxpat` and `osc.rnbopat` files.
+Note that the `rnbo~` object subpatcher can be generated using the `-sp` option and possibly used in other contexts as explained on [this page](https://rnbo.cycling74.com/learn/abstractions). So `faust2rnbo -sp osc.dsp` will create both `osc.maxpat` and `osc.rnbopat` files. In this case the main patch uses the [patchername/paramname](https://rnbo.cycling74.com/learn/rnbo-abstractions-and-rnbopat-files#parameters-in-subpatchers-and-abstractions) parameter naming convention:
+
+<img src="img/faust-rnbo1-bis.png" class="mx-auto d-block" width="100%">
+<center>*Generated RNBO patch in -sp mode *</center>
+
+and the subpatcher contains a `p` object to load and use the `osc.rnbopat` file:
+
+<img src="img/faust-rnbo1-ter.png" class="mx-auto d-block" width="100%">
+<center>*`rnbo~` subpatcher with parameter control machinery in `p` mode*</center>
 
 ### Bargraph handling
 
@@ -225,10 +233,10 @@ with {
 ```
 <!-- /faust-run -->
 
-compiled with **faust2rnbo** will create a subpatch with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), and the user-interface:
+compiled with **faust2rnbo** will create a subpatcher with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), and the user-interface:
 
 <img src="img/faust-rnbo2-bis.png" class="mx-auto d-block" width="100%">
-<center>*RNBO subpatcher with additional audio outputs for bargraph*</center>
+<center>*`rnbo~` subpatcher with additional audio outputs for bargraph*</center>
 
 and the main patch with parameters displaying the bargraph values:
 
@@ -237,7 +245,7 @@ and the main patch with parameters displaying the bargraph values:
 
 ### MIDI control
 
-Control of parameters with MIDI can be activated using the `-midi` option, or using the [declare options "[midi:on]";]( https://faustdoc.grame.fr/manual/midi/#configuring-midi-in-faust) syntax in the DSP code. The patch will then contain `midiin/midiout` objects at global level and specialized `ctlin/notein etc.` objects in the codebox subpatch with the appropriate `scale` object to map the MIDI message range on the target parameter range.
+Control of parameters with MIDI can be activated using the `-midi` option, or using the [declare options "[midi:on]";]( https://faustdoc.grame.fr/manual/midi/#configuring-midi-in-faust) syntax in the DSP code. The patch will then contain `midiin/midiout` objects at global level and specialized `ctlin/notein etc.` objects in the codebox subpatcher with the appropriate `scale` object to map the MIDI message range on the target parameter range.
 
 So for instance the MIDI augmented example: 
 
@@ -289,12 +297,14 @@ compiled with the command:
 ```bash
 faust2rnbo -midi -nvoices 12 organ.dsp 
 ```
-will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatch correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity) will be added when needed, with the generated user-interface:
+will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatcher correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity) will be added when needed, with the generated user-interface:
 
 <img src="img/faust-rnbo4.png" class="mx-auto d-block" width="100%">
 <center>*Generated polyphonic RNBO patch with MIDI control*</center>
 
 In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. 
+
+Note that here again, the `rnbo~` object subpatcher can be generated using the `-sp` option and possibly used in other context.
 
 ### Polyphonic instruments with an effect
 
@@ -322,11 +332,14 @@ To be compiled with the following:
 faust2rnbo -midi -nvoices 16 -effect auto organ2.dsp 
 ```
 
-with the generated user-interface, containting the polyphonic DSP `rnbo~` object connected to the global effect `rnbo~` object:
+with the generated user-interface and the polyphonic DSP `rnbo~` object, using the `p`abstraction model to load and activate the polyphonic instrument (as a `organ2.maxpat` file), connected to the global effect (as a `organ2_effect.rnbopat` file). Having a single `rnbo~` object with the two embedded subpachers is mandatory  to properly create the exported project.
 
 <img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
-<center>*Generated polyphonic RNBO patch connected to the global effect, with MIDI control*</center>
+<center>*Generated polyphonic RNBO patch with MIDI control*</center>
 
-Note that the two `rnbo~` object subpatcher can be generated using the `-sp`option. So `faust2rnbo -sp -midi -nvoices 16 -effect auto organ2.dsp ` will create the `organ2.maxpat` file, and `organ2.rnbopat`, `organ2_effect.rnbopat` subpatcher files.
+and the `rnbo~` subpather:
+<img src="img/faust-rnbo5-bis.png" class="mx-auto d-block" width="100%">
+<center>*`rnbo~` subpatcher with the polyphonic instrument and global effect as `p`abstractions*</center>
+
 
 ## Using the Faust Web IDE [TODO]
