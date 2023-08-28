@@ -595,7 +595,7 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 <!-- /faust-run -->
 
 <p>can now be controlled with MIDI volume (ctrl 7), ctrl 1 and ctrl 2 for each channel frequency. Modification done on the parameters in the GUI will be sent as MIDI output messages.</p>
-<p>So the following command:</p>
+<p>And the following command:</p>
 <pre><code class="language-bash">faust2rnbo -midi osc.dsp 
 </code></pre>
 <p>will compile a <code>osc.maxpat</code> file containing additional <code>midiin/midiout</code> objects, with the following user-interface:</p>
@@ -662,7 +662,7 @@ effect = dm.freeverb_demo;
 <p>To be compiled with the following:</p>
 <pre><code class="language-bash">faust2rnbo -midi -nvoices 16 -effect auto organ2.dsp 
 </code></pre>
-<p>with the generated user-interface and the polyphonic DSP <code>rnbo~</code> object, using the <code>p</code>abstraction model to load and activate the polyphonic instrument (as a <code>organ2.maxpat</code> file), connected to the global effect (as a <code>organ2_effect.rnbopat</code> file). Having a single <code>rnbo~</code> object with the two embedded subpachers is mandatory  to properly create the exported project.</p>
+<p>with the generated user-interface and the polyphonic DSP <code>rnbo~</code> object, using the <code>p</code>abstraction model to load and activate the polyphonic instrument (as a <code>organ2.maxpat</code> file), connected to the global effect (as a <code>organ2_effect.rnbopat</code> file). Having a single <code>rnbo~</code> object with the two embedded subpachers is mandatory  to properly create the exported project:</p>
 <p><img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
 <center><em>Generated polyphonic RNBO patch with MIDI control</em></center></p>
 <p>and the <code>rnbo~</code> subpather:
