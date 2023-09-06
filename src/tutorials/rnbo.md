@@ -332,7 +332,7 @@ To be compiled with the following:
 faust2rnbo -midi -nvoices 16 -effect auto organ2.dsp 
 ```
 
-with the generated user-interface and the polyphonic DSP `rnbo~` object, using the `p`abstraction model to load and activate the polyphonic instrument (as a `organ2.maxpat` file), connected to the global effect (as a `organ2_effect.rnbopat` file). Having a single `rnbo~` object with the two embedded subpachers is mandatory  to properly create the exported project:
+with the generated user-interface and the polyphonic DSP `rnbo~` object, using the `p` abstraction model to load and activate the polyphonic instrument (as a `organ2.rnbopat` file), connected to the global effect (as a `organ2_effect.rnbopat` file). Having a single `rnbo~` object with the two embedded subpachers is mandatory  to properly create the exported project:
 
 <img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
 <center>*Generated polyphonic RNBO patch with MIDI control*</center>
@@ -341,4 +341,30 @@ and the `rnbo~` subpather:
 <img src="img/faust-rnbo5-bis.png" class="mx-auto d-block" width="100%">
 <center>*`rnbo~` subpatcher with the polyphonic instrument and global effect as `p`abstractions*</center>
 
-## Using the Faust Web IDE [TODO]
+## Using the Faust Web IDE
+
+Faust DSP program can be written, tested in the [Faust Web IDE](https://faustide.grame.fr/) and generated as RNBO patches.
+
+### Generating a RNBO patch
+
+The output as a RNBO patch can directly be generated using the *Platform = rnbo* and *Architecture = rnbo* export options. The resulting *foo* folder is self-contained, containing the `foo.maxpat` file.to be opened with Max/MSP.
+
+<img src="img/export.png" class="mx-auto d-block" width="40%">
+<center>*Exporting the code*</center> 
+
+### Generating the RNBO patch in polyphonic mode
+
+DSP programs following the polyphonic [freq/gate/gain convention](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) can be generated using the *Platform = rnbo* and *Architecture = rnbo-poly* export options. The resulting *foo* folder is self-contained, containing the `foo.maxpat` file to be opened with Max/MSP.
+
+### Generating the RNBO patch in polyphonic mode with a global effect
+
+DSP programs following the polyphonic [freq/gate/gain convention](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) with and an [integrated effect](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer) can be generated using the *Platform = rnbo* and *Architecture = rnbo-poly-effect* export options. The resulting *foo* folder is self-contained, containing the `foo.maxpat`, `foo.rnbopat`and `foo_effect.rnbopat` files (using the `p` abstraction model), with `foo.maxpat` file to be opened with Max/MSP.
+
+
+### Generating the RNBO patch from a Faust DSP program found in the web
+
+Faust DSP programs found on the Web can also be converted:
+
+- for instance the [fverb](https://faust.grame.fr/community/powered-by-faust/#fverb) listed on the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page. The DSP content can simply be loaded using the `https://faustide.grame.fr/?code=URL` syntax, so with the following URL: [https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp](https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp), tested in the Faust Web IDE, then converted in a RNBO patch as already showed.
+
+- examples of the [faustplayground](https://faustplayground.grame.fr/) platform can be [found here](https://github.com/grame-cncm/faustplayground/tree/master/faust-modules) and possibly converted. 

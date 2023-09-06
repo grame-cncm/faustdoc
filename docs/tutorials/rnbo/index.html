@@ -354,8 +354,24 @@
             </li>
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide-todo" class="nav-link">Using the Faust Web IDE [TODO]</a>
+            <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide" class="nav-link">Using the Faust Web IDE</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#generating-a-rnbo-patch" class="nav-link">Generating a RNBO patch</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generating-the-rnbo-patch-in-polyphonic-mode" class="nav-link">Generating the RNBO patch in polyphonic mode</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generating-the-rnbo-patch-in-polyphonic-mode-with-a-global-effect" class="nav-link">Generating the RNBO patch in polyphonic mode with a global effect</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generating-the-rnbo-patch-from-a-faust-dsp-program-found-in-the-web" class="nav-link">Generating the RNBO patch from a Faust DSP program found in the web</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -662,13 +678,32 @@ effect = dm.freeverb_demo;
 <p>To be compiled with the following:</p>
 <pre><code class="language-bash">faust2rnbo -midi -nvoices 16 -effect auto organ2.dsp 
 </code></pre>
-<p>with the generated user-interface and the polyphonic DSP <code>rnbo~</code> object, using the <code>p</code>abstraction model to load and activate the polyphonic instrument (as a <code>organ2.maxpat</code> file), connected to the global effect (as a <code>organ2_effect.rnbopat</code> file). Having a single <code>rnbo~</code> object with the two embedded subpachers is mandatory  to properly create the exported project:</p>
+<p>with the generated user-interface and the polyphonic DSP <code>rnbo~</code> object, using the <code>p</code> abstraction model to load and activate the polyphonic instrument (as a <code>organ2.rnbopat</code> file), connected to the global effect (as a <code>organ2_effect.rnbopat</code> file). Having a single <code>rnbo~</code> object with the two embedded subpachers is mandatory  to properly create the exported project:</p>
 <p><img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
 <center><em>Generated polyphonic RNBO patch with MIDI control</em></center></p>
 <p>and the <code>rnbo~</code> subpather:
 <img src="img/faust-rnbo5-bis.png" class="mx-auto d-block" width="100%">
 <center><em><code>rnbo~</code> subpatcher with the polyphonic instrument and global effect as <code>p</code>abstractions</em></center></p>
-<h2 id="using-the-faust-web-ide-todo">Using the Faust Web IDE [TODO]</h2></div>
+<h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
+<p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as RNBO patches.</p>
+<h3 id="generating-a-rnbo-patch">Generating a RNBO patch</h3>
+<p>The output as a RNBO patch can directly be generated using the <em>Platform = rnbo</em> and <em>Architecture = rnbo</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.maxpat</code> file.to be opened with Max/MSP.</p>
+<p><img src="img/export.png" class="mx-auto d-block" width="40%">
+<center><em>Exporting the code</em></center> </p>
+<h3 id="generating-the-rnbo-patch-in-polyphonic-mode">Generating the RNBO patch in polyphonic mode</h3>
+<p>DSP programs following the polyphonic <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> can be generated using the <em>Platform = rnbo</em> and <em>Architecture = rnbo-poly</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.maxpat</code> file to be opened with Max/MSP.</p>
+<h3 id="generating-the-rnbo-patch-in-polyphonic-mode-with-a-global-effect">Generating the RNBO patch in polyphonic mode with a global effect</h3>
+<p>DSP programs following the polyphonic <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> with and an <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a> can be generated using the <em>Platform = rnbo</em> and <em>Architecture = rnbo-poly-effect</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.maxpat</code>, <code>foo.rnbopat</code>and <code>foo_effect.rnbopat</code> files (using the <code>p</code> abstraction model), with <code>foo.maxpat</code> file to be opened with Max/MSP.</p>
+<h3 id="generating-the-rnbo-patch-from-a-faust-dsp-program-found-in-the-web">Generating the RNBO patch from a Faust DSP program found in the web</h3>
+<p>Faust DSP programs found on the Web can also be converted:</p>
+<ul>
+<li>
+<p>for instance the <a href="https://faust.grame.fr/community/powered-by-faust/#fverb">fverb</a> listed on the <a href="https://faust.grame.fr/community/powered-by-faust/">Powered By Faust</a> page. The DSP content can simply be loaded using the <code>https://faustide.grame.fr/?code=URL</code> syntax, so with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp">https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp</a>, tested in the Faust Web IDE, then converted in a RNBO patch as already showed.</p>
+</li>
+<li>
+<p>examples of the <a href="https://faustplayground.grame.fr/">faustplayground</a> platform can be <a href="https://github.com/grame-cncm/faustplayground/tree/master/faust-modules">found here</a> and possibly converted. </p>
+</li>
+</ul></div>
             </div>
         </div>
 
