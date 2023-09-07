@@ -225,4 +225,4 @@ with the following URL: [https://faustide.grame.fr/?code=https://raw.githubuserc
 
 - basic [Examples](https://faustdoc.grame.fr/examples/ambisonics/) have been compiled to Cmajor [here](rsrc/examples-cmajor.zip)
 
-- examples of the [faustplayground](https://faustplayground.grame.fr/) platform can be [found here](https://github.com/grame-cncm/faustplayground/tree/master/faust-modules) and possibly converted. They have been compiled to Cmajor [here](rsrc/faust-modules-cmajor.zip)
+- examples of the [faustplayground](https://faustplayground.grame.fr/) platform can be [found here](https://github.com/grame-cncm/faustplayground/tree/master/public/faust-modules) and possibly converted. They have been compiled to Cmajor [here](rsrc/faust-modules-cmajor.zip).
