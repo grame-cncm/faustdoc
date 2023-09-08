@@ -234,8 +234,15 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
 
 ## Using the Faust Web IDE
 
+
+### Generating a JSFX file
+
 The JSFX backend is available on the [Faust web IDE](https://faustide.grame.fr/). In order to export a Faust program as JSFX code, you will need to click on the "export/compile to specific target" button (on the left side, below "Save as"). Then, you need to  choose ***jsfx*** both as the platform and architecture, and click ***compile***.  
 This will allow your to download a `binary.zip` file, containing the resulting ***jsfx*** file and your original ***dsp*** file. 
+
+### Generating a JSFX file in polyphonic mode
+
+Use the `declare options "[midi:on][nvoices:n]";` [convention](https://faustdoc.grame.fr/manual/midi/#configuring-and-activating-polyphony) in the DSP code to activate MIDI and polyphonic mode.
 
 ## Limitations
 

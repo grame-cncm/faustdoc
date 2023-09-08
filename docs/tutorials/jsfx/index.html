@@ -336,6 +336,14 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#using-the-faust-web-ide" class="nav-link">Using the Faust Web IDE</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#generating-a-jsfx-file" class="nav-link">Generating a JSFX file</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#generating-a-jsfx-file-in-polyphonic-mode" class="nav-link">Generating a JSFX file in polyphonic mode</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#limitations" class="nav-link">Limitations</a>
@@ -564,8 +572,11 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
 (midi_event &gt; 0) ? (control());
 </code></pre>
 <h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
+<h3 id="generating-a-jsfx-file">Generating a JSFX file</h3>
 <p>The JSFX backend is available on the <a href="https://faustide.grame.fr/">Faust web IDE</a>. In order to export a Faust program as JSFX code, you will need to click on the "export/compile to specific target" button (on the left side, below "Save as"). Then, you need to  choose <strong><em>jsfx</em></strong> both as the platform and architecture, and click <strong><em>compile</em></strong>.<br />
 This will allow your to download a <code>binary.zip</code> file, containing the resulting <strong><em>jsfx</em></strong> file and your original <strong><em>dsp</em></strong> file. </p>
+<h3 id="generating-a-jsfx-file-in-polyphonic-mode">Generating a JSFX file in polyphonic mode</h3>
+<p>Use the <code>declare options "[midi:on][nvoices:n]";</code> <a href="https://faustdoc.grame.fr/manual/midi/#configuring-and-activating-polyphony">convention</a> in the DSP code to activate MIDI and polyphonic mode.</p>
 <h2 id="limitations">Limitations</h2>
 <p>As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some other might come in the future. </p>
 <p>First, only three controls are available: </p>
