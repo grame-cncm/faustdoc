@@ -314,7 +314,7 @@
             
             <li class="nav-item" data-level="1"><a href="#faust-compiler-options" class="nav-link">Faust Compiler Options</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2603" class="nav-link">FAUST compiler version 2.60.3</a>
+            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2680" class="nav-link">FAUST compiler version 2.68.0</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -358,7 +358,7 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="faust-compiler-options">Faust Compiler Options</h1>
-<h2 id="faust-compiler-version-2603">FAUST compiler version 2.60.3</h2>
+<h2 id="faust-compiler-version-2680">FAUST compiler version 2.68.0</h2>
 <pre><code class="language-faust-options">usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
     and fileN represents a Faust source file (.dsp extension).
@@ -383,7 +383,7 @@
 <h2 id="code-generation-options">Code generation options:</h2>
 <hr />
 <pre><code class="language-faust-options">  -lang &lt;lang&gt; --language                 select output language,
-                                          'lang' should be c, cpp (default), cmajor, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust or wast/wasm.
+                                          'lang' should be c, cpp (default), cmajor, codebox, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust, vhdl or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.
@@ -401,6 +401,7 @@
   -os1        --one-sample1               generate one sample computation (1 = separated control and DSP struct).
   -os2        --one-sample2               generate one sample computation (2 = separated control and DSP struct. Separation in short and long delay lines).
   -os3        --one-sample3               generate one sample computation (3 = like 2 but with external memory pointers kept in the DSP struct).
+  -it         --inline-table              inline rdtable/rwtable code in the main class.
   -cm         --compute-mix               mix in outputs buffers.
   -ct         --check-table               check rtable/rwtable index range and generate safe access code [0/1: 1 by default].
   -cn &lt;name&gt;  --class-name &lt;name&gt;         specify the name of the dsp class to be used instead of mydsp.
@@ -428,12 +429,11 @@
   -fun        --fun-tasks                 separate tasks code as separated functions (in -vec, -sch, or -omp mode).
   -fm &lt;file&gt;  --fast-math &lt;file&gt;          use optimized versions of mathematical functions implemented in &lt;file&gt;, use 'faust/dsp/fastmath.cpp' when file is 'def', assume functions are defined in the architecture file when file is 'arch'.
   -mapp       --math-approximation        simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
+  -noreprc    --no-reprc                  (Rust only) Don't force dsp struct layout to follow C ABI.
   -ns &lt;name&gt;  --namespace &lt;name&gt;          generate C++ or D code in a namespace &lt;name&gt;.
-  -vhdl          --vhdl                   output vhdl file.
   -vhdl-trace    --vhdl-trace             activate trace.
-  -vhdl-type 0|1 --vhdl-type 0|1          sample format 0 = sfixed (default), 1 = float.
-  -vhdl-msb &lt;n&gt;  --vhdl-msb &lt;n&gt;           Most Significant Bit (MSB) position.
-  -vhdl-lsb &lt;n&gt;  --vhdl-lsb &lt;n&gt;           Less Significant Bit (LSB) position.
+  -vhdl-float    --vhdl-float             uses IEEE-754 format for samples instead of fixed point.
+  -vhdl-components &lt;file&gt; --vhdl-components &lt;file&gt;    path to a file describing custom components for the VHDL backend.
   -fpga-mem &lt;n&gt;  --fpga-mem &lt;n&gt;           FPGA block ram max size, used in -os2/-os3 mode.
   -wi &lt;n&gt;     --widening-iterations &lt;n&gt;   number of iterations before widening in signal bounding.
   -ni &lt;n&gt;     --narrowing-iterations &lt;n&gt;  number of iterations before stopping narrowing in signal bounding.

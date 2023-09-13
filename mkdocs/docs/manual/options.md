@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.60.3
+## FAUST compiler version 2.68.0
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -28,7 +28,7 @@ usage : faust [options] file1 [file2 ...].
 ---------------------------------------
 ~~~faust-options
   -lang <lang> --language                 select output language,
-                                          'lang' should be c, cpp (default), cmajor, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust or wast/wasm.
+                                          'lang' should be c, cpp (default), cmajor, codebox, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust, vhdl or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.
@@ -46,6 +46,7 @@ usage : faust [options] file1 [file2 ...].
   -os1        --one-sample1               generate one sample computation (1 = separated control and DSP struct).
   -os2        --one-sample2               generate one sample computation (2 = separated control and DSP struct. Separation in short and long delay lines).
   -os3        --one-sample3               generate one sample computation (3 = like 2 but with external memory pointers kept in the DSP struct).
+  -it         --inline-table              inline rdtable/rwtable code in the main class.
   -cm         --compute-mix               mix in outputs buffers.
   -ct         --check-table               check rtable/rwtable index range and generate safe access code [0/1: 1 by default].
   -cn <name>  --class-name <name>         specify the name of the dsp class to be used instead of mydsp.
@@ -73,12 +74,11 @@ usage : faust [options] file1 [file2 ...].
   -fun        --fun-tasks                 separate tasks code as separated functions (in -vec, -sch, or -omp mode).
   -fm <file>  --fast-math <file>          use optimized versions of mathematical functions implemented in <file>, use 'faust/dsp/fastmath.cpp' when file is 'def', assume functions are defined in the architecture file when file is 'arch'.
   -mapp       --math-approximation        simpler/faster versions of 'floor/ceil/fmod/remainder' functions.
+  -noreprc    --no-reprc                  (Rust only) Don't force dsp struct layout to follow C ABI.
   -ns <name>  --namespace <name>          generate C++ or D code in a namespace <name>.
-  -vhdl          --vhdl                   output vhdl file.
   -vhdl-trace    --vhdl-trace             activate trace.
-  -vhdl-type 0|1 --vhdl-type 0|1          sample format 0 = sfixed (default), 1 = float.
-  -vhdl-msb <n>  --vhdl-msb <n>           Most Significant Bit (MSB) position.
-  -vhdl-lsb <n>  --vhdl-lsb <n>           Less Significant Bit (LSB) position.
+  -vhdl-float    --vhdl-float             uses IEEE-754 format for samples instead of fixed point.
+  -vhdl-components <file> --vhdl-components <file>    path to a file describing custom components for the VHDL backend.
   -fpga-mem <n>  --fpga-mem <n>           FPGA block ram max size, used in -os2/-os3 mode.
   -wi <n>     --widening-iterations <n>   number of iterations before widening in signal bounding.
   -ni <n>     --narrowing-iterations <n>  number of iterations before stopping narrowing in signal bounding.
