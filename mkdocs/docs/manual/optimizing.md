@@ -20,7 +20,7 @@ One can think of these four categories as *different computation rates*. The pro
 
 #### Specializing the DSP Code
 
-The Faust compiler can possibly do a lot of optimizations at compile time. The DSP code can for instance be compiled for a fixed sample rate, thus doing at compile time all computation that depends of it. Since the Faust compiler will look for librairies starting from the local folder, a simple way is to locally copy the `libraries/platform.lib` file (which contains the `SR` definition), and change its definition for a fixed value like 48000 Hz. Then the DSP code has to be recompiled for the specialisation to take effect. Note that `libraries/platform.lib` also contains the definition of  the `tablesize` constant which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust services scripts which add the `-I /usr/local/share/faust/embedded/` parameter to the Faust command line to use a special version of the platform.lib file.
+The Faust compiler can possibly do a lot of optimizations at compile time. The DSP code can for instance be compiled for a fixed sample rate, thus doing at compile time all computation that depends of it. Since the Faust compiler will look for librairies starting from the local folder, a simple way is to locally copy the `libraries/platform.lib` file (which contains the `SR` definition), and change its definition for a fixed value like 48000 Hz. Then the DSP code has to be recompiled for the specialisation to take effect. Note that `libraries/platform.lib` also contains the definition of the `tablesize` constant which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust services scripts which add the `-I /usr/local/share/faust/embedded/` parameter to the Faust command line to use a special version of the platform.lib file.
 
 ### Computations Done *at Init time*
 
@@ -28,7 +28,9 @@ If not specialized with a constant value at compilation time, all computations t
 
 #### Using rdtable or rwtable
 
-**TODO**: explain how computations can be done at init time and how to use rdtable or rwtable to store pre-computed values.
+**TODO**: explain how computations can be done at init time and how to use `rdtable` or `rwtable` to store pre-computed values.
+
+Several [tabulation functions](https://faustlibraries.grame.fr/libs/basics/#function-tabulation) can possibly be used.
 
 ### Computations Done *at Control Rate*
 
