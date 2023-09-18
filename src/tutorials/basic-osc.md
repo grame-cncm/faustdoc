@@ -85,10 +85,10 @@ process = +(0.01) ~ ma.frac;
 * How do we change the pitch of the sawtooth wave? 
     * -> We should increment the counter faster or slower. Try different values (e.g., 0.001, 0.1, etc.).
 * Instead of controlling the increment of the counter, we'd like to control the
-frequency of the sawtooth wave.  <!-- What's a frequency? Show how it impacts the generated wave.-->
+frequency of the sawtooth wave. <!-- What's a frequency? Show how it impacts the generated wave.-->
 * To do that, we need to know the number of values of the wave processed by the
 computer in one second. That's what we call the [sampling rate](https://en.wikipedia.org/wiki/Sampling_(signal_processing)). <!-- INSIST ON WHAT IT IS.--> This value changes in function of the context of the program so it can be retrieved with `ma.SR`. 
-* A sampling rate of 44100 corresponds to a frequency of 44100Hz. If we want a
+* A sampling rate of 44100 corresponds to a frequency of 44100 Hz. If we want a
 frequency of 440, what increment do we need to put in our counter?
     * -> `freq/ma.SR`
 * In the end, we get:

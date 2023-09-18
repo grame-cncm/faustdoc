@@ -319,7 +319,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Equivalent signal expressions 
 
-It is really important to note that *syntactically equivalent signal expressions* will be *internally represented by the same memory structure* (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))` expression, then used in both outputs:
+It is really important to note that *syntactically equivalent signal expressions* will be *internally represented by the same memory structure* (using hash consing), thus treated in the same way in the further compilation steps. So the following code where the `s1` variable is created to define the `sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))` expression, then used in both outputs:
 
 ```C++
 static void equivalent1()

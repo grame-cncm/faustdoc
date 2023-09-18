@@ -485,7 +485,7 @@ function update(freq1,freq2,volume) {
     if (fUpdated) { fUpdated = false; control(); }
 }
 </code></pre>
-<p>Finally <code>compute</code> process the audio inputs and produces audio ouputs:</p>
+<p>Finally <code>compute</code> process the audio inputs and produces audio outputs:</p>
 <pre><code>// Update parameters
 / Compute one frame
 function compute() {
@@ -555,7 +555,7 @@ Options:
 <p><img src="img/faust-rnbo1-ter.png" class="mx-auto d-block" width="100%">
 <center><em><code>rnbo~</code> subpatcher with parameter control machinery in <code>p</code> mode</em></center></p>
 <h3 id="bargraph-handling">Bargraph handling</h3>
-<p>In Faust, bargraph are typically used to analyse audio signals where computed values are sent at control rate. This cannot be directly done in the RNBO model where only audio sigals can be sent from the codebox code. So additional audio outputs are created for bargraph, and will be sampled (using <code>snapshot~</code> and <code>change</code>) and be connected to <code>param</code> objects, like input controllers.</p>
+<p>In Faust, bargraph are typically used to analyze audio signals where computed values are sent at control rate. This cannot be directly done in the RNBO model where only audio signals can be sent from the codebox code. So additional audio outputs are created for bargraph, and will be sampled (using <code>snapshot~</code> and <code>change</code>) and be connected to <code>param</code> objects, like input controllers.</p>
 <p>So for instance the following example: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
@@ -685,7 +685,7 @@ effect = dm.freeverb_demo;
 <img src="img/faust-rnbo5-bis.png" class="mx-auto d-block" width="100%">
 <center><em><code>rnbo~</code> subpatcher with the polyphonic instrument and global effect as <code>p</code>abstractions</em></center></p>
 <h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
-<p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as RNBO patches.</p>
+<p>Faust DSP programs can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as RNBO patches.</p>
 <h3 id="generating-a-rnbo-patch">Generating a RNBO patch</h3>
 <p>The output as a RNBO patch can directly be generated using the <em>Platform = rnbo</em> and <em>Architecture = rnbo</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.maxpat</code> file.to be opened with Max/MSP.</p>
 <p><img src="img/export.png" class="mx-auto d-block" width="40%">

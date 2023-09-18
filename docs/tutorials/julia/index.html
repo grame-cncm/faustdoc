@@ -439,7 +439,7 @@ getNumOutputs: 2
 Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt; UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), &quot;/Oscillator/freq2&quot; =&gt; UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), &quot;/Oscillator/freq1&quot; =&gt; UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
 </code></pre>
-<p>With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerfull <a href="http://docs.juliaplots.org/latest/">Plots.jl</a> package), and showing here the effect of the <code>si.smoo</code> at the beginning of the signals:</p>
+<p>With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerful <a href="http://docs.juliaplots.org/latest/">Plots.jl</a> package), and showing here the effect of the <code>si.smoo</code> at the beginning of the signals:</p>
 <p><img src="img/osc-display.png" class="mx-auto d-block" width="60%">
 <center><em>Displaying the outputs</em></center></p>
 <h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
@@ -552,7 +552,7 @@ println(&quot;Application name: &quot;, m.name, &quot;\n&quot;)
 <pre><code class="language-julia">println(&quot;getNumInputs: &quot;, getNumInputs(my_dsp))
 println(&quot;getNumOutputs: &quot;, getNumOutputs(my_dsp), &quot;\n&quot;)
 </code></pre>
-<p>Infomation on all controllers can be retrieved using the <code>MapUI</code> type:</p>
+<p>Information on all controllers can be retrieved using the <code>MapUI</code> type:</p>
 <pre><code class="language-julia"># Create a MapUI controller
 map_ui = MapUI(my_dsp)
 buildUserInterface!(my_dsp, map_ui)
@@ -566,7 +566,7 @@ outputs = zeros(FAUSTFLOAT, block_size, getNumOutputs(my_dsp))
 compute!(my_dsp, block_size, inputs, outputs)
 println(&quot;One computed output buffer: &quot;, outputs)
 </code></pre>
-<p>Now the <strong>osc.jl</strong> can possibly be directly integrated in a larger project, or customised using an adapted new architecture file. </p>
+<p>Now the <strong>osc.jl</strong> can possibly be directly integrated in a larger project, or customized using an adapted new architecture file. </p>
 <h3 id="the-faust2portaudiojulia-tool">The faust2portaudiojulia tool</h3>
 <p>The Faust DSP program can be compiled and run with the more sophisticated <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/julia#faust2portaudiojulia">faust2portaudiojulia</a> tool which will render it using the <a href="https://juliapackages.com/p/portaudio">PortAudio.jl</a> package to access the audio driver, <a href="https://juliapackages.com/p/opensoundcontrol">OpenSoundControl.jl</a> package for OSC control, and <a href="http://juliagraphics.github.io/Gtk.jl/latest/">GTK.jl</a> package for the Graphical User Interface.</p>
 <p>The <strong>faust2portaudiojulia</strong> tool use this <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/portaudio_gtk.jl">portaudio_gtk.jl</a> architecture file. When used the following way:</p>
@@ -606,7 +606,7 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 <h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
 <p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Julia code, or possibly as working audio applications.</p>
 <h3 id="generating-the-pure-julia-output">Generating the pure Julia output</h3>
-<p>The output of the Julia backend can directly be generated using the <em>Platform = source</em> and <em>Architecture = julia</em> export options. As previouly explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.</p>
+<p>The output of the Julia backend can directly be generated using the <em>Platform = source</em> and <em>Architecture = julia</em> export options. As previously explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.</p>
 <p><img src="img/export.png" class="mx-auto d-block" width="40%">
 <center><em>Exporting the code</em></center></p>
 <h3 id="generating-a-minimal-working-julia-file">Generating a minimal working Julia file</h3>
@@ -624,16 +624,16 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 <pre><code class="language-bash">julia -t 2 foo.jl -oscc 
 </code></pre>
 <h2 id="using-the-faustjl-julia-package">Using the Faust.jl Julia package</h2>
-<p>The Julia ecosystem contains over 4,000 packages that <a href="https://julialang.org/packages/">are registered in the General registry</a>. A Faust.lj package initially developed by <a href="https://corajr.com">Cora Johnson-Roberson</a>, has been <a href="https://github.com/sletz/Faust.jl">forked and extended here</a>. It allows to use the libfaust library and the Julia Faust backend. </p>
+<p>The Julia ecosystem contains over 4,000 packages that <a href="https://julialang.org/packages/">are registered in the General registry</a>. A Faust.lj package initially developed by <a href="https://corajr.com">Cora Johnson-Roberson</a>, has been <a href="https://github.com/sletz/Faust.jl">forked and extended here</a>. It allows the use of the libfaust library and the Julia Faust backend. </p>
 <p>The <a href="https://code.visualstudio.com">Visual Studio Code</a> application can be configurated with a <a href="https://marketplace.visualstudio.com/items?itemName=julialang.language-julia">Julia extension</a>. It is a very convenient way to  edit, compile and test Julia + Faust code. </p>
 <h3 id="installing-the-forked-faustjl-package">Installing the forked Faust.jl package</h3>
-<p>In VS Code, you can <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/">enter the pakage mode</a>. Pkg comes with a REPL. Enter the Pkg REPL by pressing <code>]</code> from the Julia REPL and install the Faust package with:</p>
+<p>In VS Code, you can <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/">enter the package mode</a>. Pkg comes with a REPL. Enter the Pkg REPL by pressing <code>]</code> from the Julia REPL and install the Faust package with:</p>
 <pre><code class="language-julia">pkg&gt; add https://github.com/sletz/Faust.jl
 </code></pre>
 <p>To get back to the Julia REPL, press backspace or ^C, then load the Faust package with:</p>
 <pre><code class="language-julia"> julia&gt; using Faust
 </code></pre>
-<p>Assuming a working Julia environement is setup, the following commands can be used.</p>
+<p>Assuming a working Julia environment is setup, the following commands can be used.</p>
 <h3 id="using-the-libfaust-compiler">Using the libfaust compiler</h3>
 <pre><code class="language-julia">
  # Create a DSP factory.
@@ -684,7 +684,7 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
  # Compile the DSP, compute one block of audio and display the outputs
  julia&gt; compileFaustString(code)
 
- # Compile the DSP, with aditionals compile arguments and display the outputs
+ # Compile the DSP, with additional compiler arguments and display the outputs
  julia&gt; compileFaustString(code; argv=[&quot;-double&quot;, &quot;-vec&quot;])
 
  # Compile the DSP, with a larger block_size and display the outputs

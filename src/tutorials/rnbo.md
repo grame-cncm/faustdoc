@@ -121,7 +121,7 @@ function update(freq1,freq2,volume) {
 }
 ```
 
-Finally `compute` process the audio inputs and produces audio ouputs:
+Finally `compute` process the audio inputs and produces audio outputs:
 
 ```
 // Update parameters
@@ -215,7 +215,7 @@ and the subpatcher contains a `p` object to load and use the `osc.rnbopat` file:
 
 ### Bargraph handling
 
-In Faust, bargraph are typically used to analyse audio signals where computed values are sent at control rate. This cannot be directly done in the RNBO model where only audio sigals can be sent from the codebox code. So additional audio outputs are created for bargraph, and will be sampled (using `snapshot~` and `change`) and be connected to `param` objects, like input controllers.
+In Faust, bargraph are typically used to analyze audio signals where computed values are sent at control rate. This cannot be directly done in the RNBO model where only audio signals can be sent from the codebox code. So additional audio outputs are created for bargraph, and will be sampled (using `snapshot~` and `change`) and be connected to `param` objects, like input controllers.
 
 So for instance the following example: 
 
@@ -343,7 +343,7 @@ and the `rnbo~` subpather:
 
 ## Using the Faust Web IDE
 
-Faust DSP program can be written, tested in the [Faust Web IDE](https://faustide.grame.fr/) and generated as RNBO patches.
+Faust DSP programs can be written, tested in the [Faust Web IDE](https://faustide.grame.fr/) and generated as RNBO patches.
 
 ### Generating a RNBO patch
 

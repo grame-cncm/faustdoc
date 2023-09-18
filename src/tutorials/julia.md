@@ -74,7 +74,7 @@ getNumOutputs: 2
 Path/UIZone dictionary: Dict{String, UIZone}("/Oscillator/volume" => UIZone(:fHslider0, 0.0f0, -96.0f0, 0.0f0, 0.1f0), "/Oscillator/freq2" => UIZone(:fHslider2, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0), "/Oscillator/freq1" => UIZone(:fHslider1, 1000.0f0, 20.0f0, 3000.0f0, 1.0f0))
 
 ```
-With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerfull [Plots.jl](http://docs.juliaplots.org/latest/) package), and showing here the effect of the `si.smoo` at the beginning of the signals:
+With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerful [Plots.jl](http://docs.juliaplots.org/latest/) package), and showing here the effect of the `si.smoo` at the beginning of the signals:
 
 <img src="img/osc-display.png" class="mx-auto d-block" width="60%">
 <center>*Displaying the outputs*</center>
@@ -222,7 +222,7 @@ println("getNumInputs: ", getNumInputs(my_dsp))
 println("getNumOutputs: ", getNumOutputs(my_dsp), "\n")
 ```
 
-Infomation on all controllers can be retrieved using the `MapUI` type:
+Information on all controllers can be retrieved using the `MapUI` type:
 
 ```julia
 # Create a MapUI controller
@@ -242,7 +242,7 @@ compute!(my_dsp, block_size, inputs, outputs)
 println("One computed output buffer: ", outputs)
 ```
 
-Now the **osc.jl** can possibly be directly integrated in a larger project, or customised using an adapted new architecture file. 
+Now the **osc.jl** can possibly be directly integrated in a larger project, or customized using an adapted new architecture file. 
 
 ### The faust2portaudiojulia tool
 
@@ -316,7 +316,7 @@ Faust DSP program can be written, tested in the [Faust Web IDE](https://faustide
 
 ### Generating the pure Julia output
 
-The output of the Julia backend can directly be generated using the *Platform = source* and *Architecture = julia* export options. As previouly explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.
+The output of the Julia backend can directly be generated using the *Platform = source* and *Architecture = julia* export options. As previously explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.
 
 <img src="img/export.png" class="mx-auto d-block" width="40%">
 <center>*Exporting the code*</center>
@@ -351,13 +351,13 @@ julia -t 2 foo.jl -oscc
 
 ## Using the Faust.jl Julia package
 
-The Julia ecosystem contains over 4,000 packages that [are registered in the General registry](https://julialang.org/packages/). A Faust.lj package initially developed by [Cora Johnson-Roberson](https://corajr.com), has been [forked and extended here](https://github.com/sletz/Faust.jl). It allows to use the libfaust library and the Julia Faust backend. 
+The Julia ecosystem contains over 4,000 packages that [are registered in the General registry](https://julialang.org/packages/). A Faust.lj package initially developed by [Cora Johnson-Roberson](https://corajr.com), has been [forked and extended here](https://github.com/sletz/Faust.jl). It allows the use of the libfaust library and the Julia Faust backend. 
 
 The [Visual Studio Code](https://code.visualstudio.com) application can be configurated with a [Julia extension](https://marketplace.visualstudio.com/items?itemName=julialang.language-julia). It is a very convenient way to  edit, compile and test Julia + Faust code. 
 
 ### Installing the forked Faust.jl package
 
-In VS Code, you can [enter the pakage mode](https://docs.julialang.org/en/v1/stdlib/Pkg/). Pkg comes with a REPL. Enter the Pkg REPL by pressing `]` from the Julia REPL and install the Faust package with:
+In VS Code, you can [enter the package mode](https://docs.julialang.org/en/v1/stdlib/Pkg/). Pkg comes with a REPL. Enter the Pkg REPL by pressing `]` from the Julia REPL and install the Faust package with:
 
 ```julia
 pkg> add https://github.com/sletz/Faust.jl
@@ -368,7 +368,7 @@ pkg> add https://github.com/sletz/Faust.jl
  julia> using Faust
 ```
 
-Assuming a working Julia environement is setup, the following commands can be used.
+Assuming a working Julia environment is setup, the following commands can be used.
 
 ### Using the libfaust compiler
 
@@ -438,7 +438,7 @@ Assuming a working Julia environement is setup, the following commands can be us
  # Compile the DSP, compute one block of audio and display the outputs
  julia> compileFaustString(code)
  
- # Compile the DSP, with aditionals compile arguments and display the outputs
+ # Compile the DSP, with additional compiler arguments and display the outputs
  julia> compileFaustString(code; argv=["-double", "-vec"])
  
  # Compile the DSP, with a larger block_size and display the outputs

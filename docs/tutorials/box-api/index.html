@@ -427,7 +427,7 @@
 <p>The <em>Semantic Phase</em> itself is composed of several steps:</p>
 <p><img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
 <center><em>The semantic phase</em></center></p>
-<p>The initial DSP code using the Block Diagram Algebra (BDA) is translated in a flat circuit in normal form in the <em>Evaluation, lambda-calculus</em> step. </p>
+<p>The initial DSP code using the Block Diagram Algebra (BDA) is translated into a flat circuit in normal form in the <em>Evaluation, lambda-calculus</em> step. </p>
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
 <p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-box-stage">Accessing the box stage</h4>
@@ -609,7 +609,7 @@ process = @(_,7);
     }
 }
 </code></pre>
-<p>Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
+<p>Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code shows how to compile in vector mode:</p>
 <pre><code class="language-C++">static void test7()
 {
     createLibContext();
@@ -699,7 +699,7 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
 }
 </code></pre>
 <h4 id="equivalent-box-expressions">Equivalent box expressions</h4>
-<p>It is really important to note that <em>syntactically equivalent box expressions</em> will be <em>internally represented by the same memory structure</em> (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))</code> expression, then used in both outputs:</p>
+<p>It is really important to note that <em>syntactically equivalent box expressions</em> will be <em>internally represented by the same memory structure</em> (using hash consing), thus treated in the same way in the further compilation steps. So the following code where the <code>s1</code> variable is created to define the <code>boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))</code> expression, then used in both outputs:</p>
 <pre><code class="language-C++">static void equivalent1()
 {
     COMPILER
@@ -1366,7 +1366,7 @@ delete dsp;
 deleteInterpreterDSPFactory(factory);
 </code></pre>
 <h4 id="connecting-the-audio-layer">Connecting the audio layer</h4>
-<p>Audio drivers allow to render the DSP instance. Here is a simple code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h">dummyaudio</a> audio driver:</p>
+<p>Audio drivers allow you to render the DSP instance. Here is a simple code example using the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h">dummyaudio</a> audio driver:</p>
 <pre><code class="language-C++">// Allocate the audio driver to render 5 buffers of 512 frames
 dummyaudio audio(5);
 audio.init(&quot;Test&quot;, dsp);
@@ -1465,7 +1465,7 @@ static void test22(int argc, char* argv[])
 }
 </code></pre>
 <h4 id="generating-the-signals-as-an-intermediate-step">Generating the signals as an intermediate step</h4>
-<p>The <code>boxesToSignals</code> function allows to compile a box in a list of signals, to be used with the <a href="https://faustdoc.grame.fr/tutorials/signal-api/">signal API</a>. The following example shows how the two steps (box =&gt; signals then signals =&gt; DSP factory) can be chained, rewriting the previous code as:</p>
+<p>The <code>boxesToSignals</code> function allows you to compile a box in a list of signals, to be used with the <a href="https://faustdoc.grame.fr/tutorials/signal-api/">signal API</a>. The following example shows how the two steps (box =&gt; signals then signals =&gt; DSP factory) can be chained, rewriting the previous code as:</p>
 <pre><code class="language-C++">// Using the Interpreter backend.
 static void test23(int argc, char* argv[])
 {
@@ -1519,7 +1519,7 @@ static void test23(int argc, char* argv[])
 }
 </code></pre>
 <h4 id="polyphonic-midi-controllable-simple-synthesizer">Polyphonic MIDI controllable simple synthesizer</h4>
-<p>Here is a MIDI controlable simple synthesizer, first with the DSP code:</p>
+<p>Here is a MIDI controllable simple synthesizer, first with the DSP code:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
 

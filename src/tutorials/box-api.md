@@ -18,7 +18,7 @@ The *Semantic Phase* itself is composed of several steps:
 <img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
 <center>*The semantic phase*</center>
 
-The initial DSP code using the Block Diagram Algebra (BDA) is translated in a flat circuit in normal form in the *Evaluation, lambda-calculus* step. 
+The initial DSP code using the Block Diagram Algebra (BDA) is translated into a flat circuit in normal form in the *Evaluation, lambda-calculus* step. 
 
 The list of output signals is produced by the *Symbolic Propagation* step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a *list of output signals in normal form*. 
 
@@ -213,7 +213,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the [compiler can also generate vector and parallel code](https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation). The following code show how to compile in vector mode:
+Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the [compiler can also generate vector and parallel code](https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation). The following code shows how to compile in vector mode:
 
 ```C++
 static void test7()
@@ -309,7 +309,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Equivalent box expressions 
 
-It is really important to note that *syntactically equivalent box expressions* will be *internally represented by the same memory structure* (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the `s1` variable is created to define the `boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))` expression, then used in both outputs:
+It is really important to note that *syntactically equivalent box expressions* will be *internally represented by the same memory structure* (using hash consing), thus treated in the same way in the further compilation steps. So the following code where the `s1` variable is created to define the `boxAdd(boxDelay(boxWire(), boxReal(500)), boxReal(0.5))` expression, then used in both outputs:
 
 ```C++
 static void equivalent1()
@@ -1009,7 +1009,7 @@ deleteInterpreterDSPFactory(factory);
 
 #### Connecting the audio layer 
 
-Audio drivers allow to render the DSP instance. Here is a simple code example using the [dummyaudio](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h) audio driver:
+Audio drivers allow you to render the DSP instance. Here is a simple code example using the [dummyaudio](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/dummy-audio.h) audio driver:
 
 ```C++
 // Allocate the audio driver to render 5 buffers of 512 frames
@@ -1116,7 +1116,7 @@ static void test22(int argc, char* argv[])
 
 #### Generating the signals as an intermediate step
 
-The `boxesToSignals` function allows to compile a box in a list of signals, to be used with the [signal API](https://faustdoc.grame.fr/tutorials/signal-api/). The following example shows how the two steps (box => signals then signals => DSP factory) can be chained, rewriting the previous code as:
+The `boxesToSignals` function allows you to compile a box in a list of signals, to be used with the [signal API](https://faustdoc.grame.fr/tutorials/signal-api/). The following example shows how the two steps (box => signals then signals => DSP factory) can be chained, rewriting the previous code as:
 
 ```C++
 // Using the Interpreter backend.
@@ -1174,7 +1174,7 @@ static void test23(int argc, char* argv[])
 
 #### Polyphonic MIDI controllable simple synthesizer
 
-Here is a MIDI controlable simple synthesizer, first with the DSP code:
+Here is a MIDI controllable simple synthesizer, first with the DSP code:
 
 <!-- faust-run -->
 ```

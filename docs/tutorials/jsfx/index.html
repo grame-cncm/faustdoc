@@ -446,8 +446,8 @@ dsp.fSlow2 = 21;
 dsp.output0 = 22;
 dsp.output1 = 23;
 </code></pre>
-<p>The next part consists in two functions used to create DSP objects, allocate their memory and initialize their states. One object represents one voice. If object has no <code>[nvoices]</code> metadata, or if <code>[nvoices:1]</code>, only one object will be created. The <code>create_instance</code> function allocates memory, then <code>init_instances</code> precomputes object state, including constants and everything that doesn't need to be computed at runtime. </p>
-<p>At last, the <code>@init</code> section defines the <code>control</code> function. This function corresponds to the computation happening just before the audio loop in the C++ backend. These correspond to the computations related to controls and MIDI. </p>
+<p>The next part consists in two functions used to create DSP objects, allocate their memory and initialize their states. One object represents one voice. If an object has no <code>[nvoices]</code> metadata, or if <code>[nvoices:1]</code>, only one object will be created. The <code>create_instance</code> function allocates memory, then <code>init_instances</code> precomputes object state, including constants and everything that doesn't need to be computed at runtime. </p>
+<p>Finally, the <code>@init</code> section defines the <code>control</code> function. This function corresponds to the computation happening just before the audio loop in the C++ backend. These correspond to the computations related to controls and MIDI. </p>
 <p>In JSFX sandboxed context, we don't need to call it on every loop, thus it has been pushed outside of <code>@block</code>. Moreover, this computation must be accessible from both <code>@slider</code> and <code>@block</code>. The current implementation will trigger a call to <code>control</code> function everytime a slider value changes, or everytime a MIDI input event happens. </p>
 <p>By default, the <code>@block</code> section is empty. It will be filled with code if MIDI is somehow enabled:</p>
 <ul>
@@ -455,7 +455,7 @@ dsp.output1 = 23;
 <li>by setting polyphonic mode with <code>declare options ["nvoices:4"]</code> </li>
 </ul>
 <p>The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named <em>freq</em>, <em>key</em>, <em>vel</em>, <em>gain</em>, <em>gate</em>, and will convert the MIDI value to whatever it is supposed to represent: frequency for <em>freq</em>, raw MIDI note number for "key" (...).  </p>
-<p>The <code>@block</code> section contains a condition so that it will only call <code>control</code> function when MIDI events occur. </p>
+<p>The <code>@block</code> section contains a condition so that it will only call the <code>control</code> function when MIDI events occur. </p>
 <p>The ̀<code>@slider</code> section only calls <code>control</code>, and is itself only computed when a slider value changes.</p>
 <p>Finally, the <code>@sample</code> section is where the magic happens. It will loop through the different objects and compute the audio output. This section is represented in JSFX as a block of code called for every single sample. At the bottom of generated code, object outputs are summed in JSFX special variables <code>spl0</code>, <code>spl1</code> (...), which are the actual outputs of a JSFX plugin.</p>
 <h3 id="midi-basic-example">MIDI basic example</h3>
@@ -510,7 +510,7 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
 <li>a gate used to trigger an envelope </li>
 </ul>
 <p>Be careful that <em>key</em> will be a value between 0-127 while frequency will be converted to cycle per seconds. Same mechanism applies to velocity (0-127) versus gain (0-1). 
-The following code shows the basic mechanism of MIDI polyphonic instrument that compiles for JSFX. </p>
+The following code shows the basic mechanism of the MIDI polyphonic instrument that compiles for JSFX. </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 
@@ -578,7 +578,7 @@ This will allow your to download a <code>binary.zip</code> file, containing the 
 <h3 id="generating-a-jsfx-file-in-polyphonic-mode">Generating a JSFX file in polyphonic mode</h3>
 <p>The <code>declare options "[midi:on][nvoices:n]";</code> <a href="https://faustdoc.grame.fr/manual/midi/#configuring-and-activating-polyphony">coding convention</a> can be used in the DSP code to activate MIDI and polyphonic mode.</p>
 <h2 id="limitations">Limitations</h2>
-<p>As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some other might come in the future. </p>
+<p>As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some others might come in the future. </p>
 <p>First, only three controls are available: </p>
 <ul>
 <li>sliders: hslider, vslider, nentry</li>

@@ -709,7 +709,7 @@ process = _ &lt;: @(500) + 0.5, @(3000) * 1.5;
 }
 </code></pre>
 <h4 id="equivalent-signal-expressions">Equivalent signal expressions</h4>
-<p>It is really important to note that <em>syntactically equivalent signal expressions</em> will be <em>internally represented by the same memory structure</em> (using hash consing), thus treated in the same way in the further compilations steps. So the following code where the <code>s1</code> variable is created to define the <code>sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))</code> expression, then used in both outputs:</p>
+<p>It is really important to note that <em>syntactically equivalent signal expressions</em> will be <em>internally represented by the same memory structure</em> (using hash consing), thus treated in the same way in the further compilation steps. So the following code where the <code>s1</code> variable is created to define the <code>sigAdd(sigDelay(sigInput(0), sigInt(500)), sigReal(0.5))</code> expression, then used in both outputs:</p>
 <pre><code class="language-C++">static void equivalent1()
 {
     COMPILER

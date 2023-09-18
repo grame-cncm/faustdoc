@@ -104,9 +104,9 @@ dsp.output0 = 22;
 dsp.output1 = 23;
 ```
 
-The next part consists in two functions used to create DSP objects, allocate their memory and initialize their states. One object represents one voice. If object has no `[nvoices]` metadata, or if `[nvoices:1]`, only one object will be created. The `create_instance` function allocates memory, then `init_instances` precomputes object state, including constants and everything that doesn't need to be computed at runtime. 
+The next part consists in two functions used to create DSP objects, allocate their memory and initialize their states. One object represents one voice. If an object has no `[nvoices]` metadata, or if `[nvoices:1]`, only one object will be created. The `create_instance` function allocates memory, then `init_instances` precomputes object state, including constants and everything that doesn't need to be computed at runtime. 
 
-At last, the `@init` section defines the `control` function. This function corresponds to the computation happening just before the audio loop in the C++ backend. These correspond to the computations related to controls and MIDI. 
+Finally, the `@init` section defines the `control` function. This function corresponds to the computation happening just before the audio loop in the C++ backend. These correspond to the computations related to controls and MIDI. 
 
 In JSFX sandboxed context, we don't need to call it on every loop, thus it has been pushed outside of `@block`. Moreover, this computation must be accessible from both `@slider` and `@block`. The current implementation will trigger a call to `control` function everytime a slider value changes, or everytime a MIDI input event happens. 
 
@@ -118,7 +118,7 @@ By default, the `@block` section is empty. It will be filled with code if MIDI i
     
 The former will actually connect MIDI key or ctrl to the slider, while the latter will connect MIDI note inputs to sliders named *freq*, *key*, *vel*, *gain*, *gate*, and will convert the MIDI value to whatever it is supposed to represent: frequency for *freq*, raw MIDI note number for "key" (...).  
 
-The `@block` section contains a condition so that it will only call `control` function when MIDI events occur. 
+The `@block` section contains a condition so that it will only call the `control` function when MIDI events occur. 
 
 The ̀`@slider` section only calls `control`, and is itself only computed when a slider value changes.
 
@@ -174,7 +174,7 @@ As explained in the [MIDI](https://faustdoc.grame.fr/manual/midi/) documentation
  - a gate used to trigger an envelope 
 
 Be careful that *key* will be a value between 0-127 while frequency will be converted to cycle per seconds. Same mechanism applies to velocity (0-127) versus gain (0-1). 
-The following code shows the basic mechanism of MIDI polyphonic instrument that compiles for JSFX. 
+The following code shows the basic mechanism of the MIDI polyphonic instrument that compiles for JSFX. 
 
 <!-- faust-run -->
 ```
@@ -245,7 +245,7 @@ The `declare options "[midi:on][nvoices:n]";` [coding convention](https://faustd
 
 ## Limitations
 
-As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some other might come in the future. 
+As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some others might come in the future. 
 
 First, only three controls are available: 
 
