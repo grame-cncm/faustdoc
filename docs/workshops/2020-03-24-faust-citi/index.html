@@ -447,10 +447,10 @@
 <p>Par convention, en Faust, un signal audio à pleine échelle varie entre -1 et +1. Mais dans un premier temps nous allons commencer par un signal en dent de scie entre 0 et 1 qui nous servira par la suite de <em>générateur de phase</em> pour produire différentes formes d'onde.</p>
 <h3 id="generateur-de-phase">Générateur de Phase</h3>
 <p>La première étape consiste à construire un <em>générateur de phase</em> qui produit un signal périodique en dents de scie entre 0 et 1. Voici le signal que nous voulons générer :</p>
-<p><img src="img/phase-sig.png" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/phase-sig.png" width="70%" class="mx-auto d-block"></p>
 <h3 id="rampe">Rampe</h3>
 <p>Pour cela nous allons produire une rampe "infinie", que nous transformerons ensuite en un signal périodique grâce à une opération <em>partie-decimale</em> :</p>
-<p><img src="img/ramp-sig.png" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/ramp-sig.png" width="70%" class="mx-auto d-block"></p>
 <p>La rampe est produite par le programme suivant :</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -469,7 +469,7 @@ process = 0.125 : + ~ _;
 <h3 id="semantique">Sémantique</h3>
 <p>Dans l'exemple précédent, <code>0,125</code>, <code>+</code> et <code>_</code> sont des <em>primitives</em> du langage. Les deux autres signes : <code>:</code> et <code>~</code> sont des opérateurs de cablage. Ils sont utilisés pour relier entre elles les expressions du langage.</p>
 <p>Pour comprendre le diagramme ci-dessus, nous allons l'annoter avec sa sémantique mathématique :</p>
-<p><img src="img/ramp-diag-math.svg" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/ramp-diag-math.svg" width="60%" class="mx-auto d-block"></p>
 <p>Comme on peut le voir dans le diagramme, la formule du signal de sortie est : <script type="math/tex">y(t) = y(t-1) + 0.125</script>
 </p>
 <p>On peut calculer les premières valeurs de <script type="math/tex">y(t)</script> :</p>

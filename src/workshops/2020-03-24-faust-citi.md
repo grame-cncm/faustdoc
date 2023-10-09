@@ -10,13 +10,13 @@ Par convention, en Faust, un signal audio à pleine échelle varie entre -1 et +
 
 La première étape consiste à construire un _générateur de phase_ qui produit un signal périodique en dents de scie entre 0 et 1. Voici le signal que nous voulons générer :
 
-<img src="img/phase-sig.png" width="80%" class="mx-auto d-block">
+<img src="img/phase-sig.png" width="70%" class="mx-auto d-block">
 
 ### Rampe
 
 Pour cela nous allons produire une rampe "infinie", que nous transformerons ensuite en un signal périodique grâce à une opération _partie-decimale_ :
 
-<img src="img/ramp-sig.png" width="80%" class="mx-auto d-block">
+<img src="img/ramp-sig.png" width="70%" class="mx-auto d-block">
 
 La rampe est produite par le programme suivant :
 
@@ -33,7 +33,7 @@ Dans l'exemple précédent, `0,125`, `+` et `_` sont des *primitives* du langage
 
 Pour comprendre le diagramme ci-dessus, nous allons l'annoter avec sa sémantique mathématique :
 
-<img src="img/ramp-diag-math.svg" width="80%" class="mx-auto d-block">
+<img src="img/ramp-diag-math.svg" width="60%" class="mx-auto d-block">
 
 Comme on peut le voir dans le diagramme, la formule du signal de sortie est : \(y(t) = y(t-1) + 0.125\)
 

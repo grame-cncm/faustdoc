@@ -373,10 +373,10 @@
 <p>We are going to build a MIDI synthesizer from scratch (without using the Faust libraries).</p>
 <h2 id="phase-generator">Phase Generator</h2>
 <p>The first step is to build a <em>phase generator</em> that produces a periodic sawtooth signal between 0 and 1. Here is the signal we want to generate:</p>
-<p><img src="img/phase-sig.png" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/phase-sig.png" width="70%" class="mx-auto d-block"></p>
 <h3 id="ramp">Ramp</h3>
 <p>In order to produce the above signal we need first to produce a ramp signal
-<img src="img/ramp-sig.png" width="80%" class="mx-auto d-block"></p>
+<img src="img/ramp-sig.png" width="70%" class="mx-auto d-block"></p>
 <p>using the following Faust program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -396,7 +396,7 @@ process = 0.125 : + ~ _;
 where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</em> of the language (predefined elementary audio components), and the other two signs: <code>:</code> and <code>~</code> are used to connect together these audio components.</p>
 <h3 id="semantics">Semantics</h3>
 <p>To understand the above diagram let's annotate it with its mathematical semantics.</p>
-<p><img src="img/ramp-diag-math.svg" width="80%" class="mx-auto d-block"></p>
+<p><img src="img/ramp-diag-math.svg" width="60%" class="mx-auto d-block"></p>
 <p>As we can see in the diagram, the formula of the output signal is: <script type="math/tex">y(t) = y(t-1) + 0.125</script>
 </p>
 <p>We can compute the first values of <script type="math/tex">y(t)</script>:</p>
