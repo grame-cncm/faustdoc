@@ -743,6 +743,7 @@ Options:
    -me : to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow)
    -debug : to print all the build steps
    -nodeploy : skip self-contained application generation (using 'macdeployqt')
+   -I include-path : add an include-directory to the generated Qt project for finding ffunction headers and such
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
@@ -944,6 +945,8 @@ Options:
    -midi : activates MIDI control
    -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
