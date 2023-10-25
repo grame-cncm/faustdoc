@@ -1,4 +1,5 @@
 
 import("stdfaust.lib");
-process = _ <: attach(_,abs : ba.linear2db : vbargraph("Level[style:numerical]",-60,0));
+s = vslider("Signal[style:radio{'Noise':0;'Sawtooth':1}]",0,0,1,1);
+process = select2(s,no.noise,os.sawtooth(440));
 

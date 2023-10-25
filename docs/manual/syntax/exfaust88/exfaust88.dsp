@@ -1,6 +1,8 @@
 
 import("stdfaust.lib");
-s = nentry("Selector",0,0,1,1) : int;
-sig = os.osc(440),os.sawtooth(440) : select2(s);
-process = sig;
+tableSize = 1 << 16;
+sineWave(tablesize) = float(ba.time)*(2.0*ma.PI)/float(tablesize) : sin;
+triangleOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdtable;
+f = hslider("freq",440,50,2000,0.01);
+process = triangleOsc(f);
 

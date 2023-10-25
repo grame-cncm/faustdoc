@@ -1,10 +1,7 @@
 
 import("stdfaust.lib");
-tableSize = 48000;
-recIndex = (+(1) : %(tableSize)) ~ *(record);
-readIndex = readSpeed/float(ma.SR) : (+ : ma.frac) ~ _ : *(float(tableSize)) : int;
-readSpeed = hslider("[0]Read Speed",1,0.001,10,0.01);
-record = button("[1]Record") : int;
-looper = rwtable(tableSize,0.0,recIndex,_,readIndex);
-process = looper;
+triangleWave = waveform{0,0.5,1,0.5,0,-0.5,-1,-.5};
+triangleOsc(f) = triangleWave,int(os.phasor(8,f)) : rdtable;
+f = hslider("freq",440,50,2000,0.01);
+process = triangleOsc(f);
 

@@ -1,6 +1,6 @@
 
 import("stdfaust.lib");
-s = nentry("Selector",0,0,1,1);
-sig = os.osc(440),os.sawtooth(440),os.triangle(440) : select3(s);
+s = nentry("Selector",0,0,1,1) : int;
+sig = os.osc(440),os.sawtooth(440) : select2(s);
 process = sig;
 

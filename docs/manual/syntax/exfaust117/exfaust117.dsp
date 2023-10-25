@@ -1,5 +1,5 @@
 
 import("stdfaust.lib");
-s = vslider("Signal[style:radio{'Noise':0;'Sawtooth':1}]",0,0,1,1);
-process = select2(s,no.noise,os.sawtooth(440));
+freq = vslider("freq[style:knob]",440,50,1000,0.1);
+process = os.sawtooth(freq);
 

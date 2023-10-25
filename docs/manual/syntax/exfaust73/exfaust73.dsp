@@ -1,3 +1,3 @@
 
-process = -0.5,0.2 : min;
+process = 4 : sqrt;
 

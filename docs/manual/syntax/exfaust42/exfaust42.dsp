@@ -1,3 +1,3 @@
 
-process = 1.5 : int;
+process = _;
 

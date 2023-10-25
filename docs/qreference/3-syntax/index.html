@@ -492,7 +492,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#waveforms-primitive" class="nav-link">Waveforms Primitive</a>
+            <li class="nav-item" data-level="3"><a href="#waveform-primitive" class="nav-link">Waveform Primitive</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -1663,7 +1663,7 @@ ComplexDiagram(
             fconstant(int fSamplingFreq, &lt;math.h&gt;)));
 BS    = fvariable(int count, &lt;math.h&gt;);
 </code></pre>
-<p>Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are only computed once, during the initialization period. </p>
+<p>Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are computed once, during the initialization period. </p>
 <p>Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.</p>
 <h4 id="include-file">Include file</h4>
 <p>In declaring foreign functions one has also to specify the include file. It allows the <span class="smallcaps">Faust</span> compiler to add the corresponding <span class="lstinline">#include...</span> in the generated code.</p>
@@ -1865,7 +1865,7 @@ r = route(N,N,par(i,N,(i+1,N-i)));
 
 process = r;
 </code></pre>
-<h3 id="waveforms-primitive">Waveforms Primitive</h3>
+<h3 id="waveform-primitive">Waveform Primitive</h3>
 <p>A waveform is a fixed periodic signal defined by a list of samples as literal numbers. A waveform has two outputs. The first output is constant and indicates the size (number of samples) of the period. The second output is the periodic signal itself. </p>
 <div class="rail">
 <span class="railtitle">waveform</span>

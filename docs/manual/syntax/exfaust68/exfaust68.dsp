@@ -1,3 +1,3 @@
 
-process = 0.1 : log;
+process = 0.1 : tan;
 

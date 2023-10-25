@@ -1106,7 +1106,7 @@ SR = min(192000.0,max(1.0,fconstant(int fSamplingFreq, <math.h>)));
 BS = fvariable(int count, <math.h>);
 ```
 
-Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are only computed once, during the initialization period. 
+Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are computed once, during the initialization period. 
 
 Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.
 
@@ -1192,6 +1192,34 @@ Whenever the Faust compiler find an application of an abstraction it replaces th
 
 ```
 (_ <: dm.zita_light :> _)
+```
+
+#### Abstractions as routing blocks
+
+Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. But non-applied lambda abstractions can possibly be used in languages that treat them as [first-class values](https://en.wikipedia.org/wiki/First-class_function), named closures when they are lexically scoped.
+
+In Faust, we choose to give a proper semantic to non-applied abstractions as results, to become routing circuits, internally called *symbolic boxes*, with their arguments named *slots* and corresponding to inputs. This is a convenient way to work with signals by *explicitly naming them*, to be used in the lambda abstraction body *with their parameter name*. 
+
+For instance a stereo crossing operation coded in the core syntax:
+
+<!-- faust-run -->
+```
+process = _,_ <: !,_,_,!; 
+```
+<!-- /faust-run -->
+
+can be simply defined as:  
+
+<!-- faust-run -->
+```
+process = \(x,y).(y,x); 
+```
+<!-- /faust-run -->
+
+which is actually equivalent to: 
+
+```
+process(x,y) = y,x; 
 ```
 
 #### Pattern Matching

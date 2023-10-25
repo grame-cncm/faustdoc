@@ -1,3 +1,3 @@
 
-process = 0 != 1;
+process = >=(0.5);
 

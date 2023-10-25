@@ -1096,7 +1096,7 @@ SR    = min(192000.0,
 BS    = fvariable(int count, <math.h>);
 \end{lstlisting}
 
-Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are only computed once, during the initialization period. 
+Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are computed once, during the initialization period. 
 
 Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.
 
