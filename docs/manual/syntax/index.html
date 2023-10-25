@@ -2303,8 +2303,8 @@ process = mono(dm.zita_light);
 <pre><code>(_ &lt;: dm.zita_light :&gt; _)
 </code></pre>
 <h4 id="abstractions-as-routing-blocks">Abstractions as routing blocks</h4>
-<p>Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. But non-applied lambda abstractions can possibly be used in languages that treat them as <a href="https://en.wikipedia.org/wiki/First-class_function">first-class values</a>, named closures when they are lexically scoped.</p>
-<p>In Faust, we choose to give a proper semantic to non-applied abstractions as results, to become routing circuits, internally called <em>symbolic boxes</em>, with their arguments named <em>slots</em> and corresponding to inputs. This is a convenient way to work with signals by <em>explicitly naming them</em>, to be used in the lambda abstraction body <em>with their parameter name</em>. </p>
+<p>Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. But unapplied lambda abstractions can possibly be used in languages that treat them as <a href="https://en.wikipedia.org/wiki/First-class_function">first-class values</a>, named closures when they are lexically scoped.</p>
+<p>In Faust, we choose to give a proper semantic to unapplied abstractions as results, to become routing circuits, internally called <em>symbolic boxes</em>, with their arguments named <em>slots</em> and corresponding to inputs. This is a convenient way to work with signals by <em>explicitly naming them</em>, to be used in the lambda abstraction body <em>with their parameter name</em>. </p>
 <p>For instance a stereo crossing operation coded in the core syntax:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust31/exfaust31.svg" class="mx-auto d-block">

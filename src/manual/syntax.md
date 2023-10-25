@@ -1196,9 +1196,9 @@ Whenever the Faust compiler find an application of an abstraction it replaces th
 
 #### Abstractions as routing blocks
 
-Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. But non-applied lambda abstractions can possibly be used in languages that treat them as [first-class values](https://en.wikipedia.org/wiki/First-class_function), named closures when they are lexically scoped.
+Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. But unapplied lambda abstractions can possibly be used in languages that treat them as [first-class values](https://en.wikipedia.org/wiki/First-class_function), named closures when they are lexically scoped.
 
-In Faust, we choose to give a proper semantic to non-applied abstractions as results, to become routing circuits, internally called *symbolic boxes*, with their arguments named *slots* and corresponding to inputs. This is a convenient way to work with signals by *explicitly naming them*, to be used in the lambda abstraction body *with their parameter name*. 
+In Faust, we choose to give a proper semantic to unapplied abstractions as results, to become routing circuits, internally called *symbolic boxes*, with their arguments named *slots* and corresponding to inputs. This is a convenient way to work with signals by *explicitly naming them*, to be used in the lambda abstraction body *with their parameter name*. 
 
 For instance a stereo crossing operation coded in the core syntax:
 
