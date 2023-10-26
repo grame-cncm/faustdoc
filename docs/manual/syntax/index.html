@@ -2303,7 +2303,7 @@ process = mono(dm.zita_light);
 <pre><code>(_ &lt;: dm.zita_light :&gt; _)
 </code></pre>
 <h4 id="unapplied-abstractions">Unapplied abstractions</h4>
-<p>Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. Functional languages generally treat them as <a href="https://en.wikipedia.org/wiki/First-class_function">first-class values</a> which give them high-order programming capabilities. </p>
+<p>Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. Functional languages generally treat them as <a href="https://en.wikipedia.org/wiki/First-class_function">first-class values</a> which give these languages high-order programming capabilities. </p>
 <p>Another way of looking at abstractions in Faust is as a means of routing or placing blocks that are given as parameters. For example, the following abstraction <code>repeat(fx) = fx : fx;</code> could be used to duplicate an effect and route input signals to be successively processed by that effect:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust31/exfaust31.svg" class="mx-auto d-block">

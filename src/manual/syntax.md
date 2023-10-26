@@ -1196,7 +1196,7 @@ Whenever the Faust compiler find an application of an abstraction it replaces th
 
 #### Unapplied abstractions
 
-Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. Functional languages generally treat them as [first-class values](https://en.wikipedia.org/wiki/First-class_function) which give them high-order programming capabilities. 
+Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. Functional languages generally treat them as [first-class values](https://en.wikipedia.org/wiki/First-class_function) which give these languages high-order programming capabilities. 
 
 Another way of looking at abstractions in Faust is as a means of routing or placing blocks that are given as parameters. For example, the following abstraction `repeat(fx) = fx : fx;` could be used to duplicate an effect and route input signals to be successively processed by that effect:
 
