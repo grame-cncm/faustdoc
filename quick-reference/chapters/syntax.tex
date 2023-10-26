@@ -1235,14 +1235,19 @@ Whenever the \faust compiler find an application of an abstraction it replaces\m
 	(_ <: harmonizer :> _)
 \end{lstlisting}
 
-\subsubsection{Abstractions as routing blocks}
+\subsubsection{Unapplied abstractions}
 
-Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. But unapplied lambda abstractions can possibly be used in languages that treat them as first-class values\footnote{\url{https://en.wikipedia.org/wiki/First-class_function}}, named closures when they are lexically scoped.
+Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. Functional languages generally treat them as first-class values\footnote{\url{https://en.wikipedia.org/wiki/First-class_function}} which give these languages high-order programming capabilities. 
 
+Another way of looking at abstractions in Faust is as a means of routing or placing blocks that are given as parameters. For example, the following abstraction \lstinline'repeat(fx) = fx : fx;' could be used to duplicate an effect and route input signals to be successively processed by that effect:
 
+\begin{lstlisting}
+	import("stdfaust.lib");
+	repeat(fx) = fx : fx;
+	process = repeat(dm.zita_light); 
+\end{lstlisting}
 
-
-In Faust, a proper semantic has been given to unapplied abstractions as results, which are actually routing circuits, internally called \textit{symbolic boxes}, with their arguments named \textit{slots} and corresponding to inputs. This is a convenient way to work with signals by \textit{explicitly naming them}, to be used in the lambda abstraction body \textit{with their parameter name}. 
+In Faust, a proper semantic has been given to \textit{unapplied abstractions}: when a lambda-abstraction is not applied to parameters, it indicates \textit{how to route input signals}. This is a convenient way to work with signals by \textit{explicitly naming them}, to be used in the lambda abstraction body \textit{with their parameter name}. 
 
 For instance a stereo crossing block written in the core syntax:
 
