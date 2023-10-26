@@ -1,10 +1,8 @@
 
 import("stdfaust.lib");
-tableSize = 48000;
-recIndex = (+(1) : %(tableSize)) ~ *(record);
-readIndex = readSpeed/float(ma.SR) : (+ : ma.frac) ~ _ : *(float(tableSize)) : int;
-readSpeed = hslider("[0]Read Speed",1,0.001,10,0.01);
-record = button("[1]Record") : int;
-looper = rwtable(tableSize,0.0,recIndex,_,readIndex);
-process = looper;
+tableSize = 1 << 16;
+sineWave(tablesize) = float(ba.time)*(2.0*ma.PI)/float(tablesize) : sin;
+triangleOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdtable;
+f = hslider("freq",440,50,2000,0.01);
+process = triangleOsc(f);
 

@@ -1,3 +1,3 @@
 
-process = 2,4 : pow;
+process = 0.1 : log10;
 

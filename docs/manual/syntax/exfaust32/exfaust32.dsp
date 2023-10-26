@@ -1,3 +1,3 @@
 
-process = \(x,y).(y,x); 
+process = _,_ <: !,_,_,!; 
 

@@ -1194,11 +1194,21 @@ Whenever the Faust compiler find an application of an abstraction it replaces th
 (_ <: dm.zita_light :> _)
 ```
 
-#### Abstractions as routing blocks
+#### Unapplied abstractions
 
-Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. But unapplied lambda abstractions can possibly be used in languages that treat them as [first-class values](https://en.wikipedia.org/wiki/First-class_function), named closures when they are lexically scoped.
+Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. Functional languages generally treat them as [first-class values](https://en.wikipedia.org/wiki/First-class_function) which give them high-order programming capabilities. 
 
-In Faust, a proper semantic has been given to unapplied abstractions as results, which are actually routing circuits, internally called *symbolic boxes*, with their arguments named *slots* and corresponding to inputs. This is a convenient way to work with signals by *explicitly naming them*, to be used in the lambda abstraction body *with their parameter name*. 
+Another way of looking at abstractions in Faust is as a means of routing or placing blocks that are given as parameters. For example, the following abstraction `repeat(fx) = fx : fx;` could be used to duplicate an effect and route input signals to be successively processed by that effect:
+
+ <!-- faust-run -->
+```
+import("stdfaust.lib");
+repeat(fx) = fx : fx;
+process = repeat(dm.zita_light); 
+```
+<!-- /faust-run -->
+
+In Faust, a proper semantic has also been given to *unapplied abstractions*: when a lambda-abstraction is not applied to parameters, it indicates *how to route input signals*. This is a convenient way to work with signals by *explicitly naming them*, to be used in the lambda abstraction body *with their parameter name*.  
 
 For instance a stereo crossing block written in the core syntax:
 

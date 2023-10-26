@@ -1,3 +1,3 @@
 
-process = 4 : sqrt;
+process = 2,4 : pow;
 
