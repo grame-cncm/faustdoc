@@ -1235,6 +1235,34 @@ Whenever the \faust compiler find an application of an abstraction it replaces\m
 	(_ <: harmonizer :> _)
 \end{lstlisting}
 
+\subsubsection{Abstractions as routing blocks}
+
+Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. But unapplied lambda abstractions can possibly be used in languages that treat them as first-class values\footnote{\url{https://en.wikipedia.org/wiki/First-class_function}}, named closures when they are lexically scoped.
+
+
+
+
+In Faust, a proper semantic has been given to unapplied abstractions as results, which are actually routing circuits, internally called \textit{symbolic boxes}, with their arguments named \textit{slots} and corresponding to inputs. This is a convenient way to work with signals by \textit{explicitly naming them}, to be used in the lambda abstraction body \textit{with their parameter name}. 
+
+For instance a stereo crossing block written in the core syntax:
+
+\begin{lstlisting}
+	process = _,_ <: !,_,_,!; 
+\end{lstlisting}
+
+can be simply defined as:  
+
+\begin{lstlisting}
+	process = \(x,y).(y,x); 
+\end{lstlisting}
+
+which is actually equivalent to: 
+
+\begin{lstlisting}
+	process(x,y) = y,x; 
+\end{lstlisting}
+
+
 \subsubsection{Pattern Matching}
 Pattern matching rules provide an effective way to analyze and transform block-diagrams algorithmically.
 \begin{rail}
