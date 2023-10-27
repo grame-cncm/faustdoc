@@ -482,14 +482,12 @@ Here is an example of a Faust program with 10 recursive blocks in parallel, each
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
-~~~
+<faust-editor><!--
 
 process = par(i, 10, + ~ @(i+1)) :> _;
 
-~~~
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
