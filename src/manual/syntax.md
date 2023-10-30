@@ -2734,7 +2734,7 @@ process = par(i,8,hslider("Voice %i",0.9,0,1,0.01));
 
 creates 8 sliders in parallel with different names while `par(i,8,hslider("Voice",0.9,0,1,0.01))` would have created only one slider and duplicated its output 8 times.
 
-The variable part can have an optional format digit. For example `"Voice %2i"` would indicate to use two digit when inserting the value of `i` in the string.
+The variable part can have an optional format digit. For example `"Voice %2i"` would indicate to use two digits when inserting the value of `i` in the string.
 
 An escape mechanism is provided. If the sign `%` is followed by itself, it will be included in the resulting string. For example `"feedback (%%)"` will result in `"feedback (%)"`.
 

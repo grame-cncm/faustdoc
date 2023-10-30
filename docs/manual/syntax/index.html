@@ -4296,7 +4296,7 @@ process = par(i,8,hslider(&quot;Voice %i&quot;,0.9,0,1,0.01));
 <!-- /faust-run -->
 
 <p>creates 8 sliders in parallel with different names while <code>par(i,8,hslider("Voice",0.9,0,1,0.01))</code> would have created only one slider and duplicated its output 8 times.</p>
-<p>The variable part can have an optional format digit. For example <code>"Voice %2i"</code> would indicate to use two digit when inserting the value of <code>i</code> in the string.</p>
+<p>The variable part can have an optional format digit. For example <code>"Voice %2i"</code> would indicate to use two digits when inserting the value of <code>i</code> in the string.</p>
 <p>An escape mechanism is provided. If the sign <code>%</code> is followed by itself, it will be included in the resulting string. For example <code>"feedback (%%)"</code> will result in <code>"feedback (%)"</code>.</p>
 <p>The variable name can be enclosed in curly brackets to clearly separate it from the rest of the string, as in <code>par(i,8,hslider("Voice %{i}", 0.9, 0, 1, 0.01))</code>.</p>
 <h4 id="labels-as-pathnames">Labels as Pathnames</h4>
