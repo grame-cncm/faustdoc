@@ -2246,6 +2246,12 @@ An alternative way to use the ESP32 board with Faust, possibly easier and more v
 
 A tutorial to show how Faust can be used with [Cmajor](https://cmajor.dev), a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. 
 
+### RNBO tools 
+
+#### [Using Faust in RNBO with codebox~](https://faustdoc.grame.fr/tutorials/rnbo/)
+
+A tutorial to show how Faust can be used with [RNBO](https://rnbo.cycling74.com), a library and toolchain that can take Max-like patches, export them as portable code, and directly compile that code to targets like a VST, a Max External, or a Raspberry Pi.
+
 ### DLang tools 
 
 #### [Faust 2 Dplug Guide](https://github.com/Tonton-Blax/dplugfausttest)
