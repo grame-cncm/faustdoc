@@ -2251,6 +2251,9 @@ A tutorial to show how Faust can be used with [Cmajor](https://cmajor.dev), a C 
 #### [Faust 2 Dplug Guide](https://github.com/Tonton-Blax/dplugfausttest)
 Explains how to use Faust in a [Dplug](https://dplug.org/) project.
 
+#### [Dplug Faust Example](https://github.com/ctrecordings/dplug-faust-example)
+This is an example plugin using Dplug with a Faust backend. It is a stereo reverb plugin using the Freeverb demo from the Faust library.
+
 ### Julia tools 
 
 #### [Faust.jl](https://github.com/corajr/Faust.jl)
