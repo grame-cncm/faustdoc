@@ -2259,7 +2259,7 @@ This is an example plugin using Dplug with a Faust backend. It is a stereo rever
 #### [Faust.jl](https://github.com/corajr/Faust.jl)
 Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.
 
-#### [Using Faust in Julia](https://faustdoc.grame.fr/tutorials/julia/). 
+#### [Using Faust in Julia](https://faustdoc.grame.fr/tutorials/julia/)
 
 A tutorial to show how Faust can be used with [Julia](https://julialang.org), a high-level, general-purpose dynamic programming language with features well suited for numerical analysis and computational science.
 
