@@ -1,0 +1,48 @@
+
+%--------------------------------------------------------------------------------------------------------------
+\subsection{Widget Modulation}
+%--------------------------------------------------------------------------------------------------------------
+
+Widget modulation allows to add inputs to existing code in order to act on the signals produced internally by its widgets. This operation is done directly by the compiler and doesn't require any modification of the existing code by the user.
+
+A widget modulation consists of a list of target widgets and an expression using them:
+
+\begin{rail}
+	modulation : '[' (target + ',') "->" expression ']';
+	target : label ( | ':' expression);
+\end{rail}
+	
+
+Here is a very simple example, assuming freeverb is a fully fonctional reverb with a \lstinline'"Wet"' slider:
+
+\begin{lstlisting}
+["Wet" -> freeverb]
+\end{lstlisting}
+
+The resulting circuit will have three inputs instead of two, the additional input acting on the values produced by the \lstinline'"Wet"' widget inside the freeverb expression.
+
+In the following example, the  \lstinline'"Wet"' widget is modulated by an LFO:
+
+\begin{lstlisting}
+lfo(10, 0.5), _, _ : ["Wet" -> freeverb]
+\end{lstlisting}
+
+\subsubsection{Target Widgets}
+
+Target widgets are specified by their label. Of course, this presupposes knowing the names of the sliders. But as these names appear on the user interface, it's easy enough. If several widgets have the same name, adding the names of some (not necesseraly all) of the surrounding groups, as in: \lstinline`"h:group/h:subgroup/label"` can help distinguish them. 
+
+Multiple targets can be indicated as in: 
+
+\begin{lstlisting}
+["Wet", "Damp", "RoomSize" -> freeverb]
+\end{lstlisting}
+
+In this case, three new inputs are added. 
+
+We haven't said how sliders are modulated. By default, when nothing is specified, the modulation is a multiplication. The previous example is equivalent to the explicit form \lstinline`["Wet":*, "Damp":*, "RoomSize":* -> freeverb]`. Please note that the \lstinline`:` sign used here is just a visual separator, it is not the sequential composition operator. 
+
+The multiplication can be replaced by any other circuit with at most two inputs and exactly one output. For example, one could write \lstinline`["Wet", "Damp", "RoomSize":+ -> freeverb]` to indicate that the \lstinline`"RoomSize"` parameter is modulated by the addition of an offset signal.
+
+Again, the only constraint on the modulation circuit is that it must have only one output and at most two inputs. We can therefore have \lstinline`0->1`, \lstinline`1->1`, or \lstinline`2->1` circuits. Only \lstinline`2->1` circuits create additional inputs. Moreover, \lstinline`0->1` circuits lead to the elimination of the slider.
+
+We can therefore rewrite \lstinline`lfo(10, 0.5), _, _ : ["Wet" -> freeverb]` as follows: \lstinline`["Wet":*(lfo(10, 0.5)) -> freeverb]`. The latter form does not lead to the creation of additional input, as the LFO is placed inside the reverb. The form \lstinline`["Wet":0.75 -> freeverb]` results in the deletion of the "Wet" slider, replaced by the constant 0.75. Finally, the form \lstinline`["Wet":+(hslider("More Wet", 0, 0, 1, 0.1)) -> freeverb]` adds a second slider to the freeverb interface.
