@@ -39,10 +39,43 @@ Multiple targets can be indicated as in:
 
 In this case, three new inputs are added. 
 
-We haven't said how sliders are modulated. By default, when nothing is specified, the modulation is a multiplication. The previous example is equivalent to the explicit form \lstinline`["Wet":*, "Damp":*, "RoomSize":* -> freeverb]`. Please note that the \lstinline`:` sign used here is just a visual separator, it is not the sequential composition operator. 
+\subsubsection{Modulators}
 
-The multiplication can be replaced by any other circuit with at most two inputs and exactly one output. For example, one could write \lstinline`["Wet", "Damp", "RoomSize":+ -> freeverb]` to indicate that the \lstinline`"RoomSize"` parameter is modulated by the addition of an offset signal.
+We haven't said how sliders are modulated. By default, when nothing is specified, the modulator is a multiplication. The previous example is equivalent to the explicit form 
 
-Again, the only constraint on the modulation circuit is that it must have only one output and at most two inputs. We can therefore have \lstinline`0->1`, \lstinline`1->1`, or \lstinline`2->1` circuits. Only \lstinline`2->1` circuits create additional inputs. Moreover, \lstinline`0->1` circuits lead to the elimination of the slider.
+\begin{lstlisting}
+["Wet": * -> freeverb]
+\end{lstlisting}
 
-We can therefore rewrite \lstinline`lfo(10, 0.5), _, _ : ["Wet" -> freeverb]` as follows: \lstinline`["Wet":*(lfo(10, 0.5)) -> freeverb]`. The latter form does not lead to the creation of additional input, as the LFO is placed inside the reverb. The form \lstinline`["Wet":0.75 -> freeverb]` results in the deletion of the "Wet" slider, replaced by the constant 0.75. Finally, the form \lstinline`["Wet":+(hslider("More Wet", 0, 0, 1, 0.1)) -> freeverb]` adds a second slider to the freeverb interface.
+\marginpar{Please note that the \lstinline`':'` sign used here is just a visual separator, it is not the sequential composition operator. }
+The multiplication can be replaced by any other circuit with at most two inputs, and exactly one output. For example, one could write:
+
+\begin{lstlisting}
+["Wet": + -> freeverb]
+\end{lstlisting}
+
+to indicate that the modulation signal will be added (instead of multiplied) to the \lstinline`"Wet"` signal.
+
+The only constraint on the modulation circuit is that it must have only one output and at most two inputs. We can therefore have \lstinline`0->1`, \lstinline`1->1`, or \lstinline`2->1` circuits. 
+
+A \lstinline`0->1` modulator being a circuit with no inputs, the target widget is removed from the user interface. Let says that we want to remove the "Damp" slider and replace it with the constant 0.5, we can write:
+
+\begin{lstlisting}
+	["Damp": 0.5 -> freeverb]
+\end{lstlisting}
+	
+A \lstinline`1->1` modulator transforms the signal produced by the widget without external input. Our previous example could be written as:
+
+\begin{lstlisting}
+["Wet": *(lfo(10, 0.5)) -> freeverb]
+\end{lstlisting}
+
+If lfo had its own user interface, it would be added to the freeverb interface, at the same level as the "Wet" slider. 
+
+Finally, a \lstinline`2->1` modulator is a circuit with two inputs, like lstinline'*'. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only \lstinline`2->1` circuits create additional inputs. As we already seen, our example could be written as:
+
+\begin{lstlisting}
+	lfo(10, 0.5), _, _ : ["Wet": * -> freeverb]
+\end{lstlisting}
+	
+The main différence with the previous case is that if lfo had its own user interface, it would be added outside of the freeverb interface.
