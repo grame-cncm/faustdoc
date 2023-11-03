@@ -58,7 +58,7 @@ to indicate that the modulation signal will be added (instead of multiplied) to 
 
 The only constraint on the modulation circuit is that it must have only one output and at most two inputs. We can therefore have \lstinline`0->1`, \lstinline`1->1`, or \lstinline`2->1` circuits. 
 
-A \lstinline`0->1` modulator being a circuit with no inputs, the target widget is removed from the user interface. Let says that we want to remove the "Damp" slider and replace it with the constant 0.5, we can write:
+A \lstinline`0->1` modulator being a circuit with no inputs, the target widget is removed from the user interface. Let says that we want to remove the \lstinline`"Damp"` slider and replace it with the constant \lstinline`0.5`, we can write:
 
 \begin{lstlisting}
 	["Damp": 0.5 -> freeverb]
@@ -70,12 +70,12 @@ A \lstinline`1->1` modulator transforms the signal produced by the widget withou
 ["Wet": *(lfo(10, 0.5)) -> freeverb]
 \end{lstlisting}
 
-If lfo had its own user interface, it would be added to the freeverb interface, at the same level as the "Wet" slider. 
+If lfo had its own user interface, it would be added to the freeverb interface, at the same level as the \lstinline`"Wet"` slider. 
 
-Finally, a \lstinline`2->1` modulator is a circuit with two inputs, like lstinline'*'. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only \lstinline`2->1` circuits create additional inputs. As we already seen, our example could be written as:
+Finally, a \lstinline`2->1` modulator is a circuit with two inputs, like \lstinline`*`. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only \lstinline`2->1` circuits create additional inputs. As we already seen, our example could be written as:
 
 \begin{lstlisting}
 	lfo(10, 0.5), _, _ : ["Wet": * -> freeverb]
 \end{lstlisting}
 	
-The main différence with the previous case is that if lfo had its own user interface, it would be added outside of the freeverb interface.
+The main différence with the previous case is that if \lstinline`lfo` had its own user interface, it would be added outside of the \lstinline`freeverb` interface.
