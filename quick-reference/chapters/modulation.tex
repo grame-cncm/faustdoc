@@ -13,7 +13,7 @@ A widget modulation consists of a list of target widgets and an expression using
 \end{rail}
 	
 
-Here is a very simple example, assuming freeverb is a fully fonctional reverb with a \lstinline'"Wet"' slider:
+Here is a very simple example, assuming freeverb is a fully functional reverb with a \lstinline'"Wet"' slider:
 
 \begin{lstlisting}
 ["Wet" -> freeverb]
@@ -21,7 +21,7 @@ Here is a very simple example, assuming freeverb is a fully fonctional reverb wi
 
 The resulting circuit will have three inputs instead of two, the additional input acting on the values produced by the \lstinline'"Wet"' widget inside the freeverb expression.
 
-In the following example, the  \lstinline'"Wet"' widget is modulated by an LFO:
+In the following example, the \lstinline'"Wet"' widget is modulated by an LFO:
 
 \begin{lstlisting}
 lfo(10, 0.5), _, _ : ["Wet" -> freeverb]
@@ -29,7 +29,7 @@ lfo(10, 0.5), _, _ : ["Wet" -> freeverb]
 
 \subsubsection{Target Widgets}
 
-Target widgets are specified by their label. Of course, this presupposes knowing the names of the sliders. But as these names appear on the user interface, it's easy enough. If several widgets have the same name, adding the names of some (not necesseraly all) of the surrounding groups, as in: \lstinline`"h:group/h:subgroup/label"` can help distinguish them. 
+Target widgets are specified by their label. Of course, this presupposes knowing the names of the sliders. But as these names appear on the user interface, it's easy enough. If several widgets have the same name, adding the names of some (not necessarily all) of the surrounding groups, as in: \lstinline`"h:group/h:subgroup/label"` can help distinguish them. 
 
 Multiple targets can be indicated as in: 
 
@@ -41,7 +41,7 @@ In this case, three new inputs are added.
 
 \subsubsection{Modulators}
 
-We haven't said how sliders are modulated. By default, when nothing is specified, the modulator is a multiplication. The previous example is equivalent to the explicit form 
+We haven't said how sliders are modulated. By default, when nothing is specified, the modulator is a multiplication. The previous example is equivalent to the explicit form:
 
 \begin{lstlisting}
 ["Wet": * -> freeverb]
@@ -70,7 +70,7 @@ A \lstinline`1->1` modulator transforms the signal produced by the widget withou
 ["Wet": *(lfo(10, 0.5)) -> freeverb]
 \end{lstlisting}
 
-If lfo had its own user interface, it would be added to the freeverb interface, at the same level as the \lstinline`"Wet"` slider. 
+If `lfo` had its own user interface, it would be added to the freeverb interface, at the same level as the \lstinline`"Wet"` slider. 
 
 Finally, a \lstinline`2->1` modulator is a circuit with two inputs, like \lstinline`*`. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only \lstinline`2->1` circuits create additional inputs. As we already seen, our example could be written as:
 

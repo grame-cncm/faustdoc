@@ -2360,10 +2360,7 @@ While the behavior of this last solution is identical to the first one, the gene
 
 ### User Interface Primitives and Configuration
 
-Faust user interface widgets/primitives allow for an **abstract** description 
-of a user interface from within the Faust code. This description is independent 
-from any GUI toolkits/frameworks and is purely abstract. Widgets can be
-**discrete** (e.g., [`button`](#button-primitive), [`checkbox`](#checkbox-primitive), etc.), **continuous** (e.g., [`hslider`](#hslider-primitive), [`vslider`](#vslider-primitive), [`nentry`](#nentry-primitive)), and **organizational** (e.g., [`vgroup`](#vgroup-primitive), [`hgroup`](#hgroup-primitive)).
+Faust user interface widgets/primitives allow for an **abstract** description of a user interface from within the Faust code. This description is independent from any GUI toolkits/frameworks and is purely abstract. Widgets can be **discrete** (e.g., [`button`](#button-primitive), [`checkbox`](#checkbox-primitive), etc.), **continuous** (e.g., [`hslider`](#hslider-primitive), [`vslider`](#vslider-primitive), [`nentry`](#nentry-primitive)), and **organizational** (e.g., [`vgroup`](#vgroup-primitive), [`hgroup`](#hgroup-primitive)).
 
 Discrete and continuous elements are signal generators. For example, a `button` produces a signal which is 1 when the button is pressed and 0 otherwise: 
 
@@ -3142,3 +3139,75 @@ g = nentry("gain[acc: 0 0 0 0 10]",0,0,1,0.01);
 ```
 
 Complex nonlinear mappings can be implemented using this system.
+
+### Widget Modulation
+
+Widget modulation allows to add inputs to existing code in order to act on the signals produced internally by its widgets. This operation is done directly by the compiler and doesn't require any modification of the existing code by the user.
+
+A widget modulation consists of a list of target widgets and an expression using them:
+
+<img src="img/widgetModulation.jpg" class="mx-auto d-block" width="60%">
+
+Here is a very simple example, assuming freeverb is a fully fonctional reverb with a `"Wet"` slider:
+
+```
+["Wet" -> freeverb]
+```
+
+The resulting circuit will have three inputs instead of two, the additional input acting on the values produced by the `"Wet"` widget inside the freeverb expression.
+
+In the following example, the `"Wet"` widget is modulated by an LFO:
+
+```
+lfo(10, 0.5), _, _ : ["Wet" -> freeverb]
+```
+
+#### Target Widgets
+
+Target widgets are specified by their label. Of course, this presupposes knowing the names of the sliders. But as these names appear on the user interface, it's easy enough. If several widgets have the same name, adding the names of some (not necessarily all) of the surrounding groups, as in: `"h:group/h:subgroup/label"` can help distinguish them. 
+
+Multiple targets can be indicated as in: 
+
+```
+["Wet", "Damp", "RoomSize" -> freeverb]
+```
+
+#### Modulators
+
+We haven't said how sliders are modulated. By default, when nothing is specified, the modulator is a multiplication. The previous example is equivalent to the explicit form 
+
+```
+["Wet": * -> freeverb]
+```
+
+Please note that the `':'` sign used here is just a visual separator, it is not the sequential composition operator. 
+
+The multiplication can be replaced by any other circuit with at most two inputs, and exactly one output. For example, one could write:
+
+```
+["Wet": + -> freeverb]
+```
+
+to indicate that the modulation signal will be added (instead of multiplied) to the `"Wet"` signal.
+
+The only constraint on the modulation circuit is that it must have only one output and at most two inputs. We can therefore have `0->1`, `1->1`, or `2->1` circuits. 
+
+A `0->1` modulator being a circuit with no inputs, the target widget is removed from the user interface. Let says that we want to remove the `"Damp"` slider and replace it with the constant `0.5`, we can write:
+
+```
+["Damp": 0.5 -> freeverb]
+```
+	
+A `1->1` modulator transforms the signal produced by the widget without external input. Our previous example could be written as:
+
+```
+["Wet": *(lfo(10, 0.5)) -> freeverb]
+```
+
+If `lfo` had its own user interface, it would be added to the freeverb interface, at the same level as the `"Wet"` slider. 
+
+Finally, a `2->1` modulator is a circuit with two inputs, like `*`. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only `2->1` circuits create additional inputs. As we already seen, our example could be written as:
+
+```
+lfo(10, 0.5), _, _ : ["Wet": * -> freeverb]
+```

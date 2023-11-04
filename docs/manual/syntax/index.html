@@ -896,6 +896,18 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#widget-modulation" class="nav-link">Widget Modulation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#target-widgets" class="nav-link">Target Widgets</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="4"><a href="#modulators" class="nav-link">Modulators</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -3867,10 +3879,7 @@ process = sig;
 
 <p>While the behavior of this last solution is identical to the first one, the generated code will be a bit different and potentially less efficient.</p>
 <h3 id="user-interface-primitives-and-configuration">User Interface Primitives and Configuration</h3>
-<p>Faust user interface widgets/primitives allow for an <strong>abstract</strong> description 
-of a user interface from within the Faust code. This description is independent 
-from any GUI toolkits/frameworks and is purely abstract. Widgets can be
-<strong>discrete</strong> (e.g., <a href="#button-primitive"><code>button</code></a>, <a href="#checkbox-primitive"><code>checkbox</code></a>, etc.), <strong>continuous</strong> (e.g., <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, <a href="#nentry-primitive"><code>nentry</code></a>), and <strong>organizational</strong> (e.g., <a href="#vgroup-primitive"><code>vgroup</code></a>, <a href="#hgroup-primitive"><code>hgroup</code></a>).</p>
+<p>Faust user interface widgets/primitives allow for an <strong>abstract</strong> description of a user interface from within the Faust code. This description is independent from any GUI toolkits/frameworks and is purely abstract. Widgets can be <strong>discrete</strong> (e.g., <a href="#button-primitive"><code>button</code></a>, <a href="#checkbox-primitive"><code>checkbox</code></a>, etc.), <strong>continuous</strong> (e.g., <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, <a href="#nentry-primitive"><code>nentry</code></a>), and <strong>organizational</strong> (e.g., <a href="#vgroup-primitive"><code>vgroup</code></a>, <a href="#hgroup-primitive"><code>hgroup</code></a>).</p>
 <p>Discrete and continuous elements are signal generators. For example, a <code>button</code> produces a signal which is 1 when the button is pressed and 0 otherwise: </p>
 <p><img src="img/button.svg" class="mx-auto d-block" width="50%"></p>
 <p>These signals can be freely combined with other audio signals. In fact, the following code is perfectly valid and will generate sound:</p>
@@ -4716,7 +4725,43 @@ process = os.sawtooth(freq);
 <p>Finally, in this slightly more complex mapping, <code>g = 0</code> when the device is tilted on its right side and the value of <code>g</code> increases towards 1 when the device is tilted on its left side:</p>
 <pre><code>g = nentry(&quot;gain[acc: 0 0 0 0 10]&quot;,0,0,1,0.01);
 </code></pre>
-<p>Complex nonlinear mappings can be implemented using this system.</p></div>
+<p>Complex nonlinear mappings can be implemented using this system.</p>
+<h3 id="widget-modulation">Widget Modulation</h3>
+<p>Widget modulation allows to add inputs to existing code in order to act on the signals produced internally by its widgets. This operation is done directly by the compiler and doesn't require any modification of the existing code by the user.</p>
+<p>A widget modulation consists of a list of target widgets and an expression using them:</p>
+<p><img src="img/widgetModulation.jpg" class="mx-auto d-block" width="60%"></p>
+<p>Here is a very simple example, assuming freeverb is a fully fonctional reverb with a <code>"Wet"</code> slider:</p>
+<pre><code>[&quot;Wet&quot; -&gt; freeverb]
+</code></pre>
+<p>The resulting circuit will have three inputs instead of two, the additional input acting on the values produced by the <code>"Wet"</code> widget inside the freeverb expression.</p>
+<p>In the following example, the <code>"Wet"</code> widget is modulated by an LFO:</p>
+<pre><code>lfo(10, 0.5), _, _ : [&quot;Wet&quot; -&gt; freeverb]
+</code></pre>
+<h4 id="target-widgets">Target Widgets</h4>
+<p>Target widgets are specified by their label. Of course, this presupposes knowing the names of the sliders. But as these names appear on the user interface, it's easy enough. If several widgets have the same name, adding the names of some (not necessarily all) of the surrounding groups, as in: <code>"h:group/h:subgroup/label"</code> can help distinguish them. </p>
+<p>Multiple targets can be indicated as in: </p>
+<pre><code>[&quot;Wet&quot;, &quot;Damp&quot;, &quot;RoomSize&quot; -&gt; freeverb]
+</code></pre>
+<h4 id="modulators">Modulators</h4>
+<p>We haven't said how sliders are modulated. By default, when nothing is specified, the modulator is a multiplication. The previous example is equivalent to the explicit form </p>
+<pre><code>[&quot;Wet&quot;: * -&gt; freeverb]
+</code></pre>
+<p>Please note that the <code>':'</code> sign used here is just a visual separator, it is not the sequential composition operator. </p>
+<p>The multiplication can be replaced by any other circuit with at most two inputs, and exactly one output. For example, one could write:</p>
+<pre><code>[&quot;Wet&quot;: + -&gt; freeverb]
+</code></pre>
+<p>to indicate that the modulation signal will be added (instead of multiplied) to the <code>"Wet"</code> signal.</p>
+<p>The only constraint on the modulation circuit is that it must have only one output and at most two inputs. We can therefore have <code>0-&gt;1</code>, <code>1-&gt;1</code>, or <code>2-&gt;1</code> circuits. </p>
+<p>A <code>0-&gt;1</code> modulator being a circuit with no inputs, the target widget is removed from the user interface. Let says that we want to remove the <code>"Damp"</code> slider and replace it with the constant <code>0.5</code>, we can write:</p>
+<pre><code>[&quot;Damp&quot;: 0.5 -&gt; freeverb]
+</code></pre>
+<p>A <code>1-&gt;1</code> modulator transforms the signal produced by the widget without external input. Our previous example could be written as:</p>
+<pre><code>[&quot;Wet&quot;: *(lfo(10, 0.5)) -&gt; freeverb]
+</code></pre>
+<p>If <code>lfo</code> had its own user interface, it would be added to the freeverb interface, at the same level as the <code>"Wet"</code> slider. </p>
+<p>Finally, a <code>2-&gt;1</code> modulator is a circuit with two inputs, like <code>*</code>. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only <code>2-&gt;1</code> circuits create additional inputs. As we already seen, our example could be written as:</p>
+<pre><code>lfo(10, 0.5), _, _ : [&quot;Wet&quot;: * -&gt; freeverb]
+</code></pre></div>
             </div>
         </div>
 
