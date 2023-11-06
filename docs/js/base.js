@@ -51,7 +51,7 @@ $(document).ready(function() {
 
     // Keyboard navigation
     document.addEventListener("keydown", function(e) {
-        if ($(e.target).is(':input')) return true;
+        if (e.defaultPrevented || $(e.target).is(':input, faust-editor')) return true;
         var key = e.which || e.keyCode || window.event && window.event.keyCode;
         var page;
         switch (key) {
