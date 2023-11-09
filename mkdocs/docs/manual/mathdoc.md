@@ -4,8 +4,9 @@ The Faust compiler provides a mechanism to produce a self-describing documentati
 
 ## Goals of the Mathdoc
 
-There are three main goals, or uses, of the Faust mathematical documentation generator:
+There are four main goals, or uses, of the Faust mathematical documentation generator:
 
+* to preserve the DSP source code with all the needed libraries, so that the DSP can be compiled with a more recent version of the compiler and produce the same resulting program. This is the way we allow the libraries themselves to evolve (even without maintaining compatibility with older versions), while still allowing an older program to be compiled with newer versions of the compiler,
 * to preserve signal processors, independently from any computer language but only under a mathematical form,
 * to bring some help for debugging tasks, by showing the formulas as they are really computed after the compilation stage,
 * to give a new teaching support, as a bridge between code and formulas for signal processing.
