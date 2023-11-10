@@ -384,7 +384,8 @@
 <p>The <span class="smallcaps">Faust</span> compiler provides a mechanism to produce a self-describing documentation of the mathematical semantic of a <span class="smallcaps">Faust</span> program, essentially as a pdf file. The corresponding options are <span class="lstinline">-mdoc</span> (short) or <span class="lstinline">--mathdoc</span> (long).</p>
 <h2 id="goals-of-the-mathdoc">Goals of the mathdoc</h2>
 <p><a name="goals-of-mdoc"></a></p>
-<p>There are three main goals, or uses, of this mathematical documentation:
+<p>There are for main goals, or uses, of this mathematical documentation:
+- to preserve the DSP source code with all the needed libraries, so that the DSP can be compiled with a more recent version of the compiler and produce the same resulting program. This is the way we allow the libraries themselves to evolve (even without maintaining compatibility with older versions), while still allowing an older program to be compiled with newer versions of the compiler;
 - to preserve signal processors, independently from any computer language but only under a mathematical form;
 - to bring some help for debugging tasks, by showing the formulas as they are really computed after the compilation stage;
 - to give a new teaching support, as a bridge between code and formulas for signal processing.</p>
