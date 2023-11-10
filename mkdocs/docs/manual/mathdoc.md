@@ -35,7 +35,7 @@ At this stage:
 
 * `cpp/` remains empty,
 * `pdf/` remains empty,
-* `src/` contains all the used Faust sources (even libraries),
+* `src/` contains all the used Faust sources (so with all needed libraries to have a self-contained DSP), 
 * `svg/` contains SVG block-diagram files,
 * `tex/` contains the generated Latex file.
 
