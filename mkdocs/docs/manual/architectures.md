@@ -2292,6 +2292,9 @@ This is an example project for controlling a synth, programmed and compiled with
 #### [DawDreamer](https://github.com/DBraun/DawDreamer)
 DawDreamer is an audio-processing Python framework supporting Faust and Faust's Box API.
 
+#### [ode2dsp](https://git.sr.ht/~kdsch/ode2dsp)
+ode2dsp is a Python library for generating ordinary differential equation (ODE) solvers in digital signal processing (DSP) languages. It automates the tedious and error-prone symbolic calculations involved in creating a DSP model of an ODE. Finite difference equations (FDEs) are rendered to Faust code.
+
 ### Rust tools 
 
 #### [rust-faust](https://github.com/Frando/rust-faust)
