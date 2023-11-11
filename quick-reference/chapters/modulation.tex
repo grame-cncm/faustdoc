@@ -83,10 +83,10 @@ The main difference with the previous case is that if \lstinline`lfo` had its ow
 Here is a complete example:
 
 \begin{lstlisting}
-	import("stdfaust.lib");
+import("stdfaust.lib");
 
-	process = ["Wet": *(lfo(0.5, 0.9)) -> dm.freeverb_demo]
-	with {
-    		lfo(f,g) = 1+os.osc(f)*g;
-	};
-\end{lstlis
+process = ["Wet": *(lfo(0.5, 0.9)) -> dm.freeverb_demo]
+with {
+    lfo(f,g) = 1+os.osc(f)*g;
+};
+\end{lstlisting}

@@ -4761,7 +4761,27 @@ process = os.sawtooth(freq);
 <p>If <code>lfo</code> had its own user interface, it would be added to the freeverb interface, at the same level as the <code>"Wet"</code> slider. </p>
 <p>Finally, a <code>2-&gt;1</code> modulator is a circuit with two inputs, like <code>*</code>. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only <code>2-&gt;1</code> circuits create additional inputs. As we already seen, our example could be written as:</p>
 <pre><code>lfo(10, 0.5), _, _ : [&quot;Wet&quot;: * -&gt; freeverb]
-</code></pre></div>
+</code></pre>
+<p>The main difference with the previous case is that if <code>lfo</code> had its own user interface, it would be added outside of the <code>freeverb</code> interface.</p>
+<p>Here is a complete example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust126/exfaust126.svg" class="mx-auto d-block">
+
+<pre><code>
+import(&quot;stdfaust.lib&quot;);
+
+process = [&quot;Wet&quot;: *(lfo(0.5, 0.9)) -&gt; dm.freeverb_demo]
+with {
+    lfo(f,g) = 1+os.osc(f)*g;
+};
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/syntax/exfaust126/exfaust126.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run --></div>
             </div>
         </div>
 
