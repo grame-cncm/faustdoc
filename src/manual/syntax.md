@@ -3211,3 +3211,18 @@ Finally, a `2->1` modulator is a circuit with two inputs, like `*`. Its first in
 ```
 lfo(10, 0.5), _, _ : ["Wet": * -> freeverb]
 ```
+
+The main difference with the previous case is that if `lfo` had its own user interface, it would be added outside of the `freeverb` interface.
+
+Here is a complete example:
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+
+process = ["Wet": *(lfo(0.5, 0.9)) -> dm.freeverb_demo]
+with {
+    lfo(f,g) = 1+os.osc(f)*g;
+};
+```
+<!-- /faust-run -->

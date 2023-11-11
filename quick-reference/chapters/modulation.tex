@@ -78,4 +78,15 @@ Finally, a \lstinline`2->1` modulator is a circuit with two inputs, like \lstinl
 	lfo(10, 0.5), _, _ : ["Wet": * -> freeverb]
 \end{lstlisting}
 	
-The main différence with the previous case is that if \lstinline`lfo` had its own user interface, it would be added outside of the \lstinline`freeverb` interface.
+The main difference with the previous case is that if \lstinline`lfo` had its own user interface, it would be added outside of the \lstinline`freeverb` interface.
+
+Here is a complete example:
+
+\begin{lstlisting}
+	import("stdfaust.lib");
+
+	process = ["Wet": *(lfo(0.5, 0.9)) -> dm.freeverb_demo]
+	with {
+    		lfo(f,g) = 1+os.osc(f)*g;
+	};
+\end{lstlis
