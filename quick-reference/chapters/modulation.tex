@@ -33,15 +33,14 @@ Multiple targets can be indicated in the same widget modulation expression as in
 ["Wet", "Damp", "RoomSize" -> freeverb]
 \end{lstlisting}
 
-
 \subsubsection{Modulators}
 
-Modulators are \faust expressions, with exactly one output and at most two inputs. that describe how to transform the signals produced by widgets. By default, when nothing is specified, the modulator is a multiplication. This is why our previous example is equivalent to:
+Modulators are \faust expressions, with exactly one output and at most two inputs that describe how to transform the signals produced by widgets. By default, when nothing is specified, the modulator is a multiplication. This is why our previous example is equivalent to:
 \marginpar{Please note that the \lstinline`':'` sign used here is just a visual separator, it is not the sequential composition operator. }
+
 \begin{lstlisting}
 ["Wet": * -> freeverb]
 \end{lstlisting}
-
 
 To indicate that the modulation signal should be added, instead of multiplied, one could write:
 \begin{lstlisting}
@@ -52,13 +51,14 @@ Multiplications and addition are examples of \lstinline`2->1` modulators, but tw
 
 \paragraph{Modulators with no inputs}
 
-Modulators with no inputs \lstinline`0->1` completely replace the target widget (it won't appear anymore in the user interface). Let's say that we want to remove the "Damp" slider and replace it with the constant 0.5, we can write:
+Modulators with no inputs \lstinline`0->1` completely replace the target widget (it won't appear anymore in the user interface). Let's say that we want to remove the \lstinline'"Damp"' slider and replace it with the constant \lstinline`0.5`, we can write:
 
 \begin{lstlisting}
     ["Damp": 0.5 -> freeverb]
 \end{lstlisting}
     
 \paragraph{Modulators with one input}
+
 A \lstinline`1->1` modulator transforms the signal produced by the target widget without the help of an external input. Our previous example could be written as:
 
 \begin{lstlisting}
@@ -68,11 +68,12 @@ A \lstinline`1->1` modulator transforms the signal produced by the target widget
 If \lstinline'lfo' had its user interface, it would be added to the freeverb interface, at the same level as the \lstinline'"Wet"' slider.
 
 \paragraph{Modulators with two inputs}
+
 Modulators with two inputs, like \lstinline'*' or \lstinline'+', are used to combine the signal produced by the target widget with an external signal. The first input is connected to the widget, the second one is connected to the external signal. As we have already seen, our example could be written as:
 
 \begin{lstlisting}
     lfo(10, 0.5), _, _ : ["Wet": * -> freeverb]
 \end{lstlisting}
     
-The main difference with the previous case is that if lfo had a user interface, it would be added outside of the freeverb interface. Please note that only \lstinline`2->1` modulators result in additional inputs. 
+The main difference with the previous case is that if \lstinline`lfo` had a user interface, it would be added outside of the freeverb interface. Please note that only \lstinline`2->1` modulators result in additional inputs. 
 
