@@ -604,7 +604,7 @@ Options:
 Usage: faust2android [options] [Faust options] &lt;file.dsp>
 Target platform: Android
 Require: Android SDK
-Compile a Faust program to an Android app
+Compile a Faust program to an Android app (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/android)
 Options:
    -osc : activates OSC control
    -source : creates an eclipse project of the app in the current directory.
@@ -634,7 +634,7 @@ Options:
 <h2 id="faust2api">faust2api</h2>
 <pre class=faust-tools>
 Usage: faust2api [options] [Faust options] &lt;file.dsp>
-faust2api can be used to generate Faust based dsp objects for various platforms:
+faust2api can be used to generate Faust based dsp objects for various platforms (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/api):
 
 Output options:
    -ios : generates an iOS API
@@ -750,7 +750,7 @@ Options:
 <h2 id="faust2cmajor">faust2cmajor</h2>
 <pre class=faust-tools>
 Usage: faust2cmajor [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to Cmajor
+Compiles Faust programs to Cmajor (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/cmajor)
 Options:
    -midi : activates MIDI control
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
@@ -795,7 +795,7 @@ Options:
 <h2 id="faust2daisy">faust2daisy</h2>
 <pre class=faust-tools>
 faust2daisy [-patch] [-midi] [-nvoices &lt;num>] [-sr &lt;num>] [-bs &lt;num>] [-source] [Faust options (-vec -vs 8...)] &lt;file.dsp>
-Compiles Faust programs to Daisy boards
+Compiles Faust programs to Daisy boards (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/daisy)
 Options:
    -patch : to compile for 4 ins/outs Patch (knob[1,2,3,4])
    -pod : to compile for 2 ins/outs Pod (knob[1,3])
@@ -837,7 +837,7 @@ Options:
 <pre class=faust-tools>
 Usage: faust2esp32 [options] [Faust options] &lt;file.dsp> &lt;file.dsp>
 faust2esp32 can be used to fully program the ESP32 microncontroller and to generate DSP objects
-that can be integrated into any ESP32 project
+that can be integrated into any ESP32 project (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/esp32)
 Options:
    -gramophone : generates for GRAME Gramophone
    -multi : generate for GRAME Gramophone in multi DSP mode
@@ -871,11 +871,11 @@ Environment variables:
   FAUSTARCH: specify the location of the Faust VST library files
     Default: /usr/local/share/faust
   QMAKE: specify the location of the qmake binary
-    Default: qmake
+    Default: /opt/local/libexec/qt5/bin/qmake
   SDK: specify the location of the VST SDK
-    Default: /usr/local/src/vstsdk
+    Default: /usr/local/include/vstsdk2.4
   SDKSRC: specify the location of the VST SDK sources
-    Default: /usr/local/src/vstsdk/public.sdk/source/vst2.x
+    Default: /usr/local/include/vstsdk2.4/public.sdk/source/vst2.x
 </pre>
 
 <h2 id="faust2feh">faust2feh</h2>
@@ -1006,7 +1006,7 @@ Options:
 <pre class=faust-tools>
 Usage: faust2juce [options] [Faust options] &lt;file.dsp>
 Require: Juce
-Compiles Faust programs to JUCE standalones or plugins
+Compiles Faust programs to JUCE standalones or plugins (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/juce)
 Options:
    -osc : activates OSC control
    -midi : activates MIDI control
@@ -1070,7 +1070,7 @@ Environment variables:
   FAUSTLIB: specify the location of the Faust LV2 library files
     Default: /usr/local/share/faust
   QMAKE: specify the location of the qmake binary
-    Default: qmake
+    Default: /opt/local/libexec/qt5/bin/qmake
 </pre>
 
 <h2 id="faust2mathdoc">faust2mathdoc</h2>
@@ -1087,7 +1087,7 @@ Options:
 <pre class=faust-tools>
 Usage: faust2max6 [options] [Faust options] &lt;file.dsp>
 Require: Max/MSP SDK
-Compiles Faust programs to Max6 externals using double precision samples
+Compiles Faust programs to Max6 externals using double precision samples (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/max-msp)
 Options:
    -osc : activates OSC control
    -midi : activates MIDI control
@@ -1312,7 +1312,7 @@ Process audio files with Faust DSP
 <pre class=faust-tools>
 faust2teensy [-lib] [-midi] [-nvoices &lt;num>] [Faust options (-vec -vs 8...)] &lt;file.dsp>
 Options:
-   -lib : generates a package containing an object compatible with the Teensy audio library.
+   -lib : generates a package containing an object compatible with the Teensy audio library (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/teensy)
    -midi : activates MIDI control
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
@@ -1323,7 +1323,7 @@ Options:
 Usage: faust2unity [options] [Faust options] &lt;file.dsp>
 Target platform: Android, Linux, MacOSX, iOS, Windows
 Require: Unity
-Generates a unity package (compressed .unitypackage folder) with all available architecture libraries for faust unity plugin and the C# files required. Use arguments to generate specific architectures
+Generates a unity package (compressed .unitypackage folder) with all available architecture libraries for faust unity plugin and the C# files required. Use arguments to generate specific architectures (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/unity)
 Options:
    -w32 : generates a Windows 32 bits library
    -w64 : generates a Windows 64 bits library
@@ -1341,7 +1341,7 @@ See architecture/unity/README.md for more info.
 <h2 id="faust2vcvrack">faust2vcvrack</h2>
 <pre class=faust-tools>
 faust2vcvrack [-soundfile] [-source] [-nvoices &lt;num>] [Faust options] &lt;file.dsp>
-Compiles Faust programs to VCV Rack modules
+Compiles Faust programs to VCV Rack modules (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/vcvrack)
    -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
    -source : to only create the source folder
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
@@ -1415,13 +1415,16 @@ Options:
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+                <div id="mkdocs-search-results"></div>
             </div>
             <div class="modal-footer">
             </div>

@@ -4727,42 +4727,42 @@ process = os.sawtooth(freq);
 </code></pre>
 <p>Complex nonlinear mappings can be implemented using this system.</p>
 <h3 id="widget-modulation">Widget Modulation</h3>
-<p>Widget modulation allows to add inputs to existing code in order to act on the signals produced internally by its widgets. This operation is done directly by the compiler and doesn't require any modification of the existing code by the user.</p>
-<p>A widget modulation consists of a list of target widgets and an expression using them:</p>
+<p><em>Widget modulation</em> acts on the widgets of an existing Faust expression, but without requiring any manual modifications of the expression's code. This operation is done directly by the compiler, according to a list of <em>target widgets</em> and associated <em>modulators</em>. Target widgets are specified by their label, as used in the graphical user interface. Modulators are Faust expressions that describe how to transform the signal produced by widgets. The syntax of a widget modulation is the following:</p>
 <p><img src="img/widgetModulation.jpg" class="mx-auto d-block" width="60%"></p>
 <p>Here is a very simple example, assuming freeverb is a fully fonctional reverb with a <code>"Wet"</code> slider:</p>
 <pre><code>[&quot;Wet&quot; -&gt; freeverb]
 </code></pre>
-<p>The resulting circuit will have three inputs instead of two, the additional input acting on the values produced by the <code>"Wet"</code> widget inside the freeverb expression.</p>
-<p>In the following example, the <code>"Wet"</code> widget is modulated by an LFO:</p>
+<p>The resulting circuit will have three inputs instead of two. The additional input is for the <code>"Wet"</code> widget. It acts on the values produced by the widget inside the freeverb expression. By default, the additional input signal, and the widget signal are multiplied together. In the following example, an external LFO is connected to this additional input:</p>
 <pre><code>lfo(10, 0.5), _, _ : [&quot;Wet&quot; -&gt; freeverb]
 </code></pre>
 <h4 id="target-widgets">Target Widgets</h4>
 <p>Target widgets are specified by their label. Of course, this presupposes knowing the names of the sliders. But as these names appear on the user interface, it's easy enough. If several widgets have the same name, adding the names of some (not necessarily all) of the surrounding groups, as in: <code>"h:group/h:subgroup/label"</code> can help distinguish them. </p>
-<p>Multiple targets can be indicated as in: </p>
+<p>Multiple targets can be indicated in the same widget modulation expression as in: </p>
 <pre><code>[&quot;Wet&quot;, &quot;Damp&quot;, &quot;RoomSize&quot; -&gt; freeverb]
 </code></pre>
 <h4 id="modulators">Modulators</h4>
-<p>We haven't said how sliders are modulated. By default, when nothing is specified, the modulator is a multiplication. The previous example is equivalent to the explicit form </p>
+<p>Modulators are Faust expressions, with exactly one output and at most two inputs that describe how to transform the signals produced by widgets. By default, when nothing is specified, the modulator is a multiplication. This is why our previous example is equivalent to:</p>
 <pre><code>[&quot;Wet&quot;: * -&gt; freeverb]
 </code></pre>
 <p>Please note that the <code>':'</code> sign used here is just a visual separator, it is not the sequential composition operator. </p>
-<p>The multiplication can be replaced by any other circuit with at most two inputs, and exactly one output. For example, one could write:</p>
+<p>To indicate that the modulation signal should be added, instead of multiplied, one could write:</p>
 <pre><code>[&quot;Wet&quot;: + -&gt; freeverb]
 </code></pre>
-<p>to indicate that the modulation signal will be added (instead of multiplied) to the <code>"Wet"</code> signal.</p>
-<p>The only constraint on the modulation circuit is that it must have only one output and at most two inputs. We can therefore have <code>0-&gt;1</code>, <code>1-&gt;1</code>, or <code>2-&gt;1</code> circuits. </p>
-<p>A <code>0-&gt;1</code> modulator being a circuit with no inputs, the target widget is removed from the user interface. Let says that we want to remove the <code>"Damp"</code> slider and replace it with the constant <code>0.5</code>, we can write:</p>
+<p>Multiplications and addition are examples of  <code>2-&gt;1</code> modulators, but two other types are allowed: <code>0-&gt;1</code> and <code>1-&gt;1</code>. </p>
+<h5 id="modulators-with-no-inputs">Modulators with no inputs</h5>
+<p>Modulators with no inputs <code>0-&gt;1</code> completely replace the target widget (it won't appear anymore in the user interface). Let's say that we want to remove the <code>"Damp"</code> slider and replace it with the constant <code>0.5</code>, we can write:</p>
 <pre><code>[&quot;Damp&quot;: 0.5 -&gt; freeverb]
 </code></pre>
-<p>A <code>1-&gt;1</code> modulator transforms the signal produced by the widget without external input. Our previous example could be written as:</p>
+<h5 id="modulators-with-one-input">Modulators with one input</h5>
+<p>A <code>1-&gt;1</code> modulator transforms the signal produced by the widget without the help of an external input. Our previous example could be written as:</p>
 <pre><code>[&quot;Wet&quot;: *(lfo(10, 0.5)) -&gt; freeverb]
 </code></pre>
-<p>If <code>lfo</code> had its own user interface, it would be added to the freeverb interface, at the same level as the <code>"Wet"</code> slider. </p>
-<p>Finally, a <code>2-&gt;1</code> modulator is a circuit with two inputs, like <code>*</code>. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only <code>2-&gt;1</code> circuits create additional inputs. As we already seen, our example could be written as:</p>
+<p>If <code>lfo</code> had its user interface, it would be added to the freeverb interface, at the same level as the <code>"Wet"</code> slider. </p>
+<h5 id="modulators-with-two-inputs">Modulators with two inputs</h5>
+<p>Modulators with two inputs, like <code>*</code> or <code>+</code>, are used to combine the signal produced by the target widget with an external signal. The first input is connected to the widget, the second one is connected to the external signal. As we have already seen, our example could be written as:</p>
 <pre><code>lfo(10, 0.5), _, _ : [&quot;Wet&quot;: * -&gt; freeverb]
 </code></pre>
-<p>The main difference with the previous case is that if <code>lfo</code> had its own user interface, it would be added outside of the <code>freeverb</code> interface.</p>
+<p>The main difference with the previous case is that if <code>lfo</code> had a user interface, it would be added outside of the freeverb interface. Please note that only <code>2-&gt;1</code> modulators result in additional inputs. </p>
 <p>Here is a complete example:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust126/exfaust126.svg" class="mx-auto d-block">
@@ -4805,13 +4805,16 @@ with {
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+                <div id="mkdocs-search-results"></div>
             </div>
             <div class="modal-footer">
             </div>

@@ -3142,9 +3142,7 @@ Complex nonlinear mappings can be implemented using this system.
 
 ### Widget Modulation
 
-Widget modulation allows to add inputs to existing code in order to act on the signals produced internally by its widgets. This operation is done directly by the compiler and doesn't require any modification of the existing code by the user.
-
-A widget modulation consists of a list of target widgets and an expression using them:
+*Widget modulation* acts on the widgets of an existing Faust expression, but without requiring any manual modifications of the expression's code. This operation is done directly by the compiler, according to a list of *target widgets* and associated *modulators*. Target widgets are specified by their label, as used in the graphical user interface. Modulators are Faust expressions that describe how to transform the signal produced by widgets. The syntax of a widget modulation is the following:
 
 <img src="img/widgetModulation.jpg" class="mx-auto d-block" width="60%">
 
@@ -3154,9 +3152,7 @@ Here is a very simple example, assuming freeverb is a fully fonctional reverb wi
 ["Wet" -> freeverb]
 ```
 
-The resulting circuit will have three inputs instead of two, the additional input acting on the values produced by the `"Wet"` widget inside the freeverb expression.
-
-In the following example, the `"Wet"` widget is modulated by an LFO:
+The resulting circuit will have three inputs instead of two. The additional input is for the `"Wet"` widget. It acts on the values produced by the widget inside the freeverb expression. By default, the additional input signal, and the widget signal are multiplied together. In the following example, an external LFO is connected to this additional input:
 
 ```
 lfo(10, 0.5), _, _ : ["Wet" -> freeverb]
@@ -3166,7 +3162,7 @@ lfo(10, 0.5), _, _ : ["Wet" -> freeverb]
 
 Target widgets are specified by their label. Of course, this presupposes knowing the names of the sliders. But as these names appear on the user interface, it's easy enough. If several widgets have the same name, adding the names of some (not necessarily all) of the surrounding groups, as in: `"h:group/h:subgroup/label"` can help distinguish them. 
 
-Multiple targets can be indicated as in: 
+Multiple targets can be indicated in the same widget modulation expression as in: 
 
 ```
 ["Wet", "Damp", "RoomSize" -> freeverb]
@@ -3174,7 +3170,7 @@ Multiple targets can be indicated as in:
 
 #### Modulators
 
-We haven't said how sliders are modulated. By default, when nothing is specified, the modulator is a multiplication. The previous example is equivalent to the explicit form 
+Modulators are Faust expressions, with exactly one output and at most two inputs that describe how to transform the signals produced by widgets. By default, when nothing is specified, the modulator is a multiplication. This is why our previous example is equivalent to:
 
 ```
 ["Wet": * -> freeverb]
@@ -3182,37 +3178,44 @@ We haven't said how sliders are modulated. By default, when nothing is specified
 
 Please note that the `':'` sign used here is just a visual separator, it is not the sequential composition operator. 
 
-The multiplication can be replaced by any other circuit with at most two inputs, and exactly one output. For example, one could write:
+To indicate that the modulation signal should be added, instead of multiplied, one could write:
 
 ```
 ["Wet": + -> freeverb]
 ```
 
-to indicate that the modulation signal will be added (instead of multiplied) to the `"Wet"` signal.
+Multiplications and addition are examples of  `2->1` modulators, but two other types are allowed: `0->1` and `1->1`. 
 
-The only constraint on the modulation circuit is that it must have only one output and at most two inputs. We can therefore have `0->1`, `1->1`, or `2->1` circuits. 
+##### Modulators with no inputs
 
-A `0->1` modulator being a circuit with no inputs, the target widget is removed from the user interface. Let says that we want to remove the `"Damp"` slider and replace it with the constant `0.5`, we can write:
+Modulators with no inputs `0->1` completely replace the target widget (it won't appear anymore in the user interface). Let's say that we want to remove the `"Damp"` slider and replace it with the constant `0.5`, we can write:
 
 ```
 ["Damp": 0.5 -> freeverb]
 ```
+
+##### Modulators with one input
 	
-A `1->1` modulator transforms the signal produced by the widget without external input. Our previous example could be written as:
+A `1->1` modulator transforms the signal produced by the widget without the help of an external input. Our previous example could be written as:
 
 ```
 ["Wet": *(lfo(10, 0.5)) -> freeverb]
 ```
 
-If `lfo` had its own user interface, it would be added to the freeverb interface, at the same level as the `"Wet"` slider. 
+If `lfo` had its user interface, it would be added to the freeverb interface, at the same level as the `"Wet"` slider. 
 
-Finally, a `2->1` modulator is a circuit with two inputs, like `*`. Its first input is connected to the signal produced by the widget, the second one is the modulation input. Only `2->1` circuits create additional inputs. As we already seen, our example could be written as:
+
+##### Modulators with two inputs
+
+Modulators with two inputs, like `*` or `+`, are used to combine the signal produced by the target widget with an external signal. The first input is connected to the widget, the second one is connected to the external signal. As we have already seen, our example could be written as:
+
 
 ```
 lfo(10, 0.5), _, _ : ["Wet": * -> freeverb]
 ```
 
-The main difference with the previous case is that if `lfo` had its own user interface, it would be added outside of the `freeverb` interface.
+The main difference with the previous case is that if `lfo` had a user interface, it would be added outside of the freeverb interface. Please note that only `2->1` modulators result in additional inputs. 
+
 
 Here is a complete example:
 
