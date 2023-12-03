@@ -638,6 +638,10 @@
             </li>
             <li class="nav-item" data-level="3"><a href="#python-tools" class="nav-link">Python tools</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#faustlab" class="nav-link">faustlab</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#faustpy" class="nav-link">FAUSTPy</a>
               <ul class="nav flex-column">
               </ul>
@@ -2597,6 +2601,14 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <h4 id="using-faust-in-julia"><a href="https://faustdoc.grame.fr/tutorials/julia/">Using Faust in Julia</a></h4>
 <p>A tutorial to show how Faust can be used with <a href="https://julialang.org">Julia</a>, a high-level, general-purpose dynamic programming language with features well suited for numerical analysis and computational science.</p>
 <h3 id="python-tools">Python tools</h3>
+<h4 id="faustlab"><a href="https://github.com/shakfu/faustlab">faustlab</a></h4>
+<p>A exploratory project to wrap the Faust <em>interpreter</em> for use by python via the following wrapping frameworks using the RtAudio cross-platform audio driver:</p>
+<ul>
+<li>cyfaust:     cython         (faust c++ interface)</li>
+<li>cfaustt:     cython         (faust c   interface)</li>
+<li>pyfaust:     pybind11     (faust c++ interface)</li>
+<li>nanobind: nanobind     (faust c++ interface)</li>
+</ul>
 <h4 id="faustpy"><a href="https://github.com/marcecj/faust_python">FAUSTPy</a></h4>
 <p>FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on <a href="https://github.com/hrtlacek/faust_python">this fork</a>.</p>
 <h4 id="faust-ctypes"><a href="https://gitlab.com/adud2/faust-ctypes">Faust Ctypes</a></h4>

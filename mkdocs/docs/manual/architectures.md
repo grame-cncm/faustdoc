@@ -2272,14 +2272,15 @@ A tutorial to show how Faust can be used with [Julia](https://julialang.org), a 
 ### Python tools 
 
 #### [faustlab](https://github.com/shakfu/faustlab)
-
-#### [FAUSTPy](https://github.com/marcecj/faust_python)
 A exploratory project to wrap the Faust *interpreter* for use by python via the following wrapping frameworks using the RtAudio cross-platform audio driver:
 
-- cyfaust: 	cython 		(faust c++ interface)
-- cfaustt: 	cython 		(faust c   interface)
-- pyfaust: 	pybind11 	(faust c++ interface)
-- nanobind: nanobind 	(faust c++ interface)
+- cyfaust:     cython         (faust c++ interface)
+- cfaustt:     cython         (faust c   interface)
+- pyfaust:     pybind11     (faust c++ interface)
+- nanobind: nanobind     (faust c++ interface)
+
+#### [FAUSTPy](https://github.com/marcecj/faust_python)
+FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on [this fork](https://github.com/hrtlacek/faust_python).
 
 #### [Faust Ctypes]( https://gitlab.com/adud2/faust-ctypes)
 A port of Marc Joliet's FaustPy from CFFI to Ctypes. Faust-Ctypes documentation is [available online](https://adud2.gitlab.io/faust-ctypes).
