@@ -2271,14 +2271,6 @@ A tutorial to show how Faust can be used with [Julia](https://julialang.org), a 
 
 ### Python tools 
 
-#### [faustlab](https://github.com/shakfu/faustlab)
-A exploratory project to wrap the Faust *interpreter* for use by python via the following wrapping frameworks using the RtAudio cross-platform audio driver:
-
-- cyfaust:     cython         (faust c++ interface)
-- cfaustt:     cython         (faust c   interface)
-- pyfaust:     pybind11     (faust c++ interface)
-- nanobind: nanobind     (faust c++ interface)
-
 #### [FAUSTPy](https://github.com/marcecj/faust_python)
 FAUSTPy is a Python wrapper for the FAUST DSP language. It is implemented using the CFFI and hence creates the wrapper dynamically at run-time. A updated version of the project is available on [this fork](https://github.com/hrtlacek/faust_python).
 
@@ -2302,6 +2294,14 @@ DawDreamer is an audio-processing Python framework supporting Faust and Faust's 
 
 #### [ode2dsp](https://git.sr.ht/~kdsch/ode2dsp)
 ode2dsp is a Python library for generating ordinary differential equation (ODE) solvers in digital signal processing (DSP) languages. It automates the tedious and error-prone symbolic calculations involved in creating a DSP model of an ODE. Finite difference equations (FDEs) are rendered to Faust code.
+
+#### [faustlab](https://github.com/shakfu/faustlab)
+A exploratory project to wrap the Faust *interpreter* for use by python via the following wrapping frameworks using the RtAudio cross-platform audio driver:
+
+- cyfaust:     cython         (faust c++ interface)
+- cfaustt:     cython         (faust c   interface)
+- pyfaust:     pybind11     (faust c++ interface)
+- nanobind: nanobind     (faust c++ interface)
 
 ### Rust tools 
 
