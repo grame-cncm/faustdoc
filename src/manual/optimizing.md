@@ -430,9 +430,9 @@ In this code example, the *wrapping index moved by an if based method* can be re
 
 Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the `-mcd` and `-dlt` options can help optimize CPU utilisation, to summarize:
 
--  chosing a big `n` value for `-mcd n` will consume less memory but the shift loop will start to be time consuming wih big delay values. This model can sometimes be better suited if the C++ or LLVM compiler correctly auto-vectorizes the code and generates better-performing SIMD code.
-- chosing `-mcd 0` will activate the  *wrapping index* second strategy for all delay lines in the DSP code, then  playing with `-dlt <n>` allows to arbitrate between the *faster but consuming more memory* method and *slower but consume less memory* method.
--  chosing a combinaison of  `-mcd n1`  and  `-dlt <n2>` can possibly be the model to chose when a lot of delay lines with different size are used in the DSP code.
+-  chosing a big `n` value for `-mcd n` will consume less memory but the shift loop will start to be time consuming with big delay values. This model can sometimes be better suited if the C++ or LLVM compiler correctly auto-vectorizes the code and generates better-performing SIMD code.
+- chosing `-mcd 0` will activate the *wrapping index* second strategy for all delay lines in the DSP code, then  playing with `-dlt <n>` allows to arbitrate between the *faster but consuming more memory* method and *slower but consume less memory* method.
+-  chosing a combinaison of `-mcd n1` and `-dlt <n2>` can possibly be the model to chose when a lot of delay lines with different sizes are used in the DSP code.
 
 Using the benchmark tools [faustbench](#faustbench) and [faustbench-llvm](#faustbench-llvm) allow to refine the choice of compilation options.
 
@@ -498,11 +498,11 @@ virtual void compute(int count,
 ...
 ```
 
-with buffers named `fRecX`  instead of  `fVecX` in the previous example. The  `-mcd <n>`  and `-dlt <n>`  options can be used with the same purpose.
+with buffers named `fRecX` instead of `fVecX` in the previous example. The `-mcd <n>` and `-dlt <n>` options can be used with the same purpose.
 
 ### Managing DSP Memory Layout
 
-On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controles using the `-mem` compilation option and an [adapted architecture file](https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager).
+On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controled using the `-mem` compilation option and an [adapted architecture file](https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager).
 
 ## Optimizing the C++ or LLVM Code
 
@@ -513,7 +513,7 @@ By default the Faust compiler produces a big scalar loop in the generated `mydsp
 
 Delay lines implementation can be be controlled with the `-mcd size` and `-dlt size` options, to choose for example between *power-of-two sizes and mask based wrapping* (faster but consumming more memory) or *if based wrapping*, slower but consumming less memory. 
 
-A lot of other compilation choices are fully controllable with options. Note that the C/C++ and LLVM backends are the one with the maximum of possible compilation options. Here    are some of them:
+Many other compilation choices are fully controllable with options. Note that the C/C++ and LLVM backends offer the greatest number of compilation options. Here are just a few of them:
 
 -  `-clang` option: when compiled with clang/clang++, adds specific #pragma for auto-vectorization.
 -  `-nvi` option: when compiled with the C++ backend, does not add the 'virtual' keyword. **This option can be especially useful in embedded devices context** 
@@ -539,7 +539,7 @@ Usage: faust2bench [Faust options] <file.dsp>
 Compiles Faust programs to a benchmark executable
 ```
 
-So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp`  is used to produce an executable, then launching `./foo` gives :
+So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp` is used to produce an executable, then launching `./foo` gives :
 
 ```
 ./foo
