@@ -430,9 +430,9 @@ In this code example, the *wrapping index moved by an if based method* can be re
 
 Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the `-mcd` and `-dlt` options can help optimize CPU utilisation, to summarize:
 
--  chosing a big `n` value for `-mcd n` will consume less memory but the shift loop will start to be time consuming with big delay values. This model can sometimes be better suited if the C++ or LLVM compiler correctly auto-vectorizes the code and generates better-performing SIMD code.
-- chosing `-mcd 0` will activate the *wrapping index* second strategy for all delay lines in the DSP code, then  playing with `-dlt <n>` allows to arbitrate between the *faster but consuming more memory* method and *slower but consume less memory* method.
--  chosing a combinaison of `-mcd n1` and `-dlt <n2>` can possibly be the model to chose when a lot of delay lines with different sizes are used in the DSP code.
+- chosing a big `n` value for `-mcd n` will consume less memory but the shift loop will start to be time consuming with big delay values. This model may sometimes be better suited if the C++ or LLVM compiler correctly auto-vectorizes the code and generates more efficient SIMD code.
+- chosing `-mcd 0` will activate the *wrapping index* second strategy for all delay lines in the DSP code, then playing with `-dlt <n>` allows to arbitrate between the *faster but consuming more memory* method and *slower but consume less memory* method.
+- chosing a combinaison of `-mcd n1` and `-dlt <n2>` can possibly be the model to chose when a lot of delay lines with different sizes are used in the DSP code.
 
 Using the benchmark tools [faustbench](#faustbench) and [faustbench-llvm](#faustbench-llvm) allow to refine the choice of compilation options.
 
