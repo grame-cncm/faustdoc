@@ -205,6 +205,24 @@ process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", o
 <img src="group3.png" class="mx-auto d-block" width="50%">
 <center>*freq1 moved one step higher in the hierarchical structure*</center>
 
+Note that the name for a given `hgroup`, `vgroup`, or `tgroup` can be used more than once, and they will be merged. This can be useful when you want to define different names for different widget signals, but still want to group them. For example, this pattern can be used to separate a synth's UI design from the implementation of the synth's DSP:
+
+```
+import ("stdfaust.lib");
+
+synth(foo, bar, baz) = os.osc(foo+bar+baz);
+
+synth_ui = synth(foo, bar, baz)
+with {
+    ui(x) = hgroup("Synth", x);
+    leftcol(x) = ui(vgroup("[0]foobar", x));
+    foo = leftcol(hslider("[0]foo", 100, 20, 1000, 1));
+    bar = leftcol(hslider("[1]bar", 100, 20, 1000, 1));
+    baz = ui(vslider("[1]baz", 100, 20, 1000, 1));
+};
+
+process = synth_ui;
+```
 
 ## What are the rules used for partial application ?
 
