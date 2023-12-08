@@ -496,7 +496,7 @@ freq2 = hslider(&quot;Freq2&quot;, 500, 200, 2000, 0.01);
 
 process = hgroup(&quot;Voice1&quot;, os.osc(freq1) + os.square(freq2)), hgroup(&quot;Voice2&quot;, os.osc(freq1) + os.triangle(freq2));
 </code></pre>
-<p><img src="group3.png" class="mx-auto d-block" width="50%">
+<p><img src="group3.png" class="mx-auto d-block" width="40%">
 <center><em>freq1 moved one step higher in the hierarchical structure</em></center></p>
 <p>Note that the name for a given <code>hgroup</code>, <code>vgroup</code>, or <code>tgroup</code> can be used more than once, and they will be merged. This can be useful when you want to define different names for different widget signals, but still want to group them. For example, this pattern can be used to separate a synth's UI design from the implementation of the synth's DSP:</p>
 <pre><code>import (&quot;stdfaust.lib&quot;);
@@ -514,6 +514,8 @@ with {
 
 process = synth_ui;
 </code></pre>
+<p><img src="group4.png" class="mx-auto d-block" width="40%">
+<center><em>naming and grouping</em></center></p>
 <h2 id="what-are-the-rules-used-for-partial-application">What are the rules used for partial application ?</h2>
 <p>Assuming <code>F</code> is not an abstraction and has <code>n+m</code> inputs and <code>A</code> has <code>n</code> outputs, then we have the rewriting rule <code>F(A) ==&gt; A,bus(m):F (with bus(1) = _ and bus(n+1) = _,bus(n))</code></p>
 <p>There is an exception when <code>F</code> is a binary operation like <code>+,-,/,*</code>. In this case, the rewriting rule is <code>/(3) ==&gt; _,3:/</code>. In other words, when we apply only one argument, it is the second one.</p></div>

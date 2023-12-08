@@ -202,7 +202,7 @@ freq2 = hslider("Freq2", 500, 200, 2000, 0.01);
 process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", os.osc(freq1) + os.triangle(freq2));
 ```
 
-<img src="group3.png" class="mx-auto d-block" width="50%">
+<img src="group3.png" class="mx-auto d-block" width="40%">
 <center>*freq1 moved one step higher in the hierarchical structure*</center>
 
 Note that the name for a given `hgroup`, `vgroup`, or `tgroup` can be used more than once, and they will be merged. This can be useful when you want to define different names for different widget signals, but still want to group them. For example, this pattern can be used to separate a synth's UI design from the implementation of the synth's DSP:
@@ -223,6 +223,9 @@ with {
 
 process = synth_ui;
 ```
+
+<img src="group4.png" class="mx-auto d-block" width="40%">
+<center>*naming and grouping*</center>
 
 ## What are the rules used for partial application ?
 
