@@ -76,7 +76,7 @@ Where:
 
 **Example**
 
-In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when a key-on message issent. Therefore, the frequency will only be updated when MIDI key 62 is pressed.
+In the following example, the frequency of a sawtooth wave oscillator is controlled by the velocity value received on key 62 when a key-on message is sent. Therefore, the frequency will only be updated when MIDI key 62 is pressed.
 
 <!-- faust-run -->
 ```
