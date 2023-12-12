@@ -1350,7 +1350,7 @@ process = triangleOsc(f);
 
 ### `soundfile` Primitive
 
-The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows access to a list of externally defined sound resources, described as the list of their filename, or complete paths. The `soundfile("label[url:path]", n)` simplified syntax, or `soundfile("label", n)` (where label is used as the soundfile path) allows to use a single file. All sound resources are concatenated in a single data structure, and each item can be accessed and used independently.
+The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows access to a list of externally defined sound resources, described as a label followed by the list of their filename, or complete paths (possibly using the `%i` syntax, as in the label part). The `soundfile("label[url:path]", n)` simplified syntax, or `soundfile("label", n)` (where label is used as the soundfile path) allows to use a single file. All sound resources are concatenated in a single data structure, and each item can be accessed and used independently.
 
 A `soundfile` has: 
 
