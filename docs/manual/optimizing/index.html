@@ -362,6 +362,10 @@
             </li>
             <li class="nav-item" data-level="3"><a href="#delay-lines-implementation-and-dsp-memory-size" class="nav-link">Delay lines implementation and DSP memory size</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#recursive-signals" class="nav-link">Recursive signals</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#delay-lines-in-recursive-signals" class="nav-link">Delay lines in recursive signals</a>
               <ul class="nav flex-column">
               </ul>
@@ -513,8 +517,7 @@ process = *(smoother_vol);
 <p>When costly math functions still appear in the sample rate code, the <code>-fm</code> <a href="https://faustdoc.grame.fr/manual/options/">compilation option</a> can possibly be used to replace the standard versions provided by the underlying OS (like <code>std::cos</code>, <code>std::tan</code>... in C++ for instance) with user defined ones (hopefully faster, but possibly less precise).</p>
 <h3 id="delay-lines-implementation-and-dsp-memory-size">Delay lines implementation and DSP memory size</h3>
 <p>The Faust compiler automatically allocates buffers for the delay lines. At each sample calculation, the delayed signal is written to a specific location (the <em>write</em> position) and read from another location (the <em>read</em> position), the <em>distance in samples</em> between the read and write indexes representing the delay itself.</p>
-<p>There are two possible strategies for implementing delay lines: either the read and write indices remain the same and the delay line memory is moved after each sample calculation, 
-or the read and write indices move themselves along the delay line (with two possible <em>wrapping index</em> methods). These multiple methods allow arbitration between memory consumption and the CPU cost of using the delay line.</p>
+<p>There are two possible strategies for implementing delay lines: either the read and write indices remain the same and the delay line memory is moved after each sample calculation, or the read and write indices move themselves along the delay line (with two possible <em>wrapping index</em> methods). These multiple methods allow arbitration between memory consumption and the CPU cost of using the delay line.</p>
 <p>Two compiler options <code>-mcd &lt;n&gt;</code> (<code>-max-copy-delay</code>) and <code>-dlt &lt;n&gt;</code> (<code>--delay-line-threshold</code>) allow you to play with both strategies and even combine them.</p>
 <p>For very short delay lines of up to two samples, the first strategy is implemented by manually shifting the buffer. Then a shift loop is generated for delay from 2 up to <code>-mcd &lt;n&gt;</code> samples. </p>
 <p>For delays values bigger than <code>-mcd &lt;n&gt;</code> samples, the second strategy is implemented by:</p>
@@ -526,7 +529,7 @@ or the read and write indices move themselves along the delay line (with two pos
 <p>Note that by default <code>-mcd 16</code> is <code>-dlt &lt;INT_MAX&gt;</code> values are used. Here is a scheme explaining the mecanism:</p>
 <pre><code>[ shift buffer |-mcd &lt;N1&gt;| wrapping power-of-two buffer |-dlt &lt;N2&gt;| if based wrapping buffer ]
 </code></pre>
-<p>Here is an example of  a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut <code>-scalar</code> mode):</p>
+<p>Here is an example of a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut <code>-scalar</code> mode):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 
@@ -781,13 +784,13 @@ virtual void compute(int count,
 <li>chosing a combinaison of <code>-mcd n1</code> and <code>-dlt &lt;n2&gt;</code> can possibly be the model to chose when a lot of delay lines with different sizes are used in the DSP code.</li>
 </ul>
 <p>Using the benchmark tools <a href="#faustbench">faustbench</a> and <a href="#faustbench-llvm">faustbench-llvm</a> allow to refine the choice of compilation options.</p>
-<h4 id="delay-lines-in-recursive-signals">Delay lines in recursive signals</h4>
-<p>Here is an example of a Faust program with 10 recursive blocks in parallel, each using a delay line of increasing value:</p>
+<h4 id="recursive-signals">Recursive signals</h4>
+<p>In the C++ generated code, the delays lines appear as <code>fVecXX</code> arrays. When recursion is used in the DSP, a one sample delay is automatically added in the recursive path, and a very short delay line is allocated (appearing as <code>fRecX</code> arrays in the generated code). Here is the code of a recursively defined integrator:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 
 <pre><code>
-process = par(i, 10, + ~ @(i+1)) :&gt; _;
+process = 1 : + ~ _;
 
 </code></pre>
 
@@ -797,7 +800,41 @@ process = par(i, 10, + ~ @(i+1)) :&gt; _;
 </div>
 <!-- /faust-run -->
 
-<p>Since a recursive signal uses a one-sample delay in its loop, a buffer is allocated to handle the delay. When a delay is added to the recursive signal, a single buffer is allocated to combine the two delay sources. The generated code using <code>faust -mcd 0</code> for instance is now:</p>
+<p>And the generated C++ code with the <code>iRec0</code> buffer:</p>
+<pre><code class="language-c++">...
+// The DSP memory layout
+int iRec0[2];
+...
+virtual void compute(int count, 
+    FAUSTFLOAT** RESTRICT inputs, 
+    FAUSTFLOAT** RESTRICT outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        iRec0[0] = iRec0[1] + 1;
+        output0[i0] = FAUSTFLOAT(iRec0[0]);
+        iRec0[1] = iRec0[0];
+    }
+}
+...   
+</code></pre>
+<h4 id="delay-lines-in-recursive-signals">Delay lines in recursive signals</h4>
+<p>Here is an example of a Faust program with 10 recursive blocks in parallel, each using a delay line of increasing value:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+
+<pre><code>
+process = par(i, 10, + ~ @(i+1)) :&gt; _;
+
+</code></pre>
+
+
+<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust2/exfaust2.dsp" target="editor">
+<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+</div>
+<!-- /faust-run -->
+
+<p>Since a recursive signal uses a one sample delay in its loop, a buffer is allocated to handle the delay. When a delay is used in addition to the recursive signal, a <em>single buffer</em> is allocated to combine the two delay sources. The generated code using <code>faust -mcd 0</code> for instance is now:</p>
 <pre><code class="language-c++">...
 // The DSP memory layout
 int IOTA0;

@@ -445,7 +445,7 @@ process = 1 : + ~ _;
 ```
 <!-- /faust-run -->
 
-An the generated C++ code with the `iRec0` buffer:
+And the generated C++ code with the `iRec0` buffer:
 
 ```c++
 ...
@@ -464,6 +464,7 @@ virtual void compute(int count,
     }
 }
 ...   
+```
 
 #### Delay lines in recursive signals
 
