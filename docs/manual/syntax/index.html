@@ -2459,8 +2459,8 @@ process = r;
 <p>The <code>waveform</code> primitive was designed to facilitate the use of <a href="#rdtable-primitive"><code>rdtable</code></a> (read table). It allows us to specify a fixed periodic signal as a list of samples as literal numbers. </p>
 <p><code>waveform</code> has two outputs:</p>
 <ul>
-<li>a constant and indicating the size (as a number of samples) of the period, </li>
-<li>the periodic signal itself. </li>
+<li>a constant indicating the size (as a number of samples) of the period</li>
+<li>the periodic signal itself</li>
 </ul>
 <p><img src="img/waveform.svg" class="mx-auto d-block"></p>
 <p>For example <code>waveform{0,1,2,3}</code> produces two outputs: the constant signal 4 and the periodic signal <script type="math/tex">(0,1,2,3,0,1,2,3,0,1,\dots)</script>. </p>
