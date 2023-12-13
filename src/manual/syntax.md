@@ -1327,8 +1327,8 @@ The `waveform` primitive was designed to facilitate the use of [`rdtable`](#rdta
 
 `waveform` has two outputs:
 
-* a constant and indicating the size (as a number of samples) of the period, 
-* the periodic signal itself. 
+* a constant indicating the size (as a number of samples) of the period
+* the periodic signal itself
 
 <img src="img/waveform.svg" class="mx-auto d-block">
 
