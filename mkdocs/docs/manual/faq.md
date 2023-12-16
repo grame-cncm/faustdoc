@@ -232,3 +232,10 @@ process = synth_ui;
 Assuming `F` is not an abstraction and has `n+m` inputs and `A` has `n` outputs, then we have the rewriting rule `F(A) ==> A,bus(m):F (with bus(1) = _ and bus(n+1) = _,bus(n))`
 
 There is an exception when `F` is a binary operation like `+,-,/,*`. In this case, the rewriting rule is `/(3) ==> _,3:/`. In other words, when we apply only one argument, it is the second one.
+
+
+## Control rate versus audio rate
+
+Question : I have a question about sample rate / control rate issues. I have a Faust code that takes channel pressure messages from my keyboard as input, therefore at control rate, and outputs an expression signal at sample rate. The first part of the code can run at control rate, but I want to force it to run at sample rate (otherwise unwanted behavior will appear). Is there a simple way of forcing my pressure signal to be at sample rate (without making a smooth which may also result in unwanted behavior)
+
+Answer: The [ba.kr2ar]( https://faustlibraries.grame.fr/libs/basics/#usage_53) function can be used for the purpose.
