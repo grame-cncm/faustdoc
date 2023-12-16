@@ -1617,7 +1617,7 @@ float fRec1[65536];
 </code></pre>
 <h4 id="the-mem-option">The -mem option</h4>
 <p>On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. </p>
-<p>The first remark is that scalar values will typically stay in the DSP structure, and the point is to move the big array buffers (<code>fRec0</code> and <code>fRec1</code> in the example) into separated memory blocks. A new <code>-mem (--memory-manager)</code> can be used to generate adapted code. On the previous DSP program, we now have the following generated C++ code: </p>
+<p>The first remark is that scalar values will typically stay in the DSP structure, and the point is to move the big array buffers (<code>fRec0</code> and <code>fRec1</code> in the example) into separated memory blocks. The <code>-mem (--memory-manager)</code> option can be used to generate adapted code. On the previous DSP program, we now have the following generated C++ code: </p>
 <pre><code class="language-c++">int IOTA0;
 int fSampleRate;
 int iConst1;

@@ -1061,7 +1061,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 
 On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. 
 
-The first remark is that scalar values will typically stay in the DSP structure, and the point is to move the big array buffers (`fRec0` and `fRec1` in the example) into separated memory blocks. A new `-mem (--memory-manager)` can be used to generate adapted code. On the previous DSP program, we now have the following generated C++ code: 
+The first remark is that scalar values will typically stay in the DSP structure, and the point is to move the big array buffers (`fRec0` and `fRec1` in the example) into separated memory blocks. The `-mem (--memory-manager)` option can be used to generate adapted code. On the previous DSP program, we now have the following generated C++ code: 
 
 ```c++
 int IOTA0;
