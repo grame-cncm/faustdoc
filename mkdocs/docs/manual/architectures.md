@@ -2303,7 +2303,7 @@ A exploratory project to wrap the Faust *interpreter* for use by python via the 
 
 #### [rust-faust](https://github.com/Frando/rust-faust)
 
-A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the dsps
+A better integration of Faust for Rust. It allows to build the DSPs via build.rs and has some abstractions to make it much easier to work with params and meta of the DSPs.
 
 #### [Faust egui](https://github.com/plule/faust-egui)
 
@@ -2311,7 +2311,7 @@ Proof of concept of drawing a UI with egui and [rust-faust](https://github.com/F
 
 #### [RustFaustExperiments](https://github.com/bluenote10/RustFaustExperiments/tree/master/Benchmarks)
 
-Tools to compare C++ and Rust  code generated from Faust. 
+Tools to compare C++ and Rust code generated from Faust. 
 
 #### [fl-tui](https://gitlab.com/raoulhc/fl-tui) 
 
