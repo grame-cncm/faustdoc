@@ -2300,7 +2300,7 @@ A exploratory project to wrap the Faust *interpreter* for use by python via the 
 - nanobind: nanobind     (faust c++ interface)
 
 #### [cyfaust](https://github.com/shakfu/cyfaust)
-A cython wrapper of the Faust interpreter and the RtAudio cross-platform audio driver. The objective is to end up with a minimal, modular, self-contained, cross-platform python3 extension.
+A cython wrapper of the Faust interpreter and the RtAudio cross-platform audio driver, derived from the [faustlab](#faustlab) project . The objective is to end up with a minimal, modular, self-contained, cross-platform python3 extension.
 
 ### Rust tools 
 
