@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.69.3
+## FAUST compiler version 2.70.3
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -52,8 +52,10 @@ usage : faust [options] file1 [file2 ...].
   -cn <name>  --class-name <name>         specify the name of the dsp class to be used instead of mydsp.
   -scn <name> --super-class-name <name>   specify the name of the super class to be used instead of dsp.
   -pn <name>  --process-name <name>       specify the name of the dsp entry-point instead of process.
-  -mcd <n>    --max-copy-delay <n>        threshold between copy and ring buffer implementation (default 16 samples).
-  -dlt <n>    --delay-line-threshold <n>  threshold between 'mask' and 'select' ring buffer implementation (default INT_MAX samples).
+  -mcd <n>    --max-copy-delay <n>        use a copy delay up to max delay <n> and a dense delay above (ocpp only) or a ring buffer (defaut 16 samples).
+  -mdd <n>    --max-dense-delay <n>       use a dense delay up to max delay <n> (if enough density) and a ring buffer delay above (ocpp only, default 1024).
+  -mdy <n>    --min-density <n>           minimal density (100*number of delays/max delay) to use a dense delays (ocpp only, default 33).
+  -dlt <n>    --delay-line-threshold <n>  use a mask-based ring buffer delays up to max delay <n> and a select based ring buffers above (default INT_MAX samples).
   -mem        --memory-manager            allocate static in global state using a custom memory manager.
   -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
   -rui        --range-ui                  whether to generate code to constraint vslider/hslider/nentry values in [min..max] range.
