@@ -77,7 +77,7 @@ while (...) {
 delete m_dsp;
 delete m_ui;
 // The factory actually keeps track of all allocated DSP (done in createDSPInstance).
-// So is not manually deleted, all remaining DSP will be garbaged here.
+// So if not manually deleted, all remaining DSP will be garbaged here.
 deleteDSPFactory(m_factory);
 ```
 

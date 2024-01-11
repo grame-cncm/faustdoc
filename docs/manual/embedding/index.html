@@ -397,7 +397,7 @@
 <h3 id="libfaust-with-llvm-backend-api">Libfaust with LLVM backend API</h3>
 <p>The complete chain goes from the Faust DSP source code, compiled in LLVM IR using the LLVM backend, to finally produce the executable code using the LLVM JIT. All steps take place in memory, getting rid of the classical file-based approaches. Pointers to executable functions can be retrieved from the resulting LLVM module and the code directly called with the appropriate parameters.</p>
 <h4 id="creation-api">Creation API</h4>
-<p>The  <code>libfaust</code> library exports the following API: </p>
+<p>The <code>libfaust</code> library exports the following API: </p>
 <ul>
 <li>given a Faust source code (as a string or a file), calling the <code>createDSPFactoryFromString</code> or <code>createDSPFactoryFromFile</code> functions runs the compilation chain (Faust + LLVM JIT) and generates the <em>prototype</em> of the class, as a <code>llvm_dsp_factory</code> pointer. This factory actually contains the compiled LLVM IR for the given DSP</li>
 <li>alternatively the <code>createCPPDSPFactoryFromBoxes</code>allows to create the factory from a box expression built with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h">box API</a></li>
@@ -429,31 +429,34 @@
 </ul>
 <h3 id="typical-code-example">Typical code example</h3>
 <p>More generally, a typical use of <code>libfaust</code> in C++ could look like:</p>
-<pre><code class="language-c++">// the Faust code to compile as a string (could be in a file too)
+<pre><code class="language-c++">// The Faust code to compile as a string (could be in a file too)
 string theCode = &quot;import(\&quot;stdfaust.lib\&quot;); process = no.noise;&quot;;
 
-// compiling in memory (createDSPFactoryFromFile could be used alternatively)
+// Compiling in memory (createDSPFactoryFromFile could be used alternatively)
 llvm_dsp_factory* m_factory = createDSPFactoryFromString( 
   &quot;faust&quot;, theCode, argc, argv, &quot;&quot;, m_errorString, optimize);
 // creating the DSP instance for interfacing
 dsp* m_dsp = m_factory-&gt;createDSPInstance();
 
-// creating a generic UI to interact with the DSP
+// Creating a generic UI to interact with the DSP
 my_ui* m_ui = new MyUI();
 // linking the interface to the DSP instance 
 m_dsp-&gt;buildUserInterface(m_ui);
 
-// initializing the DSP instance with the SR
+// Initializing the DSP instance with the SR
 m_dsp-&gt;init(44100);
 
-// hypothetical audio callback, assuming m_input/m_output are previously allocated 
+// Hypothetical audio callback, assuming m_input/m_output are previously allocated 
 while (...) {
   m_dsp-&gt;compute(128, m_input, m_output);
 }
 
-// cleaning
+// Cleaning
+// Manually delete the DSP
 delete m_dsp;
 delete m_ui;
+// The factory actually keeps track of all allocated DSP (done in createDSPInstance).
+// So if not manually deleted, all remaining DSP will be garbaged here.
 deleteDSPFactory(m_factory);
 </code></pre>
 <p>The first step consists in creating a DSP factory from a DSP file (using <code>createDSPFactoryFromFile</code>) or string  (using <code>createDSPFactoryFromString</code>) with additional parameters given to the compiler. Assuming the compilation works, a factory is returned, to create a DSP instance with the factory <code>createDSPInstance</code> method. </p>
