@@ -14,7 +14,7 @@ The complete chain goes from the Faust DSP source code, compiled in LLVM IR usin
 
 #### Creation API
 
-The  `libfaust` library exports the following API: 
+The `libfaust` library exports the following API: 
 
 - given a Faust source code (as a string or a file), calling the `createDSPFactoryFromString` or `createDSPFactoryFromFile` functions runs the compilation chain (Faust + LLVM JIT) and generates the *prototype* of the class, as a `llvm_dsp_factory` pointer. This factory actually contains the compiled LLVM IR for the given DSP
 - alternatively the `createCPPDSPFactoryFromBoxes`allows to create the factory from a box expression built with the [box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h)
@@ -30,51 +30,54 @@ The  `libfaust` library exports the following API:
 After the DSP factory has been compiled, the application or the plugin running it might need to save it and then restore it. To get the internal factory compiled code, several functions are available:
 
 - `writeDSPFactoryToIR`: get the DSP factory LLVM IR (in textual format) as a string 
--  `writeDSPFactoryToIRFile`: get the DSP factory LLVM IR (in textual format) and write it to a file
--  `writeDSPFactoryToBitcode`: get the DSP factory LLVM IR (in binary format) as a string 
--  `writeDSPFactoryToBitcodeFile`: save the DSP factory LLVM IR (in binary format) in a file
--  `writeDSPFactoryToMachine`: get the DSP factory executable machine code as a string
--  `writeDSPFactoryToMachineFile`: save the DSP factory executable machine code in a file
+- `writeDSPFactoryToIRFile`: get the DSP factory LLVM IR (in textual format) and write it to a file
+- `writeDSPFactoryToBitcode`: get the DSP factory LLVM IR (in binary format) as a string 
+- `writeDSPFactoryToBitcodeFile`: save the DSP factory LLVM IR (in binary format) in a file
+- `writeDSPFactoryToMachine`: get the DSP factory executable machine code as a string
+- `writeDSPFactoryToMachineFile`: save the DSP factory executable machine code in a file
 
 To re-create a DSP factory from a previously saved code, several functions are available:
 
  - `readDSPFactoryFromIR`: create a DSP factory from a string containing the LLVM IR (in textual format) 
  - `readDSPFactoryFromIRFile`: create a DSP factory from a file containing the LLVM IR (in textual format)
- -  `readDSPFactoryFromBitcode`: create a DSP factory from a string containing the LLVM IR (in binary format)
- -  `readDSPFactoryFromBitcodeFile`: create a DSP factory from a file containing the LLVM IR (in binary format)
- -  `readDSPFactoryFromMachine`: create a DSP factory from a string containing the executable machine code
- -  `readDSPFactoryFromMachineFile`: create a DSP factory from a file containing the executable machine code.
+ - `readDSPFactoryFromBitcode`: create a DSP factory from a string containing the LLVM IR (in binary format)
+ - `readDSPFactoryFromBitcodeFile`: create a DSP factory from a file containing the LLVM IR (in binary format)
+ - `readDSPFactoryFromMachine`: create a DSP factory from a string containing the executable machine code
+ - `readDSPFactoryFromMachineFile`: create a DSP factory from a file containing the executable machine code.
 
 ### Typical code example
 
 More generally, a typical use of `libfaust` in C++ could look like:
 
 ```c++
-// the Faust code to compile as a string (could be in a file too)
+// The Faust code to compile as a string (could be in a file too)
 string theCode = "import(\"stdfaust.lib\"); process = no.noise;";
 
-// compiling in memory (createDSPFactoryFromFile could be used alternatively)
+// Compiling in memory (createDSPFactoryFromFile could be used alternatively)
 llvm_dsp_factory* m_factory = createDSPFactoryFromString( 
   "faust", theCode, argc, argv, "", m_errorString, optimize);
 // creating the DSP instance for interfacing
 dsp* m_dsp = m_factory->createDSPInstance();
 
-// creating a generic UI to interact with the DSP
+// Creating a generic UI to interact with the DSP
 my_ui* m_ui = new MyUI();
 // linking the interface to the DSP instance 
 m_dsp->buildUserInterface(m_ui);
 
-// initializing the DSP instance with the SR
+// Initializing the DSP instance with the SR
 m_dsp->init(44100);
 
-// hypothetical audio callback, assuming m_input/m_output are previously allocated 
+// Hypothetical audio callback, assuming m_input/m_output are previously allocated 
 while (...) {
   m_dsp->compute(128, m_input, m_output);
 }
 
-// cleaning
+// Cleaning
+// Manually delete the DSP
 delete m_dsp;
 delete m_ui;
+// The factory actually keeps track of all allocated DSP (done in createDSPInstance).
+// So is not manually deleted, all remaining DSP will be garbaged here.
 deleteDSPFactory(m_factory);
 ```
 
