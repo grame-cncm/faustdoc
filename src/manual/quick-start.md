@@ -12,7 +12,7 @@ More generally, at the end of this section:
 * you should know enough to write basic Faust programs,
 * you should be able to use them on different platforms.
 
-This tutorial was designed to be carried out in the [Faust Online IDE](https://faustide.grame.fr). If you wish to do it locally, you'll have to [install Faust on your system](https://github.com/grame-cncm/faust#compilation-and-installation) but this step is absolutely not required,
+This tutorial was designed to be carried out in the [Faust Online IDE](https://faustide.grame.fr) (with its [documentation](https://github.com/grame-cncm/faustide/blob/master/README.md)). If you wish to do it locally, you'll have to [install Faust on your system](https://github.com/grame-cncm/faust#compilation-and-installation) but this step is absolutely not required,
 
 ## Making Sound
 
