@@ -314,10 +314,6 @@
             
             <li class="nav-item" data-level="1"><a href="#generator" class="nav-link">generator</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#churchorgan" class="nav-link">churchOrgan</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#filterosc" class="nav-link">filterOsc</a>
               <ul class="nav flex-column">
               </ul>
@@ -358,62 +354,9 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="generator">generator</h1>
-<h2 id="churchorgan">churchOrgan</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
-<faust-editor><!--
-
-declare name "churchOrgan";
-declare author "Remi Chapelle";
-
-import("stdfaust.lib");
-
-f = hslider("[00]freq[unit:Hz]",440,50,1000,0.1);
-g = hslider("[01]gain",1,0,1,0.01);
-t = button("[10]gate") : si.smoo;
-p8 = hslider("[03]gain 8ve partial",1,0,1,0.01);
-p5 = hslider("[04]gain 5th partial",1,0,1,0.01);
-p3 = hslider("[05]gain 3d partial",1,0,1,0.01);
-px = hslider("[06]gain other partials",0.05,0,1,0.01);
-p0 = hslider("[02]gain fundamental",1,0,1,0.01);
-psub = hslider("[07]gain lower octave",1,0,1,0.01);
-nog = hslider("[08]noise gain",0.01,0,1,0.001);
-pg = hslider("[09]gain preset",1,0,1,0.01);
-r = dm.zita_light; //reverb
-
-//Instrument
-
-orgue =
-    os.osc(f)          *p0
-        + os.osc(f*2)   *p8
-        + os.osc(f*0.5) *psub*0.5
-        + os.osc(f*1.5) *p5*0.3
-        + os.osc(f*3)   *p5*0.9
-        + os.osc(f*4)   *p8*0.8
-        + os.osc(f*5)   *p3*0.7
-        + os.osc(f*6)   *p5*0.6
-        + os.osc(f*7)   *px*0.5
-        + os.osc(f*8)   *p8*0.6
-        + os.osc(f*9)   *px*0.3
-        + os.osc(f*10)  *p3*0.2
-        + os.osc(f*11)  *px*0.15
-        + os.osc(f*12)  *p5*0.1
-        + os.osc(f*13)  *px*0.8
-        + os.osc(f*14)  *px*0.6
-        + os.osc(f*15)  *px*0.5
-        + os.osc(f*16)  *p8*0.4
-        + no.noise*nog;
-
-process = orgue*g*t <: r;
-
---></faust-editor>
-<br>
-</div>
-<!-- /faust-run -->
-
 <h2 id="filterosc">filterOsc</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "filterOSC";
@@ -432,7 +375,7 @@ process = dm.oscrs_demo;
 
 <h2 id="noise">noise</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check noises.lib
@@ -495,7 +438,7 @@ The following listing shows the input Faust code, parsed to compile this mathema
 
 <h2 id="noisemetadata">noiseMetadata</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check noises.lib
@@ -580,7 +523,7 @@ The following listing shows the input Faust code, parsed to compile this mathema
 
 <h2 id="osc">osc</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name        "osc";
@@ -608,7 +551,7 @@ process = vgroup("Oscillator", os.osc(freq) * vol);
 
 <h2 id="osci">osci</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name        "osci";
@@ -636,7 +579,7 @@ process = vgroup("Oscillator", os.osci(freq) * vol);
 
 <h2 id="sawtoothlab">sawtoothLab</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "sawtoothLab";
@@ -655,7 +598,7 @@ process = dm.sawtooth_demo;
 
 <h2 id="virtualanalog">virtualAnalog</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "VirtualAnalog";
@@ -674,7 +617,7 @@ process = dm.virtual_analog_oscillator_demo;
 
 <h2 id="virtualanaloglab">virtualAnalogLab</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "virtualAnalogLab";

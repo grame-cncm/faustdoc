@@ -486,10 +486,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#faust2rnbo" class="nav-link">faust2rnbo</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#faust2rpialsaconsole" class="nav-link">faust2rpialsaconsole</a>
               <ul class="nav flex-column">
               </ul>
@@ -1242,23 +1238,6 @@ Options:
    -qrcode : activates QR code generation
    -poly : produces a polyphonic DSP, ready to be used with MIDI events
    -nodeploy : skip self-contained application generation (using 'macdeployqt')
-   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
-</pre>
-
-<h2 id="faust2rnbo">faust2rnbo</h2>
-<pre class=faust-tools>
-Usage: faust2rnbo [options] [Faust options] &lt;file.dsp>
-Compiles Faust programs to RNBO patches
-Options:
-   -midi : activates MIDI control
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -compile : to trigger C++ compilation at load time
-   -test : to generate special 'RB_XX' prefix for parameters (for testing)
-   -sp : to generate codebox subpatcher as a file.rnbopat file
-   -cpp_path &lt;path> : to set C++ export folder
-   -cpp_filename &lt;filename> : to set C++ export filename
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
