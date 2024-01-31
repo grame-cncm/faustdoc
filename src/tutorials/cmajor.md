@@ -147,6 +147,7 @@ The following [polyphonic ready instrument](https://faustdoc.grame.fr/manual/mid
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 process = organ <: _,_
 with {
@@ -173,6 +174,7 @@ The following polyphonic ready instrument DSP, with an [integrated effect](https
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 process = pm.clarinet_ui_MIDI <: _,_;
 effect = dm.freeverb_demo;

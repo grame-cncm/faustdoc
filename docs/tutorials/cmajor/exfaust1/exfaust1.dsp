@@ -1,4 +1,5 @@
 
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 process = organ <: _,_
 with {

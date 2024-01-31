@@ -281,6 +281,7 @@ When the DSP follows the [polyphonic ready instrument](https://faustdoc.grame.fr
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 
 process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)
@@ -312,6 +313,7 @@ The following polyphonic ready instrument DSP, with an [integrated effect](https
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 
 process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)
@@ -359,7 +361,6 @@ DSP programs following the polyphonic [freq/gate/gain convention](https://faustd
 ### Generating the RNBO patch in polyphonic mode with a global effect
 
 DSP programs following the polyphonic [freq/gate/gain convention](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) with and an [integrated effect](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer) can be generated using the *Platform = rnbo* and *Architecture = rnbo-poly-effect* export options. The resulting *foo* folder is self-contained, containing the `foo.maxpat`, `foo.rnbopat`and `foo_effect.rnbopat` files (using the `p` abstraction model), with `foo.maxpat` file to be opened with Max/MSP.
-
 
 ### Generating the RNBO patch from a Faust DSP program found in the web
 

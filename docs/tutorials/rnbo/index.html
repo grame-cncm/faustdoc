@@ -614,6 +614,7 @@ process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 
 process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)
@@ -643,6 +644,7 @@ with {
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 
 process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)

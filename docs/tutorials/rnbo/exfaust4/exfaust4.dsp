@@ -1,4 +1,5 @@
 
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 
 process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)

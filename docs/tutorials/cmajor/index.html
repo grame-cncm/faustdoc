@@ -479,6 +479,7 @@ Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler document
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 process = organ <: _,_
 with {
@@ -506,6 +507,7 @@ with {
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on][nvoices:8]";
 import("stdfaust.lib");
 process = pm.clarinet_ui_MIDI <: _,_;
 effect = dm.freeverb_demo;
