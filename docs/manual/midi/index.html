@@ -433,6 +433,7 @@
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:ctrl 11]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -458,6 +459,7 @@ process = os.sawtooth(freq);
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:keyon 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -483,6 +485,7 @@ process = os.sawtooth(freq);
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:keyoff 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -508,6 +511,7 @@ process = os.sawtooth(freq);
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:key 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -533,6 +537,7 @@ process = os.sawtooth(freq);
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:keypress 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -557,6 +562,7 @@ process = os.sawtooth(freq);
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 vol = hslider("volume[midi:chanpress]",0.5,0,1,0.01) : si.smoo;
 process = os.sawtooth(440) * vol;
@@ -581,6 +587,7 @@ process = os.sawtooth(440) * vol;
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 inst = nentry("Instrument[midi:pgm]",0,0,3,1) : int;
 process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selectn(4,inst);
@@ -605,6 +612,7 @@ process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selec
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 bend = ba.semi2ratio(hslider("frequency[midi:pitchwheel]",0,-2,2,0.01)) : si.smoo;
 process = os.sawtooth(440*bend);
@@ -636,6 +644,7 @@ process = os.sawtooth(440*bend);
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 
 // square signal (1/0), changing state at each received clock
@@ -675,6 +684,7 @@ process = os.osc(8*freq(front(clocker))) * play;
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 freq = hslider("freq",200,50,1000,0.01);
 gain = hslider("gain",0.5,0,1,0.01);
@@ -694,6 +704,7 @@ process = os.sawtooth(freq)*gain*gate;
 <div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 freq = hslider("key",60,36,96,1) : midikey2hz 
 with {
@@ -717,6 +728,7 @@ process = os.sawtooth(freq)*gain*gate;
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 <faust-editor><!--
 
+declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 freq = hslider("freq",200,50,1000,0.01);
 gain = hslider("gain",0.5,0,1,0.01);

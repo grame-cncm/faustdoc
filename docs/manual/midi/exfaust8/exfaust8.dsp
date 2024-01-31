@@ -1,4 +1,5 @@
 
+declare options "[midi:on]";
 import("stdfaust.lib");
 
 // square signal (1/0), changing state at each received clock

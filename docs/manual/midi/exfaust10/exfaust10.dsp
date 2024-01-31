@@ -1,4 +1,5 @@
 
+declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 freq = hslider("key",60,36,96,1) : midikey2hz 
 with {

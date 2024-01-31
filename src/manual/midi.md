@@ -53,6 +53,7 @@ In the following example, the frequency of a sawtooth wave oscillator is control
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:ctrl 11]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -80,6 +81,7 @@ In the following example, the frequency of a sawtooth wave oscillator is control
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:keyon 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -107,6 +109,7 @@ In the following example, the frequency of a sawtooth wave oscillator is control
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:keyoff 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -134,6 +137,7 @@ In the following example, the frequency of a sawtooth wave oscillator is control
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:key 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -161,6 +165,7 @@ In the following example, the frequency of a sawtooth wave oscillator is control
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 freq = hslider("frequency[midi:keypress 62]",200,50,1000,0.01) : si.smoo;
 process = os.sawtooth(freq);
@@ -187,6 +192,7 @@ In the following example, the volume of a sawtooth wave oscillator is controlled
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 vol = hslider("volume[midi:chanpress]",0.5,0,1,0.01) : si.smoo;
 process = os.sawtooth(440) * vol;
@@ -214,6 +220,7 @@ In the following example, the instrument will be choosen in the {0,3} range.
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 inst = nentry("Instrument[midi:pgm]",0,0,3,1) : int;
 process = (os.sawtooth(400),os.osc(400),os.sawtooth(600),os.osc(600)) : ba.selectn(4,inst);
@@ -240,6 +247,7 @@ In the following example, the bend of a sawtooth wave oscillator is controlled b
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 bend = ba.semi2ratio(hslider("frequency[midi:pitchwheel]",0,-2,2,0.01)) : si.smoo;
 process = os.sawtooth(440*bend);
@@ -284,6 +292,7 @@ A typical Faust program will then use the MIDI clock stream to possibly compute 
 
 <!-- faust-run -->
 ```
+declare options "[midi:on]";
 import("stdfaust.lib");
 
 // square signal (1/0), changing state at each received clock
@@ -327,6 +336,7 @@ In the following example, the standard `freq`, `gain`, and `gate` parameters are
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 freq = hslider("freq",200,50,1000,0.01);
 gain = hslider("gain",0.5,0,1,0.01);
@@ -341,6 +351,7 @@ In the next example, the standard `key`, `gain`, and `gate` parameters are used 
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 freq = hslider("key",60,36,96,1) : midikey2hz 
 with {
@@ -360,6 +371,7 @@ The previous example can be slightly improved by adding an envelope generator an
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:12]";
 import("stdfaust.lib");
 freq = hslider("freq",200,50,1000,0.01);
 gain = hslider("gain",0.5,0,1,0.01);
