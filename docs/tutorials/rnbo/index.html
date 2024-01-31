@@ -391,21 +391,18 @@ Compiling Faust DSP to codebox~ code will allow to take profit of hundreds of DS
 <p>Assuming you've <a href="https://faust.grame.fr/downloads/">installed the <strong>faust</strong> compiler</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
-freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
-freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
+vol = hslider("volume [unit:dB]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider("freq1 [unit:Hz]", 1000, 20, 3000, 1);
+freq2 = hslider("freq2 [unit:Hz]", 200, 20, 3000, 1);
 
-process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -559,23 +556,20 @@ Options:
 <p>So for instance the following example: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = vmeter,hmeter
 with {
-    vmeter(x) = attach(x, envelop(x) : vbargraph(&quot;vmeter dB [midi:ctrl 1]&quot;, -96, 10));
-    hmeter(x) = attach(x, envelop(x) : hbargraph(&quot;hmeter dB [midi:ctrl 2]&quot;, -96, 10));
+    vmeter(x) = attach(x, envelop(x) : vbargraph("vmeter dB [midi:ctrl 1]", -96, 10));
+    hmeter(x) = attach(x, envelop(x) : hbargraph("hmeter dB [midi:ctrl 2]", -96, 10));
 
     envelop = abs : max(ba.db2linear(-96)) : ba.linear2db : min(10) : max ~ -(96.0/ma.SR);
 };
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -590,23 +584,20 @@ with {
 <p>So for instance the MIDI augmented example: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-declare options &quot;[midi:on]&quot;;
+declare options "[midi:on]";
 
-vol = hslider(&quot;volume [unit:dB][midi: ctrl 7]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
-freq1 = hslider(&quot;freq1 [unit:Hz][midi: ctrl 1]&quot;, 1000, 20, 3000, 0.1);
-freq2 = hslider(&quot;freq2 [unit:Hz][midi: ctrl 2]&quot;, 200, 20, 3000, 0.1);
+vol = hslider("volume [unit:dB][midi: ctrl 7]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider("freq1 [unit:Hz][midi: ctrl 1]", 1000, 20, 3000, 0.1);
+freq2 = hslider("freq2 [unit:Hz][midi: ctrl 2]", 200, 20, 3000, 0.1);
 
-process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -621,23 +612,20 @@ process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vo
 <p>When the DSP follows the <a href="https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support">polyphonic ready instrument</a> convention, it can be activated in MIDI controllable polyphonic mode. So the following DSP program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = vgroup(&quot;Organ&quot;, voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button(&quot;gate&quot;))) * master &lt;: (_,_)
+process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)
 with {
-    master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
-    gain = hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
-    freq = hslider(&quot;freq&quot;, 500, 200, 3000, 0.1);
+    master = hslider("master [midi:ctrl 7]", 0.5, 0, 1, 0.01);
+    gain = hslider("gain", 0.5, 0, 1, 0.01);
+    freq = hslider("freq", 500, 200, 3000, 0.1);
     voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
 };
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -653,25 +641,22 @@ with {
 <p>The following polyphonic ready instrument DSP, with an <a href="https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a>, can be converted to a polyphonic MIDI ready patch:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = vgroup(&quot;Organ&quot;, voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button(&quot;gate&quot;))) * master &lt;: (_,_)
+process = vgroup("Organ", voice(freq) * gain * en.adsr(0.1, 0.1, 0.8, 0.3, button("gate"))) * master <: (_,_)
 with {
-    master = hslider(&quot;master [midi:ctrl 7]&quot;, 0.5, 0, 1, 0.01);
-    gain = hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
-    freq = hslider(&quot;freq&quot;, 500, 200, 3000, 0.1);
+    master = hslider("master [midi:ctrl 7]", 0.5, 0, 1, 0.01);
+    gain = hslider("gain", 0.5, 0, 1, 0.01);
+    freq = hslider("freq", 500, 200, 3000, 0.1);
     voice(freq) = os.osc(freq) + os.osc(freq*2)*0.5 + os.osc(freq*3)*0.25;
 };
 
 effect = dm.freeverb_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/rnbo/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -727,16 +712,13 @@ effect = dm.freeverb_demo;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -783,5 +765,6 @@ effect = dm.freeverb_demo;
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

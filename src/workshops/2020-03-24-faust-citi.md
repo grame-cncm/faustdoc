@@ -26,7 +26,6 @@ process = 0.125 : + ~ _;
 ```
 <!-- /faust-run -->
 
-
 ### Sémantique
 
 Dans l'exemple précédent, `0,125`, `+` et `_` sont des *primitives* du langage. Les deux autres signes : `:` et `~` sont des opérateurs de cablage. Ils sont utilisés pour relier entre elles les expressions du langage.
@@ -107,7 +106,6 @@ process = phase(440);
 
 Nous pouvons maintenant nous servir du générateur de phase pour produire un signal en dent de scie :
 
-
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
@@ -125,7 +123,6 @@ process = sawtooth(440);
 
 Nous pouvons également nous servir du générateurr de phase pour produire un signal carré :
 
-
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
@@ -139,13 +136,11 @@ process = squarewave(440);
 ```
 <!-- /faust-run -->
 
-
 ## Synthèse additive
 
 ### Exemple 1 : générateur sinusoidal
 
 Le générateur de phase est également à la base de l'oscillateur sinusoidal :
-
 
 <!-- faust-run -->
 ```
@@ -159,7 +154,6 @@ osc(f) = sin(phase(f) * 2 * ma.PI);
 process = osc(440);
 ```
 <!-- /faust-run -->
-
 
 Mais maintenant que nous avons vu comment créer de toutes pièces un oscillateur sinusoidal, nous allons utiliser celui qui est défini dans la libraries standard de Faust :
 
@@ -185,7 +179,6 @@ process = os.osc(440) * hslider("gain", 0.1, 0, 1, 0.01);
 
 Le premier paramètre est une chaine de caractère qui indique le nom du slider. Il est suivi de quatre paramètres numériques. Le deuxième paramètre `0.1` indique la valeur par défaut du slider, c'est à dire la valeur que va délivrer le slider quand on lance le programme. Ensuite nous avons la valeur minimale `0`, la valeur maximale `1` et le pas de variation `0.01`.
 
-
 ### Exemple 3 : Exercice, ajouter un contrôle de fréquence
 
 A titre d'exercice, remplacer, dans l'exemple précédent, la fréquence 440 par un slider horizontal dont le nom sera `"freq"`, la valeur par défaut `110`, la valeur minimale `40`, la valeur maximale `8000` et le pas `1`.
@@ -196,8 +189,6 @@ import("stdfaust.lib");
 process = os.osc(440 /*a remplacer*/) * hslider("gain", 0.1, 0, 1, 0.01);
 ```
 <!-- /faust-run -->
-
-
 
 ### Exemple 4 : Phénomène de repliement de fréquence au-delà de SR/2
 
@@ -213,7 +204,6 @@ process = os.osc(hslider("freq", 440, 20, 20000, 1)) * hslider("gain", 0.1, 0, 1
 
 ```
 <!-- /faust-run -->
-
 
 ### Exemple 5 : Synthèse additive
 
@@ -233,8 +223,8 @@ process = sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
 <!-- /faust-run -->
  A noter l'utilisation de la construction `sum(i, n, foo(i))` qui est equivalente à `foo(0)+foo(1)+...+foo(n-1)`.
 
-
 ### Exemple 6 : Approximation d'un signal carré par synthèse additive
+
 Nous avons vu précédemment comment produire une signal carré parfait. Ce signal carré parfait comporte une infinité d'harmoniques qui, du fait de l'échantillonnage, vont se replier sur le spectre audible, ce qui va donner un son bruité moins fidèle ! On peut approximer un signal carré par synthèse additive, en additionnant une serie infinie d'harmoniques impaires (voir [https://fr.wikipedia.org/wiki/Signal_carré](https://fr.wikipedia.org/wiki/Signal_carré)) :
 
 <!-- faust-run -->
@@ -269,6 +259,7 @@ process = sawtooth(55);
 
 
 ## Synthèse soustractive
+
 La synthèse soustractive procède à l'inverse de la synthèse additive. Elle consiste à partir d'un son riche, par exemple un bruit blanc, et à sculpter son spectre.
 
 ### Exemple 1 : un bruit blanc
@@ -285,7 +276,6 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01);
 
 ### Exemple 2 : lowpass
 
-
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
@@ -297,7 +287,6 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.lowpass(3, hslider("
 
 ### Exemple 3 : high pass
 
-
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
@@ -308,7 +297,6 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.highpass(3, hslider(
 <!-- /faust-run -->
 
 ### Exemple 4 : bandpass
-
 
 <!-- faust-run -->
 ```
@@ -323,7 +311,6 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 
 ### Exemple 5 : resonnant
 
-
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
@@ -335,9 +322,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 ```
 <!-- /faust-run -->
 
-
 ### Exemple 6 : fir
-
 
 <!-- faust-run -->
 ```
@@ -351,9 +336,7 @@ transformation = @(1) : *(hslider("gain", 0, -1, 1, 0.1));
 ```
 <!-- /faust-run -->
 
-
 ### Exemple 7 : iir
-
 
 <!-- faust-run -->
 ```
@@ -367,9 +350,7 @@ transformation = @(0) : *(hslider("gain", 0, -0.95, 0.95, 0.01));
 ```
 <!-- /faust-run -->
 
-
 ### Exemple 8 : filtre en peigne
-
 
 <!-- faust-run -->
 ```
@@ -383,9 +364,7 @@ transformation = @(hslider("delay", 0, 0, 20, 1)) : *(hslider("gain", 0, -0.98, 
 ```
 <!-- /faust-run -->
 
-
 ### Exemple 9 : Karplus Strong (1/2)
-
 
 <!-- faust-run -->
 ```
@@ -401,9 +380,7 @@ moyenne(x) = (x+x')/2;
 ```
 <!-- /faust-run -->
 
-
 ### Exemple 10 : Karplus Strong (2/2)
-
 
 <!-- faust-run -->
 ```
@@ -425,9 +402,7 @@ upfront(x) = x>x';
 ```
 <!-- /faust-run -->
 
-
 ### Exemple 11 : Kisana
-
 
 <!-- faust-run -->
 ```
@@ -544,7 +519,6 @@ string(coef, freq, t60, level, trig) = no.noise*level
 
 ### Exemple 1 : fm1
 
-
 <!-- faust-run -->
 ```
 import("stdfaust.lib");
@@ -563,9 +537,7 @@ process = FM(
 ```
 <!-- /faust-run -->
 
-
 ### Exemple 2 : fm2
-
 
 <!-- faust-run -->
 ```

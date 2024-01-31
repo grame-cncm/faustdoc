@@ -372,18 +372,15 @@
 <p>The following program (<code>FaustSawtooth.dsp</code>) implements a sawtooth wave oscillator with controllable gain and frequency:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = nentry(&quot;freq&quot;,440,20,20000,0.01) : si.smoo;
-gain = nentry(&quot;gain&quot;,1,0,1,0.01) : si.smoo;
+import("stdfaust.lib");
+freq = nentry("freq",440,20,20000,0.01) : si.smoo;
+gain = nentry("gain",1,0,1,0.01) : si.smoo;
 process = os.sawtooth(freq)*gain;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/teensy/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -440,16 +437,13 @@ AudioConnection patchCord1(faustSawtooth,1,out,1);
 <p>A simple Faust program (<code>FaustZita.dsp</code>) calling this effect could look like that:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 process = dm.zita_light;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/teensy/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -539,16 +533,13 @@ with{
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -595,5 +586,6 @@ with{
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

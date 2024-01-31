@@ -397,21 +397,18 @@
 <p>Assuming you've <a href="https://github.com/grame-cncm/faust/wiki/BuildingSimple">compiled and installed</a> the <strong>faust</strong> compiler from the <a href="https://github.com/grame-cncm/faust">master-dev branch</a>, starting from the following DSP <strong>osc.dsp</strong> program:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
-freq1 = hslider(&quot;freq1 [unit:Hz]&quot;, 1000, 20, 3000, 1);
-freq2 = hslider(&quot;freq2 [unit:Hz]&quot;, 200, 20, 3000, 1);
+vol = hslider("volume [unit:dB]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq1 = hslider("freq1 [unit:Hz]", 1000, 20, 3000, 1);
+freq2 = hslider("freq2 [unit:Hz]", 200, 20, 3000, 1);
 
-process = vgroup(&quot;Oscillator&quot;, os.osc(freq1) * vol, os.osc(freq2) * vol);
+process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/tutorials/julia/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -717,16 +714,13 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -773,5 +767,6 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

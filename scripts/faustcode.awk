@@ -10,11 +10,15 @@ function makeFaust(code, i) {
 	out = DOCROOT"/"dsp;
 	print code > out;
 	print "<div class=\"faust-run\"><img src=\""svg"\" class=\"mx-auto d-block\">"
-	print "~~~";
+	# print "~~~";
+	# print code;
+	# print "~~~\n";
+	# print "<a href=\"https://faustide.grame.fr/?code="FAUSTDOC"/"dsp"\" target=\"editor\">";
+	# print "<button type=\"button\" class=\"btn btn-primary\">Try it Yourself >></button></a>";
+	print "<faust-editor><!--";
 	print code;
-	print "~~~\n";
-	print "<a href=\"https://faustide.grame.fr/?code="FAUSTDOC"/"dsp"\" target=\"editor\">";
-	print "<button type=\"button\" class=\"btn btn-primary\">Try it Yourself >></button></a>";
+	print "--></faust-editor>";
+	print "<br>";
 	print "</div>";
 	close(out);
 }
@@ -26,9 +30,6 @@ BEGIN {
 	INFAUST = 0;
 	FAUSTCODE = "";
 	NL = "";
-}
-
-END {
 }
 
 ################# 
@@ -50,5 +51,3 @@ END {
 /<!-- faust-run -->/	{ 
 	INFAUST = 1;
 }
-
-

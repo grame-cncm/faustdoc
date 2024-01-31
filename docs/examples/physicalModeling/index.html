@@ -425,554 +425,479 @@
 <h2 id="brass">brass</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;Brass&quot;;
-declare description &quot;Simple brass instrument physical model with physical parameters.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "Brass";
+declare description "Simple brass instrument physical model with physical parameters.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.brass_ui &lt;: _,_;
+process = pm.brass_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="brassmidi">brassMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;BrassMIDI&quot;;
-declare description &quot;Simple MIDI-controllable brass instrument physical model with physical parameters.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "BrassMIDI";
+declare description "Simple MIDI-controllable brass instrument physical model with physical parameters.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.brass_ui_MIDI &lt;: _,_;
+process = pm.brass_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="churchbell">churchBell</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;ChurchBell&quot;;
-declare description &quot;Generic church bell physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "ChurchBell";
+declare description "Generic church bell physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.churchBell_ui &lt;: _,_;
+process = pm.churchBell_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="clarinet">clarinet</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;Clarinet&quot;;
-declare description &quot;Simple clarinet physical model with physical parameters.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "Clarinet";
+declare description "Simple clarinet physical model with physical parameters.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.clarinet_ui &lt;: _,_;
+process = pm.clarinet_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="clarinetmidi">clarinetMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;ClarinetMIDI&quot;;
-declare description &quot;Simple MIDI-controllable clarinet physical model with physical parameters.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "ClarinetMIDI";
+declare description "Simple MIDI-controllable clarinet physical model with physical parameters.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.clarinet_ui_MIDI &lt;: _,_;
+process = pm.clarinet_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="djembemidi">djembeMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;DjembeMIDI&quot;;
-declare description &quot;Simple MIDI-controllable djembe physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "DjembeMIDI";
+declare description "Simple MIDI-controllable djembe physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.djembe_ui_MIDI &lt;: _,_;
+process = pm.djembe_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="elecguitarmidi">elecGuitarMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;ElecGuitarMidi&quot;;
-declare description &quot;Simple electric guitar model without effect chain.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "ElecGuitarMidi";
+declare description "Simple electric guitar model without effect chain.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // TODO: We could potentially add an audio effect chain here
 
-process = pm.elecGuitar_ui_MIDI &lt;: _,_;
+process = pm.elecGuitar_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="englishbell">englishBell</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;EnglishChurchBell&quot;;
-declare description &quot;English church bell physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "EnglishChurchBell";
+declare description "English church bell physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.englishBell_ui &lt;: _,_;
+process = pm.englishBell_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="flute">flute</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;Flute&quot;;
-declare description &quot;Simple flute physical model with physical parameters.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "Flute";
+declare description "Simple flute physical model with physical parameters.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.flute_ui &lt;: _,_;
+process = pm.flute_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust8/exfaust8.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="flutemidi">fluteMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;FluteMIDI&quot;;
-declare description &quot;Simple MIDI-controllable flute physical model with physical parameters.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "FluteMIDI";
+declare description "Simple MIDI-controllable flute physical model with physical parameters.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.flute_ui_MIDI &lt;: _,_;
+process = pm.flute_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust9/exfaust9.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="frenchbell">frenchBell</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;FrenchChurchBell&quot;;
-declare description &quot;French church bell physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "FrenchChurchBell";
+declare description "French church bell physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.frenchBell_ui &lt;: _,_;
+process = pm.frenchBell_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust10/exfaust10.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="germanbell">germanBell</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;GermanChurchBell&quot;;
-declare description &quot;German church bell physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "GermanChurchBell";
+declare description "German church bell physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.germanBell_ui &lt;: _,_;
+process = pm.germanBell_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust11/exfaust11.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="guitarmidi">guitarMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;GuitarMidi&quot;;
-declare description &quot;Simple acoustic guitar model with steel strings.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "GuitarMidi";
+declare description "Simple acoustic guitar model with steel strings.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.guitar_ui_MIDI &lt;: _,_;
+process = pm.guitar_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust12/exfaust12.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="karplus">karplus</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;KarplusStrong&quot;;
-declare description &quot;Simple call of the Karplus-Strong model for the Faust physical modeling library&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "KarplusStrong";
+declare description "Simple call of the Karplus-Strong model for the Faust physical modeling library";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.ks_ui_MIDI &lt;: _,_;
+process = pm.ks_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust13/exfaust13.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="marimbamidi">marimbaMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 // WARNING: this model is incomplete and is only here for testing purposes
 
-declare name &quot;MarimbaMIDI&quot;;
-declare description &quot;Simple MIDI-controllable marimba physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "MarimbaMIDI";
+declare description "Simple MIDI-controllable marimba physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.marimba_ui_MIDI &lt;: _,_;
+process = pm.marimba_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust14/exfaust14.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="modularinterpinstrmidi">modularInterpInstrMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;ModularInterpInstrMidi&quot;;
-declare description &quot;String instrument with a modular body&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon &amp; John Granzow, CCRMA (Stanford University), GRAME, University of Michigan&quot;;
+declare name "ModularInterpInstrMidi";
+declare description "String instrument with a modular body";
+declare license "MIT";
+declare copyright "(c)Romain Michon & John Granzow, CCRMA (Stanford University), GRAME, University of Michigan";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.modularInterpInstr_ui_MIDI &lt;: _,_;
+process = pm.modularInterpInstr_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust15/exfaust15.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="nylonguitarmidi">nylonGuitarMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;NylonGuitarMidi&quot;;
-declare description &quot;Simple acoustic guitar model with nylon strings.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "NylonGuitarMidi";
+declare description "Simple acoustic guitar model with nylon strings.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.nylonGuitar_ui_MIDI &lt;: _,_;
+process = pm.nylonGuitar_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust16/exfaust16.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="russianbell">russianBell</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust17/exfaust17.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;RussianChurchBell&quot;;
-declare description &quot;Russian church bell physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "RussianChurchBell";
+declare description "Russian church bell physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.russianBell_ui &lt;: _,_;
+process = pm.russianBell_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust17/exfaust17.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="standardbell">standardBell</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust18/exfaust18.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;StandardChurchBell&quot;;
-declare description &quot;Standard church bell physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "StandardChurchBell";
+declare description "Standard church bell physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.standardBell_ui &lt;: _,_;
+process = pm.standardBell_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust18/exfaust18.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="violin">violin</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;Violin&quot;;
-declare description &quot;Simple violin physical model controlled with continuous parameters.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "Violin";
+declare description "Simple violin physical model controlled with continuous parameters.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.violin_ui &lt;: _,_;
+process = pm.violin_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust19/exfaust19.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="violinmidi">violinMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;ViolinMidi&quot;;
-declare description &quot;Simple MIDI-controllable violin physical model.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "ViolinMidi";
+declare description "Simple MIDI-controllable violin physical model.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.violin_ui_MIDI &lt;: _,_;
+process = pm.violin_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust20/exfaust20.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="vocalbp">vocalBP</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust21/exfaust21.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;Vocal BandPass&quot;;
-declare description &quot;Simple source-filter vocal synthesizer.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "Vocal BandPass";
+declare description "Simple source-filter vocal synthesizer.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.SFFormantModelBP_ui &lt;: _,_;
+process = pm.SFFormantModelBP_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust21/exfaust21.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="vocalbpmidi">vocalBPMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust22/exfaust22.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;Vocal BandPass MIDI&quot;;
-declare description &quot;Simple MIDI-controllable source-filter vocal synthesizer.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Romain Michon, CCRMA (Stanford University), GRAME&quot;;
+declare name "Vocal BandPass MIDI";
+declare description "Simple MIDI-controllable source-filter vocal synthesizer.";
+declare license "MIT";
+declare copyright "(c)Romain Michon, CCRMA (Stanford University), GRAME";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.SFFormantModelBP_ui_MIDI &lt;: _,_;
+process = pm.SFFormantModelBP_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust22/exfaust22.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="vocalfof">vocalFOF</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust23/exfaust23.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;Vocal FOF&quot;;
-declare description &quot;FOF vocal synthesizer.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Mike Olsen, CCRMA (Stanford University)&quot;;
+declare name "Vocal FOF";
+declare description "FOF vocal synthesizer.";
+declare license "MIT";
+declare copyright "(c)Mike Olsen, CCRMA (Stanford University)";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.SFFormantModelFofSmooth_ui &lt;: _,_;
+process = pm.SFFormantModelFofSmooth_ui <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust23/exfaust23.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="vocalfofmidi">vocalFOFMIDI</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust24/exfaust24.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;Vocal FOF MIDI&quot;;
-declare description &quot;MIDI-controllable FOF vocal synthesizer.&quot;;
-declare license &quot;MIT&quot;;
-declare copyright &quot;(c)Mike Olsen, CCRMA (Stanford University)&quot;;
+declare name "Vocal FOF MIDI";
+declare description "MIDI-controllable FOF vocal synthesizer.";
+declare license "MIT";
+declare copyright "(c)Mike Olsen, CCRMA (Stanford University)";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-process = pm.SFFormantModelFofSmooth_ui_MIDI &lt;: _,_;
+process = pm.SFFormantModelFofSmooth_ui_MIDI <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/physicalModeling/exfaust24/exfaust24.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -998,16 +923,13 @@ process = pm.SFFormantModelFofSmooth_ui_MIDI &lt;: _,_;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -1054,5 +976,6 @@ process = pm.SFFormantModelFofSmooth_ui_MIDI &lt;: _,_;
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

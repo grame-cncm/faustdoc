@@ -333,60 +333,54 @@
 <h2 id="foursourcestoocto">fourSourcesToOcto</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;fourSourcesToOcto&quot;;
-declare version &quot;1.0&quot;;
-declare author &quot;CICM&quot;;
-declare license &quot;BSD&quot;;
-declare copyright &quot;(c)CICM 2013&quot;;
+declare name "fourSourcesToOcto";
+declare version "1.0";
+declare author "CICM";
+declare license "BSD";
+declare copyright "(c)CICM 2013";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-r1 = hslider(&quot;Radius1&quot;, 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
-a1 = hslider(&quot;Angle1&quot;, 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
-r2 = hslider(&quot;Radius2&quot;, 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
-a2 = hslider(&quot;Angle2&quot;, 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
-r3 = hslider(&quot;Radius3&quot;, 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
-a3 = hslider(&quot;Angle3&quot;, 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
-r4 = hslider(&quot;Radius4&quot;, 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
-a4 = hslider(&quot;Angle4&quot;, 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
+r1 = hslider("Radius1", 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
+a1 = hslider("Angle1", 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
+r2 = hslider("Radius2", 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
+a2 = hslider("Angle2", 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
+r3 = hslider("Radius3", 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
+a3 = hslider("Angle3", 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
+r4 = hslider("Radius4", 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
+a4 = hslider("Angle4", 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
 
-process(sig1, sig2, sig3, sig4) = ho.map(3, sig1, r1, a1), ho.map(3, sig2, r2, a2), ho.map(3, sig3, r3, a3), ho.map(3, sig4, r4, a4) :&gt; ho.optimInPhase(3) : ho.decoder(3, 8);
-
-
-
-</code></pre>
+process(sig1, sig2, sig3, sig4) = ho.map(3, sig1, r1, a1), ho.map(3, sig2, r2, a2), ho.map(3, sig3, r3, a3), ho.map(3, sig4, r4, a4) :> ho.optimInPhase(3) : ho.decoder(3, 8);
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/ambisonics/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="onesourcetostereo">oneSourceToStereo</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;oneSourceToStereo&quot;;
-declare version &quot;1.0&quot;;
-declare author &quot;CICM&quot;;
-declare license &quot;BSD&quot;;
-declare copyright &quot;(c)CICM 2013&quot;;
+declare name "oneSourceToStereo";
+declare version "1.0";
+declare author "CICM";
+declare license "BSD";
+declare copyright "(c)CICM 2013";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-r1 = hslider(&quot;Radius&quot;, 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
-a1 = hslider(&quot;Angle&quot;, 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
+r1 = hslider("Radius", 1.0, 0, 5, 0.001) : si.smooth(ba.tau2pole(0.02));
+a1 = hslider("Angle", 0, ma.PI*(-2), ma.PI*2, 0.001) : si.smooth(ba.tau2pole(0.02));
 
 process(sig) = ho.map(7, sig, r1, a1) : ho.optimInPhase(7) : ho.decoderStereo(7);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/ambisonics/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -412,16 +406,13 @@ process(sig) = ho.map(7, sig, r1, a1) : ho.optimInPhase(7) : ho.decoderStereo(7)
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -468,5 +459,6 @@ process(sig) = ho.map(7, sig, r1, a1) : ho.optimInPhase(7) : ho.decoderStereo(7)
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

@@ -1,4 +1,5 @@
 
+declare options "[midi:on][nvoices:4]";
 import("stdfaust.lib");
 
 // control variables

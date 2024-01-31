@@ -1,5 +1,5 @@
 
-declare options "[nvoices:12]";
+declare options "[midi:on][nvoices:12]";
 
 import("stdfaust.lib");
 freq = nentry("freq",200,50,1000,0.01);

@@ -1,5 +1,5 @@
 
-declare options "[nvoices:4]";
+declare options "[midi:on][nvoices:4]";
 import("stdfaust.lib");
 
 freq = hslider("freq", 0, 0, 10000, 0.1) : si.smoo;

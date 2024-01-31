@@ -252,6 +252,7 @@ Here is a simple example showing how oscillators can be controlled by UI items. 
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:4]";
 import("stdfaust.lib");
 
 freq = hslider("freq", 200, 50, 5000, 0.01);
@@ -268,6 +269,7 @@ A polyphonic instrument with `freq/gate/gain` controllers associated with VC MID
 
 <!-- faust-run -->
 ```
+declare options "[midi:on][nvoices:4]";
 import("stdfaust.lib");
 
 // control variables

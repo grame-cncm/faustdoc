@@ -479,23 +479,20 @@
 <p>Here is a simple example showing how oscillators can be controlled by GUI items, associated with metadata in the DSP code:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // UI controllers connected using metadata
-freq = hslider(&quot;freq [knob:1]&quot;, 200, 50, 5000, 0.01);
-gain = hslider(&quot;gain [knob:2]&quot;, 0.5, 0, 1, 0.01);
-gate = button(&quot;gate [switch:1]&quot;);
+freq = hslider("freq [knob:1]", 200, 50, 5000, 0.01);
+gain = hslider("gain [knob:2]", 0.5, 0, 1, 0.01);
+gate = button("gate [switch:1]");
 
 // DSP processor
 process = os.osc(freq) * gain * 5, os.sawtooth(freq) * gain * gate * 5;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -506,25 +503,22 @@ process = os.osc(freq) * gain * 5, os.sawtooth(freq) * gain * gate * 5;
 </ul>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 // Simplest possible script using all variables
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // Switch button, highlight in red
-switch(i) = button(&quot;switch%i [switch:%i]&quot;) : hbargraph(&quot;[switchlight_red:%i]&quot;, 0, 1);
+switch(i) = button("switch%i [switch:%i]") : hbargraph("[switchlight_red:%i]", 0, 1);
 
 // Gain slider, highlight in red
-gain(i) = hslider(&quot;gain%i [knob:%i]&quot;, 0.1, 0, 1, 0.01) : hbargraph(&quot;[light_red:%i]&quot;, 0, 1);
+gain(i) = hslider("gain%i [knob:%i]", 0.1, 0, 1, 0.01) : hbargraph("[light_red:%i]", 0, 1);
 
 process = si.bus(6) : par(i, 6, *(gain(i+1)) * (1-switch(i+1)));
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -533,10 +527,10 @@ process = si.bus(6) : par(i, 6, *(gain(i+1)) * (1-switch(i+1)));
 </ul>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 // Voltage-controlled oscillator example
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 // Create a phasor with a given frequency
 phasor(freq) = freq/ma.SR : (+ : decimal) ~ _ with { decimal(x) = x-int(x); };
@@ -544,17 +538,14 @@ phasor(freq) = freq/ma.SR : (+ : decimal) ~ _ with { decimal(x) = x-int(x); };
 // Pitch to freq conversion (also included in the rack.lib library)
 cv_pitch2freq(cv_pitch) = 440 * 2 ^ (cv_pitch - 0.75);
 
-gain = hslider(&quot;gain [knob:1]&quot;, 0.1, 0, 1, 0.01) * 10 - 5;
+gain = hslider("gain [knob:1]", 0.1, 0, 1, 0.01) * 10 - 5;
 
 pitch(x) = x + gain;
 
 process(x) = sin(2 * ma.PI * phasor(cv_pitch2freq(pitch(x)))) * 5;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -597,45 +588,44 @@ process(x) = sin(2 * ma.PI * phasor(cv_pitch2freq(pitch(x)))) * 5;
 <p>Here is a simple example showing how oscillators can be controlled by UI items. One switch, one button and two knobs will be created in the GUI:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+declare options "[midi:on][nvoices:4]";
+import("stdfaust.lib");
 
-freq = hslider(&quot;freq&quot;, 200, 50, 5000, 0.01);
-gain = hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
-gate = button(&quot;gate&quot;);
-check = checkbox(&quot;check&quot;);
+freq = hslider("freq", 200, 50, 5000, 0.01);
+gain = hslider("gain", 0.5, 0, 1, 0.01);
+gate = button("gate");
+check = checkbox("check");
 
 // DSP processor
 process = os.osc(freq) * gain * gate, os.sawtooth(freq) * gain * check;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <p>A polyphonic instrument with <code>freq/gate/gain</code> controllers associated with VC MIDI inputs, using the <code>[CV:N]</code> metadata, to be compiled with the <code>-nvoices &lt;num&gt;</code> option:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+declare options "[midi:on][nvoices:4]";
+import("stdfaust.lib");
 
 // control variables
-master = hslider(&quot;master&quot;, 0.3, 0, 2, 0.01);    
-pan = hslider(&quot;pan&quot;, 0.5, 0, 1, 0.01);    
+master = hslider("master", 0.3, 0, 2, 0.01);    
+pan = hslider("pan", 0.5, 0, 1, 0.01);    
 
-freq = nentry(&quot;freq [CV:1]&quot;, 440, 20, 20000, 1);    
-gate = button(&quot;gate [CV:2]&quot;);      
-gain = nentry(&quot;gain [CV:3]&quot;, 0.3, 0, 10, 0.01);    
+freq = nentry("freq [CV:1]", 440, 20, 20000, 1);    
+gate = button("gate [CV:2]");      
+gain = nentry("gain [CV:3]", 0.3, 0, 10, 0.01);    
 
 // relative amplitudes of the different partials
-amp(1) = hslider(&quot;amp1&quot;, 1.0, 0, 3, 0.01);
-amp(2) = hslider(&quot;amp2&quot;, 0.5, 0, 3, 0.01);
-amp(3) = hslider(&quot;amp3&quot;, 0.25, 0, 3, 0.01);
+amp(1) = hslider("amp1", 1.0, 0, 3, 0.01);
+amp(2) = hslider("amp2", 0.5, 0, 3, 0.01);
+amp(3) = hslider("amp3", 0.25, 0, 3, 0.01);
 
 // panner function
 panner(pan, x) = x*sqrt(1-pan), x*sqrt(pan);
@@ -644,30 +634,24 @@ panner(pan, x) = x*sqrt(1-pan), x*sqrt(pan);
 partial(i) = amp(i+1)*os.osc((i+1)*freq);
 
 process = sum(i, 3, partial(i))
-            * (gate : vgroup(&quot;1-adsr&quot;, en.adsr(0.05, 0.1, 0.1, 0.1)))
-            * gain : vgroup(&quot;2-master&quot;, *(master) : panner(pan));
+            * (gate : vgroup("1-adsr", en.adsr(0.05, 0.1, 0.1, 0.1)))
+            * gain : vgroup("2-master", *(master) : panner(pan));
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <p>This polyphonic instrument can then be connected to a polyphonic reverb, to be also compiled with the <code>-nvoices &lt;num&gt;</code> option:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 process = dm.freeverb_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-11-21-faust-vcvrack/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -693,16 +677,13 @@ process = dm.freeverb_demo;
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -749,5 +730,6 @@ process = dm.freeverb_demo;
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

@@ -309,7 +309,7 @@ Polyphony is conveniently handled in Faust directly by Faust Architectures. Note
 Polyphony support can be added to any Faust program (as long as the target architecture supports it) simply by adding the `[nvoices:n]` metadata to the [standard `option` metadata](#standard-metadata) where `n` is the maximum number of voices of polyphony to be allocated:
 
 ```
-declare options "[nvoices:12]";
+declare options "[midi:on][nvoices:12]";
 ```
 
 ### Standard Polyphony Parameters

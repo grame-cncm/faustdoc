@@ -314,6 +314,10 @@
             
             <li class="nav-item" data-level="1"><a href="#generator" class="nav-link">generator</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#churchorgan" class="nav-link">churchOrgan</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#filterosc" class="nav-link">filterOsc</a>
               <ul class="nav flex-column">
               </ul>
@@ -354,309 +358,338 @@
                     <div class="col-md-9 main-container" role="main">
 
 <h1 id="generator">generator</h1>
-<h2 id="filterosc">filterOsc</h2>
+<h2 id="churchorgan">churchOrgan</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;filterOSC&quot;;
-declare version &quot;0.0&quot;;
-declare author &quot;JOS, revised by RM&quot;;
-declare description &quot;Simple application demoing filter based oscillators.&quot;;
+declare name "churchOrgan";
+declare author "Remi Chapelle";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
+
+f = hslider("[00]freq[unit:Hz]",440,50,1000,0.1);
+g = hslider("[01]gain",1,0,1,0.01);
+t = button("[10]gate") : si.smoo;
+p8 = hslider("[03]gain 8ve partial",1,0,1,0.01);
+p5 = hslider("[04]gain 5th partial",1,0,1,0.01);
+p3 = hslider("[05]gain 3d partial",1,0,1,0.01);
+px = hslider("[06]gain other partials",0.05,0,1,0.01);
+p0 = hslider("[02]gain fundamental",1,0,1,0.01);
+psub = hslider("[07]gain lower octave",1,0,1,0.01);
+nog = hslider("[08]noise gain",0.01,0,1,0.001);
+pg = hslider("[09]gain preset",1,0,1,0.01);
+r = dm.zita_light; //reverb
+
+//Instrument
+
+orgue =
+    os.osc(f)          *p0
+        + os.osc(f*2)   *p8
+        + os.osc(f*0.5) *psub*0.5
+        + os.osc(f*1.5) *p5*0.3
+        + os.osc(f*3)   *p5*0.9
+        + os.osc(f*4)   *p8*0.8
+        + os.osc(f*5)   *p3*0.7
+        + os.osc(f*6)   *p5*0.6
+        + os.osc(f*7)   *px*0.5
+        + os.osc(f*8)   *p8*0.6
+        + os.osc(f*9)   *px*0.3
+        + os.osc(f*10)  *p3*0.2
+        + os.osc(f*11)  *px*0.15
+        + os.osc(f*12)  *p5*0.1
+        + os.osc(f*13)  *px*0.8
+        + os.osc(f*14)  *px*0.6
+        + os.osc(f*15)  *px*0.5
+        + os.osc(f*16)  *p8*0.4
+        + no.noise*nog;
+
+process = orgue*g*t <: r;
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="filterosc">filterOsc</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+declare name "filterOSC";
+declare version "0.0";
+declare author "JOS, revised by RM";
+declare description "Simple application demoing filter based oscillators.";
+
+import("stdfaust.lib");
 
 process = dm.oscrs_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="noise">noise</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check noises.lib
+// WARNING: This a "legacy example based on a deprecated library". Check noises.lib
 // for more accurate examples of noise functions
 
-declare name        &quot;Noise&quot;;
-declare version     &quot;1.1&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2009&quot;;
+declare name        "Noise";
+declare version     "1.1";
+declare author      "Grame";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2009";
 
 //-----------------------------------------------------------------
 // Noise generator and demo file for the Faust math documentation
 //-----------------------------------------------------------------
 
-&lt;mdoc&gt;
-\section{Presentation of the &quot;noise.dsp&quot; Faust program}
+<mdoc>
+\section{Presentation of the "noise.dsp" Faust program}
 This program describes a white noise generator with an interactive volume, using a random function.
 
 \subsection{The random function}
 The \texttt{random} function describes a generator of random numbers, which equation follows. You should notice hereby the use of an integer arithmetic on 32 bits, relying on integer wrapping for big numbers.
-&lt;equation&gt;random&lt;/equation&gt;
+<equation>random</equation>
 
 \subsection{The noise function}
 The white noise then corresponds to:
-&lt;equation&gt;noise&lt;/equation&gt;
-&lt;/mdoc&gt;
+<equation>noise</equation>
+</mdoc>
 
 random  = +(12345)~*(1103515245);
 noise   = random/2147483647.0;
 
-&lt;mdoc&gt;
+<mdoc>
 \subsection{Just add a user interface element to play volume!}
 Endly, the sound level of this program is controlled by a user slider, which gives the following equation: 
-&lt;equation&gt;process&lt;/equation&gt;
-&lt;/mdoc&gt;
+<equation>process</equation>
+</mdoc>
 
-&lt;mdoc&gt;
+<mdoc>
 \section{Block-diagram schema of process}
 This process is illustrated on figure 1.
-&lt;diagram&gt;process&lt;/diagram&gt;
-&lt;/mdoc&gt;
+<diagram>process</diagram>
+</mdoc>
 
-process = noise * vslider(&quot;Volume[style:knob][acc: 0 0 -10 0 10]&quot;, 0.5, 0, 1, 0.1);
+process = noise * vslider("Volume[style:knob][acc: 0 0 -10 0 10]", 0.5, 0, 1, 0.1);
 
-&lt;mdoc&gt;
+<mdoc>
 \section{Notice of this documentation}
 You might be careful of certain information and naming conventions used in this documentation:
-&lt;notice/&gt;
+<notice/>
 
 \section{Listing of the input code}
 The following listing shows the input Faust code, parsed to compile this mathematical documentation.
-&lt;listing/&gt;
-&lt;/mdoc&gt;
+<listing/>
+</mdoc>
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="noisemetadata">noiseMetadata</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-// WARNING: This a &quot;legacy example based on a deprecated library&quot;. Check noises.lib
+// WARNING: This a "legacy example based on a deprecated library". Check noises.lib
 // for more accurate examples of noise functions
 
-&lt;mdoc&gt;
-\title{&lt;metadata&gt;name&lt;/metadata&gt;}
-\author{&lt;metadata&gt;author&lt;/metadata&gt;}
+<mdoc>
+\title{<metadata>name</metadata>}
+\author{<metadata>author</metadata>}
 \date{\today}
 \maketitle
 
 \begin{tabular}{ll}
     \hline
-    \textbf{name}       &amp; &lt;metadata&gt;name&lt;/metadata&gt; \\
-    \textbf{version}    &amp; &lt;metadata&gt;version&lt;/metadata&gt; \\
-    \textbf{author}     &amp; &lt;metadata&gt;author&lt;/metadata&gt; \\
-    \textbf{license}    &amp; &lt;metadata&gt;license&lt;/metadata&gt; \\
-    \textbf{copyright}  &amp; &lt;metadata&gt;copyright&lt;/metadata&gt; \\
+    \textbf{name}       & <metadata>name</metadata> \\
+    \textbf{version}    & <metadata>version</metadata> \\
+    \textbf{author}     & <metadata>author</metadata> \\
+    \textbf{license}    & <metadata>license</metadata> \\
+    \textbf{copyright}  & <metadata>copyright</metadata> \\
     \hline
 \end{tabular}
 \bigskip
-&lt;/mdoc&gt;
+</mdoc>
 //-----------------------------------------------------------------
 // Noise generator and demo file for the Faust math documentation
 //-----------------------------------------------------------------
 
-declare name        &quot;noiseMetadata&quot;; // avoid same name as in noise.dsp
-declare version     &quot;1.1&quot;;
-declare author      &quot;Grame&quot;;
-declare author      &quot;Yghe&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2009&quot;;
+declare name        "noiseMetadata"; // avoid same name as in noise.dsp
+declare version     "1.1";
+declare author      "Grame";
+declare author      "Yghe";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2009";
 
-&lt;mdoc&gt;
-\section{Presentation of the &quot;noise.dsp&quot; Faust program}
+<mdoc>
+\section{Presentation of the "noise.dsp" Faust program}
 This program describes a white noise generator with an interactive volume, using a random function.
 
 \subsection{The random function}
-&lt;/mdoc&gt;
+</mdoc>
 
 random  = +(12345)~*(1103515245);
 
-&lt;mdoc&gt;
+<mdoc>
 The \texttt{random} function describes a generator of random numbers, which equation follows. You should notice hereby the use of an integer arithmetic on 32 bits, relying on integer wrapping for big numbers.
-&lt;equation&gt;random&lt;/equation&gt;
+<equation>random</equation>
 
 \subsection{The noise function}
-&lt;/mdoc&gt;
+</mdoc>
 
 noise   = random/2147483647.0;
 
-&lt;mdoc&gt;
+<mdoc>
 The white noise then corresponds to:
-&lt;equation&gt;noise&lt;/equation&gt;
+<equation>noise</equation>
 
 \subsection{Just add a user interface element to play volume!}
-&lt;/mdoc&gt;
+</mdoc>
 
-process = noise * vslider(&quot;Volume[style:knob]&quot;, 0, 0, 1, 0.1);
+process = noise * vslider("Volume[style:knob]", 0, 0, 1, 0.1);
 
-&lt;mdoc&gt;
+<mdoc>
 Endly, the sound level of this program is controlled by a user slider, which gives the following equation: 
-&lt;equation&gt;process&lt;/equation&gt;
+<equation>process</equation>
 
 \section{Block-diagram schema of process}
 This process is illustrated on figure 1.
-&lt;diagram&gt;process&lt;/diagram&gt;
+<diagram>process</diagram>
 
 \section{Notice of this documentation}
 You might be careful of certain information and naming conventions used in this documentation:
-&lt;notice /&gt;
+<notice />
 
 \section{Listing of the input code}
 The following listing shows the input Faust code, parsed to compile this mathematical documentation.
-&lt;listing mdoctags=&quot;false&quot; dependencies=&quot;false&quot; distributed=&quot;false&quot; /&gt;
-&lt;/mdoc&gt;
+<listing mdoctags="false" dependencies="false" distributed="false" />
+</mdoc>
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="osc">osc</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name        &quot;osc&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2009&quot;;
+declare name        "osc";
+declare version     "1.0";
+declare author      "Grame";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2009";
 
 //-----------------------------------------------
 //      Sinusoidal Oscillator
 //-----------------------------------------------
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
-freq = hslider(&quot;freq [unit:Hz]&quot;, 1000, 20, 24000, 1);
+vol = hslider("volume [unit:dB]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo;
+freq = hslider("freq [unit:Hz]", 1000, 20, 24000, 1);
 
-process = vgroup(&quot;Oscillator&quot;, os.osc(freq) * vol);
-
-
-</code></pre>
+process = vgroup("Oscillator", os.osc(freq) * vol);
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust3/exfaust3.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="osci">osci</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name        &quot;osci&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2009&quot;;
+declare name        "osci";
+declare version     "1.0";
+declare author      "Grame";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2009";
 
 //-----------------------------------------------
 //        Sinusoidal Oscillator
 //      (with linear interpolation)
 //-----------------------------------------------
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
-vol = hslider(&quot;volume [unit:dB]&quot;, 0, -96, 0, 0.1) : ba.db2linear : si.smoo ;
-freq = hslider(&quot;freq [unit:Hz]&quot;, 1000, 20, 24000, 1);
+vol = hslider("volume [unit:dB]", 0, -96, 0, 0.1) : ba.db2linear : si.smoo ;
+freq = hslider("freq [unit:Hz]", 1000, 20, 24000, 1);
 
-process = vgroup(&quot;Oscillator&quot;, os.osci(freq) * vol);
+process = vgroup("Oscillator", os.osci(freq) * vol);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust4/exfaust4.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="sawtoothlab">sawtoothLab</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;sawtoothLab&quot;;
-declare version &quot;0.0&quot;;
-declare author &quot;JOS, revised by RM&quot;;
-declare description &quot;An application demonstrating the different sawtooth oscillators of Faust.&quot;;
+declare name "sawtoothLab";
+declare version "0.0";
+declare author "JOS, revised by RM";
+declare description "An application demonstrating the different sawtooth oscillators of Faust.";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = dm.sawtooth_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust5/exfaust5.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="virtualanalog">virtualAnalog</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;VirtualAnalog&quot;;
-declare version &quot;0.0&quot;;
-declare author &quot;JOS, revised by RM&quot;;
-declare description &quot;Virtual analog oscillator demo application.&quot;;
+declare name "VirtualAnalog";
+declare version "0.0";
+declare author "JOS, revised by RM";
+declare description "Virtual analog oscillator demo application.";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = dm.virtual_analog_oscillator_demo;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust6/exfaust6.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="virtualanaloglab">virtualAnalogLab</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name &quot;virtualAnalogLab&quot;;
+declare name "virtualAnalogLab";
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 process = 
- vgroup(&quot;[1]&quot;, dm.virtual_analog_oscillator_demo) : 
- vgroup(&quot;[2]&quot;, dm.moog_vcf_demo) : 
- vgroup(&quot;[3]&quot;, dm.spectral_level_demo)
- // See also: vgroup(&quot;[3]&quot;, dm.fft_spectral_level_demo(32))
-  &lt;: _,_;
+ vgroup("[1]", dm.virtual_analog_oscillator_demo) : 
+ vgroup("[2]", dm.moog_vcf_demo) : 
+ vgroup("[3]", dm.spectral_level_demo)
+ // See also: vgroup("[3]", dm.fft_spectral_level_demo(32))
+  <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/generator/exfaust7/exfaust7.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -682,16 +715,13 @@ process =
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -738,5 +768,6 @@ process =
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

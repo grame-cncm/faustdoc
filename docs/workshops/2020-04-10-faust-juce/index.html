@@ -367,20 +367,17 @@
 <p>First, let's implement a basic subtractive synthesizer in Faust based on a filtered sawtooth wave (<code>FaustSynth.dsp</code>):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
-freq = nentry(&quot;freq&quot;,200,50,1000,0.01);
-gain = nentry(&quot;gain&quot;,0.5,0,1,0.01) : si.smoo;
-gate = button(&quot;gate&quot;) : si.smoo;
-cutoff = nentry(&quot;cutoff&quot;,10000,50,10000,0.01) : si.smoo;
-process = os.sawtooth(freq)*gain*gate : fi.lowpass(3,cutoff) &lt;: _,_;
+import("stdfaust.lib");
+freq = nentry("freq",200,50,1000,0.01);
+gain = nentry("gain",0.5,0,1,0.01) : si.smoo;
+gate = button("gate") : si.smoo;
+cutoff = nentry("cutoff",10000,50,10000,0.01) : si.smoo;
+process = os.sawtooth(freq)*gain*gate : fi.lowpass(3,cutoff) <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-juce/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -613,22 +610,19 @@ Once again, JUCE is a powerful tool to implement sophisticated UI in a very simp
 <p>For this example, we'll be using a stereo echo:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 echo(d,f) = +~de.delay(48000,del)*f
 with {
   del = d*ma.SR;
 };
-delay = nentry(&quot;delay&quot;,0.25,0,1,0.01) : si.smoo;
-feedback = nentry(&quot;feedback&quot;,0.5,0,1,0.01) : si.smoo;
+delay = nentry("delay",0.25,0,1,0.01) : si.smoo;
+feedback = nentry("feedback",0.5,0,1,0.01) : si.smoo;
 process = par(i,2,echo(delay,feedback));
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-juce/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -751,22 +745,19 @@ void EffectAudioProcessorEditor::resized()
 <p>The procedure to create a polyphonic synthesizer DSP object is slightly different than for a simple monophonic synth such as the one presented at the beginning of this tutorial. Here, we'll be using the same Faust program as one used for the <a href="#simple-monophonic-synth-plug-in">mono synthesizer example</a>. To enable polyphony, we just need to configure the <code>nvoices</code> metadata which allows us to specify the maximum number of voices of polyphony of the DSP object that will be generated:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare options &quot;[nvoices:12]&quot;;
+declare options "[midi:on][nvoices:12]";
 
-import(&quot;stdfaust.lib&quot;);
-freq = nentry(&quot;freq&quot;,200,50,1000,0.01);
-gain = nentry(&quot;gain&quot;,0.5,0,1,0.01) : si.smoo;
-gate = button(&quot;gate&quot;) : si.smoo;
-cutoff = nentry(&quot;cutoff&quot;,10000,50,10000,0.01) : si.smoo;
-process = os.sawtooth(freq)*gain*gate : fi.lowpass(3,cutoff) &lt;: _,_;
+import("stdfaust.lib");
+freq = nentry("freq",200,50,1000,0.01);
+gain = nentry("gain",0.5,0,1,0.01) : si.smoo;
+gate = button("gate") : si.smoo;
+cutoff = nentry("cutoff",10000,50,10000,0.01) : si.smoo;
+process = os.sawtooth(freq)*gain*gate : fi.lowpass(3,cutoff) <: _,_;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/workshops/2020-04-10-faust-juce/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -984,16 +975,13 @@ void PolySynthAudioProcessorEditor::handleNoteOff(MidiKeyboardState*, int midiCh
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -1040,5 +1028,6 @@ void PolySynthAudioProcessorEditor::handleNoteOff(MidiKeyboardState*, int midiCh
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

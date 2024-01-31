@@ -462,16 +462,13 @@ sudo make install
 <p>To illustrate how HTTP support works, let's reuse our previous example, a simple monophonic audio mixer with 4 inputs and one output. For each input we have a mute button and a level slider:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-input(v) = vgroup(&quot;input %v&quot;, *(1-checkbox(&quot;mute&quot;)) : *(vslider(&quot;level&quot;, 0, 0, 1, 0.01)));
-process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
+input(v) = vgroup("input %v", *(1-checkbox("mute")) : *(vslider("level", 0, 0, 1, 0.01)));
+process  = hgroup("mixer", par(i, 4, input(i)) :> _);
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/http/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -674,16 +671,13 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -730,5 +724,6 @@ process  = hgroup(&quot;mixer&quot;, par(i, 4, input(i)) :&gt; _);
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>

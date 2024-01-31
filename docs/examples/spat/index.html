@@ -333,13 +333,13 @@
 <h2 id="panpot">panpot</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name        &quot;panpot&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2006&quot;;
+declare name        "panpot";
+declare version     "1.0";
+declare author      "Grame";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2006";
 
 //-------------------------------------------------
 // Stereo panpot
@@ -347,30 +347,27 @@ declare copyright   &quot;(c)GRAME 2006&quot;;
 
 panpot(x) = sqrt(c)*x, sqrt(1-c)*x
             with {
-                c = (nentry(&quot;[1]pan[style:knob]&quot;,0,-90,90,1)-90.0)/-180.0;
+                c = (nentry("[1]pan[style:knob]",0,-90,90,1)-90.0)/-180.0;
             };
 
 process = panpot;
 
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/spat/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
 <h2 id="spat_1">spat</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-declare name        &quot;spat&quot;;
-declare version     &quot;1.0&quot;;
-declare author      &quot;Grame&quot;;
-declare license     &quot;BSD&quot;;
-declare copyright   &quot;(c)GRAME 2006&quot;;
+declare name        "spat";
+declare version     "1.0";
+declare author      "Grame";
+declare license     "BSD";
+declare copyright   "(c)GRAME 2006";
 
 //==========================================================
 //
@@ -379,24 +376,21 @@ declare copyright   &quot;(c)GRAME 2006&quot;;
 //
 //==========================================================
 
-import(&quot;stdfaust.lib&quot;);
+import("stdfaust.lib");
 
 //------------------------------------------------------
 // EXEMPLE : une entree mono spatialisee sur 8 sorties
 //------------------------------------------------------
 
-angle = hslider(&quot;angle&quot;, 0.0, 0, 1, 0.01);
-distance = hslider(&quot;distance&quot;, 0.5, 0, 1, 0.01);
+angle = hslider("angle", 0.0, 0, 1, 0.01);
+distance = hslider("distance", 0.5, 0, 1, 0.01);
 
-process = vgroup(&quot;Spatializer 1x8&quot;, sp.spat(8, angle, distance));
-
-
-
-</code></pre>
+process = vgroup("Spatializer 1x8", sp.spat(8, angle, distance));
 
 
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/examples/spat/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run --></div>
             </div>
@@ -422,16 +416,13 @@ process = vgroup(&quot;Spatializer 1x8&quot;, sp.spat(8, angle, distance));
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -478,5 +469,6 @@ process = vgroup(&quot;Spatializer 1x8&quot;, sp.spat(8, angle, distance));
     </div>
 </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.30/dist/faust-web-component.js" defer></script>
     </body>
 </html>
