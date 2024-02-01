@@ -49,6 +49,10 @@ A video about making an Eight Channel Mixer in the Faust IDE  by Julius Smith.
 
 ### Syntax Highlighting
 
+#### [tree-sitter-faust](https://github.com/khiner/tree-sitter-faust)
+
+[Tree-sitter](https://tree-sitter.github.io/) grammar Faust. Every Faust syntax feature should be supported. The npm package is [here](https://www.npmjs.com/package/tree-sitter-faust).
+
 #### [Syntax Highlighting Files](https://github.com/grame-cncm/faust/tree/master-dev/syntax-highlighting)
 
 This folder contains syntax highlighting files for various editors.

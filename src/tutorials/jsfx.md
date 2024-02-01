@@ -7,7 +7,6 @@ The JSFX language is based on Cockos [EEL2](https://www.cockos.com/EEL2/) open-s
 
 The [first section](#using-command-line-tools) assumes a working [Faust compiler installed](https://github.com/grame-cncm/faust) on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) is better suited for JSFX users who want to discover Faust.  
 
-
 ## Using command line tools
 
 ### Generating JSFX code
@@ -196,7 +195,6 @@ The generated code contains a filled `@block` section that is used to look for M
 
  - a NOTE ON message looks for an available voice (or steals the oldest one if necessary) and sets its controls
  - a NOTE OFF message looks for the voice that is playing its key to turn its gate off. 
-    
     
 ```
 @block
