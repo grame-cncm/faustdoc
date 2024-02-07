@@ -44,6 +44,9 @@ A video about writing a Slew Limiter in the Faust Language by Julius Smith.
 
 A video about making an Eight Channel Mixer in the Faust IDE  by Julius Smith.
 
+#### [Creating VSTs and more using FAUST](https://musichackspace.org/product/creating-vsts-and-more-using-faust/)
+
+FAUST is a programming language that enables us to quickly create cross-platform DSP code. We can easily create VST plugins, Max-Externals and more. Its high-quality built-in library of effects and tools enables us to quickly draft high quality audio processing devices. The workshop aims at getting new users started, conveying what FAUST is good for and how to use it effectively to produce high quality results quickly.
 
 ## Various Tools
 
