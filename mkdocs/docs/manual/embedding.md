@@ -211,3 +211,5 @@ Like metaSurface64, it has both its own loop generator and a multi-effects FX en
 * [HISE](http://www.hise.audio) is an open source framework for building sample based virtual instruments combining a highly performant Disk-Streaming Engine, a flexible DSP-Audio Module system and a handy Interface Designer.
 
 * [AMATI](https://github.com/glocq/Amati) is a VST plugin for live-coding effects in the Faust programming language.
+
+* [cyfaust](https://github.com/shakfu/cyfaust) is a cython wrapper of the Faust interpreter and the RtAudio cross-platform audio driver, derived from the [faustlab](https://github.com/shakfu/faustlab) project. The objective is to end up with a minimal, modular, self-contained, cross-platform python3 extension.
