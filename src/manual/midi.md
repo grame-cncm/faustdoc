@@ -447,7 +447,9 @@ effect = dm.zita_light;
 
 In this case, the polyphonic part is based on `process` and a single instance of the effect defined in `effect` will be created and shared by all voices.
 
-Note that since [`dm.zita_light`](TODO) is a stereo effect, the output of `process` must be split into 2 signals. Also, be aware that this type of construction wont be visible in the corresponding block diagram that will only show what's implemented in the `process` line.
+The architecture machinery then separates the instrument description itself (the `process = ...` definition) from the effect definition (the `effect = ...` definition), possibly adapts the instrument number of outputs to the effect number of inputs, compiles each part separately, and combines them.
+
+Here [`dm.zita_light`](https://faustlibraries.grame.fr/libs/demos/#dmzita_light) is a stereo effect, the mono output of the `os.sawtooth(freq)*envelope` expression can be split into 2 signals (but would be splitted automatically if kept as a mono output). Also, be aware that this type of construction wont be visible in the corresponding block diagram that will only show what's implemented in the `process` line.
 
 <!-- TODO: in poly mode, effect should automatically activated -->
 

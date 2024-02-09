@@ -799,7 +799,8 @@ effect = dm.zita_light;
 <!-- /faust-run -->
 
 <p>In this case, the polyphonic part is based on <code>process</code> and a single instance of the effect defined in <code>effect</code> will be created and shared by all voices.</p>
-<p>Note that since <a href="TODO"><code>dm.zita_light</code></a> is a stereo effect, the output of <code>process</code> must be split into 2 signals. Also, be aware that this type of construction wont be visible in the corresponding block diagram that will only show what's implemented in the <code>process</code> line.</p>
+<p>The architecture machinery then separates the instrument description itself (the <code>process = ...</code> definition) from the effect definition (the <code>effect = ...</code> definition), possibly adapts the instrument number of outputs to the effect number of inputs, compiles each part separately, and combines them.</p>
+<p>Here <a href="https://faustlibraries.grame.fr/libs/demos/#dmzita_light"><code>dm.zita_light</code></a> is a stereo effect, the mono output of the <code>os.sawtooth(freq)*envelope</code> expression can be split into 2 signals (but would be splitted automatically if kept as a mono output). Also, be aware that this type of construction wont be visible in the corresponding block diagram that will only show what's implemented in the <code>process</code> line.</p>
 <!-- TODO: in poly mode, effect should automatically activated -->
 
 <h3 id="polyphony-and-continuous-pitch">Polyphony and Continuous Pitch</h3>

@@ -407,8 +407,7 @@ process = par(i,2,ef.cubicnl(drive,offset)) <: par(i,2,dm.zita_light);
 
 Once again, the only rule with this is that in the expression `A<:B` the number of inputs of `B` has to be a multiple of the number of outputs of `A`.
 
-<!-- TODO: make sure that signal distribution rules are explained somewhere
-else in the doc -->
+<!-- TODO: make sure that signal distribution rules are explained somewhere else in the doc -->
 
 #### Merge Composition
 
@@ -615,7 +614,7 @@ The `seq` iteration can be used to duplicate an expression in series. Just like 
 
 **Example: Peak Equalizer**
 
-The [`fi.peak_eq`](TODO) function of the Faust libraries implements a second order "peak equalizer" section (gain boost or cut near some frequency). When placed in series, it can be used to implement a full peak equalizer:
+The [`fi.peak_eq`](https://faustlibraries.grame.fr/libs/filters/#fipeak_eq) function of the Faust libraries implements a second order "peak equalizer" section (gain boost or cut near some frequency). When placed in series, it can be used to implement a full peak equalizer:
 
 <!-- faust-run -->
 ```
@@ -1024,8 +1023,7 @@ In practice, that's how the `stdfaust.lib`library works.
 
 <!-- TODO: import? -->
 
-<!-- TODO: we should also show how this type of construction can be used to
-define function with variables with a predefined value, etc. -->
+<!-- TODO: we should also show how this type of construction can be used to define function with variables with a predefined value, etc. -->
 
 #### `component` Expression
 

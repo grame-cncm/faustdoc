@@ -1305,8 +1305,7 @@ process = par(i,2,ef.cubicnl(drive,offset)) <: par(i,2,dm.zita_light);
 <!-- /faust-run -->
 
 <p>Once again, the only rule with this is that in the expression <code>A&lt;:B</code> the number of inputs of <code>B</code> has to be a multiple of the number of outputs of <code>A</code>.</p>
-<!-- TODO: make sure that signal distribution rules are explained somewhere
-else in the doc -->
+<!-- TODO: make sure that signal distribution rules are explained somewhere else in the doc -->
 
 <h4 id="merge-composition">Merge Composition</h4>
 <p>The <em>merge composition</em> (e.g., <code>A:&gt;B</code>) is the dual of the <a href="#split-composition"><em>split composition</em></a>. The number of outputs of <script type="math/tex">A</script> must be a multiple of the number of inputs of <script type="math/tex">B</script>: </p>
@@ -1520,7 +1519,7 @@ process = par(i,nHarmonics,os.osc(freq*(i+1))) :> /(nHarmonics)*envelope;
 <li>its third argument is the expression to be duplicated.</li>
 </ul>
 <p><strong>Example: Peak Equalizer</strong></p>
-<p>The <a href="TODO"><code>fi.peak_eq</code></a> function of the Faust libraries implements a second order "peak equalizer" section (gain boost or cut near some frequency). When placed in series, it can be used to implement a full peak equalizer:</p>
+<p>The <a href="https://faustlibraries.grame.fr/libs/filters/#fipeak_eq"><code>fi.peak_eq</code></a> function of the Faust libraries implements a second order "peak equalizer" section (gain boost or cut near some frequency). When placed in series, it can be used to implement a full peak equalizer:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust20/exfaust20.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -2119,8 +2118,7 @@ v(t) = max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1)
 <p>In practice, that's how the <code>stdfaust.lib</code>library works.</p>
 <!-- TODO: import? -->
 
-<!-- TODO: we should also show how this type of construction can be used to
-define function with variables with a predefined value, etc. -->
+<!-- TODO: we should also show how this type of construction can be used to define function with variables with a predefined value, etc. -->
 
 <h4 id="component-expression"><code>component</code> Expression</h4>
 <p>The <code>component</code> construction allows us to reuse a full Faust program (e.g., a <code>.dsp</code> file) as a simple expression.</p>
