@@ -2328,6 +2328,10 @@ Another Rust wrapper for the Faust compiler, using [JACK](https://jackaudio.org)
 
 A work-in-progress project to integrate Faust generated Rust code with [NIH-plug](https://github.com/robbert-vdh/nih-plug).
 
+#### [Nih Faust Stereo Fx Jit](https://github.com/YPares/nih_faust_stereo_fx_jit)
+
+A plugin to load Faust dsp files and JIT-compile them with LLVM. A simple GUI is provided to select which script to load and where to look for the Faust libraries that this script may import. The selected DSP script is saved as part of the plugin state and therefore is saved with your DAW project.
+
 ### WebAssembly tools 
 
 #### [faust-loader](https://github.com/Smona/faust-loader)
