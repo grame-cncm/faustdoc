@@ -398,7 +398,7 @@ process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 <p>The Cmajor code can be generated using:</p>
 <pre><code class="language-bash">faust -lang cmajor osc.dsp -o osc.cmajor
 </code></pre>
-<p>This will generate a <code>mydsp</code> processor with a set of methods to manipulate it. This API basically mimics the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h">one defined for the C++ backend</a>. </p>
+<p>This will generate a <code>mydsp</code> processor included in a namespace <code>faust {...}</code> with a set of methods to manipulate it. This API basically mimics the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h">one defined for the C++ backend</a>. </p>
 <h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
 <p>The generated code contains <code>input event</code> definition for the three sliders defined in the DSP source code:</p>
 <pre><code>input event float32 eventfHslider1 [[ name: &quot;freq1&quot;, group: &quot;/v:Oscillator/freq1&quot;, min: 20.0f, max: 3000.0f, init: 1000.0f, step: 1.0f, meta_unit0: &quot;Hz&quot; ]];

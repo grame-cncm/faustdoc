@@ -34,7 +34,7 @@ The Cmajor code can be generated using:
 faust -lang cmajor osc.dsp -o osc.cmajor
 ```
 
-This will generate a `mydsp` processor with a set of methods to manipulate it. This API basically mimics the [one defined for the C++ backend](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h). 
+This will generate a `mydsp` processor included in a namespace `faust {...}` with a set of methods to manipulate it. This API basically mimics the [one defined for the C++ backend](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h). 
 
 ### Looking at the generated code
 
