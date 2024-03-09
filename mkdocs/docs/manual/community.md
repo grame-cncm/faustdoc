@@ -4,6 +4,10 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [How to build Mod Duo plugin written in Faust](https://medium.com/@vlad.shcherbakov/deploying-a-faust-program-to-mod-duo-f2a588eaea7b)
+
+This article shows how you can compile a Faust program to run on [Mod Duo](https://mod.audio).
+
 #### [Handling infinity and not-a-number (NaN) values in Faust and C++ audio programming](https://www.dariosanfilippo.com/blog/2020/handling_inf_nan_values_in_faust_and_cpp/)  
 
 This post by [Dario Sanfilippo](https://www.dariosanfilippo.com) discusses insights gained over a few years of audio programming to implement robust Faust/C++ software, particularly when dealing with infinity and NaN values.
