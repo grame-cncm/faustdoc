@@ -532,7 +532,7 @@ while B = _,_,_;
 has 3 inputs
 </code></pre>
 <h4 id="recursive-connection-error">Recursive connection error</h4>
-<p>Combining two blocks <code>A</code> and <code>B</code> with the recursive composition will produce a box connection error if the number of outputs of <code>A</code> is less than the number of inputs of <code>B</code>, or the number of outputs of <code>B</code> is less than the number of inputs of <code>A</code> (that is the following <script type="math/tex; mode=display">\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)</script> connection rule is not respected). So for instance the following program:</p>
+<p>Combining two blocks <code>A</code> and <code>B</code> with the recursive composition will produce a box connection error if the number of outputs of <code>A</code> is less than the number of inputs of <code>B</code>, or the number of outputs of <code>B</code> is more than the number of inputs of <code>A</code> (that is the following <script type="math/tex; mode=display">\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)</script> connection rule is not respected). So for instance the following program:</p>
 <pre><code>A = _,_;
 B = _,_,_;
 process = A ~ B;
