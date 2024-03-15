@@ -217,7 +217,6 @@ DSP programs following the polyphonic [freq/gate/gain convention](https://faustd
 
 DSP programs following the polyphonic [freq/gate/gain convention](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) with and an [integrated effect](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer) can be generated using the *Platform = cmajor* and *Architecture = cmajor-poly-effect* export options. The resulting *foo* folder is self-contained, containing the `foo.cmajor` and `foo.cmajorpatch` files. The instrument can be executed using `cmaj play foo/foo.cmajorpatch` command and played with a MIDI device or possibly [converted as a JUCE plugin](https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md).
 
-
 ### Generating the Cmajor output from a Faust DSP program found in the web
 
 Faust DSP programs found on the Web can also be converted:
@@ -228,3 +227,9 @@ with the following URL: [https://faustide.grame.fr/?code=https://raw.githubuserc
 - basic [Examples](https://faustdoc.grame.fr/examples/ambisonics/) have been compiled to Cmajor [here](rsrc/examples-cmajor.zip)
 
 - examples of the [faustplayground](https://faustplayground.grame.fr/) platform can be [found here](https://github.com/grame-cncm/faustplayground/tree/master/public/faust-modules) and possibly converted. They have been compiled to Cmajor [here](rsrc/faust-modules-cmajor.zip).
+
+## Experimental Faust in Cmajor integration 
+
+With the release of the Cmajor [source code](https://github.com/cmajor-lang/cmajor), an experimental Faust in Cmajor integration [has been started]( https://github.com/sletz/cmajor?tab=readme-ov-file#faust--cmajor) on a Cmajor project fork.
+
+
