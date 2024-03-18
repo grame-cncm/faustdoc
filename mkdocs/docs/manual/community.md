@@ -4,6 +4,10 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [How to compile HISE and FAUST for Audio Plugin Development](https://www.youtube.com/watch?v=qHHShO4uOvI)
+
+This video shows how you can use Faust inside [HISE](https://hise.dev). More info on how to use Faust in HISE can be found on the [HISE Faust forum](https://forum.hise.audio/category/14/faust-development).
+
 #### [How to build Mod Duo plugin written in Faust](https://medium.com/@vlad.shcherbakov/deploying-a-faust-program-to-mod-duo-f2a588eaea7b)
 
 This article shows how you can compile a Faust program to run on [Mod Duo](https://mod.audio).
