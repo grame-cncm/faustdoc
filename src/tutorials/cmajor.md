@@ -232,4 +232,12 @@ with the following URL: [https://faustide.grame.fr/?code=https://raw.githubuserc
 
 With the release of the Cmajor [source code](https://github.com/cmajor-lang/cmajor), an experimental Faust in Cmajor integration [has been started]( https://github.com/sletz/cmajor?tab=readme-ov-file#faust--cmajor) on a Cmajor project fork.
 
+### Known limitations
 
+The Cmajor language generates some usefull API when the patch is exported in C++ or JavaScript. For example the  `getInputEndpoints/getOutputEndpoints` and `getEndpointHandle` functions allow an external piece of code to enumerate and access all endpoints, to possibly control the program or build a GUI. But unfortunately those functions **are not part of the language itself**. Thus there is no way we know of:
+
+ - to write a generic Cmajor program that would automatically connect some endpoints (assuming they would use some kind of MIDI describing metadata) to MIDI messages
+ 
+ - to write a generic Cmajor program that would automatically wraps a voice generated from a Faust DSP program in a polyphonic and MIDI aware program, and expose the voice set of parameters at the main graph level, to be controlled globally for all voices
+
+We think the language would gain expressive power by having some kind of [reflexivity](https://en.wikipedia.org/wiki/Reflective_programming). 
