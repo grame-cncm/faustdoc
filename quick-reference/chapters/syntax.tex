@@ -737,6 +737,7 @@ When doing partial application with an \emph{infix operator}, it is important to
 	\end{center}
 	\caption{Partial application of infix operators}
 	\label{tab-partialrules}
+	
 \end{table}
 
 For commutative operations that doesn't matter. But for non-commutative ones, it is more ``natural'' to fix the second argument.  We use divide by 2 (\lstinline'/(2)') or rise to the cube (\lstinline'^(3)') more often than the other way around.
@@ -1234,6 +1235,8 @@ Whenever the \faust compiler find an application of an abstraction it replaces\m
 \begin{lstlisting}
 	(_ <: harmonizer :> _)
 \end{lstlisting}
+
+Note that the arguments given to the primitive or function in applications are reduced to their \emph{block normal form} (that is the flat equivalent block) before the actual application. Thus if the number of outputs of the argument block does not mach the needed number of arguments, the application will be treated as \emph{partial application} and the missing arguments will be replaced by one or several \lstinline'_' (to complete the number of missing arguments). 
 
 \subsubsection{Unapplied abstractions}
 

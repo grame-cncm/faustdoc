@@ -1192,6 +1192,9 @@ Whenever the Faust compiler find an application of an abstraction it replaces th
 (_ <: dm.zita_light :> _)
 ```
 
+Note that the arguments given to the primitive or function in applications are reduced to their *block normal form* (that is the flat equivalent block) before the actual application. Thus if the number of outputs of the argument block does not mach the needed number of arguments, the application will be treated as *partial application* and the missing arguments will be replaced by one or several `_` (to complete the number of missing arguments). 
+
+
 #### Unapplied abstractions
 
 Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. Functional languages generally treat them as [first-class values](https://en.wikipedia.org/wiki/First-class_function) which give these languages high-order programming capabilities. 

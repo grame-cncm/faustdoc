@@ -2219,6 +2219,7 @@ process = mono(dm.zita_light);
 <p>Whenever the Faust compiler find an application of an abstraction it replaces the <em>variable part</em> with the argument. The resulting expression is as expected:</p>
 <pre><code>(_ &lt;: dm.zita_light :&gt; _)
 </code></pre>
+<p>Note that the arguments given to the primitive or function in applications are reduced to their <em>block normal form</em> (that is the flat equivalent block) before the actual application. Thus if the number of outputs of the argument block does not mach the needed number of arguments, the application will be treated as <em>partial application</em> and the missing arguments will be replaced by one or several <code>_</code> (to complete the number of missing arguments). </p>
 <h4 id="unapplied-abstractions">Unapplied abstractions</h4>
 <p>Usually, lambda abstractions are supposed to be applied on arguments, using beta-reduction in Lambda-Calculus. Functional languages generally treat them as <a href="https://en.wikipedia.org/wiki/First-class_function">first-class values</a> which give these languages high-order programming capabilities. </p>
 <p>Another way of looking at abstractions in Faust is as a means of routing or placing blocks that are given as parameters. For example, the following abstraction <code>repeat(fx) = fx : fx;</code> could be used to duplicate an effect and route input signals to be successively processed by that effect:</p>
