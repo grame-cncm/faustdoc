@@ -4,6 +4,10 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [Mozzi Revisited](https://www.pschatzmann.ch/home/2024/03/15/mozzi-revisited/)
+
+Mozzi brings your Arduino to life by allowing it to produce much more complex and interesting growls, sweeps and chorusing atmospherics. These sounds can be quickly and easily constructed from familiar synthesis units like oscillators, delays, filters and envelopes and can be [programmed with Faust](https://github.com/pschatzmann/arduino-audio-tools/wiki/Faust).
+
 #### [How to compile HISE and FAUST for Audio Plugin Development](https://www.youtube.com/watch?v=qHHShO4uOvI)
 
 This video shows how you can use Faust inside [HISE](https://hise.dev). More info on how to use Faust in HISE can be found on the [HISE Faust forum](https://forum.hise.audio/category/14/faust-development).
