@@ -334,6 +334,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#warning-messages" class="nav-link">Warning messages</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#debugging-at-runtime" class="nav-link">Debugging at runtime</a>
@@ -435,6 +439,8 @@ Field = fRec3 size = 2 r_count = 4 w_count = 2
 <p>Note that since the signal interval calculation is imperfect, you may see <em>false positives</em>, and uneeded range constraining code might be generated, especially when using recursive signals where the interval calculation system will typically produce <em>[-inf, inf]</em> range, which is not precise enough to correctly describe the real signal range.  </p>
 <h4 id="the-me-option">The -me option</h4>
 <p>Starting with version 2.37.0, mathematical functions which have a finite domain (like <code>sqrt</code> defined for positive or null values, or <code>asin</code> defined for values in the [-1..1] range) are <em>checked at compile time</em> when they <em>actually compute values at that time</em>, and <em>raise an error</em> if the program tries to compute an out-of-domain value.  If those functions appear in the generated code, their domain of use can also be checked (using the interval computation system) and  the <code>-me</code> option <em>will display warnings</em> if the domain of use is incorrect. Note that again because of the imperfect interval computation system, <em>false positives</em> may appear and should be checked.</p>
+<h4 id="warning-messages">Warning messages</h4>
+<p>Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the <code>-wall</code> compilation option. Mathematical out-of-domain error warning messages are displayed when both <code>-wall</code> and <code>-me</code> options are used.</p>
 <h3 id="debugging-at-runtime">Debugging at runtime</h3>
 <h4 id="the-interp-tracer-tool">The interp-tracer tool</h4>
 <p>The  <strong>interp-tracer</strong> tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically <code>FP_SUBNORMAL</code>, <code>FP_INFINITE</code> and <code>FP_NAN</code> values, or <code>INTEGER_OVERFLOW</code>, <code>CAST_INT_OVERFLOW</code>  and <code>DIV_BY_ZERO</code> operations, or <code>LOAD/STORE</code> errors. </p>
