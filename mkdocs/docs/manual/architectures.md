@@ -194,7 +194,7 @@ public:
     midi() {}
     virtual ~midi() {}
 
-    // Additional time-stamped API for MIDI input
+    // Additional timestamped API for MIDI input
     virtual MapUI* keyOn(double, int channel, int pitch, int velocity)
     {
         return keyOn(channel, pitch, velocity);
@@ -325,7 +325,7 @@ Several concrete implementations subclassing `midi_handler` using native APIs ha
 
 <img src="img/MIDIHierarchy.jpg" class="mx-auto d-block" width="80%">
 
-Depending on the native MIDI API being used, event time-stamps are either expressed in absolute time or in frames. They are converted to offsets expressed in samples relative to the beginning of the audio buffer.
+Depending on the native MIDI API being used, event timestamps are either expressed in absolute time or in frames. They are converted to offsets expressed in samples relative to the beginning of the audio buffer.
 
 Connected with the `MidiUI` class (a subclass of `UI`), they allow a given DSP to be controlled with incoming MIDI messages or possibly send MIDI messages when its internal control state changes.
 
@@ -718,9 +718,11 @@ public:
     virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) = 0;
 
     /**
-     * DSP instance computation: alternative method to be used by subclasses.
+     * Alternative DSP instance computation method for use by subclasses, incorporating an additional `date_usec` parameter,
+     * which specifies the timestamp of the first sample in the audio buffers.
      *
-     * @param date_usec - the timestamp in microsec given by audio driver.
+     * @param date_usec - the timestamp in microsec given by audio driver. By convention timestamp of -1 means 'no timestamp conversion',
+     * events already have a timestamp expressed in frames.
      * @param count - the number of frames to compute
      * @param inputs - the input audio buffers as an array of non-interleaved 
      * FAUSTFLOAT samples (either float, double or quad)
@@ -805,7 +807,7 @@ and are part of three different types of global metadata:
 - metadata like `author` of `copyright`are part of the [Global Medata](https://faustdoc.grame.fr/manual/syntax/#global-metadata)
 - metadata like`noises.lib/name`are part of the [Function Metadata](https://faustdoc.grame.fr/manual/syntax/#function-metadata)
 
-Specialized subclasses of  the`Meta` class can be implemented to decode the needed key/value pairs for a given use-case. 
+Specialized subclasses of the`Meta` class can be implemented to decode the needed key/value pairs for a given use-case. 
 
 ### Macro Construction of DSP Components
 
@@ -817,7 +819,7 @@ Since taking advantage of the huge number of already available UI and audio arch
 
 A `dsp_decorator` class, subclass of the root `dsp` class has first been defined. Following the decorator design pattern, it allows behavior to be added to an individual object, either statically or dynamically.
 
-As an example of the decorator pattern, the `timed_dsp` class allows to decorate a given DSP with sample accurate control capability or  the `mydsp_poly` class for polyphonic DSPs, explained in the next sections.
+As an example of the decorator pattern, the `timed_dsp` class allows to decorate a given DSP with sample accurate control capability or the `mydsp_poly` class for polyphonic DSPs, explained in the next sections.
 
 #### Combining DSP Components
 
@@ -840,7 +842,7 @@ In some cases control may be more finely interleaved with audio rendering, and s
 
 Although the Faust language permits the description of sample level algorithms (i.e., like recursive filters, etc.), Faust generated DSP are usually computed by blocks. Underlying audio architectures give a fixed size buffer over and over to the DSP `compute` method which consumes and produces audio samples.
 
-##### Control to DSP Link
+#### Control to DSP Link
 
 In the current version of the Faust generated code, the primary connection point between the control interface and the DSP code is simply a memory zone. For control inputs, the architecture layer continuously write values in this zone, which is then *sampled* by the DSP code at the beginning of the `compute` method, and used with the same values throughout the call. Because of this simple control/DSP connexion mechanism, the *most recent value* is used by the DSP code.
 
@@ -848,33 +850,37 @@ Similarly for control outputs , the DSP code inside the `compute` method possibl
 
 Although this behaviour is satisfactory for most use-cases, some specific usages need to handle the complete stream of control values with sample accurate timing. For instance keeping all control messages and handling them at their exact position in time is critical for proper MIDI clock synchronisation.
 
-##### Time-Stamped Control
+#### Timestamped Control
 
-The first step consists in extending the architecture control mechanism to deal with *time-stamped* control events. Note that this requires the underlying event control layer to support this capability. The native MIDI API for instance is usually able to deliver time-stamped MIDI messages.
+The first step consists in extending the architecture control mechanism to deal with *timestamped* control events. Note that this requires the underlying event control layer to support this capability. The native MIDI API for instance is usually able to deliver timestamped MIDI messages.
 
-The next step is to keep all time-stamped events in a *time ordered* data structure to be continuously written by the control side, and read by the audio side.
+The next step is to keep all timestamped events in a *time ordered* data structure to be continuously written by the control side, and read by the audio side.
 
 Finally the sample computation has to take account of all queued control events, and correctly change the DSP control state at successive points in time.
 
-##### Slices Based DSP Computation
+#### Slices Based DSP Computation
 
-With time-stamped control messages, changing control values at precise sample indexes on the audio stream becomes possible. A generic *slices based* DSP rendering strategy has been implemented in the [timed_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/timed-dsp.h) class.
+With timestamped control messages, changing control values at precise sample indexes on the audio stream becomes possible. A generic *slices based* DSP rendering strategy has been implemented in the [timed_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/timed-dsp.h) class.
 
-A ring-buffer is used to transmit the stream of time-stamped events from the control layer to the DSP one. In the case of MIDI control for instance, the ring-buffer is written with a pair containing the time-stamp expressed in samples and the actual MIDI message each time one is received. In the DSP compute method, the ring-buffer will be read to handle all messages received during the previous audio block.
+A ring-buffer is used to transmit the stream of timestamped events from the control layer to the DSP one. In the case of MIDI control for instance, the ring-buffer is written with a pair containing the timestamp expressed in samples (or microseconds) and the actual MIDI message each time one is received. In the DSP compute method, the ring-buffer will be read to handle all messages received during the previous audio block.
 
 Since control values can change several times inside the same audio block, the DSP compute cannot be called only once with the total number of frames and the complete inputs/outputs audio buffers. The following strategy has to be used:
 
 - several slices are defined with control values changing between consecutive slices
-- all control values having the same time-stamp are handled together, and change the DSP control internal state. The slice is computed up to the next control parameters time-stamp until the end of the given audio block is reached
+- all control values having the same timestamp are handled together, and change the DSP control internal state. The slice is computed up to the next control parameters timestamp until the end of the given audio block is reached
 - in the next figure, four slices with the sequence of c1, c2, c3, c4 frames are successively given to the DSP compute method, with the appropriate part of the audio input/output buffers. Control values (appearing here as *[v1,v2,v3]*, then *[v1,v3]*, then *[v1]*, then *[v1,v2,v3]* sets) are changed between slices
 
 <img src="img/compute_slices.png" class="mx-auto d-block" width="60%">
 
-Since time-stamped control messages from the previous audio block are used in the current block, control messages are aways handled with one audio buffer latency.
+Since timestamped control messages from the previous audio block are used in the current block, control messages are aways handled with one audio buffer latency.
 
 Note that this slices based computation model can always be directly implemented on top of the underlying audio layer, without relying on the `timed_dsp` wrapper class. 
 
-##### Typical Use-Case
+#### Audio driver timestamping
+
+Some audio drivers can get the timestamp of the first sample in the audio buffers, and will typically call the DSP alternative `compute(double date_usec, int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)` function with the correct timestamp. By convention timestamp of -1 means *'no timestamp conversion', events already have a timestamp expressed in frames* (see [jackaudio_midi](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/audio/jack-dsp.h) for an example driver using timestamp expressed in frames). The [timed_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/timed-dsp.h) wrapper class is an example of a DSP class actually using the timestamp information.
+
+#### Typical Use-Case
 
 A typical Faust program can use the *MIDI clock* command signal to possibly compute the Beat Per Minutes (BPM) information for any synchronization need it may have. 
 
