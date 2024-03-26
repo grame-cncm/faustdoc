@@ -4,6 +4,12 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [Generate WAMs with FaustIDE](http://www.webaudiomodules.com/docs/usage/generate-with-faustide/)
+
+[Web Audio Modules](http://www.webaudiomodules.com) (WAM) ias a standard for Web Audio plugins and DAWs. The 2.0 version of Web Audio Modules has been released in 2021 as a group effort by a large set of people and since then, multiple plugins and hosts have been published, mostly as open source and free software.
+
+The FAUST IDE is a very popular tool for [generating WAMs from existing FAUST code](http://www.webaudiomodules.com/docs/usage/generate-with-faustide) (and there are hundreds of source code example available for audio effects, instruments, etc.). You can [generate WAMs directly](http://www.webaudiomodules.com/docs/usage/generate-with-faust) from the command line using the [faust2wam script](https://github.com/Fr0stbyteR/faust2wam).
+
 #### [Mozzi Revisited](https://www.pschatzmann.ch/home/2024/03/15/mozzi-revisited/)
 
 Mozzi brings your Arduino to life by allowing it to produce much more complex and interesting growls, sweeps and chorusing atmospherics. These sounds can be quickly and easily constructed from familiar synthesis units like oscillators, delays, filters and envelopes and can be [programmed with Faust](https://github.com/pschatzmann/arduino-audio-tools/wiki/Faust).
