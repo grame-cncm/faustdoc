@@ -213,3 +213,5 @@ Like metaSurface64, it has both its own loop generator and a multi-effects FX en
 * [AMATI](https://github.com/glocq/Amati) is a VST plugin for live-coding effects in the Faust programming language.
 
 * [cyfaust](https://github.com/shakfu/cyfaust) is a cython wrapper of the Faust interpreter and the RtAudio cross-platform audio driver, derived from the [faustlab](https://github.com/shakfu/faustlab) project. The objective is to end up with a minimal, modular, self-contained, cross-platform python3 extension.
+
+* [nih-faust-jit](https://github.com/YPares/nih-faust-jit) ia a plugin written in Rust to load Faust dsp files and JIT-compile them with LLVM. A simple GUI is provided to select which script to load and where to look for the Faust libraries that this script may import. The selected DSP script is saved as part of the plugin state and therefore is saved with your DAW project.

@@ -522,18 +522,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#faust2wasm" class="nav-link">faust2wasm</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2webaudiowasm" class="nav-link">faust2webaudiowasm</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2webaudiowast" class="nav-link">faust2webaudiowast</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
         </ul>
@@ -1370,49 +1358,6 @@ Compiles Faust programs to VCV Rack modules (see https://github.com/grame-cncm/f
    -version &lt;1|2> : to set the plugin version, 1 by default
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 
-</pre>
-
-<h2 id="faust2wasm">faust2wasm</h2>
-<pre class=faust-tools>
-Usage: faust2wasm [options] &lt;file.dsp>
-Compiles Faust programs to WASM modules
-Options:
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -opt : optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
-   -worklet : generates AudioWorklet compatible code
-   -wap : generates a WAP (Web Audio Plugin). This forces -worklet mode, and create additional files
-   -wap2 : generates a WAP V2 (Web Audio Plugin). This forces -worklet mode, and create additional files
-   -comb : combine several DSPs in a unique resulting 'comb.js' file, sharing the same Emscripten runtime
-   -emcc : compile C++ generated code to wasm with Emscripten, otherwise the internal wasm backend is used [experimental]
-   -npm : add a package.json file for npm package distribution
-</pre>
-
-<h2 id="faust2webaudiowasm">faust2webaudiowasm</h2>
-<pre class=faust-tools>
-Usage: faust2webaudiowasm [options] &lt;file.dsp>
-Compiles Faust programs to self-contained HTML pages with WASM
-Options:
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
-   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
-   -opt : optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
-   -worklet : generates AudioWorklet compatible code
-   -links : add links to source code and SVG diagrams in the generated HTML file
-   -emcc : use the EMCC generated glue (mandatory when using 'soundfiles' in the DSP code) [experimental]
-</pre>
-
-<h2 id="faust2webaudiowast">faust2webaudiowast</h2>
-<pre class=faust-tools>
-Usage: faust2webaudiowast [options] &lt;file.dsp>
-Compiles Faust programs to self-contained HTML pages with WASM
-Options:
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
-   -opt : optimize the wasm module using Binaryen tools (https://github.com/WebAssembly/binaryen)
-   -worklet : generates AudioWorklet compatible code
-   -links : add links to source code and SVG diagrams in the generated HTML file
-   -emcc : compile C++ generated code to wasm with Emscripten, otherwise the internal wasm backend is used
 </pre></div>
             </div>
         </div>
