@@ -501,12 +501,13 @@
 <p>Note that if a <span class="lstinline"> declare name \"Foo\"; </span> line is present in the DSP program, <span class="lstinline">Foo</span> will be used as the OSC root name, otherwise the DSP filename will be used instead.</p>
 <p>These OSC parameters can be changed from the command line using one of the following options:</p>
 <ul>
-<li><span class="lstinline">-port number</span> set the port number used by the application to receive messages.</li>
-<li><span class="lstinline">-outport number</span> set the port number used by the application to transmit messages.</li>
-<li><span class="lstinline">-errport number</span> set the port number used by the application to transmit error messages.</li>
-<li><span class="lstinline">-desthost host</span> set the destination host for the messages sent by the application. Note that the destination address can be changed with the first incoming message: first received packet from another host sets the destination address to this host.</li>
-<li><span class="lstinline">-xmit 0|1|2</span> turn transmission OFF, ALL, or ALIAS (default OFF). When transmission is OFF, input elements can be controlled using their addresses or aliases (if present). When transmission is ALL, input elements can be controlled using their addresses or aliases (if present), user's actions and output elements (bargraph) are transmitted as OSC messages as well as aliases (if present). When transmission is ALIAS,  input elements can only be controlled using their aliases, user's actions and output elements (bargraph) are transmitted as aliases only.</li>
+<li><span class="lstinline">-port number</span> sets the port number used by the application to receive messages.</li>
+<li><span class="lstinline">-outport number</span> sets the port number used by the application to transmit messages.</li>
+<li><span class="lstinline">-errport number</span> sets the port number used by the application to transmit error messages.</li>
+<li><span class="lstinline">-desthost host</span> set sthe destination host for the messages sent by the application. Note that the destination address can be changed with the first incoming message: first received packet from another host sets the destination address to this host.</li>
+<li><span class="lstinline">-xmit 0|1|2</span> turns transmission OFF, ALL, or ALIAS (default OFF). When transmission is OFF, input elements can be controlled using their addresses or aliases (if present). When transmission is ALL, input elements can be controlled using their addresses or aliases (if present), user's actions and output elements (bargraph) are transmitted as OSC messages as well as aliases (if present). When transmission is ALIAS,  input elements can only be controlled using their aliases, user's actions and output elements (bargraph) are transmitted as aliases only.</li>
 <li><span class="lstinline">-xmitfilter path</span> allows to filter output messages. Note that 'path' can be a regular expression (like "/freeverb/Reverb1/*").</li>
+<li><span class="lstinline">-bundle 0|1</span> activates the bundle mode where all transmitted values are sent in a single message, to be used together with the <span class="lstinline">-xmit</span> option.</li>
 </ul>
 <p>For example:</p>
 <pre><code>    ./noise -xmit 1 -desthost 192.168.1.104 -outport 6000
