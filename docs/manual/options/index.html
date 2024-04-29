@@ -1,307 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
-        
-        <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Compiler Options - Faust Documentation</title>
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <link href="/css/quickref.css" rel="stylesheet">
-        <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <title>Compiler Options - Faust Documentation
+    </title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <link href="/css/quickref.css" rel="stylesheet">
+    <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="../.."><img src="../../img/faustText.svg" width="150px"> </a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script> 
+</head>
 
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../.." class="nav-link">Home</a>
-                            </li>
-                            <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manual <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
+<body>
+    <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="../.."><img
+                    src="../../img/faustText.svg" width="150px"> </a>
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Expanded navigation -->
+            <div id="navbar-collapse" class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li class="navitem">
+                        <a href="../.." class="nav-link">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manual <b
+                                class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
 <li>
     <a href="../introduction/" class="dropdown-item">Introduction</a>
 </li>
-                                    
+                            
 <li>
     <a href="../overview/" class="dropdown-item">Overview of the Faust Universe</a>
 </li>
-                                    
+                            
 <li>
     <a href="../quick-start/" class="dropdown-item">Quick Start</a>
 </li>
-                                    
+                            
 <li>
     <a href="../syntax/" class="dropdown-item">Faust Syntax</a>
 </li>
-                                    
+                            
 <li>
     <a href="../errors/" class="dropdown-item">Error Messages</a>
 </li>
-                                    
+                            
 <li>
     <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
 </li>
-                                    
+                            
 <li>
     <a href="./" class="dropdown-item active">Compiler Options</a>
 </li>
-                                    
+                            
 <li>
     <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
 </li>
-                                    
+                            
 <li>
     <a href="../architectures/" class="dropdown-item">Architecture Files</a>
 </li>
-                                    
+                            
 <li>
     <a href="../embedding/" class="dropdown-item">Embedding the Compiler</a>
 </li>
-                                    
+                            
 <li>
     <a href="../optimizing/" class="dropdown-item">Optimizing the Code</a>
 </li>
-                                    
+                            
 <li>
     <a href="../debugging/" class="dropdown-item">Debugging the Code</a>
 </li>
-                                    
+                            
 <li>
     <a href="../deploying/" class="dropdown-item">Deploying on the Web</a>
 </li>
-                                    
+                            
 <li>
     <a href="../remote/" class="dropdown-item">Remote Compilation</a>
 </li>
-                                    
+                            
 <li>
     <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
 </li>
-                                    
+                            
 <li>
     <a href="../osc/" class="dropdown-item">OSC Support</a>
 </li>
-                                    
+                            
 <li>
     <a href="../http/" class="dropdown-item">HTTP Support</a>
 </li>
-                                    
+                            
 <li>
     <a href="../midi/" class="dropdown-item">MIDI Support</a>
 </li>
-                                    
+                            
 <li>
     <a href="../soundfiles/" class="dropdown-item">Soundfiles Support</a>
 </li>
-                                    
+                            
 <li>
     <a href="../community/" class="dropdown-item">Community</a>
 </li>
-                                    
+                            
 <li>
     <a href="../faq/" class="dropdown-item">Frequently Asked Questions</a>
 </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b
+                                class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
 <li>
     <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/bela/" class="dropdown-item"> bela </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/generator/" class="dropdown-item"> generator </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/misc/" class="dropdown-item"> misc </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/SAM/" class="dropdown-item"> SAM </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../examples/spat/" class="dropdown-item"> spat </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
 </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b
+                                class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
 <li>
     <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/box-api/" class="dropdown-item">Using the box API</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/julia/" class="dropdown-item">Using Faust in Julia</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/jsfx/" class="dropdown-item">Using Faust in JSFX</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/rnbo/" class="dropdown-item">Using Faust in RNBO with codebox~</a>
 </li>
-                                    
+                            
 <li>
     <a href="../../tutorials/debugging/" class="dropdown-item">Advanced debugging with interp-tracer</a>
 </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b
+                                class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
 <li>
     <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
 </li>
-                                    
+                            
 <li>
     <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
 </li>
-                                </ul>
-                            </li>
-                            <li class="navitem">
-                                <a href="../../about/" class="nav-link">About</a>
-                            </li>
                         </ul>
+                    </li>
+                    <li class="navitem">
+                        <a href="../../about/" class="nav-link">About</a>
+                    </li>
+                </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fa fa-search"></i> Search
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-        
-        
+    </div>
 
-        <div class="container">
-            <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    
+
+    <div class="container">
+        <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
         <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
@@ -355,7 +364,7 @@
         </ul>
     </div>
 </div></div>
-                    <div class="col-md-9 main-container" role="main">
+            <div class="col-md-9 main-container" role="main">
 
 <h1 id="faust-compiler-options">Faust Compiler Options</h1>
 <h2 id="faust-compiler-version-27213">FAUST compiler version 2.72.13</h2>
@@ -486,22 +495,22 @@
 <hr />
 <pre><code class="language-faust-options">faust -a jack-gtk.cpp -o myfx.cpp myfx.dsp
 </code></pre></div>
-            </div>
         </div>
+    </div>
 
-        <footer class="col-md-12">
-            <hr>
-                <p>Copyright &copy; 2020-2024 <a href="https://www.grame.fr">Grame-CNCM</a></p>
-        </footer>
-        <script>
-            var base_url = "../..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="../../js/base.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
-        <script src="../../search/main.js" defer></script>
+    <footer class="col-md-12">
+        <hr>
+        <p>Copyright &copy; 2020-2024 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+    </footer>
+    <script>
+        var base_url = "../..",
+        shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+    </script>
+    <script src="../../js/base.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+    <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -562,6 +571,8 @@
     </div>
 </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.2.39/dist/faust-web-component.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.3.2/dist/faust-web-component.js"
+        defer></script>
     </body>
+
 </html>

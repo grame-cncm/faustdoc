@@ -1359,22 +1359,19 @@ A `soundfile` has:
 * two fixed outputs: the first one is the length in samples of the currently accessed sound, the second one is the nominal sample rate in Hz of the currently accessed sound
 * `n` several more outputs for the sound channels themselves, as a integer [constant numerical expression](#constant-numerical-expressions)
 
-<!-- faust-run -->
-```
-reader = _~+(1);
-process = 0,reader:soundfile("son[url:{'foo.wav'}]",2);
-```
-<!-- /faust-run -->
-
 If more outputs than the actual number of channels in the sound file are used, the audio channels will be automatically duplicated up to the wanted number of outputs (so for instance, if a stereo file is used with four output channels, the same group of two channels will be duplicated).
 
 If the soundfile cannot be loaded for whatever reason, a default sound with one channel, a length of 1024 frames and null outputs (with samples of value 0) will be used. Note also that soundfiles are entirely loaded in memory by the architecture file, so that the read index signal can access any sample.
 
 A minimal example to play a stereo soundfile until it's end can be written with:
 
+<!-- faust-run -->
 ```
-process = 0,_~+(1):soundfile("son[url:{'foo.wav'}]",2):!,!,_,_;
+declare soundfiles "https://raw.githubusercontent.com/sletz/faust-sampler/main";
+
+process = 0,_~+(1):soundfile("son[url:{'violon.wav'}]",2):!,!,_,_;
 ```
+<!-- /faust-run -->
 
 The 0 first parameter selects the first sound in the soundfile list (which only contains one file in this example), then uses an incrementing read index signal to play the soundfile, cuts the unneeded *sound length in frames* and *sample rate* ouputs, and keeps the two actual sound outputs. Having the *sound length in frames* first output allows to implement sound looping, or any kind of more sophisticated read index signal. Having the *sound sample rate* second output allows to possibly adapt or change the reading speed. 
 
