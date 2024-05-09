@@ -113,7 +113,7 @@ RMS(n) = S:M:R with {
 
 	summation = + ~ *(phase != 0) : capture(phase==(n-1));
 	phase = 1 : (+,n:%)~_;
-	capture(b) = select2(n)~_;
+	capture(b) = select2(b)~_;
 };
 ```
 ## Overlapping Block Sum
@@ -139,7 +139,7 @@ RMS(n) = S:M:R with {
 		with { w = n/c; };
 
 	phase = 1 : (+,n:%)~_;
-	capture(b) = select2(n)~_;
+	capture(b) = select2(b)~_;
 };
 ```
 

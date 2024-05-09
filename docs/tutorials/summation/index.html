@@ -427,7 +427,7 @@
 
     summation = + ~ *(phase != 0) : capture(phase==(n-1));
     phase = 1 : (+,n:%)~_;
-    capture(b) = select2(n)~_;
+    capture(b) = select2(b)~_;
 };
 </code></pre>
 <h2 id="overlapping-block-sum">Overlapping Block Sum</h2>
@@ -447,7 +447,7 @@
         with { w = n/c; };
 
     phase = 1 : (+,n:%)~_;
-    capture(b) = select2(n)~_;
+    capture(b) = select2(b)~_;
 };
 </code></pre>
 <h2 id="comparing-all-the-solutions">Comparing all the solutions</h2>
