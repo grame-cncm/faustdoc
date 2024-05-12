@@ -482,38 +482,38 @@ process = *(vol);
 }
 </code></pre>
 <p>So the CPU usage will obviously be higher, and the need for parameter smoothing should be carefully studied.</p>
-<p>Another point to consider is the <em>order of computation</em> when smoothing control. In the following DSP code, the slider value is <em>first</em> converted first to a dB value, <em>then</em> smoothed:</p>
+<p>Another point to consider is the <em>order of computation</em> when smoothing control. In the following DSP code, the dB slider value is <em>first</em> converted first to a linear value, <em>then</em> smoothed:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
-smoother_vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : ba.linear2db : si.smoo;
+smoother_vol = hslider(&quot;Volume&quot;, -6.0, -120.0, .0, 0.01) : ba.db2linear : si.smoo;
 process = *(smoother_vol);
 </code></pre>
-<p>And the generated C++ code for <code>compute</code> has the costly <code>log10</code> math function used in <code>ba.linear2db</code> evaluted at control rate, so once before the DSP loop:</p>
+<p>And the generated C++ code for <code>compute</code> has the costly <code>pow</code> math function used in <code>ba.db2linear</code> evaluted at control rate, so once before the DSP loop:</p>
 <pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
-  FAUSTFLOAT* input0 = inputs[0];
-  FAUSTFLOAT* output0 = outputs[0];
-  float fSlow0 = (0.0199999996f * std::log10(float(fHslider0)));
-  for (int i = 0; (i &lt; count); i = (i + 1)) {
-    fRec0[0] = (fSlow0 + (0.999000013f * fRec0[1]));
-    output0[i] = FAUSTFLOAT((float(input0[i]) * fRec0[0]));
-    fRec0[1] = fRec0[0];
-  }
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = fConst0 * std::pow(1e+01f, 0.05f * float(fHslider0));
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        fRec0[0] = fSlow0 + fConst1 * fRec0[1];
+        output0[i0] = FAUSTFLOAT(float(input0[i0]) * fRec0[0]);
+        fRec0[1] = fRec0[0];
+    }
 }
 </code></pre>
-<p>But if the order between <code>ba.linear2db</code> and <code>si.smoo</code> is reversed like in the following code:</p>
+<p>But if the order between <code>ba.db2linear</code> and <code>si.smoo</code> is reversed like in the following code:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
-smoother_vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : si.smoo: ba.linear2db;
+smoother_vol = hslider(&quot;Volume&quot;, -6.0, -120.0, .0, 0.01) : si.smoo : ba.db2linear;
 process = *(smoother_vol);
 </code></pre>
-<p>The generated C++ code for <code>compute</code> now has the <code>log10</code> math function used in <code>ba.linear2db</code> evaluated at sample rate in the DSP loop, which is obviously much more costly:</p>
+<p>The generated C++ code for <code>compute</code> now has the <code>pow</code> math function used in <code>ba.db2linear</code> evaluated at sample rate in the DSP loop, which is obviously much more costly:</p>
 <pre><code class="language-c++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
-  FAUSTFLOAT* input0 = inputs[0];
-  FAUSTFLOAT* output0 = outputs[0];
-  float fSlow0 = (0.00100000005f * float(fHslider0));
-  for (int i = 0; (i &lt; count); i = (i + 1)) {
-    fRec0[0] = (fSlow0 + (0.999000013f * fRec0[1]));
-    output0[i] = FAUSTFLOAT((20.0f * (float(input0[i]) * std::log10(fRec0[0]))));
-    fRec0[1] = fRec0[0];
-  }
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = fConst0 * float(fHslider0);
+    for (int i0 = 0; i0 &lt; count; i0 = i0 + 1) {
+        fRec0[0] = fSlow0 + fConst1 * fRec0[1];
+        output0[i0] = FAUSTFLOAT(float(input0[i0]) * std::pow(1e+01f, 0.05f * fRec0[0]));
+        fRec0[1] = fRec0[0];
+    }
 }
 </code></pre>
 <p>So to obtain the best performances in the generated code, all costly computations have to be done on the control value (as much as possible, this may not always be the desirable behaviour), and <code>si.smoo</code> (or any function that moves the computation from control rate to sample rate) as the last operation. </p>
@@ -541,15 +541,12 @@ process = *(smoother_vol);
 <p>Here is an example of a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut <code>-scalar</code> mode):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-process = par(i, 10, @(i+1)) :&gt; _;
+process = par(i, 10, @(i+1)) :> _;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -797,15 +794,12 @@ virtual void compute(int count,
 <p>In the C++ generated code, the delays lines appear as <code>fVecXX</code> arrays. When recursion is used in the DSP, a one sample delay is automatically added in the recursive path, and a very short delay line is allocated (appearing as <code>fRecX</code> arrays in the generated code). Here is the code of a recursively defined integrator:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
 process = 1 : + ~ _;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -831,15 +825,12 @@ virtual void compute(int count,
 <p>Here is an example of a Faust program with 10 recursive blocks in parallel, each using a delay line of increasing value:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
 
-<pre><code>
-process = par(i, 10, + ~ @(i+1)) :&gt; _;
+process = par(i, 10, + ~ @(i+1)) :> _;
 
-</code></pre>
-
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 

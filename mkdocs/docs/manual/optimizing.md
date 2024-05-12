@@ -84,49 +84,49 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 
 So the CPU usage will obviously be higher, and the need for parameter smoothing should be carefully studied.
 
-Another point to consider is the *order of computation* when smoothing control. In the following DSP code, the slider value is *first* converted first to a dB value, *then* smoothed:
+Another point to consider is the *order of computation* when smoothing control. In the following DSP code, the dB slider value is *first* converted first to a linear value, *then* smoothed:
 
 ```
 import("stdfaust.lib");
-smoother_vol = hslider("Volume", 0.5, 0, 1, 0.01) : ba.linear2db : si.smoo;
+smoother_vol = hslider("Volume", -6.0, -120.0, .0, 0.01) : ba.db2linear : si.smoo;
 process = *(smoother_vol);
 ```
 
-And the generated C++ code for `compute` has the costly `log10` math function used in `ba.linear2db` evaluted at control rate, so once before the DSP loop:
+And the generated C++ code for `compute` has the costly `pow` math function used in `ba.db2linear` evaluted at control rate, so once before the DSP loop:
 
 ```c++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
-  FAUSTFLOAT* input0 = inputs[0];
-  FAUSTFLOAT* output0 = outputs[0];
-  float fSlow0 = (0.0199999996f * std::log10(float(fHslider0)));
-  for (int i = 0; (i < count); i = (i + 1)) {
-    fRec0[0] = (fSlow0 + (0.999000013f * fRec0[1]));
-    output0[i] = FAUSTFLOAT((float(input0[i]) * fRec0[0]));
-    fRec0[1] = fRec0[0];
-  }
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = fConst0 * std::pow(1e+01f, 0.05f * float(fHslider0));
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        fRec0[0] = fSlow0 + fConst1 * fRec0[1];
+        output0[i0] = FAUSTFLOAT(float(input0[i0]) * fRec0[0]);
+        fRec0[1] = fRec0[0];
+    }
 }
 ```
 
-But if the order between `ba.linear2db` and `si.smoo` is reversed like in the following code:
+But if the order between `ba.db2linear` and `si.smoo` is reversed like in the following code:
 
 ```
 import("stdfaust.lib");
-smoother_vol = hslider("Volume", 0.5, 0, 1, 0.01) : si.smoo: ba.linear2db;
+smoother_vol = hslider("Volume", -6.0, -120.0, .0, 0.01) : si.smoo : ba.db2linear;
 process = *(smoother_vol);
 ```
 
-The generated C++ code for `compute` now has the `log10` math function used in `ba.linear2db` evaluated at sample rate in the DSP loop, which is obviously much more costly:
+The generated C++ code for `compute` now has the `pow` math function used in `ba.db2linear` evaluated at sample rate in the DSP loop, which is obviously much more costly:
 
 ```c++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
-  FAUSTFLOAT* input0 = inputs[0];
-  FAUSTFLOAT* output0 = outputs[0];
-  float fSlow0 = (0.00100000005f * float(fHslider0));
-  for (int i = 0; (i < count); i = (i + 1)) {
-    fRec0[0] = (fSlow0 + (0.999000013f * fRec0[1]));
-    output0[i] = FAUSTFLOAT((20.0f * (float(input0[i]) * std::log10(fRec0[0]))));
-    fRec0[1] = fRec0[0];
-  }
+    FAUSTFLOAT* input0 = inputs[0];
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = fConst0 * float(fHslider0);
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        fRec0[0] = fSlow0 + fConst1 * fRec0[1];
+        output0[i0] = FAUSTFLOAT(float(input0[i0]) * std::pow(1e+01f, 0.05f * fRec0[0]));
+        fRec0[1] = fRec0[0];
+    }
 }
 ```
 
@@ -173,14 +173,12 @@ Here is an example of a Faust program with 10 delay lines in parallel, each dela
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
-~~~
+<faust-editor><!--
 
 process = par(i, 10, @(i+1)) :> _;
 
-~~~
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust0/exfaust0.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -448,14 +446,12 @@ In the C++ generated code, the delays lines appear as `fVecXX` arrays. When recu
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
-~~~
+<faust-editor><!--
 
 process = 1 : + ~ _;
 
-~~~
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust1/exfaust1.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
@@ -486,14 +482,12 @@ Here is an example of a Faust program with 10 recursive blocks in parallel, each
 
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
-~~~
+<faust-editor><!--
 
 process = par(i, 10, + ~ @(i+1)) :> _;
 
-~~~
-
-<a href="https://faustide.grame.fr/?code=https://faustdoc.grame.fr/manual/optimizing/exfaust2/exfaust2.dsp" target="editor">
-<button type="button" class="btn btn-primary">Try it Yourself >></button></a>
+--></faust-editor>
+<br>
 </div>
 <!-- /faust-run -->
 
