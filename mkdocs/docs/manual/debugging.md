@@ -70,7 +70,7 @@ Those informations can possibly be used to detect abnormal memory consumption.
 
 ## Debugging the DSP Code 
 
-On a computer, doing a computation that is undefined in mathematics (like `val/0` of `log(-1)`), and unrepresentable in floating-point arithmetic, will produce a [NaN](https://en.wikipedia.org/wiki/NaN) value, which has a [special internal representation](https://en.cppreference.com/w/cpp/numeric/math/NAN). Similarly, some computations will exceed the range that is representable with floating-point arithmetics, and are represented with a special [INFINITY](https://en.cppreference.com/w/cpp/numeric/math/INFINITY) value, which value depends of the choosen type (like `float`, `double` or `long double`).
+On a computer, doing a computation that is undefined in mathematics (like `val/0` or `log(-1)`), and unrepresentable in floating-point arithmetic, will produce a [NaN](https://en.wikipedia.org/wiki/NaN) value, which has a [special internal representation](https://en.cppreference.com/w/cpp/numeric/math/NAN). Similarly, some computations will exceed the range that is representable with floating-point arithmetics, and are represented with a special [INFINITY](https://en.cppreference.com/w/cpp/numeric/math/INFINITY) value, which value depends of the chosen type (like `float`, `double` or `long double`).
 
 After being produced, those values can actually *contaminate* the following flow of computations (that is `Nan + any value = NaN` for instance) up to the point of producing incorrect indexes when used in array access, and causing memory access crashes.  
 
@@ -84,7 +84,7 @@ Several strategies have been developed to help programmers better understand the
 
 Using the `-ct` compilation option allows to check table index range and generate safe table access code. It verifies that the signal range is compatible with the  table size, and if needed, generate safe read and write indexes access code, by constraining them to stay in a given `[0.. size-1]` range. 
 
-Note that since the signal interval calculation is imperfect, you may see *false positives*, and uneeded range constraining code might be generated, especially when using recursive signals where the interval calculation system will typically produce *[-inf, inf]* range, which is not precise enough to correctly describe the real signal range.  
+Note that since the signal interval calculation is imperfect, you may see *false positives*, and unneeded range constraining code might be generated, especially when using recursive signals where the interval calculation system will typically produce *[-inf, inf]* range, which is not precise enough to correctly describe the real signal range.  
 
 #### The -me option
 
@@ -92,7 +92,7 @@ Starting with version 2.37.0, mathematical functions which have a finite domain 
 
 #### Warning messages
 
-Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the `-wall` compilation option. Mathematical out-of-domain error warning messages are displayed when both `-wall` and `-me` options are used.
+Warning messages do not stop the compilation process, but allow to get useful informations on potential problematic code. The messages can be printed using the `-wall` compilation option. Mathematical out-of-domain error warning messages are displayed when both `-wall` and `-me` options are used.
 
 ### Debugging at runtime
 
