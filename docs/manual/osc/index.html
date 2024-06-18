@@ -557,7 +557,6 @@ process = no.noise*hslider("level",0,0,1,0.01);
   to this host.</li>
 <li><code>-xmit 0|1|2</code> turns transmission OFF, ALL, or ALIAS (default OFF). When transmission is OFF, input elements can be controlled using their addresses or aliases (if present). When transmission is ALL, input elements can be controlled using their addresses or aliases (if present), user's actions and output elements (i.e., <code>bargraph</code>, etc.) are transmitted as OSC messages as well as aliases (if present). When transmission is ALIAS, input elements can only be controlled using their aliases, user's actions and output elements are transmitted as aliases only.</li>
 <li><code>-xmitfilter path</code> allows to filter output messages. Note that <code>path</code> can be a regular expression (like <code>/freeverb/Reverb1/*</code>).</li>
-<li><code>-bundle 0|1</code> activates the bundle mode where all transmitted values are sent in a single message, to be used together with the <code>-xmit</code> option.</li>
 </ul>
 <p>For example:</p>
 <pre><code>./noise -xmit 1 -desthost 192.168.1.104 -outport 6000

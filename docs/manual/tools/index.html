@@ -355,6 +355,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2caconsole" class="nav-link">faust2caconsole</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2cagtk" class="nav-link">faust2cagtk</a>
               <ul class="nav flex-column">
               </ul>
@@ -364,6 +368,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#faust2cmajor" class="nav-link">faust2cmajor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#faust2comparator" class="nav-link">faust2comparator</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -475,6 +483,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2paconsole" class="nav-link">faust2paconsole</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2paqt" class="nav-link">faust2paqt</a>
               <ul class="nav flex-column">
               </ul>
@@ -516,6 +528,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#faust2sndfile" class="nav-link">faust2sndfile</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#faust2stratus" class="nav-link">faust2stratus</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -700,6 +716,26 @@ Compiles Faust programs to a benchmark executable
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
+<h2 id="faust2caconsole">faust2caconsole</h2>
+<pre class=faust-tools>
+Usage: faust2caconsole [options] [Faust options] &lt;file.dsp>
+Target platform: MacOS
+Compiles Faust programs to CLI and CoreAudio
+Options:
+   -httpd : activates HTTP control
+   -osc : activates OSC control
+   -midi : activates MIDI control
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -dyn : create libfaust + LLVM backend dynamic version
+   -resample : to resample soundfiles to the audio driver sample rate.
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
+   -preset &lt;directory> : add a preset manager on top of GUI and save the preset files in the given directory
+   -preset auto : add a preset manager on top of GUI and save the preset files in a system temporary directory
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
 <h2 id="faust2cagtk">faust2cagtk</h2>
 <pre class=faust-tools>
 Usage: faust2cagtk [options] [Faust options] &lt;file.dsp>
@@ -762,6 +798,11 @@ Options:
    -test : to test the resulting patch with 'cmaj render'
    -play : to start the 'cmaj' runtime with the generated Cmajor file
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2comparator">faust2comparator</h2>
+<pre class=faust-tools>
+Usage: faust2comparator [options] [Faust options] &lt;file.dsp>
 </pre>
 
 <h2 id="faust2csound">faust2csound</h2>
@@ -1101,6 +1142,7 @@ Options:
    -ds &lt;factor> : downsample the DSP by a factor
    -filter &lt;filter> : use a filter for upsampling or downsampling [0..4]
    -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -mc : to activate multi-channels model
    -native : to compile for the native CPU (otherwise the 'generic' mode is used by default)
    -universal : to generate a universal (arm/intel) external
    -nopatch : to deactivate patch generation
@@ -1177,6 +1219,21 @@ Options:
    -universal : generate a 64/32 bits external
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 See architecture/unity/README.md for more info.
+</pre>
+
+<h2 id="faust2paconsole">faust2paconsole</h2>
+<pre class=faust-tools>
+Usage: faust2paconsole [options] [Faust options] &lt;file.dsp>
+Require: PortAudio
+Compiles Faust programs to PortAudio
+Options:
+   -httpd : activates HTTP control
+   -osc : activates OSC control
+   -midi : activates MIDI control
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2paqt">faust2paqt</h2>
@@ -1327,6 +1384,34 @@ Process audio files with Faust DSP
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
+<h2 id="faust2stratus">faust2stratus</h2>
+<pre class=faust-tools>
+Usage: faust2stratus [options] [Faust options] &lt;file.dsp> ... [&lt;file.cpp> ...]
+Target platform: Chaos Audio Stratus pedal
+Compiles Faust programs for the Chaos Audio Stratus pedal
+  with optional c++ compile for, and effect install to, the pedal
+
+Unlike most other faust2xxx scripts, this can also be used to compile
+  effect c++ code that has been constructed elsewhere, or has been modified 
+  after being generated by the Faust compiler (e.g. where the algorithm c++ code
+  has been 'tweaked' after generation)
+
+The script can be used to build and install multiple different effects in one go
+
+Running this script with no options except input files will result in effect libraries
+  built for the platform upon which the script is executed, not for the pedal
+
+Options:
+   -nocppc : Do not compile the generated c++ source files
+   -nodocker : Do not use docker for pedal builds even if it is available
+   -stratusbuild : Generates the c++ code locally, then builds the effect library for the Stratus pedal
+   -stratusinstall : Generates the c++ code locally, then builds and installs the effect library for the Stratus pedal
+
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+     the script automatically uses '-i -scn FaustDSP -light -nvi'
+     -O and/or -o can be used, otherwise all output is in the same folder as the corresponding input
+</pre>
+
 <h2 id="faust2teensy">faust2teensy</h2>
 <pre class=faust-tools>
 faust2teensy [-lib] [-midi] [-nvoices &lt;num>] [Faust options (-vec -vs 8...)] &lt;file.dsp>
@@ -1364,7 +1449,7 @@ Compiles Faust programs to VCV Rack modules (see https://github.com/grame-cncm/f
    -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
    -source : to only create the source folder
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -version &lt;1|2> : to set the plugin version, 1 by default
+   -version &lt;1|2> : to set the plugin version, 2 by default
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 
 </pre></div>
