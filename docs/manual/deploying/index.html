@@ -325,6 +325,10 @@
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#the-faustwasm-package" class="nav-link">The faustwasm package</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#exporting-for-the-web-using-the-faust-editor-of-faust-ide" class="nav-link">Exporting for the Web using the Faust Editor of Faust IDE</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#the-faust-web-component-package" class="nav-link">The faust-web-component package</a>
@@ -346,6 +350,22 @@ See extended documentation<a href="https://github.com/grame-cncm/faust/tree/mast
 <h2 id="the-faustwasm-package">The faustwasm package</h2>
 <p>The <a href="https://www.npmjs.com/package/@grame/faustwasm?activeTab=readme">FaustWasm library</a> presents a convenient, high-level API that wraps around Faust compiler. This library's interface is primarily designed for TypeScript usage, although it also provides API descriptions and documentation for pure JavaScript. The WebAssembly version of the Faust Compiler, compatible with both Node.js and web browsers, has been compiled using Emscripten 3.1.31.</p>
 <p>The library offers functionality for compiling Faust DSP code into WebAssembly, enabling its utilization as WebAudio nodes within a standard WebAudio node graph. Moreover, it supports offline rendering scenarios. Furthermore, supplementary tools can be employed for generating SVGs from Faust DSP programs.</p>
+<h3 id="exporting-for-the-web-using-the-faust-editor-of-faust-ide">Exporting for the Web using the Faust Editor of Faust IDE</h3>
+<p>Web targets can be exported from the <a href="https://fausteditor.grame.fr">Faust Editor</a> or <a href="https://faustide.grame.fr">Faust IDE</a> using the remote compilation service. Choose the <code>Platform = web</code>, then <code>Architecture</code> with one of the following target:</p>
+<ul>
+<li>
+<p><code>wasmjs-ts</code> allows you to export a ready to use Web audio node. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
+</li>
+<li>
+<p><code>wasm-poly-ts</code> allows you to export a ready to use polyphonic MIDI controllable Web audio node. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
+</li>
+<li>
+<p><code>webaudiowasm-ts</code> allows you to export a ready to use Web audio node with a GUI. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
+</li>
+<li>
+<p><code>webaudiowasm-poly-ts</code> allows you to export a ready to use polyphonic MIDI controllable Web audio node with a GUI. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
+</li>
+</ul>
 <h2 id="the-faust-web-component-package">The faust-web-component package</h2>
 <p>Tthe <a href="https://github.com/grame-cncm/faust-web-component">faust-web-component</a> package provides two web components for embedding interactive Faust snippets in web pages:</p>
 <ul>
