@@ -1,4 +1,4 @@
 ComplexDiagram(
-	Sequence (NonTerminal('expression'), 'letrec', NonTerminal('{'), NonTerminal('diffequation+'), Choice (0, Skip(), Sequence ('where', NonTerminal('definition+'))), NonTerminal('}'))
+	Sequence (NonTerminal('expression'), 'letrec', NonTerminal('{'), OneOrMore (NonTerminal('diffequation')), Choice (0, Skip(), Sequence ('where', OneOrMore (NonTerminal('definition')))), NonTerminal('}'))
 ).addTo()
 

@@ -2356,6 +2356,10 @@ process = sig;
 
 While the behavior of this last solution is identical to the first one, the generated code will be a bit different and potentially less efficient.
 
+### Specific Primitives
+
+In Faust, signals operate within a *[min, max]* range. The `lowest(sig)` primitive determines the minimum value a given `sig` signal can attain, while the `highest(sig)` primitive identifies its maximum value. However, be aware that the compiler's interval computation might not accurately estimate the true *[min, max]* range, often resulting in *-INFINITY* for the minimum value and/or *INFINITY* for the maximum value.
+
 ### User Interface Primitives and Configuration
 
 Faust user interface widgets/primitives allow for an **abstract** description of a user interface from within the Faust code. This description is independent from any GUI toolkits/frameworks and is purely abstract. Widgets can be **discrete** (e.g., [`button`](#button-primitive), [`checkbox`](#checkbox-primitive), etc.), **continuous** (e.g., [`hslider`](#hslider-primitive), [`vslider`](#vslider-primitive), [`nentry`](#nentry-primitive)), and **organizational** (e.g., [`vgroup`](#vgroup-primitive), [`hgroup`](#hgroup-primitive)).

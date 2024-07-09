@@ -1438,7 +1438,7 @@ ComplexDiagram(
 <span class="railtitle">envexp</span>
 <br /><script>
 ComplexDiagram(
-    Choice (0, Sequence (NonTerminal('expression'), 'with', NonTerminal('{'), NonTerminal('definition+'), NonTerminal('}')), Sequence (NonTerminal('expression'), 'letrec', NonTerminal('{'), NonTerminal('diffequation+'), Choice (0, Skip(), Sequence ('where', NonTerminal('definition+'))), NonTerminal('}')), Sequence ('environment', NonTerminal('{'), NonTerminal('definition+'), NonTerminal('}')), Sequence (NonTerminal('expression'), '.', NonTerminal('ident')), Sequence ('library', '(', NonTerminal('filename'), ')'), Sequence ('component', '(', NonTerminal('filename'), ')'), Sequence (NonTerminal('expression'), '[', NonTerminal('definition+'), ']'))
+    Choice (0, Sequence (NonTerminal('expression'), 'with', NonTerminal('{'), NonTerminal('definition+'), NonTerminal('}')), Sequence (NonTerminal('expression'), 'letrec', NonTerminal('{'), OneOrMore (NonTerminal('diffequation')), Choice (0, Skip(), Sequence ('where', OneOrMore (NonTerminal('definition')))), NonTerminal('}')), Sequence ('environment', NonTerminal('{'), OneOrMore (NonTerminal('definition')), NonTerminal('}')), Sequence (NonTerminal('expression'), '.', NonTerminal('ident')), Sequence ('library', '(', NonTerminal('filename'), ')'), Sequence ('component', '(', NonTerminal('filename'), ')'), Sequence (NonTerminal('expression'), '[', OneOrMore (NonTerminal('definition')), ']'))
 ).addTo()
 </script>
 </div>
@@ -1449,7 +1449,7 @@ ComplexDiagram(
 <span class="railtitle">withexpression</span>
 <br /><script>
 ComplexDiagram(
-    Sequence (NonTerminal('expression'), 'with', NonTerminal('{'), NonTerminal('definition+'), NonTerminal('}'))
+    Sequence (NonTerminal('expression'), 'with', NonTerminal('{'), OneOrMore (NonTerminal('definition')), NonTerminal('}'))
 ).addTo()
 </script>
 </div>
@@ -1479,7 +1479,7 @@ as <span class="lstinline">E letrec { 'x = y+10; 'y = x-1; }</span> </p>
 <span class="railtitle">letrecexpression</span>
 <br /><script>
 ComplexDiagram(
-    Sequence (NonTerminal('expression'), 'letrec', NonTerminal('{'), NonTerminal('diffequation+'), Choice (0, Skip(), Sequence ('where', NonTerminal('definition+'))), NonTerminal('}'))
+    Sequence (NonTerminal('expression'), 'letrec', NonTerminal('{'), OneOrMore (NonTerminal('diffequation')), Choice (0, Skip(), Sequence ('where', OneOrMore (NonTerminal('definition')))), NonTerminal('}'))
 ).addTo()
 </script>
 </div>
@@ -1540,7 +1540,7 @@ ComplexDiagram(
 <span class="railtitle">environment</span>
 <br /><script>
 ComplexDiagram(
-    Sequence ('environment', NonTerminal('{'), NonTerminal('definition+'), NonTerminal('}'))
+    Sequence ('environment', NonTerminal('{'), OneOrMore (NonTerminal('definition')), NonTerminal('}'))
 ).addTo()
 </script>
 </div>
@@ -1617,7 +1617,7 @@ ComplexDiagram(
 <span class="railtitle">explicitsubst</span>
 <br /><script>
 ComplexDiagram(
-    Sequence (NonTerminal('expression'), "[", NonTerminal('definition+'), "]")
+    Sequence (NonTerminal('expression'), "[", OneOrMore (NonTerminal('definition')), "]")
 ).addTo()
 </script>
 </div>
@@ -1701,7 +1701,7 @@ BS    = fvariable(int count, &lt;math.h&gt;);
 <span class="railtitle">includefile</span>
 <br /><script>
 ComplexDiagram(
-    Choice (0, Sequence ('<', NonTerminal('char+'), '>'), Sequence ('"', NonTerminal('char+'), '"'))
+    Choice (0, Sequence ('<', OneOrMore (NonTerminal('char')), '>'), Sequence ('"', OneOrMore (NonTerminal('char')), '"'))
 ).addTo()
 </script>
 </div>
@@ -1843,7 +1843,7 @@ ComplexDiagram(
 </div>
 
 <h3 id="numbers">Numbers</h3>
-<p><span class="smallcaps">Faust</span> considers two types of numbers: <em>integers</em> and <em>floats</em>. Integers are implemented as signed 32-bits integers, and floats are implemented either with a simple, double or extended precision depending of the compiler options. Floats are available in decimal or scientific notation. </p>
+<p><span class="smallcaps">Faust</span> considers two types of numbers: <em>integers</em> and <em>floats</em>. Integers are implemented as signed 32-bits integers, and floats are implemented either with a simple, double or extended precision depending of the compiler options. Floats are available in decimal or scientific notation.</p>
 <div class="rail">
 <span class="railtitle">int</span>
 <br /><script>
@@ -1888,11 +1888,10 @@ ComplexDiagram(
 route(A,B,(a,b),(c,d),...)
 </code></pre>
 <p>where:</p>
-<ul>
-<li><span class="lstinline">A</span> is the number of input signals, as an integer <em>constant numerical expression</em>, automatically promoted to <em>int</em></li>
-<li><span class="lstinline">B</span> is the number of output signals, as an integer <em>constant numerical expression</em>, automatically promoted to <em>int</em></li>
-<li><span class="lstinline">a,b / (a,b)</span> is an input/output pair, as integers <em>constant numerical expressions</em>, automatically promoted to <em>int</em></li>
-</ul>
+<pre><code>- &lt;span class="lstinline"&gt;A&lt;/span&gt; is the number of input signals, as an integer _constant numerical expression_, automatically promoted to _int_
+- &lt;span class="lstinline"&gt;B&lt;/span&gt; is the number of output signals, as an integer _constant numerical expression_, automatically promoted to _int_
+- &lt;span class="lstinline"&gt;a,b / (a,b)&lt;/span&gt; is an input/output pair, as integers _constant numerical expressions_, automatically promoted to _int_
+</code></pre>
 <p>Inputs are numbered from <span class="lstinline">1</span> to <span class="lstinline">A</span> and outputs are numbered from <span class="lstinline">1</span> to <span class="lstinline">B</span>. There can be any number of input/output pairs after the declaration of <span class="lstinline">A</span> and <span class="lstinline">B</span>.</p>
 <p>For example, crossing two signals can be carried out with:</p>
 <pre><code>process = route(2,2,1,2,2,1);
@@ -1914,7 +1913,7 @@ r = route(N,N,par(i,N,(i+1,N-i)));
 process = r;
 </code></pre>
 <h3 id="waveform-primitive">Waveform Primitive</h3>
-<p>A waveform is a fixed periodic signal defined by a list of samples as literal numbers. A waveform has two outputs. The first output is constant and indicates the size (number of samples) of the period. The second output is the periodic signal itself. </p>
+<p>A waveform is a fixed periodic signal defined by a list of samples as literal numbers. A waveform has two outputs. The first output is constant and indicates the size (number of samples) of the period. The second output is the periodic signal itself.</p>
 <div class="rail">
 <span class="railtitle">waveform</span>
 <br /><script>
@@ -1924,25 +1923,24 @@ ComplexDiagram(
 </script>
 </div>
 
-<p>For example <span class="lstinline">waveform {0,1,2,3}</span> produces two outputs, the constant signal 4 and the periodic signal <span class="lstinline">0,1,2,3,0,1,2,3,0,1</span>\ldots. </p>
+<p>For example <span class="lstinline">waveform {0,1,2,3}</span> produces two outputs, the constant signal 4 and the periodic signal <span class="lstinline">0,1,2,3,0,1,2,3,0,1</span>\ldots.</p>
 <p>Please note that <span class="lstinline">waveform</span> works nicely with <span class="lstinline">rdtable</span>. Its first output, known at compile time, gives the size of the table, while the second signal gives the content of the table. Here is an example:</p>
 <pre><code>process = waveform {10,20,30,40,50,60,70}, %(7)~+(3) : rdtable;
 </code></pre>
 <h3 id="soundfile-primitive">Soundfile Primitive</h3>
 <p>The  <span class="lstinline">soundfile("label[url:{</span>path1';'path2';'path3';}]", n)' primitive allows access to a list of externally defined sound resources, described as a label followed by the list of their filename, or complete paths (possibly using the '%i' syntax, as in the label part). The <span class="lstinline">soundfile("label[url:path]", n)</span> , or <span class="lstinline">soundfile("label", n)</span> (where label is used as the soundfile path) simplified syntax allows to use a single file. All sound resources are concatenated in a single data structure, and each item can be accessed and used independently.</p>
 <p>A soundfile has:</p>
-<ul>
-<li>two inputs: the sound number (as a integer between 0 and 255, automatically promoted to <em>int</em>), and the read index in the sound (automatically promoted to <em>int</em>, which will access the last sample of the sound if the read index is greater than the sound length)</li>
-<li>two fixed outputs: the first one is the length in samples of the currently accessed sound, the second one is the nominal sample rate in Hz of the currently accessed sound</li>
-<li><span class="lstinline">n</span> several more outputs for the sound channels themselves, as a integer <em>constant numerical expression</em></li>
-</ul>
+<pre><code>- two inputs: the sound number (as a integer between 0 and 255, automatically promoted to _int_), and the read index in the sound (automatically promoted to _int_, which will access the last sample of the sound if the read index is greater than the sound length)
+- two fixed outputs: the first one is the length in samples of the currently accessed sound, the second one is the nominal sample rate in Hz of the currently accessed sound
+-  &lt;span class="lstinline"&gt;n&lt;/span&gt; several more outputs for the sound channels themselves, as a integer _constant numerical expression_
+</code></pre>
 <p>If more outputs than the actual number of channels in the soundfile are used, the sound channels will be automatically duplicated up to the wanted number of outputs (so for instance if a stereo sound is used with four output channels, the same group of two channels will be duplicated).</p>
 <p>If the soundfile cannot be loaded for whatever reason, a default sound with one channel, a length of 1024 frames and null outputs (with samples of value 0) will be used. Note also that soundfiles are entirely loaded in memory by the architecture file, so that the read index signal can access any sample.</p>
-<p>Specialized architecture files are responsible to load the actual soundfile. The <span class="lstinline">SoundUI</span> C++ class located in the <span class="lstinline">faust/gui/SoundUI.h</span> file implements the <span class="lstinline">void addSoundfile(label, url, sf_zone)</span> method, which loads the actual soundfiles using the {\it libsndfile} library, or possibly specific audio file loading code (in the case of the JUCE framework for instance), and set up the <span class="lstinline">sf_zone</span> sound memory pointers. </p>
+<p>Specialized architecture files are responsible to load the actual soundfile. The <span class="lstinline">SoundUI</span> C++ class located in the <span class="lstinline">faust/gui/SoundUI.h</span> file implements the <span class="lstinline">void addSoundfile(label, url, sf_zone)</span> method, which loads the actual soundfiles using the {\it libsndfile} library, or possibly specific audio file loading code (in the case of the JUCE framework for instance), and set up the <span class="lstinline">sf_zone</span> sound memory pointers.</p>
 <p>Note that a special architecture file can perfectly decide to access and use sound resources created by another means (that is, not directly loaded from a soundfile). For instance a mapping between labels and sound resources defined in memory could be used, with some additional code in charge to actually setup all sound memory pointers when <span class="lstinline">void addSoundfile(label, url, sf_zone)</span> is called by the <span class="lstinline">buidUserInterface</span> mechanism.</p>
 <h3 id="c-equivalent-primitives">C-equivalent primitives</h3>
 <p>Most <span class="smallcaps">Faust</span> primitives are analogue to their C counterpart but adapted to signal processing.
-For example <span class="lstinline">+</span> is a function of type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> that transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)</script>. The function <span class="lstinline">-</span> has type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> and transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)-x_{2}(t)</script>. </p>
+For example <span class="lstinline">+</span> is a function of type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> that transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)+x_{2}(t)</script>. The function <span class="lstinline">-</span> has type <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script> and transforms a pair of signals <script type="math/tex">(x_1,x_2)</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=x_{1}(t)-x_{2}(t)</script>.</p>
 <p>Please be aware that the unary <span class="lstinline">-</span> only exists in a limited form<div class="marginpar">Warning: unlike other programming languages the unary operatior <span class="lstinline">-</span> only exists in limited form in <span class="smallcaps">Faust</span>
 </div>. It can be used with numbers: <span class="lstinline">-0.5</span> and variables: <span class="lstinline">-myvar</span>, but not with expressions surrounded by parenthesis, because in this case it represents a partial application.  For instance   <span class="lstinline">-(a * b)</span> is a partial application. It is syntactic sugar for <span class="lstinline">_,(a * b) : -</span>. If you want to negate a complex term in parenthesis, you'll have to use <span class="lstinline">0 - (a * b)</span> instead.</p>
 <p>The primitives may use the int type for their arguments, but will automatically use the float type when the actual computation requires it. For instance <span class="lstinline">1/2</span> using int type arguments will correctly result in <span class="lstinline">0.5</span> in float type. Logical and shift primitives use the int type.</p>
@@ -2063,11 +2061,10 @@ For example <span class="lstinline">+</span> is a function of type <script type=
 </td>
 </tr>
 <tr>
-<td>&amp;</td>
+<td></td>
+<td></td>
 <td>
 <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
-</td>
-<td>bitwise AND: <script type="math/tex">y(t)=x_{1}(t)&x_{2}(t)</script>
 </td>
 </tr>
 <tr>
@@ -2153,7 +2150,7 @@ For example <span class="lstinline">+</span> is a function of type <script type=
 </tbody>
 </table>
 <h3 id="mathh-equivalent-primitives">math.h-equivalent primitives</h3>
-<p>Most of the C math.h functions are also built-in as primitives (the others are defined as external functions in file maths.lib). 
+<p>Most of the C math.h functions are also built-in as primitives (the others are defined as external functions in file maths.lib).
 The primitives may use the int type for their arguments, but will automatically use the float type when the actual computation requires it.</p>
 <table>
 <thead>
@@ -2346,7 +2343,7 @@ The primitives may use the int type for their arguments, but will automatically 
 </tbody>
 </table>
 <h3 id="delay-table-selector-primitives">Delay, Table, Selector primitives</h3>
-<p>The following primitives allow to define fixed delays, read-only and read-write tables and 2 or 3-ways selectors (see figure <a href="../3-syntax#fig-delays">fig-delays</a>).</p>
+<p>The following primitives allow to define delays, read-only and read-write tables and 2 or 3-ways selectors (see figure <a href="../3-syntax#fig-delays">fig-delays</a>), and some other specific primitives.</p>
 <table>
 <thead>
 <tr>
@@ -2366,7 +2363,7 @@ The primitives may use the int type for their arguments, but will automatically 
 <td>
 <script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
 </td>
-<td>1-sample delay:  <script type="math/tex">y(t+1)=x(t),y(0)=0</script>
+<td>1-sample delay:     <script type="math/tex">y(t+1)=x(t),y(0)=0</script>
 </td>
 </tr>
 <tr>
@@ -2374,7 +2371,7 @@ The primitives may use the int type for their arguments, but will automatically 
 <td>
 <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </td>
-<td>1-sample delay:   <script type="math/tex">y(t+1)=x_{2}(t),y(0)=x_{1}(0)</script>
+<td>1-sample delay:     <script type="math/tex">y(t+1)=x_{2}(t),y(0)=x_{1}(0)</script>
 </td>
 </tr>
 <tr>
@@ -2382,7 +2379,7 @@ The primitives may use the int type for their arguments, but will automatically 
 <td>
 <script type="math/tex">\mathbb{S}^{2}\rightarrow\mathbb{S}^{1}</script>
 </td>
-<td>fixed delay:     <script type="math/tex">y(t+x_{2}(t))=x_{1}(t), y(t<x_{2}(t))=0</script>
+<td>variable delay:     <script type="math/tex">y(t)=x_{1}(t-x_{2}(t)), x_{1}(t<0)=0</script>
 </td>
 </tr>
 <tr>
@@ -2390,7 +2387,7 @@ The primitives may use the int type for their arguments, but will automatically 
 <td>
 <script type="math/tex">\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}</script>
 </td>
-<td>read-only table: <script type="math/tex">y(t)=T[r(t)]</script>
+<td>read-only table:    <script type="math/tex">y(t)=T[r(t)]</script>
 </td>
 </tr>
 <tr>
@@ -2398,7 +2395,7 @@ The primitives may use the int type for their arguments, but will automatically 
 <td>
 <script type="math/tex">\mathbb{S}^{5}\rightarrow\mathbb{S}^{1}</script>
 </td>
-<td>read-write table:    <script type="math/tex">T[w(t)]=c(t); y(t)=T[r(t)]</script>
+<td>read-write table:   <script type="math/tex">T[w(t)]=c(t); y(t)=T[r(t)]</script>
 </td>
 </tr>
 <tr>
@@ -2406,7 +2403,7 @@ The primitives may use the int type for their arguments, but will automatically 
 <td>
 <script type="math/tex">\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}</script>
 </td>
-<td>select between 2 signals:    <script type="math/tex">T[]={x_{0}(t),x_{1}(t)}; y(t)=T[s(t)]</script>
+<td>select between 2 signals:   <script type="math/tex">T[]={x_{0}(t),x_{1}(t)}; y(t)=T[s(t)]</script>
 </td>
 </tr>
 <tr>
@@ -2414,22 +2411,42 @@ The primitives may use the int type for their arguments, but will automatically 
 <td>
 <script type="math/tex">\mathbb{S}^{4}\rightarrow\mathbb{S}^{1}</script>
 </td>
-<td>select between 3 signals:    <script type="math/tex">T[]={x_{0}(t),x_{1}(t),x_{2}(t)}; y(t)=T[s(t)]</script>
+<td>select between 3 signals:   <script type="math/tex">T[]={x_{0}(t),x_{1}(t),x_{2}(t)}; y(t)=T[s(t)]</script>
+</td>
+</tr>
+<tr>
+<td>lowest</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>
+<script type="math/tex">y(t)=\min_{j=0}^{\inf} x(j)</script>
+</td>
+</tr>
+<tr>
+<td>highest</td>
+<td>
+<script type="math/tex">\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}</script>
+</td>
+<td>
+<script type="math/tex">y(t)=\max_{j=0}^{\inf} x(j)</script>
 </td>
 </tr>
 </tbody>
 </table>
-<p><a name="fig-delays"></a>
-<img alt="fig-delays" src="../illustrations/faust-diagram6.png" />
+<pre><code>&lt;a name="fig-delays"&gt;&lt;/a&gt;
+</code></pre>
+<p><img alt="fig-delays" src="../illustrations/faust-diagram6.png" />
 <span class='caption'>Delays, tables and selectors primitives </span></p>
 <p>The size input of <em>rdtable</em> and <em>rwtable</em> are integer <em>constant numerical expressions</em> automatically promoted to <em>int</em>, and the read and write indexes are also automatically promoted to <em>int</em>. The delay value is automatically promoted to <em>int</em>.</p>
 <h3 id="user-interface-elements">User Interface Elements</h3>
 <p><span class="smallcaps">Faust</span> user interface widgets allow an abstract description of the user interface from within the <span class="smallcaps">Faust</span> code. This description is
-independent of any GUI toolkits. It is based on <strong>buttons</strong>, <strong>checkboxes</strong>, <strong>sliders</strong>, etc. that are grouped together 
+independent of any GUI toolkits. It is based on <strong>buttons</strong>, <strong>checkboxes</strong>, <strong>sliders</strong>, etc. that are grouped together
 vertically and horizontally using appropriate grouping schemes.</p>
-<p>All these GUI elements produce signals. A button for example (see figure <a href="../3-syntax#fig-button">fig-button</a>) produces a signal which is 1 when the button is pressed and 0 otherwise. These signals can be freely combined with other audio signals. </p>
-<p><a name="fig-button"></a>
-<img alt="fig-button" src="../illustrations/button.png" />
+<p>All these GUI elements produce signals. A button for example (see figure <a href="../3-syntax#fig-button">fig-button</a>) produces a signal which is 1 when the button is pressed and 0 otherwise. These signals can be freely combined with other audio signals.</p>
+<pre><code>&lt;a name="fig-button"&gt;&lt;/a&gt;
+</code></pre>
+<p><img alt="fig-button" src="../illustrations/button.png" />
 <span class='caption'>User Interface Button</span></p>
 <table>
 <thead>
@@ -2493,7 +2510,7 @@ vertically and horizontally using appropriate grouping schemes.</p>
 <h4 id="labels">Labels</h4>
 <p>Every user interface widget has a label (a string) that identifies it and informs the user of its purpose. There are three important mechanisms associated with labels (and coded inside the string): <em>variable parts</em>, <em>pathnames</em> and <em>metadata</em>.</p>
 <div class="paragraph">Variable parts.</div>
-<p>Labels can contain variable parts. These variable parts are indicated by the sign '%' followed by the name of a variable. During compilation each label is processed in order to replace the variable parts by the value of the variable. 
+<p>Labels can contain variable parts. These variable parts are indicated by the sign '%' followed by the name of a variable. During compilation each label is processed in order to replace the variable parts by the value of the variable.
 For example <span class="lstinline">par(i,8,hslider("Voice %i", 0.9, 0, 1, 0.01))</span> creates 8 different sliders in parallel :</p>
 <pre><code>hslider(&quot;Voice 0&quot;, 0.9, 0, 1, 0.01),
 hslider(&quot;Voice 1&quot;, 0.9, 0, 1, 0.01),
@@ -2501,7 +2518,7 @@ hslider(&quot;Voice 1&quot;, 0.9, 0, 1, 0.01),
 hslider(&quot;Voice 7&quot;, 0.9, 0, 1, 0.01).
 </code></pre>
 <p>while <span class="lstinline">par(i,8,hslider("Voice", 0.9, 0, 1, 0.01))</span> would have created only one slider and duplicated its output 8 times.</p>
-<p>The variable part can have an optional format digit. 
+<p>The variable part can have an optional format digit.
 For example <span class="lstinline">"Voice %2i"</span> would indicate to use two digits when inserting the value of i in the string.</p>
 <p>An escape mechanism is provided.
 If the sign <span class="lstinline">%</span> is followed by itself, it will be included in the resulting string.
@@ -2521,14 +2538,14 @@ For example <span class="lstinline">"feedback (%%)"</span> will result in <span 
 )
 </code></pre>
 <p>the volume slider has pathname <span class="lstinline">/h:Foo/v:Faa/volume</span>.</p>
-<p>In order to give more flexibility to the design of user interfaces, it is possible to explicitly specify the absolute or relative pathname of a widget directly in its label. </p>
+<p>In order to give more flexibility to the design of user interfaces, it is possible to explicitly specify the absolute or relative pathname of a widget directly in its label.</p>
 <p>In our previous example the pathname of:</p>
 <pre><code>    hslider(&quot;../volume&quot;,...)
 </code></pre>
 <p>would have been <span class="lstinline">"/h:Foo/volume"</span>, while the pathname of:</p>
 <pre><code>    hslider(&quot;t:Fii/volume&quot;,...)
 </code></pre>
-<p>would have been: 
+<p>would have been:
 <span class="lstinline">"/h:Foo/v:Faa/t:Fii/volume"</span>.</p>
 <p>The grammar for labels with pathnames is the following:</p>
 <div class="rail">
@@ -2559,7 +2576,7 @@ ComplexDiagram(
 </div>
 
 <div class="paragraph">Metadata</div>
-<p>Widget labels can contain metadata enclosed in square brackets. These metadata associate a key with a value and are used to provide additional information to the architecture file.  They are typically used to improve the look and feel of the user interface. 
+<p>Widget labels can contain metadata enclosed in square brackets. These metadata associate a key with a value and are used to provide additional information to the architecture file.  They are typically used to improve the look and feel of the user interface.
 The <span class="smallcaps">Faust</span> code:</p>
 <pre><code>process = *(hslider(&quot;foo [key1: val 1][key2: val 2]&quot;, 
                     0, 0, 1, 0.1));
@@ -2578,29 +2595,29 @@ The <span class="smallcaps">Faust</span> code:</p>
 ...
 };
 </code></pre>
-<p>All the metadata are removed from the label by the compiler and 
-transformed in calls to the <span class="lstinline">UI::declare()</span> method. All these 
-<span class="lstinline">UI::declare()</span> calls will always take place before the <span class="lstinline">UI::AddSomething()</span> 
-call that creates the User Interface element. This allows the 
+<p>All the metadata are removed from the label by the compiler and
+transformed in calls to the <span class="lstinline">UI::declare()</span> method. All these
+<span class="lstinline">UI::declare()</span> calls will always take place before the <span class="lstinline">UI::AddSomething()</span>
+call that creates the User Interface element. This allows the
 <span class="lstinline">UI::AddSomething()</span>  method to make full use of the available metadata.</p>
-<p>It is the role of the architecture file to decide what to do with these 
-metadata. The <span class="lstinline">jack-qt.cpp</span> architecture file for example implements the 
+<p>It is the role of the architecture file to decide what to do with these
+metadata. The <span class="lstinline">jack-qt.cpp</span> architecture file for example implements the
 following:
-- <span class="lstinline">"...[style:knob]..."</span> creates a rotating knob instead of a regular 
-slider or nentry.
-- <span class="lstinline">"...[style:led]..."</span> in a bargraph's label creates a small LED instead 
-of a full bargraph
-- <span class="lstinline">"...[unit:dB]..."</span> in a bargraph's label creates a more realistic 
-bargraph with colors ranging from green to red depending of the level of 
-the value
-- <span class="lstinline">"...[unit:xx]..."</span> in a widget postfixes the value displayed with xx
-- <span class="lstinline">"...[tooltip:bla bla]..."</span> add a tooltip to the widget
-- <span class="lstinline">"...[osc:/address min max]..."</span> Open Sound Control message alias</p>
+    - <span class="lstinline">"...[style:knob]..."</span> creates a rotating knob instead of a regular
+          slider or nentry.
+    - <span class="lstinline">"...[style:led]..."</span> in a bargraph's label creates a small LED instead
+          of a full bargraph
+    - <span class="lstinline">"...[unit:dB]..."</span> in a bargraph's label creates a more realistic
+          bargraph with colors ranging from green to red depending of the level of
+          the value
+    - <span class="lstinline">"...[unit:xx]..."</span> in a widget postfixes the value displayed with xx
+    - <span class="lstinline">"...[tooltip:bla bla]..."</span> add a tooltip to the widget
+    - <span class="lstinline">"...[osc:/address min max]..."</span> Open Sound Control message alias</p>
 <p>Moreover starting a label with a number option like in <span class="lstinline">"[1]..."</span> provides
 a convenient means to control the alphabetical order of the widgets.</p>
 <h4 id="attach">Attach</h4>
 <p>The <span class="lstinline">attach</span> primitive takes two input signals and produce one output signal which is a copy of the first input. The role of <span class="lstinline">attach</span> is to force its second input signal to be compiled with the first one. From a mathematical point of view <span class="lstinline">attach(x,y)</span> is equivalent to <span class="lstinline">1<em>x+0</em>y</span>, which is in turn equivalent to <span class="lstinline">x</span>, but it tells the compiler not to optimize-out <span class="lstinline">y</span>.</p>
-<p>To illustrate this role let say that we want to develop a mixer application with a vumeter for each input signals. Such vumeters can be easily coded in <span class="smallcaps">Faust</span> using an envelop detector connected to a bargraph. The problem is that these envelop signals have no role in the output signals. Using <span class="lstinline">attach(x,vumeter(x))</span> one can tell the compiler that when <span class="lstinline">x</span> is compiled <span class="lstinline">vumeter(x)</span> should also be compiled. </p>
+<p>To illustrate this role let say that we want to develop a mixer application with a vumeter for each input signals. Such vumeters can be easily coded in <span class="smallcaps">Faust</span> using an envelop detector connected to a bargraph. The problem is that these envelop signals have no role in the output signals. Using <span class="lstinline">attach(x,vumeter(x))</span> one can tell the compiler that when <span class="lstinline">x</span> is compiled <span class="lstinline">vumeter(x)</span> should also be compiled.</p>
 <h3 id="widget-modulation">Widget Modulation</h3>
 <p><strong>Widget modulation</strong> acts on the widgets of an existing <span class="smallcaps">Faust</span> expression, but without requiring any manual modifications of the expression's code. This operation is done directly by the compiler, according to a list of <strong>target widgets</strong> and associated <strong>modulators</strong>. Target widgets are specified by their label, as used in the graphical user interface. Modulators are <span class="smallcaps">Faust</span> expressions that describe how to transform the signal produced by widgets. The syntax of a widget modulation is the following:</p>
 <div class="rail">

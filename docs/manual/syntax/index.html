@@ -785,6 +785,10 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#specific-primitives" class="nav-link">Specific Primitives</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="3"><a href="#user-interface-primitives-and-configuration" class="nav-link">User Interface Primitives and Configuration</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#button-primitive" class="nav-link">button Primitive</a>
@@ -3600,6 +3604,8 @@ process = sig;
 <!-- /faust-run -->
 
 <p>While the behavior of this last solution is identical to the first one, the generated code will be a bit different and potentially less efficient.</p>
+<h3 id="specific-primitives">Specific Primitives</h3>
+<p>In Faust, signals operate within a <em>[min, max]</em> range. The <code>lowest(sig)</code> primitive determines the minimum value a given <code>sig</code> signal can attain, while the <code>highest(sig)</code> primitive identifies its maximum value. However, be aware that the compiler's interval computation might not accurately estimate the true <em>[min, max]</em> range, often resulting in <em>-INFINITY</em> for the minimum value and/or <em>INFINITY</em> for the maximum value.</p>
 <h3 id="user-interface-primitives-and-configuration">User Interface Primitives and Configuration</h3>
 <p>Faust user interface widgets/primitives allow for an <strong>abstract</strong> description of a user interface from within the Faust code. This description is independent from any GUI toolkits/frameworks and is purely abstract. Widgets can be <strong>discrete</strong> (e.g., <a href="#button-primitive"><code>button</code></a>, <a href="#checkbox-primitive"><code>checkbox</code></a>, etc.), <strong>continuous</strong> (e.g., <a href="#hslider-primitive"><code>hslider</code></a>, <a href="#vslider-primitive"><code>vslider</code></a>, <a href="#nentry-primitive"><code>nentry</code></a>), and <strong>organizational</strong> (e.g., <a href="#vgroup-primitive"><code>vgroup</code></a>, <a href="#hgroup-primitive"><code>hgroup</code></a>).</p>
 <p>Discrete and continuous elements are signal generators. For example, a <code>button</code> produces a signal which is 1 when the button is pressed and 0 otherwise: </p>

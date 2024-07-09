@@ -1,4 +1,4 @@
 ComplexDiagram(
-	Sequence (NonTerminal('expression'), "[", NonTerminal('definition+'), "]")
+	Sequence (NonTerminal('expression'), "[", OneOrMore (NonTerminal('definition')), "]")
 ).addTo()
 

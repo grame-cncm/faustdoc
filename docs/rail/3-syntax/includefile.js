@@ -1,4 +1,4 @@
 ComplexDiagram(
-	Choice (0, Sequence ('<', NonTerminal('char+'), '>'), Sequence ('"', NonTerminal('char+'), '"'))
+	Choice (0, Sequence ('<', OneOrMore (NonTerminal('char')), '>'), Sequence ('"', OneOrMore (NonTerminal('char')), '"'))
 ).addTo()
 
