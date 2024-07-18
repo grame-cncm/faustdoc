@@ -25,6 +25,10 @@ Web targets can be exported from the [Faust Editor](https://fausteditor.grame.fr
 
 - `webaudiowasm-poly-ts` allows you to export a ready to use polyphonic MIDI controllable Web audio node with a GUI. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
 
+- `wam2-ts` allows you to export a ready to use [WAM 2.0 plugin](http://www.webaudiomodules.com/docs/intro/). A complete tutorial can be [found here](http://www.webaudiomodules.com/docs/usage/generate-with-faustide). 
+
+- `wam2-poly-ts` allows you to export a ready to use polyphonic MIDI controllable WAM 2.0 plugin. 
+
 ## The faust-web-component package
 
 Tthe [faust-web-component](https://github.com/grame-cncm/faust-web-component) package provides two web components for embedding interactive Faust snippets in web pages:
