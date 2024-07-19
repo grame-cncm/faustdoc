@@ -21,9 +21,9 @@ Web targets can be exported from the [Faust Editor](https://fausteditor.grame.fr
 
 - `wasm-poly-ts` allows you to export a ready to use polyphonic MIDI controllable Web audio node. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
 
-- `webaudiowasm-ts` allows you to export a ready to use Web audio node with a GUI. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
+- `webaudiowasm-ts` allows you to export a ready to use Web audio node with a GUI, that can be installed as a [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app). An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
 
-- `webaudiowasm-poly-ts` allows you to export a ready to use polyphonic MIDI controllable Web audio node with a GUI. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
+- `webaudiowasm-poly-ts` allows you to export a ready to use polyphonic MIDI controllable Web audio node with a GUI, that can be installed as a [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app). An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
 
 ## Exporting WAM 2.0 plugins
 
