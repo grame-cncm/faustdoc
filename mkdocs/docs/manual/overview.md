@@ -28,24 +28,24 @@ share/         : contains documentation, the Faust libraries and architecture fi
 
 The following subsections present the main tools build on top of the Faust compiler and intended to facilitate your life. 
 
-## FaustLive
+## Faust IDE
 
-[FaustLive](https://github.com/grame-cncm/faustlive) is an advanced self-contained prototyping environment for the Faust programming language with an ultra-short edit-compile-run cycle. Thanks to its fully embedded compilation chain, FaustLive is simple [to install](https://github.com/grame-cncm/faustlive/releases) and doesn't require any external compiler, development toolchain or SDK to run.
-
-FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled and run on the fly by simple drag and drop. They can even be edited and recompiled while running, without sound interruption. It supports also native applications generation using the Faust online compiler.
-
-## Faustgen
-
-Faustgen is a Max/MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max/MSP. Faustgen is part of the [Faust](https://github.com/grame-cncm/faust) project, and distributed in the [Faust releases](https://github.com/grame-cncm/faust/releases).
+[Faust IDE](https://faustide.grame.fr) is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures, but also various utilities for signal processing development.
 
 ## Faust Editor
 
  [Faust Editor](https://fausteditor.grame.fr) is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures.
 
-## Faust IDE
-
-[Faust IDE](https://faustide.grame.fr) is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures, but also various utilities for signal processing development.
-
 ## Faust Playground
 
 [Faust Playground](https://faustplayground.grame.fr) is a graphical environment to develop Faust programs with a higher level approach. It has been initially designed for kids and for pedagogical purpose.
+
+## Faustgen
+
+Faustgen is a Max/MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max/MSP. Faustgen is part of the [Faust](https://github.com/grame-cncm/faust) project, and distributed in the [Faust releases](https://github.com/grame-cncm/faust/releases).
+
+## FaustLive
+
+[FaustLive](https://github.com/grame-cncm/faustlive) is an advanced self-contained prototyping environment for the Faust programming language with an ultra-short edit-compile-run cycle. Thanks to its fully embedded compilation chain, FaustLive is simple [to install](https://github.com/grame-cncm/faustlive/releases) and doesn't require any external compiler, development toolchain or SDK to run.
+
+FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled and run on the fly by simple drag and drop. They can even be edited and recompiled while running, without sound interruption. It supports also native applications generation using the Faust online compiler. **Note that FaustLive is regularly recompiled, but is no more developed, so Faust IDE is the recommended tool to use**.  
