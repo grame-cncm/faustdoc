@@ -3078,12 +3078,13 @@ process = os.sawtooth(freq);
 
 #### `[hidden:0|1]` Metadata
 
-The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a [motion sensor](#sensors-control-metadatas) or [OSC messages](../osc) and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using `faust2android` or `faust2ios`.
+The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a [motion sensor](#sensors-control-metadatas) or [OSC messages](../osc) and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using `faust2android`, `faust2ios` or in the Web platform.
 
 **Compatibility**
 
 * iOS 
 * Android
+* Web platform
 
 ### Sensors Control Metadatas
 
@@ -3093,9 +3094,9 @@ Sensors control metadata can be used to map the built-in sensors of mobile devic
 
 These metadatas are compatible with the following Faust targets and no additional step is required for them to be taken into account when the corresponding application is generated:
 
-* [`faust2android`](https://faustdoc.grame.fr/manual/tools/)
-* [`faust2ios`](https://faustdoc.grame.fr/manual/tools/)
-* [`faust2smartkeyb`](https://faustdoc.grame.fr/manual/tools/)
+* [`faust2android`](https://faustdoc.grame.fr/manual/tools/#faust2android)
+* [`faust2ios`](https://faustdoc.grame.fr/manual/tools/#faust2ios)
+* [`faust2smartkeyb`](https://faustdoc.grame.fr/manual/tools/#faust2smartkeyb)
 
 Sensors control metadatas have five parameters and follow the following syntax:
 

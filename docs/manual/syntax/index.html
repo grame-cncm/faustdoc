@@ -4317,20 +4317,21 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h4 id="hidden01-metadata"><code>[hidden:0|1]</code> Metadata</h4>
-<p>The <code>[hidden:0|1]</code> metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a <a href="#sensors-control-metadatas">motion sensor</a> or <a href="../osc">OSC messages</a> and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using <code>faust2android</code> or <code>faust2ios</code>.</p>
+<p>The <code>[hidden:0|1]</code> metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a <a href="#sensors-control-metadatas">motion sensor</a> or <a href="../osc">OSC messages</a> and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using <code>faust2android</code>, <code>faust2ios</code> or in the Web platform.</p>
 <p><strong>Compatibility</strong></p>
 <ul>
 <li>iOS </li>
 <li>Android</li>
+<li>Web platform</li>
 </ul>
 <h3 id="sensors-control-metadatas">Sensors Control Metadatas</h3>
 <p>Sensors control metadata can be used to map the built-in sensors of mobile devices to some of the parameters of a Faust program.</p>
 <p><strong>Compatibility</strong></p>
 <p>These metadatas are compatible with the following Faust targets and no additional step is required for them to be taken into account when the corresponding application is generated:</p>
 <ul>
-<li><a href="https://faustdoc.grame.fr/manual/tools/"><code>faust2android</code></a></li>
-<li><a href="https://faustdoc.grame.fr/manual/tools/"><code>faust2ios</code></a></li>
-<li><a href="https://faustdoc.grame.fr/manual/tools/"><code>faust2smartkeyb</code></a></li>
+<li><a href="https://faustdoc.grame.fr/manual/tools/#faust2android"><code>faust2android</code></a></li>
+<li><a href="https://faustdoc.grame.fr/manual/tools/#faust2ios"><code>faust2ios</code></a></li>
+<li><a href="https://faustdoc.grame.fr/manual/tools/#faust2smartkeyb"><code>faust2smartkeyb</code></a></li>
 </ul>
 <p>Sensors control metadatas have five parameters and follow the following syntax:</p>
 <pre><code>[acc: a b c d e] // for accelerometer
