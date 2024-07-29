@@ -16,4 +16,4 @@ Check the [faust2xx]( https://faustdoc.grame.fr/manual/tools/) script descriptio
 
 They are some additional functions in the [soundfiles.lib](https://faustlibraries.grame.fr/libs/soundfiles/) library. Three basic functions are fully documented for now. There is more code already written in the [library source](https://github.com/grame-cncm/faustlibraries/blob/master/soundfiles.lib) that allows to read sound files with different kind of interpolation.
 
-Note that the `soundfile` primitive is not yet available in the [Faust Web IDE](https://faustide.grame.fr).
+The `soundfile` primitive can be used in the Web platform. See the [Faust Web IDE](https://github.com/grame-cncm/faustide?tab=readme-ov-file#soundfiles-access) related documentation.
