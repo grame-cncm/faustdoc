@@ -2062,7 +2062,7 @@ FAUST_ADDHORIZONTALBARGRAPH("Vol", fHbargraph0, 0.0f, 1.0f);
 
 #endif
 </code></pre>
-<p>The <code>FAUST_ADDHORIZONTALSLIDER</code> or <code>FAUST_ADDHORIZONTALBARGRAPH</code> can then be implemented to do whatever is needed with the <code>Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f</code> and <code>"Vol", fHbargraph0, 0.0f, 1.0f</code> parameters respectively. </p>
+<p>The <code>FAUST_ADDHORIZONTALSLIDER</code> or <code>FAUST_ADDHORIZONTALBARGRAPH</code> macros can then be implemented to do whatever is needed with the <code>Gain", fHslider0, 0.0f, 0.0f, 1.0f, 0.01f</code> and <code>"Vol", fHbargraph0, 0.0f, 1.0f</code> parameters respectively. </p>
 <p>The more sophisticated <code>FAUST_LIST_ACTIVES</code> and <code>FAUST_LIST_PASSIVES</code> macros can possibly be used to call any <code>p</code> function (defined elsewhere in the architecture file) on each item. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/minimal-static.cpp">minimal-static.cpp</a> file demonstrates this feature.</p>
 <h2 id="developing-a-new-architecture-file">Developing a New Architecture File</h2>
 <p>Developing a new architecture file typically means writing a generic file, that will be populated with the actual output of the Faust compiler, in order to produce a complete file, ready-to-be-compiled as a standalone application or plugin.</p>
