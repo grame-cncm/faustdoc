@@ -1797,6 +1797,57 @@ class my_class : public mydsp {
 };
 ```
 
+or *decorating* a DSP object using the [decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern), which is already implemented in [this file](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h), and can possibly be sub-classed like:  
+
+```c++
+class my_decorator : public decorator_dsp {
+
+    private:
+
+        // Do something specific
+
+    public:
+
+        my_decorator(dsp* dsp):decorator_dsp(dsp)
+        {
+            // Do something specific
+        }
+
+
+        virtual ~my_class()
+        {
+            // Do something specific
+        }
+
+        // Implementation of some of the methods
+        
+        // Override the 'instanceClear' method
+        void instanceClear()
+        {
+            // Do something specific
+            
+            // Call the inherited 'instanceClear' 
+            decorator_dsp::instanceClear();
+        }
+     
+        // Override the 'compute' method
+        void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+        {
+            // Do something specific
+            
+            // Call the inherited 'compute' 
+            decorator_dsp::compute(count, inputs, outputs);
+        }
+
+        // Do something specific
+};
+
+// Decorates a concrete instance
+my_decorator DSP = new my_decorator(new mydsp());
+...
+
+```
+
 #### Developing New UI Architectures
 
 For really new architectures, the `UI` base class,  the [GenericUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h) helper class or the `GUI` class (described before), have to be subclassed. Note that a lot of classes presented in the [Some useful UI classes for developers](#some-useful-ui-classes-and-tools-for-developers) section can also be subclassed or possibly enriched with additional code. 

@@ -2292,6 +2292,54 @@ int main(int argc, char* argv[])
         // Do something specific
 };
 </code></pre>
+<p>or <em>decorating</em> a DSP object using the <a href="https://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>, which is already implemented in <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h">this file</a>, and can possibly be sub-classed like:  </p>
+<pre><code class="language-c++">class my_decorator : public decorator_dsp {
+
+    private:
+
+        // Do something specific
+
+    public:
+
+        my_decorator(dsp* dsp):decorator_dsp(dsp)
+        {
+            // Do something specific
+        }
+
+
+        virtual ~my_class()
+        {
+            // Do something specific
+        }
+
+        // Implementation of some of the methods
+
+        // Override the 'instanceClear' method
+        void instanceClear()
+        {
+            // Do something specific
+
+            // Call the inherited 'instanceClear' 
+            decorator_dsp::instanceClear();
+        }
+
+        // Override the 'compute' method
+        void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+        {
+            // Do something specific
+
+            // Call the inherited 'compute' 
+            decorator_dsp::compute(count, inputs, outputs);
+        }
+
+        // Do something specific
+};
+
+// Decorates a concrete instance
+my_decorator DSP = new my_decorator(new mydsp());
+...
+
+</code></pre>
 <h4 id="developing-new-ui-architectures">Developing New UI Architectures</h4>
 <p>For really new architectures, the <code>UI</code> base class,  the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/DecoratorUI.h">GenericUI</a> helper class or the <code>GUI</code> class (described before), have to be subclassed. Note that a lot of classes presented in the <a href="#some-useful-ui-classes-and-tools-for-developers">Some useful UI classes for developers</a> section can also be subclassed or possibly enriched with additional code. </p>
 <h4 id="developing-new-audio-architectures">Developing New Audio Architectures</h4>
