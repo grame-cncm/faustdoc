@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 
 #cd $1
@@ -9,7 +9,7 @@ do
 	echo
 	echo "## " $tool
 	echo "<pre class=faust-tools>"
-	sh $tool -help | sed -e 's/\</\&lt;/g'
+	$tool -help | sed -e 's/\</\&lt;/g'
 	echo "</pre>"
 	echo
 
