@@ -1865,7 +1865,7 @@ class mydsp : public dsp {
 }
 </code></pre>
 <h4 id="defining-and-using-a-custom-memory-manager">Defining and using a custom memory manager</h4>
-<p>When compiled with the <code>-mem</code> option, the client code has to define an adapted <code>memory_manager</code> class for its specific needs. A cutom memory manager is implemented by subclassing the <code>dsp_memory_manager</code> abstract base class, and defining the <code>begin</code>, <code>end</code>, <code>ìnfo</code>, <code>allocate</code> and <code>destroy</code> methods. Here is an example of a simple heap allocating manager:</p>
+<p>When compiled with the <code>-mem</code> option, the client code has to define an adapted <code>memory_manager</code> class for its specific needs. A cutom memory manager is implemented by subclassing the <code>dsp_memory_manager</code> abstract base class, and defining the <code>begin</code>, <code>end</code>, <code>ìnfo</code>, <code>allocate</code> and <code>destroy</code> methods. Here is an example of a simple heap allocating manager (implemented in the  <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/dummy-mem.cpp">dummy-mem.cpp</a> architecture file):</p>
 <pre><code class="language-c++">struct malloc_memory_manager : public dsp_memory_manager {
 
     virtual void begin(size_t count)

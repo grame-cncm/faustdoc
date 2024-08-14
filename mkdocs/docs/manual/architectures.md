@@ -1315,7 +1315,7 @@ static void memoryInfo() {
 
 #### Defining and using a custom memory manager
 
-When compiled with the `-mem` option, the client code has to define an adapted `memory_manager` class for its specific needs. A cutom memory manager is implemented by subclassing the `dsp_memory_manager` abstract base class, and defining the `begin`, `end`, `ìnfo`, `allocate` and `destroy` methods. Here is an example of a simple heap allocating manager:
+When compiled with the `-mem` option, the client code has to define an adapted `memory_manager` class for its specific needs. A cutom memory manager is implemented by subclassing the `dsp_memory_manager` abstract base class, and defining the `begin`, `end`, `ìnfo`, `allocate` and `destroy` methods. Here is an example of a simple heap allocating manager (implemented in the  [dummy-mem.cpp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/dummy-mem.cpp) architecture file):
 
 ```c++
 struct malloc_memory_manager : public dsp_memory_manager {
