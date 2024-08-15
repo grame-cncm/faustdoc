@@ -784,7 +784,7 @@ When doing partial application with an *infix operator*, it is important to note
 
 | Prefix Partial Application Syntax | | Core Syntax |
 | -------- | -------- | --------- |
-| `+(C)` | \(\equiv\) | `_,C : *` |
+| `+(C)` | \(\equiv\) | `_,C : +` |
 | `-(C)` | \(\equiv\) | `_,C : -` |
 | `<(C)` | \(\equiv\) | `_,C : <` |
 | `/(C)` | \(\equiv\) | `_,C : /` |
