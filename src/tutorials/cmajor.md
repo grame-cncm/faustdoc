@@ -230,7 +230,7 @@ with the following URL: [https://faustide.grame.fr/?code=https://raw.githubuserc
 
 ## Experimental Faust in Cmajor integration 
 
-With the release of the Cmajor [source code](https://github.com/cmajor-lang/cmajor), an experimental Faust in Cmajor integration [has been started]( https://github.com/sletz/cmajor?tab=readme-ov-file#faust--cmajor) on a Cmajor project fork.
+With the release of the Cmajor [source code](https://github.com/cmajor-lang/cmajor), an experimental Faust in Cmajor integration can be tested starting with [Cmajor 1.0.2616 release](https://github.com/cmajor-lang/cmajor/releases/tag/1.0.2616).
 
 ### Known limitations
 
