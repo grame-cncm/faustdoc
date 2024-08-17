@@ -830,7 +830,9 @@ A few additional macro construction classes, subclasses of the root dsp class ha
 
 This methology is followed to implement the three remaining composition operators (*split*, *merge*, *recursion*), which ends up with a C++ API to combine DSPs with the usual five operators: `createDSPSequencer`, `createDSPParallelizer`, `createDSPSplitter`, `createDSPMerger`, `createDSPRecursiver` to be used at C++ level to dynamically combine DSPs.
 
-Note that this idea of decorating or combining several C++  `dsp` objects can perfectly be extended in specific projects, to meet other needs: like muting some part of a graph of several DSPs for instance. But keep in mind that keeping the  `dsp` API then allows to take profit of all already available `UI` and `audio` based classes.
+And finally the `createDSPCrossfader` tool allows you to crossfade between two DSP modules. The crossfade parameter (as a slider) controls the mix between the two modules outputs. When *Crossfade = 1*, the first DSP only is computed, when *Crossfade = 0*, the second DSP only is computed, otherwise both DSPs are computed and mixed.
+
+Note that this idea of decorating or combining several C++ `dsp` objects can perfectly be extended in specific projects, to meet other needs: like muting some part of a graph of several DSPs for instance. But keep in mind that keeping the `dsp` API then allows to take profit of all already available `UI` and `audio` based classes.
 
 ### Sample Accurate Control
 
