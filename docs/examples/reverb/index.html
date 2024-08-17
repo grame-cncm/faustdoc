@@ -351,6 +351,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#vital_rev" class="nav-link">vital_rev</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#zitarev" class="nav-link">zitaRev</a>
               <ul class="nav flex-column">
               </ul>
@@ -504,9 +508,28 @@ process = dm.stereo_reverb_tester;
 </div>
 <!-- /faust-run -->
 
-<h2 id="zitarev">zitaRev</h2>
+<h2 id="vital_rev">vital_rev</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+declare name "vital_rev";
+declare version "0.1";
+declare author "David Braun";
+declare description "Vital demo application.";
+
+import("stdfaust.lib");
+
+process = dm.vital_rev_demo;    
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="zitarev">zitaRev</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "zitaRev";
@@ -525,7 +548,7 @@ process = dm.zita_rev1;
 
 <h2 id="zitarevfdn">zitaRevFDN</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "zitaRevFDN";

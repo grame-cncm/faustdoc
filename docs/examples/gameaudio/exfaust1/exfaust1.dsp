@@ -1,60 +1,85 @@
 
-//----------------------------door--------------------------
-// door(force) : produces a creaking door sound,
-//                          based on examples
+import("stdfaust.lib");
+
+//------------------------rain_on_window--------------------
+// rain_on_window : produces a sound of raindrops on a glass
+//                  window, based on examples
 //                          from the book "Designing Sound"
-//                                by Andy Farnell
+//                               by Andy Farnell
 //
 // #### Usage
 //
 // 
-// door(force) : _
+// rain_on_window : _
 // 
-//
-// Where:
-//
-// * force: a float value between 0 and 1
-//              (0.3 to 0.93 for best results)
 //
 // #### Examples
 //
 // 
-// door(hslider("force", 0, 0, 0.93, 0.001)) <: _, _;
+// rain_on_window <: (_, _);
 // 
 //
 //------------------------------------------------------------
 
-import("stdfaust.lib");
+//------------------------ambient_rain----------------------
+// ambient_rain(freq) : produces a ambient rain sound,
+//                         based on examples
+//                         from the book "Designing Sound"
+//                               by Andy Farnell
+//
+// #### Usage
+//
+// 
+// ambient_rain(freq) : _
+// 
+//
+// Where:
+//
+// * freq: general frequency of the raindrops, best results
+//               in the range 5-50
+//
+// #### Examples
+//
+// 
+// ambient_rain(10) <: (_, _);
+// 
+//
+//------------------------------------------------------------
 
-stickslip(force) = metro : timer : *(1000) : min(100) : /(100) :
-                   sqrt <: (+(0.1) : sqrt), (vline) : (*)
+path(d, g, f1, f2, f1o, f2o, q, s) = (+(s) : de.delay(300, ds) : *(g) <:
+             (flt(f2, f2o), flt(f1, f1o), _)) ~ (_) : (si.block(1), _, _)
     with {
-        swap(a, b) = (b, a);
-        metro = force : ba.line(ba.sec2samp(0.1)) : (step1 ~ _);
-        step1(t, s) = s <: (>(0.3)), (swap(1) : (-) <:
-                   ((*(60) : +(3)), (*(6) : *(no.noise : abs : ba.sAndH(t)))) : (+)) : _, (/(1000) : ba.sec2samp : ba.pulse) : (*);
-        timer(s) = 1 : ba.pulse_countup(((s : mem) == 0)) : /(ma.SR) : ba.sAndH(s);
-        vline(s) = s <: _, mem : (!=) : en.ar(0, s / 1000) <: (*);
+        ds = ba.sec2samp(d / 1000);
+        flt(f, fo) = fi.resonbp(f, q, 1) * os.osc(fo);
     };
 
-wood1 = _ <: ((fs, qs, si.bus(6)) : ro.interleave(6, 3) : par(i, 6, flt)), *(0.2) :> _
+glasswindow = (reroutei : (path1, path2) : rerouteo) ~ (_, _) : (si.block(2), _)
     with {
-        fs = (62.5, 125, 250, 395, 560, 790);
-        qs = (1, 1, 2, 2, 3, 3);
-        flt(f, q) = fi.resonbp(f, q, 1);
+        path1 = path(3.7, 0.61, 2007, 1994, 254, 669, 2.3);
+        path2 = path(4.2, 0.61, 1986, 1969, 443, 551, 2.3);
+        reroutei(i1, i2, i3) = (i3 + i2, i3 + i1);
+        rerouteo(p1a, p1b, p2a, p2b) = (p1a, p2a, p1b + p2b);
     };
 
-wood2 = _ <: (ds, si.bus(8)) : ro.interleave(8, 2) : par(i, 8, res) :> fi.highpass(1, 125)
+drops = out
     with {
-        res(b) = dfbe(b, 0.05);
-        ds = (4.52, 5.06, 6.27, 8, 5.48, 7.14, 10.12, 16);
-        dfbe(i, g) = ((+) : de.delay(ba.sec2samp(0.1), ba.sec2samp(i / 1000))) ~ (*(g));
+        normcos(s) = cos(2 * ma.PI * s);
+        noise = no.gnoise(10) : fi.resonbp(50, 1, 2) : fi.lowpass(1, 500);
+        right = noise * noise : *(10);
+        left = (noise * 80) + 40 : os.phasor(1): -(0.25) : normcos;
+        hip = fi.highpass(1, 500);
+        out = left * right : max(0.35) : -(0.35) : *(0.5) : hip : hip;
     };
 
-door(force) = stickslip(force) : wood1 : wood2 : *(0.2);
+rain_on_window = drops : fi.highpass(1, 9000) : *(15) : glasswindow;
 
-process = door(force) <: (_, _)
+ambient_rain(f) = drops2(f, 0.013, 0.05, 0.1)
     with {
-        force = button("door") : ba.impulsify : en.ar(2, 1.5) : *(0.61) : +(0.28);
+        drops2(f, q, t, a) = no.noise : fi.resonbp(f, q, 200) : aa.clip(0, 1) :
+                    max(t) : -(t) : sq : sq : *(a) : fi.highpass(1, 2000);
+        sq(x) = x * x;
     };
+
+process = rain_on_window + ambient_rain(10) : sp.spat(2, 0.1, 1);
+
 
