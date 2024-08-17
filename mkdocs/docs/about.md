@@ -9,23 +9,24 @@ reports, ideas, etc. We would like in particular to thank:
 <ul>
 Fons&nbsp;Adriaensen, Karim&nbsp;Barkati,
 Jérôme&nbsp;Barthélemy, Tim&nbsp;Blechmann, 
-Tiziano&nbsp;Bole, Alain&nbsp;Bonardi, 
+Tiziano&nbsp;Bole, Alain&nbsp;Bonardi, Bart Brouns, 
 Thomas&nbsp;Charbonnel, Raffaele&nbsp;Ciavarella, 
 Julien&nbsp;Colafrancesco, Damien&nbsp;Cramet, 
 Sarah&nbsp;Denoux, Étienne&nbsp;Gaudrin, 
 Olivier&nbsp;Guillerminet, Pierre&nbsp;Guillot, 
-Albert&nbsp;Gräf, Pierre&nbsp;Jouvelot, 
+Albert&nbsp;Gräf, Agathe Herrou, Pierre&nbsp;Jouvelot, 
 Stefan&nbsp;Kersten, Victor&nbsp;Lazzarini, 
 Matthieu&nbsp;Leberre, Mathieu&nbsp;Leroi, 
 Fernando&nbsp;Lopez-Lezcano, Kjetil&nbsp;Matheussen, 
 Hermann&nbsp;Meyer, Rémy&nbsp;Muller, 
 Raphael&nbsp;Panis, Eliott&nbsp;Paris, 
 Reza&nbsp;Payami, Laurent&nbsp;Pottier, 
+Dirk Roosenburg,
 Sampo&nbsp;Savolainen, Nicolas&nbsp;Scaringella, 
 Anne&nbsp;Sedes, Priyanka&nbsp;Shekar, 
 Stephen&nbsp;Sinclair, Travis&nbsp;Skare, 
 Julius&nbsp;Smith, Mike&nbsp;Solomon, 
-Michael&nbsp;Wilson, Bart Brouns, Dirk Roosenburg.
+Michael&nbsp;Wilson.
 </ul>
 
 as well as our colleagues at [GRAME](http://grame.fr):
