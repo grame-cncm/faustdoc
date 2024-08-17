@@ -815,7 +815,7 @@ The Faust program specification is usually entirely done in the language itself.
 
 Since taking advantage of the huge number of already available UI and audio architecture files is important, keeping the same `dsp` API is preferable, so that more complex DSP can be controlled and audio rendered the usual way. Extended DSP classes will typically subclass the `dsp` base class and override or complete part of its API. 
 
-#### Dsp Decorator Pattern
+#### DSP Decorator Pattern
 
 A `dsp_decorator` class, subclass of the root `dsp` class has first been defined. Following the decorator design pattern, it allows behavior to be added to an individual object, either statically or dynamically.
 

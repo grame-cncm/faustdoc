@@ -415,7 +415,7 @@
             </li>
             <li class="nav-item" data-level="3"><a href="#macro-construction-of-dsp-components" class="nav-link">Macro Construction of DSP Components</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="4"><a href="#dsp-decorator-pattern" class="nav-link">Dsp Decorator Pattern</a>
+            <li class="nav-item" data-level="4"><a href="#dsp-decorator-pattern" class="nav-link">DSP Decorator Pattern</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -1494,7 +1494,7 @@ process = no.noise;
 <h3 id="macro-construction-of-dsp-components">Macro Construction of DSP Components</h3>
 <p>The Faust program specification is usually entirely done in the language itself. But in some specific cases it may be useful to develop <em>separated DSP components</em> and <em>combine</em> them in a more complex setup.</p>
 <p>Since taking advantage of the huge number of already available UI and audio architecture files is important, keeping the same <code>dsp</code> API is preferable, so that more complex DSP can be controlled and audio rendered the usual way. Extended DSP classes will typically subclass the <code>dsp</code> base class and override or complete part of its API. </p>
-<h4 id="dsp-decorator-pattern">Dsp Decorator Pattern</h4>
+<h4 id="dsp-decorator-pattern">DSP Decorator Pattern</h4>
 <p>A <code>dsp_decorator</code> class, subclass of the root <code>dsp</code> class has first been defined. Following the decorator design pattern, it allows behavior to be added to an individual object, either statically or dynamically.</p>
 <p>As an example of the decorator pattern, the <code>timed_dsp</code> class allows to decorate a given DSP with sample accurate control capability or the <code>mydsp_poly</code> class for polyphonic DSPs, explained in the next sections.</p>
 <h4 id="combining-dsp-components">Combining DSP Components</h4>
