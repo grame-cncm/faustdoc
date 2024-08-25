@@ -358,22 +358,22 @@ See extended documentation<a href="https://github.com/grame-cncm/faust/tree/mast
 <p>Web targets can be exported from the <a href="https://fausteditor.grame.fr">Faust Editor</a> or <a href="https://faustide.grame.fr">Faust IDE</a> using the remote compilation service. Choose <code>Platform = web</code>, then <code>Architecture</code> with one of the following target:</p>
 <ul>
 <li>
-<p><code>wasmjs</code> allows you to export a ready to use Web audio node. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
+<p><code>wasmjs</code> allows you to export a ready to use Web audio node to be integrated in the application. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
 </li>
 <li>
-<p><code>wasm-poly</code> allows you to export a ready to use polyphonic MIDI controllable Web audio node. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
+<p><code>wasmjs-poly</code> allows you to export a ready to use polyphonic MIDI controllable Web audio node to be integrated in the application. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
 </li>
 <li>
-<p><code>webaudiowasm</code> allows you to export a ready to use Web audio node with a GUI, that can be installed as a <a href="https://en.wikipedia.org/wiki/Progressive_web_app">Progressive Web Application</a>. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
+<p><code>webaudiowasm</code> allows you to export a ready to use Web audio node with a prebuilt GUI, that can be installed as a <a href="https://en.wikipedia.org/wiki/Progressive_web_app">Progressive Web Application</a>. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
 </li>
 <li>
-<p><code>webaudiowasm-poly</code> allows you to export a ready to use polyphonic MIDI controllable Web audio node with a GUI, that can be installed as a <a href="https://en.wikipedia.org/wiki/Progressive_web_app">Progressive Web Application</a>. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
+<p><code>webaudiowasm-poly</code> allows you to export a ready to use polyphonic MIDI controllable Web audio node with a prebuilt GUI, that can be installed as a <a href="https://en.wikipedia.org/wiki/Progressive_web_app">Progressive Web Application</a>. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.</p>
 </li>
 <li>
-<p><code>pwa</code> allows you to export a ready to use <a href="https://en.wikipedia.org/wiki/Progressive_web_app">Progressive Web Application</a>, directly usable in the page, and that can possibly be installed and run on smartphone or tablet using the QR Code.</p>
+<p><code>pwa</code> allows you to export a ready to use <a href="https://en.wikipedia.org/wiki/Progressive_web_app">Progressive Web Application</a> with a prebuilt GUI, directly usable in the page, and that can possibly be installed and run on smartphone or tablet using the QR Code.</p>
 </li>
 <li>
-<p><code>pwa-poly</code> allows you to export a ready to use polyphonic MIDI controllable <a href="https://en.wikipedia.org/wiki/Progressive_web_app">Progressive Web Application</a>, directly usable in the page, and that can possibly be installed and run on smartphone or tablet using the QR Code.</p>
+<p><code>pwa-poly</code> allows you to export a ready to use polyphonic MIDI controllable <a href="https://en.wikipedia.org/wiki/Progressive_web_app">Progressive Web Application</a> with a prebuilt GUI, directly usable in the page, and that can possibly be installed and run on smartphone or tablet using the QR Code.</p>
 </li>
 </ul>
 <h2 id="exporting-wam-20-plugins">Exporting WAM 2.0 plugins</h2>
@@ -384,6 +384,9 @@ See extended documentation<a href="https://github.com/grame-cncm/faust/tree/mast
 </li>
 <li>
 <p><code>wam2-poly-ts</code> allows you to export a ready to use polyphonic MIDI controllable WAM 2.0 plugin. </p>
+</li>
+<li>
+<p><code>wam2-fft-ts</code> allows you to export a ready to use WAM 2.0 plugin using the FFT architecture presented in <a href="https://inria.hal.science/hal-04507625/document">this paper</a>.</p>
 </li>
 </ul>
 <h2 id="the-faust-web-component-package">The faust-web-component package</h2>

@@ -17,17 +17,17 @@ The library offers functionality for compiling Faust DSP code into WebAssembly, 
 
 Web targets can be exported from the [Faust Editor](https://fausteditor.grame.fr) or [Faust IDE](https://faustide.grame.fr) using the remote compilation service. Choose `Platform = web`, then `Architecture` with one of the following target:
 
-- `wasmjs` allows you to export a ready to use Web audio node. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
+- `wasmjs` allows you to export a ready to use Web audio node to be integrated in the application. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
 
-- `wasm-poly` allows you to export a ready to use polyphonic MIDI controllable Web audio node. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
+- `wasmjs-poly` allows you to export a ready to use polyphonic MIDI controllable Web audio node to be integrated in the application. An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
 
-- `webaudiowasm` allows you to export a ready to use Web audio node with a GUI, that can be installed as a [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app). An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
+- `webaudiowasm` allows you to export a ready to use Web audio node with a prebuilt GUI, that can be installed as a [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app). An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
 
-- `webaudiowasm-poly` allows you to export a ready to use polyphonic MIDI controllable Web audio node with a GUI, that can be installed as a [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app). An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
+- `webaudiowasm-poly` allows you to export a ready to use polyphonic MIDI controllable Web audio node with a prebuilt GUI, that can be installed as a [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app). An example of HTML and JavaScript files demonstrate how the node can be loaded and activated.
 
-- `pwa` allows you to export a ready to use [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app), directly usable in the page, and that can possibly be installed and run on smartphone or tablet using the QR Code.
+- `pwa` allows you to export a ready to use [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app) with a prebuilt GUI, directly usable in the page, and that can possibly be installed and run on smartphone or tablet using the QR Code.
 
-- `pwa-poly` allows you to export a ready to use polyphonic MIDI controllable [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app), directly usable in the page, and that can possibly be installed and run on smartphone or tablet using the QR Code.
+- `pwa-poly` allows you to export a ready to use polyphonic MIDI controllable [Progressive Web Application](https://en.wikipedia.org/wiki/Progressive_web_app) with a prebuilt GUI, directly usable in the page, and that can possibly be installed and run on smartphone or tablet using the QR Code.
 
 ## Exporting WAM 2.0 plugins
 
@@ -36,6 +36,9 @@ Web targets can be exported from the [Faust Editor](https://fausteditor.grame.fr
 - `wam2-ts` allows you to export a ready to use WAM 2.0 plugin.  
 
 - `wam2-poly-ts` allows you to export a ready to use polyphonic MIDI controllable WAM 2.0 plugin. 
+
+- `wam2-fft-ts` allows you to export a ready to use WAM 2.0 plugin using the FFT architecture presented in [this paper](https://inria.hal.science/hal-04507625/document).
+
 
 ## The faust-web-component package
 
