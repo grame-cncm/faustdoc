@@ -4,7 +4,7 @@
 
 ### Using the FIR backend
 
-The FIR (Faust Imperative Representation) backend can possibly be used to look at a textual version of the intermediate imperative language. 
+The FIR (Faust Imperative Representation) backend can possibly be used to look at a textual version of the intermediate imperative language. Use the `make developer` target to compile the FIR backend, then use `faust -lang fir foo.dsp` to compile a given foo.dsp file as a FIR textual output. 
 
 ```
 import("stdfaust.lib");
