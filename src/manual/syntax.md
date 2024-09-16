@@ -3133,7 +3133,15 @@ For example, controlling the gain of a synthesizer using the X axis of the accel
 g = nentry("gain[acc: 0 0 -10 0 10]",0.5,0,1,0.01);
 ```
 
-With this configuration, `g = 0` when the device is standing vertically on its right side, `g = 0.5` when the device is standing horizontally with screen facing up, and `g = 1` when the device is standing vertically on its left side.
+With this configuration, `g = 0` when the device is standing vertically on its right side, `g = 0.5` when the device is standing horizontally with screen facing up, and `g = 1` when the device is standing vertically on its left side. Here is a working example:
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+g = hslider("gain[hidden:1][acc: 0 0 -10 0 10]",0.5,0,1,0.01):si.smoo;
+process = os.osc(500)*g;
+```
+<!-- /faust-run -->
 
 Finally, in this slightly more complex mapping, `g = 0` when the device is tilted on its right side and the value of `g` increases towards 1 when the device is tilted on its left side:
 

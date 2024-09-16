@@ -4357,7 +4357,20 @@ process = os.sawtooth(freq);
 <p>For example, controlling the gain of a synthesizer using the X axis of the accelerometer can be easily done simply by writing something like:</p>
 <pre><code>g = nentry(&quot;gain[acc: 0 0 -10 0 10]&quot;,0.5,0,1,0.01);
 </code></pre>
-<p>With this configuration, <code>g = 0</code> when the device is standing vertically on its right side, <code>g = 0.5</code> when the device is standing horizontally with screen facing up, and <code>g = 1</code> when the device is standing vertically on its left side.</p>
+<p>With this configuration, <code>g = 0</code> when the device is standing vertically on its right side, <code>g = 0.5</code> when the device is standing horizontally with screen facing up, and <code>g = 1</code> when the device is standing vertically on its left side. Here is a working example:</p>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust126/exfaust126.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("stdfaust.lib");
+g = hslider("gain[hidden:1][acc: 0 0 -10 0 10]",0.5,0,1,0.01):si.smoo;
+process = os.osc(500)*g;
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
 <p>Finally, in this slightly more complex mapping, <code>g = 0</code> when the device is tilted on its right side and the value of <code>g</code> increases towards 1 when the device is tilted on its left side:</p>
 <pre><code>g = nentry(&quot;gain[acc: 0 0 0 0 10]&quot;,0,0,1,0.01);
 </code></pre>
@@ -4401,7 +4414,7 @@ process = os.sawtooth(freq);
 <p>The main difference with the previous case is that if <code>lfo</code> had a user interface, it would be added outside of the freeverb interface. Please note that only <code>2-&gt;1</code> modulators result in additional inputs. </p>
 <p>Here is a complete example:</p>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust126/exfaust126.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust127/exfaust127.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 import("stdfaust.lib");
