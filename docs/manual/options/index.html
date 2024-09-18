@@ -323,7 +323,7 @@
             
             <li class="nav-item" data-level="1"><a href="#faust-compiler-options" class="nav-link">Faust Compiler Options</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2746" class="nav-link">FAUST compiler version 2.74.6</a>
+            <li class="nav-item" data-level="2"><a href="#faust-compiler-version-2757" class="nav-link">FAUST compiler version 2.75.7</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -355,6 +355,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#environment-variables" class="nav-link">Environment variables:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#example" class="nav-link">Example:</a>
               <ul class="nav flex-column">
               </ul>
@@ -367,7 +371,7 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="faust-compiler-options">Faust Compiler Options</h1>
-<h2 id="faust-compiler-version-2746">FAUST compiler version 2.74.6</h2>
+<h2 id="faust-compiler-version-2757">FAUST compiler version 2.75.7</h2>
 <pre><code class="language-faust-options">usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
     and fileN represents a Faust source file (.dsp extension).
@@ -476,6 +480,7 @@
   -flist      --file-list                 print file list (including libraries) used to eval process.
   -tg         --task-graph                print the internal task graph in dot format.
   -sg         --signal-graph              print the internal signal graph in dot format.
+  -rg         --retiming-graph            print the internal signal graph after retiming in dot format.
   -norm       --normalized-form           print signals in normalized form and exit.
   -me         --math-exceptions           check / for 0 as denominator and remainder, fmod, sqrt, log10, log, acos, asin functions domain.
   -sts        --strict-select             generate strict code for 'selectX' even for stateless branches (both are computed).
@@ -491,6 +496,15 @@
   -archdir    --archdir                   print directory containing the Faust architectures.
   -dspdir     --dspdir                    print directory containing the Faust dsp libraries.
   -pathslist  --pathslist                 print the architectures and dsp library paths.
+</code></pre>
+<h2 id="environment-variables">Environment variables:</h2>
+<hr />
+<pre><code class="language-faust-options">  FAUST_DEBUG      = FAUST_LLVM1          print LLVM IR before optimisation.
+  FAUST_DEBUG      = FAUST_LLVM2          print LLVM IR after optimisation.
+  FAUST_DEBUG      = FAUST_LLVM_NO_FM     deactivate fast-math optimisation in LLVM IR.
+  FAUST_DEBUG      = FAUST_DTREE          successive tree pointer allocation to guaranty deterministic compilation.
+  FAUST_DTREE_SIZE = &lt;num&gt;                to set the size of each array of successive tree pointers in FAUST_DTREE mode.
+  FAUST_OPT        = FAUST_SIG_NO_NORM    deactivate signal normalisation.
 </code></pre>
 <h2 id="example">Example:</h2>
 <hr />

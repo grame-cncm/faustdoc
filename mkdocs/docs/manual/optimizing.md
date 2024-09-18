@@ -435,10 +435,10 @@ In this code example, the *wrapping index moved by an if based method* can be re
 Choosing values that use less memory can be particularly important in the context of embedded devices. Testing different combinations of the `-mcd` and `-dlt` options can help optimize CPU utilisation, to summarize:
 
 - chosing a big `n` value for `-mcd n` will consume less memory but the shift loop will start to be time consuming with big delay values. This model may sometimes be better suited if the C++ or LLVM compiler correctly auto-vectorizes the code and generates more efficient SIMD code.
-- chosing `-mcd 0` will activate the *wrapping index* second strategy for all delay lines in the DSP code, then playing with `-dlt <n>` allows to arbitrate between the *faster but consuming more memory* method and *slower but consume less memory* method.
+- chosing `-mcd 0` will activate the *wrapping index* second strategy for all delay lines in the DSP code, then playing with `-dlt <n>` allows you to arbitrate between the *faster but consuming more memory* method and *slower but consume less memory* method.
 - chosing a combinaison of `-mcd n1` and `-dlt <n2>` can possibly be the model to chose when a lot of delay lines with different sizes are used in the DSP code.
 
-Using the benchmark tools [faustbench](#faustbench) and [faustbench-llvm](#faustbench-llvm) allow to refine the choice of compilation options.
+Using the benchmark tools [faustbench](#faustbench) and [faustbench-llvm](#faustbench-llvm) allow you to refine the choice of compilation options.
 
 #### Recursive signals
 
@@ -553,7 +553,7 @@ On audio boards where the memory is separated as several blocks (like SRAM, SDRA
 From a given DSP program, the Faust compiler tries to generate the most efficient implementation. Optimizations can be done at DSP writing time, or later on when the target langage is generated (like  C++ or LLVM IR).
 The generated code can have different *shapes* depending of compilation options, and can run faster of slower. Several programs and tools are available to help Faust programmers to test (for possible numerical or precision issues), optimize their programs by discovering the best set of options for a given DSP code, and finally compile them into native code for the target CPUs. 
 
-By default the Faust compiler produces a big scalar loop in the generated `mydsp::compute` method. Compiler options allow to generate other code *shapes*, like for instance separated simpler loops connected with buffers in the so-called vectorized mode (obtained using  the `-vec` option). The assumption is that auto-vectorizer passes in modern compilers will be able to better generate efficient SIMD code for them. In this vec option, the size of the internal buffer can be changed using the `-vs value` option. Moreover the computation graph can be organized in deep-first order using `-dfs`.  
+By default the Faust compiler produces a big scalar loop in the generated `mydsp::compute` method. Compiler options allow you to generate other code *shapes*, like for instance separated simpler loops connected with buffers in the so-called vectorized mode (obtained using  the `-vec` option). The assumption is that auto-vectorizer passes in modern compilers will be able to better generate efficient SIMD code for them. In this vec option, the size of the internal buffer can be changed using the `-vs value` option. Moreover the computation graph can be organized in deep-first order using `-dfs`.  
 
 Delay lines implementation can be be controlled with the `-mcd size` and `-dlt size` options, to choose for example between *power-of-two sizes and mask based wrapping* (faster but consumming more memory) or *if based wrapping*, slower but consumming less memory. 
 
@@ -575,7 +575,7 @@ The **faustbench-llvm** tool uses the `libfaust` library and its LLVM backend to
 
 ### faust2bench
 
-The **faust2bench** tool allows to benchmark a given DSP program:
+The **faust2bench** tool allows you to benchmark a given DSP program:
 
 ```
 faust2bench -h
@@ -644,7 +644,7 @@ struct mydsp : public dsp {
 };
 ```
 
-Using `faust2bench -inj adapted.cpp dummy.dsp`  creates the executable to be tested with `./dummy` (remember that  `dummy.dsp ` is a program that is not actually used in `-inj` mode).
+Using `faust2bench -inj adapted.cpp dummy.dsp` creates the executable to be tested with `./dummy` (remember that  `dummy.dsp` is a program that is not actually used in `-inj` mode).
 
 ### dynamic-faust
 

@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.74.6
+## FAUST compiler version 2.75.7
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -115,6 +115,7 @@ usage : faust [options] file1 [file2 ...].
   -flist      --file-list                 print file list (including libraries) used to eval process.
   -tg         --task-graph                print the internal task graph in dot format.
   -sg         --signal-graph              print the internal signal graph in dot format.
+  -rg         --retiming-graph            print the internal signal graph after retiming in dot format.
   -norm       --normalized-form           print signals in normalized form and exit.
   -me         --math-exceptions           check / for 0 as denominator and remainder, fmod, sqrt, log10, log, acos, asin functions domain.
   -sts        --strict-select             generate strict code for 'selectX' even for stateless branches (both are computed).
@@ -131,6 +132,16 @@ usage : faust [options] file1 [file2 ...].
   -archdir    --archdir                   print directory containing the Faust architectures.
   -dspdir     --dspdir                    print directory containing the Faust dsp libraries.
   -pathslist  --pathslist                 print the architectures and dsp library paths.
+~~~
+## Environment variables:
+---------------------------------------
+~~~faust-options
+  FAUST_DEBUG      = FAUST_LLVM1          print LLVM IR before optimisation.
+  FAUST_DEBUG      = FAUST_LLVM2          print LLVM IR after optimisation.
+  FAUST_DEBUG      = FAUST_LLVM_NO_FM     deactivate fast-math optimisation in LLVM IR.
+  FAUST_DEBUG      = FAUST_DTREE          successive tree pointer allocation to guaranty deterministic compilation.
+  FAUST_DTREE_SIZE = <num>                to set the size of each array of successive tree pointers in FAUST_DTREE mode.
+  FAUST_OPT        = FAUST_SIG_NO_NORM    deactivate signal normalisation.
 ~~~
 ## Example:
 ---------------------------------------
