@@ -75,7 +75,7 @@ END {
 
 ################# 
 # content but not comments
-!/^[ 	]*\%/ {
+!/^[ 	]*%/ {
 	if (PRINT) print $0 >> FILE; 
 }
 
@@ -85,7 +85,7 @@ END {
 		section = getsection(ref);
 		tag = gettag(ref);
 		mdfile =  basename(FILE);
-		print section ": <a class=\"indexitem\" href=\"" mdfile "#" mdfile "-" tag "\">" tag "<\/a> " >> INDEX;
+		print section ": <a class=\"indexitem\" href=\"" mdfile "#" mdfile "-" tag "\">" tag "</a> " >> INDEX;
 		print "s/\\" $0 "/<a name=\"" mdfile "-" tag "\"><\\/a>/" >> SED;
 	}
 }
