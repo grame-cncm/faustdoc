@@ -39,7 +39,7 @@ process = no.noise*0.5;
 
 Thus, standard mathematical operations can be used in Faust just like in any other language. 
 
-We'll now connect the noise generator to a resonant lowpass filter ([`fi.resonlp`](https://faustlibraries.grame.fr/libs/filters/#firesonlp)) by using the Faust [sequential composition operator](../syntax/#sequential-composition): `:`
+We'll now connect the noise generator to a resonant lowpass filter ([`fi.resonlp`](https://faustlibraries.grame.fr/libs/filters/#firesonlp)) by using the Faust [sequential composition operator](syntax.md#sequential-composition): `:`
 
 <!-- faust-run -->
 ```
@@ -53,7 +53,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 
 [`fi.resonlp`](https://faustlibraries.grame.fr/libs/filters/#firesonlp) has four arguments (in order): *cut-off frequency*, *q*, *gain* and its *input*. Note that you can have a quick look of what the arguments of a function are simply by hovering it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables don't have a type in Faust and everything is considered as a signal. The Faust compiler takes care of making the right optimizations by choosing which variable is ran at audio rate, what their types are, etc. Thus, `ctFreq`, `q` and `gain` could well be controlled by oscillators (i.e., signals running at audio rate) here. 
 
-Since the input of the filter is not specified as an argument here (but it could, of course), it automatically becomes an "implicit" input/argument of `fi.resonlp`. The `:` [sequential composition operator](../syntax/#sequential-composition) can be used to connect two elements that have the same number of outputs and inputs. Since `no.noise` has one output and `fi.resonlp(ctFreq,q,gain)` has one implicit input, we can connect them together. This is essentially the same as writing something like:
+Since the input of the filter is not specified as an argument here (but it could, of course), it automatically becomes an "implicit" input/argument of `fi.resonlp`. The `:` [sequential composition operator](syntax.md#sequential-composition) can be used to connect two elements that have the same number of outputs and inputs. Since `no.noise` has one output and `fi.resonlp(ctFreq,q,gain)` has one implicit input, we can connect them together. This is essentially the same as writing something like:
 
 <!-- faust-run -->
 ```
@@ -95,7 +95,7 @@ process = no.noise : _ : fi.resonlp(ctFreq,q,gain) : _;
 
 Of course, this should not affect the result.
 
-You probably noticed that we used the [`,` Faust composition operator to express two signals in parallel](../syntax/#parallel-composition). We can easily turn our filtered noise example into a stereo object using it:
+You probably noticed that we used the [`,` Faust composition operator to express two signals in parallel](syntax.md#parallel-composition). We can easily turn our filtered noise example into a stereo object using it:
 
 <!-- faust-run -->
 ```
@@ -125,9 +125,9 @@ You could think of the first form as a same noise signal splitted and then filte
 
 Since `filter,filter` is considered here as a full expression, we cannot use the `:` operator to connect `no.noise` to the two filters in parallel because `filter,filter` has two inputs (`_,_ : filter,filter : _,_`) and `no.noise` only has one output. 
 
-The `<:` [split composition operator](../syntax/#split-composition) used here takes `n` signals and splits them into `m` signals. The only rule is that `m` has to be a multiple of `n`.
+The `<:` [split composition operator](syntax.md#split-composition) used here takes `n` signals and splits them into `m` signals. The only rule is that `m` has to be a multiple of `n`.
 
-The [merge `:>` composition operator](../syntax/#merge-composition) can be used exactly the same way:
+The [merge `:>` composition operator](syntax.md#merge-composition) can be used exactly the same way:
 
 ```
 import("stdfaust.lib");
@@ -168,9 +168,9 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 ```
 <!-- /faust-run -->
 
-Faust allows us to declare basic [user interface (UI) elements](../syntax/#user-interface-primitives-and-configuration) to control the parameters of a Faust object. Since Faust can be used to make a wide range of elements ranging from standalone applications to audio plug-ins or API, the role of UI declarations differs a little in function of the target. For example, in the Faust Online Editor, a UI is a window with various kind of controllers (sliders, buttons, etc.). On the other hand, if you're using Faust to generate an audio engine using `faust2api`, then UI elements declared in your Faust code will be the parameters visible to "the rest of the world" and controllable through the API.
+Faust allows us to declare basic [user interface (UI) elements](syntax.md#user-interface-primitives-and-configuration) to control the parameters of a Faust object. Since Faust can be used to make a wide range of elements ranging from standalone applications to audio plug-ins or API, the role of UI declarations differs a little in function of the target. For example, in the Faust Online Editor, a UI is a window with various kind of controllers (sliders, buttons, etc.). On the other hand, if you're using Faust to generate an audio engine using `faust2api`, then UI elements declared in your Faust code will be the parameters visible to "the rest of the world" and controllable through the API.
 
-An exhaustive list of the standard Faust UI elements is given in the [corresponding section](../syntax/#user-interface-primitives-and-configuration). Be aware that they not all supported by all the Faust targets. For example, you wont be able to declare vertical sliders if you're using the [Faust Playground](https://faustplayground.grame.fr), etc. 
+An exhaustive list of the standard Faust UI elements is given in the [corresponding section](syntax.md#user-interface-primitives-and-configuration). Be aware that they not all supported by all the Faust targets. For example, you wont be able to declare vertical sliders if you're using the [Faust Playground](https://faustplayground.grame.fr), etc. 
 
 In the current case, we'd like to control the `ctFreq`, `q` and `gain` parameters of the previous program with horizontal sliders. To do this, we can write something like:
 
@@ -184,7 +184,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 ```
 <!-- /faust-run -->
 
-The first argument of [`hslider`](../syntax/#hslider-primitive) is the *name of the parameter* as it will be displayed in the interface or used in the API (it can be different from the name of the variable associated with the UI element), the next one is the *default value*, then the *min* and *max* values and finally the *step*. To summarize: `hslider("paramName",default,min,max,step)`.
+The first argument of [`hslider`](syntax.md#hslider-primitive) is the *name of the parameter* as it will be displayed in the interface or used in the API (it can be different from the name of the variable associated with the UI element), the next one is the *default value*, then the *min* and *max* values and finally the *step*. To summarize: `hslider("paramName",default,min,max,step)`.
 
 Let's now add a "gate" [`button`](#button-primitive) to start and stop the sound (where `gate` is just the name of the button):
 
@@ -199,7 +199,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 ```
 <!-- /faust-run -->
 
-Note that we were able to [order parameters in the interface](../syntax/#ordering-ui-elements) by numbering them in the parameter name field using squared brackets. 
+Note that we were able to [order parameters in the interface](syntax.md#ordering-ui-elements) by numbering them in the parameter name field using squared brackets. 
 
 Faust user interface elements run at control rate. Thus, you might have noticed that clicks are produced when moving sliders quickly. This problem can be easily solved by "smoothing" down the output of the sliders using the [`si.smoo`](https://faustlibraries.grame.fr/libs/signals/#sismoo) function:
 
@@ -301,4 +301,4 @@ with {
 process = string(freq,res,gate);
 ```
 
-Sampling rate is defined in [`maths.lib`](https://faustlibraries.grame.fr/libs/maths/) as [`SR`](https://faustlibraries.grame.fr/libs/maths/#masr). We're using it here to compute the length of the delay of the comb filter. [`with{}`](../syntax/#witht-expression) is a Faust primitive to attach local variables to a function. So in the current case, `del` is a local variable of `string`.
+Sampling rate is defined in [`maths.lib`](https://faustlibraries.grame.fr/libs/maths/) as [`SR`](https://faustlibraries.grame.fr/libs/maths/#masr). We're using it here to compute the length of the delay of the comb filter. [`with{}`](syntax.md#witht-expression) is a Faust primitive to attach local variables to a function. So in the current case, `del` is a local variable of `string`.

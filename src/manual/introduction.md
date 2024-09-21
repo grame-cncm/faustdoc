@@ -58,7 +58,7 @@ Faust's conciseness can sometimes become a problem too, especially for complex a
 
 While the Faust compiler is relatively bug-free, it does have some limitations and might get stuck in some extreme cases that you will probably never encounter. If you do, [shoot us an e-mail](https://sourceforge.net/p/faudiostream/mailman/)!
 
-From here, you can jump to the [Quick Start Tutorial](../quick-start) section of this manual.
+From here, you can jump to the [Quick Start Tutorial](quick-start.md) section of this manual.
 
 ## Design Principles
 
@@ -68,7 +68,7 @@ Since the beginning of its development in 2002, Faust has been guided by various
 * Faust programs are fully compiled (i.e., not interpreted). The compiler translates Faust programs into equivalent programs in other languages (e.g., JAVA, LLVM IR, WebAssembly, etc.) taking care of generating the most efficient code. The result can generally compete with, and sometimes even outperform, C++ code written by seasoned programmers. 
 * The generated code works at the sample level. It is therefore suited to implement low-level DSP functions like recursive filters. Moreover the code can be easily embedded. It is self-contained and doesn't depend of any DSP library or runtime system. It has a very deterministic behavior and a constant memory footprint. 
 * The semantic of Faust is simple and well defined. This is not just of academic interest. It allows the Faust compiler to be *semantically driven*. Instead of compiling a program literally, it compiles the mathematical function it denotes. This feature is useful for example to promote components reuse while preserving optimal performance.  
-* Faust is a textual language but nevertheless block-diagram oriented. It actually combines two approaches: *functional programming* and *algebraic block-diagrams*. The key idea is to view block-diagram construction as function composition. For that purpose, Faust relies on a *block-diagram algebra* of five composition operations: `: , ~ <: :>` (see the section on [Diagram Composition Operations](../syntax/#diagram-composition-operations) for more details).
+* Faust is a textual language but nevertheless block-diagram oriented. It actually combines two approaches: *functional programming* and *algebraic block-diagrams*. The key idea is to view block-diagram construction as function composition. For that purpose, Faust relies on a *block-diagram algebra* of five composition operations: `: , ~ <: :>` (see the section on [Diagram Composition Operations](syntax.md#diagram-composition-operations) for more details).
 * Thanks to the concept of *architecture*, Faust programs can be easily deployed on a large variety of audio platforms and plug-in formats without any change to the Faust code.
 
 ## Signal Processor Semantic

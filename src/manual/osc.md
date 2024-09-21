@@ -4,7 +4,7 @@
 
 Most Faust architectures provide [Open Sound Control (OSC)](http://opensoundcontrol.org/) support (the implementation is based internally on the *oscpack* library by Ross Bencina). This allows applications to be remotely controlled from any OSC-capable application, programming language, or hardware device. 
 
-OSC support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the `[osc:on]` metadata to the [standard `option` metadata](../syntax/#standard-metadata):
+OSC support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the `[osc:on]` metadata to the [standard `option` metadata](syntax.md#standard-metadata):
 
 ```
 declare options "[osc:on]";
@@ -211,7 +211,7 @@ T2: /mixer/input_3/level fff 0.0000 0.0000 1.0000
 T2: /mixer/input_3/mute  fff 0.0000 0.0000 1.0000
 ```
 
-As we can see, each widget has a unique OSC address obtained by concatenating the top level group label "mixer," with the "input" group label and the widget label (see the [Labels as Pathnames Section](../syntax/#labels-as-pathnames)). Please, note that blank spaces are replaced by underscores and metadata are removed during this operation. 
+As we can see, each widget has a unique OSC address obtained by concatenating the top level group label "mixer," with the "input" group label and the widget label (see the [Labels as Pathnames Section](syntax.md#labels-as-pathnames)). Please, note that blank spaces are replaced by underscores and metadata are removed during this operation. 
 
 All addresses must have a common root. This is the case in our example because there is a unique horizontal group `mixer` containing all widgets. If a common root is missing as in the following code:
 

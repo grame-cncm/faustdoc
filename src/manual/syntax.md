@@ -116,7 +116,7 @@ process = os.osc(440); // the "hello world" of computer music
 
 ### Documentation Tags
 
-Documentation statements are optional and typically used to control the generation of the mathematical documentation of a Faust program. This documentation system is detailed in the [Mathematical Documentation](../mathdoc) chapter. In this section we essentially describe the documentation statements syntax.
+Documentation statements are optional and typically used to control the generation of the mathematical documentation of a Faust program. This documentation system is detailed in the [Mathematical Documentation](mathdoc.md) chapter. In this section we essentially describe the documentation statements syntax.
 
 A documentation statement starts with an opening `<mdoc>` tag and ends with a closing `</mdoc>` tag. Free text content, typically in Latex format, can be placed in between these two tags. <!-- Why not markdown? -->
 
@@ -2793,7 +2793,7 @@ virtual void buildUserInterface(UI* ui_interface) {
 }
 ```
 
-Note that path names are inherent to the use of tools gravitating around Faust such as [OSC control](../osc) or `faust2api`. In the case of `faust2api`, since no user interface is actually generated, UI elements just become a way to declare parameters of a Faust object. Therefore, there's no distinction between `nentry`, `hslider`, `vslider`, etc.
+Note that path names are inherent to the use of tools gravitating around Faust such as [OSC control](osc.md) or `faust2api`. In the case of `faust2api`, since no user interface is actually generated, UI elements just become a way to declare parameters of a Faust object. Therefore, there's no distinction between `nentry`, `hslider`, `vslider`, etc.
 
 #### Smoothing
 
@@ -3078,7 +3078,7 @@ process = os.sawtooth(freq);
 
 #### `[hidden:0|1]` Metadata
 
-The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a [motion sensor](#sensors-control-metadatas) or [OSC messages](../osc) and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using `faust2android`, `faust2ios` or in the Web platform.
+The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a [motion sensor](#sensors-control-metadatas) or [OSC messages](osc.md) and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using `faust2android`, `faust2ios` or in the Web platform.
 
 **Compatibility**
 
