@@ -162,7 +162,7 @@ $(FAUSTDIR):
 
 ####################################################################
 install:
-	pip install mkdocs
+	pip install mkdocs==1.5.3
 	pip install markdown-include
 	pip install mkdocs-bootswatch
 	pip install python-markdown-math
