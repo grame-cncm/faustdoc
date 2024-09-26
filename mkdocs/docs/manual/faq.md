@@ -3,9 +3,9 @@
 
 ## When to use `int` or `float` cast ?
 
-The [Signal Processor Semantic](https://faustdoc.grame.fr/manual/introduction/#signal-processor-semantic) section explains what a Faust program describes. In particular Faust considers two type of signals: *integer signals* and *floating point signals*. Mathematical operations either occur in the domain of integer numbers, or in the domain of floating point numbers, depending of their types, read [here](https://faustdoc.grame.fr/manual/syntax/#numbers). Using explicit [int cast](https://faustdoc.grame.fr/manual/syntax/#int-primitive) or [float cast](https://faustdoc.grame.fr/manual/syntax/#float-primitive) may be needed to force a given computation to be done in the correct number domain.
+The [Signal Processor Semantic](../manual/introduction.md#signal-processor-semantic) section explains what a Faust program describes. In particular Faust considers two type of signals: *integer signals* and *floating point signals*. Mathematical operations either occur in the domain of integer numbers, or in the domain of floating point numbers, depending of their types, read [here](../manual/syntax.md#numbers). Using explicit [int cast](../manual/syntax.md#int-primitive) or [float cast](../manual/syntax.md#float-primitive) may be needed to force a given computation to be done in the correct number domain.
 
-Some language primitives (like [par](https://faustdoc.grame.fr/manual/syntax/#parallel-composition), [seq](https://faustdoc.grame.fr/manual/syntax/#sequential-composition), [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive), [soundfile](https://faustdoc.grame.fr/manual/syntax/#soundfile-primitive), etc.) assume that their parameters are [Constant Numerical Expressions](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions) of the integer type. In this case the compiler automatically does *type promotion* and there is no need to use `int` cast to have the argument be of the integer type (note that an uneeded cast will simply be ignored and will not add uneeded computation in the generated code). 
+Some language primitives (like [par](../manual/syntax.md#parallel-composition), [seq](../manual/syntax.md#sequential-composition), [route](../manual/syntax.md#route-primitive), [soundfile](../manual/syntax.md#soundfile-primitive), etc.) assume that their parameters are [Constant Numerical Expressions](../manual/syntax.md#constant-numerical-expressions) of the integer type. In this case the compiler automatically does *type promotion* and there is no need to use `int` cast to have the argument be of the integer type (note that an uneeded cast will simply be ignored and will not add uneeded computation in the generated code). 
 
 User interface items produce *floating point signals*. Depending of their use later in the computed expression, using explicit `int` cast may be needed also to force a given computation to be done in the correct number domain.
 
@@ -89,7 +89,7 @@ for (int i0 = 0; i0 < count; i0 = i0 + 1) {
 
 to therefore preserve the strict semantic, even if a non-strict `(cond) ? then : else` form is used to produce the result of the `select2` expression. 
 
-This can be helpful for [debugging purposes](https://faustdoc.grame.fr/manual/debugging/#debugging-at-runtime) like testing if there is no division by 0, or producing `INF` or `NaN` values. The [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) can be used for that by adding  the `-sts` option.
+This can be helpful for [debugging purposes](../manual/debugging.md#debugging-at-runtime) like testing if there is no division by 0, or producing `INF` or `NaN` values. The [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) can be used for that by adding  the `-sts` option.
 
 So again remember that `select2` cannot be used to **avoid computing something**. For computations that need to avoid some values or ranges (like doing  `val/0` that would return `INF`, or `log` of a negative value that would return `NaN`), the solution is to use  `min` and  `max` to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write `1/max(ma.EPSILON, x)`. 
 
@@ -191,7 +191,7 @@ The `freq1` and  `freq2` controllers now don't have the same path in each group 
 <img src="group2.png" class="mx-auto d-block" width="60%">
 <center>*Four freq1 and freq2 controllers*</center>
 
-Using the relative pathname as explained in [Labels as Pathnames](https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames) possibly allows us to move `freq1` one step higher in the hierarchical structure, thus having again a unique path (like `/foo/Freq1`) and controller: 
+Using the relative pathname as explained in [Labels as Pathnames](../manual/syntax.md#labels-as-pathnames) possibly allows us to move `freq1` one step higher in the hierarchical structure, thus having again a unique path (like `/foo/Freq1`) and controller: 
 
 ```
 import("stdfaust.lib");

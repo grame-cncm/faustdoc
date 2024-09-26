@@ -22,7 +22,7 @@ Don't forget to setup the **RACK_DIR** variable: `export RACK_DIR=<Rack SDK fold
 
 ### Compiling the VCV Prototype module Faust version
 
-The Faust compiler can be embedded in applications or plugins using [libfaust](https://faustdoc.grame.fr/manual/embedding/), and DSP code can be edited and JIT compiled on the fly.
+The Faust compiler can be embedded in applications or plugins using [libfaust](../manual/embedding.md), and DSP code can be edited and JIT compiled on the fly.
 
 You'll have to clone and compile the [GitHub project](https://github.com/VCVRack/VCV-Prototype/tree/faust). Be use to use the `faust` branch and follow the [explanations](https://github.com/VCVRack/VCV-Prototype/blob/faust/Faust.md) given.
 

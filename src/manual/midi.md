@@ -14,7 +14,7 @@ MIDI support can be added to any Faust program (as long as the target architectu
 declare options "[midi:on]";
 ```
 
-or using the `-midi` option in most of [faust2xx](https://faustdoc.grame.fr/manual/tools/) scripts.
+or using the `-midi` option in most of [faust2xx](../manual/tools.md) scripts.
 
 <!-- TODO: the tables indicating which architectures implement MIDI support should be placed here. -->
 
@@ -389,7 +389,7 @@ process = os.sawtooth(freq)*envelope : /(4);
 
 ### Configuring and Activating Polyphony
 
-Polyphony can be activated *manually* in some Faust architectures using an option/flag during compilation (e.g., typically `-poly` or `-nvoices <num>` in the [faust2xx](https://faustdoc.grame.fr/manual/tools/) scripts). That's also how the [Faust Online IDE](https://faustide.grame.fr) works where a button can be used to turn polyphony on or off.
+Polyphony can be activated *manually* in some Faust architectures using an option/flag during compilation (e.g., typically `-poly` or `-nvoices <num>` in the [faust2xx](../manual/tools.md) scripts). That's also how the [Faust Online IDE](https://faustide.grame.fr) works where a button can be used to turn polyphony on or off.
 
 However, the most standard way to activate polyphony in Faust is to declare the `[nvoices:n]` metadata which allows us to specify the maximum number of voices of polyphony (`n`) that will be allocated in the generated program.
 

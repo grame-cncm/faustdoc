@@ -180,7 +180,7 @@ MIDI control messages are described as metadata in UI elements. They are decoded
 
 #### Defined Standard MIDI Messages
 
-A special `[midi:xxx yyy...]` metadata needs to be added to the UI element. The full description of supported MIDI messages is part of the [Faust documentation](https://faustdoc.grame.fr/manual/midi/).
+A special `[midi:xxx yyy...]` metadata needs to be added to the UI element. The full description of supported MIDI messages is part of the [Faust documentation](../manual/midi.md).
 
 #### MIDI Classes
 
@@ -467,7 +467,7 @@ vslider("freq [unit:dB][style:knob][gyr:0 0 -30 0 30]", 0, 20, 100, 1)
 
 When one or several metadata are added in the same item label, then will appear in the generated code as one or successives `declare(FAUSTFLOAT* zone, const char* key, const char* value);` lines *before* the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the [MetaDataUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h) class for an example of this technique.
 
-MIDI specific metadata are [described here](https://faustdoc.grame.fr/manual/midi/) and are decoded the `MidiUI` class.
+MIDI specific metadata are [described here](../manual/midi.md) and are decoded the `MidiUI` class.
 
 Note that medatada are not supported in all architecture files. Some of them like (`acc` or `gyr` for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and *can possibly be adapted for a specific project.* They can be decoded using the `MetaDataUI`class.
 
@@ -804,8 +804,8 @@ struct Meta
 and are part of three different types of global metadata:
 
 - metadata like`compile_options` or `filename` are automatically generated 
-- metadata like `author` of `copyright`are part of the [Global Medata](https://faustdoc.grame.fr/manual/syntax/#global-metadata)
-- metadata like`noises.lib/name`are part of the [Function Metadata](https://faustdoc.grame.fr/manual/syntax/#function-metadata)
+- metadata like `author` of `copyright`are part of the [Global Medata](../manual/syntax.md#global-metadata)
+- metadata like`noises.lib/name`are part of the [Function Metadata](../manual/syntax.md#function-metadata)
 
 Specialized subclasses of the`Meta` class can be implemented to decode the needed key/value pairs for a given use-case. 
 
@@ -1497,7 +1497,7 @@ static void dynamic_bench(const string& in_filename)
 }
 ```
 
-This class can typically be used in tools that help developers discover the best Faust compilation parameters for a given DSP program, like the [faustbench](https://faustdoc.grame.fr/manual/optimizing/#faustbench) and [faustbench-llvm](https://faustdoc.grame.fr/manual/optimizing/#faustbench-llvm) tools.
+This class can typically be used in tools that help developers discover the best Faust compilation parameters for a given DSP program, like the [faustbench](../manual/optimizing.md#faustbench) and [faustbench-llvm](../manual/optimizing.md#faustbench-llvm) tools.
 
 ### The Proxy DSP Class
 
@@ -1860,7 +1860,7 @@ The `audio` base class has to be subclassed and each method implemented for the 
 
 #### Developing a New Soundfile Loader
 
-Soundfiles are defined in the DSP program using the [soundfile primitive](https://faustdoc.grame.fr/manual/syntax/#soundfile-primitive). Here is a simple DSP program which uses a single *tango.wav* audio file and play it until its end:
+Soundfiles are defined in the DSP program using the [soundfile primitive](../manual/syntax.md#soundfile-primitive). Here is a simple DSP program which uses a single *tango.wav* audio file and play it until its end:
 
 ```
 process = 0,_~+(1):soundfile("sound[url:{'tango.wav'}]",2):!,!,
@@ -1991,7 +1991,7 @@ Most of the architecture files have been developed in C++ over the years. Thus t
 
 ### Using faust2xx Scripts 
 
-The `faust2xx` scripts finally combine different architecture files to generate a ready-to-use application or plugin, etc... from a Faust DSP program. They typically combine the *generated DSP* with an *UI architecture* file and an *audio architecture* file. Most of the also have addition options like `-midi`, `-nvoices <num>`, `-effect <auto|effect.dsp>` or `-soundfile` to generate polyphonic instruments with or without effects, or audio file support. Look at the [following page](https://faustdoc.grame.fr/manual/tools/) for a more complete description.  
+The `faust2xx` scripts finally combine different architecture files to generate a ready-to-use application or plugin, etc... from a Faust DSP program. They typically combine the *generated DSP* with an *UI architecture* file and an *audio architecture* file. Most of the also have addition options like `-midi`, `-nvoices <num>`, `-effect <auto|effect.dsp>` or `-soundfile` to generate polyphonic instruments with or without effects, or audio file support. Look at the [following page](../manual/tools.md) for a more complete description.  
 
 ### Developing a faust2xx Script
 
@@ -2293,17 +2293,17 @@ Static metadata generator for Faust/C++. This program builds the metadata for a 
 
 #### [Arduino tools](https://www.pschatzmann.ch/home/2022/04/22/using-faust-dsp-with-my-arduino-audio-tools/)
 
-An alternative way to use the ESP32 board with Faust, possibly easier and more versatile than the examples mentioned on the [esp32 tutorial](https://faustdoc.grame.fr/tutorials/esp32/).
+An alternative way to use the ESP32 board with Faust, possibly easier and more versatile than the examples mentioned on the [esp32 tutorial](../tutorials/esp32.md).
 
 ### Cmajor tools 
 
-#### [Using Faust in Cmajor](https://faustdoc.grame.fr/tutorials/cmajor/)
+#### [Using Faust in Cmajor](../tutorials/cmajor.md)
 
 A tutorial to show how Faust can be used with [Cmajor](https://cmajor.dev), a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. 
 
 ### RNBO tools 
 
-#### [Using Faust in RNBO with codebox~](https://faustdoc.grame.fr/tutorials/rnbo/)
+#### [Using Faust in RNBO with codebox~](../tutorials/rnbo.md)
 
 A tutorial to show how Faust can be used with [RNBO](https://rnbo.cycling74.com), a library and toolchain that can take Max-like patches, export them as portable code, and directly compile that code to targets like a VST, a Max External, or a Raspberry Pi.
 
@@ -2320,7 +2320,7 @@ This is an example plugin using Dplug with a Faust backend. It is a stereo rever
 #### [Faust.jl](https://github.com/corajr/Faust.jl)
 Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.
 
-#### [Using Faust in Julia](https://faustdoc.grame.fr/tutorials/julia/)
+#### [Using Faust in Julia](../tutorials/julia.md)
 
 A tutorial to show how Faust can be used with [Julia](https://julialang.org), a high-level, general-purpose dynamic programming language with features well suited for numerical analysis and computational science.
 

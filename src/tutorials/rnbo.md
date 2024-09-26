@@ -1,7 +1,7 @@
 # Using Faust in RNBO with codebox~
 
 In this tutorial, we present how [Faust](https://faust.grame.fr) can be used with [RNBO](https://rnbo.cycling74.com), a library and toolchain that can take Max-like patches, export them as portable code, and directly compile that code to targets like a VST, a Max External, or a Raspberry Pi. DSP programs can be compiled to the internal [codebox~](https://rnbo.cycling74.com/codebox) sample level scripting language.
-Compiling Faust DSP to codebox~ code will allow to take profit of hundreds of DSP building blocks implemented in the [Faust Libraries](https://faustlibraries.grame.fr), ready to use [Examples](https://faustdoc.grame.fr/examples/ambisonics/), any DSP program developed in more than 200 projects listed in the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page, or Faust DSP programs found on the net.
+Compiling Faust DSP to codebox~ code will allow to take profit of hundreds of DSP building blocks implemented in the [Faust Libraries](https://faustlibraries.grame.fr), ready to use [Examples](../examples/ambisonics.md), any DSP program developed in more than 200 projects listed in the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page, or Faust DSP programs found on the net.
 
 #### Who is this tutorial for?
 
@@ -156,7 +156,7 @@ out1 = outputs[0];
 out2 = outputs[1];
 ```
 
-Note that the generated code uses the so-called [scalar code generation model](https://faustdoc.grame.fr/manual/compiler/#structure-of-the-generated-code), the default one, where the compiled sample generation code is done in `compute`. 
+Note that the generated code uses the so-called [scalar code generation model](../manual/compiler.md#structure-of-the-generated-code), the default one, where the compiled sample generation code is done in `compute`. 
 
 ### Testing the generated codebox~ code
 
@@ -245,7 +245,7 @@ and the main patch with parameters displaying the bargraph values:
 
 ### MIDI control
 
-Control of parameters with MIDI can be activated using the `-midi` option, or using the [declare options "[midi:on]";]( https://faustdoc.grame.fr/manual/midi/#configuring-midi-in-faust) syntax in the DSP code. The patch will then contain `midiin/midiout` objects at global level and specialized `ctlin/notein etc.` objects in the codebox subpatcher with the appropriate `scale` object to map the MIDI message range on the target parameter range.
+Control of parameters with MIDI can be activated using the `-midi` option, or using the [declare options "[midi:on]";]( ../manual/midi.md#configuring-midi-in-faust) syntax in the DSP code. The patch will then contain `midiin/midiout` objects at global level and specialized `ctlin/notein etc.` objects in the codebox subpatcher with the appropriate `scale` object to map the MIDI message range on the target parameter range.
 
 So for instance the MIDI augmented example: 
 
@@ -277,7 +277,7 @@ will compile a `osc.maxpat` file containing additional `midiin/midiout` objects,
 
 ### Polyphonic instruments
 
-When the DSP follows the [polyphonic ready instrument](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) convention, it can be activated in MIDI controllable polyphonic mode. So the following DSP program:
+When the DSP follows the [polyphonic ready instrument](../manual/midi.md#midi-polyphony-support) convention, it can be activated in MIDI controllable polyphonic mode. So the following DSP program:
 
 <!-- faust-run -->
 ```
@@ -298,7 +298,7 @@ compiled with the command:
 ```bash
 faust2rnbo -midi -nvoices 12 organ.dsp 
 ```
-will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatcher correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity) will be added when needed, with the generated user-interface:
+will create a patch containing a `rnbo~` object with 12 voices, and with a `notein` object added in the subpatcher correctly connected to the appropriate *freq/gain/gate* aware parameters. Additional mapping depending of the [convention used](../manual/midi.md#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity) will be added when needed, with the generated user-interface:
 
 <img src="img/faust-rnbo4.png" class="mx-auto d-block" width="100%">
 <center>*Generated polyphonic RNBO patch with MIDI control*</center>
@@ -309,7 +309,7 @@ Note that here again, the `rnbo~` object subpatcher can be generated using the `
 
 ### Polyphonic instruments with an effect
 
-The following polyphonic ready instrument DSP, with an [integrated effect](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer), can be converted to a polyphonic MIDI ready patch:
+The following polyphonic ready instrument DSP, with an [integrated effect](../manual/midi.md#audio-effects-and-polyphonic-synthesizer), can be converted to a polyphonic MIDI ready patch:
 
 <!-- faust-run -->
 ```
@@ -356,11 +356,11 @@ The output as a RNBO patch can directly be generated using the *Platform = rnbo*
 
 ### Generating the RNBO patch in polyphonic mode
 
-DSP programs following the polyphonic [freq/gate/gain convention](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) can be generated using the *Platform = rnbo* and *Architecture = rnbo-poly* export options. The resulting *foo* folder is self-contained, containing the `foo.maxpat` file to be opened with Max/MSP.
+DSP programs following the polyphonic [freq/gate/gain convention](../manual/midi.md#midi-polyphony-support) can be generated using the *Platform = rnbo* and *Architecture = rnbo-poly* export options. The resulting *foo* folder is self-contained, containing the `foo.maxpat` file to be opened with Max/MSP.
 
 ### Generating the RNBO patch in polyphonic mode with a global effect
 
-DSP programs following the polyphonic [freq/gate/gain convention](https://faustdoc.grame.fr/manual/midi/#midi-polyphony-support) with and an [integrated effect](https://faustdoc.grame.fr/manual/midi/#audio-effects-and-polyphonic-synthesizer) can be generated using the *Platform = rnbo* and *Architecture = rnbo-poly-effect* export options. The resulting *foo* folder is self-contained, containing the `foo.maxpat`, `foo.rnbopat`and `foo_effect.rnbopat` files (using the `p` abstraction model), with `foo.maxpat` file to be opened with Max/MSP.
+DSP programs following the polyphonic [freq/gate/gain convention](../manual/midi.md#midi-polyphony-support) with and an [integrated effect](../manual/midi.md#audio-effects-and-polyphonic-synthesizer) can be generated using the *Platform = rnbo* and *Architecture = rnbo-poly-effect* export options. The resulting *foo* folder is self-contained, containing the `foo.maxpat`, `foo.rnbopat`and `foo_effect.rnbopat` files (using the `p` abstraction model), with `foo.maxpat` file to be opened with Max/MSP.
 
 ### Generating the RNBO patch from a Faust DSP program found in the web
 

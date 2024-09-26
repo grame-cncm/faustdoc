@@ -1116,7 +1116,7 @@ In declaring foreign functions one has also to specify the include file. It allo
 
 #### Library File
 
-In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the Faust compiler to (possibly) automatically link the library. Note that this feature is only used with the [LLVM backend in 'libfaust' dynamic library model](https://faustdoc.grame.fr/manual/embedding/#using-libfaust-with-the-llvm-backend).
+In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the Faust compiler to (possibly) automatically link the library. Note that this feature is only used with the [LLVM backend in 'libfaust' dynamic library model](../manual/embedding.md#using-libfaust-with-the-llvm-backend).
 
 <!-- TODO I feel like more could be said here -->
 
@@ -3094,9 +3094,9 @@ Sensors control metadata can be used to map the built-in sensors of mobile devic
 
 These metadatas are compatible with the following Faust targets and no additional step is required for them to be taken into account when the corresponding application is generated:
 
-* [`faust2android`](https://faustdoc.grame.fr/manual/tools/#faust2android)
-* [`faust2ios`](https://faustdoc.grame.fr/manual/tools/#faust2ios)
-* [`faust2smartkeyb`](https://faustdoc.grame.fr/manual/tools/#faust2smartkeyb)
+* [`faust2android`](../manual/tools.md#faust2android)
+* [`faust2ios`](../manual/tools.md#faust2ios)
+* [`faust2smartkeyb`](../manual/tools.md#faust2smartkeyb)
 
 Sensors control metadatas have five parameters and follow the following syntax:
 

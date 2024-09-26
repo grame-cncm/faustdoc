@@ -133,7 +133,7 @@ The available MIDI inputs are:
  - key (both keyon and keyoff)
  - ctrl
 
-See [MIDI](https://faustdoc.grame.fr/manual/midi/) for more information about MIDI metadata syntax.
+See [MIDI](../manual/midi.md) for more information about MIDI metadata syntax.
 
 <!-- faust-run -->
 ```
@@ -166,7 +166,7 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
 
 ### MIDI polyphonic example
 
-As explained in the [MIDI](https://faustdoc.grame.fr/manual/midi/) documentation, Faust supports MIDI polyphonic audio plugins. These plugins respond to MIDI note inputs with three different data: 
+As explained in the [MIDI](../manual/midi.md) documentation, Faust supports MIDI polyphonic audio plugins. These plugins respond to MIDI note inputs with three different data: 
 
  - key or frequency
  - velocity or gain
@@ -239,7 +239,7 @@ This will allow your to download a `binary.zip` file, containing the resulting *
 
 ### Generating a JSFX file in polyphonic mode
 
-The `declare options "[midi:on][nvoices:n]";` [coding convention](https://faustdoc.grame.fr/manual/midi/#configuring-and-activating-polyphony) can be used in the DSP code to activate MIDI and polyphonic mode.
+The `declare options "[midi:on][nvoices:n]";` [coding convention](../manual/midi.md#configuring-and-activating-polyphony) can be used in the DSP code to activate MIDI and polyphonic mode.
 
 ## Limitations
 

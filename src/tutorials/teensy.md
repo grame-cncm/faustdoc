@@ -16,7 +16,7 @@ Using this type of chip for embedded real-time audio DSP presents a wide range o
 
 The Teensy/[Teensyduino](https://www.pjrc.com/teensy/teensyduino.html) comes with an [Audio Library](https://www.pjrc.com/teensy/td_libs_Audio.html) that can be used to synthesize sound directly on the Teensy. It uses a patching paradigm where DSP objects can be connected together using virtual patch chords. An [online tool](https://www.pjrc.com/teensy/gui/index.html) provides a user interface to this system and allows for the implementation of sound processing algorithms in a "Max/MSP way." Various elements can be used as the input and the output of the system (e.g., built-in Teensy DAC/ADC, audio shield, etc.). More information and tutorials can be found on the [Audio Library webpage](https://www.pjrc.com/teensy/td_libs_Audio.html).
 
-The current DSP objects of the Teensy Audio Library can be used to implement simple algorithms but their scope is relatively limited (i.e., basic oscillators, filters, etc.). [faust2teensy](https://faustdoc.grame.fr/manual/tools/#faust2teensy) can be used to implement new objects for the Teensy Audio Library using Faust. Since Faust is currently not able to produce fixed-point DSP C++ code, generated object use floating point arithmetic internally. The main consequence is that this system will only work efficiently if it's used on a Teensy board hosting an FPU. Hence, we strongly recommend you to use the Teensy 3.6/4.0 for this (things will work on the 3.2, but computational power will be extremely limited). 
+The current DSP objects of the Teensy Audio Library can be used to implement simple algorithms but their scope is relatively limited (i.e., basic oscillators, filters, etc.). [faust2teensy](../manual/tools.md#faust2teensy) can be used to implement new objects for the Teensy Audio Library using Faust. Since Faust is currently not able to produce fixed-point DSP C++ code, generated object use floating point arithmetic internally. The main consequence is that this system will only work efficiently if it's used on a Teensy board hosting an FPU. Hence, we strongly recommend you to use the Teensy 3.6/4.0 for this (things will work on the 3.2, but computational power will be extremely limited). 
 
 This tutorial walks you through the steps of synthesizing sound with Faust on the Teensy.
 
@@ -215,4 +215,4 @@ with{
 };
 ``` 
 
-Similarly, the maximum size of the delay lines of some reverb algorithms might be too big and should be adjusted. Using  the `-dlt` option can help, see the [Managing DSP Memory Size](https://faustdoc.grame.fr/manual/optimizing/#managing-dsp-memory-size) section.
+Similarly, the maximum size of the delay lines of some reverb algorithms might be too big and should be adjusted. Using  the `-dlt` option can help, see the [Managing DSP Memory Size](../manual/optimizing.md#managing-dsp-memory-size) section.

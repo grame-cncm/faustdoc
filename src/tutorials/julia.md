@@ -51,7 +51,7 @@ ERROR: LoadError: UndefVarError: dsp not defined
 ...
 ```
 
-Some additional types like `FAUSTFLOAT`, `dsp`, `Meta` and `UI` have to be defined in a so-called [architecture files](https://faustdoc.grame.fr/manual/architectures/). The Julia specific ones are [described here](https://github.com/grame-cncm/faust/tree/master-dev/architecture/julia#julia-architecture-files). A simple one named [minimal.jl](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl) can be used for that with the following command:
+Some additional types like `FAUSTFLOAT`, `dsp`, `Meta` and `UI` have to be defined in a so-called [architecture files](../manual/architectures.md). The Julia specific ones are [described here](https://github.com/grame-cncm/faust/tree/master-dev/architecture/julia#julia-architecture-files). A simple one named [minimal.jl](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl) can be used for that with the following command:
 
 ```bash
 faust -lang julia osc.dsp -a julia/minimal.jl -o osc.jl
@@ -291,7 +291,7 @@ Dict{String, UIZone}("/Oscillator/volume" => UIZone(:fHslider0, 0.0f0, -96.0f0, 
 Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 ```
 
-Direct OSC commands can be sent, as [explained here](https://faustdoc.grame.fr/manual/osc/). So for instance to change both channel frequencies:
+Direct OSC commands can be sent, as [explained here](../manual/osc.md). So for instance to change both channel frequencies:
 
 ```bash
  oscsend localhost 5000 /Oscillator/freq1 f 400

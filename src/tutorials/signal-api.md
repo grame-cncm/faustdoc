@@ -28,7 +28,7 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 A new intermediate public entry point has been created in the *Semantic Phase* to allow the creation of a signal set (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h) (or the [C signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal-c.h) version) allows to programmatically create the list of output signals, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
 
-Note that the [box API](https://faustdoc.grame.fr/tutorials/box-api/) allows to access another stage in the compilation stage.
+Note that the [box API](../tutorials/box-api.md) allows to access another stage in the compilation stage.
 
 ## Compiling signal expressions
 
@@ -210,7 +210,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the [compiler can also generate vector and parallel code](https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation). The following code show how to compile in vector mode:
+Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the [compiler can also generate vector and parallel code](../manual/compiler.md#controlling-code-generation). The following code show how to compile in vector mode:
 
 ```C++
 static void test5()
@@ -411,7 +411,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-User Interface layout can be described with [hgroup](https://faustdoc.grame.fr/manual/syntax/#hgroup-primitive), or [vgroup](https://faustdoc.grame.fr/manual/syntax/#vgroup-primitive) or [tgroup](https://faustdoc.grame.fr/manual/syntax/#tgroup-primitive). With the signal API, the layout can be defined using the [labels-as-pathnames](https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames) syntax, as in the following example:
+User Interface layout can be described with [hgroup](../manual/syntax.md#hgroup-primitive), or [vgroup](../manual/syntax.md#vgroup-primitive) or [tgroup](../manual/syntax.md#tgroup-primitive). With the signal API, the layout can be defined using the [labels-as-pathnames](../manual/syntax.md#labels-as-pathnames) syntax, as in the following example:
 
 <!-- faust-run -->
 ```
@@ -763,7 +763,7 @@ process = waveform { 0, 100, 200, 300, 400 };
 ```
 <!-- /faust-run -->
 
-Can be written with the code, where the size of the waveform is the first output, and the waveform content itself is the second output created with `sigWaveform`, to follow the [waveform semantic](https://faustdoc.grame.fr/manual/syntax/#waveform-primitive):
+Can be written with the code, where the size of the waveform is the first output, and the waveform content itself is the second output created with `sigWaveform`, to follow the [waveform semantic](../manual/syntax.md#waveform-primitive):
 
 ```C++
 static void test12()
@@ -808,13 +808,13 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 The *soundfile* primitive allows the access of a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:
 
-- the sound number (as a integer between 0 and 255 as a [constant numerical expression](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions))
+- the sound number (as a integer between 0 and 255 as a [constant numerical expression](../manual/syntax.md#constant-numerical-expressions))
 - the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) 
 
 The generated block has: 
 
 - two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate
-- several more outputs for the sound channels themselves, as a [constant numerical expression](https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions)
+- several more outputs for the sound channels themselves, as a [constant numerical expression](../manual/syntax.md#constant-numerical-expressions)
 
 The soundfile block is created with `sigSoundfile`, but cannot be used directly. It has to be used with:
 
@@ -1071,7 +1071,7 @@ GUI* interface = new GTKUI("Test", &argc, &argv);
 dsp->buildUserInterface(interface);
 interface->run();
 ```
-And all other [standard controllers](https://faustdoc.grame.fr/manual/architectures/) (MIDI, OSC, etc.) can be used as usual.  
+And all other [standard controllers](../manual/architectures.md) (MIDI, OSC, etc.) can be used as usual.  
 
 #### Example with audio rendering and GUI control
 
@@ -1183,7 +1183,7 @@ static void test24(int argc, char* argv[])
         tvec signals;
     
         // Follow the freq/gate/gain convention, 
-      	// see: https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters
+      	// see: ../manual/midi/#standard-polyphony-parameters
         Signal freq = sigNumEntry("freq", 
                                   sigReal(100), 
                                   sigReal(100), 

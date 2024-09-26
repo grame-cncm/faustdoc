@@ -1,6 +1,6 @@
 # Advanced debugging with interp-tracer
 
-Some general informations are [given here](https://faustdoc.grame.fr/manual/debugging/#debugging-the-dsp-code) on how to debug the Faust DSP code. This tutorial aims to better explain how the [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) tool can be used to debug code at runtime.  
+Some general informations are [given here](../manual/debugging.md#debugging-the-dsp-code) on how to debug the Faust DSP code. This tutorial aims to better explain how the [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) tool can be used to debug code at runtime.  
 The **interp-tracer** tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW, NEGATIVE_BITSHIFT and DIV_BY_ZERO operations, or LOAD/STORE errors.
 
 ##  Debugging out-of-domain computations 
@@ -67,9 +67,9 @@ INT memory: 3
 
 ## Debugging rdtable and rwtable primitives
 
-The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index, and the [rwtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive uses a read index and a write index. The table size is known at compile time, and read/write indexes must stay inside the table to avoid memory access crashes at runtime. 
+The [rdtable](../manual/syntax.md#rdtable-primitive) primitive uses a read index, and the [rwtable](../manual/syntax.md#rdtable-primitive) primitive uses a read index and a write index. The table size is known at compile time, and read/write indexes must stay inside the table to avoid memory access crashes at runtime. 
 
-The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option can be used to check table index range and generate safe table access code. 
+The [-ct](../manual/debugging.md#the-ct-option) option can be used to check table index range and generate safe table access code. 
 
 For the following DSP table.dsp program:
 
@@ -214,7 +214,7 @@ without any added range constraining code.
 
 ##  Debugging the select2 primitive
 
-The `select2` primitive has a strict semantic, but for code optimization strategies, the generated code [is not fully strict]( https://faustdoc.grame.fr/manual/faq/#does-select2-behaves-as-a-standard-cc-like-if). 
+The `select2` primitive has a strict semantic, but for code optimization strategies, the generated code [is not fully strict]( ../manual/faq.md#does-select2-behaves-as-a-standard-cc-like-if). 
 
 For the following DSP program:
 

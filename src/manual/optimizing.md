@@ -136,7 +136,7 @@ So to obtain the best performances in the generated code, all costly computation
 
 #### Possibly deactivating table range check with -ct option
 
-The [-ct](https://faustdoc.grame.fr/manual/debugging/#the-ct-option) option is activated by default (starting at Faust version 2.53.4), but can possibly be removed (using `-ct 0`) to speed up the code. Read [Debugging rdtable and rwtable primitives](https://faustdoc.grame.fr/tutorials/debugging/#debugging-rdtable-and-rwtable-primitives) for a complete description.
+The [-ct](../manual/debugging.md#the-ct-option) option is activated by default (starting at Faust version 2.53.4), but can possibly be removed (using `-ct 0`) to speed up the code. Read [Debugging rdtable and rwtable primitives](../tutorials/debugging.md#debugging-rdtable-and-rwtable-primitives) for a complete description.
 
 #### Using Function Tabulation
 
@@ -144,7 +144,7 @@ The use of `rdtable` kind of compilation done at init time can be simplified usi
 
 #### Using Fast Math Functions
 
-When costly math functions still appear in the sample rate code, the `-fm` [compilation option](https://faustdoc.grame.fr/manual/options/) can possibly be used to replace the standard versions provided by the underlying OS (like `std::cos`, `std::tan`... in C++ for instance) with user defined ones (hopefully faster, but possibly less precise).
+When costly math functions still appear in the sample rate code, the `-fm` [compilation option](../manual/options.md) can possibly be used to replace the standard versions provided by the underlying OS (like `std::cos`, `std::tan`... in C++ for instance) with user defined ones (hopefully faster, but possibly less precise).
 
 ### Delay lines implementation and DSP memory size
 
@@ -531,7 +531,7 @@ with buffers named `fRecX` instead of `fVecX` in the previous example. The `-mcd
 
 ### Managing DSP Memory Layout
 
-On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controled using the `-mem` compilation option and an [adapted architecture file](https://faustdoc.grame.fr/manual/architectures/#custom-memory-manager).
+On audio boards where the memory is separated as several blocks (like SRAM, SDRAM…) with different access time, it becomes important to refine the DSP memory model so that the DSP structure will not be allocated on a single block of memory, but possibly distributed on all available blocks. The idea is then to allocate parts of the DSP that are often accessed in fast memory and the other ones in slow memory. This can be controled using the `-mem` compilation option and an [adapted architecture file](../manual/architectures.md#custom-memory-manager).
 
 ## Optimizing the C++ or LLVM Code
 
@@ -643,8 +643,8 @@ Note that some **faust2xx** tools like [`faust2max6`](https://github.com/grame-c
 
 ## Compiling for Multiple CPUs
 
-On modern CPUs, compiling native code dedicated to the target processor is critical to obtain the best possible performances. When using the C++ backend, the same C++ file can be compiled with `gcc` of `clang` for each possible target CPU using the appropriate `-march=cpu` option. When using the LLVM backend, the same LLVM IR code can be compiled into CPU specific machine code using the [dynamic-faust](https://faustdoc.grame.fr/manual/optimizing/#dynamic-faust) tool. This step will typically be done using the best compilation options automatically found with the [faustbench](https://faustdoc.grame.fr/manual/optimizing/#faustbench) tool or [faustbench-llvm](https://faustdoc.grame.fr/manual/optimizing/#faustbench-llvm) tools. A specialized tool has been developed to combine all the possible options.
+On modern CPUs, compiling native code dedicated to the target processor is critical to obtain the best possible performances. When using the C++ backend, the same C++ file can be compiled with `gcc` of `clang` for each possible target CPU using the appropriate `-march=cpu` option. When using the LLVM backend, the same LLVM IR code can be compiled into CPU specific machine code using the [dynamic-faust](../manual/optimizing.md#dynamic-faust) tool. This step will typically be done using the best compilation options automatically found with the [faustbench](../manual/optimizing.md#faustbench) tool or [faustbench-llvm](../manual/optimizing.md#faustbench-llvm) tools. A specialized tool has been developed to combine all the possible options.
 
 ### faust2object
 
-The `faust2object` tool  either uses the standard C++ compiler or the LLVM dynamic compilation chain (the [dynamic-faust](https://faustdoc.grame.fr/manual/optimizing/#dynamic-faust) tool) to compile a Faust DSP to object code files (.o) and wrapper C++ header files for different CPUs. The DSP name is used in the generated C++ and object code files, thus allowing to generate distinct versions of the code that can finally be linked together in a single binary. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faust2object).
+The `faust2object` tool  either uses the standard C++ compiler or the LLVM dynamic compilation chain (the [dynamic-faust](../manual/optimizing.md#dynamic-faust) tool) to compile a Faust DSP to object code files (.o) and wrapper C++ header files for different CPUs. The DSP name is used in the generated C++ and object code files, thus allowing to generate distinct versions of the code that can finally be linked together in a single binary. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faust2object).

@@ -100,11 +100,11 @@ Warning messages do not stop the compilation process, but allow to get useful in
 
 The  **interp-tracer** tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically `FP_SUBNORMAL`, `FP_INFINITE` and `FP_NAN` values, or `INTEGER_OVERFLOW`, `CAST_INT_OVERFLOW`  and `DIV_BY_ZERO` operations, or `LOAD/STORE` errors. 
 
-See the [complete documentation](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) and the [Advanced debugging with interp-tracer](https://faustdoc.grame.fr/tutorials/debugging/) tutorial.
+See the [complete documentation](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) and the [Advanced debugging with interp-tracer](../tutorials/debugging.md) tutorial.
 
 #### The faust2caqt tool
 
-On macOS, the [faust2caqt](https://faustdoc.grame.fr/manual/tools/#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow, etc.) at runtime. Developers can possibly use the [dsp_me_checker](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP object with the math computation exception handling code. 
+On macOS, the [faust2caqt](../manual/tools.md#faust2caqt) script has a `-me` option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow, etc.) at runtime. Developers can possibly use the [dsp_me_checker](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42) class to decorate a given DSP object with the math computation exception handling code. 
 
 ### Fixing the errors
 

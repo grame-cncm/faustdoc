@@ -24,7 +24,7 @@ function makeFaust(code, i) {
 }
 
 BEGIN {
-	FAUSTDOC = "https://faustdoc.grame.fr";
+	FAUSTDOC = "..";
 #	FAUSTDOC = "https://grame-cncm.github.io/faustdoc/";
 	INDEX = 0;
 	INFAUST = 0;

@@ -110,7 +110,7 @@ This happens when an undefined name is used.
 
 ## Box connection errors
 
-[Diagram expressions](https://faustdoc.grame.fr/manual/syntax/#diagram-expressions) express how block expressions can be combined to create new ones. The connection rules are precisely defined for each of them and have to be followed for the program to be correct. Remember the [operator priority](https://faustdoc.grame.fr/manual/syntax/#diagram-composition-operations) when writing more complex expressions.   
+[Diagram expressions](../manual/syntax.md#diagram-expressions) express how block expressions can be combined to create new ones. The connection rules are precisely defined for each of them and have to be followed for the program to be correct. Remember the [operator priority](../manual/syntax.md#diagram-composition-operations) when writing more complex expressions.   
 
 ### The five connections rules 
 
@@ -213,7 +213,7 @@ has 3 inputs and 3 outputs
 
 #### Route connection errors
 
-More complex routing between blocks can also be described using the [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive) primitive. Two different errors can be produced in case of incorrect coding:  
+More complex routing between blocks can also be described using the [route](../manual/syntax.md#route-primitive) primitive. Two different errors can be produced in case of incorrect coding:  
 
 ```
 process = route(+,8.7,(0,0),(0,1));
@@ -237,7 +237,7 @@ ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,
  
 ### Iterative constructions 
 
-[Iterations](https://faustdoc.grame.fr/manual/syntax/#iterations) are analogous to `for(...)` loops in other languages and provide a convenient way to automate some complex block-diagram constructions. All `par`, `seq`, `sum`, `prod` expressions have the same form, take an identifier as first parameter, a number of iteration as an integer constant numerical expression as second parameter, then an arbitrary block-diagram as third parameter.
+[Iterations](../manual/syntax.md#iterations) are analogous to `for(...)` loops in other languages and provide a convenient way to automate some complex block-diagram constructions. All `par`, `seq`, `sum`, `prod` expressions have the same form, take an identifier as first parameter, a number of iteration as an integer constant numerical expression as second parameter, then an arbitrary block-diagram as third parameter.
 
 The example code:
 
@@ -302,7 +302,7 @@ Signal expressions are produced from box expressions, are type annotated and fin
 
 ### Automatic type promotion 
 
-Some primitives (like [route](https://faustdoc.grame.fr/manual/syntax/#route-primitive), [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive), [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive)...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of `int(exp)` is internally added and is not necessary in the source code. 
+Some primitives (like [route](../manual/syntax.md#route-primitive), [rdtable](../manual/syntax.md#rdtable-primitive), [rwtable](../manual/syntax.md#rwtable-primitive)...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of `int(exp)` is internally added and is not necessary in the source code. 
 
 ### Parameter range errors
 
@@ -340,7 +340,7 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 
 ### Table construction errors
 
-The [rdtable](https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time 
+The [rdtable](../manual/syntax.md#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](../manual/syntax.md#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time 
 
 
 The `rdtable` primitive assumes that the table content is produced by a processor with 0 input and one output, known at compiled time. So the following expression:
