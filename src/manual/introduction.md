@@ -56,7 +56,7 @@ Despite all this, Faust does have some limitations. For instance, it doesn't all
 
 Faust's conciseness can sometimes become a problem too, especially for complex algorithms with lots of recursive signals. It is usually crucial in Faust to have the "mental global picture" of the algorithm to be implemented which in some cases can be hard.
 
-While the Faust compiler is relatively bug-free, it does have some limitations and might get stuck in some extreme cases that you will probably never encounter. If you do, [shoot us an e-mail](https://sourceforge.net/p/faudiostream/mailman/)!
+While the Faust compiler is relatively bug-free, it does have some limitations and might get stuck in some extreme cases that you will probably never encounter. If you do, [shoot us an e-mail](mailto:research@grame.fr)!
 
 From here, you can jump to the [Quick Start Tutorial](quick-start.md) section of this manual.
 
