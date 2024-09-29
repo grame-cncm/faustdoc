@@ -20,7 +20,7 @@
     <link href="/css/quickref.css" rel="stylesheet">
     <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <script src="../../js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
@@ -453,9 +453,9 @@ Field = fRec3 size = 2 r_count = 4 w_count = 2
 <h3 id="debugging-at-runtime">Debugging at runtime</h3>
 <h4 id="the-interp-tracer-tool">The interp-tracer tool</h4>
 <p>The  <strong>interp-tracer</strong> tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically <code>FP_SUBNORMAL</code>, <code>FP_INFINITE</code> and <code>FP_NAN</code> values, or <code>INTEGER_OVERFLOW</code>, <code>CAST_INT_OVERFLOW</code>  and <code>DIV_BY_ZERO</code> operations, or <code>LOAD/STORE</code> errors. </p>
-<p>See the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">complete documentation</a> and the <a href="https://faustdoc.grame.fr/tutorials/debugging/">Advanced debugging with interp-tracer</a> tutorial.</p>
+<p>See the <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer">complete documentation</a> and the <a href="../../tutorials/debugging/">Advanced debugging with interp-tracer</a> tutorial.</p>
 <h4 id="the-faust2caqt-tool">The faust2caqt tool</h4>
-<p>On macOS, the <a href="https://faustdoc.grame.fr/manual/tools/#faust2caqt">faust2caqt</a> script has a <code>-me</code> option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow, etc.) at runtime. Developers can possibly use the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42">dsp_me_checker</a> class to decorate a given DSP object with the math computation exception handling code. </p>
+<p>On macOS, the <a href="../tools/#faust2caqt">faust2caqt</a> script has a <code>-me</code> option to catch math computation exceptions (floating point exceptions and integer div-by-zero or overflow, etc.) at runtime. Developers can possibly use the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-checker.h#L42">dsp_me_checker</a> class to decorate a given DSP object with the math computation exception handling code. </p>
 <h3 id="fixing-the-errors">Fixing the errors</h3>
 <p>These errors must then be corrected by carefully checking signal range, like verifying the min/max values in <code>vslider/hslider/nentry</code> user-interface items. </p>
 <h3 id="additional-resources">Additional Resources</h3>

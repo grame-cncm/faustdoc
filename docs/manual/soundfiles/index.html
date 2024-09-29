@@ -20,7 +20,7 @@
     <link href="/css/quickref.css" rel="stylesheet">
     <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <script src="../../js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
@@ -339,7 +339,7 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="sound-files-support">Sound files Support</h1>
-<p>Sound files can be used with the <code>soundfile</code> language primitive. Sound files will be fully loaded in memory at init time and will be accessed with an input read index. The length and sample rate of the sound files can be accessed to implement more sophisticated playing schemes. A more complete description of the <code>soundfile</code> primitive can be <a href="https://faustdoc.grame.fr/manual/syntax/#soundfile-primitive">found here</a>.</p>
+<p>Sound files can be used with the <code>soundfile</code> language primitive. Sound files will be fully loaded in memory at init time and will be accessed with an input read index. The length and sample rate of the sound files can be accessed to implement more sophisticated playing schemes. A more complete description of the <code>soundfile</code> primitive can be <a href="../syntax/#soundfile-primitive">found here</a>.</p>
 <h2 id="using-sound-files-with-the-faust2xx-scripts">Using sound files with the faust2xx scripts</h2>
 <p>Since using sound files (actually all formats that can be read by the <a href="http://www.mega-nerd.com/libsndfile/">libsndfile library</a>, or by JUCE if you use the <em>faust2juce</em> tool), have to be <em>embedded with the generated binary</em> (application or plugin), the <em>-soundfile</em> option has been added in some of the <em>faust2xx</em> scripts to do that. Assuming a DSP program using the  <code>soundfile</code> primitive is written, the following commands can be used to generate binaries:</p>
 <ul>
@@ -350,7 +350,7 @@
 <p><code>faust2max6 -soundfile foo.dsp</code> to embed the needed sound files in the Max/MSP external bundle on OSX</p>
 </li>
 </ul>
-<p>Check the <a href="https://faustdoc.grame.fr/manual/tools/">faust2xx</a> script description page to know which one currently support the <em>-soundfile</em> option.</p>
+<p>Check the <a href="../tools/">faust2xx</a> script description page to know which one currently support the <em>-soundfile</em> option.</p>
 <h2 id="the-soundfile-library">The Soundfile Library</h2>
 <p>They are some additional functions in the <a href="https://faustlibraries.grame.fr/libs/soundfiles/">soundfiles.lib</a> library. Three basic functions are fully documented for now. There is more code already written in the <a href="https://github.com/grame-cncm/faustlibraries/blob/master/soundfiles.lib">library source</a> that allows to read sound files with different kind of interpolation.</p>
 <p>The <code>soundfile</code> primitive can be used in the Web platform. See the <a href="https://github.com/grame-cncm/faustide?tab=readme-ov-file#soundfiles-access">Faust Web IDE</a> related documentation.</p></div>

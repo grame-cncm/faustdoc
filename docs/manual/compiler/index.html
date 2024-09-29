@@ -20,7 +20,7 @@
     <link href="/css/quickref.css" rel="stylesheet">
     <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <script src="../../js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
@@ -367,7 +367,7 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="using-the-faust-compiler">Using the Faust Compiler</h1>
-<p>While the Faust compiler is available in different forms (e.g., <a href="../embedding">Embedded Compiler</a>, etc.), its most "common" one is the command line version, which can be invoked using the <code>faust</code> command. It translates a Faust program into code in a wide range of languages (C, C++, Rust, LLVM IR, WebAssembly, etc.). The generated code can be wrapped into an optional <em>architecture file</em> allowing to directly produce a fully operational program.</p>
+<p>While the Faust compiler is available in different forms (e.g., <a href="../embedding/">Embedded Compiler</a>, etc.), its most "common" one is the command line version, which can be invoked using the <code>faust</code> command. It translates a Faust program into code in a wide range of languages (C, C++, Rust, LLVM IR, WebAssembly, etc.). The generated code can be wrapped into an optional <em>architecture file</em> allowing to directly produce a fully operational program.</p>
 <p>A typical call of the Faust command line compiler is:</p>
 <pre><code>faust [OPTIONS] faustFile.dsp
 </code></pre>
@@ -388,7 +388,7 @@ details and put a link to that here -->
 <pre><code>faust -a alsa-gtk.cpp noise.dsp -o noise.cpp
 g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 </code></pre>
-<p>Note that a wide range of <a href="https://faustdoc.grame.fr/manual/tools/"><code>faust2...</code> compilation scripts</a> can be used to facilitate this operation by taking a Faust file and returning the corresponding binary for your platform.</p>
+<p>Note that a wide range of <a href="../tools/"><code>faust2...</code> compilation scripts</a> can be used to facilitate this operation by taking a Faust file and returning the corresponding binary for your platform.</p>
 <h2 id="structure-of-the-generated-code">Structure of the Generated Code</h2>
 <p>A Faust DSP C++ class derives from the base <code>dsp</code> class defined as below (a similar structure is used for languages other than C++):</p>
 <pre><code>class dsp {
@@ -506,7 +506,7 @@ g++ -lpthread -lasound `pkg-config --cflags --libs gtk+-2.0` noise.cpp -o noise
 <h3 id="vector-code-generation">Vector Code Generation</h3>
 <p>Modern C++ compilers are able to do autovectorization, that is to use SIMD instructions to speedup the code. These instructions can typically operate in parallel on short vectors of 4 or 8 simple precision floating point numbers, leading to a theoretical speedup of 4 or 8.</p>
 <p>Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular, complex loops can prevent autovectorization. The goal of the vector code generation is to rearrange the C++ code in a way that facilitates the autovectorization job of the C++ compiler. Instead of generating a single sample computation loop, it splits the computation into several simpler loops that communicates by vectors.</p>
-<p>The vector code generation is activated by passing the <a href="https://faustdoc.grame.fr/manual/options/"><code>--vectorize</code> (or <code>-vec</code>)</a> option to the Faust compiler. Two additional options are available: <code>--vec-size &lt;n&gt;</code> controls the size of the vector (by default 32 samples) and <code>--loop-variant 0/1</code> gives some additional control on the loops: <code>--loop-variant 0</code> generates fixed-size sub-loops with a final sub-loop that processes the last samples, <code>--loop-variant 1</code> generates sub-loops of variable vector size.</p>
+<p>The vector code generation is activated by passing the <a href="../options/"><code>--vectorize</code> (or <code>-vec</code>)</a> option to the Faust compiler. Two additional options are available: <code>--vec-size &lt;n&gt;</code> controls the size of the vector (by default 32 samples) and <code>--loop-variant 0/1</code> gives some additional control on the loops: <code>--loop-variant 0</code> generates fixed-size sub-loops with a final sub-loop that processes the last samples, <code>--loop-variant 1</code> generates sub-loops of variable vector size.</p>
 <p>To illustrate the difference between scalar code and vector code, let's take the computation of the RMS (Root Mean Square) value of a signal.  Here is the Faust code that computes the Root Mean Square of a sliding window of 1000 samples:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -640,10 +640,10 @@ process = RMS(1000);
 <p>The result is a directed graph in which each node is a computation loop (see figure below). This graph is stored in the class object and a topological sort is applied to it before printing the code. </p>
 <p><img src="img/loopgraph2.svg" class="mx-auto d-block" width="30%"></p>
 <h3 id="parallel-code-generation">Parallel Code Generation</h3>
-<p>Parallel code generation is activated by passing either the <a href="https://faustdoc.grame.fr/manual/options/"><code>--openMP</code> (or <code>-omp</code>) option or the <code>--scheduler</code> (or <code>-sch</code>) option</a>. It implies that the <code>-vec</code> option as well as the parallel code generation are built on top of the vector code generation.</p>
+<p>Parallel code generation is activated by passing either the <a href="../options/"><code>--openMP</code> (or <code>-omp</code>) option or the <code>--scheduler</code> (or <code>-sch</code>) option</a>. It implies that the <code>-vec</code> option as well as the parallel code generation are built on top of the vector code generation.</p>
 <h4 id="the-openmp-code-generator">The OpenMP Code Generator</h4>
 <p><img src="img/openmpModel.svg" class="mx-auto d-block" width="100%"></p>
-<p>The <a href="https://faustdoc.grame.fr/manual/options/"><code>--openMP</code> (or <code>-omp</code>) option</a>, when given to the Faust compiler, will insert appropriate <a href="https://www.openmp.org/">OpenMP</a> directives into the C++ code. OpenMP is a well established API that is used to explicitly define direct multi-threaded, shared memory parallelism. It is based on a fork-join model of parallelism (see figure above). Parallel regions are delimited by <code>#pragma omp parallel</code> constructs. At the entrance of a parallel region, a group of parallel threads is activated. The code within a parallel region is executed by each thread of the parallel group until the end of the region. </p>
+<p>The <a href="../options/"><code>--openMP</code> (or <code>-omp</code>) option</a>, when given to the Faust compiler, will insert appropriate <a href="https://www.openmp.org/">OpenMP</a> directives into the C++ code. OpenMP is a well established API that is used to explicitly define direct multi-threaded, shared memory parallelism. It is based on a fork-join model of parallelism (see figure above). Parallel regions are delimited by <code>#pragma omp parallel</code> constructs. At the entrance of a parallel region, a group of parallel threads is activated. The code within a parallel region is executed by each thread of the parallel group until the end of the region. </p>
 <pre><code>#pragma omp parallel
 {
   // the code here is executed simultaneously by every thread of the parallel 
@@ -793,7 +793,7 @@ parallel.</li>
 <li>finally <code>#pragma omp single</code> indicates that this section will be executed by only one thread (any of them).</li>
 </ul>
 <h4 id="the-scheduler-code-generator">The Scheduler Code Generator</h4>
-<p>With the <a href="https://faustdoc.grame.fr/manual/options/"><code>--scheduler</code> (or <code>-sch</code>) option</a> given to the Faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worked threads is created and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.</p>
+<p>With the <a href="../options/"><code>--scheduler</code> (or <code>-sch</code>) option</a> given to the Faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worked threads is created and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.</p>
 <p>Starting from a ready task, each thread follows the dependencies, possibly pushing ready sub-tasks into it's own local WSQ. When no more tasks can be activated on a given computation path, the thread pops a task from it's local WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from other threads WSQ.</p>
 <p>The local LIFO Pop operation allows better cache locality and the FIFO steal Pop "larger chuck" of work to be done. The reason for this is that many work stealing workloads are divide-and-conquer in nature, stealing one of the oldest task implicitly also steals a (potentially) large sub-tree of computations that will unfold once that piece of work is stolen and run.</p>
 <p>Compared to the OpenMP model (<code>-omp</code>) the new model is worse for simple Faust programs and usually starts to behave comparable or sometimes better for "complex enough" Faust programs. In any case, since OpenMP does not behave so well with GCC compilers, and is unusable on OSX in real-time contexts, this new scheduler option has it's own value.  We plan to improve it adding a "pipelining" idea in the future.</p>

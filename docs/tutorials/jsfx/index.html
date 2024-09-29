@@ -20,7 +20,7 @@
     <link href="/css/quickref.css" rel="stylesheet">
     <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <script src="../../js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
@@ -473,7 +473,7 @@ The available MIDI inputs are: </p>
 <li>key (both keyon and keyoff)</li>
 <li>ctrl</li>
 </ul>
-<p>See <a href="https://faustdoc.grame.fr/manual/midi/">MIDI</a> for more information about MIDI metadata syntax.</p>
+<p>See <a href="../../manual/midi/">MIDI</a> for more information about MIDI metadata syntax.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -506,7 +506,7 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
 (midi_event &gt; 0) ? (control());
 </code></pre>
 <h3 id="midi-polyphonic-example">MIDI polyphonic example</h3>
-<p>As explained in the <a href="https://faustdoc.grame.fr/manual/midi/">MIDI</a> documentation, Faust supports MIDI polyphonic audio plugins. These plugins respond to MIDI note inputs with three different data: </p>
+<p>As explained in the <a href="../../manual/midi/">MIDI</a> documentation, Faust supports MIDI polyphonic audio plugins. These plugins respond to MIDI note inputs with three different data: </p>
 <ul>
 <li>key or frequency</li>
 <li>velocity or gain</li>
@@ -576,7 +576,7 @@ while (midirecv(mpos, msg1, msg2, msg3)) (
 <p>The JSFX backend is available on the <a href="https://faustide.grame.fr/">Faust web IDE</a>. In order to export a Faust program as JSFX code, you will need to click on the "export/compile to specific target" button (on the left side, below "Save as"). Then, you need to  choose <strong><em>jsfx</em></strong> both as the platform and architecture, and click <strong><em>compile</em></strong>.<br />
 This will allow your to download a <code>binary.zip</code> file, containing the resulting <strong><em>jsfx</em></strong> file and your original <strong><em>dsp</em></strong> file. </p>
 <h3 id="generating-a-jsfx-file-in-polyphonic-mode">Generating a JSFX file in polyphonic mode</h3>
-<p>The <code>declare options "[midi:on][nvoices:n]";</code> <a href="https://faustdoc.grame.fr/manual/midi/#configuring-and-activating-polyphony">coding convention</a> can be used in the DSP code to activate MIDI and polyphonic mode.</p>
+<p>The <code>declare options "[midi:on][nvoices:n]";</code> <a href="../../manual/midi/#configuring-and-activating-polyphony">coding convention</a> can be used in the DSP code to activate MIDI and polyphonic mode.</p>
 <h2 id="limitations">Limitations</h2>
 <p>As JSFX is a sandboxed environment, this backend cannot match the full Faust potential. Some features are missing, some others might come in the future. </p>
 <p>First, only three controls are available: </p>

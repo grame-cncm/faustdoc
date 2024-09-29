@@ -20,7 +20,7 @@
     <link href="/css/quickref.css" rel="stylesheet">
     <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <script src="../../js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
@@ -569,7 +569,7 @@
 <p>The objective of this workshop is to help you get familiar with the Faust language through very simple examples of signal processing and sound synthesis.
 The documentation and the examples we will use can be found here:</p>
 <ul>
-<li><strong><a href="https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/">https://faustdoc.grame.fr/workshops/2020-04-10-faust-101/</a></strong></li>
+<li><strong><a href="./">../workshops/2020-04-10-faust-101/</a></strong></li>
 </ul>
 <p>All examples will be run in the online Faust IDE:</p>
 <ul>
@@ -612,7 +612,7 @@ process = _;
 <li>the <code>_</code> sign represents one of the <em>primitives</em> of the language (primitives are the predefined functions of the language). It represents an <em>audio cable</em> that lets the signal pass through without transforming it. This is what one calls in mathematics the <em>identity</em> function, the signal that enters on the left comes out on the right identically. </li>
 </ul>
 <h3 id="example-2-adding-two-signals">Example 2: Adding two signals</h3>
-<p>We saw in the previous example the primitive <code>_</code>. Faust has a large number of primitives, including all <a href="https://faustdoc.grame.fr/manual/syntax/#faust-syntax">mathematical operations</a>.</p>
+<p>We saw in the previous example the primitive <code>_</code>. Faust has a large number of primitives, including all <a href="../../manual/syntax/#faust-syntax">mathematical operations</a>.</p>
 <p>The <code>+</code> primitive for instance is used to add two signals. It can therefore be used to transform a stereophonic signal (on two channels) into a monophonic signal as in the following example:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">

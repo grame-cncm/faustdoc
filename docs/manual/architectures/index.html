@@ -20,7 +20,7 @@
     <link href="/css/quickref.css" rel="stylesheet">
     <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <script src="../../js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
@@ -929,7 +929,7 @@ struct UI {
 <h4 id="midi-messages-in-the-dsp-source-code">MIDI Messages in the DSP Source Code</h4>
 <p>MIDI control messages are described as metadata in UI elements. They are decoded by a <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MidiUI.h">MidiUI</a> class, subclass of <code>UI</code>, which parses incoming MIDI messages and updates the appropriate control parameters, or sends MIDI messages when the UI elements (sliders, buttons...) are moved.</p>
 <h4 id="defined-standard-midi-messages">Defined Standard MIDI Messages</h4>
-<p>A special <code>[midi:xxx yyy...]</code> metadata needs to be added to the UI element. The full description of supported MIDI messages is part of the <a href="https://faustdoc.grame.fr/manual/midi/">Faust documentation</a>.</p>
+<p>A special <code>[midi:xxx yyy...]</code> metadata needs to be added to the UI element. The full description of supported MIDI messages is part of the <a href="../midi/">Faust documentation</a>.</p>
 <h4 id="midi-classes">MIDI Classes</h4>
 <p>A <code>midi</code> base class defining MIDI messages decoding/encoding methods has been developed. It will be used to receive and transmit MIDI messages:</p>
 <pre><code class="language-c++">class midi {
@@ -1202,7 +1202,7 @@ struct UI : public UIReal&lt;FAUSTFLOAT&gt;
 <pre><code>vslider(&quot;freq [unit:dB][style:knob][gyr:0 0 -30 0 30]&quot;, 0, 20, 100, 1)
 </code></pre>
 <p>When one or several metadata are added in the same item label, then will appear in the generated code as one or successives <code>declare(FAUSTFLOAT* zone, const char* key, const char* value);</code> lines <em>before</em> the line describing the item itself. Thus the UI managing code has to associate them with the proper item. Look at the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/MetaDataUI.h">MetaDataUI</a> class for an example of this technique.</p>
-<p>MIDI specific metadata are <a href="https://faustdoc.grame.fr/manual/midi/">described here</a> and are decoded the <code>MidiUI</code> class.</p>
+<p>MIDI specific metadata are <a href="../midi/">described here</a> and are decoded the <code>MidiUI</code> class.</p>
 <p>Note that medatada are not supported in all architecture files. Some of them like (<code>acc</code> or <code>gyr</code> for example) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future and <em>can possibly be adapted for a specific project.</em> They can be decoded using the <code>MetaDataUI</code>class.</p>
 <h4 id="graphic-oriented-pure-controllers-code-generator-ui">Graphic-oriented, pure controllers, code generator UI</h4>
 <p>Even if the UI architecture module is graphic-oriented, a given implementation can perfectly choose to ignore all layout information and only keep the controller ones, like the buttons, sliders, nentries, bargraphs. This is typically what is done in the <code>MidiUI</code> or <code>OSCUI</code> architectures. </p>
@@ -1487,8 +1487,8 @@ process = no.noise;
 <p>and are part of three different types of global metadata:</p>
 <ul>
 <li>metadata like<code>compile_options</code> or <code>filename</code> are automatically generated </li>
-<li>metadata like <code>author</code> of <code>copyright</code>are part of the <a href="https://faustdoc.grame.fr/manual/syntax/#global-metadata">Global Medata</a></li>
-<li>metadata like<code>noises.lib/name</code>are part of the <a href="https://faustdoc.grame.fr/manual/syntax/#function-metadata">Function Metadata</a></li>
+<li>metadata like <code>author</code> of <code>copyright</code>are part of the <a href="../syntax/#global-metadata">Global Medata</a></li>
+<li>metadata like<code>noises.lib/name</code>are part of the <a href="../syntax/#function-metadata">Function Metadata</a></li>
 </ul>
 <p>Specialized subclasses of the<code>Meta</code> class can be implemented to decode the needed key/value pairs for a given use-case. </p>
 <h3 id="macro-construction-of-dsp-components">Macro Construction of DSP Components</h3>
@@ -2024,7 +2024,7 @@ DSP.memoryDestroy();
     cout &lt;&lt; endl;
 }
 </code></pre>
-<p>This class can typically be used in tools that help developers discover the best Faust compilation parameters for a given DSP program, like the <a href="https://faustdoc.grame.fr/manual/optimizing/#faustbench">faustbench</a> and <a href="https://faustdoc.grame.fr/manual/optimizing/#faustbench-llvm">faustbench-llvm</a> tools.</p>
+<p>This class can typically be used in tools that help developers discover the best Faust compilation parameters for a given DSP program, like the <a href="../optimizing/#faustbench">faustbench</a> and <a href="../optimizing/#faustbench-llvm">faustbench-llvm</a> tools.</p>
 <h3 id="the-proxy-dsp-class">The Proxy DSP Class</h3>
 <p>In some cases, a DSP may run outside of the application or plugin context, like on another machine. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-dsp.h">proxy_dsp</a> class allows to create a proxy DSP that will be finally connected to the real one (using an OSC or HTTP based machinery for instance), and will reflect its behaviour. It uses the previously described  <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/JSONUIDecoder.h">JSONUIDecoder</a> class. Then the <code>proxy_dsp</code> can be used in place of the real DSP, and connected with <code>UI</code> controllers using the standard <code>buildUserInterface</code> to control it.  </p>
 <p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark">faust-osc-controller</a> tool demonstrates this capability using an OSC connection between the real DSP and its proxy. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-osc-dsp.h">proxy_osc_dsp</a> class implements a specialized <code>proxy_dsp</code> using the <a href="http://liblo.sourceforge.net">liblo</a> OSC library to connect to a OSC controllable DSP (which is using the <code>OSCUI</code> class and running in another context or machine). Then the <code>faust-osc-controller</code> program <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/faust-osc-controller.cpp">creates a real GUI</a> (using <code>GTKUI</code> in this example) and have it control the remote DSP and reflect its dynamic state (like vumeter values coming back from the real DSP). </p>
@@ -2346,7 +2346,7 @@ my_decorator DSP = new my_decorator(new mydsp());
 <h4 id="developing-new-audio-architectures">Developing New Audio Architectures</h4>
 <p>The <code>audio</code> base class has to be subclassed and each method implemented for the given audio hardware. In some cases the audio driver can adapt to the required number of DSP inputs/outputs (like the <a href="https://jackaudio.org">JACK</a> audio system for instance which can open any number of virtual audio ports). But in general, the number of hardware audio inputs/outputs may not exactly match the DSP ones. This is the responsability of the audio driver to adapt to this situation. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp-adapter.h">dsp_adapter</a> <code>dsp</code> decorator can help in this case.</p>
 <h4 id="developing-a-new-soundfile-loader">Developing a New Soundfile Loader</h4>
-<p>Soundfiles are defined in the DSP program using the <a href="https://faustdoc.grame.fr/manual/syntax/#soundfile-primitive">soundfile primitive</a>. Here is a simple DSP program which uses a single <em>tango.wav</em> audio file and play it until its end:</p>
+<p>Soundfiles are defined in the DSP program using the <a href="../syntax/#soundfile-primitive">soundfile primitive</a>. Here is a simple DSP program which uses a single <em>tango.wav</em> audio file and play it until its end:</p>
 <pre><code>process = 0,_~+(1):soundfile(&quot;sound[url:{'tango.wav'}]&quot;,2):!,!,
 </code></pre>
 <p>The compiled C++ class has the following structure:</p>
@@ -2451,7 +2451,7 @@ virtual void readFile(Soundfile* soundfile,
 </ul>
 <h2 id="the-faust2xx-scripts">The faust2xx Scripts</h2>
 <h3 id="using-faust2xx-scripts">Using faust2xx Scripts</h3>
-<p>The <code>faust2xx</code> scripts finally combine different architecture files to generate a ready-to-use application or plugin, etc... from a Faust DSP program. They typically combine the <em>generated DSP</em> with an <em>UI architecture</em> file and an <em>audio architecture</em> file. Most of the also have addition options like <code>-midi</code>, <code>-nvoices &lt;num&gt;</code>, <code>-effect &lt;auto|effect.dsp&gt;</code> or <code>-soundfile</code> to generate polyphonic instruments with or without effects, or audio file support. Look at the <a href="https://faustdoc.grame.fr/manual/tools/">following page</a> for a more complete description.  </p>
+<p>The <code>faust2xx</code> scripts finally combine different architecture files to generate a ready-to-use application or plugin, etc... from a Faust DSP program. They typically combine the <em>generated DSP</em> with an <em>UI architecture</em> file and an <em>audio architecture</em> file. Most of the also have addition options like <code>-midi</code>, <code>-nvoices &lt;num&gt;</code>, <code>-effect &lt;auto|effect.dsp&gt;</code> or <code>-soundfile</code> to generate polyphonic instruments with or without effects, or audio file support. Look at the <a href="../tools/">following page</a> for a more complete description.  </p>
 <h3 id="developing-a-faust2xx-script">Developing a faust2xx Script</h3>
 <p>The <code>faust2xx</code> script are mostly written in <a href="https://fr.wikipedia.org/wiki/Bourne-Again_shell">bash</a> (but any scripting language can be used) and aims to produce a ready-to-use application, plugin, etc... from a DSP program. A <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faust2minimal">faust2minimal</a> template script using the C++ backend, can be used to start the process.</p>
 <p>The  helper scripts, <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustpath">faustpath</a>,  <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustoptflags">faustoptflags</a>, and <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/usage.sh">usage.sh</a> can be used to setup common variables: </p>
@@ -2671,12 +2671,12 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <h4 id="josmodules-and-josm_faust"><a href="https://github.com/josmithiii/JOSModules">JOSModules</a> and <a href="https://github.com/josmithiii/josm_faust#josm_faust">josm_faust</a></h4>
 <p><a href="https://ccrma.stanford.edu/~jos/">Julius Smith</a> projects to facilitate the use of Faust generated  C++ code in JUCE projects. </p>
 <h4 id="arduino-tools"><a href="https://www.pschatzmann.ch/home/2022/04/22/using-faust-dsp-with-my-arduino-audio-tools/">Arduino tools</a></h4>
-<p>An alternative way to use the ESP32 board with Faust, possibly easier and more versatile than the examples mentioned on the <a href="https://faustdoc.grame.fr/tutorials/esp32/">esp32 tutorial</a>.</p>
+<p>An alternative way to use the ESP32 board with Faust, possibly easier and more versatile than the examples mentioned on the <a href="../../tutorials/esp32/">esp32 tutorial</a>.</p>
 <h3 id="cmajor-tools">Cmajor tools</h3>
-<h4 id="using-faust-in-cmajor"><a href="https://faustdoc.grame.fr/tutorials/cmajor/">Using Faust in Cmajor</a></h4>
+<h4 id="using-faust-in-cmajor"><a href="../../tutorials/cmajor/">Using Faust in Cmajor</a></h4>
 <p>A tutorial to show how Faust can be used with <a href="https://cmajor.dev">Cmajor</a>, a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. </p>
 <h3 id="rnbo-tools">RNBO tools</h3>
-<h4 id="using-faust-in-rnbo-with-codebox"><a href="https://faustdoc.grame.fr/tutorials/rnbo/">Using Faust in RNBO with codebox~</a></h4>
+<h4 id="using-faust-in-rnbo-with-codebox"><a href="../../tutorials/rnbo/">Using Faust in RNBO with codebox~</a></h4>
 <p>A tutorial to show how Faust can be used with <a href="https://rnbo.cycling74.com">RNBO</a>, a library and toolchain that can take Max-like patches, export them as portable code, and directly compile that code to targets like a VST, a Max External, or a Raspberry Pi.</p>
 <h3 id="dlang-tools">DLang tools</h3>
 <h4 id="faust-2-dplug-guide"><a href="https://github.com/Tonton-Blax/dplugfausttest">Faust 2 Dplug Guide</a></h4>
@@ -2686,7 +2686,7 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <h3 id="julia-tools">Julia tools</h3>
 <h4 id="faustjl"><a href="https://github.com/corajr/Faust.jl">Faust.jl</a></h4>
 <p>Julia wrapper for the Faust compiler. Uses the Faust LLVM C API.</p>
-<h4 id="using-faust-in-julia"><a href="https://faustdoc.grame.fr/tutorials/julia/">Using Faust in Julia</a></h4>
+<h4 id="using-faust-in-julia"><a href="../../tutorials/julia/">Using Faust in Julia</a></h4>
 <p>A tutorial to show how Faust can be used with <a href="https://julialang.org">Julia</a>, a high-level, general-purpose dynamic programming language with features well suited for numerical analysis and computational science.</p>
 <h3 id="python-tools">Python tools</h3>
 <h4 id="faustpy"><a href="https://github.com/marcecj/faust_python">FAUSTPy</a></h4>

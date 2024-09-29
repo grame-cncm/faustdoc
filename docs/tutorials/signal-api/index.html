@@ -20,7 +20,7 @@
     <link href="/css/quickref.css" rel="stylesheet">
     <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <script src="../../js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
@@ -437,7 +437,7 @@
 <p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
 <p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of a signal set (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h">signal API</a> (or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal-c.h">C signal API</a> version) allows to programmatically create the list of output signals, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. </p>
-<p>Note that the <a href="https://faustdoc.grame.fr/tutorials/box-api/">box API</a> allows to access another stage in the compilation stage.</p>
+<p>Note that the <a href="../box-api/">box API</a> allows to access another stage in the compilation stage.</p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
 <p>To use the signal API, the following steps must be taken:</p>
 <ul>
@@ -605,7 +605,7 @@ process = _ <: @(+(0.5), 500), @(*(1.5), 3000);
     }
 }
 </code></pre>
-<p>Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="https://faustdoc.grame.fr/manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
+<p>Several options of the Faust compiler allow control of the generated C++ code. By default computation is done sample by sample in a single loop. But the <a href="../../manual/compiler/#controlling-code-generation">compiler can also generate vector and parallel code</a>. The following code show how to compile in vector mode:</p>
 <pre><code class="language-C++">static void test5()
 {
     createLibContext();
@@ -786,7 +786,7 @@ process = @(+(0.5), 500) * vslider("Vol", 0.5, 0, 1, 0.01);
         }
 }
 </code></pre>
-<p>User Interface layout can be described with <a href="https://faustdoc.grame.fr/manual/syntax/#hgroup-primitive">hgroup</a>, or <a href="https://faustdoc.grame.fr/manual/syntax/#vgroup-primitive">vgroup</a> or <a href="https://faustdoc.grame.fr/manual/syntax/#tgroup-primitive">tgroup</a>. With the signal API, the layout can be defined using the <a href="https://faustdoc.grame.fr/manual/syntax/#labels-as-pathnames">labels-as-pathnames</a> syntax, as in the following example:</p>
+<p>User Interface layout can be described with <a href="../../manual/syntax/#hgroup-primitive">hgroup</a>, or <a href="../../manual/syntax/#vgroup-primitive">vgroup</a> or <a href="../../manual/syntax/#tgroup-primitive">tgroup</a>. With the signal API, the layout can be defined using the <a href="../../manual/syntax/#labels-as-pathnames">labels-as-pathnames</a> syntax, as in the following example:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1109,7 +1109,7 @@ process = waveform { 0, 100, 200, 300, 400 };
 </div>
 <!-- /faust-run -->
 
-<p>Can be written with the code, where the size of the waveform is the first output, and the waveform content itself is the second output created with <code>sigWaveform</code>, to follow the <a href="https://faustdoc.grame.fr/manual/syntax/#waveform-primitive">waveform semantic</a>:</p>
+<p>Can be written with the code, where the size of the waveform is the first output, and the waveform content itself is the second output created with <code>sigWaveform</code>, to follow the <a href="../../manual/syntax/#waveform-primitive">waveform semantic</a>:</p>
 <pre><code class="language-C++">static void test12()
 {
     COMPILER
@@ -1145,13 +1145,13 @@ process = waveform { 0, 100, 200, 300, 400 };
 <h4 id="creating-soundfile">Creating soundfile</h4>
 <p>The <em>soundfile</em> primitive allows the access of a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:</p>
 <ul>
-<li>the sound number (as a integer between 0 and 255 as a <a href="https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions">constant numerical expression</a>)</li>
+<li>the sound number (as a integer between 0 and 255 as a <a href="../../manual/syntax/#constant-numerical-expressions">constant numerical expression</a>)</li>
 <li>the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) </li>
 </ul>
 <p>The generated block has: </p>
 <ul>
 <li>two fixed outputs: the first one is the currently accessed sound length in frames, the second one is the currently accessed sound nominal sample rate</li>
-<li>several more outputs for the sound channels themselves, as a <a href="https://faustdoc.grame.fr/manual/syntax/#constant-numerical-expressions">constant numerical expression</a></li>
+<li>several more outputs for the sound channels themselves, as a <a href="../../manual/syntax/#constant-numerical-expressions">constant numerical expression</a></li>
 </ul>
 <p>The soundfile block is created with <code>sigSoundfile</code>, but cannot be used directly. It has to be used with:</p>
 <ul>
@@ -1384,7 +1384,7 @@ audio.stop();
 dsp-&gt;buildUserInterface(interface);
 interface-&gt;run();
 </code></pre>
-<p>And all other <a href="https://faustdoc.grame.fr/manual/architectures/">standard controllers</a> (MIDI, OSC, etc.) can be used as usual.  </p>
+<p>And all other <a href="../../manual/architectures/">standard controllers</a> (MIDI, OSC, etc.) can be used as usual.  </p>
 <h4 id="example-with-audio-rendering-and-gui-control">Example with audio rendering and GUI control</h4>
 <p>Here is a more complete example, first with the DSP code:</p>
 <!-- faust-run -->
@@ -1496,7 +1496,7 @@ static void test24(int argc, char* argv[])
         tvec signals;
 
         // Follow the freq/gate/gain convention, 
-        // see: https://faustdoc.grame.fr/manual/midi/#standard-polyphony-parameters
+        // see: ../manual/midi/#standard-polyphony-parameters
         Signal freq = sigNumEntry(&quot;freq&quot;, 
                                   sigReal(100), 
                                   sigReal(100), 

@@ -20,7 +20,7 @@
     <link href="/css/quickref.css" rel="stylesheet">
     <link href="/rail/railroad-diagrams.css" rel="stylesheet">
 
-    <script src="../../js/jquery-1.10.2.min.js" defer></script>
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
     <script src="../../js/bootstrap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script> 
@@ -488,7 +488,7 @@ process = box1,box2;
 </code></pre>
 <p>This happens when an undefined name is used.</p>
 <h2 id="box-connection-errors">Box connection errors</h2>
-<p><a href="https://faustdoc.grame.fr/manual/syntax/#diagram-expressions">Diagram expressions</a> express how block expressions can be combined to create new ones. The connection rules are precisely defined for each of them and have to be followed for the program to be correct. Remember the <a href="https://faustdoc.grame.fr/manual/syntax/#diagram-composition-operations">operator priority</a> when writing more complex expressions.   </p>
+<p><a href="../syntax/#diagram-expressions">Diagram expressions</a> express how block expressions can be combined to create new ones. The connection rules are precisely defined for each of them and have to be followed for the program to be correct. Remember the <a href="../syntax/#diagram-composition-operations">operator priority</a> when writing more complex expressions.   </p>
 <h3 id="the-five-connections-rules">The five connections rules</h3>
 <p>A second category of error messages is returned when block expressions are not correctly connected. </p>
 <h4 id="parallel-connection">Parallel connection</h4>
@@ -558,7 +558,7 @@ while B = _,_,_;
 has 3 inputs and 3 outputs
 </code></pre>
 <h4 id="route-connection-errors">Route connection errors</h4>
-<p>More complex routing between blocks can also be described using the <a href="https://faustdoc.grame.fr/manual/syntax/#route-primitive">route</a> primitive. Two different errors can be produced in case of incorrect coding:  </p>
+<p>More complex routing between blocks can also be described using the <a href="../syntax/#route-primitive">route</a> primitive. Two different errors can be produced in case of incorrect coding:  </p>
 <pre><code>process = route(+,8.7,(0,0),(0,1));
 </code></pre>
 <p>will produce the following error message:</p>
@@ -571,7 +571,7 @@ has 3 inputs and 3 outputs
 <pre><code>ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,0,0,button(&quot;foo&quot;))
 </code></pre>
 <h3 id="iterative-constructions">Iterative constructions</h3>
-<p><a href="https://faustdoc.grame.fr/manual/syntax/#iterations">Iterations</a> are analogous to <code>for(...)</code> loops in other languages and provide a convenient way to automate some complex block-diagram constructions. All <code>par</code>, <code>seq</code>, <code>sum</code>, <code>prod</code> expressions have the same form, take an identifier as first parameter, a number of iteration as an integer constant numerical expression as second parameter, then an arbitrary block-diagram as third parameter.</p>
+<p><a href="../syntax/#iterations">Iterations</a> are analogous to <code>for(...)</code> loops in other languages and provide a convenient way to automate some complex block-diagram constructions. All <code>par</code>, <code>seq</code>, <code>sum</code>, <code>prod</code> expressions have the same form, take an identifier as first parameter, a number of iteration as an integer constant numerical expression as second parameter, then an arbitrary block-diagram as third parameter.</p>
 <p>The example code:</p>
 <pre><code>process = par(+, 2, 8);
 </code></pre>
@@ -604,7 +604,7 @@ process = foo;
 <h2 id="signal-related-errors">Signal related errors</h2>
 <p>Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical functions is checked and non allowed operations are signaled. </p>
 <h3 id="automatic-type-promotion">Automatic type promotion</h3>
-<p>Some primitives (like <a href="https://faustdoc.grame.fr/manual/syntax/#route-primitive">route</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a>, <a href="https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive">rwtable</a>...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of <code>int(exp)</code> is internally added and is not necessary in the source code. </p>
+<p>Some primitives (like <a href="../syntax/#route-primitive">route</a>, <a href="../syntax/#rdtable-primitive">rdtable</a>, <a href="../syntax/#rwtable-primitive">rwtable</a>...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of <code>int(exp)</code> is internally added and is not necessary in the source code. </p>
 <h3 id="parameter-range-errors">Parameter range errors</h3>
 <h4 id="soundfile-usage-error">Soundfile usage error</h4>
 <p>The soundfile primitive assumes the part number to stay in the [0..255] interval, so for instance the following code: </p>
@@ -625,7 +625,7 @@ process = @(ba.time);
 </code></pre>
 <p>[TO COMPLETE]</p>
 <h3 id="table-construction-errors">Table construction errors</h3>
-<p>The <a href="https://faustdoc.grame.fr/manual/syntax/#rdtable-primitive">rdtable</a> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The <a href="https://faustdoc.grame.fr/manual/syntax/#rwtable-primitive">rwtable</a> primitive can be used to implement a read/write table. Both have a size computed at compiled time </p>
+<p>The <a href="../syntax/#rdtable-primitive">rdtable</a> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The <a href="../syntax/#rwtable-primitive">rwtable</a> primitive can be used to implement a read/write table. Both have a size computed at compiled time </p>
 <p>The <code>rdtable</code> primitive assumes that the table content is produced by a processor with 0 input and one output, known at compiled time. So the following expression:</p>
 <pre><code>process = rdtable(9, +, 4);
 </code></pre>
