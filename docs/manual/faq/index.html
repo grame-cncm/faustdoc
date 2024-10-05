@@ -534,7 +534,7 @@ process = synth_ui;
 <p>There is an exception when <code>F</code> is a binary operation like <code>+,-,/,*</code>. In this case, the rewriting rule is <code>/(3) ==&gt; _,3:/</code>. In other words, when we apply only one argument, it is the second one.</p>
 <h2 id="control-rate-versus-audio-rate">Control rate versus audio rate</h2>
 <p>Question: <em>I have a question about sample rate / control rate issues. I have a Faust code that takes channel pressure messages from my keyboard as input, therefore at control rate, and outputs an expression signal at sample rate. The first part of the code can run at control rate, but I want to force it to run at sample rate (otherwise unwanted behavior will appear). Is there a simple way of forcing my pressure signal to be at sample rate (without making a smooth which may also result in unwanted behavior)</em>.</p>
-<p>Answer: the <a href="https://faustlibraries.grame.fr/libs/basics/#usage_53">ba.kr2ar</a> function can be used for that purpose.</p></div>
+<p>Answer: the <a href="https://faustlibraries.grame.fr/libs/basics/#bakr2ar">ba.kr2ar</a> function can be used for that purpose.</p></div>
         </div>
     </div>
 
