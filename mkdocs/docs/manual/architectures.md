@@ -747,9 +747,13 @@ The dsp class is central to the Faust architecture design:
 
 (note that `FAUSTFLOAT` label is typically defined to be the actual type of sample: either `float` or `double` using `#define FAUSTFLOAT float` in the code for instance).
 
-For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods (the actual name can be changed using the `-cn` option). For dynamic code producing backends like the LLVM IR, Cmajor or the Interpreter ones, the actual code (an LLVM module, a Cmajor module or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces an `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `cmajorpatch_dsp` typed object (defined in the [cmajorpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/cmajorpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio` C++ classes (like the C++ generated class). See the following class diagram:
+For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods. For dynamic code producing backends like the LLVM IR, Cmajor or the Interpreter ones, the actual code (an LLVM module, a Cmajor module or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces an `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `cmajorpatch_dsp` typed object (defined in the [cmajorpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/cmajorpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio` C++ classes (like the C++ generated class). See the following class diagram:
 
 <img src="img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
+
+### Changing the generated class name 
+
+By default, the generated class is `mydsp`, but can be changed using the `-cn new_name` option. Note that any `mydsp` string used in the architecture class will be automatically replaced by the `new_name` string. Thus other sections of the architecture file can possibly adapt using the `-cn new_name` renaming feature.
 
 ### Global DSP metadata 
 
