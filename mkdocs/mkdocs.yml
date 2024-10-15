@@ -86,10 +86,11 @@ plugins:
 
 extra_css:
    - '/css/quickref.css'
+   - '/css/github.min.css'
    - '/rail/railroad-diagrams.css'
 
 extra_javascript:
-  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  - '/js/faust-web-component.js'
 
 markdown_extensions:
     - mdx_math
