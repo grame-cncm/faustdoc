@@ -1215,8 +1215,8 @@ Require: Unity
 Compiles Faust programs to OSX/iOS libraries suitable for the Unity environment
 Options:
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -ios :       create an iOS static library
-   -universal : generate a 64/32 bits external
+   -ios : creates an iOS static library
+   -universal : generates an universal (arm/intel) external on OSX
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 See architecture/unity/README.md for more info.
 </pre>
@@ -1437,6 +1437,7 @@ Options:
    -linux : generates a Linux library
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
    -source : generates the source files (uncompressed folder)
+   -universal : generates a universal (arm/intel) external on OSX
    -unpacked : generates an unpacked folder with files organized like the Unity Asset hierarchy. Use this options to add specific files in the unity package (in the Assets folder, then use 'encoderunitypackage &lt;folder>' to compress and pack it.
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 See architecture/unity/README.md for more info.
