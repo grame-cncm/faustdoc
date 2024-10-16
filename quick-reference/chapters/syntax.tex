@@ -371,7 +371,6 @@ The priority and associativity of this five operations are given table \ref{tabl
   	\label{table-composition}
 \end{table}
  
- 
 
 \paragraph{Parallel Composition}
 The \emph{parallel composition}  \lstinline'(A,B)' (figure \ref{figure-par1}) is probably the simplest one. It places the two block-dia\-grams one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of \lstinline$A$ and \lstinline$B$. The outputs of the resulting block-diagram are the outputs of \lstinline$A$ and \lstinline$B$. 
@@ -1300,3 +1299,14 @@ will produce:
 
 Please note that patterns are evaluated before the pattern matching operation. Therefore only variables that appear free in the pattern are binding variables during pattern matching. 
 
+\subsection{Equivalent expressions}
+
+When programming in Faust, you may reuse the same expression in multiple places within your code. If the compiler can prove that these expressions are used in identical contexts, it will automatically share the computation between the different occurrences. This is particularly useful for expressions involving User Interface (UI) widgets like buttons or sliders. In these cases, equivalence is determined by the widget’s pathname, which is constructed by concatenating the labels of all surrounding groups. If the pathnames are identical, the compiler will treat the expressions as equivalent, allowing the same control (e.g., a button or slider) to affect different parts of the program.
+
+To share UI widgets deeply nested within the hierarchical structure, you may need to "move them up" in the hierarchy by adjusting their pathnames. This can be done using syntax like the following:
+
+\begin{lstlisting}
+	hslider("../volume",...)
+\end{lstlisting}
+
+By doing so, the widget's pathname is made syntactically equivalent across different parts of the program, enabling shared control.
