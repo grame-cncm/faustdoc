@@ -43,7 +43,8 @@ help:
 	@echo "This Makefile is intended to generate the faust documentation"
 	@echo "======================================================="
 	@echo "Available targets are:"
-	@echo "  install  : install the required components"
+	@echo "  install  : install the required Python components"
+	@echo "  dependencies  : download the required css and js dependencies"
 	@echo "  build    : build the web site"
 	@echo "  serve    : launch the mkdoc server"
 	@echo "Development specific targets are available:"
@@ -68,6 +69,7 @@ test:
 ####################################################################
 build:
 	$(MAKE) all
+	$(MAKE) dependencies
 	cd $(MKDIR) && mkdocs build
 	git checkout docs/CNAME
 	
@@ -159,6 +161,13 @@ $(FAUSTDIR):
 	@echo "   - set FAUSTDIR to the faust projet location in this Makefile"
 	@echo "   - call $(MAKE) FAUSTDIR=faust_projet_path"
 	@false;
+
+####################################################################
+dependencies:
+	curl -L --create-dirs https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css -o ./mkdocs/docs/css/github.min.css
+	curl -L --create-dirs https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js -o ./mkdocs/docs/js/highlight.min.js
+	curl -L --create-dirs https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.4.1/dist/faust-web-component.js -o ./mkdocs/docs/js/faust-web-component.js
+	curl -L --create-dirs https://github.com/mathjax/MathJax/archive/2.7.1.zip -o ./mkdocs/docs/js/2.7.1.zip && unzip -o ./mkdocs/docs/js/2.7.1.zip -d ./mkdocs/docs/js/
 
 ####################################################################
 install:
