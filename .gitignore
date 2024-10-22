@@ -39,8 +39,11 @@ mkdocs/docs/qreference/
 
 mkdocs/docs/rail/[0-9]*
 
+faust
+
 src/examples/ambisonics.md
 src/examples/analysis.md
+src/examples/autodiff.md
 src/examples/bela.md
 src/examples/delayEcho.md
 src/examples/dynamic.md
@@ -52,8 +55,9 @@ src/examples/phasing.md
 src/examples/physicalModeling.md
 src/examples/pitchShifting.md
 src/examples/psychoacoustic.md
+src/examples/quantizing.md
 src/examples/reverb.md
 src/examples/SAM.md
 src/examples/smartKeyboard.md
 src/examples/spat.md
-src/examples/quantizing.md
+
