@@ -230,7 +230,7 @@ with the following URL: [https://faustide.grame.fr/?code=https://raw.githubuserc
 
 ## Experimental Faust in Cmajor integration 
 
-With the release of the [Cmajor source code](https://github.com/cmajor-lang/cmajor), an experimental integration with Faust is now available, beginning with the [Cmajor 1.0.2616 release](https://github.com/cmajor-lang/cmajor/releases/tag/1.0.2616). This enables the creation of patches that merge Faust and Cmajor code. The `libfaust` component, which includes a Faust-to-Cmajor backend, is compiled as WebAssembly and dynamically used in the Faust DSP-to-Cmajor conversion process. The resulting Cmajor files are then JIT-compiled. See the [FaustFM example](https://github.com/cmajor-lang/cmajor/tree/main/).
+With the release of the [Cmajor source code](https://github.com/cmajor-lang/cmajor), an experimental integration with Faust is now available, beginning with the [Cmajor 1.0.2616 release](https://github.com/cmajor-lang/cmajor/releases/tag/1.0.2616). This enables the creation of patches that merge Faust and Cmajor code. The `libfaust` component, which includes a Faust-to-Cmajor backend, is compiled as WebAssembly and dynamically used in the Faust DSP-to-Cmajor conversion process. The resulting Cmajor files are then JIT-compiled. See the [FaustFM example](https://github.com/cmajor-lang/cmajor/tree/main/examples/patches/FaustFM).
 
 ### Known limitations
 
