@@ -567,7 +567,7 @@ with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.git
 </li>
 </ul>
 <h2 id="experimental-faust-in-cmajor-integration">Experimental Faust in Cmajor integration</h2>
-<p>With the release of the Cmajor <a href="https://github.com/cmajor-lang/cmajor">source code</a>, an experimental Faust in Cmajor integration can be tested starting with <a href="https://github.com/cmajor-lang/cmajor/releases/tag/1.0.2616">Cmajor 1.0.2616 release</a>.</p>
+<p>With the release of the <a href="https://github.com/cmajor-lang/cmajor">Cmajor source code</a>, an experimental integration with Faust is now available, beginning with the <a href="https://github.com/cmajor-lang/cmajor/releases/tag/1.0.2616">Cmajor 1.0.2616 release</a>. This enables the creation of patches that merge Faust and Cmajor code. The <code>libfaust</code> component, which includes a Faust-to-Cmajor backend, is compiled as WebAssembly and dynamically used in the Faust DSP-to-Cmajor conversion process. The resulting Cmajor files are then JIT-compiled. See the <a href="https://github.com/cmajor-lang/cmajor/tree/main/">FaustFM example</a>.</p>
 <h3 id="known-limitations">Known limitations</h3>
 <p>The Cmajor language generates some usefull API when the patch is exported in C++ or JavaScript. For example the  <code>getInputEndpoints/getOutputEndpoints</code> and <code>getEndpointHandle</code> functions allow an external piece of code to enumerate and access all endpoints, to possibly control the program or build a GUI. But unfortunately those functions <strong>are not part of the language itself</strong>. Thus there is no way we know of:</p>
 <ul>
