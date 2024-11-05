@@ -241,7 +241,7 @@ Despite its textual syntax, Faust is conceptually a block-diagram language. Faus
 
 ### Constant Numerical Expressions  
 
-Some language primitives (like `rdtable`, `rwtable`, `hslider` etc.) take constant numbers as some of their parameters. This is the case also for expressions using pattern matching techniques. Those numbers can be directly given in the code, but can also be computed by more complex expressions *which have to produce numbers at compile time*. We will refer to them as [constant numerical expressions](#constant-numerical-expressions) in the documentation.
+Some language primitives (like `rdtable`, `rwtable`, `hslider` etc.) take constant numbers as some of their parameters. This is the case also for expressions using pattern matching techniques. Those numbers can be directly given in the code, but can also be computed by more complex expressions *which have to produce numbers known at compile time*. We will refer to them as [constant numerical expressions](#constant-numerical-expressions) in the documentation.
 
 ### Diagram Expressions
 
