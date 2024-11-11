@@ -2279,9 +2279,9 @@ Convert Faust code to a header-only standalone C++ library. A collection of head
 
 A post-processor for Faust, which allows to generate with more flexibility. This is a source transformation tool based on the Faust compiler. It permits to arrange the way how Faust source is generated with greater flexibility.
 
-#### [cookiecutter-dpf-faust](https://github.com/SpotlightKid/cookiecutter-dpf-faust)
+#### [dpf-faust-project-template](https://github.com/SpotlightKid/dpf-faust-project-template)
 
-A [cookiecutter](https://github.com/cookiecutter/cookiecutter) project template for [DISTRHO plugin framework](https://github.com/DISTRHO/DPF) audio effect plugins using Faust for the implementation of the DSP pipeline.
+A [copier](https://github.com/copier-org/copier) project template for DISTRHO Plugin Framework ([DPF](https://github.com/DISTRHO/DPF)) audio effect plugins using [FAUST](https://faust.grame.fr) for the implementation of the DSP pipeline.
 
 #### [faustmd](https://github.com/jpcima/faustmd)
 
