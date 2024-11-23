@@ -1,4 +1,4 @@
-# Architecture Files
+ # Architecture Files
 
 A Faust program describes a *signal processor*, a pure DSP computation that maps *input signals* to *output signals*. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by *architecture files*.
 
@@ -2278,6 +2278,10 @@ Convert Faust code to a header-only standalone C++ library. A collection of head
 #### [faustpp](https://github.com/jpcima/faustpp)
 
 A post-processor for Faust, which allows to generate with more flexibility. This is a source transformation tool based on the Faust compiler. It permits to arrange the way how Faust source is generated with greater flexibility.
+
+#### [faustdoctor](https://github.com/SpotlightKid/faustdoctor)
+
+A fork of [faustpp](https://github.com/jpcima/faustpp) with greater flexibility.
 
 #### [dpf-faust-project-template](https://github.com/SpotlightKid/dpf-faust-project-template)
 
