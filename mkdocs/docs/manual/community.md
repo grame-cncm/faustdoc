@@ -4,8 +4,16 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
-#### [Generate WAMs with FaustIDE](http://www.webaudiomodules.com/docs/usage/generate-with-faustide/)
 
+#### [About this filters business](https://lucaspanedda.github.io/2024/11/12/filters.html) 
+
+A tutorial on Digital Filters in Faust.
+
+#### [Exploring Pseudo-Random and Stochastic Signals](https://lucaspanedda.github.io/2024/11/15/random.html)
+
+Exploring Pseudo-Random and Stochastic Signals in Digital Sound Synthesis Random and stochastic signals in synthesis can be useful for implementing time-varying oscillators and/or control signals.
+
+#### [Generate WAMs with FaustIDE](http://www.webaudiomodules.com/docs/usage/generate-with-faustide/)
 [Web Audio Modules](http://www.webaudiomodules.com) (WAM) ias a standard for Web Audio plugins and DAWs. The 2.0 version of Web Audio Modules has been released in 2021 as a group effort by a large set of people and since then, multiple plugins and hosts have been published, mostly as open source and free software.
 
 The FAUST IDE is a very popular tool for [generating WAMs from existing FAUST code](http://www.webaudiomodules.com/docs/usage/generate-with-faustide) (and there are hundreds of source code example available for audio effects, instruments, etc.). You can [generate WAMs directly](http://www.webaudiomodules.com/docs/usage/generate-with-faust) from the command line using the [faust2wam script](https://github.com/Fr0stbyteR/faust2wam).
