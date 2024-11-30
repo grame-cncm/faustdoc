@@ -40,13 +40,6 @@ pre {
     width: 40%;
 }
 
-.bs-sidebar {
-  overflow-y: auto;
-  max-height: 100%;
-	height: calc(100vh - 100px);
-	overflow-x: hidden;
-}
-
 blockquote{
   padding-left: 20pt;
   font-weight: bold;
@@ -378,6 +371,13 @@ h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .head
 }
 
 @media (min-width: 992px) {
+    .bs-sidebar {
+        overflow-y: auto;
+        max-height: 100%;
+        height: calc(100vh - 100px);
+        overflow-x: hidden;
+    }
+
     .dropdown-menu {
         overflow-y: auto;
         max-height: calc(100vh - 3.5rem);
