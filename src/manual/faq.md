@@ -246,3 +246,36 @@ Question: *Is there a way to force the sliders to show in numerical order respec
  
 Answer: Labels can contain variable parts. These are indicated with the sign % followed by the name of a variable. For a detailed explanation of how to use this feature, refer to the [comprehensive documentation](syntax.md#variable-parts-of-a-label).
 
+## Semantic of bargraphs
+
+Question: *When are  control rate outputs (like hbargraph/vbargraph) calculated every sample ?* 
+
+Answer: This depends on the nature of the signal entering the bargraph. If it's a control rate signal, as in `process = vslider("foo", 0, 0, 1, 0.01) : vbargraph("bar", 0, 1);`, then updating is done at control rate:
+
+```C++
+virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    fVbargraph0 = FAUSTFLOAT(float(fVslider0));
+    float fSlow0 = fVbargraph0;
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        output0[i0] = FAUSTFLOAT(fSlow0);
+    }
+}
+```
+
+But if the signal is at sample rate, as in `process = vslider("foo", 0, 0, 1, 0.01) : si.smooth(0.9) : vbargraph("bar", 0, 1);`, the calculation must be at sample rate to be correct (that is to properly update the signal state at each sample), even if all the values are not displayed:
+
+```C++
+virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
+{
+    FAUSTFLOAT* output0 = outputs[0];
+    float fSlow0 = fConst0 * float(fVslider0);
+    for (int i0 = 0; i0 < count; i0 = i0 + 1) {
+        fRec0[0] = fSlow0 + fConst1 * fRec0[1];
+        fVbargraph0 = FAUSTFLOAT(fRec0[0]);
+        output0[i0] = FAUSTFLOAT(fVbargraph0);
+        fRec0[1] = fRec0[0];
+    }
+}
+```
