@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.75.7
+## FAUST compiler version 2.77.0
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -20,6 +20,7 @@ usage : faust [options] file1 [file2 ...].
   -o <file>                               the output file.
   -e        --export-dsp                  export expanded DSP (with all included libraries).
   -uim      --user-interface-macros       add user interface macro definitions to the output code.
+  -rnt      --rust-no-faustdsp-trait      (Rust only) Don't generate FaustDsp trait implmentation.
   -xml                                    generate an XML description file.
   -json                                   generate a JSON description file.
   -O <dir>  --output-dir <dir>            specify the relative directory of the generated output code and of additional generated files (SVG, XML...).
@@ -28,7 +29,7 @@ usage : faust [options] file1 [file2 ...].
 ---------------------------------------
 ~~~faust-options
   -lang <lang> --language                 select output language,
-                                          'lang' should be c, cpp (default), cmajor, codebox, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust, vhdl or wast/wasm.
+                                          'lang' should be c, cpp (default), cmajor, codebox, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust, sdf3, vhdl or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.
@@ -117,6 +118,7 @@ usage : faust [options] file1 [file2 ...].
   -sg         --signal-graph              print the internal signal graph in dot format.
   -rg         --retiming-graph            print the internal signal graph after retiming in dot format.
   -norm       --normalized-form           print signals in normalized form and exit.
+  -norm1      --normalized-form1          print signals in normalized form with IDs for shared sub-expressions and exit.
   -me         --math-exceptions           check / for 0 as denominator and remainder, fmod, sqrt, log10, log, acos, asin functions domain.
   -sts        --strict-select             generate strict code for 'selectX' even for stateless branches (both are computed).
   -wall       --warning-all               print all warnings.
@@ -138,6 +140,7 @@ usage : faust [options] file1 [file2 ...].
 ~~~faust-options
   FAUST_DEBUG      = FAUST_LLVM1          print LLVM IR before optimisation.
   FAUST_DEBUG      = FAUST_LLVM2          print LLVM IR after optimisation.
+  FAUST_DEBUG      = FIR_PRINTER          print FIR after generation.
   FAUST_DEBUG      = FAUST_LLVM_NO_FM     deactivate fast-math optimisation in LLVM IR.
   FAUST_DEBUG      = FAUST_DTREE          successive tree pointer allocation to guaranty deterministic compilation.
   FAUST_DTREE_SIZE = <num>                to set the size of each array of successive tree pointers in FAUST_DTREE mode.
