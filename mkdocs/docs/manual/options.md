@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.77.0
+## FAUST compiler version 2.77.3
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -142,8 +142,6 @@ usage : faust [options] file1 [file2 ...].
   FAUST_DEBUG      = FAUST_LLVM2          print LLVM IR after optimisation.
   FAUST_DEBUG      = FIR_PRINTER          print FIR after generation.
   FAUST_DEBUG      = FAUST_LLVM_NO_FM     deactivate fast-math optimisation in LLVM IR.
-  FAUST_DEBUG      = FAUST_DTREE          successive tree pointer allocation to guaranty deterministic compilation.
-  FAUST_DTREE_SIZE = <num>                to set the size of each array of successive tree pointers in FAUST_DTREE mode.
   FAUST_OPT        = FAUST_SIG_NO_NORM    deactivate signal normalisation.
 ~~~
 ## Example:
