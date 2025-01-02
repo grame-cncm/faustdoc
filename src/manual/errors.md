@@ -357,6 +357,44 @@ ERROR : checkInit failed for type RSEVN interval(-2,2,-24)
 
 The same kind of errors will happen when read and write indexes are incorrectly defined in a `rwtable` primitive. 
 
+### Duplicate pathname error
+
+Pathnames for different GUI items have to be diffrent. Compiling the following code:
+
+```
+import("stdfaust.lib");
+nBands = 8;
+filterBank(N) = hgroup("Filter Bank",seq(i,N,oneBand(i)))
+with {
+    oneBand(j) = vgroup("[%j]Band",fi.peak_eq(l,f,b))
+    with {
+        a = j+1; // just so that band numbers don't start at 0
+        l = vslider("[2]Level[unit:db]",0,-70,12,0.01) : si.smoo;
+        f = nentry("[1]Freq",(80+(1000*8/N*(j+1)-80)),20,20000,0.01) : si.smoo;
+        b = f/hslider("[0]Q[style:knob]",1,1,50,0.01) : si.smoo;
+    };
+};
+process = filterBank(nBands);
+```
+
+gives the `ERROR : path '/Filter_Bank/Band/Q' is already used` message. This is because we typically want to distinguish pathnames to be controlled by OSC messages for instance. So a proper solution would be to rewrite the code with:
+
+```
+import("stdfaust.lib");
+nBands = 8;
+filterBank(N) = hgroup("Filter Bank",seq(i,N,oneBand(i)))
+with {
+    oneBand(j) = vgroup("[%j]Band %a",fi.peak_eq(l,f,b))
+    with {
+        a = j+1; // just so that band numbers don't start at 0
+        l = vslider("[2]Level[unit:db]",0,-70,12,0.01) : si.smoo;
+        f = nentry("[1]Freq",(80+(1000*8/N*(j+1)-80)),20,20000,0.01) : si.smoo;
+        b = f/hslider("[0]Q[style:knob]",1,1,50,0.01) : si.smoo;
+    };
+};
+process = filterBank(nBands);
+```
+
 ## Mathematical functions out of domain errors
 
 Error messages will be produced when the mathematical functions are used outside of their domain, and if the problematic computation is done at compile time. If the out of domain computation may be done at runtime, then a warning can be produced using the `-me` option (see [Warning messages](#warning-messages) section).
@@ -377,7 +415,6 @@ ERROR : % by 0 in IN[0] % 0
 
 The same kind of errors will be produced for `acos`, `asin`, `fmod`, `log10`, `log`, `remainder` and `sqrt` functions.
 
-
 ## FIR and backends related errors 
 
 Some primitives of the language are not available in some backends.
@@ -388,15 +425,15 @@ fun = ffunction(float fun(float), <fun.h>, "");
 process = fun;
 ```
  
- compiled with the wast/wasm backends using: `faust -lang wast errors.dsp` will produce the following error:
+compiled with the wast/wasm backends using: `faust -lang wast errors.dsp` will produce the following error:
  
  ```
 ERROR : calling foreign function 'fun' is not allowed in this compilation mode
  ```
  
- and the same kind of errors would happen also with foreign variables or constants. 
+and the same kind of errors would happen also with foreign variables or constants. 
  
- [TO COMPLETE]
+[TO COMPLETE]
  
 ## Compiler option errors
 
