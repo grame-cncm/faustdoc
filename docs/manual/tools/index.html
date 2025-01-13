@@ -542,6 +542,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2supercollider" class="nav-link">faust2supercollider</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2teensy" class="nav-link">faust2teensy</a>
               <ul class="nav flex-column">
               </ul>
@@ -687,7 +691,6 @@ Global options:
 
 Android specific options:
    -package : set the JAVA package name (e.g. '-package mypackage' will change the JAVA package name to 'mypackage.DspFaust'). The default package name is 'com.DspFaust.'
-   -soundfile : add built-in Soundfile support to the API
 
 Options supported by iOS, CoreAudio, ALSA, JACK, PortAudio, RTAudio, Miniaudio, openFrameworks and JUCE
    -midi : add built-in RtMidi support to the API
@@ -1453,6 +1456,23 @@ Options:
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
      the script automatically uses '-i -scn FaustDSP -light -nvi'
      -O and/or -o can be used, otherwise all output is in the same folder as the corresponding input
+</pre>
+
+<h2 id="faust2supercollider">faust2supercollider</h2>
+<pre class=faust-tools>
+Usage: faust2supercollider [options] [Faust options] &lt;file.dsp>
+Require: SuperCollider includes
+Compiles Faust programs to SuperCollider UGens. On macOS, soundfiles will be searched in 'xx/Library/Application Support/SuperCollider/Extensions/' and 'xx/Library/Application Support/SuperCollider/Extensions/FaustSounds'
+Options:
+   -d[ebug] : to activate debug mode
+   -dm : to activate debug message mode
+   -sd : activate the --synthdef option in faust2sc
+   -ks : to keep the UGen source
+   -sn : to compile for SuperNova
+   -noprefix : to remove the standard 'Faust' prefix
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -universal : to generate a universal (arm/intel) UGens
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2teensy">faust2teensy</h2>
