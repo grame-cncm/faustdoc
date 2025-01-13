@@ -1,4 +1,4 @@
- # Architecture Files
+# Architecture Files
 
 A Faust program describes a *signal processor*, a pure DSP computation that maps *input signals* to *output signals*. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by *architecture files*.
 

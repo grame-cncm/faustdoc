@@ -320,11 +320,12 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#architecture-files" class="nav-link">Architecture Files</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#minimal-structure-of-an-architecture-file" class="nav-link">Minimal Structure of an Architecture File</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#audio-architecture-modules" class="nav-link">Audio Architecture Modules</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#external-and-internal-audio-sample-formats" class="nav-link">External and internal audio sample formats</a>
@@ -341,7 +342,6 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#midi-architecture-modules" class="nav-link">MIDI Architecture Modules</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#midi-messages-in-the-dsp-source-code" class="nav-link">MIDI Messages in the DSP Source Code</a>
@@ -358,7 +358,6 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#ui-architecture-modules" class="nav-link">UI Architecture Modules</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#active-widgets" class="nav-link">Active Widgets</a>
@@ -403,7 +402,6 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#dsp-architecture-modules" class="nav-link">DSP Architecture Modules</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#the-base-dsp-class" class="nav-link">The Base dsp Class</a>
@@ -508,7 +506,6 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#embedded-platforms" class="nav-link">Embedded Platforms</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#metadata-naming-convention" class="nav-link">Metadata Naming Convention</a>
@@ -521,7 +518,6 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#developing-a-new-architecture-file" class="nav-link">Developing a New Architecture File</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#adapting-the-generated-dsp" class="nav-link">Adapting the Generated DSP</a>
@@ -542,12 +538,10 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#other-languages-than-c" class="nav-link">Other Languages Than C++</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#the-faust2xx-scripts" class="nav-link">The faust2xx Scripts</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#using-faust2xx-scripts" class="nav-link">Using faust2xx Scripts</a>
@@ -560,12 +554,10 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#the-faust2api-model" class="nav-link">The faust2api Model</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#using-the-inj-option-with-faust2xx-scripts" class="nav-link">Using the -inj Option With faust2xx Scripts</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#using-the-template-llvmcpp-architecture" class="nav-link">Using the template-llvm.cpp architecture</a>
@@ -590,7 +582,6 @@
             </li>
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#additional-ressources" class="nav-link">Additional Ressources</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#preprocessing-tools" class="nav-link">Preprocessing tools</a>
@@ -787,12 +778,14 @@
             </li>
               </ul>
             </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
             <div class="col-md-9 main-container" role="main">
 
-<p># Architecture Files</p>
+<h1 id="architecture-files">Architecture Files</h1>
 <p>A Faust program describes a <em>signal processor</em>, a pure DSP computation that maps <em>input signals</em> to <em>output signals</em>. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by <em>architecture files</em>.</p>
 <p>An <em>architecture file</em> describes how to relate a Faust program to the external world, in particular the audio drivers and the controllers interfaces to be used. This approach allows a single Faust program to be easily deployed to a large variety of audio standards (e.g., Max/MSP externals, PD externals, VST plugins, CoreAudio applications, JACK applications, iPhone/Android, etc.):</p>
 <p><img src="img/Architectures.png" class="mx-auto d-block" width="90%"></p>
