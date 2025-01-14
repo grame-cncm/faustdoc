@@ -3909,7 +3909,7 @@ process = os.sawtooth(freq)*gain;
 <!-- /faust-run -->
 
 <h4 id="vbargraph-primitive"><code>vbargraph</code> Primitive</h4>
-<p>The <code>vbargraph</code> primitive implements a vertical bar-graph (typically a meter displaying the level of a signal).</p>
+<p>The <code>vbargraph</code> primitive implements a vertical bargraph (typically a meter displaying the level of a signal).</p>
 <p><strong>Usage</strong></p>
 <p><code>vbargraph</code> takes an input signal and outputs it while making it available to the UI.</p>
 <pre><code>_ : vbargraph(&quot;label&quot;,min,max) : _
@@ -3935,7 +3935,7 @@ process = _ <: attach(_,abs : ba.linear2db : vbargraph("Level",-60,0));
 
 <p>Note the use of the <a href="#attach-primitive"><code>attach</code></a> primitive here that forces the compilation of the <code>vbargraph</code> without using its output signal (see section on the <a href="#attach-primitive"><code>attach</code> primitive</a>).</p>
 <h4 id="hbargraph-primitive"><code>hbargraph</code> Primitive</h4>
-<p>The <code>hbargraph</code> primitive implements a horizontal bar-graph (typically a meter displaying the level of a signal).</p>
+<p>The <code>hbargraph</code> primitive implements an horizontal bargraph (typically a meter displaying the level of a signal).</p>
 <p><strong>Usage</strong></p>
 <p><code>hbargraph</code> takes an input signal and outputs it while making it available to the UI.</p>
 <pre><code>_ : hbargraph(&quot;label&quot;,min,max) : _

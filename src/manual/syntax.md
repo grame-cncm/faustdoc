@@ -2655,7 +2655,7 @@ process = os.sawtooth(freq)*gain;
 
 #### `vbargraph` Primitive
 
-The `vbargraph` primitive implements a vertical bar-graph (typically a meter displaying the level of a signal).
+The `vbargraph` primitive implements a vertical bargraph (typically a meter displaying the level of a signal).
 
 **Usage**
 
@@ -2685,7 +2685,7 @@ Note the use of the [`attach`](#attach-primitive) primitive here that forces the
 
 #### `hbargraph` Primitive
 
-The `hbargraph` primitive implements a horizontal bar-graph (typically a meter displaying the level of a signal).
+The `hbargraph` primitive implements an horizontal bargraph (typically a meter displaying the level of a signal).
 
 **Usage**
 
