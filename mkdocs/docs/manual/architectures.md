@@ -2416,6 +2416,9 @@ Makes dynamic compilation of Faust on the web a little easier, and has a dev pro
 #### [faust-wap2-playground](https://github.com/Nek/faust-wap2-playground)
 Playground and template for Faust-based web audio experiments.
 
+#### [vite-plugin-faust](https://www.npmjs.com/package/vite-plugin-faust)
+Vite plugin to transform Faust DSP files into importable JavaScript (+ WASM) modules. Uses [faustwasm](https://www.npmjs.com/package/@grame/faustwasm) under the hood.
+
 ### Dart tools 
 
 #### [flutter_faust_ffi](https://github.com/t2techno/flutter_faust_ffi)
