@@ -28,7 +28,7 @@ process = box1,box2;
 will produce the following error message:
 
 ```
-errors.dsp : 2 : ERROR : syntax error, unexpected IDENT
+error.dsp:2 : ERROR : syntax error, unexpected IDENT
 ```
 
 It means that an unexpected identifier as been found line 2 of the file test.dsp. Usually, this error is due to the absence of the semi-column `;` at the end of the previous line. 
@@ -44,7 +44,7 @@ t1 = _~(+(1);
 will produce the following error message:
 
 ```
-errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF
+errors.dsp:1 : ERROR : syntax error, unexpected ENDDEF
 
 ```
 
@@ -59,7 +59,7 @@ process = ffunction;
 will produce the following error message:
 
 ```
-errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF, expecting LPAR
+errors.dsp:1 : ERROR : syntax error, unexpected ENDDEF, expecting LPAR
 ```
 
 The parser was expecting a left parenthesis. It identified a keyword of the language that requires arguments.
@@ -73,7 +73,7 @@ process = +)1);
 will produce the following error message:
 
 ```
-errors.dsp : 1 : ERROR : syntax error, unexpected RPAR
+errors.dsp:1 : ERROR : syntax error, unexpected RPAR
 ```
 
 The wrong parenthesis has been used.
@@ -87,7 +87,7 @@ process = <:+;
 will produce the following error message:
 
 ```
-errors.dsp : 1 : ERROR : syntax error, unexpected SPLIT
+errors.dsp:1 : ERROR : syntax error, unexpected SPLIT
 ```
 
 The `<:` split operator is not correctly used, and should have been written `process = _<:+;`. 
@@ -102,7 +102,7 @@ process = foo;
 will produce the following error message:
 
 ```
-errors.dsp : 1 : ERROR : undefined symbol : foo
+errors.dsp:1 : ERROR : undefined symbol : foo
 ```
 
 This happens when an undefined name is used.

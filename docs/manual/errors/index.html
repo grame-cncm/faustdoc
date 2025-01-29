@@ -450,7 +450,7 @@ box2 = 2;
 process = box1,box2;
 </code></pre>
 <p>will produce the following error message:</p>
-<pre><code>errors.dsp : 2 : ERROR : syntax error, unexpected IDENT
+<pre><code>error.dsp:2 : ERROR : syntax error, unexpected IDENT
 </code></pre>
 <p>It means that an unexpected identifier as been found line 2 of the file test.dsp. Usually, this error is due to the absence of the semi-column <code>;</code> at the end of the previous line. </p>
 <p>The following program:</p>
@@ -458,7 +458,7 @@ process = box1,box2;
 2 process = t1 / 2147483647;
 </code></pre>
 <p>will produce the following error message:</p>
-<pre><code>errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF
+<pre><code>errors.dsp:1 : ERROR : syntax error, unexpected ENDDEF
 
 </code></pre>
 <p>The parser finds the end of the definition (<code>;</code>) while searching a closing right parenthesis.</p>
@@ -466,28 +466,28 @@ process = box1,box2;
 <pre><code>process = ffunction;
 </code></pre>
 <p>will produce the following error message:</p>
-<pre><code>errors.dsp : 1 : ERROR : syntax error, unexpected ENDDEF, expecting LPAR
+<pre><code>errors.dsp:1 : ERROR : syntax error, unexpected ENDDEF, expecting LPAR
 </code></pre>
 <p>The parser was expecting a left parenthesis. It identified a keyword of the language that requires arguments.</p>
 <p>The following program:</p>
 <pre><code>process = +)1);
 </code></pre>
 <p>will produce the following error message:</p>
-<pre><code>errors.dsp : 1 : ERROR : syntax error, unexpected RPAR
+<pre><code>errors.dsp:1 : ERROR : syntax error, unexpected RPAR
 </code></pre>
 <p>The wrong parenthesis has been used.</p>
 <p>The following program:</p>
 <pre><code>process = &lt;:+;
 </code></pre>
 <p>will produce the following error message:</p>
-<pre><code>errors.dsp : 1 : ERROR : syntax error, unexpected SPLIT
+<pre><code>errors.dsp:1 : ERROR : syntax error, unexpected SPLIT
 </code></pre>
 <p>The <code>&lt;:</code> split operator is not correctly used, and should have been written <code>process = _&lt;:+;</code>. </p>
 <p>The following program:</p>
 <pre><code>process = foo;
 </code></pre>
 <p>will produce the following error message:</p>
-<pre><code>errors.dsp : 1 : ERROR : undefined symbol : foo
+<pre><code>errors.dsp:1 : ERROR : undefined symbol : foo
 </code></pre>
 <p>This happens when an undefined name is used.</p>
 <h2 id="box-connection-errors">Box connection errors</h2>
