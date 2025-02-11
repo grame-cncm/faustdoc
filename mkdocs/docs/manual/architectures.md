@@ -2401,6 +2401,9 @@ A plugin to load Faust dsp files and JIT-compile them with LLVM. A simple GUI is
 
 ### WebAssembly tools 
 
+#### [Deploying Faust DSP on the Web](deploying.md)
+A description of different solutions to use Faust on the Web platform.
+
 #### [faust-loader](https://github.com/Smona/faust-loader)
 Import Faust .dsp files, and get back an AudioWorklet or ScriptProcessor node.
 
