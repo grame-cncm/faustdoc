@@ -130,7 +130,7 @@ examples : $(FAUSTDIR) src/examples $(EXOUT) zip
 
 src/examples/%.md: $(EXDIR)/%
 	@echo ========= building  $(*F) example
-	$(eval tmp := $(shell ls $</*.dsp | grep -v 'multibandFilter\|guitarix\|mixer'))
+	$(eval tmp := $(shell ls $</*.dsp | grep -v 'autodiff\|multibandFilter\|guitarix\|mixer'))
 	scripts/make-example $(*F) $(tmp) > $@
 
 exlist :
