@@ -318,6 +318,18 @@
             
             <li class="nav-item" data-level="1"><a href="#autodiff" class="nav-link">autodiff</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#noise" class="nav-link">noise</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#noop" class="nav-link">noop</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ramp" class="nav-link">ramp</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -325,7 +337,44 @@
 </div></div>
             <div class="col-md-9 main-container" role="main">
 
-<h1 id="autodiff">autodiff</h1></div>
+<h1 id="autodiff">autodiff</h1>
+<h2 id="noise">noise</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+ import("stdfaust.lib");
+ process = no.noise;
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="noop">noop</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("stdfaust.lib");
+process = _;
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="ramp">ramp</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+process = 1e-3 : + ~ _ : %(2) : -(1);
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run --></div>
         </div>
     </div>
 
