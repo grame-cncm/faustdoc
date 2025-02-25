@@ -326,6 +326,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#wfs" class="nav-link">wfs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -339,11 +343,11 @@
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 <faust-editor><!--
 
-declare name        "panpot";
-declare version     "1.0";
-declare author      "Grame";
-declare license     "BSD";
-declare copyright   "(c)GRAME 2006";
+declare name      "panpot";
+declare version   "1.0";
+declare author    "Grame";
+declare license   "BSD";
+declare copyright "(c)GRAME 2006";
 
 //-------------------------------------------------
 // Stereo panpot
@@ -367,16 +371,16 @@ process = panpot;
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 <faust-editor><!--
 
-declare name        "spat";
-declare version     "1.0";
-declare author      "Grame";
-declare license     "BSD";
-declare copyright   "(c)GRAME 2006";
+declare name      "spat";
+declare version   "1.0";
+declare author    "Grame";
+declare license   "BSD";
+declare copyright "(c)GRAME 2006";
 
 //==========================================================
 //
-//                      GMEM SPAT
-//  implementation of L. Pottier Spatializer
+//                         GMEM SPAT
+//    implementation of L. Pottier Spatializer
 //
 //==========================================================
 
@@ -390,6 +394,37 @@ angle = hslider("angle", 0.0, 0, 1, 0.01);
 distance = hslider("distance", 0.5, 0, 1, 0.01);
 
 process = vgroup("Spatializer 1x8", sp.spat(8, angle, distance));
+
+
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="wfs">wfs</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+declare name      "wfs";
+declare version   "1.0";
+declare author    "Grame";
+declare license   "BSD";
+declare copyright "(c)GRAME 2025";
+
+import("stdfaust.lib");
+
+// Distance between speakers in meters
+speakersDist = 0.0783;  
+
+// Reference listening point (central position for WFS)
+xref = 0;
+yref = 1;
+zref = 0;
+
+// Spatialize 2 sound sources on 8 speakers
+process = sp.wfs_ui(xref,yref,zref,speakersDist,2,8);
 
 
 
