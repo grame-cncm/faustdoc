@@ -1,10 +1,9 @@
 
-declare name "reverbTester";
-declare version "0.0";
-declare author "RM";
-declare description "Handy test inputs for reverberator demos below.";
+declare name "reverbTank";
+declare version "0.1";
+declare author "David Braun";
 
 import("stdfaust.lib");
 
-process = dm.stereo_reverb_tester;
+process = dm.reverbTank_demo;
 

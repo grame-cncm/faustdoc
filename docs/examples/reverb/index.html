@@ -342,6 +342,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#reverbtank" class="nav-link">reverbTank</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#reverbtester" class="nav-link">reverbTester</a>
               <ul class="nav flex-column">
               </ul>
@@ -484,9 +488,27 @@ process = dm.fdnrev0_demo(N,NB,BSO);
 </div>
 <!-- /faust-run -->
 
-<h2 id="reverbtester">reverbTester</h2>
+<h2 id="reverbtank">reverbTank</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+declare name "reverbTank";
+declare version "0.1";
+declare author "David Braun";
+
+import("stdfaust.lib");
+
+process = dm.reverbTank_demo;
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="reverbtester">reverbTester</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "reverbTester";
@@ -505,7 +527,7 @@ process = dm.stereo_reverb_tester;
 
 <h2 id="vital_rev">vital_rev</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "vital_rev";
@@ -524,7 +546,7 @@ process = dm.vital_rev_demo;
 
 <h2 id="zitarev">zitaRev</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "zitaRev";
@@ -543,7 +565,7 @@ process = dm.zita_rev1;
 
 <h2 id="zitarevfdn">zitaRevFDN</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "zitaRevFDN";
