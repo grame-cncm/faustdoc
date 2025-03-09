@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.77.3
+## FAUST compiler version 2.79.3
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -20,7 +20,6 @@ usage : faust [options] file1 [file2 ...].
   -o <file>                               the output file.
   -e        --export-dsp                  export expanded DSP (with all included libraries).
   -uim      --user-interface-macros       add user interface macro definitions to the output code.
-  -rnt      --rust-no-faustdsp-trait      (Rust only) Don't generate FaustDsp trait implmentation.
   -xml                                    generate an XML description file.
   -json                                   generate a JSON description file.
   -O <dir>  --output-dir <dir>            specify the relative directory of the generated output code and of additional generated files (SVG, XML...).
@@ -86,6 +85,8 @@ usage : faust [options] file1 [file2 ...].
   -fpga-mem <n>  --fpga-mem <n>           FPGA block ram max size, used in -mem1/-mem2 mode.
   -wi <n>     --widening-iterations <n>   number of iterations before widening in signal bounding.
   -ni <n>     --narrowing-iterations <n>  number of iterations before stopping narrowing in signal bounding.
+  -rnt        --rust-no-faustdsp-trait    (Rust only) Don't generate FaustDsp trait implmentation.
+  -rnlm       --rust-no-libm              (Rust only) Don't generate FFI calls to libm.
 ~~~
 ## Block diagram options:
 ---------------------------------------
