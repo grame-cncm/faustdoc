@@ -5,7 +5,6 @@ CHAPTERS := $(wildcard chapters/*.tex)
 
 .PHONY: mkdocs
 
-
 all: 
 	$(MAKE) latex
 	$(MAKE) mkdocs
