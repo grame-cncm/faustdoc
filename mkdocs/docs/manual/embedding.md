@@ -216,5 +216,5 @@ Like metaSurface64, it has both its own loop generator and a multi-effects FX en
 
 * [nih-faust-jit](https://github.com/YPares/nih-faust-jit) ia a plugin written in Rust to load Faust dsp files and JIT-compile them with LLVM. A simple GUI is provided to select which script to load and where to look for the Faust libraries that this script may import. The selected DSP script is saved as part of the plugin state and therefore is saved with your DAW project.
 
-* [QLFAUST](https://github.com/njazz/QLFAUST) is plugin for FAUST Programming Language using the [FaustSwiftUI](https://github.com/njazz/FaustSwiftUI) project, a SwiftUI-based dynamic UI renderer for Faust DSP JSON metadata. It parses the Faust UI JSON structure and displays corresponding SwiftUI controls like sliders, toggles, buttons, bargraphs etc.
+* [QLFAUST](https://github.com/njazz/QLFAUST) is a plugin for FAUST Programming Language using the [FaustSwiftUI](https://github.com/njazz/FaustSwiftUI) project, a SwiftUI-based dynamic UI renderer for Faust DSP JSON metadata. It parses the Faust UI JSON structure and displays corresponding SwiftUI controls like sliders, toggles, buttons, bargraphs etc.
 
