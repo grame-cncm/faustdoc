@@ -1,10 +1,10 @@
 
-declare name "vital_rev";
-declare version "0.1";
-declare author "David Braun";
-declare description "Vital demo application.";
+declare name "reverbTester";
+declare version "0.0";
+declare author "RM";
+declare description "Handy test inputs for reverberator demos below.";
 
 import("stdfaust.lib");
 
-process = dm.vital_rev_demo;	
+process = dm.stereo_reverb_tester;
 

@@ -1,10 +1,10 @@
 
-declare name "zitaRev";
-declare version "0.0";
-declare author "JOS, Revised by RM";
-declare description "Example GUI for zita_rev1_stereo (mostly following the Linux zita-rev1 GUI).";
+declare name "vital_rev";
+declare version "0.1";
+declare author "David Braun";
+declare description "Vital demo application.";
 
 import("stdfaust.lib");
 
-process = dm.zita_rev1;	
+process = dm.vital_rev_demo;	
 

@@ -338,6 +338,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#kb_rom_rev1" class="nav-link">kb_rom_rev1</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#reverbdesigner" class="nav-link">reverbDesigner</a>
               <ul class="nav flex-column">
               </ul>
@@ -465,9 +469,28 @@ process = dm.jprev_demo;
 </div>
 <!-- /faust-run -->
 
-<h2 id="reverbdesigner">reverbDesigner</h2>
+<h2 id="kb_rom_rev1">kb_rom_rev1</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+declare name "kb_rom_rev1";
+declare version "0.1";
+declare author "Luca Spanedda";
+declare description "Keith Barr reverb effect rom_rev1 demo application.";
+
+import("stdfaust.lib");
+
+process = dm.kb_rom_rev1_demo;  
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="reverbdesigner">reverbDesigner</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "reverbDesigner";
@@ -490,7 +513,7 @@ process = dm.fdnrev0_demo(N,NB,BSO);
 
 <h2 id="reverbtank">reverbTank</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "reverbTank";
@@ -508,7 +531,7 @@ process = dm.reverbTank_demo;
 
 <h2 id="reverbtester">reverbTester</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "reverbTester";
@@ -527,7 +550,7 @@ process = dm.stereo_reverb_tester;
 
 <h2 id="vital_rev">vital_rev</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "vital_rev";
@@ -546,7 +569,7 @@ process = dm.vital_rev_demo;
 
 <h2 id="zitarev">zitaRev</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "zitaRev";
@@ -565,7 +588,7 @@ process = dm.zita_rev1;
 
 <h2 id="zitarevfdn">zitaRevFDN</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "zitaRevFDN";
