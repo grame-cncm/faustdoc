@@ -780,6 +780,14 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#lua-tools" class="nav-link">Lua tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#libmfxfaust" class="nav-link">libMfxFaust</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -2762,7 +2770,10 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <p>Vite plugin to transform Faust DSP files into importable JavaScript (+ WASM) modules. Uses <a href="https://www.npmjs.com/package/@grame/faustwasm">faustwasm</a> under the hood.</p>
 <h3 id="dart-tools">Dart tools</h3>
 <h4 id="flutter_faust_ffi"><a href="https://github.com/t2techno/flutter_faust_ffi">flutter_faust_ffi</a></h4>
-<p>A basic flutter app as a proof of concept utilizing Faust's C API export with Dart's ffi methods to create cross-platform plug-ins.</p></div>
+<p>A basic flutter app as a proof of concept utilizing Faust's C API export with Dart's ffi methods to create cross-platform plug-ins.</p>
+<h3 id="lua-tools">Lua tools</h3>
+<h4 id="libmfxfaust"><a href="https://github.com/Simon-L/libMfxFaust">libMfxFaust</a></h4>
+<p>This library is intended for use with Luajit through the FFI, DspFaust.cpp contains code at the end of the file that exposes functions in C namespace to easily call from Luajit, but plain C will work just as well.</p></div>
         </div>
     </div>
 

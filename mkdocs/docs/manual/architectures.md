@@ -2426,3 +2426,9 @@ Vite plugin to transform Faust DSP files into importable JavaScript (+ WASM) mod
 
 #### [flutter_faust_ffi](https://github.com/t2techno/flutter_faust_ffi)
 A basic flutter app as a proof of concept utilizing Faust's C API export with Dart's ffi methods to create cross-platform plug-ins.
+
+### Lua tools 
+
+#### [libMfxFaust](https://github.com/Simon-L/libMfxFaust)
+This library is intended for use with Luajit through the FFI, DspFaust.cpp contains code at the end of the file that exposes functions in C namespace to easily call from Luajit, but plain C will work just as well.
+
