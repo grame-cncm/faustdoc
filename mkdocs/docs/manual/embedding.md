@@ -107,7 +107,7 @@ The interpreter backend API is similar to the LLVM backend API:
 - alternatively the `createInterpreterDSPFactoryFromSignals` allows to create the factory from a list of outputs signals built with the [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h)
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
 - next, the `createDSPInstance` method of the factory class, corresponding to the `new className` of C++, instantiates an `interpreter_dsp` pointer, to be used as any regular Faust compiled DSP object, run and controlled through its interface. The instance contains the interpreter virtual machine loaded with the compiled bytecode, to be executed for each method. When finished, `delete` can be used to destroy the dsp instance. Note that an instance internally needs to access its associated factory during its entire lifetime. 
-- since ``interpreter_dsp`` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](../manual/architectures.md) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
+- since `interpreter_dsp` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](../manual/architectures.md) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
 - `deleteInterpreterDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore, that is when all associated DSP instances have been properly destroyed. 
 - a unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
 
@@ -132,7 +132,37 @@ The generated code is obviously much slower than LLVM generated native code. Mea
 
 ## Using libfaust with the WebAssembly backend
 
-The libfaust C++ library can be compiled in WebAssembly with [Emscripten](https://emscripten.org/), and used in the web  or NodeJS platforms. A [specific page on the subject](../manual/deploying.md) is available. 
+The libfaust C++ library can be compiled in WebAssembly with [Emscripten](https://emscripten.org/), and used in the Web or NodeJS platforms. A [specific page on the subject](../manual/deploying.md) is available. 
+
+Another possibility is to use the [wasmtime](https://wasmtime.dev) JIT compiler to use the WebAssembly format outside of the Web context. The libfaust library is used with its WebAssembly backend to produce a wasm module to be JIT compiled using wasmtime and executed on the fly. 
+
+#### Creation API
+
+The Wasm backend API is similar to the LLVM/Interpreter backends API: 
+
+- given a FAUST source code (as a file or a string),  calling the `createWasmDSPFactory`  function runs the compilation chain (Faust + wasm backend) and generates the *prototype* of the class, as an `wasm_dsp_factory` pointer. This factory actually contains the compiled wasm for the given DSP
+- alternatively the `createWasmDSPFactoryFromBoxes` allows to create the factory from a box expression built with the [box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h)
+- alternatively the `createWasmDSPFactoryFromSignals` allows to create the factory from a list of outputs signals built with the [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h)
+- the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
+- next, the `createDSPInstance` method of the factory class, corresponding to the `new className` of C++, instantiates an `wasm_dsp` pointer, to be used as any regular Faust compiled DSP object, run and controlled through its interface. The instance contains the interpreter virtual machine loaded with the compiled bytecode, to be executed for each method. When finished, `delete` can be used to destroy the dsp instance. Note that an instance internally needs to access its associated factory during its entire lifetime. 
+- since `wasm_dsp` is a subclass of the `dsp` base class, an object of this type can be used with all the available `audio` and `UI` classes. In essence, this is like reusing [all architecture files](../manual/architectures.md) already developed for the static C++ class compilation scheme like `OSCUI`, `httpdUI` interfaces, etc.
+- `deleteWasmDSPFactory` has to be explicitly used to properly decrement the reference counter when the factory is not needed anymore, that is when all associated DSP instances have been properly destroyed. 
+- a unique SHA1 key of the created factory can be obtained using its `getSHAKey` method
+
+#### Saving/restoring the factory
+
+After the DSP factory has been compiled, the application or plugin may want to save/restore it in order to save Faust to wasm bytecode compilation at next use. To get the internal factory bytecode and save it, two functions are available:
+
+  - `writeWasmDSPFactoryToMachine` allows to get the interpreter bytecode as a string
+  - `writeWasmDSPFactoryToMachineFile` allows to save the interpreter bytecode in a file
+
+To re-create a DSP factory from a previously saved code, two functions are available:
+
+  - `readWasmDSPFactoryFromMachine`allows to create a DSP factory from a string containing the wasm bytecode
+  - `readWasmDSPFactoryFromMachineFile` allows to create a DSP factory from a file containing the wasm bytecode
+
+The complete API is available and documented in the installed [faust/dsp/wasm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/wasm-dsp.h) header. Note that only the scalar compilation mode is supported. A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/architecture/wasmtime/faustwasmtime.cpp) used to develop the [faustwasmtime](https://github.com/grame-cncm/faust/tree/master-dev/architecture/wasmtime) program. 
+
 
 ## Additional Functions
 
