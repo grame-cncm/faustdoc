@@ -523,13 +523,13 @@ deleteDSPFactory(m_factory);
 <h4 id="savingrestoring-the-factory_2">Saving/restoring the factory</h4>
 <p>After the DSP factory has been compiled, the application or plugin may want to save/restore it in order to save Faust to wasm bytecode compilation at next use. To get the internal factory bytecode and save it, two functions are available:</p>
 <ul>
-<li><code>writeWasmDSPFactoryToMachine</code> allows to get the interpreter bytecode as a string</li>
-<li><code>writeWasmDSPFactoryToMachineFile</code> allows to save the interpreter bytecode in a file</li>
+<li><code>writeWasmDSPFactoryToMachine</code> allows to get the wasm binary code as a string</li>
+<li><code>writeWasmDSPFactoryToMachineFile</code> allows to save the wasm binary code in a file</li>
 </ul>
 <p>To re-create a DSP factory from a previously saved code, two functions are available:</p>
 <ul>
-<li><code>readWasmDSPFactoryFromMachine</code>allows to create a DSP factory from a string containing the wasm bytecode</li>
-<li><code>readWasmDSPFactoryFromMachineFile</code> allows to create a DSP factory from a file containing the wasm bytecode</li>
+<li><code>readWasmDSPFactoryFromMachine</code>allows to create a DSP factory from a string containing the wasm binary code </li>
+<li><code>readWasmDSPFactoryFromMachineFile</code> allows to create a DSP factory from a file containing the wasm binary code </li>
 </ul>
 <p>The complete API is available and documented in the installed <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/wasm-dsp.h">faust/dsp/wasm-dsp.h</a> header. Note that only the scalar compilation mode is supported. A more complete C++ example can be <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/wasmtime/faustwasmtime.cpp">found here</a> used to develop the <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/wasmtime">faustwasmtime</a> program. </p>
 <h2 id="additional-functions">Additional Functions</h2>

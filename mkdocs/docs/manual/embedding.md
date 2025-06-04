@@ -153,13 +153,13 @@ The Wasm backend API is similar to the LLVM/Interpreter backends API:
 
 After the DSP factory has been compiled, the application or plugin may want to save/restore it in order to save Faust to wasm bytecode compilation at next use. To get the internal factory bytecode and save it, two functions are available:
 
-  - `writeWasmDSPFactoryToMachine` allows to get the interpreter bytecode as a string
-  - `writeWasmDSPFactoryToMachineFile` allows to save the interpreter bytecode in a file
+  - `writeWasmDSPFactoryToMachine` allows to get the wasm binary code as a string
+  - `writeWasmDSPFactoryToMachineFile` allows to save the wasm binary code in a file
 
 To re-create a DSP factory from a previously saved code, two functions are available:
 
-  - `readWasmDSPFactoryFromMachine`allows to create a DSP factory from a string containing the wasm bytecode
-  - `readWasmDSPFactoryFromMachineFile` allows to create a DSP factory from a file containing the wasm bytecode
+  - `readWasmDSPFactoryFromMachine`allows to create a DSP factory from a string containing the wasm binary code 
+  - `readWasmDSPFactoryFromMachineFile` allows to create a DSP factory from a file containing the wasm binary code 
 
 The complete API is available and documented in the installed [faust/dsp/wasm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/wasm-dsp.h) header. Note that only the scalar compilation mode is supported. A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/architecture/wasmtime/faustwasmtime.cpp) used to develop the [faustwasmtime](https://github.com/grame-cncm/faust/tree/master-dev/architecture/wasmtime) program. 
 
