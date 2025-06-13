@@ -2432,3 +2432,7 @@ A basic flutter app as a proof of concept utilizing Faust's C API export with Da
 #### [libMfxFaust](https://github.com/Simon-L/libMfxFaust)
 This library is intended for use with Luajit through the FFI, DspFaust.cpp contains code at the end of the file that exposes functions in C namespace to easily call from Luajit, but plain C will work just as well.
 
+### Haskell tools 
+
+#### [hs-faust](https://github.com/DivitMittal/hs-faust)
+hs-faust provides Haskell DSL wrapper for the C Signal API of the Faust. This allows one to define Faust signal processing graphs within Haskell and compile them using the Faust infrastructure. This project explores using Haskell to construct DSP algorithms that can then be compiled by Faust into various targets (LLVM, C++, etc.).

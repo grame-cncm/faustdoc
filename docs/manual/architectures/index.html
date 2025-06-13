@@ -788,6 +788,14 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="3"><a href="#haskell-tools" class="nav-link">Haskell tools</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="4"><a href="#hs-faust" class="nav-link">hs-faust</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
               </ul>
             </li>
               </ul>
@@ -2773,7 +2781,10 @@ process = (hslider(&quot;Spectro&quot;, 0, 0, 1, 1),0) : sf : !,!,_,_;
 <p>A basic flutter app as a proof of concept utilizing Faust's C API export with Dart's ffi methods to create cross-platform plug-ins.</p>
 <h3 id="lua-tools">Lua tools</h3>
 <h4 id="libmfxfaust"><a href="https://github.com/Simon-L/libMfxFaust">libMfxFaust</a></h4>
-<p>This library is intended for use with Luajit through the FFI, DspFaust.cpp contains code at the end of the file that exposes functions in C namespace to easily call from Luajit, but plain C will work just as well.</p></div>
+<p>This library is intended for use with Luajit through the FFI, DspFaust.cpp contains code at the end of the file that exposes functions in C namespace to easily call from Luajit, but plain C will work just as well.</p>
+<h3 id="haskell-tools">Haskell tools</h3>
+<h4 id="hs-faust"><a href="https://github.com/DivitMittal/hs-faust">hs-faust</a></h4>
+<p>hs-faust provides Haskell DSL wrapper for the C Signal API of the Faust. This allows one to define Faust signal processing graphs within Haskell and compile them using the Faust infrastructure. This project explores using Haskell to construct DSP algorithms that can then be compiled by Faust into various targets (LLVM, C++, etc.).</p></div>
         </div>
     </div>
 
