@@ -3394,10 +3394,17 @@ process = @(N);
 <!-- /faust-run -->
 
 <h3 id="table-primitives">Table Primitives</h3>
-<!-- TODO: intro here -->
-
+<p>Tables are data structures used to store and access sequences of numerical values, typically for purposes such as wave-table synthesis or lookup operations. Two primary table primitives are provided:</p>
+<ul>
+<li><code>rdtable</code>: for read-only access to tables.</li>
+</ul>
+<p>This primitive uses a table that is filled once at initialization time, before audio computation begins. The table is typically populated over its entire size using an integer counter, passed into a function such as <code>sin</code>, <code>cos</code>, or a custom mapping. The resulting table remains fixed throughout the program execution and supports efficient, deterministic access during signal processing.</p>
+<ul>
+<li><code>rwtable</code>: for read/write access to tables.</li>
+</ul>
+<p>This primitive allows read/write access to a table during audio processing. Like <code>rdtable</code>, it also starts with an initial table content, defined using a function and an integer counter at initialization time. However, unlike <code>rdtable</code>, <code>rwtable</code> allows dynamic updates to the table: an incoming signal can be written into the table at a write index, while a read index retrieves samples from it. This makes it ideal for implementing loopers or circular buffers where the table content evolves in real time.</p>
 <h4 id="rdtable-primitive"><code>rdtable</code> Primitive</h4>
-<p>The <code>rdtable</code> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The table can either be implemented by using the <code>waveform</code> primitive (as shown in the first example) or using a function controlled by a timer (such as <a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>) as demonstrated in the second example. The idea is that the table is created during the initialization step and before audio computation begins. </p>
+<p>The <code>rdtable</code> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The table can either be implemented by using the <code>waveform</code> primitive (as shown in the first example) or using a function controlled by a counter (such as <a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>) as demonstrated in the second example. The idea is that the table is created during the initialization step and before audio computation begins. </p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">\mathbb{S}^{3}\rightarrow\mathbb{S}^{1}</script>
 </li>
@@ -3430,8 +3437,8 @@ process = triangleOsc(f);
 </div>
 <!-- /faust-run -->
 
-<p><strong>Example: Basic Sinus Wave Oscillator Using the <code>sin</code> Primitive and a Timer</strong></p>
-<p>In this example, a sine table is implemented using the <a href="#sin-primitive"><code>sin</code></a> primitive and a timer (<a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>). The timer calls the <code>sin</code> function during the initialization step of the Faust program. It is then used with <code>rdtable</code> to implement a sine wave oscillator. </p>
+<p><strong>Example: Basic Sinus Wave Oscillator Using the <code>sin</code> Primitive</strong></p>
+<p>In this example, a sine table is implemented using the <a href="#sin-primitive"><code>sin</code></a> primitive and the (<a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>) function called at initialization time to fill the table. It is then used with <code>rdtable</code> to implement a sine wave oscillator, by reading it using a phasor. </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust89/exfaust89.svg" class="mx-auto d-block">
 <faust-editor><!--
