@@ -2302,7 +2302,7 @@ route(A,B,(a,b),(c,d),...)
 <ul>
 <li><code>A</code> is the number of input signals, as an integer <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
 <li><code>B</code> is the number of output signals, as an integer <a href="#constant-numerical-expressions">constant numerical expression</a>, automatically promoted to <em>int</em></li>
-<li><code>a,b</code> or <code>(a,b)</code> is an input/output pair, as integers <a href="#constant-numerical-expressions">constant numerical expressions</a>, automatically promoted to <em>int</em></li>
+<li><code>a,b / (a,b)</code> is an input/output pair, as integers <a href="#constant-numerical-expressions">constant numerical expressions</a>, automatically promoted to <em>int</em></li>
 </ul>
 <p>Inputs are numbered from 1 to <code>A</code> and outputs are numbered from 1 to <code>B</code>. There can be any number of input/output pairs after the declaration of <code>A</code> and <code>B</code>.</p>
 <p>For example, crossing two signals can be carried out with:</p>
@@ -3430,7 +3430,7 @@ process = triangleOsc(f);
 </div>
 <!-- /faust-run -->
 
-<p><strong>Example: Basic Triangle Wave Oscillator Using the <code>sin</code> Primitive and a Timer</strong></p>
+<p><strong>Example: Basic Sinus Wave Oscillator Using the <code>sin</code> Primitive and a Timer</strong></p>
 <p>In this example, a sine table is implemented using the <a href="#sin-primitive"><code>sin</code></a> primitive and a timer (<a href="https://faustlibraries.grame.fr/libs/basics/#batime"><code>ba.time</code></a>). The timer calls the <code>sin</code> function during the initialization step of the Faust program. It is then used with <code>rdtable</code> to implement a sine wave oscillator. </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust89/exfaust89.svg" class="mx-auto d-block">
@@ -3439,9 +3439,9 @@ process = triangleOsc(f);
 import("stdfaust.lib");
 tableSize = 1 << 16;
 sineWave(tablesize) = float(ba.time)*(2.0*ma.PI)/float(tablesize) : sin;
-triangleOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdtable;
+sineOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdtable;
 f = hslider("freq",440,50,2000,0.01);
-process = triangleOsc(f);
+process = sineOsc(f);
 
 --></faust-editor>
 <br>

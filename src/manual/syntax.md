@@ -2196,7 +2196,7 @@ process = triangleOsc(f);
 ```
 <!-- /faust-run -->
 
-**Example: Basic Triangle Wave Oscillator Using the `sin` Primitive and a Timer**
+**Example: Basic Sinus Wave Oscillator Using the `sin` Primitive and a Timer**
 
 In this example, a sine table is implemented using the [`sin`](#sin-primitive) primitive and a timer ([`ba.time`](https://faustlibraries.grame.fr/libs/basics/#batime)). The timer calls the `sin` function during the initialization step of the Faust program. It is then used with `rdtable` to implement a sine wave oscillator. 
 
@@ -2205,9 +2205,9 @@ In this example, a sine table is implemented using the [`sin`](#sin-primitive) p
 import("stdfaust.lib");
 tableSize = 1 << 16;
 sineWave(tablesize) = float(ba.time)*(2.0*ma.PI)/float(tablesize) : sin;
-triangleOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdtable;
+sineOsc(f) = tableSize,sineWave(tableSize),int(os.phasor(tableSize,f)) : rdtable;
 f = hslider("freq",440,50,2000,0.01);
-process = triangleOsc(f);
+process = sineOsc(f);
 ```
 <!-- /faust-run -->
 
