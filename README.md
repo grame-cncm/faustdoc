@@ -6,8 +6,12 @@
 This repository is intended to build the documentation of the Faust environment, and to provide the corresponding examples. 
 
 ### Prerequisites
+- you must have make, "g++" (the GCC or Clang C++ driver), bison, and flex installed.
 - you must have python, pip and [mkdocs](https://www.mkdocs.org/) installed.
 - you must have the Faust source code installed. You can get it from [github](https://github.com/grame-cncm/faust). **Be sure to use a fresh cloned repository and to correcly install submodules with `git submodule update --init`**. The exact location can possibly be set in the make command using the `FAUSTDIR`  environment variable.
+- you must have Faust installed in PATH, too: it's used during the build.
+  [FIXME: does it need to be built in any particular way to get the right options in mkdocs/docs/manual/options.md?
+   Since that's checked in, this won't matter except when it actually needs to be updated.]
 - you must have openssl installed for base64 conversion.
 
 ###  WARNING: adding new files
