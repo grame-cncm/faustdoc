@@ -10,23 +10,21 @@ The Faust distribution hosts the source of the Faust compiler (both in its comma
 
 The latest stable release of the Faust distribution can be found [here](https://github.com/grame-cncm/faust/releases). It is recommended for most Faust users willing to compile the Faust compiler and libfaust from scratch.
 
-To have the latest stable development version, you can use the `master branch` of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master) which is hosted on GitHub. For something even more bleeding edge (to be used at your own risks), you might use the `master-dev` branch of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master-dev). 
+To have the latest stable development version, you can use the `master branch` of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master) which is hosted on GitHub. For something even more bleeding edge (to be used at your own risk), you can use the `master-dev` branch of the Faust [git repository](https://github.com/grame-cncm/faust/tree/master-dev). 
 `master-dev` is the development sub-branch of `master`. It is used by Faust developers to commit  their changes and can be considered as "the main development branch". The goal is to make sure that `master` is always functional. Merges between `master-dev`  and `master` are carried out at each stable release by the GRAME team.
 
 Also, note that pre-compiled packages of the Faust compiler and of libfaust for various platforms can be found on the of the [Faust website](https://faust.grame.fr).
 
 The Faust distribution is organized as follows:
 
-```
-bin/           : contains the compiler and the [Faust tools](../tools)
+<pre><code class="hljs markdown">bin/           : contains the compiler and the <a href="../tools">Faust tools</a>
 include/       : contains header files required by the Faust tools
 lib/           : contains the Faust libraries
-share/         : contains documentation, the Faust libraries and architecture files
-```
+share/         : contains documentation, the Faust libraries and architecture files</code></pre>
 
-**Note**: you can install the Faust distribution anywhere you want, provided that the `faust` command is available from your PATH (requires to update your .profile if not in a standard location). 
+**Note**: you can install the Faust distribution anywhere you want, provided that the `faust` command is available from your PATH (this requires updating your .profile if it's not in a standard location). 
 
-The following subsections present the main tools build on top of the Faust compiler and intended to facilitate your life. 
+The following subsections present the main tools built on top of the Faust compiler and intended to facilitate your life. 
 
 ## Faust IDE
 
@@ -42,10 +40,10 @@ The following subsections present the main tools build on top of the Faust compi
 
 ## Faustgen
 
-Faustgen is a Max/MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max/MSP. Faustgen is part of the [Faust](https://github.com/grame-cncm/faust) project, and distributed in the [Faust releases](https://github.com/grame-cncm/faust/releases).
+Faustgen is a Max/MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max/MSP. Faustgen is part of the [Faust](https://github.com/grame-cncm/faust) project, and is distributed in the [Faust releases](https://github.com/grame-cncm/faust/releases).
 
 ## FaustLive
 
 [FaustLive](https://github.com/grame-cncm/faustlive) is an advanced self-contained prototyping environment for the Faust programming language with an ultra-short edit-compile-run cycle. Thanks to its fully embedded compilation chain, FaustLive is simple [to install](https://github.com/grame-cncm/faustlive/releases) and doesn't require any external compiler, development toolchain or SDK to run.
 
-FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled and run on the fly by simple drag and drop. They can even be edited and recompiled while running, without sound interruption. It supports also native applications generation using the Faust online compiler. **Note that FaustLive is regularly recompiled, but is no more developed, so Faust IDE is the recommended tool to use**.  
+FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled and run on the fly by simple drag and drop. They can even be edited and recompiled while running, without sound interruption. It also supports native application generation using the Faust online compiler. **Note that FaustLive is regularly recompiled, but is no longer developed, so Faust IDE is the recommended tool to use**.  

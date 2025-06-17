@@ -10,10 +10,10 @@ Since using sound files (actually all formats that can be read by the [libsndfil
 
 - `faust2max6 -soundfile foo.dsp` to embed the needed sound files in the Max/MSP external bundle on OSX
 
-Check the [faust2xx]( ../manual/tools.md) script description page to know which one currently support the *-soundfile* option.
+Check the [faust2xx]( ../manual/tools.md) script description page to know which ones currently support the *-soundfile* option.
 
 ## The Soundfile Library
 
-They are some additional functions in the [soundfiles.lib](https://faustlibraries.grame.fr/libs/soundfiles/) library. Three basic functions are fully documented for now. There is more code already written in the [library source](https://github.com/grame-cncm/faustlibraries/blob/master/soundfiles.lib) that allows to read sound files with different kind of interpolation.
+There are some additional functions in the [soundfiles.lib](https://faustlibraries.grame.fr/libs/soundfiles/) library. Three basic functions are fully documented for now. There is more code already written in the [library source](https://github.com/grame-cncm/faustlibraries/blob/master/soundfiles.lib) that can read sound files with different kinds of interpolation.
 
 The `soundfile` primitive can be used in the Web platform. See the [Faust Web IDE](https://github.com/grame-cncm/faustide?tab=readme-ov-file#soundfiles-access) related documentation.

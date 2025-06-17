@@ -7,7 +7,7 @@ This repository is intended to build the documentation of the Faust environment,
 
 ### Prerequisites
 - you must have python, pip and [mkdocs](https://www.mkdocs.org/) installed.
-- you must have the Faust source code installed. You can get it from [github](https://github.com/grame-cncm/faust). **Be sure to use a fresh cloned repository and to correcly install submodules with `git submodule update --init`**. The exact location can possibly be set in the make command using the `FAUSTDIR`  environment variable.
+- you must have the Faust source code installed. You can get it from [github](https://github.com/grame-cncm/faust). **Be sure to use a fresh cloned repository and to correctly install the submodules with `git submodule update --init`**. The exact location can possibly be set in the make command using the `FAUSTDIR`  environment variable.
 - you must have openssl installed for base64 conversion.
 
 ###  WARNING: adding new files
