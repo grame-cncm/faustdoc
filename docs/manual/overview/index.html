@@ -356,17 +356,17 @@
 <h2 id="the-faust-distribution">The Faust Distribution</h2>
 <p>The Faust distribution hosts the source of the Faust compiler (both in its command line and library version), the source of the Faust <em>architectures</em> (targets), the various Faust compilation scripts, a wide range of Faust-related-tools, the <a href="https://faustlibraries.grame.fr">Faust DSP Libraries</a> (which in practice are hosted a separate Git submodule), etc.</p>
 <p>The latest stable release of the Faust distribution can be found <a href="https://github.com/grame-cncm/faust/releases">here</a>. It is recommended for most Faust users willing to compile the Faust compiler and libfaust from scratch.</p>
-<p>To have the latest stable development version, you can use the <code>master branch</code> of the Faust <a href="https://github.com/grame-cncm/faust/tree/master">git repository</a> which is hosted on GitHub. For something even more bleeding edge (to be used at your own risks), you might use the <code>master-dev</code> branch of the Faust <a href="https://github.com/grame-cncm/faust/tree/master-dev">git repository</a>. 
+<p>To have the latest stable development version, you can use the <code>master branch</code> of the Faust <a href="https://github.com/grame-cncm/faust/tree/master">git repository</a> which is hosted on GitHub. For something even more bleeding edge (to be used at your own risk), you can use the <code>master-dev</code> branch of the Faust <a href="https://github.com/grame-cncm/faust/tree/master-dev">git repository</a>. 
 <code>master-dev</code> is the development sub-branch of <code>master</code>. It is used by Faust developers to commit  their changes and can be considered as "the main development branch". The goal is to make sure that <code>master</code> is always functional. Merges between <code>master-dev</code>  and <code>master</code> are carried out at each stable release by the GRAME team.</p>
 <p>Also, note that pre-compiled packages of the Faust compiler and of libfaust for various platforms can be found on the of the <a href="https://faust.grame.fr">Faust website</a>.</p>
 <p>The Faust distribution is organized as follows:</p>
-<pre><code>bin/           : contains the compiler and the [Faust tools](../tools)
+<pre><code class="hljs markdown">bin/           : contains the compiler and the <a href="../tools">Faust tools</a>
 include/       : contains header files required by the Faust tools
 lib/           : contains the Faust libraries
-share/         : contains documentation, the Faust libraries and architecture files
-</code></pre>
-<p><strong>Note</strong>: you can install the Faust distribution anywhere you want, provided that the <code>faust</code> command is available from your PATH (requires to update your .profile if not in a standard location). </p>
-<p>The following subsections present the main tools build on top of the Faust compiler and intended to facilitate your life. </p>
+share/         : contains documentation, the Faust libraries and architecture files</code></pre>
+
+<p><strong>Note</strong>: you can install the Faust distribution anywhere you want, provided that the <code>faust</code> command is available from your PATH (this requires updating your .profile if it's not in a standard location). </p>
+<p>The following subsections present the main tools built on top of the Faust compiler and intended to facilitate your life. </p>
 <h2 id="faust-ide">Faust IDE</h2>
 <p><a href="https://faustide.grame.fr">Faust IDE</a> is a zero-conf tool that provides all the compilation services, including binaries generation for all the supported platforms and architectures, but also various utilities for signal processing development.</p>
 <h2 id="faust-editor">Faust Editor</h2>
@@ -374,10 +374,10 @@ share/         : contains documentation, the Faust libraries and architecture fi
 <h2 id="faust-playground">Faust Playground</h2>
 <p><a href="https://faustplayground.grame.fr">Faust Playground</a> is a graphical environment to develop Faust programs with a higher level approach. It has been initially designed for kids and for pedagogical purpose.</p>
 <h2 id="faustgen">Faustgen</h2>
-<p>Faustgen is a Max/MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max/MSP. Faustgen is part of the <a href="https://github.com/grame-cncm/faust">Faust</a> project, and distributed in the <a href="https://github.com/grame-cncm/faust/releases">Faust releases</a>.</p>
+<p>Faustgen is a Max/MSP external that provides features similar to FaustLive. It's the ideal tool for fast prototyping in Max/MSP. Faustgen is part of the <a href="https://github.com/grame-cncm/faust">Faust</a> project, and is distributed in the <a href="https://github.com/grame-cncm/faust/releases">Faust releases</a>.</p>
 <h2 id="faustlive">FaustLive</h2>
 <p><a href="https://github.com/grame-cncm/faustlive">FaustLive</a> is an advanced self-contained prototyping environment for the Faust programming language with an ultra-short edit-compile-run cycle. Thanks to its fully embedded compilation chain, FaustLive is simple <a href="https://github.com/grame-cncm/faustlive/releases">to install</a> and doesn't require any external compiler, development toolchain or SDK to run.</p>
-<p>FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled and run on the fly by simple drag and drop. They can even be edited and recompiled while running, without sound interruption. It supports also native applications generation using the Faust online compiler. <strong>Note that FaustLive is regularly recompiled, but is no more developed, so Faust IDE is the recommended tool to use</strong>.  </p></div>
+<p>FaustLive is the ideal tool for fast prototyping. Faust programs can be compiled and run on the fly by simple drag and drop. They can even be edited and recompiled while running, without sound interruption. It also supports native application generation using the Faust online compiler. <strong>Note that FaustLive is regularly recompiled, but is no longer developed, so Faust IDE is the recommended tool to use</strong>.  </p></div>
         </div>
     </div>
 
