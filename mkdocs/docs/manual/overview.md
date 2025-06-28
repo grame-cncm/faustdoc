@@ -1,6 +1,6 @@
 # Overview of the Faust Universe
 
-While in its most *primitive* form, Faust is distributed as a command-line compiler, however a wide range of additional tools for Faust are also available. While the variety and function of these tools might be hard to grasp at first, this chapter aims to provide an overview of their roles and will hopefully help you decide when you might want to use each tool.
+In its most *primitive* form, Faust is distributed as a command-line compiler. However, a wide range of additional tools have also been developed for Faust. While the variety and function of these tools might be hard to grasp at first, this chapter aims to provide an overview of each their roles and will hopefully help you decide when you might want to use a given tool.
 
 <!-- TODO: it'd be nice to have some kind of figure here summarizing everything the various Faust branches should appear in this figure: we want something as complete as possible. -->
 

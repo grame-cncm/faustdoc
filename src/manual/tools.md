@@ -1,6 +1,6 @@
 # `faust2[...]` Tools
 
-While in its most *primitive* form, Faust is distributed as a command-line compiler, a wide range of additional tools for Faust have also been developed. While the variety and function of these tools might be hard to grasp at first, this section aims to provide an overview of their roles and will hopefully help you decide when you might want to use a given tool.
+In its most *primitive* form, Faust is distributed as a command-line compiler. However, a wide range of additional tools have also been developed for Faust. While the variety and function of these tools might be hard to grasp at first, this section aims to provide an overview of each their roles and will hopefully help you decide when you might want to use a given tool.
 
 The Faust tools is a set of scripts that take a dsp file as input to generate various output for a lot of architectures and platforms. All the tools names are in the form `faust2xx` where `xx` is the target architecture. 
 
