@@ -49,7 +49,7 @@ Where:
 
 **Example**
 
-In the following example, the frequency of a sawtooth wave oscillator is controlled by MIDI CC 11. When CC11=0, then the frequency is 200Hz, when CC11=127, then the frequency is 1000Hz.
+In the following example, the frequency of a sawtooth wave oscillator is controlled by MIDI CC 11. When CC11=0, then the frequency is 50Hz, when CC11=127, then the frequency is 1000Hz.
 
 <!-- faust-run -->
 ```
