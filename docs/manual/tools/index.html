@@ -506,6 +506,18 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2pwconsole" class="nav-link">faust2pwconsole</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#faust2pwgtk" class="nav-link">faust2pwgtk</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#faust2pwqt" class="nav-link">faust2pwqt</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2raqt" class="nav-link">faust2raqt</a>
               <ul class="nav flex-column">
               </ul>
@@ -1325,6 +1337,47 @@ Compiles Faust programs to PortAudio and Rust binary
 Options:
    -source : only generates the source project.
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2pwconsole">faust2pwconsole</h2>
+<pre class=faust-tools>
+Usage: faust2pwconsole [options] [Faust options] &lt;file.dsp>
+Require: Pipewire
+Compiles Faust programs to CLI and PIPEWIRE
+Options:
+   -httpd : activates HTTP control
+   -osc : activates OSC control
+   -midi : activates MIDI control
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2pwgtk">faust2pwgtk</h2>
+<pre class=faust-tools>
+Usage: faust2pipewire [options] [Faust options] &lt;file.dsp>
+Target platform: Linux
+Require: Pipewire
+Compiles Faust programs to Pipewire and GTK
+Options:
+   -httpd : activates HTTP control
+   -osc : activates OSC control
+   -midi : activates MIDI control
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -dyn : create libfaust + LLVM backend dynamic version
+   -resample : to resample soundfiles to the audio driver sample rate.
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
+   -preset &lt;directory> : add a preset manager on top of GUI and save the preset files in the given directory
+   -preset auto : add a preset manager on top of GUI and save the preset files in a system temporary directory
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
+</pre>
+
+<h2 id="faust2pwqt">faust2pwqt</h2>
+<pre class=faust-tools>
 </pre>
 
 <h2 id="faust2raqt">faust2raqt</h2>
