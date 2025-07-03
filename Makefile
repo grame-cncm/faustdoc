@@ -166,7 +166,7 @@ $(FAUSTDIR):
 dependencies:
 	@test -f ./mkdocs/docs/css/github.min.css || curl -L --create-dirs https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css -o ./mkdocs/docs/css/github.min.css
 	@test -f ./mkdocs/docs/js/highlight.min.js || curl -L --create-dirs https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js -o ./mkdocs/docs/js/highlight.min.js
-	@test -f ./mkdocs/docs/js/faust-web-component.js || curl -L --create-dirs https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.5.4/dist/faust-web-component.js -o ./mkdocs/docs/js/faust-web-component.js
+	@test -f ./mkdocs/docs/js/faust-web-component.js || curl -L --create-dirs https://cdn.jsdelivr.net/npm/@grame/faust-web-component@0.5.5/dist/faust-web-component.js -o ./mkdocs/docs/js/faust-web-component.js
 	@test -d ./mkdocs/docs/js/MathJax-2.7.1 || (curl -L --create-dirs https://github.com/mathjax/MathJax/archive/2.7.1.zip -o ./mkdocs/docs/js/2.7.1.zip && unzip -o ./mkdocs/docs/js/2.7.1.zip -d ./mkdocs/docs/js/ && rm ./mkdocs/docs/js/2.7.1.zip)
 
 ####################################################################
