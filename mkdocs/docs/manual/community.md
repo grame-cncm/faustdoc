@@ -5,6 +5,10 @@ Here is a list of additional material contributed by the community of Faust deve
 ## Articles, Video and Blog Posts
 
 
+#### [Create a Simple Stereo Compressor with FAUST and HISE](https://www.youtube.com/watch?v=Z7sgsYsCQ8s)
+
+Create a Simple Stereo Compressor with FAUST and HISE by Tania Ghosh.
+
 #### [About this filters business](https://lucaspanedda.github.io/2024/11/12/filters.html) 
 
 A tutorial on Digital Filters in Faust.
