@@ -4,6 +4,9 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [From Code to Sound: Exploring Real-Time Audio with Faust](https://medium.com/@choudharyshubhangi13/from-code-to-sound-exploring-real-time-audio-with-faust-31dbd2bce802)
+
+Exploring Faust programming by Shubhangi Choudhary.
 
 #### [Create a Simple Stereo Compressor with FAUST and HISE](https://www.youtube.com/watch?v=Z7sgsYsCQ8s)
 
