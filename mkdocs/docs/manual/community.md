@@ -131,6 +131,10 @@ Features:
 - Render finite difference equations (FDEs) to Faust code
 - Calculate stability of ODEs and FDEs at an operating point
 
+#### [circle-faust](https://github.com/marchingband/circle-faust)
+
+This repo demonstrates pwm audio output with an added DAC for pi-zero-2 using circle SDK.
+
 ### Contributing
 
 Feel free to contribute by [forking this project](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks) and [creating a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), or by mailing the library description [here](mailto:research@grame.fr).
