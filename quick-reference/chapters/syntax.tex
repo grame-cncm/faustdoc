@@ -1110,6 +1110,19 @@ includefile : '<' (char +) '>' | '"' (char +) '"' ;
 \subsubsection{Library file}
 In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the \faust compiler to (possibly) automatically link the library. Note that this feature is only used with the LLVM backend in 'libfaust' dynamic library model.
 
+
+\subsubsection{Availability of Foreign Functions, Variables, and Constants}
+
+Foreign functions, variables, and constants can only be used in \faust when the target backend provides a mechanism to access their definitions and compiled code. In practice, this means:  
+
+\begin{itemize}
+  \item \textbf{C/C++ backends}: full support, since external symbols can be resolved at link time.
+  \item \textbf{LLVM backend}: partial support, as external calls can be lowered to LLVM instructions, or using libraries compiled to LLVM bitcode and linked in the final binary, but with more restrictions.
+  \item \textbf{Other backends (e.g., JavaScript, WebAssembly, etc.)}: foreign expressions are generally not supported, and any attempt to use them will cause compilation to fail.
+\end{itemize}
+
+This limitation arises because many backends operate in isolated or sandboxed environments, where external code or symbols cannot be safely linked. Developers should therefore ensure that their DSP code either avoids foreign expressions or is explicitly targeted to backends that support them.
+
 %The syntax of these foreign declarations is the following :
 %The foreign function mechanism allows to use external functions, variables and constants. External functions are limited to numerical ones. 
 %  

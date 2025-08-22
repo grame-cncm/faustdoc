@@ -514,6 +514,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#availability-of-foreign-functions-variables-and-constants" class="nav-link">Availability of Foreign Functions, Variables, and Constants</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#applications-and-abstractions" class="nav-link">Applications and Abstractions</a>
@@ -2178,6 +2182,14 @@ BS = fvariable(int count, &lt;math.h&gt;);
 <p><img src="img/includefile.svg" class="mx-auto d-block"></p>
 <h4 id="library-file">Library File</h4>
 <p>In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the Faust compiler to (possibly) automatically link the library. Note that this feature is only used with the <a href="../embedding/#using-libfaust-with-the-llvm-backend">LLVM backend in 'libfaust' dynamic library model</a>.</p>
+<h4 id="availability-of-foreign-functions-variables-and-constants">Availability of Foreign Functions, Variables, and Constants</h4>
+<p>Foreign functions, variables, and constants can only be used in Faust when the target backend provides a mechanism to access their definitions or compiled code. In practice, this means:</p>
+<ul>
+<li><strong>C/C++ backends</strong>: full support, since external symbols can be resolved at link time.  </li>
+<li><strong>LLVM backend</strong>: partial support, as external calls can be lowered to LLVM instructions, or by linking libraries compiled to LLVM bitcode into the final binary. However, some restrictions still apply.  </li>
+<li><strong>Other backends (e.g., JavaScript, WebAssembly, etc.)</strong>: foreign expressions are generally not supported, and any attempt to use them will cause compilation to fail.  </li>
+</ul>
+<p>This limitation arises because many backends operate in isolated or sandboxed environments, where external code or symbols cannot be safely linked. Developers should therefore ensure that their DSP code either avoids foreign expressions or is explicitly targeted to backends that support them.</p>
 <!-- TODO I feel like more could be said here -->
 
 <h3 id="applications-and-abstractions">Applications and Abstractions</h3>

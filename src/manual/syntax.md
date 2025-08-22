@@ -1118,6 +1118,17 @@ In declaring foreign functions one has also to specify the include file. It allo
 
 In declaring foreign functions one can possibly specify the library where the actual code is located. It allows the Faust compiler to (possibly) automatically link the library. Note that this feature is only used with the [LLVM backend in 'libfaust' dynamic library model](../manual/embedding.md#using-libfaust-with-the-llvm-backend).
 
+#### Availability of Foreign Functions, Variables, and Constants
+
+Foreign functions, variables, and constants can only be used in Faust when the target backend provides a mechanism to access their definitions or compiled code. In practice, this means:
+
+- **C/C++ backends**: full support, since external symbols can be resolved at link time.  
+- **LLVM backend**: partial support, as external calls can be lowered to LLVM instructions, or by linking libraries compiled to LLVM bitcode into the final binary. However, some restrictions still apply.  
+- **Other backends (e.g., JavaScript, WebAssembly, etc.)**: foreign expressions are generally not supported, and any attempt to use them will cause compilation to fail.  
+
+This limitation arises because many backends operate in isolated or sandboxed environments, where external code or symbols cannot be safely linked. Developers should therefore ensure that their DSP code either avoids foreign expressions or is explicitly targeted to backends that support them.
+
+
 <!-- TODO I feel like more could be said here -->
 
 ### Applications and Abstractions
