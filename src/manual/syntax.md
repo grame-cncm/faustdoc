@@ -1120,7 +1120,7 @@ In declaring foreign functions one can possibly specify the library where the ac
 
 #### Availability of Foreign Functions, Variables, and Constants
 
-Foreign functions, variables, and constants can only be used in Faust when the target backend provides a mechanism to access their definitions or compiled code. In practice, this means:
+Foreign functions, variables, and constants can only be used in Faust when the target backend provides a mechanism to access their definitions and compiled code. In practice, this means:
 
 - **C/C++ backends**: full support, since external symbols can be resolved at link time.  
 - **LLVM backend**: partial support, as external calls can be lowered to LLVM instructions, or by linking libraries compiled to LLVM bitcode into the final binary. However, some restrictions still apply.  
