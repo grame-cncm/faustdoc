@@ -1124,7 +1124,7 @@ Foreign functions, variables, and constants can only be used in Faust when the t
 
 - **C/C++ backends**: full support, since external symbols can be resolved at link time.  
 - **LLVM backend**: partial support, as external calls can be lowered to LLVM instructions, or by linking libraries compiled to LLVM bitcode into the final binary. However, some restrictions still apply.  
-- **Other backends (e.g., JavaScript, WebAssembly, etc.)**: foreign expressions are generally not supported, and any attempt to use them will cause compilation to fail.  
+- **Other backends (e.g., Julia, WebAssembly, etc.)**: foreign expressions are generally not supported, and any attempt to use them will cause compilation to fail.  
 
 This limitation arises because many backends operate in isolated or sandboxed environments, where external code or symbols cannot be safely linked. Developers should therefore ensure that their DSP code either avoids foreign expressions or is explicitly targeted to backends that support them.
 
