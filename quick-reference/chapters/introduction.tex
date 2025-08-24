@@ -12,7 +12,7 @@ Various principles have guided the design of \faust :
 
 \item \faust is a \textit{specification language}. It aims at providing an adequate notation to describe \textit{signal processors} from a mathematical point of view. \faust is, as much as possible, free from implementation details. 
 
-\item \faust programs are fully compiled, not interpreted. The compiler translates \faust programs into equivalent C++ programs taking care of generating the most efficient code. The result can generally compete with, and sometimes even outperform, C++ code written by seasoned programmers. 
+\item \faust programs are fully compiled, not interpreted. The compiler translates \faust programs into equivalent target languages such as C/C++, LLVM IR, WebAssembly, and others, taking care of generating the most efficient code. The result can generally compete with, and sometimes even outperform, C++ code written by seasoned programmers.
 
 \item The generated code works at the sample level. It is therefore suited to implement low-level DSP functions like recursive filters. Moreover the code can be easily embedded. It is self-contained and doesn't depend of any DSP library or runtime system. It has a very deterministic behavior and a constant memory footprint. 
 
