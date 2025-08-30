@@ -2449,7 +2449,7 @@ virtual void readFile(Soundfile* soundfile,
 <p>Another example to look at is <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/gui/WaveReader.h">WaveReader</a>.</p>
 <p>The <code>SoundUI</code> architecture is then used the following way:</p>
 <pre><code class="language-c++"> mydsp DSP;
- // Here using a compiled time chosen SoundfileReader 
+ // Using a compiled time chosen SoundfileReader 
  SoundUI* sound_interface = new SoundUI(); 
  DSP.buildUserInterface(sound_interface);
  ...
@@ -2458,11 +2458,22 @@ virtual void readFile(Soundfile* soundfile,
  // Finally deallocate the sound_interface and associated Soundfile resources
  delete sound_interface;
 </code></pre>
-<p>The <code>SoundfileReader</code> object can be dynamically choosen by using an alternate version of the <code>SoundUI</code> constructor, possibly choosing the sample format to be <em>double</em> when the DSP code is compiled with the <code>-double</code> option:</p>
+<p>By default, the <code>SoundUI</code> class tries to load soundfiles relative to the executable’s location. In many cases, this works out of the box. However, if your soundfiles live in a different directory (for example inside a bundle, resource folder, or custom installation path), you need to explicitly tell <code>SoundUI</code> where to look. The sound directory base path may have to be given using the alternate and richer version of the <code>SoundUI</code> constructor, here using the helper <code>SoundUI::getBinaryPathFrom</code> function:</p>
 <pre><code class="language-c++"> mydsp DSP;
- // Here using a dynamically chosen custom MyMemoryReader 
+ // Create a SoundUI with an explicit base path for soundfiles
+ SoundUI* sound_interface = new SoundUI(SoundUI::getBinaryPathFrom(&quot;bundle_path&quot;)); 
+ DSP.buildUserInterface(sound_interface);
+ ...
+ run the DSP
+ ...
+ // Finally deallocate the sound_interface and associated Soundfile resources
+ delete sound_interface;
+</code></pre>
+<p>The <code>SoundfileReader</code> object can be dynamically choosen by using the alternate version of the <code>SoundUI</code> constructor, possibly choosing the sample format to be <em>double</em> when the DSP code is compiled with the <code>-double</code> option:</p>
+<pre><code class="language-c++"> mydsp DSP;
+ // Using a dynamically chosen custom MyMemoryReader 
  SoundfileReader* sound_reader = new MyMemoryReader(...);
- SoundUI* sound_interface = new SoundUI(&quot;&quot;, false, sound_reader, true);
+ SoundUI* sound_interface = new SoundUI(&quot;&quot;, -1, sound_reader, true);
  DSP.buildUserInterface(sound_interface);
  ...
  run the DSP

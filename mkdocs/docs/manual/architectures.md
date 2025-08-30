@@ -1957,7 +1957,7 @@ The `SoundUI` architecture is then used the following way:
 
 ```c++
  mydsp DSP;
- // Here using a compiled time chosen SoundfileReader 
+ // Using a compiled time chosen SoundfileReader 
  SoundUI* sound_interface = new SoundUI(); 
  DSP.buildUserInterface(sound_interface);
  ...
@@ -1966,14 +1966,28 @@ The `SoundUI` architecture is then used the following way:
  // Finally deallocate the sound_interface and associated Soundfile resources
  delete sound_interface;
 ```
+
+By default, the `SoundUI` class tries to load soundfiles relative to the executable’s location. In many cases, this works out of the box. However, if your soundfiles live in a different directory (for example inside a bundle, resource folder, or custom installation path), you need to explicitly tell `SoundUI` where to look. The sound directory base path may have to be given using the alternate and richer version of the `SoundUI` constructor, here using the helper `SoundUI::getBinaryPathFrom` function:
+
+```c++
+ mydsp DSP;
+ // Create a SoundUI with an explicit base path for soundfiles
+ SoundUI* sound_interface = new SoundUI(SoundUI::getBinaryPathFrom("bundle_path")); 
+ DSP.buildUserInterface(sound_interface);
+ ...
+ run the DSP
+ ...
+ // Finally deallocate the sound_interface and associated Soundfile resources
+ delete sound_interface;
+```
  
- The `SoundfileReader` object can be dynamically choosen by using an alternate version of the `SoundUI` constructor, possibly choosing the sample format to be *double* when the DSP code is compiled with the `-double` option:
+ The `SoundfileReader` object can be dynamically choosen by using the alternate version of the `SoundUI` constructor, possibly choosing the sample format to be *double* when the DSP code is compiled with the `-double` option:
  
 ```c++
  mydsp DSP;
- // Here using a dynamically chosen custom MyMemoryReader 
+ // Using a dynamically chosen custom MyMemoryReader 
  SoundfileReader* sound_reader = new MyMemoryReader(...);
- SoundUI* sound_interface = new SoundUI("", false, sound_reader, true);
+ SoundUI* sound_interface = new SoundUI("", -1, sound_reader, true);
  DSP.buildUserInterface(sound_interface);
  ...
  run the DSP
