@@ -18,10 +18,6 @@ Create a Simple Stereo Compressor with FAUST and HISE by Tania Ghosh.
 - Exploring Pseudo-Random and Stochastic Signals in Digital Sound
 - Digital Reverberation - a tutorial in Faust
 
-#### [Exploring Pseudo-Random and Stochastic Signals](https://lucaspanedda.github.io/2024/11/15/random.html)
-
-Exploring Pseudo-Random and Stochastic Signals in Digital Sound Synthesis Random and stochastic signals in synthesis can be useful for implementing time-varying oscillators and/or control signals.
-
 #### [Generate WAMs with FaustIDE](http://www.webaudiomodules.com/docs/usage/generate-with-faustide/)
 [Web Audio Modules](http://www.webaudiomodules.com) (WAM) ias a standard for Web Audio plugins and DAWs. The 2.0 version of Web Audio Modules has been released in 2021 as a group effort by a large set of people and since then, multiple plugins and hosts have been published, mostly as open source and free software.
 
