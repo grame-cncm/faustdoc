@@ -4,6 +4,9 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [Faust vs Bitwig Grid: Choosing Between Code-Based and Visual Modular Audio Programming](https://acrylicpedia.com/faust-vs-bitwig-grid/)
+This blog contrasts Faust’s code-based, mathematical approach to DSP with Bitwig Grid’s visual, modular environment for experimentation. 
+
 #### [From Code to Sound: Exploring Real-Time Audio with Faust](https://medium.com/@choudharyshubhangi13/from-code-to-sound-exploring-real-time-audio-with-faust-31dbd2bce802)
 
 Exploring Faust programming by Shubhangi Choudhary.
