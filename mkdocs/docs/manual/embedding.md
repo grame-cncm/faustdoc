@@ -115,13 +115,13 @@ The interpreter backend API is similar to the LLVM backend API:
 
 After the DSP factory has been compiled, the application or plugin may want to save/restore it in order to save Faust to interpreter bytecode compilation at next use. To get the internal factory bytecode and save it, two functions are available:
 
-  - `writeInterpreterDSPFactoryToMachine` allows to get the interpreter bytecode as a string
-  - `writeInterpreterDSPFactoryToMachineFile` allows to save the interpreter bytecode in a file
+  - `writeInterpreterDSPFactoryToBitcode` allows to get the interpreter bytecode as a string
+  - `writeInterpreterDSPFactoryToBitcodeFile` allows to save the interpreter bytecode in a file
 
 To re-create a DSP factory from a previously saved code, two functions are available:
 
-  - `readInterpreterDSPFactoryFromMachine`allows to create a DSP factory from a string containing the interpreter bytecode
-  - `readInterpreterDSPFactoryFromMachineFile` allows to create a DSP factory from a file containing the interpreter bytecode
+  - `readInterpreterDSPFactoryFromBitcode` allows to create a DSP factory from a string containing the interpreter bytecode
+  - `readInterpreterDSPFactoryFromBitcodeFile` allows to create a DSP factory from a file containing the interpreter bytecode
 
 The complete API is available and documented in the installed [faust/dsp/interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) header. Note that only the scalar compilation mode is supported. A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/tests/interp-tests/interp-test.cpp). 
 
