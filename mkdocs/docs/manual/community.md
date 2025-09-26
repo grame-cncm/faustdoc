@@ -4,6 +4,9 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [Variety Box Effects Pedal](https://blog.bela.io/variety-box-bela-mini/) 
+Martin Robinson's explorations with Bela, Pure Data and FAUST. 
+
 #### [Faust vs Bitwig Grid: Choosing Between Code-Based and Visual Modular Audio Programming](https://acrylicpedia.com/faust-vs-bitwig-grid/)
 This blog contrasts Faust’s code-based, mathematical approach to DSP with Bitwig Grid’s visual, modular environment for experimentation. 
 
