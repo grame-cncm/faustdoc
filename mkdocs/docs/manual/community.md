@@ -41,11 +41,11 @@ This video shows how you can use Faust inside [HISE](https://hise.dev). More inf
 
 This article shows how you can compile a Faust program to run on [Mod Duo](https://mod.audio).
 
-#### [Handling infinity and not-a-number (NaN) values in Faust and C++ audio programming](https://www.dariosanfilippo.com/blog/2020/handling_inf_nan_values_in_faust_and_cpp/)  
+#### [Handling infinity and not-a-number (NaN) values in Faust and C++ audio programming](https://www.dariosanfilippo.com/posts/2020/12/28/handling_inf_nan_values_in_faust_and_cpp.html)  
 
 This post by [Dario Sanfilippo](https://www.dariosanfilippo.com) discusses insights gained over a few years of audio programming to implement robust Faust/C++ software, particularly when dealing with infinity and NaN values.
 
-#### [Three ways to implement recursive circuits in the Faust language](https://www.dariosanfilippo.com/blog/2020/faust_recursive_circuits/)  
+#### [Three ways to implement recursive circuits in the Faust language](https://www.dariosanfilippo.com/posts/2020/11/28/faust_recursive_circuits.html)  
 
 This post by [Dario Sanfilippo](https://www.dariosanfilippo.com) is about the implementation of not-so-simple recursive circuits in the Faust language.  
 
