@@ -4,7 +4,12 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [Building an Audiovisual Synth #6: New Audio Engine with FAUST](https://matthiasmeissen.substack.com/p/building-an-audiovisual-synth-6-new)
+
+Building a drum engine with FAUST and Rust.
+
 #### [Variety Box Effects Pedal](https://blog.bela.io/variety-box-bela-mini/) 
+
 Martin Robinson's explorations with Bela, Pure Data and FAUST. 
 
 #### [Faust vs Bitwig Grid: Choosing Between Code-Based and Visual Modular Audio Programming](https://acrylicpedia.com/faust-vs-bitwig-grid/)
