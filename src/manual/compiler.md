@@ -1,6 +1,6 @@
 # Using the Faust Compiler
 
-While the Faust compiler is available in different forms (e.g., [Embedded Compiler](embedding.md), etc.), its most "common" one is the command line version, which can be invoked using the `faust` command. It translates a Faust program into code in a wide range of languages (C, C++, Rust, LLVM IR, WebAssembly, etc.). The generated code can be wrapped into an optional *architecture file* allowing to directly produce a fully operational program.
+While the Faust compiler is available in different forms (e.g., [Embedded Compiler](embedding.md), etc.), its most common one is the command-line version, which can be invoked using the `faust` command. It translates a Faust program into code in a wide range of languages (C, C++, Rust, LLVM IR, WebAssembly, etc.). The generated code can be wrapped into an optional *architecture file*, allowing you to directly produce a fully operational program.
 
 A typical call of the Faust command line compiler is:
 
@@ -8,13 +8,13 @@ A typical call of the Faust command line compiler is:
 faust [OPTIONS] faustFile.dsp
 ```
 
-The Faust compiler outputs C++ code by default therefore running: 
+The Faust compiler outputs C++ code by default; therefore running: 
 
 ```
 faust noise.dsp 
 ```
 
-will compile `noise.dsp` and output the corresponding C++ code on the standard output. The option `-o` allows to reroute the standard output to a file: 
+will compile `noise.dsp` and output the corresponding C++ code on the standard output. The `-o` option allows us to redirect the standard output to a file: 
 
 ```
 faust noise.dsp -o noise.cpp
@@ -152,7 +152,7 @@ Several fine-grained initialization methods are available:
 - the `instanceInit` method calls several additional initialization methods. 
 - the `instanceConstants` method sets the instance constant state. 
 - the `instanceClear` method resets the instance dynamic state (delay lines...).  
-- the `instanceResetUserInterface` method resets all control value to their default state. 
+- the `instanceResetUserInterface` method resets all control values to their default state. 
 
 All of those methods can be used individually on an allocated instance to reset part of its state. 
 
@@ -160,9 +160,9 @@ The `init` method combines class static state and instance initialization.
 
 When using a single instance, calling `init` is the simplest way to do "what is needed." When using several instances, all of them can be initialized using `instanceInit`, with a single call to `classInit` to initialize the static shared state.
 
-The `compute` method takes the number of frames to process, and `inputs` and `outputs` buffers as arrays of separated mono channels. Note that by default `inputs` and `outputs` buffers are supposed to be distinct memory zones, so one cannot safely write `compute(count, inputs, inputs)`. The `-inpl` compilation option can be used for that, but only in scalar mode for now. 
+The `compute` method takes the number of frames to process, and `inputs` and `outputs` buffers as arrays of separate mono channels. Note that by default `inputs` and `outputs` buffers are expected to be distinct memory zones, so one cannot safely write `compute(count, inputs, inputs)`. The `-inpl` compilation option can be used for that, but only in scalar mode for now. 
 
-By default the generated code process `float` type samples. This can be changed using the `-double` option (or even `-quad` in some backends). The `FAUSTFLOAT` type used in the `compute` method is defined in architecture files, and can be `float` or `double`, depending of the audio driver layer. Sample adaptation may have to be used between the DSP sample type and the audio driver sample type.
+By default the generated code processes `float` type samples. This can be changed using the `-double` option (or even `-quad` in some backends). The `FAUSTFLOAT` type used in the `compute` method is defined in architecture files and can be `float` or `double`, depending on the audio driver layer. Sample adaptation may have to be used between the DSP sample type and the audio driver sample type.
 
 ## Controlling Code Generation
 
@@ -170,9 +170,9 @@ Several options of the Faust compiler allow to control the generated C++ code. B
 
 ### Vector Code Generation
 
-Modern C++ compilers are able to do autovectorization, that is to use SIMD instructions to speedup the code. These instructions can typically operate in parallel on short vectors of 4 or 8 simple precision floating point numbers, leading to a theoretical speedup of 4 or 8.
+Modern C++ compilers are able to do autovectorization, that is, to use SIMD instructions to speed up the code. These instructions can typically operate in parallel on short vectors of four or eight single-precision floating point numbers, leading to a theoretical speed-up of four or eight.
 
-Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular, complex loops can prevent autovectorization. The goal of the vector code generation is to rearrange the C++ code in a way that facilitates the autovectorization job of the C++ compiler. Instead of generating a single sample computation loop, it splits the computation into several simpler loops that communicates by vectors.
+Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular, complex loops can prevent autovectorization. The goal of vector code generation is to rearrange the C++ code in a way that facilitates the autovectorization job of the C++ compiler. Instead of generating a single sample-computation loop, it splits the computation into several simpler loops that communicate by vectors.
 
 The vector code generation is activated by passing the [`--vectorize` (or `-vec`)](../manual/options.md) option to the Faust compiler. Two additional options are available: `--vec-size <n>` controls the size of the vector (by default 32 samples) and `--loop-variant 0/1` gives some additional control on the loops: `--loop-variant 0` generates fixed-size sub-loops with a final sub-loop that processes the last samples, `--loop-variant 1` generates sub-loops of variable vector size.
 
@@ -186,14 +186,14 @@ RMS(n) = square : mean(n) : sqrt;
 // Square of a signal
 square(x) = x * x;
 
-// Mean of n consecutive samples of a signal (uses fixpoint to avoid the 
+// Mean of n consecutive samples of a signal (uses fixed point to avoid the 
 // accumulation of rounding errors) 
 mean(n) = float2fix : integrate(n) : fix2float : /(n); 
 
 // Sliding sum of n consecutive samples
 integrate(n,x) = x - x@n : +~_;
 
-// Convertion between float and fix point
+// Conversion between float and fixed point
 float2fix(x) = int(x*(1<<20));      
 fix2float(x) = float(x)/(1<<20);    
 
@@ -609,4 +609,3 @@ void computeThread(int num_thread) {
   }
 }
 ```
-

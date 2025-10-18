@@ -1,14 +1,14 @@
 # Using Faust with VCV Rack
 
-[VCV Rack](https://vcvrack.com) is virtual modular synthesizer, allowing thousands of separated developed modules to be connected in patches to synthesize and process sounds. A large community of developers are providing tons of modules to be installed in the application as [libraries](https://library.vcvrack.com), and a lot of them are developed as [open-source projects on GitHub](https://github.com/search?q=vcv+rack).
+[VCV Rack](https://vcvrack.com) is a virtual modular synthesizer, allowing thousands of separately developed modules to be connected in patches to synthesize and process sounds. A large community of developers provide tons of modules to be installed in the application as [libraries](https://library.vcvrack.com), and many of them are developed as [open-source projects on GitHub](https://github.com/search?q=vcv+rack).
 
 <img src="img/VCV_Rack.png" width="70%" class="mx-auto d-block">
 
-In this tutorial, we'll show how to use the [Faust](https://faust.grame.fr) language to generate monophonic or polyphonic modules: 
+In this tutorial, we'll show how to use the [Faust](https://faust.grame.fr) language to generate monophonic or polyphonic modules:
 
-- either using  the Faust aware programmable [VCV Prototype](https://github.com/VCVRack/VCV-Prototype/tree/faust) to edit/compile/test Faust DSP code
-- or using the [faust2vcvrack](https://github.com/grame-cncm/faust/tree/master-dev/architecture/vcvrack) tool with allows to generate standalone modules 
-- to introduce module development, a quick introduction on **using C++ to develop modules** will be done first.
+- either using the Faust-aware programmable [VCV Prototype](https://github.com/VCVRack/VCV-Prototype/tree/faust) to edit, compile, and test Faust DSP code
+- or using the [faust2vcvrack](https://github.com/grame-cncm/faust/tree/master-dev/architecture/vcvrack) tool, which allows you to generate standalone modules
+- to introduce module development, we'll start with a quick overview of **using C++ to develop modules**.
 
 ## Installation
 
@@ -18,19 +18,19 @@ Get the [binary version](https://vcvrack.com/Rack) for your OS here.
 
 From [Plugin Development Tutorial page](https://vcvrack.com/manual/PluginDevelopmentTutorial) and the [SDK itself](https://vcvrack.com/downloads/) for your OS.
 
-Don't forget to setup the **RACK_DIR** variable: `export RACK_DIR=<Rack SDK folder>`. 
+Don't forget to set up the **RACK_DIR** variable: `export RACK_DIR=<Rack SDK folder>`.
 
 ### Compiling the VCV Prototype module Faust version
 
 The Faust compiler can be embedded in applications or plugins using [libfaust](../manual/embedding.md), and DSP code can be edited and JIT compiled on the fly.
 
-You'll have to clone and compile the [GitHub project](https://github.com/VCVRack/VCV-Prototype/tree/faust). Be use to use the `faust` branch and follow the [explanations](https://github.com/VCVRack/VCV-Prototype/blob/faust/Faust.md) given.
+You'll have to clone and compile the [GitHub project](https://github.com/VCVRack/VCV-Prototype/tree/faust). Be sure to use the `faust` branch and follow the [explanations](https://github.com/VCVRack/VCV-Prototype/blob/faust/Faust.md) provided.
 
-**Then you should be ready for this workshop !** 
+**Then you should be ready for this workshop!**
 
 ## The modular principle
 
-VCV Rack follows  the **Modular synthesizers** principe explained on this [Wikipedia article](https://en.wikipedia.org/wiki/Modular_synthesizer):
+VCV Rack follows the **modular synthesizer** principle explained in this [Wikipedia article](https://en.wikipedia.org/wiki/Modular_synthesizer):
 
 > **Modular synthesizers** are [synthesizers](https://en.wikipedia.org/wiki/Synthesizer) composed of separate modules of different functions. The modules can be connected together with patch cords, a matrix patching system, or switches by the user to create a [patch](https://en.wikipedia.org/wiki/Patch_(synthesizer)). The output (voltages) from the modules may function as (audio) signals, control voltages, or logic/timing conditions. Typical modules are oscillators (operate on frequency), filters (spectrum), amplifiers/gates (amplitude) and Envelope generators (dynamic control).
 
@@ -38,9 +38,9 @@ To do that, control signals (CV) run at audio rate, and so the entire patch is t
 
 Since software modules mimic real physical ones, they somewhat follow the same conventions to represent signal range, **typically with [-5v...5v] or [0v..10v] values**, or **1V/octave** for MIDI signals. Read the [voltage standard](https://vcvrack.com/manual/VoltageStandards) page for a more complete description.
 
-Control parameters can also be changed from the module GUI using switches, knobs.etc...
+Control parameters can also be changed from the module GUI using switches, knobs, etc.
 
-Modules **can be monophonic or polyphonic (up to 16 channels)**, where each cable actually transport several (usually related) signals. The polyphonic model is obviously used for instruments, but can also be used for effects. Polyhonic modules have **thicker cables** in the GUI. 
+Modules **can be monophonic or polyphonic (up to 16 channels)**, where each cable actually transports several (usually related) signals. The polyphonic model is obviously used for instruments, but can also be used for effects. Polyphonic modules have **thicker cables** in the GUI.
 
 ## Developing C++ Modules
 
@@ -60,11 +60,11 @@ make && make install
 
 ### GUI description using SVG 
 
-The module GUI is done using SVG. Developers will classically prepare the background layer with [Inkscape](https://inkscape.org/) or a similar tool, with special conventions to describe audio or CV inputs/outputs, UI items (knobs, lights, custom widgets... ). Here a example of a basic SVG template with a *light*, a *param* (like knob), an *audio or CV input*, and an *audio or CV output*:
+The module GUI is done using SVG. Developers typically prepare the background layer with [Inkscape](https://inkscape.org/) or a similar tool, with special conventions to describe audio or CV inputs/outputs and UI items (knobs, lights, custom widgets, etc.). Here is an example of a basic SVG template with a *light*, a *parameter* (like a knob), an *audio or CV input*, and an *audio or CV output*:
 
 <img src="img/VCV_SVG.png" width="12%" class="mx-auto d-block">
 
-Inside the module project, the following command will decode the SVG file and generate template C++ code to create the various widget:
+Inside the module project, the following command will decode the SVG file and generate template C++ code to create the various widgets:
 
 ```
 ../helper.py createmodule MyModule res/MyModule.svg src/MyModule.cpp
@@ -131,16 +131,16 @@ The 6 *switches*, *knobs* as well as the *lights* and *switchLights* can be conn
 - `[light_red:N|light_green:N|light_blue:N]` (with N from 1 to 6) has to be used in a `vbargraph` or `hbargraph` item to connect it to the prototype interface light number N
 - `[switchlight_red:N|switchlight_green:N|switchlight_blue:N]` (with N from 1 to 6) has to be used in a `vbargraph` or `hbargraph` to connect it to the prototype interface switchLight number N 
 
-So a button or checkbox UI item can use the `[switch:N]` metadata to be associated with the corresponding GUI switch, which color can be controlled using the `switchlight_xx:N` metadata. For instance:  
+So a button or checkbox UI item can use the `[switch:N]` metadata to be associated with the corresponding GUI switch, whose color can be controlled using the `switchlight_xx:N` metadata. For instance:
 
-- `gate = button("gate [switch:1") : hbargraph("[switchlight_red:1]", 0, 1);` can be written to describe a button which become red when pressed
-- `check = checkbox("check [switch:2]") : vbargraph("[switchlight_red:2]", 0, 1) : vbargraph("[switchlight_green:2]", 0, 1) : vbargraph("[switchlight_blue:2]", 0, 1);` can be written to describe a checkbox which become white when checked
+- `gate = button("gate [switch:1") : hbargraph("[switchlight_red:1]", 0, 1);` describes a button that becomes red when pressed
+- `check = checkbox("check [switch:2]") : vbargraph("[switchlight_red:2]", 0, 1) : vbargraph("[switchlight_green:2]", 0, 1) : vbargraph("[switchlight_blue:2]", 0, 1);` describes a checkbox that becomes white when checked
 
 Other metadata:
 
 - `[scale:lin|log|exp]` metadata is implemented.
 
-The [rack.lib](https://github.com/VCVRack/VCV-Prototype/blob/faust/res/faust/rack.lib) Faust library contains usefull functions to convert CV signals, and can be enriched if needed. 
+The [rack.lib](https://github.com/VCVRack/VCV-Prototype/blob/faust/res/faust/rack.lib) Faust library contains useful functions to convert CV signals, and can be enriched if needed.
 
 Note that **only monophonic DSP programs** can be described. 
 
@@ -162,7 +162,7 @@ process = os.osc(freq) * gain * 5, os.sawtooth(freq) * gain * gate * 5;
 ```
 <!-- /faust-run -->
 
-Following the VCV Prototype model, note that audio outputs **are multipled by 5** to follow the [-5v..5v] range convention. 
+Following the VCV Prototype model, note that audio outputs **are multiplied by 5** to follow the [-5v..5v] range convention.
 
 The VCV Prototype standard examples ported to Faust can be seen in the examples folder:
 
@@ -184,7 +184,7 @@ process = si.bus(6) : par(i, 6, *(gain(i+1)) * (1-switch(i+1)));
 ```
 <!-- /faust-run -->
 
-- **vco.dsp**  shows an oscillator with frequency controlled by a knob and a CV pich signal (following the 1V/octave convention):
+- **vco.dsp** shows an oscillator with frequency controlled by a knob and a CV pitch signal (following the 1V/octave convention):
 
 <!-- faust-run -->
 ```

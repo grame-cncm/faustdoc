@@ -1,21 +1,21 @@
 # Error messages
 
-Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can occur at different stages in the compilation process, possibly with the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error. 
+Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled and usually indicate issues such as syntax or semantic errors. They can arise at different stages in the compilation process and may include the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the problem. 
 
 The compiler is organized in several stages:
 
-- starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an [Abstract Source Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)) made here of primitives in the *Box language*. A first class of errors messages are known as *syntax error* messages, like missing the `;` character to end a line, etc. 
-- the next step is to evaluate the definition of `process` programe entry point. This step is basically a λ-calculus interpreter with a strict evaluation. The result is ”flat” block-diagram where everything have been expanded. The resulting block is type annoatetd to discover its number of inputs and outputs.
-- the ”flat” block-diagram  is then translated the *Signal language* where signals as conceptually infinite streams of samples or control values. The box language actually implements the Faust [Block Diagram Algebra](https://hal.science/hal-02159011v1), and not following the connections rules will trigger a second class of errors messages, the *box connection errors*. Other errors can be produced at this stage when parameters for some primitives are not of the correct type.  
-- the pattern matching meta language allows to algorithmically create and manipulate block diagrams expressions. So a third class of *pattern matching coding errors* can occur at this level. 
-- signal expressions are optimized, type annotated (to associate an integer or real type with each signal, but also discovering when signals are to be computed: at init time, control-rate or sample-rate..) to produce a so-called *normal-form*. A fourth class of *parameter range errors* or *typing errors* can occur at this level, like using delays with a non-bounded size, etc.  
-- signal expressions are then converted in FIR (Faust Imperative Representation), a representation for state based computation (memory access, arithmetic computations, control flow, etc.), to be converted into the final target language (like C/C++, LLVM IR, Rust, WebAssembly, etc.). A fifth class of *backend errors* can occur at this level, like non supported compilation options for a given backend, etc.
+- starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an [Abstract Syntax Tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree)) composed here of primitives in the *Box language*. A first class of error messages is known as *syntax errors*, like missing the `;` character to end a line, etc. 
+- the next step is to evaluate the definition of the `process` program entry point. This step is basically a λ-calculus interpreter with strict evaluation. The result is a “flat” block diagram where everything has been expanded. The resulting block is type annotated to discover its number of inputs and outputs.
+- the “flat” block diagram is then translated into the *Signal language*, where signals are conceptually infinite streams of samples or control values. The Box language actually implements the Faust [Block Diagram Algebra](https://hal.science/hal-02159011v1), and not following the connection rules will trigger a second class of error messages, the *box connection errors*. Other errors can be produced at this stage when parameters for some primitives are not of the correct type.  
+- the pattern-matching metalanguage allows us to algorithmically create and manipulate block-diagram expressions. So a third class of *pattern-matching coding errors* can occur at this level. 
+- signal expressions are optimized and type annotated (to associate an integer or real type with each signal, and to determine when signals must be computed: at init time, control rate, or sample rate) to produce a so-called *normal form*. A fourth class of *parameter range errors* or *typing errors* can occur at this level, such as using delays with an unbounded size.  
+- signal expressions are then converted into FIR (Faust Imperative Representation), a representation for state-based computation (memory access, arithmetic computations, control flow, etc.), before being converted into the final target language (like C/C++, LLVM IR, Rust, WebAssembly, etc.). A fifth class of *backend errors* can occur at this level, such as unsupported compilation options for a given backend.
 
-Note that the current error messages system is still far from perfect, usually when the origin of the error in the DSP source cannot be properly traced. In this case the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box of a Signal) is printed.
+Note that the current error message system is still far from perfect, especially when the origin of the error in the DSP source cannot be properly traced. In this case, the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box or a Signal) is printed.
 
 ## Syntax errors
 
-Those errors happen when the language syntax is not respected. Here are some examples.
+These errors happen when the language syntax is not respected. Here are some examples.
 
 The following program:
 
@@ -31,7 +31,7 @@ will produce the following error message:
 error.dsp:2 : ERROR : syntax error, unexpected IDENT
 ```
 
-It means that an unexpected identifier as been found line 2 of the file test.dsp. Usually, this error is due to the absence of the semi-column `;` at the end of the previous line. 
+It means that an unexpected identifier has been found on line 2 of the file `test.dsp`. Usually, this error is due to the absence of the semicolon `;` at the end of the previous line. 
 
 
 The following program:
@@ -48,7 +48,7 @@ errors.dsp:1 : ERROR : syntax error, unexpected ENDDEF
 
 ```
 
-The parser finds the end of the definition (`;`) while searching a closing right parenthesis.
+The parser finds the end of the definition (`;`) while searching for a closing right parenthesis.
 
 The following program:
 
@@ -76,7 +76,7 @@ will produce the following error message:
 errors.dsp:1 : ERROR : syntax error, unexpected RPAR
 ```
 
-The wrong parenthesis has been used.
+An incorrect parenthesis was used.
 
 The following program:
 
@@ -120,7 +120,7 @@ A second category of error messages is returned when block expressions are not c
 
 Combining two blocks `A` and `B` in parallel can never produce a box connection error since the 2 blocks are placed one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of `A` and `B`. The outputs of the resulting block-diagram are the outputs of `A` and `B`.
 
-#### Sequencial connection error
+#### Sequential connection error
 
 Combining two blocks `A` and `B` in sequence will produce a box connection error if `outputs(A) != inputs(B)`. So for instance the following program:
 
@@ -190,7 +190,7 @@ has 3 inputs
 
 #### Recursive connection error
 
-Combining two blocks `A` and `B` with the recursive composition will produce a box connection error if the number of outputs of `A` is less than the number of inputs of `B`, or the number of outputs of `B` is more than the number of inputs of `A` (that is the following $$\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)$$ connection rule is not respected). So for instance the following program:
+Combining two blocks `A` and `B` with the recursive composition will produce a box connection error if the number of outputs of `A` is less than the number of inputs of `B`, or the number of outputs of `B` is greater than the number of inputs of `A` (that is, the following connection rule must be respected: $$\mathrm{outputs}(A) \geq \mathrm{inputs}(B)\ \text{and}\ \mathrm{inputs}(A) \geq \mathrm{outputs}(B)$$). So for instance the following program:
 
 ```
 A = _,_;
@@ -237,7 +237,7 @@ ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,
  
 ### Iterative constructions 
 
-[Iterations](../manual/syntax.md#iterations) are analogous to `for(...)` loops in other languages and provide a convenient way to automate some complex block-diagram constructions. All `par`, `seq`, `sum`, `prod` expressions have the same form, take an identifier as first parameter, a number of iteration as an integer constant numerical expression as second parameter, then an arbitrary block-diagram as third parameter.
+[Iterations](../manual/syntax.md#iterations) are analogous to `for(...)` loops in other languages and provide a convenient way to automate complex block-diagram constructions. All `par`, `seq`, `sum`, and `prod` expressions have the same form: they take an identifier as the first parameter, the number of iterations as an integer constant numerical expression as the second parameter, and an arbitrary block diagram as the third parameter.
 
 The example code:
 
@@ -265,7 +265,7 @@ filename.dsp : 1 : ERROR : not a constant expression of type : (0->1) : +
 
 ## Pattern matching errors 
 
-Pattern matching mechanism allows to algorithmically create and manipulate block diagrams expressions. Pattern matching coding errors can occur at this level.  
+The pattern-matching mechanism allows us to algorithmically create and manipulate block-diagram expressions. Pattern-matching coding errors can occur at this level.  
 
 ### Multiple symbol definition error
 
@@ -275,7 +275,7 @@ This error happens when a symbol is defined several times in the DSP file:
 ERROR : [file foo.dsp : N] : multiple definitions of symbol 'foo'
 ```
 
-Since computation are done at compile time and the pattern matching language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.
+Since computations are performed at compile time and the pattern-matching language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.
 
 ### Loop detection error
 
@@ -298,11 +298,11 @@ and similar kind of infinite loop errors can be produced with more complex code.
 
 ## Signal related errors 
 
-Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical functions is checked and non allowed operations are signaled. 
+Signal expressions are produced from Box expressions, are type annotated, and are finally reduced to a normal form. Some primitives expect their parameters to follow certain constraints, such as being within a specific range or being bounded. The domain of mathematical functions is checked and disallowed operations are flagged. 
 
 ### Automatic type promotion 
 
-Some primitives (like [route](../manual/syntax.md#route-primitive), [rdtable](../manual/syntax.md#rdtable-primitive), [rwtable](../manual/syntax.md#rwtable-primitive)...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of `int(exp)` is internally added and is not necessary in the source code. 
+Some primitives (like [route](../manual/syntax.md#route-primitive), [rdtable](../manual/syntax.md#rdtable-primitive), [rwtable](../manual/syntax.md#rwtable-primitive), etc.) expect arguments with an integer type, which is automatically promoted. That is, the equivalent of `int(exp)` is internally added and is not necessary in the source code. 
 
 ### Parameter range errors
 
@@ -340,7 +340,7 @@ ERROR : can't compute the min and max values of : proj0(letrec(W0 = (proj0(W0)'+
 
 ### Table construction errors
 
-The [rdtable](../manual/syntax.md#rdtable-primitive) primitive can be used to read through a read-only (pre-defined at initialisation time) table. The [rwtable](../manual/syntax.md#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compiled time 
+The [rdtable](../manual/syntax.md#rdtable-primitive) primitive can be used to read through a read-only (predefined at initialization time) table. The [rwtable](../manual/syntax.md#rwtable-primitive) primitive can be used to implement a read/write table. Both have a size computed at compile time.
 
 
 The `rdtable` primitive assumes that the table content is produced by a processor with 0 input and one output, known at compiled time. So the following expression:
@@ -359,7 +359,7 @@ The same kind of errors will happen when read and write indexes are incorrectly 
 
 ### Duplicate pathname error
 
-Pathnames for different GUI items have to be diffrent. Compiling the following code:
+Pathnames for different GUI items have to be different. Compiling the following code:
 
 ```
 import("stdfaust.lib");

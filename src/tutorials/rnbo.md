@@ -1,11 +1,11 @@
-# Using Faust in RNBO with codebox~
+# Using Faust in RNBO with Codebox~
 
-In this tutorial, we present how [Faust](https://faust.grame.fr) can be used with [RNBO](https://rnbo.cycling74.com), a library and toolchain that can take Max-like patches, export them as portable code, and directly compile that code to targets like a VST, a Max External, or a Raspberry Pi. DSP programs can be compiled to the internal [codebox~](https://rnbo.cycling74.com/codebox) sample level scripting language.
-Compiling Faust DSP to codebox~ code will allow to take profit of hundreds of DSP building blocks implemented in the [Faust Libraries](https://faustlibraries.grame.fr), ready to use [Examples](../examples/ambisonics.md), any DSP program developed in more than 200 projects listed in the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page, or Faust DSP programs found on the net.
+In this tutorial, we present how [Faust](https://faust.grame.fr) can be used with [RNBO](https://rnbo.cycling74.com), a library and toolchain that can take Max-like patches, export them as portable code, and directly compile that code to targets like a VST, a Max External, or a Raspberry Pi. DSP programs can be compiled to the internal [codebox~](https://rnbo.cycling74.com/codebox) sample-level scripting language.
+Compiling Faust DSP to codebox~ code allows you to take advantage of hundreds of DSP building blocks implemented in the [Faust Libraries](https://faustlibraries.grame.fr), ready-to-use [Examples](../examples/ambisonics.md), any DSP program developed in more than 200 projects listed on the [Powered By Faust](https://faust.grame.fr/community/powered-by-faust/) page, or Faust DSP programs found on the net.
 
 #### Who is this tutorial for?
 
-The [first section](#using-command-line-tools) assumes a working [Faust](https://github.com/grame-cncm/faust) compiler installed on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) is better suited for RNBO users who want to discover Faust.  
+The [first section](#using-command-line-tools) assumes a working [Faust](https://github.com/grame-cncm/faust) compiler is installed on the machine, so it is more suited to regular Faust users. The [second section](#using-the-faust-web-ide) is better suited for RNBO users who want to discover Faust.  
 
 ## Using command line tools
 
@@ -25,17 +25,17 @@ process = vgroup("Oscillator", os.osc(freq1) * vol, os.osc(freq2) * vol);
 ```
 <!-- /faust-run -->
 
-The codebox~ code can be generated using the following line (note the use of `-double` option, the default sample format in RNBO/codebox~):
+The codebox~ code can be generated using the following line (note the use of the `-double` option, the default sample format in RNBO/codebox~):
 
 ```bash
 faust -lang codebox -double osc.dsp -o osc.codebox
 ```
 
-This will generate a series of functions to init, update parameters and compute audio frames.
+This will generate a series of functions to initialize, update parameters, and compute audio frames.
 
 ### Looking at the generated code
 
-The generated code contains a sequence of parameters definitions with their min, max, step and default values:
+The generated code contains a sequence of parameter definitions with their min, max, step, and default values:
 
 ```
 // Params
@@ -44,7 +44,7 @@ The generated code contains a sequence of parameters definitions with their min,
 @param({min: -96.0, max: 0.0, step: 0.1}) volume = 0.0;
 ```
 
-Next the declaration of the DSP structure using the `@state` decorator, creating a state that persists across the lifetime of the codebox object. Scalar and arrays with the proper type are created:
+Next the DSP structure is declared using the `@state` decorator, creating a state that persists across the lifetime of the codebox object. Scalar and array fields with the proper type are created:
 
 ```
 // Fields
@@ -66,7 +66,7 @@ Next the declaration of the DSP structure using the `@state` decorator, creating
 @state fControl_cb = new FixedDoubleArray(3);
 ```
 
-Next the DSP init code, which is added in [dspsetup](https://rnbo.cycling74.com/codebox#special-functions), only available in codebox~ where it will be called each time audio is turned on in Max (which is basically every time the audio state is toggled, or the sample rate or vector size is changed). Here the DSP state is initialized using the RNBO current sample rate: 
+Next, the DSP init code is added in [dspsetup](https://rnbo.cycling74.com/codebox#special-functions), only available in codebox~, where it will be called each time audio is turned on in Max (which is basically every time the audio state is toggled, or the sample rate or vector size is changed). Here the DSP state is initialized using the RNBO current sample rate: 
 
 ```
 // Init
@@ -98,7 +98,7 @@ function dspsetup() {
 }
 ```
 
-Parameters handling is separated in two functions: `control` is called each time a parameter has changed:
+Parameter handling is split into two functions: `control` is called each time a parameter has changed:
 
 ```
 // Control
@@ -109,7 +109,7 @@ function control() {
 }
 ```
 
-And the actual change is triggered when at least one parameter has changed, controlled by the state of `fUpdated`global variable:
+The actual change is triggered when at least one parameter has changed, controlled by the state of the `fUpdated` global variable:
 
 ```
 // Update parameters
@@ -121,7 +121,7 @@ function update(freq1,freq2,volume) {
 }
 ```
 
-Finally `compute` process the audio inputs and produces audio outputs:
+Finally, `compute` processes the audio inputs and produces audio outputs:
 
 ```
 // Update parameters

@@ -1,12 +1,12 @@
 \chapter{Mathematical Documentation}
 \label{mdoc}
 
-The \faust compiler provides a mechanism to produce a self-describing documentation of the mathematical semantic of a \faust program, essentially as a pdf file. The corresponding options are \lstinline!-mdoc! (short) or \lstinline!--mathdoc! (long).
+The \faust compiler provides a mechanism to produce a self-describing documentation of the mathematical semantics of a \faust program, essentially as a pdf file. The corresponding options are \lstinline!-mdoc! (short) or \lstinline!--mathdoc! (long).
 
 \section{Goals of the mathdoc}
 \label{goals-of-mdoc}
 
-There are for main goals, or uses, of this mathematical documentation:
+There are four main goals, or uses, of this mathematical documentation:
 \begin{enumerate}
 \item to preserve the DSP source code with all the needed libraries, so that the DSP can be compiled with a more recent version of the compiler and produce the same resulting program. This is the way we allow the libraries themselves to evolve (even without maintaining compatibility with older versions), while still allowing an older program to be compiled with newer versions of the compiler;
 \item to preserve signal processors, independently from any computer language but only under a mathematical form;
@@ -28,7 +28,7 @@ There are for main goals, or uses, of this mathematical documentation:
 \section{Generating the mathdoc}
 \label{generating-mdoc}
 
-The easiest way to generate the complete mathematical documentation is to call the \lstinline!faust2mathdoc! script on a \faust file, as the \lstinline!-mdoc! option leave the documentation production unfinished. For example: 
+The easiest way to generate the complete mathematical documentation is to call the \lstinline!faust2mathdoc! script on a \faust file, as the \lstinline!-mdoc! option leaves the documentation production unfinished. For example: 
 \begin{lstlisting}
 faust2mathdoc noise.dsp
 \end{lstlisting}
@@ -95,7 +95,7 @@ By default, when no \lstinline!<mdoc>! tag can be found in the input \faust file
 \section{Manual documentation}
 \label{manual-mdoc}
 
-You can specify yourself the documentation instead of using the automatic mode, with five xml-like tags. That permits you to modify the presentation and to add your own comments, not only on \lstinline!process!, but also about any expression you'd like to. Note that as soon as you declare an \lstinline!<mdoc>! tag inside your \faust file, the default structure of the automatic mode is ignored, and all the \latex stuff becomes up to you!
+You can specify the documentation yourself instead of using the automatic mode, with five XML-like tags. That allows you to modify the presentation and to add your own comments, not only on \lstinline!process!, but also about any expression you'd like to document. Note that as soon as you declare an \lstinline!<mdoc>! tag inside your \faust file, the default structure of the automatic mode is ignored, and all the \latex content becomes your responsibility.
 
 \subsection{Six tags}
 \label{doc-tags}
@@ -106,7 +106,7 @@ Here are the six specific tags:
   \begin{itemize}
   \item \lstinline!<equation></equation>!, to get equations of a \faust expression,
   \item \lstinline!<diagram></diagram>!, to get the top-level block-diagram of a \faust expression,
-  \item \lstinline!<metadata></metadata>!, to reference \faust metadatas (cf. declarations), calling the corresponding keyword,
+  \item \lstinline!<metadata></metadata>!, to reference \faust metadata (cf. declarations), calling the corresponding keyword,
   \item \lstinline!<notice />!, to insert the "adaptive'' notice all formulas actually printed,
   \item \lstinline!<listing [attributes] />!, to insert the listing of \faust files called.
   \end{itemize}
@@ -123,9 +123,9 @@ The \lstinline!<listing />! tag can have up to three boolean attributes (set to 
 \subsection{The mdoc top-level tags}
 \label{mdoc-tag}
 
-The \lstinline!<mdoc></mdoc>! tags are the top-level delimiters for \faust mathematical documentation sections. This means that the four other documentation tags can't be used outside these pairs (see section \ref{documentation}).
+The \lstinline!<mdoc></mdoc>! tags are the top-level delimiters for \faust mathematical documentation sections. This means that the four other documentation tags cannot be used outside these pairs (see Section \ref{documentation}).
 
-In addition of the four inner tags, \lstinline!<mdoc></mdoc>! tags accept free \latex text, including its standard macros (like \lstinline!\section!, \lstinline!\emph!, etc.). This allows to manage the presentation of resulting tex file directly from within the input \faust file. 
+In addition to the four inner tags, \lstinline!<mdoc></mdoc>! tags accept free \latex text, including its standard macros (like \lstinline!\section!, \lstinline!\emph!, etc.). This allows you to manage the presentation of the resulting tex file directly from within the input \faust file. 
 
 The complete list of the \latex packages included by \faust can be found in the file \lstinline!architecture/latexheader.tex!.
 
@@ -190,11 +190,11 @@ The white noise then corresponds to:
 process = noise * vslider("Volume[style:knob]", 0, 0, 1, 0.1);
 
 <mdoc>
-Endly, the sound level of this program is controlled by a user slider, which gives the following equation: 
+Finally, the sound level of this program is controlled by a user slider, which gives the following equation: 
 <equation>process</equation>
 
 \section{Block-diagram schema of process}
-This process is illustrated on figure 1.
+This process is illustrated in Figure 1.
 <diagram>process</diagram>
 
 \section{Notice of this documentation}
@@ -240,6 +240,4 @@ If you would like to contribute to the localization effort, feel free to transla
 \item Then, open the pdf file \lstinline!myfaustfile-mdoc/pdf/myfaustfile.pdf!.
 \item That's all !
 \end{enumerate}
-
-
 

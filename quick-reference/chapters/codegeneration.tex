@@ -1,11 +1,11 @@
-\chapter{Controlling the code generation}
+\chapter{Controlling the Code Generation}
 \label{codegeneration}
 
-Several options of the \faust compiler allow to control the generated C++ code. By default the computations are done sample by sample in a single loop. But the compiler can also generate \textit{vector} and \textit{parallel} code.
+Several options of the \faust compiler allow you to control the generated C++ code. By default the computations are done sample by sample in a single loop, but the compiler can also generate \textit{vector} and \textit{parallel} code.
 
 \section{Vector code generation}
-Modern C++ compilers are able to do autovectorization, that is to use SIMD instructions to speedup the code. These instructions can typically operate in parallel on short vectors of 4 simple precision floating point numbers thus leading to a theoretical speedup of $\times4$. 
-Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular too complex loops can prevent autovectorization. The goal of the vector code generation is to rearrange the C++ code in a way that facilitates the autovectorization job of the C++ compiler. Instead of generating a single sample computation loop, it splits the computation into several simpler loops that communicates by vectors.
+Modern C++ compilers are able to perform autovectorization, that is, to use SIMD instructions to speed up the code. These instructions can typically operate in parallel on short vectors of four single-precision floating point numbers, leading to a theoretical speed up of $\times 4$. 
+Autovectorization of C/C++ programs is a difficult task. Current compilers are very sensitive to the way the code is arranged. In particular, overly complex loops can prevent autovectorization. The goal of vector code generation is to rearrange the C++ code in a way that makes the autovectorization job of the C++ compiler easier. Instead of generating a single sample computation loop, it splits the computation into several simpler loops that communicate through vectors.
 
 The vector code generation is activated by passing the \lstinline!--vectorize! (or \lstinline!-vec!) option to the \faust compiler. Two additional options are available:  \lstinline!--vec-size <n>! controls the size of the vector (by default 32 samples) and \lstinline!--loop-variant 0/1! gives some additional control on the loops: \lstinline!--loop-variant 0! generates fixed-size sub-loops with a final sub-loop that processes the last samples, \lstinline!--loop-variant 1! generates sub-loops of variable vector size. 
 
@@ -20,7 +20,7 @@ RMS(n) = square : mean(n) : sqrt;
 square(x) = x * x;
 
 // Mean of n consecutive samples of a signal
-// (uses fixpoint to avoid the accumulation of
+// (uses fixed point to avoid the accumulation of
 // rounding errors) 
 mean(n) = float2fix : integrate(n) : 
           fix2float : /(n); 
@@ -28,7 +28,7 @@ mean(n) = float2fix : integrate(n) :
 // Sliding sum of n consecutive samples
 integrate(n,x) = x - x@n : +~_;
 
-// Convertion between float and fix point
+// Conversion between float and fixed point
 float2fix(x) = int(x*(1<<20));      
 fix2float(x) = float(x)/(1<<20);    
 
@@ -98,7 +98,7 @@ virtual void compute (int fullcount,
 }
 \end{lstlisting}
 
-While the second version of the code is more complex, it turns out to be much easier to vectorize efficiently by the C++ compiler. Using Intel icc 11.0, with the exact same compilation options: \texttt{-O3 -xHost -ftz -fno-alias -fp-model fast=2}, the scalar version leads to a throughput performance of 129.144  MB/s, while the vector version achieves 359.548  MB/s, a speedup of x2.8 ! 
+While the second version of the code is more complex, it turns out to be much easier for the C++ compiler to vectorize efficiently. Using Intel icc 11.0, with the exact same compilation options: \texttt{-O3 -xHost -ftz -fno-alias -fp-model fast=2}, the scalar version achieves a throughput of 129.144 MB/s, while the vector version reaches 359.548 MB/s, a 2.8$\times$ speed up.
 
 \begin{figure}[htb]
   \centering
@@ -107,7 +107,7 @@ While the second version of the code is more complex, it turns out to be much ea
   \label{fig:stack}
 \end{figure}
 
-The vector code generation is built on top of the scalar code generation (see figure \ref{fig:stack}). Every time an expression needs to be compiled, the compiler checks if it requires a separate loop or not. It applies some simple rules for that. Expressions that are shared (and are complex enough) are good candidates to be compiled in a separate loop, as well as recursive expressions and expressions used in delay lines. 
+Vector code generation is built on top of scalar code generation (see Figure \ref{fig:stack}). Every time an expression needs to be compiled, the compiler checks whether it requires a separate loop or not. It applies some simple rules for that. Expressions that are shared (and are complex enough) are good candidates to be compiled in a separate loop, as well as recursive expressions and expressions used in delay lines. 
 
 The result is a directed graph in which each node is a computation loop (see Figure \ref{fig:loopgraph}). This graph is stored in the klass object and a topological sort is applied to it before printing the code. 
 
@@ -120,7 +120,7 @@ The result is a directed graph in which each node is a computation loop (see Fig
 
 \section{Parallel code generation}
 
-The parallel code generation is activated by passing either the \lstinline!--openMP! (or \lstinline!-omp!) option or the \lstinline!--scheduler! (or \lstinline!-sch!) option. It implies the \lstinline!-vec! options as the parallel code generation is built on top of the vector code generation.  
+Parallel code generation is activated by passing either the \lstinline!--openMP! (or \lstinline!-omp!) option or the \lstinline!--scheduler! (or \lstinline!-sch!) option. It implies the \lstinline!-vec! option, as parallel code generation is built on top of vector code generation.  
 
 \subsection{The OpenMP code generator}
 
@@ -131,7 +131,7 @@ The parallel code generation is activated by passing either the \lstinline!--ope
   \label{fig:openmp}
 \end{figure}
 
-The \lstinline!--openMP! (or \lstinline!-omp!) option given to the \faust compiler will insert appropriate OpenMP directives in the C++ code. OpenMP (http://wwww.openmp.org) is a well established API that is used to explicitly define direct multi-threaded, shared memory parallelism. It is based on a fork-join model of parallelism (see figure \ref{fig:openmp}). 
+The \lstinline!--openMP! (or \lstinline!-omp!) option given to the \faust compiler inserts appropriate OpenMP directives in the C++ code. OpenMP (http://www.openmp.org) is a well-established API that is used to explicitly define direct multi-threaded, shared-memory parallelism. It is based on a fork-join model of parallelism (see Figure \ref{fig:openmp}). 
 Parallel regions are delimited by \lstinline!#pragma omp parallel! constructs. At the entrance of a parallel region a team of parallel threads is activated. The code within a parallel region is executed by each thread of the parallel team until the end of the region. 
 
 \begin{lstlisting}
@@ -143,7 +143,7 @@ Parallel regions are delimited by \lstinline!#pragma omp parallel! constructs. A
 }
 \end{lstlisting}
 
-In order not to have every thread doing redundantly the exact same work, OpemMP provides specific \textit{work-sharing} directives. For example \lstinline!#pragma omp sections! allows to break the work into separate, discrete sections, each section being executed by one thread:
+To avoid having every thread redundantly do the exact same work, OpenMP provides specific \textit{work-sharing} directives. For example \lstinline!#pragma omp sections! allows you to break the work into separate, discrete sections, each section being executed by one thread:
 
 \begin{lstlisting}
 #pragma omp parallel
@@ -166,7 +166,7 @@ In order not to have every thread doing redundantly the exact same work, OpemMP 
 \end{lstlisting}
 
 \subsection{Adding OpenMP directives}
-As said before the parallel code generation is built on top of the vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set $S_0$ (loops $L1$, $L2$ and $L3$ in the DAG of Figure \ref{fig:loopgraph}) contains the loops that don't depend on any other loops, the set $S_1$ contains the loops that only depend on loops of $S_0$, (that is loops $L4$ and $L5$), etc.. 
+As mentioned earlier, parallel code generation is built on top of vector code generation. The graph of loops produced by the vector code generator is topologically sorted in order to detect the loops that can be computed in parallel. The first set $S_0$ (loops $L1$, $L2$, and $L3$ in the DAG of Figure \ref{fig:loopgraph}) contains the loops that do not depend on any other loops. The set $S_1$ contains the loops that depend only on loops of $S_0$ (that is, loops $L4$ and $L5$), etc. 
 
 As all the loops of a given set $S_n$ can be computed in parallel, the compiler will generate a \lstinline!sections! construct with a \lstinline!section! for each loop. 
 \begin{lstlisting}
@@ -184,14 +184,14 @@ As all the loops of a given set $S_n$ can be computed in parallel, the compiler 
   }
 \end{lstlisting}
  
-If a given set contains only one loop, then the compiler checks to see if the loop can be parallelized (no recursive dependencies) or not. If it can be parallelized, it generates:
+If a given set contains only one loop, then the compiler checks to see whether the loop can be parallelized (no recursive dependencies) or not. If it can be parallelized, it generates:
 \begin{lstlisting}
   #pragma omp for
   for (...) {
    // Loop code
   }
 \end{lstlisting}
-otherwise it generates a \lstinline!single! construct so that only one thread will execute the loop:
+otherwise it generates a \lstinline!single! construct so that only one thread executes the loop:
 \begin{lstlisting}
   #pragma omp single
   for (...) {
@@ -200,7 +200,7 @@ otherwise it generates a \lstinline!single! construct so that only one thread wi
 \end{lstlisting}
 
 \subsection{Example of parallel OpenMP code}
-To illustrate how \faust uses the OpenMP directives, here is a very simple example, two 1-pole filters in parallel connected to an adder (see figure \ref{fig:parfilter} the corresponding block-diagram):
+To illustrate how \faust uses the OpenMP directives, here is a very simple example: two 1-pole filters in parallel connected to an adder (see Figure \ref{fig:parfilter} for the corresponding block-diagram):
 
 \begin{lstlisting}
 filter(c) = *(1-c) : + ~ *(c);
@@ -210,7 +210,7 @@ process = filter(0.9), filter(0.9) : +;
 \begin{figure}[htb] 
   \centering
   \includegraphics[width=8cm]{images/filter2}
-  \caption{two filters in parallel connected to an adder}   
+  \caption{Two filters in parallel connected to an adder}   
   \label{fig:parfilter}
 \end{figure}
 
@@ -281,7 +281,7 @@ This code requires some comments:
 
 \item Variables external to the parallel region are shared by default. The pragma \lstinline!firstprivate(fRec0,fRec1)! indicates that each thread should have its private copy of fRec0 and fRec1. The reason is that accessing shared variables requires an indirection and is quite inefficient compared to private copies.
 
-\item The top level loop \lstinline!for (int index = 0;...)...! is executed by all threads simultaneously. The subsequent work-sharing directives inside the loop will indicate how the work must be shared between the threads. 
+\item The top-level loop \lstinline!for (int index = 0;...)...! is executed by all threads simultaneously. The subsequent work-sharing directives inside the loop indicate how the work must be shared between the threads. 
 
 \item Please note that an implied barrier exists at the end of each work-sharing region. All threads must have executed the barrier before any of them can continue.
 
@@ -291,21 +291,21 @@ This code requires some comments:
 
 \item The loop construct \lstinline!#pragma omp for! specifies that the iterations of the associated loop will be executed in parallel. The iterations of the loop are distributed across the parallel threads. For example, if we have two threads, the first one can compute indices between 0 and count/2 and the other one between count/2 and count. 
 
-\item Finally \lstinline!#pragma omp single!  in section 3 indicates that this last section will be executed by only one thread (any of them).
+\item Finally, \lstinline!#pragma omp single! in section 3 indicates that this last section will be executed by only one thread (any of them).
 
 \end{enumerate}
 
 \subsection{The scheduler code generator}
- With the \lstinline!--scheduler! (or \lstinline!-sch!) option given to the \faust compiler, the computation graph is cut into separated computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worked threads is created and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.
+ With the \lstinline!--scheduler! (or \lstinline!-sch!) option given to the \faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worker threads is created and each thread uses its own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a push operation, a "private" LIFO pop operation, and a "public" FIFO pop operation.
 
-Starting from a ready task, each thread follows the dependencies, possibly pushing ready sub-tasks into it's own local WSQ. When no more tasks can be activated on a given computation path, the thread pops a task from it's local WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from other threads WSQ.
+Starting from a ready task, each thread follows the dependencies, possibly pushing ready sub-tasks into its own local WSQ. When no more tasks can be activated on a given computation path, the thread pops a task from its local WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from another thread's WSQ.
 
-The local LIFO Pop operation allows better cache locality and the FIFO steal Pop "larger chuck" of work to be done. The reason for this is that many work stealing workloads are divide-and-conquer in nature, stealing one of the oldest task implicitly also steals a (potentially) large subtree of computations that will unfold once that piece of work is stolen and run.
+The local LIFO pop operation allows better cache locality, and the FIFO steal pop grabs larger chunks of work to be done. The reason for this is that many work-stealing workloads are divide-and-conquer in nature; stealing one of the oldest tasks implicitly also steals a (potentially) large subtree of computations that will unfold once that piece of work is stolen and run.
 
-Compared to the OpenMP model (\lstinline!-omp!) the new model is worse for simple \faust  programs and usually starts to behave comparable or sometimes better for "complex enough" \faust  programs. In any case, since OpenMP does not behave so well with GCC compilers (only quite recent versions like GCC 4.4 start to show some improvements), and is unusable on OSX in real-time contexts, this new scheduler option has it's own value.  We plan to improve it adding a "pipelining" idea in the future.
+Compared to the OpenMP model (\lstinline!-omp!), the new model is worse for simple \faust programs and usually starts to behave comparably, or sometimes better, for "complex enough" \faust programs. In any case, since OpenMP does not behave so well with GCC compilers (only quite recent versions like GCC 4.4 start to show some improvements) and is unusable on macOS in real-time contexts, this new scheduler option has its own value. We plan to improve it by adding a "pipelining" idea in the future.
 
 \subsection{Example of parallel scheduler code}
-To illustrate how \faust generates the scheduler code, here is a very simple example, two 1-pole filters in parallel connected to an adder (see figure \ref{fig:parfilter} the corresponding block-diagram):
+To illustrate how \faust generates the scheduler code, here is a very simple example: two 1-pole filters in parallel connected to an adder (see Figure \ref{fig:parfilter} for the corresponding block-diagram):
 
 \begin{lstlisting}
 filter(c) = *(1-c) : + ~ *(c);
@@ -313,7 +313,7 @@ process = filter(0.9), filter(0.9) : +;
 \end{lstlisting}
 
 
-When \lstinline!-sch! option is used, the content of the additional \textit{architecture/scheduler.h} file is inserted in the generated code. It contains code to deal with WSQ and thread management. The \lstinline'compute()' and \lstinline'computeThread()' methods are the following:
+When the \lstinline!-sch! option is used, the content of the additional \textit{architecture/scheduler.h} file is inserted in the generated code. It contains code to deal with WSQ and thread management. The \lstinline'compute()' and \lstinline'computeThread()' methods are the following:
 \begin{lstlisting}
 
 virtual void compute (int fullcount, 

@@ -2,25 +2,25 @@
 
 <!-- TODO: something should be said about MIDI channels -->
 
-Similarly to [OSC](osc.md), several Faust architectures also provide MIDI support. This allows Faust applications to be controlled from any MIDI device (or to control MIDI devices). MIDI is also the preferable way to control Polyphonic instruments.
+Similarly to [OSC](osc.md), several Faust architectures also provide MIDI support. This allows Faust applications to be controlled from any MIDI device (or to control MIDI devices). MIDI is also the preferred way to control polyphonic instruments.
 
 <!-- TODO: more about link between MIDI and polyphony in general -->
 
 ## Configuring MIDI in Faust
 
-MIDI support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the `[midi:on]` metadata to the [standard `options` metadata](syntax.md#standard-metadata):
+MIDI support can be added to any Faust program (as long as the target architecture supports it; see tables below) simply by adding the `[midi:on]` metadata to the [standard `options` metadata](syntax.md#standard-metadata):
 
 ```
 declare options "[midi:on]";
 ```
 
-or using the `-midi` option in most of [faust2xx](../manual/tools.md) scripts.
+or by using the `-midi` option in most [`faust2xx`](../manual/tools.md) scripts.
 
 <!-- TODO: the tables indicating which architectures implement MIDI support should be placed here. -->
 
 MIDI control is configured in Faust using [metadata](syntax.md#metadata) in [UI elements](syntax.md#user-interface-primitives-and-configuration). MIDI channels from 1 to 16 can be used at reception or sending time. **By convention, using the channel = 0 value (or no channel setting) means "all channels".** That is, at reception time, MIDI messages received on all channels can be used to control a given parameter, and at sending time, the MIDI message associated to a parameter will be sent on all channels.
 
-MIDI metadata are decoded by a special architecture that parses incoming MIDI messages and updates the appropriate control parameters, or send MIDI messages when the UI elements (i.e., sliders, buttons, etc.) are moved. 
+MIDI metadata are decoded by a special architecture that parses incoming MIDI messages and updates the appropriate control parameters, or sends MIDI messages when the UI elements (i.e., sliders, buttons, etc.) are moved. 
 
 All MIDI configuration metadata in Faust follow the following format:
 
@@ -28,7 +28,7 @@ All MIDI configuration metadata in Faust follow the following format:
 [midi:xxx yyy...]
 ```
 
-This section provides a list of the most common metadata that can be used to configure of the MIDI behavior of a Faust program.
+This section provides a list of the most common metadata that can be used to configure the MIDI behavior of a Faust program.
 
 Below, when a 7-bit MIDI parameter is used to drive a [button](syntax.md#button-primitive) or a [checkbox](syntax.md#checkbox-primitive), its maximum value (127) maps to 1 ("on") while its minimum value (0) maps to 0 ("off").
 
@@ -118,7 +118,7 @@ process = os.sawtooth(freq);
 
 ### `[midi:key midikey]` or `[midi:key midikey chan]` Metadata
 
-The `[midi:key midikey]` metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific `midikey` to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first `[midi:midikey midikey]` version can receive messages on all channels, and will send on all channels. The second `[midi:midikey midikey chan]` version can receive messages on `chan` only, and will send on the `chan` channel only (or all channels using the `chan = 0` value).
+The `[midi:key midikey]` metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific `midikey` to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first `[midi:key midikey]` version can receive messages on all channels, and will send on all channels. The second `[midi:key midikey chan]` version can receive messages on `chan` only, and will send on the `chan` channel only (or all channels using the `chan = 0` value).
 
 **Usage**
 

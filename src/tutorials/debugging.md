@@ -1,19 +1,19 @@
-# Advanced debugging with interp-tracer
+# Advanced Debugging with interp-tracer
 
-Some general informations are [given here](../manual/debugging.md#debugging-the-dsp-code) on how to debug the Faust DSP code. This tutorial aims to better explain how the [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) tool can be used to debug code at runtime.  
+Some general information is [given here](../manual/debugging.md#debugging-the-dsp-code) on how to debug Faust DSP code. This tutorial aims to explain how the [interp-tracer](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#interp-tracer) tool can be used to debug code at runtime.  
 The **interp-tracer** tool runs and instruments the compiled program using the Interpreter backend. Various statistics on the code are collected and displayed while running and/or when closing the application, typically FP_SUBNORMAL, FP_INFINITE and FP_NAN values, or INTEGER_OVERFLOW, CAST_INT_OVERFLOW, NEGATIVE_BITSHIFT and DIV_BY_ZERO operations, or LOAD/STORE errors.
 
-##  Debugging out-of-domain computations 
+##  Debugging Out-of-Domain Computations 
 
-Using the `-trace 4`option allows to exit at first error and write FBC (Faust Byte Code) trace as a `DumpCode-foo.txt` file, and the program memory layout as `DumpMem-fooXXX.txt` file. 
+Using the `-trace 4` option allows you to exit on the first error and write the FBC (Faust Byte Code) trace as a `DumpCode-foo.txt` file, and the program memory layout as a `DumpMem-fooXXX.txt` file.
 
-The following `debug.dsp` DSP program:
+The following `debug.dsp` program:
 
 ```
 process = hslider("foo", 0.5, -1, 1, 0.01) : log; 
 ```
 
-will produce out-of-domain values as soon at the slider value is 0 or below, with the following trace written on the console:
+will produce out-of-domain values as soon as the slider value is 0 or below, with the following trace written on the console:
 
 ```
 -------- Interpreter 'NaN' trace start --------
@@ -36,7 +36,7 @@ Stack [Int: 0] [REAL: -4,605170]
 -------- Interpreter 'NaN' trace end --------
 ```
 
-The trace contains the stack of Faust Byte Code (FBC) instructions executed by the interpreter, with the latest instructions executed before the actual error, here the `kLogf` operation. The names of the fields in the DSP structure are also visible, here `fHslider0`. Looking at the generated C++ can help understand the control flow:
+The trace contains the stack of Faust Byte Code (FBC) instructions executed by the interpreter, with the latest instructions executed before the actual error, here the `kLogf` operation. The names of the fields in the DSP structure are also visible, here `fHslider0`. Looking at the generated C++ can help clarify the control flow:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
@@ -65,13 +65,13 @@ INT memory: 3
 2 i0 16
 ```
 
-## Debugging rdtable and rwtable primitives
+## Debugging `rdtable` and `rwtable` Primitives
 
-The [rdtable](../manual/syntax.md#rdtable-primitive) primitive uses a read index, and the [rwtable](../manual/syntax.md#rdtable-primitive) primitive uses a read index and a write index. The table size is known at compile time, and read/write indexes must stay inside the table to avoid memory access crashes at runtime. 
+The [rdtable](../manual/syntax.md#rdtable-primitive) primitive uses a read index, and the [rwtable](../manual/syntax.md#rdtable-primitive) primitive uses a read index and a write index. The table size is known at compile time, and read/write indexes must stay inside the table to avoid memory-access crashes at runtime. 
 
-The [-ct](../manual/debugging.md#the-ct-option) option can be used to check table index range and generate safe table access code. 
+The [-ct](../manual/debugging.md#the-ct-option) option can be used to check table index ranges and generate safe table access code. 
 
-For the following DSP table.dsp program:
+For the following `table.dsp` program:
 
 ```
 process = rwtable(SIZE, 0.0, rdx, _, wdx)
@@ -139,9 +139,9 @@ virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTR
 }
 ```
 
-where the `iTemp0` read and write index is now constrained to stay in the *[0..15]* range and the code will not crash at runtime anymore.
+where the `iTemp0` read and write indexes are now constrained to stay in the *[0..15]* range and the code will no longer crash at runtime.
 
-The DSP program was indeed incorrect with the indexes wrapping at 32 samples boundaries. It can be rewritten as:
+The DSP program was indeed incorrect with the indexes wrapping at 32-sample boundaries. It can be rewritten as:
 
 ```
 process = rwtable(SIZE, 0.0, rdx, _, wdx)
@@ -153,7 +153,7 @@ with {
 };
 ```
 
-and the generated C++ code with the `-ct 1` option (and using the `-wall`option to print warning messages on the console) is now:
+and the generated C++ code with the `-ct 1` option (and using the `-wall` option to print warning messages on the console) is now:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) {
@@ -176,7 +176,7 @@ WARNING : RDTbl read index [0:inf] is outside of table size (16) in read(write(T
 WARNING : WRTbl write index [0:inf] is outside of table size (16) in write(TABLE(16,0.0f),proj0(letrec(W0 = ((proj0(W0)'+1)%16)))@0,IN[0])
 ```
 
-The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. **But since the signal interval calculation is currently imperfect, unneeded range constraining code might be generated !** This is actually the case in the generated code, and can be tested using `interp-tracer -trace 4 -ct 0 table.dsp`, which does not generate constraining code, but does not show any problem.
+The range test code checks if the read or write index interval is inside the *[0..size-1]* range, and only generates constraining code when needed. **But since the signal interval calculation is currently imperfect, unnecessary range-constraining code might be generated!** This is actually the case in the generated code, and can be tested using `interp-tracer -trace 4 -ct 0 table.dsp`, which does not generate constraining code, but does not show any problem.
 
 **If one is absolutely sure of the *stay in range* property, then adding constraining code can be deactivated using `-ct 0` and the generated code will be faster.** The hope is to improve the signal interval calculation model, so that the index constraining code will not be needed anymore.
 

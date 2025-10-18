@@ -1,10 +1,10 @@
-\chapter{Compiling and installing \faust}
+\chapter{Compiling and Installing \faust}
 \label{install}
 
 The \faust source distribution \lstinline'faust-2.81.8.tar.gz' can be downloaded from GitHub (\myurl{https://github.com/grame-cncm/faust/releases}).
 
 \section{Organization of the distribution}
-The first thing is to decompress the downloaded archive. 
+The first step is to decompress the downloaded archive. 
 \begin{lstlisting}
 	tar xzf faust-2.81.8.tar.gz
 \end{lstlisting}
@@ -25,13 +25,13 @@ The resulting \lstinline'faust-2.81.8/' folder should contain the following elem
 \end{tabular}
 
 \section{Compilation}
-\faust has no dependencies outside standard libraries. Therefore the compilation should be straightforward. There is no configuration phase, to compile the \faust compiler simply do :
+\faust has no dependencies outside standard libraries. Therefore, the compilation should be straightforward. There is no configuration phase; to compile the \faust compiler simply do:
 \begin{lstlisting}
 	cd faust-2.81.8/
 	make
 \end{lstlisting}
 
-If the compilation was successful you can test the compiler before installing it:
+If the compilation is successful you can test the compiler before installing it:
 \begin{lstlisting}
 	[cd faust-2.81.8/]
 	./build/bin/faust -v
@@ -56,7 +56,7 @@ Embedded backends:
 Copyright (C) 2002-2025, GRAME - Centre National de Creation Musicale. All rights reserved. 
 \end{lstlisting}
 
-Then you can also try to compile one of the examples :
+You can then try to compile one of the examples:
 \begin{lstlisting}
 	[cd faust-2.81.8/]
 	./build/bin/faust examples/generator/noise.dsp
@@ -79,9 +79,8 @@ depending on your system.
 
 \section{Compilation of the examples}
 
-Once \faust correctly installed, you can have a look at the provided examples in the \lstinline'examples/' folder. 
+Once \faust is correctly installed, you can look at the provided examples in the \lstinline'examples/' folder. 
 
-You can use any of the \lstinline'faust2...' script installed on your system (go in \lstinline'/tools/faust2appls' to get an exhaustive list) to compile the Faust codes available in this folder. For example, if you're a Mac user and you want to turn \lstinline'filtering/vcfWahLab.dsp' into a standalone CoreAudio application with a QT interface, just run:
+You can use any of the \lstinline'faust2...' scripts installed on your system (go to \lstinline'/tools/faust2appls' to get an exhaustive list) to compile the \faust programs available in this folder. For example, if you're a Mac user and you want to turn \lstinline'filtering/vcfWahLab.dsp' into a standalone CoreAudio application with a Qt interface, just run:
 
 \lstinline'faust2caqt filtering/vcfWahLab.dsp'
-

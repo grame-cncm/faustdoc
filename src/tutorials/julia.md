@@ -4,18 +4,18 @@
 
 In this tutorial, we present how Faust can be used in [Julia](https://julialang.org/), a high-level, high-performance, dynamic programming language. While it is a general-purpose language and can be used to write any application, many of its features are well suited for numerical analysis and computational science.
 
-An [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia has been firstly developed by [Cora Johnson-Roberson](https://corajr.com), and will be covered by the [last section of the tutorial](#using-the-faustjl-julia-package). Then a [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) has been added in a second step in the Faust compiler. It allows to generate ready to use Julia code from any Faust DSP program. 
+An [integration of the libfaust compiler](https://github.com/corajr/Faust.jl) in Julia was first developed by [Cora Johnson-Roberson](https://corajr.com), and will be covered by the [last section of the tutorial](#using-the-faustjl-julia-package). Then a [Julia backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/julia) was added in a second step in the Faust compiler. It allows you to generate ready-to-use Julia code from any Faust DSP program.
 
 #### Who is this tutorial for?
 
-The [first section](#using-command-line-tools) assumes a working [Faust compiler installed](https://github.com/grame-cncm/faust) on the machine, so is more designed for regular Faust users. The [second section](#using-the-faust-web-ide) and [third section](#using-the-faustjl-julia-package) are better suited for Julia users who want to discover Faust.  
+The [first section](#using-command-line-tools) assumes a working [Faust compiler](https://github.com/grame-cncm/faust) is installed on the machine, so it is more suited to regular Faust users. The [second section](#using-the-faust-web-ide) and [third section](#using-the-faustjl-julia-package) are better suited for Julia users who want to discover Faust.  
 
 ### Installing the required packages
 
-Be sure to have the **julia** command available in your PATH, as [explained here](https://julialang.org/downloads/platform/). With a fresh Julia install, all required packages are decribed in the [packages.jl](https://raw.githubusercontent.com/grame-cncm/faust/master-dev/architecture/julia/packages.jl) file:
+Be sure to have the **julia** command available in your PATH, as [explained here](https://julialang.org/downloads/platform/). With a fresh Julia install, all required packages are described in the [packages.jl](https://raw.githubusercontent.com/grame-cncm/faust/master-dev/architecture/julia/packages.jl) file:
 
- - in case you have an installed Faust version, it can be installed with the `julia packages.jl` command done in the `architecture/julia` folder of the Faust repository
- - of directly downloaded, and executed with the `julia packages.jl` command
+ - if you already have an installed Faust version, it can be installed with the `julia packages.jl` command run in the `architecture/julia` folder of the Faust repository
+ - or downloaded directly and executed with the `julia packages.jl` command
 
 ## Using command line tools
 
@@ -43,7 +43,7 @@ faust -lang julia osc.dsp -o osc.jl
 
 This will generate a `mydsp{T}` data structure, as a subtype of the `abstract type dsp`, with a set of methods to manipulate it. The generated API simply follows [the one defined](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/dsp/dsp.jl) for the base `dsp` type. This API basically mimics the [one defined for the C++ backend](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/dsp.h).
 
-The resulting file is not self-contained and so cannot be directly compiled using the **julia** program:
+The resulting file is not self-contained and therefore cannot be directly compiled using the **julia** program:
 
 ```bash
 julia osc.jl
@@ -51,19 +51,19 @@ ERROR: LoadError: UndefVarError: dsp not defined
 ...
 ```
 
-Some additional types like `FAUSTFLOAT`, `dsp`, `Meta` and `UI` have to be defined in a so-called [architecture files](../manual/architectures.md). The Julia specific ones are [described here](https://github.com/grame-cncm/faust/tree/master-dev/architecture/julia#julia-architecture-files). A simple one named [minimal.jl](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl) can be used for that with the following command:
+Some additional types like `FAUSTFLOAT`, `dsp`, `Meta`, and `UI` have to be defined in a so-called [architecture file](../manual/architectures.md). The Julia-specific ones are [described here](https://github.com/grame-cncm/faust/tree/master-dev/architecture/julia#julia-architecture-files). A simple one named [minimal.jl](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/minimal.jl) can be used for that with the following command:
 
 ```bash
 faust -lang julia osc.dsp -a julia/minimal.jl -o osc.jl
 ```
 
-Now the resulting **foo.jl **file is self-contained and can be executed with: 
+Now the resulting **foo.jl** file is self-contained and can be executed with: 
 
 ```bash
 julia -i osc.jl (here -i to stay in interactive mode)
 ```
 
-Which compiles the Julia code, executes it and produces:
+This compiles the Julia code, executes it, and produces:
 
 ```bash
 Application name: osc
@@ -111,7 +111,7 @@ mutable struct mydsp{T} <: dsp
 	end
 end
 ```
-Note that the structure is parametrized with a `{T}` type to be given at initialization time. The `const REAL = Float32` or `const REAL = Float64`  line is generated depending of the `-single` (default), or `-double` option given at compilation time, and can be used for that. 
+Note that the structure is parameterized with a `{T}` type to be given at initialization time. The `const REAL = Float32` or `const REAL = Float64` line is generated depending on the `-single` (default) or `-double` option given at compilation time, and can be used for that. 
 
 Several access methods are generated:
 
@@ -124,7 +124,7 @@ function getNumOutputs(dsp::mydsp{T}) where {T}
 end
 ```
 
-Several initialiation methods like `init!`, `initanceInit!`, `instanceResetUserInterface!` etc. are generated, here is one of them:
+Several initialization methods like `init!`, `instanceInit!`, `instanceResetUserInterface!`, etc. are generated; here is one of them:
 
 ```julia
 function instanceResetUserInterface!(dsp::mydsp{T}) where {T}
@@ -152,7 +152,7 @@ end
 
 The DSP structure fields to access are simply described with their name (actually a [Symbol](https://docs.julialang.org/en/v1/manual/metaprogramming/#Symbols) in Julia terminology), and can later be used with the standard [setproperty!](https://docs.julialang.org/en/v1/base/base/#Base.setproperty!) and [getproperty](https://docs.julialang.org/en/v1/base/base/#Base.getproperty) access methods, like in the `setParamValue!` and `getParamValue`methods written in the [MapUI](https://github.com/grame-cncm/faust/blob/master-dev/architecture/julia/gui/MapUI.jl) architecture.
 
-And finally the `compute!` method that processes and input buffer with `count` frames to produce an output buffer: 
+And finally the `compute!` method processes an input buffer with `count` frames to produce an output buffer:
 
 
 ```julia
@@ -196,7 +196,7 @@ my_dsp = mydsp{REAL}()
 init!(my_dsp, samplerate)
 ```
 
-His name can be extracted from the DSP metadata using the following code:
+Its name can be extracted from the DSP metadata using the following code:
 
 ```julia
 # Retrieve the application name

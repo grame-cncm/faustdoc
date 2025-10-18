@@ -10,8 +10,8 @@ A \faust program describes a \emph{signal processor}, a pure computation that ma
 
 An \emph{architecture file} describes how to relate a \faust program to the external world, in particular the audio drivers and the user interface to be used. This approach allows a single \faust program to be easily deployed to a large variety of audio standards (Max/MSP externals, PD externals, VST plugins, CoreAudio applications, Jack applications, iPhone, etc.). 
 
-The architecture to be used is specified at compile time with the \lstinline'-a' options. For example
-\lstinline'faust -a jack-gtk.cpp foo.dsp' indicates to use the Jack GTK architecture when compiling \code{foo.dsp}.
+The architecture to be used is specified at compile time with the \lstinline'-a' option. For example
+\lstinline'faust -a jack-gtk.cpp foo.dsp' indicates that the Jack GTK architecture should be used when compiling \code{foo.dsp}.
 
 \begin{table}[htp]
 \begin{center}
@@ -20,18 +20,18 @@ The architecture to be used is specified at compile time with the \lstinline'-a'
 \textbf{File name}		& \textbf{Description}   \\
 \hline
 \texttt{alchemy-as.cpp} 	& Flash - ActionScript plugin \\
-\texttt{ca-qt.cpp} 		& CoreAudio QT4 standalone application  \\
+\texttt{ca-qt.cpp} 		& CoreAudio Qt4 standalone application  \\
 \texttt{jack-gtk.cpp} 		& JACK GTK standalone application  \\
-\texttt{jack-qt.cpp} 		& JACK QT4 standalone application  \\
+\texttt{jack-qt.cpp} 		& JACK Qt4 standalone application  \\
 \texttt{jack-console.cpp} 	& JACK command line application  \\
 \texttt{jack-internal.cpp} 	& JACK server plugin  \\
 %%\texttt{jack-wx.cpp} 	& Jack wxWindows standalone application  \\
 \texttt{alsa-gtk.cpp} 		& ALSA GTK standalone application  \\
-\texttt{alsa-qt.cpp} 		& ALSA QT4 standalone application  \\
+\texttt{alsa-qt.cpp} 		& ALSA Qt4 standalone application  \\
 \texttt{oss-gtk.cpp} 		& OSS GTK standalone application  \\
 %%\texttt{oss-wx.cpp} 	& OSS wxWindows standalone application  \\
 \texttt{pa-gtk.cpp} 		& PortAudio GTK standalone application  \\
-\texttt{pa-qt.cpp} 		& PortAudio QT4 standalone application  \\
+\texttt{pa-qt.cpp} 		& PortAudio Qt4 standalone application  \\
 %%\texttt{pa-wx.cpp} 	& PortAudio wxWindows standalone application  \\
 \hline
 \texttt{max-msp.cpp} 	& Max/MSP external  \\
@@ -58,7 +58,7 @@ The architecture to be used is specified at compile time with the \lstinline'-a'
 \label{tab:availablearch}
 \end{table}%
 
-The main available architecture files are listed table \ref{tab:availablearch}. Since \faust 0.9.40 some of these architectures are a modular combination of an \emph{audio module} and one or more \emph{user interface modules}. Among these user interface modules OSCUI provide supports for Open Sound Control allowing \faust programs to be controlled by OSC messages. 
+The main available architecture files are listed in Table \ref{tab:availablearch}. Since \faust 0.9.40 some of these architectures are a modular combination of an \emph{audio module} and one or more \emph{user interface modules}. Among these user interface modules, OSCUI provides support for Open Sound Control, allowing \faust programs to be controlled by OSC messages. 
 
 \section{Audio architecture modules} 
 An \emph{audio architecture module} typically connects a \faust program to the audio drivers.
@@ -84,7 +84,7 @@ class audio {
 };
 \end{lstlisting} 
 
-The API is simple enough to give a great flexibility to audio architectures implementations. The \code{init} method should initialize the audio. At \code{init} exit, the system should be in a safe state to recall the \code{dsp} object state.
+The API is simple enough to give great flexibility to audio architecture implementations. The \code{init} method should initialize the audio. Upon \code{init} exit, the system should be in a safe state to recall the \code{dsp} object state.
 
 Table \ref{tab:aarch} gives some of the audio architectures currently available for various operating systems.
 \begin{table}[htp]
@@ -107,7 +107,7 @@ Pure 			& Linux, Mac OS X, Windows \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Some of \faust audio architectures.}
+\caption{Some of \faust's audio architectures.}
 \label{tab:aarch}
 \end{table}%
  
@@ -143,9 +143,9 @@ Pure 			& Linux, Mac OS X, Windows \\
 %---------------------------------------------------
 
 A UI architecture module links user actions (via graphic widgets, command line parameters, OSC messages, etc.) with the \faust program to control. 
-It is responsible for associating program parameters to user interface elements and to update parameter's values according to user actions. This association is triggered by the \code{dsp::buildUserInterface} call, where the \code{dsp} asks a UI object to build the DSP module controllers.
+It is responsible for associating program parameters with user interface elements and updating parameter values according to user actions. This association is triggered by the \code{dsp::buildUserInterface} call, where the \code{dsp} asks a UI object to build the DSP module controllers.
 
-Since the interface is basically graphic oriented, the main concepts are \emph{widget} based: a UI architecture module is semantically oriented to handle active widgets, passive widgets and widgets layout.
+Since the interface is basically graphically oriented, the main concepts are \emph{widget} based: a UI architecture module is semantically oriented to handle active widgets, passive widgets, and widget layout.
 
 A \faust UI architecture module derives an \emph{UI} class (Figure \ref{tab:ui}). 
 
@@ -212,16 +212,16 @@ class UI
 \subsection{Active widgets}
 \label{awidget}
 Active widgets are graphical elements that control a parameter value. They are initialized with the widget name and a pointer to the linked value, using the FAUSTFLOAT macro type (defined at compile time as either float or double).
-The widget currently considered are \code{Button},  \code{CheckButton},  \code{VerticalSlider},  \code{HorizontalSlider} and  \code{NumEntry}. \\
+The widgets currently considered are \code{Button}, \code{CheckButton}, \code{VerticalSlider}, \code{HorizontalSlider}, and \code{NumEntry}. \\
 A GUI architecture must implement a method \\
 \code{addXxx(const char* name, FAUSTFLOAT* zone, ...)} for each active widget.
-Additional parameters are available for \code{Slider} and \code{NumEntry}: the \code{init},  \code{min},  \code{max} and \code{step} values.
+Additional parameters are available for \code{Slider} and \code{NumEntry}: the \code{init}, \code{min}, \code{max} and \code{step} values.
 
 %---------------------------------------------------
 \subsection{Passive widgets}
 \label{pwidget}
 Passive widgets are graphical elements that reflect values. Similarly to active widgets, they are initialized with the widget name and a pointer to the linked value.
-The widget currently considered are  \code{HorizontalBarGraph} and  \code{VerticalBarGraph}. \\
+The widgets currently considered are \code{HorizontalBarGraph} and \code{VerticalBarGraph}. \\
 A UI architecture must implement a method \\
 \code{addXxx(const char* name, FAUSTFLOAT* zone, ...)} for each passive widget.
 Additional parameters are available, depending on the passive widget type.
@@ -229,8 +229,8 @@ Additional parameters are available, depending on the passive widget type.
 %---------------------------------------------------
 \subsection{Widgets layout}
 \label{wlayout}
-Generally, a  GUI is hierarchically organized into boxes and/or tab boxes. 
-A UI architecture must support the following methods to setup this hierarchy : \\
+Generally, a GUI is hierarchically organized into boxes and/or tab boxes. 
+A UI architecture must support the following methods to set up this hierarchy: \\
 \htab\code{openTabBox(const char* label)} \\
 \htab\code{openHorizontalBox(const char* label)} \\
 \htab\code{openVerticalBox(const char* label)} \\
@@ -246,7 +246,7 @@ Note that all the widgets are added to the current box.
 \hline
 console & a textual command line UI \\
 GTKUI & a GTK-based GUI \\
-QTGUI & a multi-platform QT-based GUI \\
+QTGUI & a multi-platform Qt-based GUI \\
 FUI & a file-based UI to store and recall modules states \\
 OSCUI & OSC control (see section \ref{osc}) \\
 httpdUI & HTTP control (see section \ref{http}) \\
@@ -261,10 +261,10 @@ httpdUI & HTTP control (see section \ref{http}) \\
 %---------------------------------------------------
 \subsection{Metadata}
 \label{metadata}
-The \faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a \code{declare} method taking as argument, a pointer to the widget associated zone, the metadata key and value: \\
+The \faust language allows widget labels to contain metadata enclosed in square brackets as key/value pairs. These metadata are handled at GUI level by a \code{declare} method taking as arguments a pointer to the widget-associated zone, the metadata key, and the value: \\
 \htab\code{declare(FAUSTFLOAT* zone, const char* key, const char* value)} \\
 
-Here is the table of currently supported general medatada (look at section \ref{osc} for OSC specific metadata and section \ref{midi} for MIDI specific metadata):
+Here is the table of currently supported general metadata (look at section \ref{osc} for OSC-specific metadata and section \ref{midi} for MIDI-specific metadata):
 
 %%Table \ref{tab:uiarch} gives some of the UI architectures currently available.
 \begin{table}[htp]
@@ -288,11 +288,11 @@ screencolor & \code{red} or \code{green}  or \code{blue} or \code{white}    \\
 \hline
 \end{tabular}
 \end{center}
-\caption{Supported medatada.}
+\caption{Supported metadata.}
 \label{tab:metadata}
 \end{table}%
 
-Some typical example where several metadata are defined could be: 
+Some typical examples where several metadata are defined could be: 
 
  \htab\code{nentry("freq [unit:Hz][scale:log][acc:0 0 -30 0 30][style:menu\{\'white noise\':0;\'pink noise\':1;\'sine\':2\}][hidden:0]", 0, 20, 100, 1)} 
  
@@ -300,15 +300,15 @@ Some typical example where several metadata are defined could be:
  
  \htab\code{vslider("freq [unit:dB][style:knob][gyr:0 0 -30 0 30]", 0, 20, 100, 1)} 
  
- Note that medatada are not supported in all architecture files. Some of them like (\code{acc} or \code{gyr} for exemple) only make sense on platforms with accelerometers or gyroscopes sensors. The set of medatada may be extended in the future. 
+ Note that metadata are not supported in all architecture files. Some of them, like \code{acc} or \code{gyr}, only make sense on platforms with accelerometer or gyroscope sensors. The set of metadata may be extended in the future. 
 
 %---------------------------------------------------
 \section{Developing a new architecture file}
 \label{architecture}
 
-Developing a new architecture file typically means writing a generic C++ file, that will be populated with the actual output of the \faust compiler, in order to produce a complete C++ file, ready to be compiled as a standalone application or plugin. 
+Developing a new architecture file typically means writing a generic C++ file that will be populated with the actual output of the \faust compiler, in order to produce a complete C++ file ready to be compiled as a standalone application or plugin. 
 
-The architecture to be used is specified at compile time with the \lstinline'-a' option. It must contain the \code{<<includeIntrinsic>>} and \code{<<includeclass>>} lines that will be looked at by the \faust compiler, and replaced by the generated C++ class. 
+The architecture to be used is specified at compile time with the \lstinline'-a' option. It must contain the \code{<<includeIntrinsic>>} and \code{<<includeclass>>} lines that will be processed by the \faust compiler and replaced by the generated C++ class. 
 
 Look at the \code{minimal.cpp} example located in the architecture folder:
 
@@ -334,7 +334,7 @@ int main(int argc, char *argv[])
     PrintUI ui;
     
     // Activate the UI
-    // (here that only prints the control paths)
+    // (here it only prints the control paths)
     DSP.buildUserInterface(&ui);
 
     // Allocate the audio driver to render 
@@ -454,9 +454,9 @@ int main(int argc, char* argv[])
 }
 \end{lstlisting} 
 
-You can possibly add the \lstinline'-i' option to actually inline all \code{#include "faust/xxx/yyy"} headers (all files starting with "faust"). Then you will have to write a \code{faust2xxx} script that will chain the \faust compilation step and the C++ compilation one. Look at scripts in the tools/faust2appls folder for real examples. 
+You can optionally add the \lstinline'-i' option to inline all \code{#include "faust/xxx/yyy"} headers (all files starting with "faust"). Then you will have to write a \code{faust2xxx} script that chains the \faust compilation step and the C++ compilation step. Look at the scripts in the tools/faust2appls folder for real examples. 
 
-Developing the adapted C++ file may require "aggregating" the generated \code{mydsp} class (subclass of \code{dsp} base class defined in faust/dsp/dsp.h header) in your specific class, or "subclassing" and extend it.  So you will have to write something like:
+Developing the adapted C++ file may require "aggregating" the generated \code{mydsp} class (a subclass of the \code{dsp} base class defined in the faust/dsp/dsp.h header) in your specific class, or "subclassing" and extending it.  So you will have to write something like:
 
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize\color{yotxt}]
 class my_class : public base_interface {
@@ -527,5 +527,4 @@ class my_class : public mydsp  {
 };
 \end{lstlisting} 
 
-This way your architecture file will be adapted to any "shape" of the generated code. That is, depending if you generate purely scalar, or vector code (using the \lstinline'-vec' option), or any other option, the generated \code{mydsp}  class will always be correctly inserted in the final C++ file. Look for instance at \code{csound.cpp} and \code{unity.cpp} architecture files in the architecture folder for real examples. 
-
+This way your architecture file will be adapted to any "shape" of the generated code. That is, depending on whether you generate purely scalar or vector code (using the \lstinline'-vec' option), or any other option, the generated \code{mydsp} class will always be correctly inserted in the final C++ file. Look, for instance, at the \code{csound.cpp} and \code{unity.cpp} architecture files in the architecture folder for real examples. 

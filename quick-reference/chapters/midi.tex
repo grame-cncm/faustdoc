@@ -3,9 +3,9 @@
 \label{midi}
 %---------------------------------------------------
 
-Similarly to OSC, several \faust architectures also provide MIDI support. This allows \faust applications to be controlled from any MIDI device (or to control MIDI devices). MIDI is also the preferable way to control Polyphonic instruments.
+Like OSC, several \faust architectures also provide MIDI support. This allows \faust applications to be controlled from any MIDI device (or to control MIDI devices). MIDI is also the preferred way to control polyphonic instruments.
 
-\section{MIDI messages description in the dsp source code}
+\section{Describing MIDI messages in the DSP source code}
 
 MIDI control messages are described as metadata in UI elements. They are decoded by a special architecture \emph{MidiUI} class that will parse incoming MIDI messages and update the appropriate control parameters, or send MIDI messages when the UI elements (sliders, buttons...) are moved.
 
@@ -15,7 +15,7 @@ Below, when a 7-bit MIDI parameter is used to drive a button or
 checkbox, its maximum value 127 maps to 1 ("on") while its minimum
 value 0 maps to 0 ("off").
 
-A special \lstinline'[midi:xxx yyy...]' metadata needs to be added in the UI  element description. The more usual MIDI messages can be used as described here:
+A special \lstinline'[midi:xxx yyy...]' metadata entry needs to be added to the UI element description. The more usual MIDI messages can be used as described here:
 
 - \lstinline'[midi:ctrl num]' in a slider or bargraph will map the UI element value to (0, 127) range. When used with a button or checkbox, 1 will be mapped to 127, 0 will be mapped to 0,
 
@@ -33,9 +33,9 @@ A special \lstinline'[midi:xxx yyy...]' metadata needs to be added in the UI  el
 
 - \lstinline'[midi:pitchwheel]' in a slider or bargraph will map the UI element value to (0,16383) range. When used with a button or checkbox, 1 will be mapped to 16383, 0 will be mapped to 0.
 
-\section{A simple example}
+\section{A Simple Example}
 
-An example with a \emph{volume} slider controlled with MIDI ctrlchange 7 messages :
+Here is an example with a \emph{volume} slider controlled with MIDI ctrlchange 7 messages:
 
 \begin{lstlisting}
 
@@ -60,7 +60,7 @@ A complete testing example named  \emph{midi\_tester.dsp}  is available in the \
   \label{fig:midi-tester}
 \end{figure}
 
-The MIDI support can be activated using the \code{-midi} option when building the audio application with the appropriate \code{faust2xxx} command. The following table (table \ref{tab:midiarch}) lists \faust's architectures which provide MIDI support. 
+MIDI support can be activated using the \code{-midi} option when building the audio application with the appropriate \code{faust2xxx} command. The following table (Table \ref{tab:midiarch}) lists the \faust architectures that provide MIDI support. 
 
 \begin{table}[htp]
 \begin{center}
@@ -85,13 +85,13 @@ Jack 			& Qt  & yes\\
 \hline
 \end{tabular}
 \end{center}
-\caption{\faust architectures with HTTP support.}
+\caption{\faust architectures with MIDI support.}
 \label{tab:midiarch}
 \end{table}
 
-\section{MIDI synchronization}
+\section{MIDI Synchronization}
 
-MIDI clock based synchronization can be used to slave a given Faust program. The following three messages need to be used:
+MIDI clock-based synchronization can be used to slave a given \faust program. The following three messages need to be used:
 
 - \lstinline'[midi:start]' in a button or checkbox will trigger a value of 1 when a \emph{start} MIDI message is received
 
@@ -99,7 +99,7 @@ MIDI clock based synchronization can be used to slave a given Faust program. The
 
 - \lstinline'[midi:clock]' in a button or checkbox will deliver a sequence of successive 1 and 0 values each time a  \emph{clock} MIDI message is received, seen by \faust code as a square command signal, to be used to compute higher level information.
 
-A typical Faust program will then use the MIDI clock stream to possibly compute the BPM information, or for any synchronization need it may have.  Here is a simple example of a sinus generated which a frequency controlled by the MIDI clock stream, and starting/stopping when receiving the MIDI start/stop messages:
+A typical \faust program will then use the MIDI clock stream to compute the BPM information, or for any synchronization need it may have.  Here is a simple example of a sine wave generated with a frequency controlled by the MIDI clock stream, starting and stopping when receiving the MIDI start/stop messages:
 
 \begin{lstlisting}
 import("music.lib");
@@ -118,7 +118,6 @@ freq(x) = (x-x@SR) : + ~ _;
    
 process = osc(8*freq(front(clocker))) * play;
 \end{lstlisting}
-
 
 
 

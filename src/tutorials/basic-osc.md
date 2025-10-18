@@ -3,13 +3,13 @@
 ## Goals
 
 * Implementing a sine oscillator from scratch in Faust
-* Understand the relation between the sine function and the generated sound
-* Use multiple sine oscillator to implement an additive synthesizer
-* Use [SmartKeyboard](https://github.com/grame-cncm/faust/tree/master-dev/architecture/smartKeyboard) to produce polyphonic mobile apps to control this synth
+* Understand the relationship between the sine function and the generated sound
+* Use multiple sine oscillators to implement an additive synthesizer
+* Use [SmartKeyboard](https://github.com/grame-cncm/faust/tree/master-dev/architecture/smartKeyboard) to produce polyphonic mobile apps that control this synth
 
 ## Sine Function in Faust
 
-* The sine function in Faust works like on a calculator:
+* The sine function in Faust works like it does on a calculator:
 
 <!-- faust-run -->
 ```
@@ -30,7 +30,7 @@ process = sin(ma.PI/2);
 
 will output `1`.
 
-> Note that `stdfaust.lib` is imported here in order to use `ma.pi`. 
+> Note that `stdfaust.lib` is imported here in order to use `ma.pi`.
 
 <!-- faust-run -->
 ```
@@ -41,11 +41,11 @@ process = sin(2*ma.PI);
 
 will output `0`.
 
-<!-- May be give a few more example with 3pi, 4pi, etc. -->
+<!-- Maybe give a few more examples with 3pi, 4pi, etc. -->
 
 ## Implementing a Phasor
 
-* What is needed to "print" a full sine wave? 
+* What is needed to generate a full sine wave?
     * -> We need to create a series of numbers (vector) going from 0 to 2pi, in other words, draw a line.
 * First let's create a "counter" in Faust:
 
@@ -55,10 +55,9 @@ process = +(1) ~ _;
 ``` 
 <!-- /faust-run -->
 
-> Don't forget that you can always print the output of a Faust program by using the in the [Faust Online IDE](https://faustide.grame.fr) `misc/csv`
+> Don't forget that you can always print the output of a Faust program by using the `misc/csv` option in the [Faust Online IDE](https://faustide.grame.fr).
 
-* The current counter counts one by one. Instead we'd like to count slower 0.01
-by 0.01.
+* The current counter counts one by one. Instead we'd like it to count more slowly, by 0.01.
 
 
 <!-- faust-run -->
@@ -87,7 +86,7 @@ process = +(0.01) ~ ma.frac;
 * Instead of controlling the increment of the counter, we'd like to control the
 frequency of the sawtooth wave. <!-- What's a frequency? Show how it impacts the generated wave.-->
 * To do that, we need to know the number of values of the wave processed by the
-computer in one second. That's what we call the [sampling rate](https://en.wikipedia.org/wiki/Sampling_(signal_processing)). <!-- INSIST ON WHAT IT IS.--> This value changes in function of the context of the program so it can be retrieved with `ma.SR`. 
+computer in one second. That's what we call the [sampling rate](https://en.wikipedia.org/wiki/Sampling_(signal_processing)). <!-- INSIST ON WHAT IT IS.--> This value depends on the context of the program, so it can be retrieved with `ma.SR`.
 * A sampling rate of 44100 corresponds to a frequency of 44100 Hz. If we want a
 frequency of 440, what increment do we need to put in our counter?
     * -> `freq/ma.SR`
@@ -101,7 +100,7 @@ process = (+(freq/ma.SR) ~ ma.frac);
 ```
 <!-- /faust-run -->
 
-* A this point feel free to plot the output of the Faust program using `misc/csv` in the export function of the online editor.
+* At this point feel free to plot the output of the Faust program using `misc/csv` in the export function of the online editor.
 * The `freq` parameter can be controlled dynamically:
 
 <!-- faust-run -->
@@ -139,7 +138,7 @@ process = osc(f);
 ```
 <!-- /faust-run -->
 
-Note that we created an `osc` function in order to have a cleaner code.
+Note that we created an `osc` function in order to have cleaner code.
 
 ## Additive Synthesis
 
@@ -195,7 +194,7 @@ process = organ(f)*g*t;
 
 ## Turn it Into an Android App
 
-* Use the export function of the Faust editor and choose `android/smartkeyb` install the app on the phone and have fun!
+* Use the export function of the Faust editor and choose `android/smartkeyb`, install the app on the phone, and have fun!
 * This could also be turned into an app always making sound and controllable with accelerometers:
 
 ```

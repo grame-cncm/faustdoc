@@ -1,8 +1,8 @@
  
 
-# Using the box API
+# Using the Box API
 
-The box API opens an *intermediate access inside the Faust compilation chain*. In this tutorial, we present it with examples of code. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the box API, and take profit of part of the Faust compiler infrastructure.
+The box API provides an *intermediate access point within the Faust compilation chain*. In this tutorial, we present it through code examples. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the box API, and take advantage of part of the Faust compiler infrastructure.
 
 #### Faust compiler structure
 
@@ -26,9 +26,9 @@ The *Code Generation Phase* translates the signals in an intermediate representa
 
 #### Accessing the box stage
 
-A new intermediate public entry point has been created in the *Semantic Phase*, after the *Evaluation, lambda-calculus* step to allow the creation of a box expression, then beneficiate of all remaining parts of the compilation chain. The [box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h) (or the [C box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box-c.h) version) allows to programmatically create the box expression, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. 
+A new intermediate public entry point has been created in the *Semantic Phase*, after the *Evaluation, lambda-calculus* step to allow the creation of a box expression, then benefit from all remaining parts of the compilation chain. The [box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h) (or the [C box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box-c.h) version) allows developers to programmatically create the box expression and then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter, or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated by looking at the generated C++ code.
 
-Note that the [signal API](../tutorials/signal-api.md) allows to access another stage in the compilation stage.
+Note that the [signal API](../tutorials/signal-api.md) allows access to another stage in the compilation chain.
 
 ## Compiling box expressions
 
@@ -38,15 +38,15 @@ To use the box API, the following steps must be taken:
 
 - creating a box expression using the box API, progressively building more complex expressions by combining simpler ones
 
-- compiling the box expression using the `createCPPDSPFactoryFromBoxes` function to create a DSP factory (or [createDSPFactoryFromBoxes](#using-the-generated-code)  to generate a LLVM embedding factory, or [createInterpreterDSPFactoryFromBoxes](#using-the-generated-code) to generate an Interpreter embedding factory)
+- compiling the box expression using the `createCPPDSPFactoryFromBoxes` function to create a DSP factory (or [createDSPFactoryFromBoxes](#using-the-generated-code) to generate an LLVM embedding factory, or [createInterpreterDSPFactoryFromBoxes](#using-the-generated-code) to generate an Interpreter embedding factory)
 
 - finally destroying the compilation context using the `destroyLibContext` function
 
-The DSP factories allow the creation of DSP instances, to be used with audio and UI architecture files, *outside of the compilation process itself*. The DSP instances and factory will finally have to be deallocated when no more used.
+The DSP factories allow the creation of DSP instances, to be used with audio and UI architecture files, *outside of the compilation process itself*. The DSP instances and factory will finally have to be deallocated when they are no longer used.
 
 ### Tools
 
-Let's first define a `compile` function, which uses the `createCPPDSPFactoryFromBoxes` function and print the generated C++ class:
+Let's first define a `compile` function, which uses the `createCPPDSPFactoryFromBoxes` function and prints the generated C++ class:
 
 ```C++
 static void compile(const string& name, 
@@ -78,7 +78,7 @@ A macro to wrap all the needed steps:
     createLibContext();  \
     exp                  \
     destroyLibContext(); \
-}                        \   
+}                        \
 ```
 
 ### Examples 
@@ -104,7 +104,7 @@ static void test1()
     (
         Box box = boxPar(boxInt(7), boxReal(3.14));
     
-        compile("test1", signals);
+        compile("test1", box);
     )
 }
 ```
@@ -124,7 +124,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 #### Doing some mathematical operations on an input signal 
 
-Here is a simple program doing a mathematical operation on an signal input:
+Here is a simple program doing a mathematical operation on a signal input:
 
 <!-- faust-run -->
 ```
@@ -182,7 +182,7 @@ process = @(_,7);
 ```
 <!-- /faust-run -->
 
-The prefix-notation `boxDelay(x, y)` operator is used to delay the `boxWire()` first parameter with the second `boxInt(7)`:
+The prefix-notation `boxDelay(x, y)` operator delays the first `boxWire()` parameter by the second argument `boxInt(7)`:
 
 ```C++
 static void test6()
@@ -191,7 +191,7 @@ static void test6()
     (
         Box box = boxDelay(boxWire(), boxInt(7));
 
-        compile("test3", test6);
+        compile("test6", box);
     )
 }
 ```
@@ -289,7 +289,7 @@ static void test8()
     )
 }
 ```
-In the `compute` method, the single `fVec0` delay line is read at 2 differents indexes:
+In the `compute` method, the single `fVec0` delay line is read at two different indexes:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
@@ -943,7 +943,7 @@ static void test18()
     (
         Box box = boxPar(osc(boxReal(440)), osc(boxReal(440)));
 
-        compile("test18", signals);
+        compile("test18", box);
     )
 }
 ```
@@ -967,7 +967,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 
 ## Using the generated code
 
-Using the LLVM or Interpreter backends allows to generate and execute the compiled DSP on the fly. 
+Using the LLVM or Interpreter backends makes it possible to generate and execute the compiled DSP on the fly.
 
 The LLVM backend can be used with `createDSPFactoryFromBoxes` (see [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h)) to produce a DSP factory, then a DSP instance:
 

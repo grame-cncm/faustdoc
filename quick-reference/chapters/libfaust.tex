@@ -1,9 +1,9 @@
 %---------------------------------------------------
-\chapter{Embedding the \faust  compiler using libfaust} 
+\chapter{Embedding the \faust Compiler Using libfaust} 
 \label{libfaust}
 %---------------------------------------------------
 
-The dynamic compilation chain allows developers to embed the \faust compiler technology directly in their application or plugins. Thanks to the awesome LLVM technology combined with libfaust, the library version of the \faust compiler, \faust DSP programs can directly be compiled and executed on the fly at full speed.
+The dynamic compilation chain allows developers to embed the \faust compiler technology directly in their applications or plugins. Thanks to LLVM technology combined with libfaust, the library version of the \faust compiler, \faust DSP programs can be compiled and executed on the fly at full speed.
 
 \section{Dynamic compilation chain}
 
@@ -19,7 +19,7 @@ LLVM (formerly Low Level Virtual Machine) is a compiler infrastructure, designed
 
 The complete chain goes from the \faust DSP source code, compiled in LLVM IR using the LLVM backend, to finally produce the executable code using the LLVM JIT. All steps take place in memory, getting rid of the classical file based approaches. Pointers to executable functions can be retrieved from the resulting LLVM module and the code directly called with the appropriate parameters.
 
-The \faust compiler has been packaged as an embeddable library called libfaust, published with an associated API that imitates the concept of oriented-object languages, like C++. Given a \faust source code (as a file or a string), calling the \code{createDSPFactoryXXX} function runs the compilation chain (\faust + LLVM JIT) and generates the {\it prototype} of the class, as a \code{llvm\_dsp\_factory} pointer.
+The \faust compiler has been packaged as an embeddable library called libfaust, published with an associated API that imitates the concept of object-oriented languages, like C++. Given a \faust source code (as a file or a string), calling the \code{createDSPFactoryXXX} function runs the compilation chain (\faust + LLVM JIT) and generates the {\it prototype} of the class as a \code{llvm\_dsp\_factory} pointer.
 
 \begin{lstlisting}
 class llvm_dsp_factory {
@@ -50,7 +50,7 @@ class llvm_dsp_factory {
 
 \end{lstlisting}
 
-Note that the library keeps an internal cache of all allocated factories so that the compilation of the same DSP code, that is same source code and same set of {\it normalized} (= sorted in a canonical order) compilations options, will return the same (reference counted) factory pointer. You will have to explicitly use \code{deleteDSPFactory} to properly decrement the reference counter when the factory is no more needed. You can get a unique SHA1 key of the created factory using its \code{getSHAKey} method.
+Note that the library keeps an internal cache of all allocated factories so that the compilation of the same DSP code—meaning the same source code and the same set of {\it normalized} (sorted in a canonical order) compilation options—will return the same (reference-counted) factory pointer. You will have to explicitly use \code{deleteDSPFactory} to properly decrement the reference counter when the factory is no longer needed. You can get a unique SHA1 key of the created factory using its \code{getSHAKey} method.
 
 Next, the \code{createDSPInstance} function, corresponding to the \code{new className} of C++, instantiates a \code{llvm\_dsp} pointer to be used through its interface, connected to the audio chain and controller interfaces. When finished, use \code{delete} to destroy the dsp instance.
 
@@ -104,8 +104,8 @@ To re-create a DSP factory from a previously saved code, several functions are a
 
 Some additional functions are available in the libfaust API:
 
-\code{expandDSPFromString/expandDSPFromFile} creates a self-contained DSP source string where all needed librairies have been included. All compilations options are normalized and included as a comment in the expanded string,
-\code{generateAuxFilesFromString/generateAuxFilesFromFile}: from a DSP source string or file, generates auxiliary files: SVG, XML, ps... depending of the argv parameters.
+\code{expandDSPFromString/expandDSPFromFile} creates a self-contained DSP source string where all needed libraries have been included. All compilation options are normalized and included as a comment in the expanded string,
+\code{generateAuxFilesFromString/generateAuxFilesFromFile}: from a DSP source string or file, generates auxiliary files: SVG, XML, PS... depending on the argv parameters.
 
 \section{Using the libfaust library}
 
@@ -119,7 +119,7 @@ The dynamic compilation chain has been used in several projects:
 \item FaustLive, an integrated IDE for \faust development
 \item Faustgen, an external object for Cycling Max/MSP language
 \item Csound6, see this demo video
-\item LibAudioStream, a framework to manipulate audio ressources through the concept of streams
+\item LibAudioStream, a framework to manipulate audio resources through the concept of streams
 \item Oliver Larkin JUCE framework integration and pMix2 project
 \item an experimental version of Antescofo
 \item FaucK: the combination of the Chuck language and \faust 

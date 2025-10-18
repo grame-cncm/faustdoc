@@ -2,7 +2,7 @@
 
 In this tutorial, we present different programming techniques to compute the **sum of *n* consecutive samples** in Faust. Such sums are typically used when computing the RMS value of a signal. It is therefore in the RMS context that we will present them. We will not use any predefined function, only Faust primitives, so that you can see all the details. 
 
-The text is intended for beginners, but with some basic knowledge of Faust. If this is not your case have a look at the various documentations on this website.
+The text is intended for beginners with some basic knowledge of Faust. If this is not the case, have a look at the various documentations on this website.
 
 ## RMS value
 The computation of the RMS (Root Mean Square) value of a signal is defined by the following Faust expression:
@@ -69,9 +69,9 @@ RMS(n) = S:M:R with {
 };
 ```
 
-## Fix-Point Sliding Sum
+## Fixed-Point Sliding Sum
 
-While the previous solution works very well with typical signals over practical time spans, the roundoff error continues to grow slowly. To avoid a gradual loss of precision, we can use a fix-point encoding of the samples, so that the subtraction after delay is always exact. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed \(2^4\)​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. 
+While the previous solution works very well with typical signals over practical time spans, the roundoff error continues to grow slowly. To avoid a gradual loss of precision, we can use a fixed-point encoding of the samples, so that the subtraction after delay is always exact. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed \(2^4\)​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. 
 
 The conversions are straightforward. To convert floating-point values to fix-point we can use the following expression: `*(2^27):int`. To convert back from fix-point to floating-point we can use the inverse expression: `float:/(2^27)`.
 
@@ -89,7 +89,7 @@ RMS(n) = S:M:R with {
 };
 ```
 
-Obviously this is correct only if we let enough bits for the integral part. Here we have 15 bits (31-16), enough for *n* up to 32000 samples.
+Obviously this is correct only if we leave enough bits for the integral part. Here we have 15 bits (31-16), enough for *n* up to 32000 samples.
 
 ## Block Sum
 
@@ -184,6 +184,6 @@ RMS(n) = environment {
 ```
 <!-- /faust-run -->
 
-The screen shot of the Faust IDE below shows the RMS values of testsource according to the 4 methods: *Sliding Sum*, *Fix-Point Sliding Sum*, *Block Sum*, and *Overlapping Block Sum*.
+The screenshot of the Faust IDE below shows the RMS values of testsource according to the four methods: *Sliding Sum*, *Fixed-Point Sliding Sum*, *Block Sum*, and *Overlapping Block Sum*.
 
 <img src="img/curves.png" width="100%" class="mx-auto d-block">

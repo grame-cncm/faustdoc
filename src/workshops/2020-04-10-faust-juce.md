@@ -1,6 +1,6 @@
 # Faust For the Confined: Adding Faust DSP Support to Your JUCE Plug-ins
 
-[JUCE](https:/juce.com/) is a well-known framework for creating audio plug-ins (i.e., VST, AU, AAX, etc.) and applications for a wide range of platforms. Faust can be used to generate ready-to-use JUCE applications and plug-ins implementing the standard user interface (UI) described in the Faust code using [faust2juce](https://github.com/grame-cncm/faust/tree/master-dev/architecture/juce). However, it is sooo easy to make professional looking UIs from scratch in JUCE that you might want to use Faust to implement the DSP portion of your plug-in and build your own UI.
+[JUCE](https://juce.com/) is a well-known framework for creating audio plug-ins (i.e., VST, AU, AAX, etc.) and applications for a wide range of platforms. Faust can be used to generate ready-to-use JUCE applications and plug-ins implementing the standard user interface (UI) described in the Faust code using [faust2juce](https://github.com/grame-cncm/faust/tree/master-dev/architecture/juce). However, it is so easy to make professional-looking UIs from scratch in JUCE that you might want to use Faust to implement the DSP portion of your plug-in and build your own UI.
 
 In this tutorial, we demonstrate how to use the Faust compiler to generate a C++ DSP object and how to interface it with your JUCE plug-in/UI. We'll cover basic examples (monophonic synth, polyphonic synth, and audio effect) as well as more advanced applications involving polyphony, etc.
 
@@ -70,7 +70,7 @@ We're now ready to create a new JUCE plug-in project!
 
 ### Creating an Empty JUCE Plug-In Project
 
-In this section, we'll assume that you're a bit familiar with [JUCE](https://juce.com/). If that's not your case, don't panic and just read their [Getting started with the Projucer](https://docs.juce.com/master/tutorial_new_projucer_project.html) tutorial. We also recommend you to have a look a the next few following tutorials to have a sense of how things work. They're nice and easy to read!
+In this section, we'll assume that you're a bit familiar with [JUCE](https://juce.com/). If that's not your case, don't panic and just read their [Getting started with the Projucer](https://docs.juce.com/master/tutorial_new_projucer_project.html) tutorial. We also recommend having a look at the next few tutorials to get a sense of how things work. They're nice and easy to read!
 
 In the Projucer, create a new Audio Plug-In, add the targets that you want, in the settings, make sure that "Plugin is a Synth" is enabled. In our case, we named it "MonoSynth" (choose this name wisely as it will impact the class names of your program).
 
@@ -128,9 +128,9 @@ void MonoSynthAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlo
 }
 ```
 
-Here, `fDSP` which is the Faust DSP object is first instantiated. Then `fUI` which will be used to control the parameters of the DSP is instantiated. These 2 objects are bound together using the `buildUserInterface` method of `fDSP`. Finally, memory is allocated for the stereo output of the Faust object. Note that `outputs` is a double array (one dimension for audio channels and one dimension for audio samples/buffers).
+Here, `fDSP`, which is the Faust DSP object, is first instantiated. Then `fUI`, which will be used to control the parameters of the DSP, is instantiated. These two objects are bound together using the `buildUserInterface` method of `fDSP`. Finally, memory is allocated for the stereo output of the Faust object. Note that `outputs` is a double array (one dimension for audio channels and one dimension for audio samples/buffers).
 
-Conversly, write the following in the `releaseResources` method of `MonoSynthAudioProcessor`:
+Conversely, write the following in the `releaseResources` method of `MonoSynthAudioProcessor`:
 
 ```
 void MonoSynthAudioProcessor::releaseResources()
@@ -175,7 +175,7 @@ fUI->setParamValue("gate",1);
 
 Note how `fUI` is used here to configure the parameter of the Faust DSP using its `setParamValue` method which has 2 arguments: the path/name of the parameter in the Faust code, and its value.
 
-Try to compile the plug-in for your desired target (e.g., VST, AU, etc.). In our case we'll juste generate a standalone plug-in for convenience. When running the plug-in, you should now hear sound!
+Try to compile the plug-in for your desired target (e.g., VST, AU, etc.). In our case we'll just generate a standalone plug-in for convenience. When running the plug-in, you should now hear sound!
 
 Since we want to control the parameters of our synth from the `PluginEditor`, we must create a series of public methods in `PluginProcessor` to control each parameter of our synth. In `PluginProcessor.h` this will look like:
 
@@ -216,9 +216,9 @@ void MonoSynthAudioProcessor::setCutoff(float cutoff)
 ```
 
 
-That's it for the `PluginProcessor`! Easy isn't it ;)? Now, let's add a basic interface to control this synth.
+That's it for the `PluginProcessor`! Easy, isn't it? Now, let's add a basic interface to control this synth.
 
-We add a series of sliders, button, and labels to the private section of `MonoSynthAudioProcessorEditor` in `PluginEditor.h`:
+We add a series of sliders, buttons, and labels to the private section of `MonoSynthAudioProcessorEditor` in `PluginEditor.h`:
 
 ```
 private:
@@ -315,7 +315,7 @@ Compile your plug-in and run it, it should look like this:
 <img src="img/plugin.jpg" class="mx-auto d-block" width="60%">
 
 The goal of this section was just to show you how to integrate a Faust DSP object into a JUCE plug-in project and how to control it with a simple UI. 
-Once again, JUCE is a powerful tool to implement sophisticated UI in a very simple way. You'll find all the documentation you need on their website](https://juce.com/) to start making beautiful plug-ins!
+Once again, JUCE is a powerful tool to implement sophisticated UI in a very simple way. You'll find all the documentation you need on their [website](https://juce.com/) to start making beautiful plug-ins!
 
 ## Simple Audio Effect Plug-In
 
@@ -350,7 +350,7 @@ faust -i -a faustMinimal.h FaustEffect.dsp -o Effect/Source/FaustEffect.h
 
 ### Creating a New Empty JUCE Plug-In Project
 
-The steps are the same as for the [mono synthesizer tutorial](#simple-monophonic-synth-plug-in) except that the "Plug-in is a Synth" checkbox shouldn't be checked this time. For this example, we decided to give a very bad and explicit name to our plug-in project: "Effect.""
+The steps are the same as for the [mono synthesizer tutorial](#simple-monophonic-synth-plug-in) except that the "Plug-in is a Synth" checkbox shouldn't be checked this time. For this example, we decided to give a very bad and explicit name to our plug-in project: "Effect."
 
 Finally, import the C++ file generated in the previous step (i.e., `FaustEffect.h`) in your project. 
 
@@ -483,7 +483,7 @@ Try to compile your program and you should have a beautiful effect plug-in :).
 
 [<< Download the source of this tutorial >>](2020-04-10-faust-juce/misc/poly.zip)
 
-The procedure to create a polyphonic synthesizer DSP object is slightly different than for a simple monophonic synth such as the one presented at the beginning of this tutorial. Here, we'll be using the same Faust program as one used for the [mono synthesizer example](#simple-monophonic-synth-plug-in). To enable polyphony, we just need to configure the `nvoices` metadata which allows us to specify the maximum number of voices of polyphony of the DSP object that will be generated:
+The procedure to create a polyphonic synthesizer DSP object is slightly different than for a simple monophonic synth such as the one presented at the beginning of this tutorial. Here, we'll be using the same Faust program as the one used for the [mono synthesizer example](#simple-monophonic-synth-plug-in). To enable polyphony, we just need to configure the `nvoices` metadata, which allows us to specify the maximum number of voices of polyphony of the DSP object that will be generated:
 
 <!-- faust-run -->
 ```
@@ -549,7 +549,7 @@ private:
 
 Once again, `faustObject` here will be the polyphonic Faust object and `driver` will be used to pass the sampling rate and buffer size to the system.
 
-Don't forget the declare the corresponding empty classes at the beginning of the file:
+Don't forget to declare the corresponding empty classes at the beginning of the file:
 
 ```
 class FaustPolyEngine;
@@ -608,13 +608,13 @@ void PolySynthAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuff
 }
 ```
 
-While the `setParamValue` method can now be called directly from `faustObject` to set the value of specific parameters of the Faust object, other polyphony-specific methods are available such as `keyOn` and `keyOff`. For an exhaustive list, you can have a look at the source of `FaustPolyEngine` which should just speak by itself.
+While the `setParamValue` method can now be called directly from `faustObject` to set the value of specific parameters of the Faust object, other polyphony-specific methods are available such as `keyOn` and `keyOff`. For an exhaustive list, you can have a look at the source of `FaustPolyEngine`, which should speak for itself.
 
 Our final goal for this tutorial is to create a simple plug-in with the following interface:
 
 <img src="img/polyPlugin.jpg" class="mx-auto d-block" width="60%">
 
-Hence, the Faust DSP object should be controlled with a polyphonic keyboard. New methods must be created in `PluginProcessor.cpp` to send keyon and keyoff events from the `PluginEditor` to the `PluginProcessor`:
+Hence, the Faust DSP object should be controlled with a polyphonic keyboard. New methods must be created in `PluginProcessor.cpp` to send key-on and key-off events from the `PluginEditor` to the `PluginProcessor`:
 
 ```
 void PolySynthAudioProcessor::keyOn(int pitch, int velocity)

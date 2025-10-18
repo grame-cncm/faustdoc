@@ -3,8 +3,8 @@
 \label{osc}
 %---------------------------------------------------
 
-Most \faust architectures provide Open Sound Control (OSC) support \footnote{The implementation is based internally on the \emph{oscpack} library by Ross Bencina}. This allows \faust applications to be remotely controlled from any OSC capable application, programming language, or hardware device. OSC support can be activated using the 
-\code{-osc} option when building the application with the appropriate \code{faust2xxx} command. The following table (table \ref{tab:oscarch}) lists \faust's architectures which provide OSC support. 
+Most \faust architectures provide Open Sound Control (OSC) support\footnote{The implementation is based internally on the \emph{oscpack} library by Ross Bencina}. This allows \faust applications to be remotely controlled from any OSC-capable application, programming language, or hardware device. OSC support can be activated using the 
+\code{-osc} option when building the application with the appropriate \code{faust2xxx} command. The following table (Table \ref{tab:oscarch}) lists the \faust architectures that provide OSC support. 
 
 \begin{table}[htp]
 \begin{center}
@@ -52,7 +52,7 @@ To illustrate how OSC support works let's define a very simple noise generator w
 	        * hslider("level", 0, 0, 1, 0.01);
 \end{lstlisting}
 	
-We are going to compile this example as a standalone Jack QT application with OSC support using the command:
+We are going to compile this example as a standalone JACK/Qt application with OSC support using the command:
 \begin{lstlisting}
 	faust2jaqt -osc noise.dsp
 \end{lstlisting}
@@ -65,7 +65,7 @@ we get various information on the standard output, including:
 \begin{lstlisting}
 	Faust OSC version 0.93 application 'noise' is running on UDP ports 5510, 5511, 5512
 \end{lstlisting}
-As we can see the OSC module makes use of three different UDP ports:
+As we can see, the OSC module makes use of three different UDP ports:
 \begin{itemize}
 \item \lstinline'5510' is the listening port number: control messages should be addressed to this port.
 \item \lstinline'5511' is the output port number: control messages sent by the application and answers to query messages are sent to this port.
@@ -86,7 +86,7 @@ These OSC parameters can be changed from the command line using one of the follo
 \item \lstinline'-port number' sets the port number used by the application to receive messages.
 \item \lstinline'-outport number' sets the port number used by the application to transmit messages.
 \item \lstinline'-errport number' sets the port number used by the application to transmit error messages.
-\item \lstinline'-desthost host' set sthe destination host for the messages sent by the application. Note that the destination address can be changed with the first incoming message: first received packet from another host sets the destination address to this host.
+\item \lstinline'-desthost host' sets the destination host for the messages sent by the application. Note that the destination address can be changed with the first incoming message: the first received packet from another host sets the destination address to that host.
 \item \lstinline'-xmit 0|1|2' turns transmission OFF, ALL, or ALIAS (default OFF). When transmission is OFF, input elements can be controlled using their addresses or aliases (if present). When transmission is ALL, input elements can be controlled using their addresses or aliases (if present), user's actions and output elements (bargraph) are transmitted as OSC messages as well as aliases (if present). When transmission is ALIAS,  input elements can only be controlled using their aliases, user's actions and output elements (bargraph) are transmitted as aliases only.
 \item \lstinline'-xmitfilter path' allows to filter output messages. Note that 'path' can be a regular expression (like "/freeverb/Reverb1/*").
 \item \lstinline'-bundle 0|1' activates the bundle mode where all transmitted values are sent in a single message, to be used together with the \lstinline'-xmit' option.
@@ -150,9 +150,9 @@ The root of the osc interface is \code{/noise}. Transmission is OFF, \code{xmit}
 
 \section{Widget's OSC address}
 
-Each widget of an application has a unique OSC address obtained by concatenating the labels of it's surrounding groups with its own label. 
+Each widget of an application has a unique OSC address obtained by concatenating the labels of its surrounding groups with its own label. 
 \marginpar{ There are potential conflicts between widget's labels and the OSC address space. An OSC symbolic name is an ASCII string consisting of a restricted set of printable characters. Therefore to ensure compatibility spaces are replaced by underscores and some other characters (asterisk, comma, forward, question mark, open bracket, close bracket, open curly brace, close curly brace) are replaced by hyphens.}
-Here is as an example \code{mix4.dsp}, a very simplified monophonic audio mixer with 4 inputs and one output. For each input we have a mute button and a level slider:
+Here is, as an example, \code{mix4.dsp}, a very simplified monophonic audio mixer with four inputs and one output. For each input we have a mute button and a level slider:
 \begin{lstlisting}
 	input(v) = vgroup("input %v", *(1-checkbox("mute")) : *(vslider("level", 0, 0, 1, 0.01)));
 	process = hgroup("mixer", par(i, 4, input(i)) :> _);

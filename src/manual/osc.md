@@ -4,13 +4,13 @@
 
 Most Faust architectures provide [Open Sound Control (OSC)](http://opensoundcontrol.org/) support (the implementation is based internally on the *oscpack* library by Ross Bencina). This allows applications to be remotely controlled from any OSC-capable application, programming language, or hardware device. 
 
-OSC support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the `[osc:on]` metadata to the [standard `option` metadata](syntax.md#standard-metadata):
+OSC support can be added to any Faust program (as long as the target architecture supports it; see tables below) simply by adding the `[osc:on]` metadata to the [standard `option` metadata](syntax.md#standard-metadata):
 
 ```
 declare options "[osc:on]";
 ```
 
-The following tables provides a list of Faust architectures providing OSC support. 
+The following tables provide a list of Faust architectures offering OSC support. 
 
 ### Linux Faust Architectures with OSC Support
 
@@ -50,7 +50,7 @@ The following tables provides a list of Faust architectures providing OSC suppor
 
 <!-- TODO: check that we explain that some of these features are built-in in stuff like the online editor. -->
 
-To illustrate how OSC support works let's define a very simple noise generator with a level control (we'll call it `noise.dsp`):
+To illustrate how OSC support works, let's define a very simple noise generator with a level control (we'll call it `noise.dsp`):
 
 <!-- faust-run -->
 ```
@@ -65,13 +65,13 @@ This example can be compiled as a standalone Jack Qt application with OSC suppor
 faust2jaqt -osc noise.dsp
 ```
 
-When the generated application is ran from the command line:
+When the generated application is run from the command line:
 
 ```
 ./noise 
 ```
 
-various information is printed in the standard output, including:
+various pieces of information are printed to standard output, including:
 
 ```
 Faust OSC version 0.93 application 'noise' is running on UDP ports 5510, 5511, 5512
@@ -83,7 +83,7 @@ Hence, the OSC module makes use of three different UDP ports:
 * `5511` is the output port number: control messages sent by the application and answers to query messages are sent to this port.
 * `5512` is the error port number: used for asynchronous error notifications.
 
-Note that if a `declare name "Foo";`  line is present in the DSP program, `Foo` will be used as the OSC root name, otherwise the DSP filename will be used instead.
+Note that if a `declare name "Foo";` line is present in the DSP program, `Foo` will be used as the OSC root name; otherwise, the DSP filename will be used instead.
 
 
 These OSC parameters can be changed from the command line using one of the following options:
@@ -106,7 +106,7 @@ will run `noise` with transmission mode ON, using `192.168.1.104` on port `6000`
 
 ## Automatic Port Allocation
 
-In order to address each application individually, only one application can be listening on a single port at one time. Therefore when the default incoming port 5510 is already opened by some other application, an application will automatically try increasing port numbers until it finds an available port. Let say that we start `noise` and `mixer` (two Faust-generated applications with OSC support) on the same machine, we'll get the following:
+In order to address each application individually, only one application can be listening on a single port at a time. Therefore, when the default incoming port 5510 is already opened by another application, a new application will automatically try increasing port numbers until it finds an available one. Let's say that we start `noise` and `mixer` (two Faust-generated applications with OSC support) on the same machine; we'll get the following:
 
 ```
 $ ./noise &
@@ -117,11 +117,11 @@ $ ./mixer
 Faust OSC version 0.93 application 'mixer' is running on UDP ports 5513, 5511, 5512
 ```
 
-The `mixer` application fails to open the default incoming port `5510` because it is already opened by `noise`. Therefore it tries to find an available port starting from `5513` and opens it. Please note that the two outcoming ports `5511` and `5512` are shared by all running applications.
+The `mixer` application fails to open the default incoming port `5510` because it is already in use by `noise`. Therefore it tries to find an available port starting from `5513` and opens it. Please note that the two outgoing ports `5511` and `5512` are shared by all running applications.
 
 ## Discovering OSC Applications
 
-The commands `oscsend` and `oscdump` from the liblo package provide a convenient mean to experiment with OSC control and potentially debug applications with OSC support. 
+The commands `oscsend` and `oscdump` from the liblo package provide a convenient means to experiment with OSC control and potentially debug applications with OSC support. 
 
 ```
 `oscsend [hostname] [port] [address] [types] [values]`: sends OSC messages 
@@ -133,7 +133,7 @@ values: `i=integer`, `f=float`, `s=string`, etc.
 `oscdump [port]`: receives OSC messages via UDP and dump to standard output
 ```
 
-Note that OSC messages can be sent from any OSC-compatible applications (e.g., PureData, Max/MSP, etc.).
+Note that OSC messages can be sent from any OSC-compatible application (e.g., PureData, Max/MSP, etc.).
 
 In the following examples, we'll use two separate terminal windows. The first one will be used to send OSC messages to the `noise` application using `oscsend`. The second terminal will be used to monitor the messages sent by the application using `oscdump`. Commands executed on terminal 1 will be preceded by `T1$`. Messages received on terminal 2 will be preceded by `T2:`. To monitor on terminal T2 the OSC messages received on UDP port 5511, `oscdump` will be used:
 
@@ -141,7 +141,7 @@ In the following examples, we'll use two separate terminal windows. The first on
 T2$ oscdump 5511
 ```
 
-Once set we can use the `hello` message to scan UDP ports for Faust applications. For example:
+Once set, we can use the `hello` message to scan UDP ports for Faust applications. For example:
 
 ```
 T1$ oscsend localhost 5510 "/*" s hello
@@ -175,11 +175,11 @@ The root of the OSC interface is `/noise`. Transmission is OFF, `xmit` is set to
 
 ## Widget's OSC Address
 
-Each widget of an application has a unique OSC address obtained by concatenating the labels of it's surrounding groups with its own label. 
+Each widget of an application has a unique OSC address obtained by concatenating the labels of its surrounding groups with its own label. 
 
-There are potential conflicts between widget's labels and the OSC address space. An OSC symbolic name is an ASCII string consisting of a restricted set of printable characters. Therefore to ensure compatibility spaces are replaced by underscores and some other characters (asterisk, comma, forward, question mark, open bracket, close bracket, open curly brace, close curly brace) are replaced by hyphens.
+There are potential conflicts between widget labels and the OSC address space. An OSC symbolic name is an ASCII string consisting of a restricted set of printable characters. Therefore, to ensure compatibility, spaces are replaced by underscores and some other characters (asterisk, comma, forward slash, question mark, open bracket, close bracket, open curly brace, close curly brace) are replaced by hyphens.
 
-Here is as an example, a very simplified monophonic audio mixer with 4 inputs and one output. For each input we have a dmute button and a level slider:
+Here is, as an example, a very simplified monophonic audio mixer with four inputs and one output. For each input we have a mute button and a level slider:
 
 <!-- faust-run -->
 ```

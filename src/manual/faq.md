@@ -1,17 +1,17 @@
 # Frequently Asked Questions
 
 
-## When to use `int` or `float` cast ?
+## When to Use `int` or `float` Cast?
 
-The [Signal Processor Semantic](../manual/introduction.md#signal-processor-semantic) section explains what a Faust program describes. In particular Faust considers two type of signals: *integer signals* and *floating point signals*. Mathematical operations either occur in the domain of integer numbers, or in the domain of floating point numbers, depending of their types, read [here](../manual/syntax.md#numbers). Using explicit [int cast](../manual/syntax.md#int-primitive) or [float cast](../manual/syntax.md#float-primitive) may be needed to force a given computation to be done in the correct number domain.
+The [Signal Processor Semantics](../manual/introduction.md#signal-processor-semantic) section explains what a Faust program describes. In particular Faust considers two types of signals: *integer signals* and *floating point signals*. Mathematical operations either occur in the domain of integer numbers or in the domain of floating point numbers, depending on their types, read [here](../manual/syntax.md#numbers). Using explicit [int cast](../manual/syntax.md#int-primitive) or [float cast](../manual/syntax.md#float-primitive) may be needed to force a given computation to be done in the correct number domain.
 
-Some language primitives (like [par](../manual/syntax.md#parallel-composition), [seq](../manual/syntax.md#sequential-composition), [route](../manual/syntax.md#route-primitive), [soundfile](../manual/syntax.md#soundfile-primitive), etc.) assume that their parameters are [Constant Numerical Expressions](../manual/syntax.md#constant-numerical-expressions) of the integer type. In this case the compiler automatically does *type promotion* and there is no need to use `int` cast to have the argument be of the integer type (note that an uneeded cast will simply be ignored and will not add uneeded computation in the generated code). 
+Some language primitives (like [par](../manual/syntax.md#parallel-composition), [seq](../manual/syntax.md#sequential-composition), [route](../manual/syntax.md#route-primitive), [soundfile](../manual/syntax.md#soundfile-primitive), etc.) assume that their parameters are [Constant Numerical Expressions](../manual/syntax.md#constant-numerical-expressions) of the integer type. In this case the compiler automatically does *type promotion* and there is no need to use `int` cast to have the argument be of the integer type (note that an unneeded cast will simply be ignored and will not add unneeded computation in the generated code). 
 
-User interface items produce *floating point signals*. Depending of their use later in the computed expression, using explicit `int` cast may be needed also to force a given computation to be done in the correct number domain.
+User interface items produce *floating point signals*. Depending on their use later in the computed expression, using explicit `int` cast may also be needed to force a given computation to be done in the correct numerical domain.
 
-## Does select2 behaves as a standard C/C++ like if ?
+## Does `select2` Behave Like a Standard C/C++ `if`?
 
-The short answer is **no**, `select2` doesn't behave like the `if-then-else` of a traditional programming language, nor does `ba.if` of the standard library. To understand why, think of `select2` as the tuner of a radio, it selects what you listen, but does not prevent the various radio stations from broadcasting. Actually, `select2` could be easily redefined in Faust as:
+The short answer is **no**, `select2` doesn't behave like the `if-then-else` of a traditional programming language, nor does `ba.if` of the standard library. To understand why, think of `select2` as the tuner of a radio: it selects what you listen to but does not prevent the various radio stations from broadcasting. Actually, `select2` could be easily redefined in Faust as:
    
 ```
 select2(i, x, y) = (1-i) * x + i * y;
@@ -19,15 +19,15 @@ select2(i, x, y) = (1-i) * x + i * y;
 
 ### Strict vs Lazy semantics
 
-In computer science terminology, `select2(i,x,y)` has so-called *strict* semantics. This means that its three arguments `i`, `x`, `y` are always evaluated before select2 itself is executed, in other words, even if `x` or `y` is not selected. The standard C/C++ `if-then-else` has *lazy* semantics. The *condition* is always executed, but depending of the value of the *condition*, only the *then* or the *else* branch is executed. 
+In computer science terminology, `select2(i,x,y)` has so-called *strict* semantics. This means that its three arguments `i`, `x`, `y` are always evaluated before `select2` itself is executed, even if `x` or `y` is not selected. The standard C/C++ `if-then-else` has *lazy* semantics. The *condition* is always executed, but depending on the value of the *condition*, only the *then* or the *else* branch is executed. 
 
-The *strict* semantics of `select2` means that you cannot use it to prevent a division by 0 in an expression, or the square root of a negative number, etc... For example, the following code will not prevent a division by 0 error:
+The *strict* semantics of `select2` means that you cannot use it to prevent a division by zero in an expression, or the square root of a negative number, etc. For example, the following code will not prevent a division by zero error:
   
 ```
 select2(x == 0, 1/x, 10000); 
 ```
 
-You cannot use `ba.if` either because it is implemented using `select2` and has the same strict semantics. Therefore the following code will not prevent a division by 0 error:
+You cannot use `ba.if` either because it is implemented using `select2` and has the same strict semantics. Therefore the following code will not prevent a division by zero error:
     
 ```
 ba.if(x == 0, 10000, 1/x);
@@ -35,13 +35,13 @@ ba.if(x == 0, 10000, 1/x);
 
 ### But things are a little bit more complex...
 
-Concerning the way `select2` is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the DSP code:
+Concerning the way `select2` is compiled by the Faust compiler, the strict semantics is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the `if`. For instance the DSP code:
 
 ```
 process = button("choose"), (*(3) : +~_), (*(7):+~_) : select2;
 ```
 
-is compiled as the following C++ code, where `fRec0[0]` and `fRec1[0]` contains the computation of each branch:
+is compiled as the following C++ code, where `fRec0[0]` and `fRec1[0]` contain the computation of each branch:
 
 ```c++
 for (int i = 0; (i < count); i = (i + 1)) {
@@ -53,7 +53,7 @@ for (int i = 0; (i < count); i = (i + 1)) {
 }
 ```
 
-For code optimization strategies, the generated code is not *fully* strict on `select2`. When Faust produces C++ code, the C++ compiler can decide to *avoid the execution of the stateless part of the signal that is not selected* (and not needed elsewhere). This doesn't change the semantics of the output signal, but it changes the strictness of the code if a division by 0 would have been executed in the stateless part. When stateless expressions are used, they are by default generated using a *non-strict* conditional expression. 
+For code optimization strategies, the generated code is not *fully* strict on `select2`. When Faust produces C++ code, the C++ compiler can decide to *avoid the execution of the stateless part of the signal that is not selected* (and not needed elsewhere). This doesn't change the semantics of the output signal, but it changes the strictness of the code if a division by zero would have been executed in the stateless part. When stateless expressions are used, they are by default generated using a *non-strict* conditional expression. 
 
 For instance the following DSP code:
 
@@ -198,13 +198,13 @@ process = filterBank(nBands);
 to produce this GUI:
 
 <img src="pathname.png" class="mx-auto d-block" width="50%">
-<center>*Distinct GUI items to have different pathnames *</center>
+<center>*Distinct GUI items to have different pathnames*</center>
 
-The rules ares the following:
+The rules are the following:
 
-- Two input control cannot have a same path (ERROR)
+- Two input controls cannot share the same path (ERROR)
 - An input control and a bargraph cannot have the same path (ERROR)
-- Two bargraph can have the same path ([WARNING](errors.md#warning-messages))
+- Two bargraphs can have the same path ([WARNING](errors.md#warning-messages))
 
 ## Surprising effects of vgroup/hgroup on how controls and parameters work
 
@@ -223,9 +223,9 @@ process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 <img src="group1.png" class="mx-auto d-block" width="50%">
 <center>*Shared freq1 and freq2 controllers*</center>
 
-So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path (like `/foo/Freq1`), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for `freq2`.
+So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path (like `/foo/Freq1`), be associated with a unique controller, and will finally appear once in the GUI. The same mechanism applies to `freq2`.
 
-Now if some grouping mecanism is used to better control the UI rendering, as in the following DSP code: 
+Now if some grouping mechanism is used to better control the UI rendering, as in the following DSP code: 
 
 ```
 import("stdfaust.lib");
@@ -236,7 +236,7 @@ freq2 = hslider("Freq2", 500, 200, 2000, 0.01);
 process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", os.osc(freq1) + os.triangle(freq2));
 ```
 
-The `freq1` and  `freq2` controllers now don't have the same path in each group (like `/foo/Voice1/Freq1` and `/foo/Voice1/Freq2` in the first group, and `/foo/Voice2/Freq1` and `/foo/Voice2/Freq2` in the second group), and so four separated controllers and UI items are finally created. 
+The `freq1` and  `freq2` controllers now don't have the same path in each group (like `/foo/Voice1/Freq1` and `/foo/Voice1/Freq2` in the first group, and `/foo/Voice2/Freq1` and `/foo/Voice2/Freq2` in the second group), and so four separate controllers and UI items are finally created. 
 
 <img src="group2.png" class="mx-auto d-block" width="60%">
 <center>*Four freq1 and freq2 controllers*</center>
@@ -258,7 +258,7 @@ process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", o
 Note that the name for a given `hgroup`, `vgroup`, or `tgroup` can be used more than once, and they will be merged. This can be useful when you want to define different names for different widget signals, but still want to group them. For example, this pattern can be used to separate a synth's UI design from the implementation of the synth's DSP:
 
 ```
-import ("stdfaust.lib");
+import("stdfaust.lib");
 
 synth(foo, bar, baz) = os.osc(foo+bar+baz);
 
@@ -277,18 +277,18 @@ process = synth_ui;
 <img src="group4.png" class="mx-auto d-block" width="40%">
 <center>*naming and grouping*</center>
 
-## What are the rules used for partial application ?
+## What Are the Rules Used for Partial Application?
 
 Assuming `F` is not an abstraction and has `n+m` inputs and `A` has `n` outputs, then we have the rewriting rule `F(A) ==> A,bus(m):F (with bus(1) = _ and bus(n+1) = _,bus(n))`
 
 There is an exception when `F` is a binary operation like `+,-,/,*`. In this case, the rewriting rule is `/(3) ==> _,3:/`. In other words, when we apply only one argument, it is the second one.
 
 
-## Control rate versus audio rate
+## Control Rate Versus Audio Rate
 
-Question: *I have a question about sample rate / control rate issues. I have a Faust code that takes channel pressure messages from my keyboard as input, therefore at control rate, and outputs an expression signal at sample rate. The first part of the code can run at control rate, but I want to force it to run at sample rate (otherwise unwanted behavior will appear). Is there a simple way of forcing my pressure signal to be at sample rate (without making a smooth which may also result in unwanted behavior)*.
+Question: *I have a question about sample-rate/control-rate issues. I have a Faust code that takes channel pressure messages from my keyboard as input, therefore at control rate, and outputs an expression signal at sample rate. The first part of the code can run at control rate, but I want to force it to run at sample rate (otherwise unwanted behavior will appear). Is there a simple way of forcing my pressure signal to be at sample rate (without applying smoothing, which may also result in unwanted behavior)?*
 
-Answer: the [ba.kr2ar](https://faustlibraries.grame.fr/libs/basics/#bakr2ar) function can be used for that purpose.
+Answer: The [ba.kr2ar](https://faustlibraries.grame.fr/libs/basics/#bakr2ar) function can be used for that purpose.
 
 ## Displaying labels with numbers
 
@@ -296,11 +296,11 @@ Question: *Is there a way to force the sliders to show in numerical order respec
  
 Answer: Labels can contain variable parts. These are indicated with the sign % followed by the name of a variable. For a detailed explanation of how to use this feature, refer to the [comprehensive documentation](syntax.md#variable-parts-of-a-label).
 
-## Semantic of bargraphs
+## Semantics of Bargraphs
 
-Question: *When are  control rate outputs (like hbargraph/vbargraph) calculated every sample ?* 
+Question: *When are control-rate outputs (like hbargraph/vbargraph) calculated every sample?* 
 
-Answer: This depends on the nature of the signal entering the bargraph. If it's a control rate signal, as in `process = vslider("foo", 0, 0, 1, 0.01) : vbargraph("bar", 0, 1);`, then updating is done at control rate:
+Answer: This depends on the nature of the signal entering the bargraph. If it's a control-rate signal, as in `process = vslider("foo", 0, 0, 1, 0.01) : vbargraph("bar", 0, 1);`, then updating is done at control rate:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
@@ -314,7 +314,7 @@ virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 }
 ```
 
-But if the signal is at sample rate, as in `process = vslider("foo", 0, 0, 1, 0.01) : si.smooth(0.9) : vbargraph("bar", 0, 1);`, the calculation must be at sample rate to be correct (that is to properly update the signal state at each sample), even if all the values are not displayed:
+But if the signal is at sample rate, as in `process = vslider("foo", 0, 0, 1, 0.01) : si.smooth(0.9) : vbargraph("bar", 0, 1);`, the calculation must be at sample rate to be correct (that is, to properly update the signal state at each sample), even if all the values are not displayed:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 

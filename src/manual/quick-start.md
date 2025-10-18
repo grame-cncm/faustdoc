@@ -2,7 +2,7 @@
 
 The goal of this section is to teach you how to use the basic elements of the Faust programming language in approximately two hours! While DSP algorithms can be easily written from scratch in Faust, we'll just show you here how to use existing elements implemented in the [Faust libraries](https://faustlibraries.grame.fr/), connect them to each other, and implement basic user interfaces (UI) to control them.
 
-One of the strength of Faust lies in its libraries that implement hundreds of functions. So you should be able to go a long way after reading this section, simply by using what's already out here.
+One of the strengths of Faust lies in its libraries that implement hundreds of functions. So you should be able to go a long way after reading this section, simply by using what's already out there.
 
 This tutorial was written assuming that the reader is already familiar with basic concepts of computer music and programming.
 
@@ -12,7 +12,7 @@ More generally, at the end of this section:
 * you should know enough to write basic Faust programs,
 * you should be able to use them on different platforms.
 
-This tutorial was designed to be carried out in the [Faust Online IDE](https://faustide.grame.fr) (with its [documentation](https://github.com/grame-cncm/faustide/blob/master/README.md)). If you wish to do it locally, you'll have to [install Faust on your system](https://github.com/grame-cncm/faust#compilation-and-installation) but this step is absolutely not required,
+This tutorial was designed to be carried out in the [Faust Online IDE](https://faustide.grame.fr) (with its [documentation](https://github.com/grame-cncm/faustide/blob/master/README.md)). If you wish to do it locally, you'll have to [install Faust on your system](https://github.com/grame-cncm/faust#compilation-and-installation), but this step is absolutely not required.
 
 ## Making Sound
 
@@ -51,7 +51,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 ```
 <!-- /faust-run -->
 
-[`fi.resonlp`](https://faustlibraries.grame.fr/libs/filters/#firesonlp) has four arguments (in order): *cut-off frequency*, *q*, *gain* and its *input*. Note that you can have a quick look of what the arguments of a function are simply by hovering it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables don't have a type in Faust and everything is considered as a signal. The Faust compiler takes care of making the right optimizations by choosing which variable is ran at audio rate, what their types are, etc. Thus, `ctFreq`, `q` and `gain` could well be controlled by oscillators (i.e., signals running at audio rate) here. 
+[`fi.resonlp`](https://faustlibraries.grame.fr/libs/filters/#firesonlp) has four arguments (in order): *cut-off frequency*, *q*, *gain* and its *input*. Note that you can have a quick look of what the arguments of a function are simply by hovering it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables don't have a type in Faust and everything is considered as a signal. The Faust compiler takes care of making the right optimizations by choosing which variable is run at audio rate, what their types are, etc. Thus, `ctFreq`, `q` and `gain` could well be controlled by oscillators (i.e., signals running at audio rate) here. 
 
 Since the input of the filter is not specified as an argument here (but it could, of course), it automatically becomes an "implicit" input/argument of `fi.resonlp`. The `:` [sequential composition operator](syntax.md#sequential-composition) can be used to connect two elements that have the same number of outputs and inputs. Since `no.noise` has one output and `fi.resonlp(ctFreq,q,gain)` has one implicit input, we can connect them together. This is essentially the same as writing something like:
 
@@ -120,8 +120,8 @@ process = no.noise <: filter,filter;
 ```
 <!-- /faust-run -->
 
-Note that this example allows us to have 2 separate filters for each channel. Since both filters currently have the same parameters, another way of writing this could be: `process = no.noise : filter <: _,_;`.  
-You could think of the first form as a same noise signal splitted and then filtered on left and right channels, and the second form as the filtered noise then splitted on left and right channels. But the compiler understand that the same filtered noise will be produced on left and right channels in both cases. So the filtered noise signal can be computed only once and used on left and right channels. For the two progams, the compiler will actually generate the exact same optimized code ! This is **a very powerful property of its semantically driven compilation model**. 
+Note that this example allows us to have two separate filters for each channel. Since both filters currently have the same parameters, another way of writing this could be: `process = no.noise : filter <: _,_;`.  
+You could think of the first form as the same noise signal split and then filtered on the left and right channels, and the second form as the filtered noise then split on the left and right channels. But the compiler understands that the same filtered noise will be produced on the left and right channels in both cases. So the filtered noise signal can be computed only once and used on the left and right channels. For the two programs, the compiler will actually generate the exact same optimized code! This is **a very powerful property of its semantically driven compilation model**. 
 
 Since `filter,filter` is considered here as a full expression, we cannot use the `:` operator to connect `no.noise` to the two filters in parallel because `filter,filter` has two inputs (`_,_ : filter,filter : _,_`) and `no.noise` only has one output. 
 
@@ -141,7 +141,7 @@ import("stdfaust.lib");
 process = no.noise <: filter+filter;
 ```
 
-Keep in mind that splitting a signal doesn't mean that its energy get spread in each copy, for example, in the expression:
+Keep in mind that splitting a signal doesn't mean that its energy gets spread in each copy, for example, in the expression:
 
 <!-- faust-run -->
 ```
@@ -168,9 +168,9 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 ```
 <!-- /faust-run -->
 
-Faust allows us to declare basic [user interface (UI) elements](syntax.md#user-interface-primitives-and-configuration) to control the parameters of a Faust object. Since Faust can be used to make a wide range of elements ranging from standalone applications to audio plug-ins or API, the role of UI declarations differs a little in function of the target. For example, in the Faust Online Editor, a UI is a window with various kind of controllers (sliders, buttons, etc.). On the other hand, if you're using Faust to generate an audio engine using `faust2api`, then UI elements declared in your Faust code will be the parameters visible to "the rest of the world" and controllable through the API.
+Faust allows us to declare basic [user interface (UI) elements](syntax.md#user-interface-primitives-and-configuration) to control the parameters of a Faust object. Since Faust can be used to make a wide range of elements ranging from standalone applications to audio plug-ins or API endpoints, the role of UI declarations differs slightly depending on the target. For example, in the Faust Online Editor, a UI is a window with various kinds of controllers (sliders, buttons, etc.). On the other hand, if you're using Faust to generate an audio engine using `faust2api`, then UI elements declared in your Faust code will be the parameters visible to "the rest of the world" and controllable through the API.
 
-An exhaustive list of the standard Faust UI elements is given in the [corresponding section](syntax.md#user-interface-primitives-and-configuration). Be aware that they not all supported by all the Faust targets. For example, you wont be able to declare vertical sliders if you're using the [Faust Playground](https://faustplayground.grame.fr), etc. 
+An exhaustive list of the standard Faust UI elements is given in the [corresponding section](syntax.md#user-interface-primitives-and-configuration). Be aware that they are not all supported by every Faust target. For example, you won't be able to declare vertical sliders if you're using the [Faust Playground](https://faustplayground.grame.fr), etc. 
 
 In the current case, we'd like to control the `ctFreq`, `q` and `gain` parameters of the previous program with horizontal sliders. To do this, we can write something like:
 
@@ -214,7 +214,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 ```
 <!-- /faust-run -->
 
-Note that we're also using `si.smoo` on the output of the `gate` button to apply a exponential envelope on its signal. 
+Note that we're also using `si.smoo` on the output of the `gate` button to apply an exponential envelope on its signal. 
 
 This is a very broad introduction to making user interface elements in Faust. You can do much more like creating groups, using knobs, different types of menus, etc. but at least you should be able to make Faust programs at this point that are controllable and sound good (or not ;) ).
 
@@ -222,7 +222,7 @@ This is a very broad introduction to making user interface elements in Faust. Yo
 
 Some Faust functions already contain a built-in UI and are ready-to-be-used. These functions are all placed in [demo.lib](https://faustlibraries.grame.fr/libs/demos/) and are accessible through the `dm.` environment. 
 
-As an example, let's add a reverb to our previous code by calling [`dm.zita_light`](https://faustlibraries.grame.fr/libs/demos/#dmzita_light) (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust wont know how to connect things):
+As an example, let's add a reverb to our previous code by calling [`dm.zita_light`](https://faustlibraries.grame.fr/libs/demos/#dmzita_light) (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust won't know how to connect things):
 
 <!-- faust-run -->
 ```

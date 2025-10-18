@@ -1,4 +1,4 @@
-\chapter{\faust syntax}
+\chapter{\faust Syntax}
 \label{syntax}
 
 
@@ -11,11 +11,11 @@ This section describes the syntax of \faust. Figure \ref{fig-syntax} gives an ov
 \label{fig-syntax}
 \end{figure}
 
-As we will see, \textit{definitions} and \textit{expressions} have a central role.
+As we will see, \textit{definitions} and \textit{expressions} play a central role.
 
 \section{\faust program}
 
-A \faust program is essentially a list of \textit{statements}. These statements can be \textit{declarations}, \textit{imports}, \textit{definitions} and \textit{documentation tags}, with optional C++ style (//... and /*...*/) comments.
+A \faust program is essentially a list of \textit{statements}. These statements can be \textit{declarations}, \textit{imports}, \textit{definitions}, and \textit{documentation tags}, with optional C++-style (//... and /*...*/) comments.
  
 \begin{rail}
 program : (statement)+;
@@ -23,7 +23,7 @@ program : (statement)+;
 
 \subsection{A Simple Program}
 
-Here is a short \faust program that implements of a simple noise generator. It exhibits various kind of statements: two \textit{declarations}, an \textit{import}, a \textit{comment} and a \textit{definition}. We will see later on \textit{documentation} statements (\ref{sec-documentation}).
+Here is a short \faust program that implements a simple noise generator. It exhibits various kinds of statements: two \textit{declarations}, an \textit{import}, a \textit{comment}, and a \textit{definition}. We will look at \textit{documentation} statements later on (\ref{sec-documentation}).
 
 \begin{lstlisting}
 declare name       "noise";
@@ -39,7 +39,7 @@ The keyword \lstinline'process' is the equivalent of \lstinline'main' in C/C++. 
 
 \section{Statements}
 
-The \textit{statements} of a \faust program are of four kinds: \textit{metadata declarations}, \textit{file imports},  \textit{definitions} and \textit{documentation}. All statements but documentation end with a semicolon (\lstinline';'). 
+The \textit{statements} of a \faust program are of four kinds: \textit{metadata declarations}, \textit{file imports}, \textit{definitions}, and \textit{documentation}. All statements except documentation end with a semicolon (\lstinline';'). 
 % 
 % \begin{grammar}
 %   <statement> ::= 
@@ -59,7 +59,7 @@ statement : declaration | fileimport | definition | documentation;
 
 \subsection{Declarations}
 
-Meta-data declarations (for example \lstinline'declare name "noise";') are optional and typically used to document a \faust project. 
+Metadata declarations (for example \lstinline'declare name "noise";') are optional and typically used to document a \faust project. 
 
 % \begin{grammar}
 %   <declaration> ::= 
@@ -92,7 +92,7 @@ declare license "BSD";
 
 \subsection{Imports}
 
-File imports allow to import definitions from other source files.  
+File imports allow you to import definitions from other source files.  
 
 % \begin{grammar}
 %   <fileimport> ::= 
@@ -110,9 +110,9 @@ For example \lstinline{import("maths.lib");} imports the definitions of the \lst
 \subsection{Documentation}
 \label{sec-documentation}
 
-Documentation statements are optional and typically used to control the generation of the mathematical documentation of a \faust program. This documentation system is detailed chapter \ref{mdoc}. In this section we will essentially describe the documentation statements syntax.
+Documentation statements are optional and typically used to control the generation of the mathematical documentation of a \faust program. This documentation system is detailed in Chapter \ref{mdoc}. In this section we essentially describe the syntax of documentation statements.
 
-A documentation statement starts with an opening \lstinline'<mdoc>' tag and ends with a closing \lstinline'</mdoc>' tag. Free text content, typically in \latex format, can be placed in between these two tags. 
+A documentation statement starts with an opening \lstinline'<mdoc>' tag and ends with a closing \lstinline'</mdoc>' tag. Free text content, typically in \latex format, can be placed between these two tags. 
 
 % \begin{grammar}
 %   <documentation> ::= 
@@ -134,7 +134,7 @@ A documentation statement starts with an opening \lstinline'<mdoc>' tag and ends
 documentation : "<mdoc>" ((freetext|equation|diagram|metadata|notice|listing)+) "</mdoc>";
 \end{rail}
 
-Moreover, optional sub-tags can be inserted in the text content itself to require the generation, at the insertion point, of mathematical \textit{equations}, graphical \textit{block-diagrams}, \faust source code \textit{listing} and explanation \textit{notice}.
+Moreover, optional sub-tags can be inserted in the text content itself to request the generation, at the insertion point, of mathematical \textit{equations}, graphical \textit{block-diagrams}, \faust source code \textit{listings}, and explanatory \textit{notices}.
 
 % \begin{grammar}
 %   <equation> ::= 
@@ -173,7 +173,7 @@ Similarly, the generation of the graphical block-diagram of a \faust expression 
 metadata : "<metadata>" keyword "</metadata>";
 \end{rail}
 
-The \lstinline'<metadata>' tags allow to reference \faust metadatas (cf. declarations), calling the corresponding keyword.
+The \lstinline'<metadata>' tags allow you to reference \faust metadata (cf. declarations) by calling the corresponding keyword.
 
 % \begin{grammar}
 %   <notice> ::= 
@@ -226,13 +226,13 @@ listingattribute : ("mdoctags" | "dependencies" | "distributed") "=" ('"true"' |
 %   \end{syntdiag}
 % \end{grammar}
 
-The \lstinline'<listing />' empty-element tag is used to generate the listing of the \faust program. Its three attributes \lstinline'mdoctags', \lstinline'dependencies' and \lstinline'distributed' enable or disable respectively \lstinline'<mdoc>' tags, other files dependencies and distribution of interleaved faust code between \lstinline'<mdoc>' sections.
+The \lstinline'<listing />' empty-element tag is used to generate the listing of the \faust program. Its three attributes \lstinline'mdoctags', \lstinline'dependencies', and \lstinline'distributed' respectively enable or disable \lstinline'<mdoc>' tags, other file dependencies, and the distribution of interleaved \faust code between \lstinline'<mdoc>' sections.
 
 \section{Definitions}
 
 A \textit{definition} associates an identifier with an expression it stands for. 
 
-Definitions are essentially a convenient shortcut avoiding to type long expressions. During compilation, more precisely during the evaluation stage, identifiers are replaced by their definitions. It is therefore always equivalent to use an identifier or directly its definition. Please note that multiple definitions of a same identifier are not allowed, unless it is a pattern matching based definition.
+Definitions are essentially a convenient shortcut that avoids typing long expressions. During compilation, more precisely during the evaluation stage, identifiers are replaced by their definitions. It is therefore always equivalent to use an identifier or its definition directly. Please note that multiple definitions of the same identifier are not allowed, unless it is a pattern-matching-based definition.
 
 \subsection{Simple Definitions}
 
@@ -250,13 +250,13 @@ For example here is the definition of \lstinline'random', a simple pseudo-random
 
 \subsection{Function Definitions}
 
-Definitions with formal parameters correspond to functions definitions.
+Definitions with formal parameters correspond to function definitions.
 
 \begin{rail}
 fdefinition  : identifier '(' (parameter + ',')  ')' '=' expression ';';
 \end{rail} 
 
-For example the definition of \lstinline'linear2db', a function that converts linear values to decibels, is :
+For example the definition of \lstinline'linear2db', a function that converts linear values to decibels, is:
 
 \begin{lstlisting}
  linear2db(x) = 20*log10(x);
@@ -279,7 +279,7 @@ pdefinition  : identifier '(' (pattern + ',')  ')' '=' expression ';';
 pattern : identifier | expression; 
 \end{rail}
 
-This powerful mechanism allows to algorithmically create and manipulate block diagrams expressions. Let's say that you want to describe a function to duplicate an expression several times in parallel:
+This powerful mechanism allows you to algorithmically create and manipulate block-diagram expressions. Let's say that you want to describe a function to duplicate an expression several times in parallel:
 \begin{lstlisting}
  duplicate(1,x) = x;
  duplicate(n,x) = x, duplicate(n-1,x);
@@ -293,13 +293,13 @@ Please note that this last definition is a convenient alternative to the more ve
              };
 \end{lstlisting}
 
-Here is another example to count the number of elements of a list. Please note that we simulate lists using parallel composition : (1,2,3,5,7,11). The main limitation of this approach is that there is no empty list. Moreover lists of only one element are represented by this element :
+Here is another example to count the number of elements of a list. Please note that we simulate lists using parallel composition: (1,2,3,5,7,11). The main limitation of this approach is that there is no empty list. Moreover, lists of only one element are represented by this element:
 \begin{lstlisting}
  count((x,xs)) = 1+count(xs);
  count(x) = 1;
 \end{lstlisting}
 
-If we now write \lstinline'count(duplicate(10,666))' the expression will be evaluated to \lstinline'10'.
+If we now write \lstinline'count(duplicate(10,666))' the expression will evaluate to \lstinline'10'.
 
 Please note that the order of pattern matching rules matters. The more specific rules must precede the more general rules. When this order is not respected, as in :
 \begin{lstlisting}
@@ -308,11 +308,11 @@ Please note that the order of pattern matching rules matters. The more specific 
 \end{lstlisting}
 the first rule will always match and the second rule will never be called.
 
-Please note that number arguments in pattern matching rules are typically \textit{constant numerical expressions}, so can be the result of more complex expressions involving computations done at compile-time.
+Please note that numeric arguments in pattern matching rules are typically \textit{constant numerical expressions}, so they can be the result of more complex expressions involving computations done at compile time.
 
 \subsection{Variants}
 
-Some statements (imports, definitions) can be preceded by a \textit{variantlist}, composed of variants which can be \textit{singleprecision}, \textit{doubleprecision}, \textit{quadprecision} or \textit{fixedpointprecision} This allows some imports and definitions to be effective only for a (or several) specific float precision option in the compiler (that is either \lstinline'-single', \lstinline'-double', \lstinline'-quad' or \lstinline'-fx' respectively). A typical use-case is the definition of floating point constants in the maths.lib library with the following lines:
+Some statements (imports, definitions) can be preceded by a \textit{variantlist}, composed of variants that can be \textit{singleprecision}, \textit{doubleprecision}, \textit{quadprecision}, or \textit{fixedpointprecision}. This allows some imports and definitions to be effective only for one (or several) specific float-precision option in the compiler (that is, either \lstinline'-single', \lstinline'-double', \lstinline'-quad', or \lstinline'-fx' respectively). A typical use case is the definition of floating point constants in the maths.lib library with the following lines:
 
 \begin{lstlisting}
 
@@ -323,7 +323,7 @@ doubleprecision MAX = 1.7976931348623158e+308;
 
 \section{Expressions}
 
-Despite its textual syntax, \faust is conceptually a block-diagram language. \faust expressions represent DSP block-diagrams and are assembled from primitive ones using various \textit{composition} operations. More traditional \textit{numerical} expressions in infix notation are also possible. Additionally \faust provides time based expressions, like delays, expressions related to lexical environments, expressions to interface with foreign function and lambda expressions.
+Despite its textual syntax, \faust is conceptually a block-diagram language. \faust expressions represent DSP block-diagrams and are assembled from primitive ones using various \textit{composition} operations. More traditional \textit{numerical} expressions in infix notation are also possible. Additionally, \faust provides time-based expressions, such as delays, expressions related to lexical environments, expressions to interface with foreign functions, and lambda expressions.
 
 \begin{rail}
 expression : diagram | insouts | numerical | time | lexical | foreign | lambda;
@@ -335,7 +335,7 @@ Some language primitives (like \textit{rdtable}, \textit{rwtable}, \textit{hslid
 
 \subsection{Diagram Expressions}
 
-Diagram expressions are assembled from primitive ones using either binary composition operations or high level iterative constructions.
+Diagram expressions are assembled from primitive ones using either binary composition operations or high-level iterative constructions.
  
 \begin{rail}
 diagramexp : diagcomposition | diagiteration;
@@ -348,11 +348,11 @@ Five binary \emph{composition operations} are available to combine block-diagram
 diagcomposition : expression (recur|','|':'|'<:'|':>') expression;
 \end{rail}
 
-To describe precisely how these connections are done, we have to introduce some notation.  The number of inputs and outputs of a bloc-diagram $A$ are notated $\mathrm{inputs}(A)$ and $\mathrm{outputs}(A)$ . The inputs and outputs themselves are respectively notated : $[0]A$, $[1]A$, $[2]A$, $\ldots$ and $A[0]$, $A[1]$, $A[2]$, etc.. 
+To describe precisely how these connections are made, we have to introduce some notation. The number of inputs and outputs of a block diagram $A$ are denoted $\mathrm{inputs}(A)$ and $\mathrm{outputs}(A)$. The inputs and outputs themselves are respectively denoted $[0]A$, $[1]A$, $[2]A$, $\ldots$ and $A[0]$, $A[1]$, $A[2]$, etc. 
 
 For each composition operation between two block-diagrams $A$ and $B$ we will describe the connections $A[i]\rightarrow [j]B$ that are created and the constraints on their relative numbers of inputs and outputs.
 
-The priority and associativity of this five operations are given table \ref{table-composition}. Please note that a higher priority value means a higher priority in the evaluation order. There is a companion table \ref{infix-comparison-priority} that gives the associativity of each numerical operator in infix expressions.
+The priority and associativity of these five operations are given in Table \ref{table-composition}. Please note that a higher priority value means a higher priority in the evaluation order. There is a companion Table \ref{infix-comparison-priority} that gives the associativity of each numerical operator in infix expressions.
  
 \begin{table}[ht]
 	\centering
@@ -367,15 +367,15 @@ The priority and associativity of this five operations are given table \ref{tabl
 		\texttt{\farg{expression}\ :>\ \farg{expression}}			& 1 & right & merge composition      	\\
 		\hline
 	\end{tabular}
-	\caption{Block-Diagram composition operation priorities}   
+\caption{Block-diagram composition operation priorities}   
   	\label{table-composition}
 \end{table}
  
 
 \paragraph{Parallel Composition}
-The \emph{parallel composition}  \lstinline'(A,B)' (figure \ref{figure-par1}) is probably the simplest one. It places the two block-dia\-grams one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of \lstinline$A$ and \lstinline$B$. The outputs of the resulting block-diagram are the outputs of \lstinline$A$ and \lstinline$B$. 
+The \emph{parallel composition}  \lstinline'(A,B)' (Figure \ref{figure-par1}) is probably the simplest one. It places the two block diagrams one on top of the other, without connections. The inputs of the resulting block diagram are the inputs of \lstinline$A$ and \lstinline$B$. The outputs of the resulting block diagram are the outputs of \lstinline$A$ and \lstinline$B$. 
 
-\emph{Parallel composition} is an associative operation : \lstinline$(A,(B,C))$ and \lstinline$((A,B),C)$ are equivalents. When no parenthesis are used : \lstinline'A,B,C,D', \faust uses right associativity and therefore build internally the expression \lstinline$(A,(B,(C,D)))$. This organization is important to know when using pattern matching techniques on parallel compositions. 
+\emph{Parallel composition} is an associative operation: \lstinline$(A,(B,C))$ and \lstinline$((A,B),C)$ are equivalent. When no parentheses are used, as in \lstinline'A,B,C,D', \faust uses right associativity and therefore builds internally the expression \lstinline$(A,(B,(C,D)))$. This organization is important to know when using pattern-matching techniques on parallel compositions. 
 
 \begin{figure}[h]
 \centering
@@ -386,11 +386,11 @@ The \emph{parallel composition}  \lstinline'(A,B)' (figure \ref{figure-par1}) is
 
 
 \paragraph{Sequential Composition}
-The \emph{sequential composition}  \lstinline$A:B$ (figure \ref{figure-seq1}) expects:
+The \emph{sequential composition}  \lstinline$A:B$ (Figure \ref{figure-seq1}) expects:
 \begin{equation}
 \mathrm{outputs}(A)=\mathrm{inputs}(B)
 \end{equation}  
-It connects each output of  $A$ to the corresponding input of $B$: 
+It connects each output of $A$ to the corresponding input of $B$: 
 \begin{equation}
 A[i]\rightarrow[i]B
 \end{equation}  
@@ -402,31 +402,31 @@ A[i]\rightarrow[i]B
 \label{figure-seq1}
 \end{figure}
 
-\emph{Sequential composition} is an associative operation : \lstinline$(A:(B:C))$ and \lstinline$((A:B):C)$ are equivalents. When no parenthesis are used, like in \lstinline$A:B:C:D$, \faust uses right associativity and therefore build internally the expression \lstinline$(A:(B:(C:D)))$.
+\emph{Sequential composition} is an associative operation: \lstinline$(A:(B:C))$ and \lstinline$((A:B):C)$ are equivalent. When no parentheses are used, like in \lstinline$A:B:C:D$, \faust uses right associativity and therefore builds internally the expression \lstinline$(A:(B:(C:D)))$.
 
 \paragraph{Split Composition}
-The \emph{split composition}  \lstinline$A<:B$ (figure \ref{figure-split1}) operator is used to distribute the outputs
+The \emph{split composition}  \lstinline$A<:B$ (Figure \ref{figure-split1}) operator is used to distribute the outputs
 of $A$ to the inputs of $B$.
 
 \begin{figure}[h]
 \centering 
 \includegraphics[scale=0.7]{images/split1} 
-\caption{example of split composition   \lstinline'((10,20) <: (+,*,/))'}  
+\caption{Example of split composition   \lstinline'((10,20) <: (+,*,/))'}  
 \label{figure-split1}
 \end{figure}
 
-For the operation to be valid the number of inputs of $B$ must be a multiple of the number of outputs of $A$ : \begin{equation}
+For the operation to be valid, the number of inputs of $B$ must be a multiple of the number of outputs of $A$: \begin{equation}
 \mathrm{outputs}(A).k=\mathrm{inputs}(B)                                                                                                                                                         \end{equation}
-Each input $i$ of $B$ is connected to the output $i \bmod k$ of $A$ : 
+Each input $i$ of $B$ is connected to the output $i \bmod k$ of $A$: 
 \begin{equation}
 A[i \bmod k]\rightarrow\ [i]B                                                                                                                                                                                                                                                                                                                       \end{equation}
 
 
 \paragraph{Merge Composition}
-The \emph{merge composition}  \lstinline$A:>B$ (figure \ref{figure-merge1}) is the dual of the \emph{split composition}. The number of outputs of $A$ must be a multiple of the number of inputs of $B$ : 
+The \emph{merge composition}  \lstinline$A:>B$ (Figure \ref{figure-merge1}) is the dual of the \emph{split composition}. The number of outputs of $A$ must be a multiple of the number of inputs of $B$: 
 \begin{equation}
 \mathrm{outputs}(A)=k.\mathrm{inputs}(B)                                                                                                                                                                                                                                                  \end{equation}
-Each output $i$ of $A$ is connected to the input $i \bmod k$ of $B$ : 
+Each output $i$ of $A$ is connected to the input $i \bmod k$ of $B$: 
 \begin{equation}
 A[i]\rightarrow\ [i \bmod k]B                                                                                                   \end{equation} 
 The $k$ incoming signals of an input of $B$ are summed together.
@@ -434,18 +434,18 @@ The $k$ incoming signals of an input of $B$ are summed together.
 \begin{figure}[h]
 \centering 
 \includegraphics[scale=0.7]{images/merge1} 
-\caption{example of merge composition \lstinline'((10,20,30,40) :> *)'}  
+\caption{Example of merge composition \lstinline'((10,20,30,40) :> *)'}  
 \label{figure-merge1}
 \end{figure}
 
 
 \paragraph{Recursive Composition}
-The \emph{recursive composition} \lstinline'A~B' (figure \ref{figure-rec1}) is used to create cycles in the block-diagram in order to express recursive computations. It is the most complex operation in terms of connections.
+The \emph{recursive composition} \lstinline'A~B' (Figure \ref{figure-rec1}) is used to create cycles in the block diagram in order to express recursive computations. It is the most complex operation in terms of connections.
 
-To be applicable it requires that :
+To be applicable it requires that:
 \begin{equation}
-\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)                                                                                               \end{equation}
-Each input of $B$ is connected to the corresponding output of $A$ via an implicit 1-sample delay : 
+\mathrm{outputs}(A) \geq \mathrm{inputs}(B) \text{ and } \mathrm{inputs}(A) \geq \mathrm{outputs}(B)                                                                                               \end{equation}
+Each input of $B$ is connected to the corresponding output of $A$ via an implicit 1-sample delay: 
 \begin{equation}
 A[i]\stackrel{Z^{-1}}{\rightarrow}[i]B
 \end{equation} 
@@ -459,19 +459,19 @@ The inputs of the resulting block diagram are the remaining unconnected inputs o
 \begin{figure}[h]
 \centering 
 \includegraphics[scale=0.7]{images/rec1} 
-\caption{example of recursive composition \lstinline'+(12345) ~ *(1103515245)'}  
+\caption{Example of recursive composition \lstinline'+(12345) ~ *(1103515245)'}  
 \label{figure-rec1}
 \end{figure}
 
 \subsubsection{Inputs and outputs of an expression}
-These two constructions can be used to know at compile time the number of inputs and outputs of any Faust expression. 
+These two constructions can be used to know at compile time the number of inputs and outputs of any \faust expression. 
 
 \begin{rail}
 insouts: "inputs" '(' expression ')'
        | "outputs" '(' expression ')';
 \end{rail}
 
-They are useful to define high order functions and build algorithmically complex block-diagrams. Here is an example to automatically reverse the order of the outputs of an expression.
+They are useful to define higher-order functions and to build algorithmically complex block diagrams. Here is an example to automatically reverse the order of the outputs of an expression.
 
 \begin{lstlisting}
 Xo(expr) = expr <: par(i,n,selector(n-i-1,n)) 
