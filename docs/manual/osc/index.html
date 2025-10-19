@@ -412,10 +412,10 @@
 <h1 id="osc-support">OSC Support</h1>
 <h2 id="overview">Overview</h2>
 <p>Most Faust architectures provide <a href="http://opensoundcontrol.org/">Open Sound Control (OSC)</a> support (the implementation is based internally on the <em>oscpack</em> library by Ross Bencina). This allows applications to be remotely controlled from any OSC-capable application, programming language, or hardware device. </p>
-<p>OSC support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the <code>[osc:on]</code> metadata to the <a href="../syntax/#standard-metadata">standard <code>option</code> metadata</a>:</p>
+<p>OSC support can be added to any Faust program (as long as the target architecture supports it; see tables below) simply by adding the <code>[osc:on]</code> metadata to the <a href="../syntax/#standard-metadata">standard <code>option</code> metadata</a>:</p>
 <pre><code>declare options &quot;[osc:on]&quot;;
 </code></pre>
-<p>The following tables provides a list of Faust architectures providing OSC support. </p>
+<p>The following tables provide a list of Faust architectures offering OSC support. </p>
 <h3 id="linux-faust-architectures-with-osc-support">Linux Faust Architectures with OSC Support</h3>
 <table>
 <thead>
@@ -514,7 +514,7 @@
 <h2 id="simple-example">Simple Example</h2>
 <!-- TODO: check that we explain that some of these features are built-in in stuff like the online editor. -->
 
-<p>To illustrate how OSC support works let's define a very simple noise generator with a level control (we'll call it <code>noise.dsp</code>):</p>
+<p>To illustrate how OSC support works, let's define a very simple noise generator with a level control (we'll call it <code>noise.dsp</code>):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -530,10 +530,10 @@ process = no.noise*hslider("level",0,0,1,0.01);
 <p>This example can be compiled as a standalone Jack Qt application with OSC support simply by running the following command:</p>
 <pre><code>faust2jaqt -osc noise.dsp
 </code></pre>
-<p>When the generated application is ran from the command line:</p>
+<p>When the generated application is run from the command line:</p>
 <pre><code>./noise 
 </code></pre>
-<p>various information is printed in the standard output, including:</p>
+<p>various pieces of information are printed to standard output, including:</p>
 <pre><code>Faust OSC version 0.93 application 'noise' is running on UDP ports 5510, 5511, 5512
 </code></pre>
 <p>Hence, the OSC module makes use of three different UDP ports:</p>
@@ -542,7 +542,7 @@ process = no.noise*hslider("level",0,0,1,0.01);
 <li><code>5511</code> is the output port number: control messages sent by the application and answers to query messages are sent to this port.</li>
 <li><code>5512</code> is the error port number: used for asynchronous error notifications.</li>
 </ul>
-<p>Note that if a <code>declare name "Foo";</code>  line is present in the DSP program, <code>Foo</code> will be used as the OSC root name, otherwise the DSP filename will be used instead.</p>
+<p>Note that if a <code>declare name "Foo";</code> line is present in the DSP program, <code>Foo</code> will be used as the OSC root name; otherwise, the DSP filename will be used instead.</p>
 <p>These OSC parameters can be changed from the command line using one of the following options:</p>
 <ul>
 <li><code>-port number</code> sets the port number used by the application to receive messages.</li>
@@ -558,7 +558,7 @@ process = no.noise*hslider("level",0,0,1,0.01);
 </code></pre>
 <p>will run <code>noise</code> with transmission mode ON, using <code>192.168.1.104</code> on port <code>6000</code> as destination.</p>
 <h2 id="automatic-port-allocation">Automatic Port Allocation</h2>
-<p>In order to address each application individually, only one application can be listening on a single port at one time. Therefore when the default incoming port 5510 is already opened by some other application, an application will automatically try increasing port numbers until it finds an available port. Let say that we start <code>noise</code> and <code>mixer</code> (two Faust-generated applications with OSC support) on the same machine, we'll get the following:</p>
+<p>In order to address each application individually, only one application can be listening on a single port at a time. Therefore, when the default incoming port 5510 is already opened by another application, a new application will automatically try increasing port numbers until it finds an available one. Let's say that we start <code>noise</code> and <code>mixer</code> (two Faust-generated applications with OSC support) on the same machine; we'll get the following:</p>
 <pre><code>$ ./noise &amp;
 ...
 Faust OSC version 0.93 application 'noise' is running on UDP ports 5510, 5511, 5512
@@ -566,20 +566,20 @@ $ ./mixer
 ...
 Faust OSC version 0.93 application 'mixer' is running on UDP ports 5513, 5511, 5512
 </code></pre>
-<p>The <code>mixer</code> application fails to open the default incoming port <code>5510</code> because it is already opened by <code>noise</code>. Therefore it tries to find an available port starting from <code>5513</code> and opens it. Please note that the two outcoming ports <code>5511</code> and <code>5512</code> are shared by all running applications.</p>
+<p>The <code>mixer</code> application fails to open the default incoming port <code>5510</code> because it is already in use by <code>noise</code>. Therefore it tries to find an available port starting from <code>5513</code> and opens it. Please note that the two outgoing ports <code>5511</code> and <code>5512</code> are shared by all running applications.</p>
 <h2 id="discovering-osc-applications">Discovering OSC Applications</h2>
-<p>The commands <code>oscsend</code> and <code>oscdump</code> from the liblo package provide a convenient mean to experiment with OSC control and potentially debug applications with OSC support. </p>
+<p>The commands <code>oscsend</code> and <code>oscdump</code> from the liblo package provide a convenient means to experiment with OSC control and potentially debug applications with OSC support. </p>
 <pre><code>`oscsend [hostname] [port] [address] [types] [values]`: sends OSC messages 
 via UDP. `[types]` is a string, the letters indicates the type of the following 
 values: `i=integer`, `f=float`, `s=string`, etc.
 </code></pre>
 <pre><code>`oscdump [port]`: receives OSC messages via UDP and dump to standard output
 </code></pre>
-<p>Note that OSC messages can be sent from any OSC-compatible applications (e.g., PureData, Max/MSP, etc.).</p>
+<p>Note that OSC messages can be sent from any OSC-compatible application (e.g., PureData, Max/MSP, etc.).</p>
 <p>In the following examples, we'll use two separate terminal windows. The first one will be used to send OSC messages to the <code>noise</code> application using <code>oscsend</code>. The second terminal will be used to monitor the messages sent by the application using <code>oscdump</code>. Commands executed on terminal 1 will be preceded by <code>T1$</code>. Messages received on terminal 2 will be preceded by <code>T2:</code>. To monitor on terminal T2 the OSC messages received on UDP port 5511, <code>oscdump</code> will be used:</p>
 <pre><code>T2$ oscdump 5511
 </code></pre>
-<p>Once set we can use the <code>hello</code> message to scan UDP ports for Faust applications. For example:</p>
+<p>Once set, we can use the <code>hello</code> message to scan UDP ports for Faust applications. For example:</p>
 <pre><code>T1$ oscsend localhost 5510 &quot;/*&quot; s hello
 </code></pre>
 <p>gives us the root message address, the network and the UDP ports used by the noise application:</p>
@@ -598,9 +598,9 @@ T2: /noise/level fff 0.000000 0.000000 1.000000
 </code></pre>
 <p>The root of the OSC interface is <code>/noise</code>. Transmission is OFF, <code>xmit</code> is set to false. The destination host for sending messages is <code>127.0.0.1</code>, the output port is <code>5511</code> and the error port is <code>5512</code>. The application has only one user interface element: <code>/noise/level</code> with current value <code>0.0</code>, minimal value <code>0.0</code> and maximal value <code>1.0</code>.</p>
 <h2 id="widgets-osc-address">Widget's OSC Address</h2>
-<p>Each widget of an application has a unique OSC address obtained by concatenating the labels of it's surrounding groups with its own label. </p>
-<p>There are potential conflicts between widget's labels and the OSC address space. An OSC symbolic name is an ASCII string consisting of a restricted set of printable characters. Therefore to ensure compatibility spaces are replaced by underscores and some other characters (asterisk, comma, forward, question mark, open bracket, close bracket, open curly brace, close curly brace) are replaced by hyphens.</p>
-<p>Here is as an example, a very simplified monophonic audio mixer with 4 inputs and one output. For each input we have a dmute button and a level slider:</p>
+<p>Each widget of an application has a unique OSC address obtained by concatenating the labels of its surrounding groups with its own label. </p>
+<p>There are potential conflicts between widget labels and the OSC address space. An OSC symbolic name is an ASCII string consisting of a restricted set of printable characters. Therefore, to ensure compatibility, spaces are replaced by underscores and some other characters (asterisk, comma, forward slash, question mark, open bracket, close bracket, open curly brace, close curly brace) are replaced by hyphens.</p>
+<p>Here is, as an example, a very simplified monophonic audio mixer with four inputs and one output. For each input we have a mute button and a level slider:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 <faust-editor><!--

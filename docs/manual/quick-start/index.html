@@ -359,7 +359,7 @@
 
 <h1 id="quick-start">Quick Start</h1>
 <p>The goal of this section is to teach you how to use the basic elements of the Faust programming language in approximately two hours! While DSP algorithms can be easily written from scratch in Faust, we'll just show you here how to use existing elements implemented in the <a href="https://faustlibraries.grame.fr/">Faust libraries</a>, connect them to each other, and implement basic user interfaces (UI) to control them.</p>
-<p>One of the strength of Faust lies in its libraries that implement hundreds of functions. So you should be able to go a long way after reading this section, simply by using what's already out here.</p>
+<p>One of the strengths of Faust lies in its libraries that implement hundreds of functions. So you should be able to go a long way after reading this section, simply by using what's already out there.</p>
 <p>This tutorial was written assuming that the reader is already familiar with basic concepts of computer music and programming.</p>
 <p>More generally, at the end of this section: </p>
 <ul>
@@ -367,7 +367,7 @@
 <li>you should know enough to write basic Faust programs,</li>
 <li>you should be able to use them on different platforms.</li>
 </ul>
-<p>This tutorial was designed to be carried out in the <a href="https://faustide.grame.fr">Faust Online IDE</a> (with its <a href="https://github.com/grame-cncm/faustide/blob/master/README.md">documentation</a>). If you wish to do it locally, you'll have to <a href="https://github.com/grame-cncm/faust#compilation-and-installation">install Faust on your system</a> but this step is absolutely not required,</p>
+<p>This tutorial was designed to be carried out in the <a href="https://faustide.grame.fr">Faust Online IDE</a> (with its <a href="https://github.com/grame-cncm/faustide/blob/master/README.md">documentation</a>). If you wish to do it locally, you'll have to <a href="https://github.com/grame-cncm/faust#compilation-and-installation">install Faust on your system</a>, but this step is absolutely not required.</p>
 <h2 id="making-sound">Making Sound</h2>
 <p>Write the following code in the <a href="https://faustide.grame.fr">Faust Online IDE</a>:</p>
 <!-- faust-run -->
@@ -405,7 +405,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 </div>
 <!-- /faust-run -->
 
-<p><a href="https://faustlibraries.grame.fr/libs/filters/#firesonlp"><code>fi.resonlp</code></a> has four arguments (in order): <em>cut-off frequency</em>, <em>q</em>, <em>gain</em> and its <em>input</em>. Note that you can have a quick look of what the arguments of a function are simply by hovering it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables don't have a type in Faust and everything is considered as a signal. The Faust compiler takes care of making the right optimizations by choosing which variable is ran at audio rate, what their types are, etc. Thus, <code>ctFreq</code>, <code>q</code> and <code>gain</code> could well be controlled by oscillators (i.e., signals running at audio rate) here. </p>
+<p><a href="https://faustlibraries.grame.fr/libs/filters/#firesonlp"><code>fi.resonlp</code></a> has four arguments (in order): <em>cut-off frequency</em>, <em>q</em>, <em>gain</em> and its <em>input</em>. Note that you can have a quick look of what the arguments of a function are simply by hovering it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables don't have a type in Faust and everything is considered as a signal. The Faust compiler takes care of making the right optimizations by choosing which variable is run at audio rate, what their types are, etc. Thus, <code>ctFreq</code>, <code>q</code> and <code>gain</code> could well be controlled by oscillators (i.e., signals running at audio rate) here. </p>
 <p>Since the input of the filter is not specified as an argument here (but it could, of course), it automatically becomes an "implicit" input/argument of <code>fi.resonlp</code>. The <code>:</code> <a href="../syntax/#sequential-composition">sequential composition operator</a> can be used to connect two elements that have the same number of outputs and inputs. Since <code>no.noise</code> has one output and <code>fi.resonlp(ctFreq,q,gain)</code> has one implicit input, we can connect them together. This is essentially the same as writing something like:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
@@ -480,8 +480,8 @@ process = no.noise <: filter,filter;
 </div>
 <!-- /faust-run -->
 
-<p>Note that this example allows us to have 2 separate filters for each channel. Since both filters currently have the same parameters, another way of writing this could be: <code>process = no.noise : filter &lt;: _,_;</code>.<br />
-You could think of the first form as a same noise signal splitted and then filtered on left and right channels, and the second form as the filtered noise then splitted on left and right channels. But the compiler understand that the same filtered noise will be produced on left and right channels in both cases. So the filtered noise signal can be computed only once and used on left and right channels. For the two progams, the compiler will actually generate the exact same optimized code ! This is <strong>a very powerful property of its semantically driven compilation model</strong>. </p>
+<p>Note that this example allows us to have two separate filters for each channel. Since both filters currently have the same parameters, another way of writing this could be: <code>process = no.noise : filter &lt;: _,_;</code>.<br />
+You could think of the first form as the same noise signal split and then filtered on the left and right channels, and the second form as the filtered noise then split on the left and right channels. But the compiler understands that the same filtered noise will be produced on the left and right channels in both cases. So the filtered noise signal can be computed only once and used on the left and right channels. For the two programs, the compiler will actually generate the exact same optimized code! This is <strong>a very powerful property of its semantically driven compilation model</strong>. </p>
 <p>Since <code>filter,filter</code> is considered here as a full expression, we cannot use the <code>:</code> operator to connect <code>no.noise</code> to the two filters in parallel because <code>filter,filter</code> has two inputs (<code>_,_ : filter,filter : _,_</code>) and <code>no.noise</code> only has one output. </p>
 <p>The <code>&lt;:</code> <a href="../syntax/#split-composition">split composition operator</a> used here takes <code>n</code> signals and splits them into <code>m</code> signals. The only rule is that <code>m</code> has to be a multiple of <code>n</code>.</p>
 <p>The <a href="../syntax/#merge-composition">merge <code>:&gt;</code> composition operator</a> can be used exactly the same way:</p>
@@ -492,7 +492,7 @@ process = no.noise &lt;: filter,filter :&gt; _;
 <pre><code>import(&quot;stdfaust.lib&quot;);
 process = no.noise &lt;: filter+filter;
 </code></pre>
-<p>Keep in mind that splitting a signal doesn't mean that its energy get spread in each copy, for example, in the expression:</p>
+<p>Keep in mind that splitting a signal doesn't mean that its energy gets spread in each copy, for example, in the expression:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -524,8 +524,8 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 </div>
 <!-- /faust-run -->
 
-<p>Faust allows us to declare basic <a href="../syntax/#user-interface-primitives-and-configuration">user interface (UI) elements</a> to control the parameters of a Faust object. Since Faust can be used to make a wide range of elements ranging from standalone applications to audio plug-ins or API, the role of UI declarations differs a little in function of the target. For example, in the Faust Online Editor, a UI is a window with various kind of controllers (sliders, buttons, etc.). On the other hand, if you're using Faust to generate an audio engine using <code>faust2api</code>, then UI elements declared in your Faust code will be the parameters visible to "the rest of the world" and controllable through the API.</p>
-<p>An exhaustive list of the standard Faust UI elements is given in the <a href="../syntax/#user-interface-primitives-and-configuration">corresponding section</a>. Be aware that they not all supported by all the Faust targets. For example, you wont be able to declare vertical sliders if you're using the <a href="https://faustplayground.grame.fr">Faust Playground</a>, etc. </p>
+<p>Faust allows us to declare basic <a href="../syntax/#user-interface-primitives-and-configuration">user interface (UI) elements</a> to control the parameters of a Faust object. Since Faust can be used to make a wide range of elements ranging from standalone applications to audio plug-ins or API endpoints, the role of UI declarations differs slightly depending on the target. For example, in the Faust Online Editor, a UI is a window with various kinds of controllers (sliders, buttons, etc.). On the other hand, if you're using Faust to generate an audio engine using <code>faust2api</code>, then UI elements declared in your Faust code will be the parameters visible to "the rest of the world" and controllable through the API.</p>
+<p>An exhaustive list of the standard Faust UI elements is given in the <a href="../syntax/#user-interface-primitives-and-configuration">corresponding section</a>. Be aware that they are not all supported by every Faust target. For example, you won't be able to declare vertical sliders if you're using the <a href="https://faustplayground.grame.fr">Faust Playground</a>, etc. </p>
 <p>In the current case, we'd like to control the <code>ctFreq</code>, <code>q</code> and <code>gain</code> parameters of the previous program with horizontal sliders. To do this, we can write something like:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
@@ -578,11 +578,11 @@ process = no.noise : fi.resonlp(ctFreq,q,gain)*t;
 </div>
 <!-- /faust-run -->
 
-<p>Note that we're also using <code>si.smoo</code> on the output of the <code>gate</code> button to apply a exponential envelope on its signal. </p>
+<p>Note that we're also using <code>si.smoo</code> on the output of the <code>gate</code> button to apply an exponential envelope on its signal. </p>
 <p>This is a very broad introduction to making user interface elements in Faust. You can do much more like creating groups, using knobs, different types of menus, etc. but at least you should be able to make Faust programs at this point that are controllable and sound good (or not ;) ).</p>
 <h2 id="final-polishing">Final Polishing</h2>
 <p>Some Faust functions already contain a built-in UI and are ready-to-be-used. These functions are all placed in <a href="https://faustlibraries.grame.fr/libs/demos/">demo.lib</a> and are accessible through the <code>dm.</code> environment. </p>
-<p>As an example, let's add a reverb to our previous code by calling <a href="https://faustlibraries.grame.fr/libs/demos/#dmzita_light"><code>dm.zita_light</code></a> (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust wont know how to connect things):</p>
+<p>As an example, let's add a reverb to our previous code by calling <a href="https://faustlibraries.grame.fr/libs/demos/#dmzita_light"><code>dm.zita_light</code></a> (high quality feedback delay network based reverb). Since this function has two implicit inputs, we also need to split the output of the filter (otherwise you will get an error because Faust won't know how to connect things):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 <faust-editor><!--

@@ -378,17 +378,17 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="http-support">HTTP Support</h1>
-<p>Similarly to OSC, several Faust architectures also provide HTTP support. This allows Faust applications to be remotely controlled from any Web browser using specific URLs. Moreover OSC and HTTPD can be freely combined.</p>
-<p>While OSC support is installed by default when Faust is built, this is not the case for HTTP. That's because it depends on the GNU <em>libmicrohttpd</em> library which is usually not installed by default on the system. An additional <code>make httpd</code> step is therefore required when compiling and installing Faust:</p>
+<p>Similarly to OSC, several Faust architectures also provide HTTP support. This allows Faust applications to be remotely controlled from any Web browser using specific URLs. Moreover, OSC and HTTP can be freely combined.</p>
+<p>While OSC support is installed by default when Faust is built, this is not the case for HTTP. That's because it depends on the GNU <em>libmicrohttpd</em> library, which is usually not installed by default on the system. An additional <code>make httpd</code> step is therefore required when compiling and installing Faust:</p>
 <pre><code>make httpd
 make
 sudo make install
 </code></pre>
 <p>Note that <code>make httpd</code> will fail if <em>libmicrohttpd</em> is not available on the system.</p>
-<p>HTTP support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the <code>[http:on]</code> metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a>:</p>
+<p>HTTP support can be added to any Faust program (as long as the target architecture supports it; see tables below) simply by adding the <code>[http:on]</code> metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a>:</p>
 <pre><code>declare options &quot;[http:on]&quot;;
 </code></pre>
-<p>The following tables lists Faust's architectures providing HTTP support: </p>
+<p>The following tables list Faust's architectures providing HTTP support: </p>
 <h3 id="linux-faust-architectures-with-http-support">Linux Faust Architectures with HTTP Support</h3>
 <table>
 <thead>
@@ -463,7 +463,7 @@ sudo make install
 </tbody>
 </table>
 <h2 id="a-simple-example">A Simple Example</h2>
-<p>To illustrate how HTTP support works, let's reuse our previous example, a simple monophonic audio mixer with 4 inputs and one output. For each input we have a mute button and a level slider:</p>
+<p>To illustrate how HTTP support works, let's reuse our previous example, a simple monophonic audio mixer with four inputs and one output. For each input we have a mute button and a level slider:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -483,13 +483,13 @@ process  = hgroup("mixer", par(i, 4, input(i)) :> _);
 <p>When the application is started from the command line:</p>
 <pre><code>./mix4 
 </code></pre>
-<p>various information are printed on the standard output, including:</p>
+<p>various pieces of information are printed on the standard output, including:</p>
 <pre><code>Faust httpd server version 0.73 is running on TCP port 5510
 </code></pre>
-<p>As we can see, the embedded Web server is running by default on TCP port 5510. The entry point is <a href="http://localhost:5510">http://localhost:5510</a>. It can be open from any recent browser and it produces the page presented in the figure below:</p>
+<p>As we can see, the embedded Web server runs by default on TCP port 5510. The entry point is <a href="http://localhost:5510">http://localhost:5510</a>. It can be opened from any recent browser and it produces the page presented in the figure below:</p>
 <p><img src="img/mix4-http.png" class="mx-auto d-block" width="70%"></p>
 <h2 id="json-description-of-the-user-interface">JSON Description of the User Interface</h2>
-<p>The communication between the application and the Web browser is based on several underlying URLs. The first one is <a href="http://localhost:5510/JSON">http://localhost:5510/JSON</a> that returns a JSON description of the user interface of the application. This JSON description is used internally by the JavaScript code to build the graphical user interface. Here is (part of) the json returned by <code>mix4</code>:</p>
+<p>The communication between the application and the Web browser is based on several underlying URLs. The first one is <a href="http://localhost:5510/JSON">http://localhost:5510/JSON</a>, which returns a JSON description of the user interface of the application. This JSON description is used internally by the JavaScript code to build the graphical user interface. Here is (part of) the JSON returned by <code>mix4</code>:</p>
 <pre><code>{
   &quot;name&quot;: &quot;mix4&quot;,
   &quot;address&quot;: &quot;YannAir.local&quot;,
@@ -528,14 +528,14 @@ process  = hgroup("mixer", par(i, 4, input(i)) :> _);
 }
 </code></pre>
 <h2 id="querying-the-state-of-the-application">Querying the State of the Application</h2>
-<p>Each widget has a unique "address" field that can be used to query its value. In our example here the level of the input 0 has the address <code>/mixer/input_0/level</code>. The address can be used to forge a URL to get the value of the widget: <a href="http://localhost:5510/mixer/input_0/level">http://localhost:5510/mixer/input_0/level</a>, resulting in:</p>
+<p>Each widget has a unique "address" field that can be used to query its value. In our example, the level of input 0 has the address <code>/mixer/input_0/level</code>. The address can be used to create a URL to get the value of the widget: <a href="http://localhost:5510/mixer/input_0/level">http://localhost:5510/mixer/input_0/level</a>, resulting in:</p>
 <pre><code>/mixer/input_0/level 0.00000  
 </code></pre>
-<p>Multiple widgets can be queried at once by using an address higher in the hierarchy. For example to get the values of the level and the mute state of input 0 we use <a href="http://localhost:5510/mixer/input_0">http://localhost:5510/mixer/input_0</a>, resulting in:</p>
+<p>Multiple widgets can be queried at once by using an address higher in the hierarchy. For example, to get the values of the level and the mute state of input 0 we use <a href="http://localhost:5510/mixer/input_0">http://localhost:5510/mixer/input_0</a>, resulting in:</p>
 <pre><code>/mixer/input_0/level 0.00000 
 /mixer/input_0/mute  0.00000 
 </code></pre>
-<p>To get the all the values at once we simply use <a href="http://localhost:5510/mixer">http://localhost:5510/mixer</a>, resulting in:</p>
+<p>To get all the values at once we simply use <a href="http://localhost:5510/mixer">http://localhost:5510/mixer</a>, resulting in:</p>
 <pre><code>/mixer/input_0/level 0.00000 
 /mixer/input_0/mute  0.00000 
 /mixer/input_1/level 0.00000 
@@ -547,11 +547,11 @@ process  = hgroup("mixer", par(i, 4, input(i)) :> _);
 </code></pre>
 <h2 id="changing-the-value-of-a-widget">Changing the Value of a Widget</h2>
 <p><img src="img/mix4-http-mute.png" class="mx-auto d-block" width="70%"></p>
-<p>Let's say that we want to mute input 1 of our mixer. For that purpose, we can use the URL <a href="http://localhost:5510/mixer/input_1/mute?value=1">http://localhost:5510/mixer/input_1/mute?value=1</a> obtained by concatenating <code>?value=1</code> at the end of the widget URL. </p>
+<p>Suppose that we want to mute input 1 of our mixer. For that purpose, we can use the URL <a href="http://localhost:5510/mixer/input_1/mute?value=1">http://localhost:5510/mixer/input_1/mute?value=1</a>, obtained by appending <code>?value=1</code> to the end of the widget URL. </p>
 <p>All widgets can be controlled in a similar way. For example <a href="http://localhost:5510/mixer/input_3/level?value=0.7">http://localhost:5510/mixer/input_3/level?value=0.7</a> will set the input 3 level to 0.7.</p>
 <h2 id="proxy-control-access-to-the-web-server">Proxy Control Access to the Web Server</h2>
-<p>A control application may want to access and control the running DSP using its Web server, but without using the delivered HTML page in a browser. Since the complete JSON can be retrieved, control applications can be purely developed in C/C++. A <em>proxy</em> version of the user interface can then be built, and parameters can be "set and get" using HTTP requests. </p>
-<p>This mode can be started dynamically using the <code>-server URL</code> parameter. Assuming an application with HTTP support is running remotely at the given URL, the control application will fetch its JSON description, use it to dynamically build the user interface, and allow for the access of the remote parameters.</p>
+<p>A control application may want to access and control the running DSP using its Web server, but without using the delivered HTML page in a browser. Since the complete JSON can be retrieved, control applications can be developed purely in C/C++. A <em>proxy</em> version of the user interface can then be built, and parameters can be set and queried using HTTP requests. </p>
+<p>This mode can be started dynamically using the <code>-server URL</code> parameter. Assuming an application with HTTP support is running remotely at the given URL, the control application will fetch its JSON description, use it to dynamically build the user interface, and allow access to the remote parameters.</p>
 <h2 id="http-cheat-sheet">HTTP Cheat Sheet</h2>
 <p>Here is a summary of the various URLs used to interact with the application's Web server.</p>
 <h3 id="default-ports">Default Ports</h3>

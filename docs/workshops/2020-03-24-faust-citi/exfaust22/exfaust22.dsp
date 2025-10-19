@@ -12,7 +12,7 @@ declare author  "Yann Orlarey";
 - Front = High + Medium frequencies
 - Bottom = High + Medium + Low frequencies
 - Left = Minimum brightness
-- Right = Maximum birghtness
+- Right = Maximum brightness
 - Front = Long notes
 - Back = Short notes
 

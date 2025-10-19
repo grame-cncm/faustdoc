@@ -357,13 +357,13 @@
 <h2 id="goals">Goals</h2>
 <ul>
 <li>Implementing a sine oscillator from scratch in Faust</li>
-<li>Understand the relation between the sine function and the generated sound</li>
-<li>Use multiple sine oscillator to implement an additive synthesizer</li>
-<li>Use <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/smartKeyboard">SmartKeyboard</a> to produce polyphonic mobile apps to control this synth</li>
+<li>Understand the relationship between the sine function and the generated sound</li>
+<li>Use multiple sine oscillators to implement an additive synthesizer</li>
+<li>Use <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/smartKeyboard">SmartKeyboard</a> to produce polyphonic mobile apps that control this synth</li>
 </ul>
 <h2 id="sine-function-in-faust">Sine Function in Faust</h2>
 <ul>
-<li>The sine function in Faust works like on a calculator:</li>
+<li>The sine function in Faust works like it does on a calculator:</li>
 </ul>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -394,7 +394,7 @@ process = sin(ma.PI/2);
 
 <p>will output <code>1</code>.</p>
 <blockquote>
-<p>Note that <code>stdfaust.lib</code> is imported here in order to use <code>ma.pi</code>. </p>
+<p>Note that <code>stdfaust.lib</code> is imported here in order to use <code>ma.pi</code>.</p>
 </blockquote>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
@@ -409,11 +409,11 @@ process = sin(2*ma.PI);
 <!-- /faust-run -->
 
 <p>will output <code>0</code>.</p>
-<!-- May be give a few more example with 3pi, 4pi, etc. -->
+<!-- Maybe give a few more examples with 3pi, 4pi, etc. -->
 
 <h2 id="implementing-a-phasor">Implementing a Phasor</h2>
 <ul>
-<li>What is needed to "print" a full sine wave? <ul>
+<li>What is needed to generate a full sine wave?<ul>
 <li>-&gt; We need to create a series of numbers (vector) going from 0 to 2pi, in other words, draw a line.</li>
 </ul>
 </li>
@@ -431,11 +431,10 @@ process = +(1) ~ _;
 <!-- /faust-run -->
 
 <blockquote>
-<p>Don't forget that you can always print the output of a Faust program by using the in the <a href="https://faustide.grame.fr">Faust Online IDE</a> <code>misc/csv</code></p>
+<p>Don't forget that you can always print the output of a Faust program by using the <code>misc/csv</code> option in the <a href="https://faustide.grame.fr">Faust Online IDE</a>.</p>
 </blockquote>
 <ul>
-<li>The current counter counts one by one. Instead we'd like to count slower 0.01
-by 0.01.</li>
+<li>The current counter counts one by one. Instead we'd like it to count more slowly, by 0.01.</li>
 </ul>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
@@ -480,7 +479,7 @@ process = +(0.01) ~ ma.frac;
 <li>Instead of controlling the increment of the counter, we'd like to control the
 frequency of the sawtooth wave. <!-- What's a frequency? Show how it impacts the generated wave.--></li>
 <li>To do that, we need to know the number of values of the wave processed by the
-computer in one second. That's what we call the <a href="https://en.wikipedia.org/wiki/Sampling_(signal_processing)">sampling rate</a>. <!-- INSIST ON WHAT IT IS.--> This value changes in function of the context of the program so it can be retrieved with <code>ma.SR</code>. </li>
+computer in one second. That's what we call the <a href="https://en.wikipedia.org/wiki/Sampling_(signal_processing)">sampling rate</a>. <!-- INSIST ON WHAT IT IS.--> This value depends on the context of the program, so it can be retrieved with <code>ma.SR</code>.</li>
 <li>A sampling rate of 44100 corresponds to a frequency of 44100 Hz. If we want a
 frequency of 440, what increment do we need to put in our counter?<ul>
 <li>-&gt; <code>freq/ma.SR</code></li>
@@ -502,7 +501,7 @@ process = (+(freq/ma.SR) ~ ma.frac);
 <!-- /faust-run -->
 
 <ul>
-<li>A this point feel free to plot the output of the Faust program using <code>misc/csv</code> in the export function of the online editor.</li>
+<li>At this point feel free to plot the output of the Faust program using <code>misc/csv</code> in the export function of the online editor.</li>
 <li>The <code>freq</code> parameter can be controlled dynamically:</li>
 </ul>
 <!-- faust-run -->
@@ -556,7 +555,7 @@ process = osc(f);
 </div>
 <!-- /faust-run -->
 
-<p>Note that we created an <code>osc</code> function in order to have a cleaner code.</p>
+<p>Note that we created an <code>osc</code> function in order to have cleaner code.</p>
 <h2 id="additive-synthesis">Additive Synthesis</h2>
 <ul>
 <li>A sine wave generates what we call a <a href="https://en.wikipedia.org/wiki/Pure_tone">pure tone</a>. More complex sounds can be produced by adding multiple sine waves together to create <a href="https://en.wikipedia.org/wiki/Harmonic">harmonics</a>. The frequency and the gain of each harmonic will determine the <a href="https://en.wikipedia.org/wiki/Timbre">timbre of the sound</a>. Using this technique, it is possible to "sculpt" a sound.</li>
@@ -629,7 +628,7 @@ process = organ(f)*g*t;
 </ul>
 <h2 id="turn-it-into-an-android-app">Turn it Into an Android App</h2>
 <ul>
-<li>Use the export function of the Faust editor and choose <code>android/smartkeyb</code> install the app on the phone and have fun!</li>
+<li>Use the export function of the Faust editor and choose <code>android/smartkeyb</code>, install the app on the phone, and have fun!</li>
 <li>This could also be turned into an app always making sound and controllable with accelerometers:</li>
 </ul>
 <pre><code>import(&quot;stdfaust.lib&quot;);

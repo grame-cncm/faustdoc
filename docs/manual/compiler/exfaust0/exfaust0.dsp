@@ -5,14 +5,14 @@ RMS(n) = square : mean(n) : sqrt;
 // Square of a signal
 square(x) = x * x;
 
-// Mean of n consecutive samples of a signal (uses fixpoint to avoid the 
+// Mean of n consecutive samples of a signal (uses fixed point to avoid the 
 // accumulation of rounding errors) 
 mean(n) = float2fix : integrate(n) : fix2float : /(n); 
 
 // Sliding sum of n consecutive samples
 integrate(n,x) = x - x@n : +~_;
 
-// Convertion between float and fix point
+// Conversion between float and fixed point
 float2fix(x) = int(x*(1<<20));      
 fix2float(x) = float(x)/(1<<20);    
 

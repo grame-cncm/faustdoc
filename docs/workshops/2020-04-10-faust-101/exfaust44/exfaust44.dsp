@@ -1,7 +1,7 @@
 
 import("stdfaust.lib");
 
-// Karplus Strong (1/2)
+// Karplus-Strong (1/2)
 process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) :
         + ~ transformation;
         

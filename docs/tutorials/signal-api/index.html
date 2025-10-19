@@ -316,7 +316,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#using-the-signal-api" class="nav-link">Using the signal API</a>
+            <li class="nav-item" data-level="1"><a href="#using-the-signal-api" class="nav-link">Using the Signal API</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#faust-compiler-structure" class="nav-link">Faust compiler structure</a>
               <ul class="nav flex-column">
@@ -370,7 +370,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#creating-soundfile" class="nav-link">Creating soundfile</a>
+            <li class="nav-item" data-level="4"><a href="#creating-soundfiles" class="nav-link">Creating Soundfiles</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -417,8 +417,8 @@
 </div></div>
             <div class="col-md-9 main-container" role="main">
 
-<h1 id="using-the-signal-api">Using the signal API</h1>
-<p>The signal API opens an <em>intermediate access inside the Faust compilation chain</em>. In this tutorial, we present it with examples of code. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API, and take profit of part of the Faust compiler infrastructure.</p>
+<h1 id="using-the-signal-api">Using the Signal API</h1>
+<p>The signal API provides an <em>intermediate access point within the Faust compilation chain</em>. In this tutorial, we present it through code examples. The goal is to show how new audio DSP languages (textual or graphical) could be built on top of the signal API, and take advantage of part of the Faust compiler infrastructure.</p>
 <h4 id="faust-compiler-structure">Faust compiler structure</h4>
 <p>The Faust compiler is composed of several steps:</p>
 <p><img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
@@ -427,12 +427,12 @@
 <p>The <em>Semantic Phase</em> itself is composed of several steps:</p>
 <p><img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
 <center><em>The semantic phase</em></center></p>
-<p>The initial DSP code using the Block Diagram Algebra (BDA) is translated in a flat circuit in normal form in the <em>Evaluation, lambda-calculus</em> step.  </p>
+<p>The initial DSP code using the Block Diagram Algebra (BDA) is translated into a flat circuit in normal form in the <em>Evaluation, lambda-calculus</em> step.  </p>
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
-<p>The <em>Code Generation Phase</em> translates the signals in an intermediate representation named FIR (Faust Imperative Representation) which is then converted to the final target language (C/C++, LLVM IR, WebAssembly,etc.) with a set of backends.</p>
+<p>The <em>Code Generation Phase</em> translates the signals into an intermediate representation named FIR (Faust Imperative Representation), which is then converted to the final target language (C/C++, LLVM IR, WebAssembly, etc.) with a set of backends.</p>
 <h4 id="accessing-the-signal-stage">Accessing the signal stage</h4>
-<p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of a signal set (as a list of output signals), then beneficiate of all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h">signal API</a> (or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal-c.h">C signal API</a> version) allows to programmatically create the list of output signals, then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated looking at the generated C++ code. </p>
-<p>Note that the <a href="../box-api/">box API</a> allows to access another stage in the compilation stage.</p>
+<p>A new intermediate public entry point has been created in the <em>Semantic Phase</em> to allow the creation of a signal set (as a list of output signals), and then benefit from all remaining parts of the compilation chain. The <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h">signal API</a> (or the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal-c.h">C signal API</a> version) allows developers to programmatically create the list of output signals and then compile it to create a ready-to-use DSP as a C++ class, or LLVM, Interpreter, or WebAssembly factories, to be used with all existing architecture files. Several optimizations done at the signal stage will be demonstrated by looking at the generated C++ code. </p>
+<p>Note that the <a href="../box-api/">box API</a> allows access to another stage in the compilation chain.</p>
 <h2 id="compiling-signal-expressions">Compiling signal expressions</h2>
 <p>To use the signal API, the following steps must be taken:</p>
 <ul>
@@ -440,18 +440,18 @@
 <p>creating a global compilation context using the <code>createLibContext</code> function</p>
 </li>
 <li>
-<p>creating signals outputs using the signal API, progressively building more complex expressions by combining simpler ones</p>
+<p>creating signal outputs using the signal API, progressively building more complex expressions by combining simpler ones</p>
 </li>
 <li>
-<p>compiling the list of outputs using the <code>createCPPDSPFactoryFromSignals</code> function to create a DSP factory (or <a href="#using-the-generated-code">createDSPFactoryFromSignals</a>  to generate a LLVM embedding factory, or <a href="#using-the-generated-code">createInterpreterDSPFactoryFromSignals</a> to generate an Interpreter embedding factory)</p>
+<p>compiling the list of outputs using the <code>createCPPDSPFactoryFromSignals</code> function to create a DSP factory (or <a href="#using-the-generated-code">createDSPFactoryFromSignals</a> to generate an LLVM embedding factory, or <a href="#using-the-generated-code">createInterpreterDSPFactoryFromSignals</a> to generate an Interpreter embedding factory)</p>
 </li>
 <li>
 <p>finally destroying the compilation context using the <code>destroyLibContext</code> function</p>
 </li>
 </ul>
-<p>The DSP factories allow the creation of DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when no more used.</p>
+<p>The DSP factories allow the creation of DSP instances, to be used with audio and UI architecture files, <em>outside of the compilation process itself</em>. The DSP instances and factory will finally have to be deallocated when they are no longer used.</p>
 <h3 id="tools">Tools</h3>
-<p>Let's first define a <code>compile</code> function, which uses the <code>createCPPDSPFactoryFromSignals</code> function and print the generated C++ class:</p>
+<p>Let's first define a <code>compile</code> function, which uses the <code>createCPPDSPFactoryFromSignals</code> function and prints the generated C++ class:</p>
 <pre><code class="language-C++">static void compile(const string&amp; name, 
                     tvec signals, 
                     int argc = 0, 
@@ -478,7 +478,7 @@
     createLibContext();  \
     exp                  \
     destroyLibContext(); \
-}                        \   
+}                        \
 </code></pre>
 <h3 id="examples">Examples</h3>
 <p>For each example, the equivalent Faust DSP program and SVG diagram is given as helpers. The SVG diagram shows the result of the compilation <em>propagate</em> step (so before any of the signal normalization steps) and clearly shows how each output signal expression has to be created. All presented C++ examples (as well as some more) are defined in the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/benchmark/signal-tester.cpp">signal-tester</a> tool, to be compiled with <code>make signal-tester</code> in the tools/benchmark folder.</p>
@@ -517,7 +517,7 @@ process = 0.5;
 }
 </code></pre>
 <h4 id="doing-some-mathematical-operations-on-an-input-signal">Doing some mathematical operations on an input signal</h4>
-<p>Here is a simple program doing a mathematical operation on an signal input:</p>
+<p>Here is a simple program doing a mathematical operation on a signal input:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1137,8 +1137,8 @@ process = waveform { 0, 100, 200, 300, 400 };
     }
 }
 </code></pre>
-<h4 id="creating-soundfile">Creating soundfile</h4>
-<p>The <em>soundfile</em> primitive allows the access of a list of externally defined sound resources, described as the list of their filename, or complete paths. It takes:</p>
+<h4 id="creating-soundfiles">Creating Soundfiles</h4>
+<p>The <em>soundfile</em> primitive allows access to a list of externally defined sound resources, described as the list of their filenames or complete paths. It takes:</p>
 <ul>
 <li>the sound number (as a integer between 0 and 255 as a <a href="../../manual/syntax/#constant-numerical-expressions">constant numerical expression</a>)</li>
 <li>the read index in the sound (which will access the last sample of the sound if the read index is greater than the sound length) </li>
@@ -1320,7 +1320,7 @@ static void test18()
 }
 </code></pre>
 <h2 id="using-the-generated-code">Using the generated code</h2>
-<p>Using the LLVM or Interpreter backends allows to generate and execute the compiled DSP on the fly. </p>
+<p>Using the LLVM or Interpreter backends makes it possible to generate and execute the compiled DSP on the fly.</p>
 <p>The LLVM backend can be used with <code>createDSPFactoryFromSignals</code> (see <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h">llvm-dsp.h</a>) to produce a DSP factory, then a DSP instance:</p>
 <pre><code class="language-C++">string error_msg;
 llvm_dsp_factory* factory = createDSPFactoryFromSignals(&quot;FaustDSP&quot;, 

@@ -404,22 +404,22 @@
 <h1 id="midi-and-polyphony-support">MIDI and Polyphony Support</h1>
 <!-- TODO: something should be said about MIDI channels -->
 
-<p>Similarly to <a href="../osc/">OSC</a>, several Faust architectures also provide MIDI support. This allows Faust applications to be controlled from any MIDI device (or to control MIDI devices). MIDI is also the preferable way to control Polyphonic instruments.</p>
+<p>Similarly to <a href="../osc/">OSC</a>, several Faust architectures also provide MIDI support. This allows Faust applications to be controlled from any MIDI device (or to control MIDI devices). MIDI is also the preferred way to control polyphonic instruments.</p>
 <!-- TODO: more about link between MIDI and polyphony in general -->
 
 <h2 id="configuring-midi-in-faust">Configuring MIDI in Faust</h2>
-<p>MIDI support can be added to any Faust program (as long as the target architecture supports it: see tables below) simply by adding the <code>[midi:on]</code> metadata to the <a href="../syntax/#standard-metadata">standard <code>options</code> metadata</a>:</p>
+<p>MIDI support can be added to any Faust program (as long as the target architecture supports it; see tables below) simply by adding the <code>[midi:on]</code> metadata to the <a href="../syntax/#standard-metadata">standard <code>options</code> metadata</a>:</p>
 <pre><code>declare options &quot;[midi:on]&quot;;
 </code></pre>
-<p>or using the <code>-midi</code> option in most of <a href="../tools/">faust2xx</a> scripts.</p>
+<p>or by using the <code>-midi</code> option in most <a href="../tools/"><code>faust2xx</code></a> scripts.</p>
 <!-- TODO: the tables indicating which architectures implement MIDI support should be placed here. -->
 
 <p>MIDI control is configured in Faust using <a href="../syntax/#metadata">metadata</a> in <a href="../syntax/#user-interface-primitives-and-configuration">UI elements</a>. MIDI channels from 1 to 16 can be used at reception or sending time. <strong>By convention, using the channel = 0 value (or no channel setting) means "all channels".</strong> That is, at reception time, MIDI messages received on all channels can be used to control a given parameter, and at sending time, the MIDI message associated to a parameter will be sent on all channels.</p>
-<p>MIDI metadata are decoded by a special architecture that parses incoming MIDI messages and updates the appropriate control parameters, or send MIDI messages when the UI elements (i.e., sliders, buttons, etc.) are moved. </p>
+<p>MIDI metadata are decoded by a special architecture that parses incoming MIDI messages and updates the appropriate control parameters, or sends MIDI messages when the UI elements (i.e., sliders, buttons, etc.) are moved. </p>
 <p>All MIDI configuration metadata in Faust follow the following format:</p>
 <pre><code>[midi:xxx yyy...]
 </code></pre>
-<p>This section provides a list of the most common metadata that can be used to configure of the MIDI behavior of a Faust program.</p>
+<p>This section provides a list of the most common metadata that can be used to configure the MIDI behavior of a Faust program.</p>
 <p>Below, when a 7-bit MIDI parameter is used to drive a <a href="../syntax/#button-primitive">button</a> or a <a href="../syntax/#checkbox-primitive">checkbox</a>, its maximum value (127) maps to 1 ("on") while its minimum value (0) maps to 0 ("off").</p>
 <h3 id="midictrl-num-or-midictrl-num-chan-metadata"><code>[midi:ctrl num]</code> or <code>[midi:ctrl num chan]</code> Metadata</h3>
 <p>The <code>[midi:ctrl num]</code> metadata assigns MIDI CC (control) to a specific UI element. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:ctrl num]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:ctrl num chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
@@ -500,7 +500,7 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h3 id="midikey-midikey-or-midikey-midikey-chan-metadata"><code>[midi:key midikey]</code> or <code>[midi:key midikey chan]</code> Metadata</h3>
-<p>The <code>[midi:key midikey]</code> metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:midikey midikey]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:midikey midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
+<p>The <code>[midi:key midikey]</code> metadata assigns the velocity value of key-on and key-off MIDI messages received on a specific <code>midikey</code> to a Faust parameter. When used in a slider/nentry or a bargraph, this metadata will map the UI element value to the {0, 127} range. When used with a button or a checkbox, 1 will be mapped to 127, 0 will be mapped to 0. The first <code>[midi:key midikey]</code> version can receive messages on all channels, and will send on all channels. The second <code>[midi:key midikey chan]</code> version can receive messages on <code>chan</code> only, and will send on the <code>chan</code> channel only (or all channels using the <code>chan = 0</code> value).</p>
 <p><strong>Usage</strong></p>
 <pre><code>foo = hslider(&quot;foo[midi:key midikey chan]&quot;,...);
 </code></pre>

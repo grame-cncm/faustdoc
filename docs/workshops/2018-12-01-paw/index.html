@@ -379,7 +379,7 @@
 <p>The first step is to build a <em>phase generator</em> that produces a periodic sawtooth signal between 0 and 1. Here is the signal we want to generate:</p>
 <p><img src="img/phase-sig.png" width="70%" class="mx-auto d-block"></p>
 <h3 id="ramp">Ramp</h3>
-<p>In order to produce the above signal we need first to produce a ramp signal
+<p>To produce the above signal, we must first generate a ramp signal
 <img src="img/ramp-sig.png" width="70%" class="mx-auto d-block"></p>
 <p>using the following Faust program:</p>
 <!-- faust-run -->
@@ -394,7 +394,7 @@ process = 0.125 : + ~ _;
 <!-- /faust-run -->
 
 <p>You can think of a Faust program as a description of an audio circuit
-where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</em> of the language (predefined elementary audio components), and the other two signs: <code>:</code> and <code>~</code> are used to connect together these audio components.</p>
+where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</em> of the language (predefined elementary audio components), and the other two signs: <code>:</code> and <code>~</code> are used to connect these audio components together.</p>
 <h3 id="semantics">Semantics</h3>
 <p>To understand the above diagram let's annotate it with its mathematical semantics.</p>
 <p><img src="img/ramp-diag-math.svg" width="60%" class="mx-auto d-block"></p>
@@ -427,7 +427,7 @@ where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</
 <li>...</li>
 </ul>
 <h3 id="phase-signal">Phase Signal</h3>
-<p>How can we transform the above ramp into sawtooth signal ? By removing the integer part of the samples in order to keep only the decimal (fractional) part (<code>3.14159</code> -&gt; <code>0.14159</code>).</p>
+<p>How can we transform the above ramp into a sawtooth signal? By removing the integer part of the samples in order to keep only the decimal (fractional) part (<code>3.14159</code> -&gt; <code>0.14159</code>).</p>
 <p>Let's define a function to do that:</p>
 <pre><code>decimalpart(x) = x - int(x);
 </code></pre>
@@ -437,7 +437,7 @@ where <code>0.125</code>, <code>+</code> and <code>_</code> are <em>primitives</
 <p>From a mathematical point of view that would be perfectly correct, but we will accumulate rounding errors. To keep full precision it is better to place the decimal part operation inside the loop:</p>
 <pre><code>process = 0.125 : (+ : decimalpart) ~ _;
 </code></pre>
-<p>We can now listen the produced signal. Just copy and past <code>decimalpart</code> and <code>process</code> definitions into the <a href="https://faustide.grame.fr">Faust Web IDE</a>.</p>
+<p>We can now listen to the produced signal. Just copy and paste the <code>decimalpart</code> and <code>process</code> definitions into the <a href="https://faustide.grame.fr">Faust Web IDE</a>.</p>
 <h2 id="controlling-the-frequency-of-the-phase-signal">Controlling the Frequency of the Phase Signal</h2>
 <p>Let's first rearrange our code:</p>
 <!-- faust-run -->
@@ -453,9 +453,9 @@ process = phase;
 </div>
 <!-- /faust-run -->
 
-<p>In our <code>phase</code> definition the step value, here <code>0.125</code> controls the frequency of the generated signal. We would like to compute this step value according to the desired frequency. In order to do the conversion we need to know the sampling rate. It is available from the standard library as <code>ma.SR</code>. </p>
-<p>Let say we would like our phase signal to have a frequency of 1 Hz, then the step should be very small <code>1/ma.SR</code> so that is will take <code>ma.SR</code> samples (i.e. 1 second) for the phase signal to reach 1.</p>
-<p>If we want a frequency of 440 Hz, we need a step 440 times bigger for the phase signal to reach 1 440 times faster. </p>
+<p>In our <code>phase</code> definition the step value, here <code>0.125</code>, controls the frequency of the generated signal. We would like to compute this step value according to the desired frequency. In order to do the conversion we need to know the sampling rate. It is available from the standard library as <code>ma.SR</code>. </p>
+<p>Let's say we would like our phase signal to have a frequency of 1 Hz; then the step should be very small, <code>1/ma.SR</code>, so that it will take <code>ma.SR</code> samples (i.e. 1 second) for the phase signal to reach 1.</p>
+<p>If we want a frequency of 440 Hz, we need a step 440 times bigger so that the phase signal reaches 1 four hundred and forty times faster. </p>
 <pre><code>phase = 440/ma.SR : (+ : decimalpart) ~ _;
 </code></pre>
 <p>We can generalize this definition by replacing <code>440</code> by a parameter <code>f</code>:</p>
@@ -465,7 +465,7 @@ process = phase;
 <pre><code>process = phase(440);
 </code></pre>
 <h2 id="creating-a-sine-wave-oscillator">Creating a Sine Wave Oscillator</h2>
-<p>The next step is to transform above phase generator into a sine wave generator. We will use the <code>sin</code> primitive that computes the sine of x (measured in radians). Therefore we start for the phase signal, we multiply it by 2PI to obtain radiants, and compute the sine. The full program is the following:</p>
+<p>The next step is to transform the phase generator above into a sine wave generator. We will use the <code>sin</code> primitive that computes the sine of x (measured in radians). Therefore we start from the phase signal, multiply it by <code>2*ma.PI</code> to obtain radians, and compute the sine. The full program is the following:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -482,18 +482,18 @@ process = osc(440);
 <!-- /faust-run -->
 
 <h2 id="controlling-the-frequency-and-gain-of-the-oscillator">Controlling the Frequency and Gain of the Oscillator</h2>
-<p>The next step is to add some controls on the frequency and gain of the oscillator. We can replace the fixed frequency <code>440</code> by a user interface slider:</p>
+<p>The next step is to add some controls for the frequency and gain of the oscillator. We can replace the fixed frequency <code>440</code> by a user interface slider:</p>
 <pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1));
 </code></pre>
 <p>and add a gain to control the output level of the oscillator:</p>
 <pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01);
 </code></pre>
 <h2 id="adding-a-gate-button">Adding a Gate Button</h2>
-<p>In order to prepare our MIDI synthesizer we need to add a gate button so that the sound is only when we press it:</p>
+<p>In order to prepare our MIDI synthesizer we need to add a gate button so that the sound is produced only when we press it:</p>
 <pre><code>process = osc(hslider(&quot;freq&quot;, 440, 20, 10000, 1)) * hslider(&quot;gain&quot;, 0.5, 0, 1, 0.01) * button(&quot;gate&quot;);
 </code></pre>
 <h2 id="adding-an-envelope-generator">Adding an Envelope Generator</h2>
-<p>It is a good idea to also add an envelop generator. Here we will use a predefined ADSR in the Standard Faust library.</p>
+<p>It is a good idea to also add an envelope generator. Here we will use a predefined ADSR in the standard Faust library.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -513,7 +513,7 @@ process = osc(hslider("freq", 440, 20, 10000, 1))
 <!-- /faust-run -->
 
 <h2 id="improving-the-timbre">Improving the Timbre</h2>
-<p>Instead of playing pure sine waves tones, let's improve the timbre with simple additive synthesis:</p>
+<p>Instead of playing pure sine wave tones, let's improve the timbre with simple additive synthesis:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 <faust-editor><!--

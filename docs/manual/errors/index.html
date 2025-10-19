@@ -330,7 +330,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="4"><a href="#sequencial-connection-error" class="nav-link">Sequencial connection error</a>
+            <li class="nav-item" data-level="4"><a href="#sequential-connection-error" class="nav-link">Sequential connection error</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -427,19 +427,19 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="error-messages">Error messages</h1>
-<p>Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled, and typically indicate issues such as syntax errors or semantic errors. They can occur at different stages in the compilation process, possibly with the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the error. </p>
+<p>Error messages are typically displayed in the form of compiler errors. They occur when the code cannot be successfully compiled and usually indicate issues such as syntax or semantic errors. They can arise at different stages in the compilation process and may include the file and line number where the error occurred (when this information can be retrieved), as well as a brief description of the problem. </p>
 <p>The compiler is organized in several stages:</p>
 <ul>
-<li>starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Source Tree</a>) made here of primitives in the <em>Box language</em>. A first class of errors messages are known as <em>syntax error</em> messages, like missing the <code>;</code> character to end a line, etc. </li>
-<li>the next step is to evaluate the definition of <code>process</code> programe entry point. This step is basically a λ-calculus interpreter with a strict evaluation. The result is ”flat” block-diagram where everything have been expanded. The resulting block is type annoatetd to discover its number of inputs and outputs.</li>
-<li>the ”flat” block-diagram  is then translated the <em>Signal language</em> where signals as conceptually infinite streams of samples or control values. The box language actually implements the Faust <a href="https://hal.science/hal-02159011v1">Block Diagram Algebra</a>, and not following the connections rules will trigger a second class of errors messages, the <em>box connection errors</em>. Other errors can be produced at this stage when parameters for some primitives are not of the correct type.  </li>
-<li>the pattern matching meta language allows to algorithmically create and manipulate block diagrams expressions. So a third class of <em>pattern matching coding errors</em> can occur at this level. </li>
-<li>signal expressions are optimized, type annotated (to associate an integer or real type with each signal, but also discovering when signals are to be computed: at init time, control-rate or sample-rate..) to produce a so-called <em>normal-form</em>. A fourth class of <em>parameter range errors</em> or <em>typing errors</em> can occur at this level, like using delays with a non-bounded size, etc.  </li>
-<li>signal expressions are then converted in FIR (Faust Imperative Representation), a representation for state based computation (memory access, arithmetic computations, control flow, etc.), to be converted into the final target language (like C/C++, LLVM IR, Rust, WebAssembly, etc.). A fifth class of <em>backend errors</em> can occur at this level, like non supported compilation options for a given backend, etc.</li>
+<li>starting from the DSP source code, the parser builds an internal memory representation of the source program (typically known as an <a href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">Abstract Syntax Tree</a>) composed here of primitives in the <em>Box language</em>. A first class of error messages is known as <em>syntax errors</em>, like missing the <code>;</code> character to end a line, etc. </li>
+<li>the next step is to evaluate the definition of the <code>process</code> program entry point. This step is basically a λ-calculus interpreter with strict evaluation. The result is a “flat” block diagram where everything has been expanded. The resulting block is type annotated to discover its number of inputs and outputs.</li>
+<li>the “flat” block diagram is then translated into the <em>Signal language</em>, where signals are conceptually infinite streams of samples or control values. The Box language actually implements the Faust <a href="https://hal.science/hal-02159011v1">Block Diagram Algebra</a>, and not following the connection rules will trigger a second class of error messages, the <em>box connection errors</em>. Other errors can be produced at this stage when parameters for some primitives are not of the correct type.  </li>
+<li>the pattern-matching metalanguage allows us to algorithmically create and manipulate block-diagram expressions. So a third class of <em>pattern-matching coding errors</em> can occur at this level. </li>
+<li>signal expressions are optimized and type annotated (to associate an integer or real type with each signal, and to determine when signals must be computed: at init time, control rate, or sample rate) to produce a so-called <em>normal form</em>. A fourth class of <em>parameter range errors</em> or <em>typing errors</em> can occur at this level, such as using delays with an unbounded size.  </li>
+<li>signal expressions are then converted into FIR (Faust Imperative Representation), a representation for state-based computation (memory access, arithmetic computations, control flow, etc.), before being converted into the final target language (like C/C++, LLVM IR, Rust, WebAssembly, etc.). A fifth class of <em>backend errors</em> can occur at this level, such as unsupported compilation options for a given backend.</li>
 </ul>
-<p>Note that the current error messages system is still far from perfect, usually when the origin of the error in the DSP source cannot be properly traced. In this case the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box of a Signal) is printed.</p>
+<p>Note that the current error message system is still far from perfect, especially when the origin of the error in the DSP source cannot be properly traced. In this case, the file and line number where the error occurred are not displayed, but an internal description of the expression (as a Box or a Signal) is printed.</p>
 <h2 id="syntax-errors">Syntax errors</h2>
-<p>Those errors happen when the language syntax is not respected. Here are some examples.</p>
+<p>These errors happen when the language syntax is not respected. Here are some examples.</p>
 <p>The following program:</p>
 <pre><code>box1 = 1
 box2 = 2;
@@ -448,7 +448,7 @@ process = box1,box2;
 <p>will produce the following error message:</p>
 <pre><code>error.dsp:2 : ERROR : syntax error, unexpected IDENT
 </code></pre>
-<p>It means that an unexpected identifier as been found line 2 of the file test.dsp. Usually, this error is due to the absence of the semi-column <code>;</code> at the end of the previous line. </p>
+<p>It means that an unexpected identifier has been found on line 2 of the file <code>test.dsp</code>. Usually, this error is due to the absence of the semicolon <code>;</code> at the end of the previous line. </p>
 <p>The following program:</p>
 <pre><code>t1 = _~(+(1);
 2 process = t1 / 2147483647;
@@ -457,7 +457,7 @@ process = box1,box2;
 <pre><code>errors.dsp:1 : ERROR : syntax error, unexpected ENDDEF
 
 </code></pre>
-<p>The parser finds the end of the definition (<code>;</code>) while searching a closing right parenthesis.</p>
+<p>The parser finds the end of the definition (<code>;</code>) while searching for a closing right parenthesis.</p>
 <p>The following program:</p>
 <pre><code>process = ffunction;
 </code></pre>
@@ -471,7 +471,7 @@ process = box1,box2;
 <p>will produce the following error message:</p>
 <pre><code>errors.dsp:1 : ERROR : syntax error, unexpected RPAR
 </code></pre>
-<p>The wrong parenthesis has been used.</p>
+<p>An incorrect parenthesis was used.</p>
 <p>The following program:</p>
 <pre><code>process = &lt;:+;
 </code></pre>
@@ -492,7 +492,7 @@ process = box1,box2;
 <p>A second category of error messages is returned when block expressions are not correctly connected. </p>
 <h4 id="parallel-connection">Parallel connection</h4>
 <p>Combining two blocks <code>A</code> and <code>B</code> in parallel can never produce a box connection error since the 2 blocks are placed one on top of the other, without connections. The inputs of the resulting block-diagram are the inputs of <code>A</code> and <code>B</code>. The outputs of the resulting block-diagram are the outputs of <code>A</code> and <code>B</code>.</p>
-<h4 id="sequencial-connection-error">Sequencial connection error</h4>
+<h4 id="sequential-connection-error">Sequential connection error</h4>
 <p>Combining two blocks <code>A</code> and <code>B</code> in sequence will produce a box connection error if <code>outputs(A) != inputs(B)</code>. So for instance the following program:</p>
 <pre><code>A = _,_;
 B = _,_,_;
@@ -541,7 +541,7 @@ while B = _,_,_;
 has 3 inputs
 </code></pre>
 <h4 id="recursive-connection-error">Recursive connection error</h4>
-<p>Combining two blocks <code>A</code> and <code>B</code> with the recursive composition will produce a box connection error if the number of outputs of <code>A</code> is less than the number of inputs of <code>B</code>, or the number of outputs of <code>B</code> is more than the number of inputs of <code>A</code> (that is the following <script type="math/tex; mode=display">\mathrm{outputs}(A) \geq \mathrm{inputs}(B) and \mathrm{inputs}(A) \geq \mathrm{outputs}(B)</script> connection rule is not respected). So for instance the following program:</p>
+<p>Combining two blocks <code>A</code> and <code>B</code> with the recursive composition will produce a box connection error if the number of outputs of <code>A</code> is less than the number of inputs of <code>B</code>, or the number of outputs of <code>B</code> is greater than the number of inputs of <code>A</code> (that is, the following connection rule must be respected: <script type="math/tex; mode=display">\mathrm{outputs}(A) \geq \mathrm{inputs}(B)\ \text{and}\ \mathrm{inputs}(A) \geq \mathrm{outputs}(B)</script>). So for instance the following program:</p>
 <pre><code>A = _,_;
 B = _,_,_;
 process = A ~ B;
@@ -570,7 +570,7 @@ has 3 inputs and 3 outputs
 <pre><code>ERROR : invalid route expression, parameters should be numbers : route(9,8.7f,0,0,0,button(&quot;foo&quot;))
 </code></pre>
 <h3 id="iterative-constructions">Iterative constructions</h3>
-<p><a href="../syntax/#iterations">Iterations</a> are analogous to <code>for(...)</code> loops in other languages and provide a convenient way to automate some complex block-diagram constructions. All <code>par</code>, <code>seq</code>, <code>sum</code>, <code>prod</code> expressions have the same form, take an identifier as first parameter, a number of iteration as an integer constant numerical expression as second parameter, then an arbitrary block-diagram as third parameter.</p>
+<p><a href="../syntax/#iterations">Iterations</a> are analogous to <code>for(...)</code> loops in other languages and provide a convenient way to automate complex block-diagram constructions. All <code>par</code>, <code>seq</code>, <code>sum</code>, and <code>prod</code> expressions have the same form: they take an identifier as the first parameter, the number of iterations as an integer constant numerical expression as the second parameter, and an arbitrary block diagram as the third parameter.</p>
 <p>The example code:</p>
 <pre><code>process = par(+, 2, 8);
 </code></pre>
@@ -584,12 +584,12 @@ has 3 inputs and 3 outputs
 <pre><code>filename.dsp : 1 : ERROR : not a constant expression of type : (0-&gt;1) : +
 </code></pre>
 <h2 id="pattern-matching-errors">Pattern matching errors</h2>
-<p>Pattern matching mechanism allows to algorithmically create and manipulate block diagrams expressions. Pattern matching coding errors can occur at this level.  </p>
+<p>The pattern-matching mechanism allows us to algorithmically create and manipulate block-diagram expressions. Pattern-matching coding errors can occur at this level.  </p>
 <h3 id="multiple-symbol-definition-error">Multiple symbol definition error</h3>
 <p>This error happens when a symbol is defined several times in the DSP file:</p>
 <pre><code>ERROR : [file foo.dsp : N] : multiple definitions of symbol 'foo'
 </code></pre>
-<p>Since computation are done at compile time and the pattern matching language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.</p>
+<p>Since computations are performed at compile time and the pattern-matching language is Turing complete, even infinite loops can be produced at compile time and should be detected by the compiler.</p>
 <h3 id="loop-detection-error">Loop detection error</h3>
 <p>The following (somewhat <em>extreme</em>) code: </p>
 <pre><code>foo(x) = foo(x);
@@ -601,9 +601,9 @@ process = foo;
 <p>and similar kind of infinite loop errors can be produced with more complex code.</p>
 <p>[TO COMPLETE]</p>
 <h2 id="signal-related-errors">Signal related errors</h2>
-<p>Signal expressions are produced from box expressions, are type annotated and finally reduced to a normal-form. Some primitives expect their parameters to follow some constraints, like being in a specific range or being bounded for instance. The domain of mathematical functions is checked and non allowed operations are signaled. </p>
+<p>Signal expressions are produced from Box expressions, are type annotated, and are finally reduced to a normal form. Some primitives expect their parameters to follow certain constraints, such as being within a specific range or being bounded. The domain of mathematical functions is checked and disallowed operations are flagged. </p>
 <h3 id="automatic-type-promotion">Automatic type promotion</h3>
-<p>Some primitives (like <a href="../syntax/#route-primitive">route</a>, <a href="../syntax/#rdtable-primitive">rdtable</a>, <a href="../syntax/#rwtable-primitive">rwtable</a>...) expect arguments with an integer type, which is automatically promoted, that is the equivalent of <code>int(exp)</code> is internally added and is not necessary in the source code. </p>
+<p>Some primitives (like <a href="../syntax/#route-primitive">route</a>, <a href="../syntax/#rdtable-primitive">rdtable</a>, <a href="../syntax/#rwtable-primitive">rwtable</a>, etc.) expect arguments with an integer type, which is automatically promoted. That is, the equivalent of <code>int(exp)</code> is internally added and is not necessary in the source code. </p>
 <h3 id="parameter-range-errors">Parameter range errors</h3>
 <h4 id="soundfile-usage-error">Soundfile usage error</h4>
 <p>The soundfile primitive assumes the part number to stay in the [0..255] interval, so for instance the following code: </p>
@@ -624,7 +624,7 @@ process = @(ba.time);
 </code></pre>
 <p>[TO COMPLETE]</p>
 <h3 id="table-construction-errors">Table construction errors</h3>
-<p>The <a href="../syntax/#rdtable-primitive">rdtable</a> primitive can be used to read through a read-only (pre-defined at initialisation time) table. The <a href="../syntax/#rwtable-primitive">rwtable</a> primitive can be used to implement a read/write table. Both have a size computed at compiled time </p>
+<p>The <a href="../syntax/#rdtable-primitive">rdtable</a> primitive can be used to read through a read-only (predefined at initialization time) table. The <a href="../syntax/#rwtable-primitive">rwtable</a> primitive can be used to implement a read/write table. Both have a size computed at compile time.</p>
 <p>The <code>rdtable</code> primitive assumes that the table content is produced by a processor with 0 input and one output, known at compiled time. So the following expression:</p>
 <pre><code>process = rdtable(9, +, 4);
 </code></pre>
@@ -633,7 +633,7 @@ process = @(ba.time);
 </code></pre>
 <p>The same kind of errors will happen when read and write indexes are incorrectly defined in a <code>rwtable</code> primitive. </p>
 <h3 id="duplicate-pathname-error">Duplicate pathname error</h3>
-<p>Pathnames for different GUI items have to be diffrent. Compiling the following code:</p>
+<p>Pathnames for different GUI items have to be different. Compiling the following code:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 nBands = 8;
 filterBank(N) = hgroup(&quot;Filter Bank&quot;,seq(i,N,oneBand(i)))

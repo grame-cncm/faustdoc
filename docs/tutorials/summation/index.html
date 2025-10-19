@@ -326,7 +326,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#fix-point-sliding-sum" class="nav-link">Fix-Point Sliding Sum</a>
+            <li class="nav-item" data-level="2"><a href="#fixed-point-sliding-sum" class="nav-link">Fixed-Point Sliding Sum</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -351,7 +351,7 @@
 
 <h1 id="rms-and-summation-in-faust">RMS and Summation in Faust</h1>
 <p>In this tutorial, we present different programming techniques to compute the <strong>sum of <em>n</em> consecutive samples</strong> in Faust. Such sums are typically used when computing the RMS value of a signal. It is therefore in the RMS context that we will present them. We will not use any predefined function, only Faust primitives, so that you can see all the details. </p>
-<p>The text is intended for beginners, but with some basic knowledge of Faust. If this is not your case have a look at the various documentations on this website.</p>
+<p>The text is intended for beginners with some basic knowledge of Faust. If this is not the case, have a look at the various documentations on this website.</p>
 <h2 id="rms-value">RMS value</h2>
 <p>The computation of the RMS (Root Mean Square) value of a signal is defined by the following Faust expression:</p>
 <pre><code>^(2) : summation : /(n) : sqrt
@@ -393,8 +393,8 @@
     summation = _ &lt;: _, @(n) : - : +~_;
 };
 </code></pre>
-<h2 id="fix-point-sliding-sum">Fix-Point Sliding Sum</h2>
-<p>While the previous solution works very well with typical signals over practical time spans, the roundoff error continues to grow slowly. To avoid a gradual loss of precision, we can use a fix-point encoding of the samples, so that the subtraction after delay is always exact. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed <script type="math/tex">2^4</script>​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. </p>
+<h2 id="fixed-point-sliding-sum">Fixed-Point Sliding Sum</h2>
+<p>While the previous solution works very well with typical signals over practical time spans, the roundoff error continues to grow slowly. To avoid a gradual loss of precision, we can use a fixed-point encoding of the samples, so that the subtraction after delay is always exact. Let's say that we want a sliding sum of 10 values between 0 and 1. We know that this sum will never exceed <script type="math/tex">2^4</script>​​​. We could therefore use up to 27 bits (31-4) to code the fractional part of values. </p>
 <p>The conversions are straightforward. To convert floating-point values to fix-point we can use the following expression: <code>*(2^27):int</code>. To convert back from fix-point to floating-point we can use the inverse expression: <code>float:/(2^27)</code>.</p>
 <p>We can now complete the definition of RMS. As we can see in the summation definition below, we first convert the samples to fix-point, do the summation on integers, then convert the result back to floating-point:</p>
 <pre><code>RMS(n) = S:M:R with {
@@ -407,7 +407,7 @@
     fix2float(p) = float : /(2^p);
 };
 </code></pre>
-<p>Obviously this is correct only if we let enough bits for the integral part. Here we have 15 bits (31-16), enough for <em>n</em> up to 32000 samples.</p>
+<p>Obviously this is correct only if we leave enough bits for the integral part. Here we have 15 bits (31-16), enough for <em>n</em> up to 32000 samples.</p>
 <h2 id="block-sum">Block Sum</h2>
 <p><em>Sliding sums</em> have a nice and smooth behavior because an updated sum is produced every sample. But they require a large delay line (larger than <em>n</em>​)​​, and can have precision problems. In this third approach, we will use a summation by blocks. The summation will be exact, will not require a large delay line, but will be only updated once per block of  <em>n</em> samples.</p>
 <p>The code is a little bit more involved. It will require a <em>phase</em> signal: <script type="math/tex">0,1,2,3,\ldots,n-1,0,1\ldots</script>​,​​​ and a <em>capture</em> (sample and hold) operation.</p>
@@ -489,7 +489,7 @@ RMS(n) = environment {
 </div>
 <!-- /faust-run -->
 
-<p>The screen shot of the Faust IDE below shows the RMS values of testsource according to the 4 methods: <em>Sliding Sum</em>, <em>Fix-Point Sliding Sum</em>, <em>Block Sum</em>, and <em>Overlapping Block Sum</em>.</p>
+<p>The screenshot of the Faust IDE below shows the RMS values of testsource according to the four methods: <em>Sliding Sum</em>, <em>Fixed-Point Sliding Sum</em>, <em>Block Sum</em>, and <em>Overlapping Block Sum</em>.</p>
 <p><img src="img/curves.png" width="100%" class="mx-auto d-block"></p></div>
         </div>
     </div>

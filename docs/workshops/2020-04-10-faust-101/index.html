@@ -472,15 +472,15 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#example-6-approximation-of-a-square-signal-by-additive-synthesis" class="nav-link">Example 6: Approximation of a square signal by additive synthesis</a>
+            <li class="nav-item" data-level="3"><a href="#example-6-approximation-of-a-square-wave-by-additive-synthesis" class="nav-link">Example 6: Approximation of a square wave by additive synthesis</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#example-7-approximation-of-a-sawtooth-signal-by-additive-synthesis" class="nav-link">Example 7: Approximation of a sawtooth signal by additive synthesis</a>
+            <li class="nav-item" data-level="3"><a href="#example-7-approximation-of-a-sawtooth-wave-by-additive-synthesis" class="nav-link">Example 7: Approximation of a sawtooth wave by additive synthesis</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#example-8-band-limited-oscillators" class="nav-link">Example 8: Band limited oscillators</a>
+            <li class="nav-item" data-level="3"><a href="#example-8-band-limited-oscillators" class="nav-link">Example 8: Band-limited oscillators</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -488,7 +488,7 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#part-5-subtractive-synthesis" class="nav-link">Part 5: Subtractive synthesis</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#example-1-a-white-noise" class="nav-link">Example 1: a white noise</a>
+            <li class="nav-item" data-level="3"><a href="#example-1-white-noise" class="nav-link">Example 1: White noise</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -520,11 +520,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#example-9-karplus-strong-12" class="nav-link">Example 9: Karplus Strong (1/2)</a>
+            <li class="nav-item" data-level="3"><a href="#example-9-karplus-strong-12" class="nav-link">Example 9: Karplus-Strong (1/2)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#example-10-karplus-strong-22" class="nav-link">Example 10: Karplus Strong (2/2)</a>
+            <li class="nav-item" data-level="3"><a href="#example-10-karplus-strong-22" class="nav-link">Example 10: Karplus-Strong (2/2)</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -540,7 +540,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#example-2-frequency-modulation-with-envelops" class="nav-link">Example 2: frequency modulation with envelops</a>
+            <li class="nav-item" data-level="3"><a href="#example-2-frequency-modulation-with-envelopes" class="nav-link">Example 2: frequency modulation with envelopes</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -560,7 +560,7 @@
 
 <p><img src="img/logo-faust.png" width="100%" class="mx-auto d-block"></p>
 <h1 id="faust-101-for-the-confined">Faust 101 for the confined</h1>
-<p>The covid-19 containment gives us at least one excellent opportunity to train! If you've always wanted to get into Faust programming but didn't have the time, here's your chance! </p>
+<p>The COVID-19 containment gives us at least one excellent opportunity to train! If you've always wanted to get into Faust programming but didn't have the time, here's your chance! </p>
 <p>The objective of this workshop is to help you get familiar with the Faust language through very simple examples of signal processing and sound synthesis.
 The documentation and the examples we will use can be found here:</p>
 <ul>
@@ -570,17 +570,17 @@ The documentation and the examples we will use can be found here:</p>
 <ul>
 <li><strong><a href="https://faustide.grame.fr">https://faustide.grame.fr</a></strong></li>
 </ul>
-<p>If ever the sounds produced with the IDE are of poor quality, with some clicks, one can use the online editor, which is more rustic, but also lighter: </p>
+<p>If the sounds produced with the IDE are of poor quality or include clicks, you can use the online editor, which is more basic but also lighter:</p>
 <ul>
 <li><strong><a href="https://fausteditor.grame.fr">https://fausteditor.grame.fr</a></strong></li>
 </ul>
 <h2 id="faust-in-a-few-words">Faust in a few words</h2>
 <ul>
-<li>Faust is a Domain-Specific Language for real-time signal processing and synthesis (like Csound, Max/MSP, SuperCollider, PureData,. . . ).</li>
-<li>Faust is based on purely functional approach.</li>
-<li>a Faust program denotes a signal processor: a function that maps input signals to output signals.</li>
-<li>Programming in Faust is essentially combining signal processors using an algebra of 5 composition operations: <code>&lt;: :&gt; : , ~</code>.</li>
-<li>Faust is a compiled language, the role of the Faust compiler is to synthesize the most efficient implementations.</li>
+<li>Faust is a domain-specific language for real-time signal processing and synthesis (like Csound, Max/MSP, SuperCollider, PureData, ...).</li>
+<li>Faust is based on a purely functional approach.</li>
+<li>A Faust program denotes a signal processor: a function that maps input signals to output signals.</li>
+<li>Programming in Faust is essentially about combining signal processors using an algebra of five composition operations: <code>&lt;: :&gt; : , ~</code>.</li>
+<li>Faust is a compiled language, and the role of the Faust compiler is to synthesize the most efficient implementations.</li>
 <li>Faust offers end-users a high-level alternative to C/C++ to develop audio applications for a large variety of platforms.</li>
 </ul>
 <h2 id="part-1-very-simple-examples">Part 1: Very simple examples</h2>
@@ -754,9 +754,9 @@ process = (_, 0.1) : *; // try to replace 0.1 by other values between 0 and 1
 <!-- /faust-run -->
 
 <p>Note that we have used parentheses in this example to clearly mark the order in which things should be done. We start by putting <code>_</code> and <code>0.1</code> in parallel, and then compose them in sequence with <code>*</code>.</p>
-<p>But, just as in <code>(2*3)+7</code> were the parentheses are not really necessary because multiplication takes precedence over addition, one could write directly <code>process = _,0.1 : *;</code> without the parentheses, because parallel composing takes precedence over sequential composing. The priority of the composition operators is shown in the previous table.</p>
+<p>But, just as in <code>(2*3)+7</code> where the parentheses are not really necessary because multiplication takes precedence over addition, one could write directly <code>process = _,0.1 : *;</code> without the parentheses, because parallel composing takes precedence over sequential composing. The priority of the composition operators is shown in the previous table.</p>
 <h3 id="example-6-controlling-the-volume-with-a-slider">Example 6: Controlling the volume with a slider</h3>
-<p>Instead of controlling the volume by editing the code, it is far more convenient to use a graphical slider. For that purpose we can use a <code>hslider(...)</code>, a horizontal slider. It takes five parameters. The first one is the name <code>"volume"</code>, then we have the defaut value <code>0.1</code>, the minimun value <code>0</code>, the maximum value <code>1</code> and a step value <code>0.1</code>. So here the default value is <code>0.1</code>:</p>
+<p>Instead of controlling the volume by editing the code, it is far more convenient to use a graphical slider. For that purpose we can use an <code>hslider(...)</code>, a horizontal slider. It takes five parameters. The first one is the name <code>"volume"</code>, then we have the default value <code>0.1</code>, the minimum value <code>0</code>, the maximum value <code>1</code>, and a step value <code>0.1</code>. So here the default value is <code>0.1</code>:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -897,7 +897,7 @@ process = stereoamp;
 </table>
 <h3 id="example-12-a-mute-button">Example 12: A <em>mute</em> button</h3>
 <p>We would like to be able to mute the sound completely at the touch of a button, without having to change the volume. </p>
-<p>Let's add a mute stage to our mono amplifier. In order to mute the signal we just have to mutiply it by 0. We will use for that purpose a <code>checkbox(...)</code>, a user interface element that produces a signal which is 0 by default and 1 when it is checked. As we want to multiply the signal by 0 when the checkbox is checked we will use <code>1-checkbox("mute")</code>:</p>
+<p>Let's add a mute stage to our mono amplifier. To mute the signal we just have to multiply it by 0. We will use a <code>checkbox(...)</code>, a user interface element that produces a signal that is 0 by default and 1 when it is checked. Because we want to multiply the signal by 0 when the checkbox is checked, we will use <code>1-checkbox("mute")</code>:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -930,9 +930,8 @@ process = stereoamp;
 </div>
 <!-- /faust-run -->
 
-<p>s</p>
 <h3 id="example-14-differentiate-the-volume-of-the-two-channels">Example 14: Differentiate the volume of the two channels</h3>
-<p>To differentiate the volume control of our two channels, we will parametrize <code>monoamp</code> with a channel number <code>c</code> which will be used to differentiate the name of each volume control. Note that the name <code>c</code> of the parameter must only have one letter to be well interpreted in the slider name <code>"volume %c[style:knob]"</code>:</p>
+<p>To differentiate the volume control of our two channels, we will parameterize <code>monoamp</code> with a channel number <code>c</code>, which we will use to customize the name of each volume control. Note that the parameter name <code>c</code> must be a single letter so it is interpreted correctly in the slider name <code>"volume %c[style:knob]"</code>:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -949,7 +948,7 @@ process = stereoamp;
 <!-- /faust-run -->
 
 <h3 id="example-15-having-many-channels">Example 15: Having many channels</h3>
-<p>We have built a stereo amp, but suppose we wanted to generalize this construction to an arbitrary number of channels. To do so, we will introduce the <code>par(i, N, ...)</code> construction which allows us to put several times an expression in parallel. It is in a way the equivalent of the for() loop of a classical programming language. </p>
+<p>We have built a stereo amp, but suppose we wanted to generalize this construction to an arbitrary number of channels. To do so, we will introduce the <code>par(i, N, ...)</code> construction, which allows us to place an expression in parallel several times. It is roughly equivalent to the <code>for()</code> loop of a classical programming language. </p>
 <p>In our case we want to indicate the number of channels of our amplifier:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
@@ -968,9 +967,9 @@ process = multiamp(2); // try multiamp(4)
 
 <h2 id="part-2-delays-and-feedbacks">Part 2: Delays and Feedbacks</h2>
 <p><img src="img/bande-feedback.png" width="90%" class="mx-auto d-block"></p>
-<p>In this new section we will see two important notions, that of delay with the <code>@</code> primitive, and that of feedback (from a looped circuit) which will require the use of the recursive composition <code>A~B</code> which allows to loop the outputs of A into the inputs of B, and the outputs of B into the inputs of A.</p>
+<p>In this section we will introduce two important concepts: delays using the <code>@</code> primitive and feedback (looped circuits), which requires the recursive composition <code>A~B</code>. This operator feeds the outputs of <code>A</code> into the inputs of <code>B</code>, and the outputs of <code>B</code> back into the inputs of <code>A</code>.</p>
 <h3 id="example-1-monophonic-delay-of-1-second">Example 1: Monophonic delay of 1 second</h3>
-<p>Let's start with a very simple example, a monophonic delay of 1 seconds or 44100 samples. We will use the prefix notation:</p>
+<p>Let's start with a very simple example, a monophonic delay of 1 second, or 44,100 samples. We will use the prefix notation:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1028,7 +1027,7 @@ process = _, monoecho;
 <!-- /faust-run -->
 
 <h3 id="example-5-a-stereophonic-echo">Example 5: A stereophonic echo</h3>
-<p>Let's make a stereophonic echo with two monophonic echos in parallel:</p>
+<p>Let's make a stereophonic echo with two monophonic echoes in parallel:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust19/exfaust19.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1102,7 +1101,7 @@ process = stereoecho(44100/4, hslider("feedback", 0, 0, 1, 0.01));
 <p>The first step is to build a <em>phase generator</em> that produces a periodic sawtooth signal between 0 and 1. Here is the signal we want to generate :</p>
 <p><img src="img/phase-sig.png" width="80%" class="mx-auto d-block"></p>
 <h3 id="example-1-ramp">Example 1: Ramp</h3>
-<p>To do this we will produce an "infinite" ramp, which we will then transform into a periodic signal thanks to a <em>part-decimal</em> operation:</p>
+<p>To do this we will produce an "infinite" ramp, which we will then transform into a periodic signal thanks to a <em>decimal part</em> operation:</p>
 <p><img src="img/ramp-sig.png" width="80%" class="mx-auto d-block"></p>
 <p>The ramp is produced by the following program:</p>
 <!-- faust-run -->
@@ -1146,14 +1145,14 @@ process = 0.125 : + ~ _;
 <li>...</li>
 </ul>
 <h3 id="example-2-a-phase-signal">Example 2: a phase signal</h3>
-<p>How do I turn the above ramp into a sawtooth signal? By deleting the whole part of the samples in order to keep only the decimal part: <script type="math/tex">3.14159\rightarrow 0.14159</script>.</p>
+<p>How do we turn the above ramp into a sawtooth signal? By removing the integer part of the samples in order to keep only the decimal part: <script type="math/tex">3.14159\rightarrow 0.14159</script>.</p>
 <p>Let's define a function to do this:</p>
 <pre><code>decimalpart(x) = x - int(x);
 </code></pre>
 <p>We can now use this function to turn our ramp into a sawtooth. It is then tempting to write:</p>
 <pre><code>process = 0.125 : + ~ _ : decimalpart;
 </code></pre>
-<p>From a mathematical point of view, that would be perfectly correct, but we will accumulate rounding errors. To keep total accuracy, it is better to place the operation of the decimal part inside the loop, like this:</p>
+<p>From a mathematical point of view, that would be perfectly correct, but we will accumulate rounding errors. To maintain full accuracy, it is better to place the decimal-part operation inside the loop, like this:</p>
 <pre><code>process = 0.125 : (+ : decimalpart) ~ _;
 </code></pre>
 <p>We can now try the whole code (<strong>think about turning down the volume</strong>) :</p>
@@ -1170,7 +1169,7 @@ process = phase;
 </div>
 <!-- /faust-run -->
 
-<p>In our definition of <code>phase</code>, the value of the step, here <code>0.125</code>, controls the frequency of the generated signal. We would like to calculate this step value as a function of the desired frequency. In order to do the conversion, we need to know the sampling frequency. It is available in the standard library as <code>ma.SR</code> and will be setup at start time by the underlying audio layer. To use this standard library we add the following line to the program: <code>import("stdfaust.lib");</code>.</p>
+<p>In our definition of <code>phase</code>, the value of the step, here <code>0.125</code>, controls the frequency of the generated signal. We would like to calculate this step value as a function of the desired frequency. In order to do the conversion, we need to know the sampling frequency. It is available in the standard library as <code>ma.SR</code> and will be set up at start time by the underlying audio layer. To use this standard library we add the following line to the program: <code>import("stdfaust.lib");</code>.</p>
 <p>Suppose we want our phase signal to have a frequency of 1 Hz, then the step should be very small <code>1/ma.SR</code>, so that it takes <code>ma.SR</code> samples (i.e. 1 second) for the phase signal to go from 0 to 1.</p>
 <p>If we want a frequency of 440 Hz, we need a 440 times larger step so that the phase signal goes from 0 to 1, 440 times faster:</p>
 <pre><code>phase = 440/ma.SR : (+ : decimalpart) ~ _;
@@ -1241,7 +1240,7 @@ process = osc(440);
 </div>
 <!-- /faust-run -->
 
-<p>But now that we have seen how to create a sinusoidal oscillator from scratch, we will use the one defined in the standard Faust libraries:</p>
+<p>But now that we have seen how to create a sinusoidal oscillator from scratch, we will use the one defined in the standard Faust library:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1256,7 +1255,7 @@ process = os.osc(440);
 <!-- /faust-run -->
 
 <h3 id="example-2-a-sine-wave-with-volume-control">Example 2: a sine wave with volume control</h3>
-<p>In this second example we used a horizontal slider <code>hslider(...)</code> to control the sound level:</p>
+<p>In this second example we use a horizontal slider <code>hslider(...)</code> to control the sound level:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust29/exfaust29.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1287,7 +1286,7 @@ process = os.osc(440 /*to replace*/) * hslider("gain", 0.1, 0, 1, 0.01);
 <!-- /faust-run -->
 
 <h3 id="example-4-frequency-aliasing-phenomenon-beyond-sr2">Example 4: Frequency aliasing phenomenon beyond SR/2</h3>
-<p>A well known problem in the field of digital sound synthesis is frequency <a href="https://en.wikipedia.org/wiki/Aliasing">aliasing</a>: any frequency beyond half the sampling frequency is <em>folded</em> in the audible spectrum:</p>
+<p>A well-known problem in the field of digital sound synthesis is frequency <a href="https://en.wikipedia.org/wiki/Aliasing">aliasing</a>: any frequency beyond half the sampling frequency is <em>folded</em> into the audible spectrum:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust31/exfaust31.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1304,7 +1303,7 @@ process = os.osc(hslider("freq", 440, 20, 20000, 1)) * hslider("gain", 0.1, 0, 1
 <!-- /faust-run -->
 
 <h3 id="example-5-additive-synthesis">Example 5: Additive synthesis</h3>
-<p>An example of an additive synthesis, where the level of each partial can be set individually:</p>
+<p>An example of additive synthesis, where the level of each partial can be set individually:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust32/exfaust32.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1324,8 +1323,8 @@ process = sum(i, 4, partial(i+1, hslider("freq", 440, 20, 8000, 0.001)));
 </div>
 <!-- /faust-run -->
 <p>Note the use of the <code>sum(i, n, foo(i))</code> construction which is equivalent to <code>foo(0)+foo(1)+...+foo(n-1)</code>.</p>
-<h3 id="example-6-approximation-of-a-square-signal-by-additive-synthesis">Example 6: Approximation of a square signal by additive synthesis</h3>
-<p>We saw earlier how to produce a perfect square wave signal. This perfect square signal contains an infinite number of harmonics which, due to sampling, will fold over the audible spectrum, resulting in a less accurate, noisy sound! A square signal can be approximated by additive synthesis, by adding an infinite series of odd harmonics (see <a href="https://en.wikipedia.org/wiki/Square_wave">https://en.wikipedia.org/wiki/Square_wave</a>):</p>
+<h3 id="example-6-approximation-of-a-square-wave-by-additive-synthesis">Example 6: Approximation of a square wave by additive synthesis</h3>
+<p>We saw earlier how to produce a perfect square wave signal. This perfect square signal contains an infinite number of harmonics which, due to sampling, will fold over the audible spectrum, resulting in a less accurate, noisy sound! A square wave can be approximated by additive synthesis, by adding an infinite series of odd harmonics (see <a href="https://en.wikipedia.org/wiki/Square_wave">https://en.wikipedia.org/wiki/Square_wave</a>):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust33/exfaust33.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1343,8 +1342,8 @@ process = squarewave(55);
 </div>
 <!-- /faust-run -->
 <p>As an exercise, change the number of harmonics to see the approximation improve (but do not exceed SR/2).</p>
-<h3 id="example-7-approximation-of-a-sawtooth-signal-by-additive-synthesis">Example 7: Approximation of a sawtooth signal by additive synthesis</h3>
-<p>Similarly, a sawtooth signal can be approximated by additive synthesis, by adding an infinite series of harmonics (see <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">https://en.wikipedia.org/wiki/Sawtooth_wave</a>):</p>
+<h3 id="example-7-approximation-of-a-sawtooth-wave-by-additive-synthesis">Example 7: Approximation of a sawtooth wave by additive synthesis</h3>
+<p>Similarly, a sawtooth wave can be approximated by additive synthesis, by adding an infinite series of harmonics (see <a href="https://en.wikipedia.org/wiki/Sawtooth_wave">https://en.wikipedia.org/wiki/Sawtooth_wave</a>):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust34/exfaust34.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1362,8 +1361,8 @@ process = sawtooth(55);
 </div>
 <!-- /faust-run -->
 
-<h3 id="example-8-band-limited-oscillators">Example 8: Band limited oscillators</h3>
-<p>The problem of aliasing can be solved using band-limited oscillators available in Faust libraries:</p>
+<h3 id="example-8-band-limited-oscillators">Example 8: Band-limited oscillators</h3>
+<p>The problem of aliasing can be solved using band-limited oscillators available in the Faust libraries:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust35/exfaust35.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1384,8 +1383,8 @@ process = os.sawN(3,400);
 
 <h2 id="part-5-subtractive-synthesis">Part 5: Subtractive synthesis</h2>
 <p><img src="img/bande-substractive.png" width="90%" class="mx-auto d-block"></p>
-<p>Subtractive synthesis is the opposite of additive synthesis. It consists in starting from a rich sound, for example white noise, and sculpting its spectrum.</p>
-<h3 id="example-1-a-white-noise">Example 1: a white noise</h3>
+<p>Subtractive synthesis is the opposite of additive synthesis. It consists of starting from a rich sound, for example white noise, and sculpting its spectrum.</p>
+<h3 id="example-1-white-noise">Example 1: White noise</h3>
 <p>A white noise generator:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust36/exfaust36.svg" class="mx-auto d-block">
@@ -1415,7 +1414,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.lowpass(3, hslider("
 </div>
 <!-- /faust-run -->
 
-<p>The used <a href="https://faustlibraries.grame.fr/libs/filters/#filowpass">fi.low</a> filter can be defined with an argument that modifies the frequency attenuation slope.</p>
+<p>The <a href="https://faustlibraries.grame.fr/libs/filters/#filowpass">fi.lowpass</a> filter used here can be configured with an argument that adjusts the attenuation slope.</p>
 <h3 id="example-3-high-pass">Example 3: high pass</h3>
 <p>Here the noise sound is filtered with a <a href="https://en.wikipedia.org/wiki/High-pass_filter">high-pass filter</a> that removes frequencies higher than a selected cutoff frequency: </p>
 <!-- faust-run -->
@@ -1431,7 +1430,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) : fi.highpass(3, hslider(
 </div>
 <!-- /faust-run -->
 
-<p>The used <a href="https://faustlibraries.grame.fr/libs/filters/#highpass">fi.highpass</a> filter can be defined with an argument that modifies the frequency attenuation slope.</p>
+<p>The <a href="https://faustlibraries.grame.fr/libs/filters/#highpass">fi.highpass</a> filter used here can be configured with an argument that adjusts the attenuation slope.</p>
 <h3 id="example-4-bandpass">Example 4: bandpass</h3>
 <p>By combining a low-pass and high-pass filter in sequence, a <a href="https://en.wikipedia.org/wiki/Band-pass_filter">bandpass filter</a> that removes frequencies lower than a selected low cutoff frequency, and higher than a selected high cutoff frequency, can be defined (using the already described <code>fi.lowpass</code> and <code>fi.highpass</code> filters): </p>
 <!-- faust-run -->
@@ -1467,9 +1466,9 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 </div>
 <!-- /faust-run -->
 
-<p>The used <a href="https://faustlibraries.grame.fr/libs/filters/#resonlp">fi.resonlp</a> filter has an argument to select the desired frequency, a Q factor to shape the frequency range, and a gain factor.</p>
+<p>The <a href="https://faustlibraries.grame.fr/libs/filters/#resonlp">fi.resonlp</a> filter used here has an argument to select the desired frequency, a Q factor to shape the frequency range, and a gain factor.</p>
 <h3 id="example-6-fir">Example 6: fir</h3>
-<p>Here a <a href="https://en.wikipedia.org/wiki/Finite_impulse_response">FIR</a> filter is used: </p>
+<p>Here an <a href="https://en.wikipedia.org/wiki/Finite_impulse_response">FIR</a> filter is used:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust41/exfaust41.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1488,7 +1487,7 @@ transformation = @(1) : *(hslider("gain", 0, -1, 1, 0.1));
 <!-- /faust-run -->
 
 <h3 id="example-7-iir">Example 7: iir</h3>
-<p>Here a <a href="https://en.wikipedia.org/wiki/Infinite_impulse_response">IIR</a> filter is used: </p>
+<p>Here an <a href="https://en.wikipedia.org/wiki/Infinite_impulse_response">IIR</a> filter is used:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust42/exfaust42.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1507,7 +1506,7 @@ transformation = @(0) : *(hslider("gain", 0, -0.95, 0.95, 0.01));
 <!-- /faust-run -->
 
 <h3 id="example-8-comb-filter">Example 8: comb filter</h3>
-<p>A <a href="https://en.wikipedia.org/wiki/Comb_filter">comb filter</a> attenuates a set of consecutives frequency bands: </p>
+<p>A <a href="https://en.wikipedia.org/wiki/Comb_filter">comb filter</a> attenuates a set of consecutive frequency bands:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust43/exfaust43.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1525,14 +1524,14 @@ transformation = @(hslider("delay", 0, 0, 20, 1)) : *(hslider("gain", 0, -0.98, 
 </div>
 <!-- /faust-run -->
 
-<h3 id="example-9-karplus-strong-12">Example 9: Karplus Strong (1/2)</h3>
+<h3 id="example-9-karplus-strong-12">Example 9: Karplus-Strong (1/2)</h3>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust44/exfaust44.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 import("stdfaust.lib");
 
-// Karplus Strong (1/2)
+// Karplus-Strong (1/2)
 process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) :
         + ~ transformation;
 
@@ -1545,14 +1544,14 @@ mean(x) = (x+x')/2;
 </div>
 <!-- /faust-run -->
 
-<h3 id="example-10-karplus-strong-22">Example 10: Karplus Strong (2/2)</h3>
+<h3 id="example-10-karplus-strong-22">Example 10: Karplus-Strong (2/2)</h3>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust45/exfaust45.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 import("stdfaust.lib");
 
-// Karplus Strong (2/2)
+// Karplus-Strong (2/2)
 process = no.noise * hslider("noise", 0.5, 0, 1, 0.01) 
         : *(envelop)
         : + ~ transformation;
@@ -1588,7 +1587,7 @@ declare author  "Yann Orlarey";
 - Front = High + Medium frequencies
 - Bottom = High + Medium + Low frequencies
 - Left = Minimum brightness
-- Right = Maximum birghtness
+- Right = Maximum brightness
 - Front = Long notes
 - Back = Short notes
 
@@ -1660,7 +1659,7 @@ Penta(key) = environment {
 }; 
 
 //----------------------------------String-------------------------------
-// A karplus-strong string.
+// A Karplus-Strong string.
 //
 // USAGE: string(440Hz, 4s, 1.0, button("play"))
 // or     button("play") : string(440Hz, 4s, 1.0)
@@ -1711,7 +1710,7 @@ process = FM(
 </div>
 <!-- /faust-run -->
 
-<h3 id="example-2-frequency-modulation-with-envelops">Example 2: frequency modulation with envelops</h3>
+<h3 id="example-2-frequency-modulation-with-envelopes">Example 2: frequency modulation with envelopes</h3>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust48/exfaust48.svg" class="mx-auto d-block">
 <faust-editor><!--

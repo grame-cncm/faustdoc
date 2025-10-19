@@ -320,7 +320,7 @@
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#optimizing-the-dsp-code" class="nav-link">Optimizing the DSP Code</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#computations-done-at-compilationspecialisation-time" class="nav-link">Computations Done at Compilation/Specialisation Time</a>
+            <li class="nav-item" data-level="3"><a href="#computations-done-at-compilationspecialization-time" class="nav-link">Computations Done at Compilation/Specialization Time</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="4"><a href="#using-pattern-matching" class="nav-link">Using Pattern Matching</a>
               <ul class="nav flex-column">
@@ -423,27 +423,27 @@
 
 <h1 id="optimizing-the-code">Optimizing the Code</h1>
 <h2 id="optimizing-the-dsp-code">Optimizing the DSP Code</h2>
-<p>Faust is a Domain Specific Language helping the programmer to write very high-level and concise DSP code, while letting the compiler do the hard work of producing the best and most efficient implementation of the specification. When processing the DSP source, the compiler typing system is able to discover how the described computations are effectively separated in four main categories: </p>
+<p>Faust is a domain-specific language helping the programmer write very high-level and concise DSP code, while letting the compiler do the hard work of producing the best and most efficient implementation of the specification. When processing the DSP source, the compiler's type system can discover how the described computations are effectively separated into four main categories: </p>
 <ul>
-<li>computations done <em>at compilation/specialisation time</em>: this is the place for algorithmic signal processors definition heavily based on the lambda-calculus constitute of the language, together with its pattern-matching capabilities</li>
-<li>computations done <em>at init time</em>: for instance all the code that depends of the actual sample-rate, or filling of some internal tables (coded with the <code>rdtable</code> or <code>rwtable</code> language primitives) </li>
-<li>computations done <em>at control rate</em>: typically all code that read the current values of controllers (buttons, sliders, nentries) and update the DSP internal state which depends of them</li>
-<li>computations done <em>at sample rate</em>: all remaining code that process and produce the samples </li>
+<li>computations done <em>at compilation/specialization time</em>: this is the place for algorithmic signal-processor definitions heavily based on the lambda calculus that constitutes the language, together with its pattern-matching capabilities</li>
+<li>computations done <em>at init time</em>: for instance, all the code that depends on the actual sample rate or fills internal tables (coded with the <code>rdtable</code> or <code>rwtable</code> language primitives) </li>
+<li>computations done <em>at control rate</em>: typically all code that reads the current values of controllers (buttons, sliders, nentries) and updates the DSP internal state that depends on them</li>
+<li>computations done <em>at sample rate</em>: all remaining code that processes and produces the samples </li>
 </ul>
-<p>One can think of these four categories as <em>different computation rates</em>. The programmer can possibly split its DSP algorithm to distribute the needed computation in the most appropriate domain (<em>slower rate</em> domain better than <em>faster rate</em> domain) and possibly rewrite some parts of its DSP algorithm from one domain to a slower rate one to finally obtain the most efficient code.</p>
-<h3 id="computations-done-at-compilationspecialisation-time">Computations Done <em>at Compilation/Specialisation Time</em></h3>
+<p>One can think of these four categories as <em>different computation rates</em>. The programmer can split their DSP algorithm to distribute the needed computation in the most appropriate domain (a slower-rate domain is generally preferable to a faster-rate domain) and possibly rewrite parts of the DSP algorithm from one domain to a slower-rate one to obtain the most efficient code.</p>
+<h3 id="computations-done-at-compilationspecialization-time">Computations Done <em>at Compilation/Specialization Time</em></h3>
 <h4 id="using-pattern-matching">Using Pattern Matching</h4>
 <p><strong>TODO</strong>: explain how pattern-matching can be used to algorithmically describe signal processors, explain the principle of defining a new DSL inside the Faust DSL (with <a href="https://faustlibraries.grame.fr/libs/fds/">fds.lib</a>, <a href="https://faustlibraries.grame.fr/libs/physmodels/">physmodels.lib</a>, <a href="https://faustlibraries.grame.fr/libs/wavedigitalfilters/">wdmodels.lib</a> as examples).</p>
 <h4 id="specializing-the-dsp-code">Specializing the DSP Code</h4>
-<p>The Faust compiler can possibly do a lot of optimizations at compile time. The DSP code can for instance be compiled for a fixed sample rate, thus doing at compile time all computation that depends of it. Since the Faust compiler will look for librairies starting from the local folder, a simple way is to locally copy the <code>libraries/platform.lib</code> file (which contains the <code>SR</code> definition), and change its definition for a fixed value like 48000 Hz. Then the DSP code has to be recompiled for the specialisation to take effect. Note that <code>libraries/platform.lib</code> also contains the definition of the <code>tablesize</code> constant which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust services scripts which add the <code>-I /usr/local/share/faust/embedded/</code> parameter to the Faust command line to use a special version of the platform.lib file.</p>
+<p>The Faust compiler can perform many optimizations at compile time. The DSP code can, for instance, be compiled for a fixed sample rate, thus performing at compile time all computation that depends on it. Since the Faust compiler searches for libraries starting from the local folder, a simple way is to locally copy the <code>libraries/platform.lib</code> file (which contains the <code>SR</code> definition) and change its definition to a fixed value like 48,000 Hz. Then the DSP code has to be recompiled for the specialization to take effect. Note that <code>libraries/platform.lib</code> also contains the definition of the <code>tablesize</code> constant, which is used in various places to allocate tables for oscillators. Thus decreasing this value can save memory, for instance when compiling for embedded devices. This is the technique used in some Faust service scripts, which add the <code>-I /usr/local/share/faust/embedded/</code> parameter to the Faust command line to use a special version of the <code>platform.lib</code> file.</p>
 <h3 id="computations-done-at-init-time">Computations Done <em>at Init time</em></h3>
-<p>If not specialized with a constant value at compilation time, all computations that use the sample rate (which is accessed with the <code>ma.SR</code> in the DSP source code and given as parameter in the DSP <code>init</code> function) will be done at init time, and possibly again each time the same DSP is initialized with another sample rate.  </p>
+<p>If not specialized with a constant value at compilation time, all computations that use the sample rate (which is accessed with <code>ma.SR</code> in the DSP source code and provided as a parameter in the DSP <code>init</code> function) will be done at init time, and possibly again each time the same DSP is initialized with another sample rate.  </p>
 <h4 id="using-rdtable-or-rwtable">Using rdtable or rwtable</h4>
 <p><strong>TODO</strong>: explain how computations can be done at init time and how to use <code>rdtable</code> or <code>rwtable</code> to store pre-computed values.</p>
 <p>Several <a href="https://faustlibraries.grame.fr/libs/basics/#function-tabulation">tabulation functions</a> can possibly be used.</p>
 <h3 id="computations-done-at-control-rate">Computations Done <em>at Control Rate</em></h3>
 <h4 id="parameter-smoothing">Parameter Smoothing</h4>
-<p>Control parameters are sampled once per block, their values are considered constant during the block, and the internal state depending of them is updated and appears at the beginning of the <code>compute</code> method, before the sample rate DSP loop. </p>
+<p>Control parameters are sampled once per block, their values are considered constant during the block, and the internal state depending on them is updated at the beginning of the <code>compute</code> method, before the sample-rate DSP loop. </p>
 <p>In the following DSP code, the <code>vol</code> slider value is directly applied on the input audio signal:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01);
@@ -459,7 +459,7 @@ process = *(vol);
     }
 }
 </code></pre>
-<p>If the control parameter needs to be smoothed (like to avoid clicks or too abrupt changes), with the <code>control : si.smoo</code> kind of code, the computation rate moves from <em>control rate</em> to <em>sample rate</em>. If the previous DSP code is now changed with:</p>
+<p>If the control parameter needs to be smoothed (for example, to avoid clicks or abrupt changes) using code such as <code>control : si.smoo</code>, the computation rate moves from <em>control rate</em> to <em>sample rate</em>. If the previous DSP code is now changed to:</p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 vol = hslider(&quot;Volume&quot;, 0.5, 0, 1, 0.01) : si.smoo;
 process = *(vol);
@@ -511,14 +511,14 @@ process = *(smoother_vol);
     }
 }
 </code></pre>
-<p>So to obtain the best performances in the generated code, all costly computations have to be done on the control value (as much as possible, this may not always be the desirable behaviour), and <code>si.smoo</code> (or any function that moves the computation from control rate to sample rate) as the last operation. </p>
+<p>To obtain the best performance in the generated code, all costly computations should be done on the control value (as much as possible—this may not always be desirable), with <code>si.smoo</code> (or any function that moves the computation from control rate to sample rate) as the last operation. </p>
 <h3 id="computations-done-at-sample-rate">Computations Done <em>at Sample Rate</em></h3>
 <h4 id="possibly-deactivating-table-range-check-with-ct-option">Possibly deactivating table range check with -ct option</h4>
 <p>The <a href="../debugging/#the-ct-option">-ct</a> option is activated by default (starting at Faust version 2.53.4), but can possibly be removed (using <code>-ct 0</code>) to speed up the code. Read <a href="../../tutorials/debugging/#debugging-rdtable-and-rwtable-primitives">Debugging rdtable and rwtable primitives</a> for a complete description.</p>
 <h4 id="using-function-tabulation">Using Function Tabulation</h4>
-<p>The use of <code>rdtable</code> kind of compilation done at init time can be simplified using the <a href="https://faustlibraries.grame.fr/libs/basics/#batabulate">ba.tabulate</a> or <a href="https://faustlibraries.grame.fr/libs/basics/#batabulate_chebychev">ba.tabulate_chebychev</a> functions to <em>tabulate</em> a given unary function <code>fun</code> on a given range. A table is created and filled with precomputed values, and can be used to compute <code>fun(x)</code> in a more efficient way (at the cost of additional  static memory needed for the table).</p>
+<p>The use of <code>rdtable</code>-style compilation done at init time can be simplified using the <a href="https://faustlibraries.grame.fr/libs/basics/#batabulate">ba.tabulate</a> or <a href="https://faustlibraries.grame.fr/libs/basics/#batabulate_chebychev">ba.tabulate_chebychev</a> functions to <em>tabulate</em> a given unary function <code>fun</code> on a given range. A table is created and filled with precomputed values and can be used to compute <code>fun(x)</code> in a more efficient way (at the cost of additional static memory needed for the table).</p>
 <h4 id="using-fast-math-functions">Using Fast Math Functions</h4>
-<p>When costly math functions still appear in the sample rate code, the <code>-fm</code> <a href="../options/">compilation option</a> can possibly be used to replace the standard versions provided by the underlying OS (like <code>std::cos</code>, <code>std::tan</code>... in C++ for instance) with user defined ones (hopefully faster, but possibly less precise).</p>
+<p>When costly math functions still appear in the sample-rate code, the <code>-fm</code> <a href="../options/">compilation option</a> can be used to replace the standard versions provided by the underlying OS (like <code>std::cos</code>, <code>std::tan</code>, etc. in C++, for instance) with user-defined ones (hopefully faster, but possibly less precise).</p>
 <h3 id="delay-lines-implementation-and-dsp-memory-size">Delay lines implementation and DSP memory size</h3>
 <p>The Faust compiler automatically allocates buffers for the delay lines. At each sample calculation, the delayed signal is written to a specific location (the <em>write</em> position) and read from another location (the <em>read</em> position), the <em>distance in samples</em> between the read and write indexes representing the delay itself.</p>
 <p>There are two possible strategies for implementing delay lines: either the read and write indices remain the same and the delay line memory is moved after each sample calculation, or the read and write indices move themselves along the delay line (with two possible <em>wrapping index</em> methods). These multiple methods allow arbitration between memory consumption and the CPU cost of using the delay line.</p>
@@ -529,11 +529,11 @@ process = *(smoother_vol);
 <li>either using arrays of power-of-two sizes accessed using mask based index computation with delays smaller than <code>-dlt &lt;n&gt;</code> value.</li>
 <li>or using a wrapping index moved by an if based method where the increasing index is compared to the delay-line size, and wrapped to zero when reaching it. This method is used for to delay values bigger then <code>-dlt &lt;n&gt;</code>. </li>
 </ul>
-<p>In this strategy the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is  slower but consume less memory.  </p>
-<p>Note that by default <code>-mcd 16</code> is <code>-dlt &lt;INT_MAX&gt;</code> values are used. Here is a scheme explaining the mecanism:</p>
+<p>In this strategy the first method is faster but consumes more memory (since a delay line of a given size will be extended to the next power-of-two size), and the second method is slower but consumes less memory.  </p>
+<p>Note that by default <code>-mcd 16</code> and <code>-dlt &lt;INT_MAX&gt;</code> values are used. Here is a diagram explaining the mechanism:</p>
 <pre><code>[ shift buffer |-mcd &lt;N1&gt;| wrapping power-of-two buffer |-dlt &lt;N2&gt;| if based wrapping buffer ]
 </code></pre>
-<p>Here is an example of a Faust program with 10 delay lines in parallel, each delaying a separated input, with three ways of compiling it (using the defaut <code>-scalar</code> mode):</p>
+<p>Here is an example of a Faust program with ten delay lines in parallel, each delaying a separate input, with three ways of compiling it (using the default <code>-scalar</code> mode):</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
 <faust-editor><!--

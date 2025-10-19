@@ -12,7 +12,7 @@ declare author  "Yann Orlarey";
 - Front = High + Medium frequencies
 - Bottom = High + Medium + Low frequencies
 - Left = Minimum brightness
-- Right = Maximum birghtness
+- Right = Maximum brightness
 - Front = Long notes
 - Back = Short notes
 
@@ -84,7 +84,7 @@ Penta(key) = environment {
 }; 
  
 //----------------------------------String-------------------------------
-// A karplus-strong string.
+// A Karplus-Strong string.
 //
 // USAGE: string(440Hz, 4s, 1.0, button("play"))
 // or	  button("play") : string(440Hz, 4s, 1.0)

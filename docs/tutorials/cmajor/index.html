@@ -360,13 +360,13 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#generating-the-cmajor-output-from-a-faust-dsp-program-found-in-the-web" class="nav-link">Generating the Cmajor output from a Faust DSP program found in the web</a>
+            <li class="nav-item" data-level="3"><a href="#generating-the-cmajor-output-from-a-faust-dsp-program-found-on-the-web" class="nav-link">Generating the Cmajor Output from a Faust DSP Program Found on the Web</a>
               <ul class="nav flex-column">
               </ul>
             </li>
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#experimental-faust-in-cmajor-integration" class="nav-link">Experimental Faust in Cmajor integration</a>
+            <li class="nav-item" data-level="2"><a href="#experimental-faust-in-cmajor-integration" class="nav-link">Experimental Faust in Cmajor Integration</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#known-limitations" class="nav-link">Known limitations</a>
               <ul class="nav flex-column">
@@ -382,9 +382,9 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="using-faust-in-cmajor">Using Faust in Cmajor</h1>
-<p>In this tutorial, we present how <a href="https://faust.grame.fr">Faust</a> can be used with <a href="https://cmajor.dev">Cmajor</a>, a C like procedural high-performance language especially designed for audio processing, and with dynamic JIT based compilation. Compiling Faust DSP to cmajor code will allow to take profit of hundreds of DSP building blocks implemented in the <a href="https://faustlibraries.grame.fr">Faust Libraries</a>, ready to use <a href="../../examples/ambisonics/">Examples</a>, any DSP program developed in more than 200 projects listed in the <a href="https://faust.grame.fr/community/powered-by-faust/">Powered By Faust</a> page, or Faust DSP programs found on the net.</p>
+<p>In this tutorial, we present how <a href="https://faust.grame.fr">Faust</a> can be used with <a href="https://cmajor.dev">Cmajor</a>, a C-like procedural high-performance language especially designed for audio processing, with dynamic JIT-based compilation. Compiling Faust DSP to Cmajor code allows you to take advantage of hundreds of DSP building blocks implemented in the <a href="https://faustlibraries.grame.fr">Faust Libraries</a>, ready-to-use <a href="../../examples/ambisonics/">Examples</a>, any DSP program developed in more than 200 projects listed on the <a href="https://faust.grame.fr/community/powered-by-faust/">Powered By Faust</a> page, or Faust DSP programs found on the net.</p>
 <h4 id="who-is-this-tutorial-for">Who is this tutorial for?</h4>
-<p>The <a href="#using-command-line-tools">first section</a> assumes a working <a href="https://github.com/grame-cncm/faust">Faust</a> compiler installed on the machine, so is more designed for regular Faust users. The <a href="#using-the-faust-web-ide">second section</a> is better suited for Cmajor users who want to discover Faust.  </p>
+<p>The <a href="#using-command-line-tools">first section</a> assumes a working <a href="https://github.com/grame-cncm/faust">Faust</a> compiler is installed on the machine, so it is more designed for regular Faust users. The <a href="#using-the-faust-web-ide">second section</a> is better suited for Cmajor users who want to discover Faust.  </p>
 <h4 id="installing-the-required-packages">Installing the required packages</h4>
 <p>Download the <a href="https://github.com/SoundStacks/cmajor/releases"><strong>cmaj</strong> package</a> and install to have it in your PATH. </p>
 <h2 id="using-command-line-tools">Using command line tools</h2>
@@ -439,22 +439,22 @@ input event float32 eventfHslider0 [[ name: &quot;volume&quot;, group: &quot;/v:
 }
 </code></pre>
 <p>Note that the generated code uses the so-called <a href="../../manual/compiler/#structure-of-the-generated-code">scalar code generation model</a>, the default one, where the compiled sample generation code is inlined on the Cmajor <code>loop</code> block. </p>
-<p>We cannot directly play the generated <code>osc.cmajor</code> file since the <strong>cmaj</strong> program expects a <code>osc.cmajorpatch</code> to execute. A simple solution is to use the following command:</p>
+<p>We cannot directly play the generated <code>osc.cmajor</code> file since the <strong>cmaj</strong> program expects an <code>osc.cmajorpatch</code> to execute. A simple solution is to use the following command:</p>
 <pre><code class="language-bash">cmaj create --name=osc osc 
 </code></pre>
 <p>to create an  <code>osc</code>  folder with default  <code>osc.cmajor</code> and <code>osc.cmajorpatch</code> files. Then using the command:</p>
 <pre><code class="language-bash">faust -lang cmajor osc.dsp -o osc/osc.cmajor
 </code></pre>
-<p>allows to simply replace the default <code>osc.cmajor</code> with our own Faust generated version.</p>
-<p>The patchfile can now be compiled and executed using the <strong>cmaj</strong> program:</p>
+<p>allows us to simply replace the default <code>osc.cmajor</code> with our own Faust-generated version.</p>
+<p>The patch file can now be compiled and executed using the <strong>cmaj</strong> program:</p>
 <pre><code class="language-bash">cmaj play osc/osc.cmajorpatch
 </code></pre>
-<p>The three declared sliders are automatically created and can be used to change the two channels frequencies and their volume.</p>
+<p>The three declared sliders are automatically created and can be used to change the two channel frequencies and their volume.</p>
 <p>The Cmajor processor code can directly be used in a more complex Cmajor program, possibly connected to other Faust generated or Cmajor hand-written processors. Note that the generated processor name can simply be changed using the Faust compiler <code>-cn &lt;name&gt;</code> option, so that several Faust generated processors can be distinguished by their names:</p>
 <pre><code class="language-bash">faust -lang cmajor -cn osc osc.dsp -o osc/osc.cmajor
 </code></pre>
 <h3 id="using-the-faust2cmajor-tool">Using the faust2cmajor tool</h3>
-<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/cmajor#faust2cmajor">faust2cmajor</a> tool allows to automate calling the Faust compiler with the right options and interacting with the <strong>cmaj</strong> program:</p>
+<p>The <a href="https://github.com/grame-cncm/faust/tree/master-dev/architecture/cmajor#faust2cmajor">faust2cmajor</a> tool allows you to automate calling the Faust compiler with the right options and interacting with the <strong>cmaj</strong> program:</p>
 <pre><code class="language-bash">faust2cmajor -h
 Usage: faust2cmajor [options] [Faust options] &lt;file.dsp&gt;
 Compiles Faust programs to Cmajor
@@ -513,7 +513,7 @@ with {
 <p>The following command then opens the <strong>cmaj</strong> program and MDI events can be sent to control the instrument:</p>
 <pre><code class="language-bash">faust2cmajor -play -midi -nvoices 16 organ.dsp 
 </code></pre>
-<p>Note that the generated GUI is empty, since the generated processor cannot automatically reflects its controls in the main graph.</p>
+<p>Note that the generated GUI is empty, since the generated processor cannot automatically reflect its controls in the main graph.</p>
 <p>The following polyphonic ready instrument DSP, with an <a href="../../manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a>, can be converted to a MIDI ready cmajor instrument:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
@@ -529,31 +529,31 @@ effect = dm.freeverb_demo;
 </div>
 <!-- /faust-run -->
 
-<p>The following command then opens the <strong>cmaj</strong> program and MDI events can be sent to control the instrument:</p>
+<p>The following command then opens the <strong>cmaj</strong> program and MIDI events can be sent to control the instrument:</p>
 <pre><code class="language-bash">faust2cmajor -play -midi -nvoices 16 -effect auto clarinet.dsp 
 </code></pre>
-<p>Here again the generated GUI is empty.</p>
+<p>Here again, the generated GUI is empty.</p>
 <h3 id="generating-the-cmajor-output-using-faustremote">Generating the Cmajor output using faustremote</h3>
 <p>A possibility is to use the <a href="../../manual/remote/">faustremote</a> script to convert a local DSP with the following commands:</p>
 <pre><code class="language-bash">faustremote cmajor cmajor foo.dsp
 unzip binary.zip
 </code></pre>
 <h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
-<p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Cmajor code.</p>
+<p>Faust DSP programs can be written and tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Cmajor code.</p>
 <h3 id="generating-the-cmajor-output">Generating the Cmajor output</h3>
-<p>The output as a Cmajor program can directly be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The program can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p>
+<p>The output as a Cmajor program can directly be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The program can be executed using the <code>cmaj play foo/foo.cmajorpatch</code> command or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p>
 <p><img src="img/export.png" class="mx-auto d-block" width="40%">
 <center><em>Exporting the code</em></center></p>
 <h3 id="generating-the-cmajor-output-in-polyphonic-mode">Generating the Cmajor output in polyphonic mode</h3>
-<p>DSP programs following the polyphonic <a href="../../manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> can be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor-poly</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p>
+<p>DSP programs following the polyphonic <a href="../../manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> can be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor-poly</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using the <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p>
 <h3 id="generating-the-cmajor-output-in-polyphonic-mode-with-a-global-effect">Generating the Cmajor output in polyphonic mode with a global effect</h3>
-<p>DSP programs following the polyphonic <a href="../../manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> with and an <a href="../../manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a> can be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor-poly-effect</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p>
-<h3 id="generating-the-cmajor-output-from-a-faust-dsp-program-found-in-the-web">Generating the Cmajor output from a Faust DSP program found in the web</h3>
-<p>Faust DSP programs found on the Web can also be converted:</p>
+<p>DSP programs following the polyphonic <a href="../../manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> with an <a href="../../manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a> can be generated using the <em>Platform = cmajor</em> and <em>Architecture = cmajor-poly-effect</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.cmajor</code> and <code>foo.cmajorpatch</code> files. The instrument can be executed using the <code>cmaj play foo/foo.cmajorpatch</code> command and played with a MIDI device or possibly <a href="https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md">converted as a JUCE plugin</a>.</p>
+<h3 id="generating-the-cmajor-output-from-a-faust-dsp-program-found-on-the-web">Generating the Cmajor Output from a Faust DSP Program Found on the Web</h3>
+<p>Faust DSP programs found on the web can also be converted:</p>
 <ul>
 <li>
 <p>for instance the <a href="https://faust.grame.fr/community/powered-by-faust/#fverb">fverb</a> listed on the <a href="https://faust.grame.fr/community/powered-by-faust/">Powered By Faust</a> page. The DSP content can simply be loaded using the <code>https://faustide.grame.fr/?code=URL</code> syntax, so
-with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp">https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp</a>, tested in the Faust Web IDE, then converted in a Cmajor program as already showed</p>
+with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp">https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp</a>, tested in the Faust Web IDE, then converted into a Cmajor program as already shown</p>
 </li>
 <li>
 <p>basic <a href="../../examples/ambisonics/">Examples</a> have been compiled to Cmajor <a href="rsrc/examples-cmajor.zip">here</a></p>
@@ -562,16 +562,16 @@ with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.git
 <p>examples of the <a href="https://faustplayground.grame.fr/">faustplayground</a> platform can be <a href="https://github.com/grame-cncm/faustplayground/tree/master/public/faust-modules">found here</a> and possibly converted. They have been compiled to Cmajor <a href="rsrc/faust-modules-cmajor.zip">here</a>.</p>
 </li>
 </ul>
-<h2 id="experimental-faust-in-cmajor-integration">Experimental Faust in Cmajor integration</h2>
+<h2 id="experimental-faust-in-cmajor-integration">Experimental Faust in Cmajor Integration</h2>
 <p>With the release of the <a href="https://github.com/cmajor-lang/cmajor">Cmajor source code</a>, an experimental integration with Faust is now available, beginning with the <a href="https://github.com/cmajor-lang/cmajor/releases/tag/1.0.2616">Cmajor 1.0.2616 release</a>. This enables the creation of patches that merge Faust and Cmajor code. The <code>libfaust</code> component, which includes a Faust-to-Cmajor backend, is compiled as WebAssembly and dynamically used in the Faust DSP-to-Cmajor conversion process. The resulting Cmajor files are then JIT-compiled. See the <a href="https://github.com/cmajor-lang/cmajor/tree/main/examples/patches/FaustFM">FaustFM example</a>.</p>
 <h3 id="known-limitations">Known limitations</h3>
-<p>The Cmajor language generates some usefull API when the patch is exported in C++ or JavaScript. For example the  <code>getInputEndpoints/getOutputEndpoints</code> and <code>getEndpointHandle</code> functions allow an external piece of code to enumerate and access all endpoints, to possibly control the program or build a GUI. But unfortunately those functions <strong>are not part of the language itself</strong>. Thus there is no way we know of:</p>
+<p>The Cmajor language generates some useful APIs when the patch is exported in C++ or JavaScript. For example the <code>getInputEndpoints/getOutputEndpoints</code> and <code>getEndpointHandle</code> functions allow an external piece of code to enumerate and access all endpoints, to possibly control the program or build a GUI. But unfortunately those functions <strong>are not part of the language itself</strong>. Thus we know of no way:</p>
 <ul>
 <li>
 <p>to write a generic Cmajor program that would automatically connect some endpoints (assuming they would use some kind of MIDI describing metadata) to MIDI messages</p>
 </li>
 <li>
-<p>to write a generic Cmajor program that would automatically wraps a voice generated from a Faust DSP program in a polyphonic and MIDI aware program, and expose the voice set of parameters at the main graph level, to be controlled globally for all voices</p>
+<p>to write a generic Cmajor program that would automatically wrap a voice generated from a Faust DSP program in a polyphonic and MIDI-aware program, and expose the voice set of parameters at the main graph level, to be controlled globally for all voices</p>
 </li>
 </ul>
 <p>We think the language would gain expressive power by having some kind of <a href="https://en.wikipedia.org/wiki/Reflective_programming">reflexivity</a>. </p></div>

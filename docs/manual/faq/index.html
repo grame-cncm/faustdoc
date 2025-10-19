@@ -318,11 +318,11 @@
             
             <li class="nav-item" data-level="1"><a href="#frequently-asked-questions" class="nav-link">Frequently Asked Questions</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#when-to-use-int-or-float-cast" class="nav-link">When to use int or float cast ?</a>
+            <li class="nav-item" data-level="2"><a href="#when-to-use-int-or-float-cast" class="nav-link">When to Use int or float Cast?</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#does-select2-behaves-as-a-standard-cc-like-if" class="nav-link">Does select2 behaves as a standard C/C++ like if ?</a>
+            <li class="nav-item" data-level="2"><a href="#does-select2-behave-like-a-standard-cc-if" class="nav-link">Does select2 Behave Like a Standard C/C++ if?</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#strict-vs-lazy-semantics" class="nav-link">Strict vs Lazy semantics</a>
               <ul class="nav flex-column">
@@ -370,11 +370,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#what-are-the-rules-used-for-partial-application" class="nav-link">What are the rules used for partial application ?</a>
+            <li class="nav-item" data-level="2"><a href="#what-are-the-rules-used-for-partial-application" class="nav-link">What Are the Rules Used for Partial Application?</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#control-rate-versus-audio-rate" class="nav-link">Control rate versus audio rate</a>
+            <li class="nav-item" data-level="2"><a href="#control-rate-versus-audio-rate" class="nav-link">Control Rate Versus Audio Rate</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -382,7 +382,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#semantic-of-bargraphs" class="nav-link">Semantic of bargraphs</a>
+            <li class="nav-item" data-level="2"><a href="#semantics-of-bargraphs" class="nav-link">Semantics of Bargraphs</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -394,27 +394,27 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
-<h2 id="when-to-use-int-or-float-cast">When to use <code>int</code> or <code>float</code> cast ?</h2>
-<p>The <a href="../introduction/#signal-processor-semantic">Signal Processor Semantic</a> section explains what a Faust program describes. In particular Faust considers two type of signals: <em>integer signals</em> and <em>floating point signals</em>. Mathematical operations either occur in the domain of integer numbers, or in the domain of floating point numbers, depending of their types, read <a href="../syntax/#numbers">here</a>. Using explicit <a href="../syntax/#int-primitive">int cast</a> or <a href="../syntax/#float-primitive">float cast</a> may be needed to force a given computation to be done in the correct number domain.</p>
-<p>Some language primitives (like <a href="../syntax/#parallel-composition">par</a>, <a href="../syntax/#sequential-composition">seq</a>, <a href="../syntax/#route-primitive">route</a>, <a href="../syntax/#soundfile-primitive">soundfile</a>, etc.) assume that their parameters are <a href="../syntax/#constant-numerical-expressions">Constant Numerical Expressions</a> of the integer type. In this case the compiler automatically does <em>type promotion</em> and there is no need to use <code>int</code> cast to have the argument be of the integer type (note that an uneeded cast will simply be ignored and will not add uneeded computation in the generated code). </p>
-<p>User interface items produce <em>floating point signals</em>. Depending of their use later in the computed expression, using explicit <code>int</code> cast may be needed also to force a given computation to be done in the correct number domain.</p>
-<h2 id="does-select2-behaves-as-a-standard-cc-like-if">Does select2 behaves as a standard C/C++ like if ?</h2>
-<p>The short answer is <strong>no</strong>, <code>select2</code> doesn't behave like the <code>if-then-else</code> of a traditional programming language, nor does <code>ba.if</code> of the standard library. To understand why, think of <code>select2</code> as the tuner of a radio, it selects what you listen, but does not prevent the various radio stations from broadcasting. Actually, <code>select2</code> could be easily redefined in Faust as:</p>
+<h2 id="when-to-use-int-or-float-cast">When to Use <code>int</code> or <code>float</code> Cast?</h2>
+<p>The <a href="../introduction/#signal-processor-semantic">Signal Processor Semantics</a> section explains what a Faust program describes. In particular Faust considers two types of signals: <em>integer signals</em> and <em>floating point signals</em>. Mathematical operations either occur in the domain of integer numbers or in the domain of floating point numbers, depending on their types, read <a href="../syntax/#numbers">here</a>. Using explicit <a href="../syntax/#int-primitive">int cast</a> or <a href="../syntax/#float-primitive">float cast</a> may be needed to force a given computation to be done in the correct number domain.</p>
+<p>Some language primitives (like <a href="../syntax/#parallel-composition">par</a>, <a href="../syntax/#sequential-composition">seq</a>, <a href="../syntax/#route-primitive">route</a>, <a href="../syntax/#soundfile-primitive">soundfile</a>, etc.) assume that their parameters are <a href="../syntax/#constant-numerical-expressions">Constant Numerical Expressions</a> of the integer type. In this case the compiler automatically does <em>type promotion</em> and there is no need to use <code>int</code> cast to have the argument be of the integer type (note that an unneeded cast will simply be ignored and will not add unneeded computation in the generated code). </p>
+<p>User interface items produce <em>floating point signals</em>. Depending on their use later in the computed expression, using explicit <code>int</code> cast may also be needed to force a given computation to be done in the correct numerical domain.</p>
+<h2 id="does-select2-behave-like-a-standard-cc-if">Does <code>select2</code> Behave Like a Standard C/C++ <code>if</code>?</h2>
+<p>The short answer is <strong>no</strong>, <code>select2</code> doesn't behave like the <code>if-then-else</code> of a traditional programming language, nor does <code>ba.if</code> of the standard library. To understand why, think of <code>select2</code> as the tuner of a radio: it selects what you listen to but does not prevent the various radio stations from broadcasting. Actually, <code>select2</code> could be easily redefined in Faust as:</p>
 <pre><code>select2(i, x, y) = (1-i) * x + i * y;
 </code></pre>
 <h3 id="strict-vs-lazy-semantics">Strict vs Lazy semantics</h3>
-<p>In computer science terminology, <code>select2(i,x,y)</code> has so-called <em>strict</em> semantics. This means that its three arguments <code>i</code>, <code>x</code>, <code>y</code> are always evaluated before select2 itself is executed, in other words, even if <code>x</code> or <code>y</code> is not selected. The standard C/C++ <code>if-then-else</code> has <em>lazy</em> semantics. The <em>condition</em> is always executed, but depending of the value of the <em>condition</em>, only the <em>then</em> or the <em>else</em> branch is executed. </p>
-<p>The <em>strict</em> semantics of <code>select2</code> means that you cannot use it to prevent a division by 0 in an expression, or the square root of a negative number, etc... For example, the following code will not prevent a division by 0 error:</p>
+<p>In computer science terminology, <code>select2(i,x,y)</code> has so-called <em>strict</em> semantics. This means that its three arguments <code>i</code>, <code>x</code>, <code>y</code> are always evaluated before <code>select2</code> itself is executed, even if <code>x</code> or <code>y</code> is not selected. The standard C/C++ <code>if-then-else</code> has <em>lazy</em> semantics. The <em>condition</em> is always executed, but depending on the value of the <em>condition</em>, only the <em>then</em> or the <em>else</em> branch is executed. </p>
+<p>The <em>strict</em> semantics of <code>select2</code> means that you cannot use it to prevent a division by zero in an expression, or the square root of a negative number, etc. For example, the following code will not prevent a division by zero error:</p>
 <pre><code>select2(x == 0, 1/x, 10000); 
 </code></pre>
-<p>You cannot use <code>ba.if</code> either because it is implemented using <code>select2</code> and has the same strict semantics. Therefore the following code will not prevent a division by 0 error:</p>
+<p>You cannot use <code>ba.if</code> either because it is implemented using <code>select2</code> and has the same strict semantics. Therefore the following code will not prevent a division by zero error:</p>
 <pre><code>ba.if(x == 0, 10000, 1/x);
 </code></pre>
 <h3 id="but-things-are-a-little-bit-more-complex">But things are a little bit more complex...</h3>
-<p>Concerning the way <code>select2</code> is compiled by the Faust compiler, the strict semantic is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the if. For instance the DSP code:</p>
+<p>Concerning the way <code>select2</code> is compiled by the Faust compiler, the strict semantics is always preserved. In particular, the type system flags problematic expressions and the stateful parts are always placed outside the <code>if</code>. For instance the DSP code:</p>
 <pre><code>process = button(&quot;choose&quot;), (*(3) : +~_), (*(7):+~_) : select2;
 </code></pre>
-<p>is compiled as the following C++ code, where <code>fRec0[0]</code> and <code>fRec1[0]</code> contains the computation of each branch:</p>
+<p>is compiled as the following C++ code, where <code>fRec0[0]</code> and <code>fRec1[0]</code> contain the computation of each branch:</p>
 <pre><code class="language-c++">for (int i = 0; (i &lt; count); i = (i + 1)) {
     fRec0[0] = (fRec0[1] + (3.0f * float(input0[i])));
     fRec1[0] = (fRec1[1] + (7.0f * float(input1[i])));
@@ -423,7 +423,7 @@
     fRec1[1] = fRec1[0];
 }
 </code></pre>
-<p>For code optimization strategies, the generated code is not <em>fully</em> strict on <code>select2</code>. When Faust produces C++ code, the C++ compiler can decide to <em>avoid the execution of the stateless part of the signal that is not selected</em> (and not needed elsewhere). This doesn't change the semantics of the output signal, but it changes the strictness of the code if a division by 0 would have been executed in the stateless part. When stateless expressions are used, they are by default generated using a <em>non-strict</em> conditional expression. </p>
+<p>For code optimization strategies, the generated code is not <em>fully</em> strict on <code>select2</code>. When Faust produces C++ code, the C++ compiler can decide to <em>avoid the execution of the stateless part of the signal that is not selected</em> (and not needed elsewhere). This doesn't change the semantics of the output signal, but it changes the strictness of the code if a division by zero would have been executed in the stateless part. When stateless expressions are used, they are by default generated using a <em>non-strict</em> conditional expression. </p>
 <p>For instance the following DSP code:</p>
 <pre><code>process = select2((+(1)~_)%10, sin:cos:sin:cos, cos:sin:cos:sin);
 </code></pre>
@@ -517,12 +517,12 @@ process = filterBank(nBands);
 </code></pre>
 <p>to produce this GUI:</p>
 <p><img src="pathname.png" class="mx-auto d-block" width="50%">
-<center><em>Distinct GUI items to have different pathnames </em></center></p>
-<p>The rules ares the following:</p>
+<center><em>Distinct GUI items to have different pathnames</em></center></p>
+<p>The rules are the following:</p>
 <ul>
-<li>Two input control cannot have a same path (ERROR)</li>
+<li>Two input controls cannot share the same path (ERROR)</li>
 <li>An input control and a bargraph cannot have the same path (ERROR)</li>
-<li>Two bargraph can have the same path (<a href="../errors/#warning-messages">WARNING</a>)</li>
+<li>Two bargraphs can have the same path (<a href="../errors/#warning-messages">WARNING</a>)</li>
 </ul>
 <h2 id="surprising-effects-of-vgrouphgroup-on-how-controls-and-parameters-work">Surprising effects of vgroup/hgroup on how controls and parameters work</h2>
 <p>User interface widget primitives like <code>button</code>, <code>vslider/hslider</code>, <code>vbargraph/hbargraph</code> allow for an abstract description of a user interface from within the Faust code. They can be grouped in a hierarchical manner using <code>vgroup/hgroup/tgroup</code> primitives. Each widget then has an associated path name obtained by concatenating the labels of all its surrounding groups with its own label.</p>
@@ -536,8 +536,8 @@ process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 </code></pre>
 <p><img src="group1.png" class="mx-auto d-block" width="50%">
 <center><em>Shared freq1 and freq2 controllers</em></center></p>
-<p>So even if  <code>freq1</code> and  <code>freq2</code> controllers are used as parameters at four different places, <code>freq1</code> used in <code>os.osc(freq1)</code> and <code>os.square(freq1)</code> will have the same path (like <code>/foo/Freq1</code>), be associated to a unique controller, and will finally appear once in the GUI. And this is the same mecanism for <code>freq2</code>.</p>
-<p>Now if some grouping mecanism is used to better control the UI rendering, as in the following DSP code: </p>
+<p>So even if  <code>freq1</code> and  <code>freq2</code> controllers are used as parameters at four different places, <code>freq1</code> used in <code>os.osc(freq1)</code> and <code>os.square(freq1)</code> will have the same path (like <code>/foo/Freq1</code>), be associated with a unique controller, and will finally appear once in the GUI. The same mechanism applies to <code>freq2</code>.</p>
+<p>Now if some grouping mechanism is used to better control the UI rendering, as in the following DSP code: </p>
 <pre><code>import(&quot;stdfaust.lib&quot;);
 
 freq1 = hslider(&quot;Freq1&quot;, 500, 200, 2000, 0.01);
@@ -545,7 +545,7 @@ freq2 = hslider(&quot;Freq2&quot;, 500, 200, 2000, 0.01);
 
 process = hgroup(&quot;Voice1&quot;, os.osc(freq1) + os.square(freq2)), hgroup(&quot;Voice2&quot;, os.osc(freq1) + os.triangle(freq2));
 </code></pre>
-<p>The <code>freq1</code> and  <code>freq2</code> controllers now don't have the same path in each group (like <code>/foo/Voice1/Freq1</code> and <code>/foo/Voice1/Freq2</code> in the first group, and <code>/foo/Voice2/Freq1</code> and <code>/foo/Voice2/Freq2</code> in the second group), and so four separated controllers and UI items are finally created. </p>
+<p>The <code>freq1</code> and  <code>freq2</code> controllers now don't have the same path in each group (like <code>/foo/Voice1/Freq1</code> and <code>/foo/Voice1/Freq2</code> in the first group, and <code>/foo/Voice2/Freq1</code> and <code>/foo/Voice2/Freq2</code> in the second group), and so four separate controllers and UI items are finally created. </p>
 <p><img src="group2.png" class="mx-auto d-block" width="60%">
 <center><em>Four freq1 and freq2 controllers</em></center></p>
 <p>Using the relative pathname as explained in <a href="../syntax/#labels-as-pathnames">Labels as Pathnames</a> possibly allows us to move <code>freq1</code> one step higher in the hierarchical structure, thus having again a unique path (like <code>/foo/Freq1</code>) and controller: </p>
@@ -559,7 +559,7 @@ process = hgroup(&quot;Voice1&quot;, os.osc(freq1) + os.square(freq2)), hgroup(&
 <p><img src="group3.png" class="mx-auto d-block" width="40%">
 <center><em>freq1 moved one step higher in the hierarchical structure</em></center></p>
 <p>Note that the name for a given <code>hgroup</code>, <code>vgroup</code>, or <code>tgroup</code> can be used more than once, and they will be merged. This can be useful when you want to define different names for different widget signals, but still want to group them. For example, this pattern can be used to separate a synth's UI design from the implementation of the synth's DSP:</p>
-<pre><code>import (&quot;stdfaust.lib&quot;);
+<pre><code>import(&quot;stdfaust.lib&quot;);
 
 synth(foo, bar, baz) = os.osc(foo+bar+baz);
 
@@ -576,18 +576,18 @@ process = synth_ui;
 </code></pre>
 <p><img src="group4.png" class="mx-auto d-block" width="40%">
 <center><em>naming and grouping</em></center></p>
-<h2 id="what-are-the-rules-used-for-partial-application">What are the rules used for partial application ?</h2>
+<h2 id="what-are-the-rules-used-for-partial-application">What Are the Rules Used for Partial Application?</h2>
 <p>Assuming <code>F</code> is not an abstraction and has <code>n+m</code> inputs and <code>A</code> has <code>n</code> outputs, then we have the rewriting rule <code>F(A) ==&gt; A,bus(m):F (with bus(1) = _ and bus(n+1) = _,bus(n))</code></p>
 <p>There is an exception when <code>F</code> is a binary operation like <code>+,-,/,*</code>. In this case, the rewriting rule is <code>/(3) ==&gt; _,3:/</code>. In other words, when we apply only one argument, it is the second one.</p>
-<h2 id="control-rate-versus-audio-rate">Control rate versus audio rate</h2>
-<p>Question: <em>I have a question about sample rate / control rate issues. I have a Faust code that takes channel pressure messages from my keyboard as input, therefore at control rate, and outputs an expression signal at sample rate. The first part of the code can run at control rate, but I want to force it to run at sample rate (otherwise unwanted behavior will appear). Is there a simple way of forcing my pressure signal to be at sample rate (without making a smooth which may also result in unwanted behavior)</em>.</p>
-<p>Answer: the <a href="https://faustlibraries.grame.fr/libs/basics/#bakr2ar">ba.kr2ar</a> function can be used for that purpose.</p>
+<h2 id="control-rate-versus-audio-rate">Control Rate Versus Audio Rate</h2>
+<p>Question: <em>I have a question about sample-rate/control-rate issues. I have a Faust code that takes channel pressure messages from my keyboard as input, therefore at control rate, and outputs an expression signal at sample rate. The first part of the code can run at control rate, but I want to force it to run at sample rate (otherwise unwanted behavior will appear). Is there a simple way of forcing my pressure signal to be at sample rate (without applying smoothing, which may also result in unwanted behavior)?</em></p>
+<p>Answer: The <a href="https://faustlibraries.grame.fr/libs/basics/#bakr2ar">ba.kr2ar</a> function can be used for that purpose.</p>
 <h2 id="displaying-labels-with-numbers">Displaying labels with numbers</h2>
 <p>Question: <em>Is there a way to force the sliders to show in numerical order respecting tens?</em> </p>
 <p>Answer: Labels can contain variable parts. These are indicated with the sign % followed by the name of a variable. For a detailed explanation of how to use this feature, refer to the <a href="../syntax/#variable-parts-of-a-label">comprehensive documentation</a>.</p>
-<h2 id="semantic-of-bargraphs">Semantic of bargraphs</h2>
-<p>Question: <em>When are  control rate outputs (like hbargraph/vbargraph) calculated every sample ?</em> </p>
-<p>Answer: This depends on the nature of the signal entering the bargraph. If it's a control rate signal, as in <code>process = vslider("foo", 0, 0, 1, 0.01) : vbargraph("bar", 0, 1);</code>, then updating is done at control rate:</p>
+<h2 id="semantics-of-bargraphs">Semantics of Bargraphs</h2>
+<p>Question: <em>When are control-rate outputs (like hbargraph/vbargraph) calculated every sample?</em> </p>
+<p>Answer: This depends on the nature of the signal entering the bargraph. If it's a control-rate signal, as in <code>process = vslider("foo", 0, 0, 1, 0.01) : vbargraph("bar", 0, 1);</code>, then updating is done at control rate:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs)
 {
     FAUSTFLOAT* output0 = outputs[0];
@@ -598,7 +598,7 @@ process = synth_ui;
     }
 }
 </code></pre>
-<p>But if the signal is at sample rate, as in <code>process = vslider("foo", 0, 0, 1, 0.01) : si.smooth(0.9) : vbargraph("bar", 0, 1);</code>, the calculation must be at sample rate to be correct (that is to properly update the signal state at each sample), even if all the values are not displayed:</p>
+<p>But if the signal is at sample rate, as in <code>process = vslider("foo", 0, 0, 1, 0.01) : si.smooth(0.9) : vbargraph("bar", 0, 1);</code>, the calculation must be at sample rate to be correct (that is, to properly update the signal state at each sample), even if all the values are not displayed:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
     FAUSTFLOAT* output0 = outputs[0];

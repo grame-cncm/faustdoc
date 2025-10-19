@@ -336,11 +336,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#generateur-de-signal-en-dent-de-scie" class="nav-link">Generateur de signal en dent de scie</a>
+            <li class="nav-item" data-level="3"><a href="#generateur-de-signal-en-dent-de-scie" class="nav-link">Générateur de signal en dent de scie</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#generateur-de-signal-carre" class="nav-link">Generateur de signal carré</a>
+            <li class="nav-item" data-level="3"><a href="#generateur-de-signal-carre" class="nav-link">Générateur de signal carré</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -348,11 +348,11 @@
             </li>
             <li class="nav-item" data-level="2"><a href="#synthese-additive" class="nav-link">Synthèse additive</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="3"><a href="#exemple-1-generateur-sinusoidal" class="nav-link">Exemple 1 : générateur sinusoidal</a>
+            <li class="nav-item" data-level="3"><a href="#exemple-1-generateur-sinusoidal" class="nav-link">Exemple 1 : générateur sinusoïdal</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#exemple-2-une-onde-sinusoidale-avec-controle-de-volume" class="nav-link">Exemple 2 : une onde sinusoidale avec controle de volume</a>
+            <li class="nav-item" data-level="3"><a href="#exemple-2-une-onde-sinusoidale-avec-controle-de-volume" class="nav-link">Exemple 2 : une onde sinusoïdale avec contrôle de volume</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -396,7 +396,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#exemple-5-resonnant" class="nav-link">Exemple 5 : resonnant</a>
+            <li class="nav-item" data-level="3"><a href="#exemple-5-resonant" class="nav-link">Exemple 5 : résonant</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -446,14 +446,14 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="faust-workshop-at-citi">Faust workshop at CITI</h1>
-<p>L'objectif de ce workshop est de se familiariser avec le langage Faust à travers des exemples simples de synthèse sonore. Tous les exemples seront executé dans l'IDE Faust en ligne <a href="https://faustide.grame.fr">https://faustide.grame.fr</a>. Si jamais les sons produits avec l'IDE sont de mauvaise qualité, avec des clics, on peut utiliser l'éditeur en ligne, plus rustique, mais aussi plus léger <a href="https://fausteditor.grame.fr">https://fausteditor.grame.fr</a></p>
+<p>L'objectif de ce workshop est de se familiariser avec le langage Faust à travers des exemples simples de synthèse sonore. Tous les exemples seront exécutés dans l'IDE Faust en ligne <a href="https://faustide.grame.fr">https://faustide.grame.fr</a>. Si jamais les sons produits avec l'IDE sont de mauvaise qualité, avec des clics, on peut utiliser l'éditeur en ligne, plus rustique, mais aussi plus léger <a href="https://fausteditor.grame.fr">https://fausteditor.grame.fr</a>.</p>
 <h2 id="signal-en-dent-de-scie">Signal en dent de scie</h2>
 <p>Par convention, en Faust, un signal audio à pleine échelle varie entre -1 et +1. Mais dans un premier temps nous allons commencer par un signal en dent de scie entre 0 et 1 qui nous servira par la suite de <em>générateur de phase</em> pour produire différentes formes d'onde.</p>
 <h3 id="generateur-de-phase">Générateur de Phase</h3>
 <p>La première étape consiste à construire un <em>générateur de phase</em> qui produit un signal périodique en dents de scie entre 0 et 1. Voici le signal que nous voulons générer :</p>
 <p><img src="img/phase-sig.png" width="70%" class="mx-auto d-block"></p>
 <h3 id="rampe">Rampe</h3>
-<p>Pour cela nous allons produire une rampe "infinie", que nous transformerons ensuite en un signal périodique grâce à une opération <em>partie-decimale</em> :</p>
+<p>Pour cela nous allons produire une rampe "infinie", que nous transformerons ensuite en un signal périodique grâce à une opération <em>partie décimale</em> :</p>
 <p><img src="img/ramp-sig.png" width="70%" class="mx-auto d-block"></p>
 <p>La rampe est produite par le programme suivant :</p>
 <!-- faust-run -->
@@ -468,7 +468,7 @@ process = 0.125 : + ~ _;
 <!-- /faust-run -->
 
 <h3 id="semantique">Sémantique</h3>
-<p>Dans l'exemple précédent, <code>0,125</code>, <code>+</code> et <code>_</code> sont des <em>primitives</em> du langage. Les deux autres signes : <code>:</code> et <code>~</code> sont des opérateurs de cablage. Ils sont utilisés pour relier entre elles les expressions du langage.</p>
+<p>Dans l'exemple précédent, <code>0,125</code>, <code>+</code> et <code>_</code> sont des <em>primitives</em> du langage. Les deux autres signes : <code>:</code> et <code>~</code> sont des opérateurs de câblage. Ils sont utilisés pour relier entre elles les expressions du langage.</p>
 <p>Pour comprendre le diagramme ci-dessus, nous allons l'annoter avec sa sémantique mathématique :</p>
 <p><img src="img/ramp-diag-math.svg" width="60%" class="mx-auto d-block"></p>
 <p>Comme on peut le voir dans le diagramme, la formule du signal de sortie est : <script type="math/tex">y(t) = y(t-1) + 0.125</script>
@@ -525,7 +525,7 @@ process = phase;
 <!-- /faust-run -->
 
 <p>Dans notre définition de la <code>phase</code>, la valeur du pas, ici <code>0,125</code>, contrôle la fréquence du signal généré. Nous aimerions calculer cette valeur de pas en fonction de la fréquence souhaitée. Afin de faire la conversion, nous devons connaître la fréquence d'échantillonnage. Elle est disponible dans la bibliothèque standard sous le nom de <code>ma.SR</code>. Pour utiliser cette bibliothèque standard nous ajoutons au programme la ligne suivante : <code>import("stdfaust.lib");</code></p>
-<p>Supposons que nous voulions que notre signal de phase ait une fréquence de 1 Hz, alors le pas devrait être très petit <code>1/ma.SR</code>, afin qu'il faille  <code>ma.SR</code> échantillons (c'est à dire 1 seconde) pour que le signal de phase passe de 0 à 1.</p>
+<p>Supposons que nous voulions que notre signal de phase ait une fréquence de 1 Hz, alors le pas devrait être très petit <code>1/ma.SR</code>, afin qu'il faille  <code>ma.SR</code> échantillons (c'est-à-dire 1 seconde) pour que le signal de phase passe de 0 à 1.</p>
 <p>Si nous voulons une fréquence de 440 Hz, nous avons besoin d'un pas 440 fois plus grand pour que le signal de phase passe de 0 à 1 440 fois plus vite :</p>
 <pre><code>phase = 440/ma.SR : (+ : decimalpart) ~ _;
 </code></pre>
@@ -535,7 +535,7 @@ process = phase;
 <p>et en passant la fréquence souhaitée à <code>phase</code>:</p>
 <pre><code>process = phase(440);
 </code></pre>
-<h3 id="generateur-de-signal-en-dent-de-scie">Generateur de signal en dent de scie</h3>
+<h3 id="generateur-de-signal-en-dent-de-scie">Générateur de signal en dent de scie</h3>
 <p>Nous pouvons maintenant nous servir du générateur de phase pour produire un signal en dent de scie :</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
@@ -555,8 +555,8 @@ process = sawtooth(440);
 </div>
 <!-- /faust-run -->
 
-<h3 id="generateur-de-signal-carre">Generateur de signal carré</h3>
-<p>Nous pouvons également nous servir du générateurr de phase pour produire un signal carré :</p>
+<h3 id="generateur-de-signal-carre">Générateur de signal carré</h3>
+<p>Nous pouvons également nous servir du générateur de phase pour produire un signal carré :</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -576,8 +576,8 @@ process = squarewave(440);
 <!-- /faust-run -->
 
 <h2 id="synthese-additive">Synthèse additive</h2>
-<h3 id="exemple-1-generateur-sinusoidal">Exemple 1 : générateur sinusoidal</h3>
-<p>Le générateur de phase est également à la base de l'oscillateur sinusoidal :</p>
+<h3 id="exemple-1-generateur-sinusoidal">Exemple 1 : générateur sinusoïdal</h3>
+<p>Le générateur de phase est également à la base de l'oscillateur sinusoïdal :</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -596,7 +596,7 @@ process = osc(440);
 </div>
 <!-- /faust-run -->
 
-<p>Mais maintenant que nous avons vu comment créer de toutes pièces un oscillateur sinusoidal, nous allons utiliser celui qui est défini dans la libraries standard de Faust :</p>
+<p>Mais maintenant que nous avons vu comment créer de toutes pièces un oscillateur sinusoïdal, nous allons utiliser celui qui est défini dans la bibliothèque standard de Faust :</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -610,8 +610,8 @@ process = os.osc(440);
 </div>
 <!-- /faust-run -->
 
-<h3 id="exemple-2-une-onde-sinusoidale-avec-controle-de-volume">Exemple 2 : une onde sinusoidale avec controle de volume</h3>
-<p>Dans ce deuxième exemple on a utilisé un slider horizontal <code>hslider(...)</code> pour régler le niveau sonore :</p>
+<h3 id="exemple-2-une-onde-sinusoidale-avec-controle-de-volume">Exemple 2 : une onde sinusoïdale avec contrôle de volume</h3>
+<p>Dans ce deuxième exemple nous avons utilisé un slider horizontal <code>hslider(...)</code> pour régler le niveau sonore :</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -625,9 +625,9 @@ process = os.osc(440) * hslider("gain", 0.1, 0, 1, 0.01);
 </div>
 <!-- /faust-run -->
 
-<p>Le premier paramètre est une chaine de caractère qui indique le nom du slider. Il est suivi de quatre paramètres numériques. Le deuxième paramètre <code>0.1</code> indique la valeur par défaut du slider, c'est à dire la valeur que va délivrer le slider quand on lance le programme. Ensuite nous avons la valeur minimale <code>0</code>, la valeur maximale <code>1</code> et le pas de variation <code>0.01</code>.</p>
+<p>Le premier paramètre est une chaîne de caractères qui indique le nom du slider. Il est suivi de quatre paramètres numériques. Le deuxième paramètre <code>0.1</code> indique la valeur par défaut du slider, c'est-à-dire la valeur délivrée lorsque l'on lance le programme. Ensuite nous avons la valeur minimale <code>0</code>, la valeur maximale <code>1</code> et le pas de variation <code>0.01</code>.</p>
 <h3 id="exemple-3-exercice-ajouter-un-controle-de-frequence">Exemple 3 : Exercice, ajouter un contrôle de fréquence</h3>
-<p>A titre d'exercice, remplacer, dans l'exemple précédent, la fréquence 440 par un slider horizontal dont le nom sera <code>"freq"</code>, la valeur par défaut <code>110</code>, la valeur minimale <code>40</code>, la valeur maximale <code>8000</code> et le pas <code>1</code>.</p>
+<p>À titre d'exercice, remplacer, dans l'exemple précédent, la fréquence 440 par un slider horizontal dont le nom sera <code>"freq"</code>, la valeur par défaut <code>110</code>, la valeur minimale <code>40</code>, la valeur maximale <code>8000</code> et le pas <code>1</code>.</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -642,7 +642,7 @@ process = os.osc(440 /*a remplacer*/) * hslider("gain", 0.1, 0, 1, 0.01);
 <!-- /faust-run -->
 
 <h3 id="exemple-4-phenomene-de-repliement-de-frequence-au-dela-de-sr2">Exemple 4 : Phénomène de repliement de fréquence au-delà de SR/2</h3>
-<p>Un problème bien connu dans le domaine de la synthèse numérique du son est celui du repliement de fréquence : toute fréquence au dela de la moitié de la fréquence d'échatillonnage se retrouve <em>repliée</em> dans le spectre audible : </p>
+<p>Un problème bien connu dans le domaine de la synthèse numérique du son est celui du repliement de fréquence : toute fréquence au-delà de la moitié de la fréquence d'échantillonnage se retrouve <em>repliée</em> dans le spectre audible : </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -679,9 +679,9 @@ process = sum(i, 4, partial(i+1,hslider("freq", 440, 20, 8000, 0.001)));
 <br>
 </div>
 <!-- /faust-run -->
-<p>A noter l'utilisation de la construction <code>sum(i, n, foo(i))</code> qui est equivalente à <code>foo(0)+foo(1)+...+foo(n-1)</code>.</p>
+<p>À noter l'utilisation de la construction <code>sum(i, n, foo(i))</code> qui est équivalente à <code>foo(0)+foo(1)+...+foo(n-1)</code>.</p>
 <h3 id="exemple-6-approximation-dun-signal-carre-par-synthese-additive">Exemple 6 : Approximation d'un signal carré par synthèse additive</h3>
-<p>Nous avons vu précédemment comment produire une signal carré parfait. Ce signal carré parfait comporte une infinité d'harmoniques qui, du fait de l'échantillonnage, vont se replier sur le spectre audible, ce qui va donner un son bruité moins fidèle ! On peut approximer un signal carré par synthèse additive, en additionnant une serie infinie d'harmoniques impaires (voir <a href="https://fr.wikipedia.org/wiki/Signal_carré">https://fr.wikipedia.org/wiki/Signal_carré</a>) :</p>
+<p>Nous avons vu précédemment comment produire un signal carré parfait. Ce signal carré parfait comporte une infinité d'harmoniques qui, du fait de l'échantillonnage, vont se replier sur le spectre audible, ce qui va donner un son bruité moins fidèle ! On peut approximer un signal carré par synthèse additive, en additionnant une série infinie d'harmoniques impaires (voir <a href="https://fr.wikipedia.org/wiki/Signal_carré">https://fr.wikipedia.org/wiki/Signal_carré</a>) :</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -698,9 +698,9 @@ process = squarewave(55);
 <br>
 </div>
 <!-- /faust-run -->
-<p>A titre d'excercice, faire varier le nombre d'harmoniques pour voir l'approximation s'améliorer (mais sans dépasser SR/2).</p>
+<p>À titre d'exercice, faire varier le nombre d'harmoniques pour voir l'approximation s'améliorer (mais sans dépasser SR/2).</p>
 <h3 id="exemple-7-approximation-dun-signal-en-dent-de-scie-par-synthese-additive">Exemple 7 : Approximation d'un signal en dent de scie par synthèse additive</h3>
-<p>De même on peut approximer un signal en dent de scie par synthèse additive, en additionnant une serie infinie d'harmoniques (voir <a href="https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie">https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie</a>) :</p>
+<p>De même on peut approximer un signal en dent de scie par synthèse additive, en additionnant une série infinie d'harmoniques (voir <a href="https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie">https://fr.wikipedia.org/wiki/Signal_en_dents_de_scie</a>) :</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -782,7 +782,7 @@ process = no.noise * hslider("noise", 0.5, 0, 1, 0.01)
 </div>
 <!-- /faust-run -->
 
-<h3 id="exemple-5-resonnant">Exemple 5 : resonnant</h3>
+<h3 id="exemple-5-resonant">Exemple 5 : résonant</h3>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -917,7 +917,7 @@ declare author  "Yann Orlarey";
 - Front = High + Medium frequencies
 - Bottom = High + Medium + Low frequencies
 - Left = Minimum brightness
-- Right = Maximum birghtness
+- Right = Maximum brightness
 - Front = Long notes
 - Back = Short notes
 
@@ -1024,7 +1024,7 @@ string(coef, freq, t60, level, trig) = no.noise*level
 
 import("stdfaust.lib");
 
-// FM: Frequency moulation
+// FM: Frequency modulation
 
 FM(fc,fm,amp) = fm : os.osc : *(amp) : +(1) : *(fc) : os.osc;
 
@@ -1048,7 +1048,7 @@ process = FM(
 
 import("stdfaust.lib");
 
-// FM: Frequency moulation 2
+// FM: Frequency modulation 2
 
 FM(fc,fm,amp) = fm : os.osc : *(amp) : +(1) : *(fc) : os.osc;
 

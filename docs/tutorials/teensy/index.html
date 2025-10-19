@@ -355,7 +355,7 @@
 
 <h1 id="dsp-on-the-teensy-with-faust">DSP on the Teensy With Faust</h1>
 <h2 id="introduction">Introduction</h2>
-<p>The <a href="https://www.pjrc.com/teensy">Teensy</a> is a development board series based on a microcontroller and distributed by <a href="https://www.pjrc.com">PJRC</a>. The Teensys 3.(2+) are based on an ARM Cortex-M4 providing plenty of computational power for real-time audio signal processing applications. In particular, the Cortex-M4 used on the <a href="https://www.pjrc.com/teensy/techspecs.html">Teensy 3.6</a> (MK66FX1M0VMD18) hosts a Floating Point Unit (FPU) and has a clock of 180MHz (overclockable at 240MHz). Also, PJRC recently released the <a href="https://www.pjrc.com/store/teensy40.html">Teensy 4.0</a> which is based on a Cortex-M7 (FPU) with a clock of 600MHz and much more memory than the 3.6. When combined with their respective <a href="https://www.pjrc.com/store/teensy3_audio.html">audio shields</a> (also distributed by PJRC), the Teensy 3.6/4.0 can be used to synthesize and process sound with advanced algorithms, etc. <a href="https://zenodo.org/record/3249282#.XRxurXVfhjE">This paper</a> provides a survey on the performances of such system when used with Faust-generated DSP objects.</p>
+<p>The <a href="https://www.pjrc.com/teensy">Teensy</a> is a development board series based on a microcontroller and distributed by <a href="https://www.pjrc.com">PJRC</a>. The Teensy 3.(2+) boards are based on an ARM Cortex-M4 providing plenty of computational power for real-time audio signal processing applications. In particular, the Cortex-M4 used on the <a href="https://www.pjrc.com/teensy/techspecs.html">Teensy 3.6</a> (MK66FX1M0VMD18) hosts a Floating Point Unit (FPU) and has a clock of 180MHz (overclockable to 240MHz). PJRC recently released the <a href="https://www.pjrc.com/store/teensy40.html">Teensy 4.0</a>, which is based on a Cortex-M7 (FPU) with a clock of 600MHz and much more memory than the 3.6. When combined with their respective <a href="https://www.pjrc.com/store/teensy3_audio.html">audio shields</a> (also distributed by PJRC), the Teensy 3.6/4.0 can be used to synthesize and process sound with advanced algorithms. <a href="https://zenodo.org/record/3249282#.XRxurXVfhjE">This paper</a> provides a survey on the performance of such systems when used with Faust-generated DSP objects.</p>
 <p><img src="img/teensy.jpg" class="mx-auto d-block" width="40%">
 <center><em>The Teensy and Its Audio Shield</em></center></p>
 <p>Using this type of chip for embedded real-time audio DSP presents a wide range of advantages:</p>
@@ -366,13 +366,13 @@
 <li>etc.</li>
 </ul>
 <p>The Teensy/<a href="https://www.pjrc.com/teensy/teensyduino.html">Teensyduino</a> comes with an <a href="https://www.pjrc.com/teensy/td_libs_Audio.html">Audio Library</a> that can be used to synthesize sound directly on the Teensy. It uses a patching paradigm where DSP objects can be connected together using virtual patch chords. An <a href="https://www.pjrc.com/teensy/gui/index.html">online tool</a> provides a user interface to this system and allows for the implementation of sound processing algorithms in a "Max/MSP way." Various elements can be used as the input and the output of the system (e.g., built-in Teensy DAC/ADC, audio shield, etc.). More information and tutorials can be found on the <a href="https://www.pjrc.com/teensy/td_libs_Audio.html">Audio Library webpage</a>.</p>
-<p>The current DSP objects of the Teensy Audio Library can be used to implement simple algorithms but their scope is relatively limited (i.e., basic oscillators, filters, etc.). <a href="../../manual/tools/#faust2teensy">faust2teensy</a> can be used to implement new objects for the Teensy Audio Library using Faust. Since Faust is currently not able to produce fixed-point DSP C++ code, generated object use floating point arithmetic internally. The main consequence is that this system will only work efficiently if it's used on a Teensy board hosting an FPU. Hence, we strongly recommend you to use the Teensy 3.6/4.0 for this (things will work on the 3.2, but computational power will be extremely limited). </p>
+<p>The current DSP objects of the Teensy Audio Library can be used to implement simple algorithms but their scope is relatively limited (i.e., basic oscillators, filters, etc.). <a href="../../manual/tools/#faust2teensy">faust2teensy</a> can be used to implement new objects for the Teensy Audio Library using Faust. Since Faust is currently not able to produce fixed-point DSP C++ code, generated objects use floating-point arithmetic internally. The main consequence is that this system will only work efficiently if it's used on a Teensy board hosting an FPU. Hence, we strongly recommend using the Teensy 3.6/4.0 for this (things will work on the 3.2, but computational power will be extremely limited). </p>
 <p>This tutorial walks you through the steps of synthesizing sound with Faust on the Teensy.</p>
 <h2 id="band-limited-sawtooth-oscillator-on-the-teensy">Band-Limited Sawtooth Oscillator on the Teensy</h2>
 <blockquote>
 <p>The source code of the section can be downloaded <a href="misc/teensy.zip">here</a></p>
 </blockquote>
-<p>The Teensy Audio Library doesn't come with any band-limited sawtooth wave oscillator (which are crucial to the implementation of good quality virtual analog synthesizer). The Faust libraries come with a wide range of band-limited oscillators that can be easily ported to the Teensy. </p>
+<p>The Teensy Audio Library doesn't come with any band-limited sawtooth wave oscillator (which is crucial to the implementation of good-quality virtual analog synthesizers). The Faust libraries come with a wide range of band-limited oscillators that can be easily ported to the Teensy. </p>
 <p>The following program (<code>FaustSawtooth.dsp</code>) implements a sawtooth wave oscillator with controllable gain and frequency:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust0/exfaust0.svg" class="mx-auto d-block">
@@ -393,7 +393,7 @@ process = os.sawtooth(freq)*gain;
 <pre><code>faust2teensy -lib FaustSawtooth.dsp
 </code></pre>
 <p>which will generate a zip file containing a <code>.cpp</code> and a <code>.h</code> file in return. Alternatively, the Faust online compilation service can be used through the <a href="https://faustide.grame.fr">Faust Web IDE</a> to carry out this task (Export(Truck)/source/teensy). The generated package should contain a file called <code>FaustSawtooth.cpp</code> and <code>FaustSawtooth.h</code>. </p>
-<p>Create a new project in the Arduino/Teensyduino software (e.g., call it <code>faustSawtooth</code>) and place <code>FaustSawtooth.cpp</code> and <code>FaustSawtooth.h</code> in the same folder (whose name should probably be <code>/faustSawtooth</code>) than <code>faustSawtooth.ino</code>.</p>
+<p>Create a new project in the Arduino/Teensyduino software (e.g., call it <code>faustSawtooth</code>) and place <code>FaustSawtooth.cpp</code> and <code>FaustSawtooth.h</code> in the same folder (whose name should probably be <code>/faustSawtooth</code>) as <code>faustSawtooth.ino</code>.</p>
 <p>Replace the content of the Arduino program with the following:</p>
 <pre><code>#include &lt;Audio.h&gt;
 #include &quot;FaustSawtooth.h&quot;
@@ -415,17 +415,17 @@ void loop() {
   delay(50);
 }
 </code></pre>
-<p>First, the header file (<code>.h</code>) of the object generated with <code>faust2teensy</code> is included. An instance of <code>FaustSawtooth</code> is then created. Since the Teensy (3.6/4.0) that we're using for this tutorial is equipped with a Teensy Audio Shied, we also create an instance of <code>AudioOutputI2S</code> and <code>AudioControlSGTL5000</code>. We then connect the Faust object to the 2 outputs of the audio shield using <code>AudioConnection</code>s. Note that if the Faust object had a stereo output (i.e., <code>process = os.sawtooth(freq)*gain &lt;: _,_</code>), the following should have been written instead:</p>
+<p>First, the header file (<code>.h</code>) of the object generated with <code>faust2teensy</code> is included. An instance of <code>FaustSawtooth</code> is then created. Since the Teensy (3.6/4.0) that we're using for this tutorial is equipped with a Teensy Audio Shield, we also create an instance of <code>AudioOutputI2S</code> and <code>AudioControlSGTL5000</code>. We then connect the Faust object to the two outputs of the audio shield using <code>AudioConnection</code>s. Note that if the Faust object had a stereo output (i.e., <code>process = os.sawtooth(freq)*gain &lt;: _,_</code>), the following should have been written instead:</p>
 <pre><code>AudioConnection patchCord0(faustSawtooth,0,out,0);
 AudioConnection patchCord1(faustSawtooth,1,out,1);
 </code></pre>
-<p>The number of inputs and outputs of objects generated with <code>faust2teensy</code> corresponds to the number inputs and outputs of the Faust program.</p>
-<p>2 bytes of memory are allocated in <code>setup()</code>. Note that if the Faust object had audio inputs, this number should probably be greater (i.e., typically 6 for stereo in and stereo out).</p>
+<p>The number of inputs and outputs of objects generated with <code>faust2teensy</code> corresponds to the number of inputs and outputs of the Faust program.</p>
+<p>Two audio blocks of memory are allocated in <code>setup()</code>. Note that if the Faust object had audio inputs, this number should probably be greater (i.e., typically six for stereo in and stereo out).</p>
 <p><code>audioShield.enable()</code> activates the audio shield and <code>audioShield.volume(0.1)</code> sets the gain of the headphone output (this step is optional).</p>
 <p>The value of the <code>freq</code> and <code>gain</code> parameters can be set using the <code>setParamValue</code> method. Note that for larger Faust objects, parameter paths might be used instead. Here, the value of <code>freq</code> is randomly generated every 50ms.</p>
 <p>After making these changes, you should be able to compile and upload your sketch to the Teensy 4.0.</p>
 <h3 id="special-note-about-the-teensy-36">Special Note About the Teensy 3.6</h3>
-<p>Before this program can be compiled and uploaded to the Teensy 3.6, some modifications need to be made to the configuration file used by the compilation script used by Teensyduino (<code>boards.txt</code>). You should be able to find it in <code>hardware/teensy/avr</code> in the source of the Arduino software (its location will vary depending on the platform your using). The most important thing to do here is to use <code>g++</code> instead of <code>gcc</code> for linking, so: </p>
+<p>Before this program can be compiled and uploaded to the Teensy 3.6, some modifications need to be made to the configuration file used by the Teensyduino toolchain (<code>boards.txt</code>). You should be able to find it in <code>hardware/teensy/avr</code> in the source of the Arduino software (its location will vary depending on the platform you're using). The most important change is to use <code>g++</code> instead of <code>gcc</code> for linking, so: </p>
 <pre><code>teensy36.build.command.linker=arm-none-eabi-gcc
 </code></pre>
 <p>should become: </p>
@@ -437,7 +437,7 @@ AudioConnection patchCord1(faustSawtooth,1,out,1);
 <blockquote>
 <p>The source code of the section can be downloaded <a href="misc/teensyEffect.zip">here</a></p>
 </blockquote>
-<p>The same procedure as the one described in the previous section can be followed to generate audio effects for the Teensy Audio Library. <a href="https://faust.grame.fr/doc/libraries/index.html#dm.zita_light"><code>dm.zita_light</code></a> implements a high quality stereo feedback delay network reverb. It hosts its own user interface elements/parameters to control its dry/wet mix (<code>Dry/Wet Mix</code>) and its level in dB (<code>Level</code>).</p>
+<p>The same procedure described in the previous section can be followed to generate audio effects for the Teensy Audio Library. <a href="https://faust.grame.fr/doc/libraries/index.html#dm.zita_light"><code>dm.zita_light</code></a> implements a high-quality stereo feedback delay network reverb. It hosts its own user interface elements/parameters to control its dry/wet mix (<code>Dry/Wet Mix</code>) and its level in dB (<code>Level</code>).</p>
 <p>A simple Faust program (<code>FaustZita.dsp</code>) calling this effect could look like that:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
