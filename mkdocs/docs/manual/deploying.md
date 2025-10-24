@@ -37,7 +37,7 @@ These components are built on top of [faustwasm](https://github.com/grame-cncm/f
 
 ## Exporting WAM 2.0 plugins
 
-[WAM 2.0 plugin](http://www.webaudiomodules.com/docs/intro/) can be exported from the [Faust Editor](https://fausteditor.grame.fr) or [Faust IDE](https://faustide.grame.fr) using the remote compilation service. A complete tutorial can be [found here](http://www.webaudiomodules.com/docs/usage/generate-with-faustide). Choose `Platform = web`, then `Architecture` with one of the following target:
+[WAM 2.0 plugin](http://www.webaudiomodules.com/docs/intro/) can be exported from the [Faust Editor](https://fausteditor.grame.fr) or [Faust IDE](https://faustide.grame.fr) using the remote compilation service, and are built using the [faust2wam](https://github.com/Fr0stbyteR/faust2wam) projtct. A complete tutorial can be [found here](http://www.webaudiomodules.com/docs/usage/generate-with-faustide). Choose `Platform = web`, then `Architecture` with one of the following target:
 
 - `wam2-ts` allows you to export a ready to use WAM 2.0 plugin.  
 
