@@ -45,3 +45,9 @@ These components are built on top of [faustwasm](https://github.com/grame-cncm/f
 
 - `wam2-fft-ts` allows you to export a ready to use WAM 2.0 plugin using the FFT architecture presented in [this paper](https://inria.hal.science/hal-04507625/document).
 
+
+YouTube videos showing examples of WAM2 generation:
+
+- [Audio Effect](https://youtu.be/OVfjImWiJDA)
+
+- [Virtual Instrument](https://youtu.be/o4ofxbefsnE)
