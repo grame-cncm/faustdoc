@@ -535,7 +535,7 @@ On audio boards where the memory is separated as several blocks (like SRAM, SDRA
 
 ## Optimizing the C++ or LLVM Code
 
-From a given DSP program, the Faust compiler tries to generate the most efficient implementation. Optimizations can be done at DSP writing time, or later on when the target langage is generated (like  C++ or LLVM IR).
+From a given DSP program, the Faust compiler tries to generate the most [efficient implementation](../manual/compiler.md). Optimizations can be done at DSP writing time, or later on when the target langage is generated (like  C++ or LLVM IR).
 The generated code can have different *shapes* depending of compilation options, and can run faster of slower. Several programs and tools are available to help Faust programmers to test (for possible numerical or precision issues), optimize their programs by discovering the best set of options for a given DSP code, and finally compile them into native code for the target CPUs. 
 
 By default the Faust compiler produces a big scalar loop in the generated `mydsp::compute` method. Compiler options allow you to generate other code *shapes*, like for instance separated simpler loops connected with buffers in the so-called vectorized mode (obtained using  the `-vec` option). The assumption is that auto-vectorizer passes in modern compilers will be able to better generate efficient SIMD code for them. In this vec option, the size of the internal buffer can be changed using the `-vs value` option. Moreover the computation graph can be organized in deep-first order using `-dfs`.  
