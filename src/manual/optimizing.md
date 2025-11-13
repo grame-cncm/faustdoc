@@ -643,7 +643,7 @@ Note that some **faust2xx** tools like [`faust2max6`](https://github.com/grame-c
 
 ## Compiling for Multiple CPUs
 
-On modern CPUs, compiling native code dedicated to the target processor is critical to obtain the best possible performances. When using the C++ backend, the same C++ file can be compiled with `gcc` of `clang` for each possible target CPU using the appropriate `-march=cpu` option. When using the LLVM backend, the same LLVM IR code can be compiled into CPU specific machine code using the [dynamic-faust](../manual/optimizing.md#dynamic-faust) tool. This step will typically be done using the best compilation options automatically found with the [faustbench](../manual/optimizing.md#faustbench) tool or [faustbench-llvm](../manual/optimizing.md#faustbench-llvm) tools. A specialized tool has been developed to combine all the possible options.
+On modern CPUs, compiling native code dedicated to the target processor is critical to obtain the best possible performances. This is particularly important when SIMD instructions are involved, since the width of the vector unit must be known at compile time. When using the C++ backend, the same C++ file can be compiled with `gcc` of `clang` for each possible target CPU using the appropriate `-march=cpu` option. When using the LLVM backend, the same LLVM IR code can be compiled into CPU specific machine code using the [dynamic-faust](../manual/optimizing.md#dynamic-faust) tool. This step will typically be done using the best compilation options automatically found with the [faustbench](../manual/optimizing.md#faustbench) tool or [faustbench-llvm](../manual/optimizing.md#faustbench-llvm) tools. A specialized tool has been developed to combine all the possible options.
 
 ### faust2object
 
