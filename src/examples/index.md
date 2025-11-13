@@ -3,7 +3,7 @@
 #### [ambisonics](ambisonics.md)
 Examples for spatial audio processing using ambisonics techniques.
 
-#### [analysis](ambisonics.md)
+#### [analysis](analysis.md)
 Examples showing how to perform signal analysis and visualization of audio content.
 
 #### [bela](bela.md)
