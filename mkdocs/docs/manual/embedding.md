@@ -90,7 +90,7 @@ Then the DSP object has to be connected to an audio driver to be rendered (see t
 
 ## Using libfaust with the Interpreter backend
 
-When compiled to embed the [Interpreter backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/interpreter), `libfaust` can also be used to generate the Faust Bytes Code (FBC) format and interpret it in memory.
+When compiled to embed the [Interpreter backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/interpreter), `libfaust` can also be used to generate the Faust Bytes Code (FBC) format and interpret it in memory its build-in Virtual Machine.
 
 ### Libfaust with Interpreter backend API
 
@@ -158,7 +158,7 @@ After the DSP factory has been compiled, the application or plugin may want to s
 
 To re-create a DSP factory from a previously saved code, two functions are available:
 
-  - `readWasmDSPFactoryFromBitcode`allows to create a DSP factory from a string containing the wasm binary code 
+  - `readWasmDSPFactoryFromBitcode` allows to create a DSP factory from a string containing the wasm binary code 
   - `readWasmDSPFactoryFromBitcodeFile` allows to create a DSP factory from a file containing the wasm binary code 
 
 The complete API is available and documented in the installed [faust/dsp/wasm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/wasm-dsp.h) header. Note that only the scalar compilation mode is supported. A more complete C++ example can be [found here](https://github.com/grame-cncm/faust/blob/master-dev/architecture/wasmtime/faustwasmtime.cpp) used to develop the [faustwasmtime](https://github.com/grame-cncm/faust/tree/master-dev/architecture/wasmtime) program. 
