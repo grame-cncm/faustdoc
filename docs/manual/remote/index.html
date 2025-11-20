@@ -322,6 +322,10 @@
             
             <li class="nav-item" data-level="1"><a href="#remote-compilation" class="nav-link">Remote compilation</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#faustremote" class="nav-link">faustremote</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -340,7 +344,20 @@
 <p>with a dedicated API explained in more details in the <a href="https://github.com/grame-cncm/faustservice">faustservice</a> project and in the <a href="https://github.com/grame-cncm/faustservice/tree/master/client">FaustWeb client</a> tool</p>
 </li>
 <li>
-<p>with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustremote">faustremote</a> script (part of the Faust distribution), which allows to access the remote compilation service and execute compilation requests. </p>
+<p>with the <a href="#faustremote">faustremote</a> script. </p>
+</li>
+</ul>
+<h2 id="faustremote">faustremote</h2>
+<p>The <a href="https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustremote">faustremote</a> script (part of the Faust distribution), allows to access the remote compilation service and execute compilation requests: </p>
+<ul>
+<li>
+<p><code>faustremote [&lt;servurl&gt;] [&lt;platform&gt; &lt;arch&gt; &lt;srcfile&gt;]</code> returns the list of <em>platform</em> and <em>arch</em> for each platform.  When no <code>&lt;servurl&gt;</code> is defined, the default GRAME Faust URL service is used. Then a given DSP file can be compiled using a command like <code>faustremote osx coreaudio-qt</code> to return the compiled result as a ZIP file. </p>
+</li>
+<li>
+<p>if DSP libraries are needed in the DSP program, a ZIP file containing all required resources can be prepared and sent.</p>
+</li>
+<li>
+<p>the <code>source</code> and <code>any</code> parameters can be used to produce code for any of the supported backend. The wanted options have to be defined using a <code>compile_options</code> metadata, like for instance <code>declare compile_options -lang c -cn foo -double</code> to compile with the C backend. By default, the resulting file will have the <code>.txt</code>extension. </p>
 </li>
 </ul></div>
         </div>
