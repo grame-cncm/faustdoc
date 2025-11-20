@@ -13,9 +13,9 @@ A remote compilation service has been developed to simplify this process. It all
   
 ## faustremote
 
-The [faustremote](https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustremote) script (part of the Faust distribution), allows to access the remote compilation service and execute compilation requests: 
+The [faustremote](https://github.com/grame-cncm/faust/blob/master-dev/tools/faust2appls/faustremote) script (part of the Faust distribution), allows you to access the remote compilation service and execute compilation requests: 
 
-- `faustremote [<servurl>] [<platform> <arch> <srcfile>]` returns the list of *platform* and *arch* for each platform.  When no `<servurl>` is defined, the default GRAME Faust URL service is used. Then a given DSP file can be compiled using a command like `faustremote osx coreaudio-qt` to return the compiled result as a ZIP file. 
+- `faustremote [<servurl>] [<platform> <arch> <srcfile>]` returns the list of *platform* and *arch* for each platform. When no `<servurl>` is defined, the default GRAME Faust URL service is used. Then a given DSP file can be compiled using a command like `faustremote osx coreaudio-qt` to return the compiled result as a ZIP file. 
 
 - if DSP libraries are needed in the DSP program, a ZIP file containing all required resources can be prepared and sent.
 
