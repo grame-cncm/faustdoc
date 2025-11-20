@@ -1,6 +1,6 @@
 # Architecture Files
 
-A Faust program describes a *signal processor*, a pure DSP computation that maps *input signals* to *output signals*. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by *architecture files*.
+A Faust program describes a *signal processor*, a pure DSP computation that maps *input signals* to *output signals*. It says nothing about audio drivers or controllers (like GUI, OSC, MIDI, sensors) that are going to control the DSP. This additional information is provided by *architecture files*. The executable code can be produced using a static or [dynamic](embedding.md) compilation model. 
 
 An *architecture file* describes how to relate a Faust program to the external world, in particular the audio drivers and the controllers interfaces to be used. This approach allows a single Faust program to be easily deployed to a large variety of audio standards (e.g., Max/MSP externals, PD externals, VST plugins, CoreAudio applications, JACK applications, iPhone/Android, etc.):
 
@@ -747,7 +747,7 @@ The dsp class is central to the Faust architecture design:
 
 (note that `FAUSTFLOAT` label is typically defined to be the actual type of sample: either `float` or `double` using `#define FAUSTFLOAT float` in the code for instance).
 
-For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods. For dynamic code producing backends like the LLVM IR, Cmajor or the Interpreter ones, the actual code (an LLVM module, a Cmajor module or a bytecode stream) is actually wrapped by some additional C++ code glue, to finally produces an `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `cmajorpatch_dsp` typed object (defined in the [cmajorpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/cmajorpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio` C++ classes (like the C++ generated class). See the following class diagram:
+For a given compiled DSP program, the compiler will generate a `mydsp` subclass of `dsp` and fill the different methods. For dynamic code–producing backends such as LLVM IR, Cmajor, or the Interpreter backend, the generated code (an LLVM module, a Cmajor module, or a bytecode stream) is actually wrapped by some additional C++ glue. This wrapping step produces an `llvm_dsp` typed object (defined in the [llvm-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/llvm-dsp.h) file), a `cmajorpatch_dsp` typed object (defined in the [cmajorpatch-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/cmajorpatch-dsp.h) file) or an `interpreter_dsp` typed object (defined in [interpreter-dsp.h](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/interpreter-dsp.h) file), ready to be used  with the `UI` and `audio` C++ classes (like the C++ generated class). See the following class diagram:
 
 <img src="img/DSPHierarchy.png" class="mx-auto d-block" width="85%">
 
