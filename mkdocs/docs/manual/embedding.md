@@ -90,7 +90,7 @@ Then the DSP object has to be connected to an audio driver to be rendered (see t
 
 ## Using libfaust with the Interpreter backend
 
-When compiled to embed the [Interpreter backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/interpreter), `libfaust` can also be used to generate the Faust Bytes Code (FBC) format and interpret it in memory its build-in Virtual Machine.
+When compiled to embed the [Interpreter backend](https://github.com/grame-cncm/faust/tree/master-dev/compiler/generator/interpreter), `libfaust` can also be used to generate the Faust Bytes Code (FBC) format and interpret it in memory using its build-in Virtual Machine.
 
 ### Libfaust with Interpreter backend API
 
