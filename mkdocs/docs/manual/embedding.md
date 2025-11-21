@@ -102,7 +102,7 @@ The FIR language is simple enough to be easily translated in the typed bytecode 
 
 The interpreter backend API is similar to the LLVM backend API: 
 
-- given a FAUST source code (as a file or a string),  calling the `createInterpreterDSPFactory`  function runs the compilation chain (Faust + interpreter backend) and generates the *prototype* of the class, as an `interpreter_dsp_factory` pointer. This factory actually contains the compiled bytecode for the given DSP
+- given a FAUST source code (as a string or a file), calling the `createInterpreterDSPFactoryFromString` or `createInterpreterDSPFactoryFromFile` functions runs the compilation chain (Faust + interpreter backend) and generates the *prototype* of the class, as an `interpreter_dsp_factory` pointer. This factory actually contains the compiled bytecode for the given DSP
 - alternatively the `createInterpreterDSPFactoryFromBoxes` allows to create the factory from a box expression built with the [box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h)
 - alternatively the `createInterpreterDSPFactoryFromSignals` allows to create the factory from a list of outputs signals built with the [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h)
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 
@@ -140,7 +140,7 @@ Another possibility is to use the [wasmtime](https://wasmtime.dev) JIT compiler 
 
 The Wasm backend API is similar to the LLVM/Interpreter backends API: 
 
-- given a FAUST source code (as a file or a string),  calling the `createWasmDSPFactory`  function runs the compilation chain (Faust + wasm backend) and generates the *prototype* of the class, as an `wasm_dsp_factory` pointer. This factory actually contains the compiled wasm for the given DSP
+- given a FAUST source code (as a string or a file), calling the `createWasmDSPFactoryFromString` or `createWasmDSPFactoryFromFile` functions runs the compilation chain (Faust + wasm backend) and generates the *prototype* of the class, as an `wasm_dsp_factory` pointer. This factory actually contains the compiled wasm for the given DSP
 - alternatively the `createWasmDSPFactoryFromBoxes` allows to create the factory from a box expression built with the [box API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h)
 - alternatively the `createWasmDSPFactoryFromSignals` allows to create the factory from a list of outputs signals built with the [signal API](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h)
 - the library keeps an internal cache of all allocated *factories* so that the compilation of the same DSP code -- that is the same source code and the same set of *normalized* (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer 

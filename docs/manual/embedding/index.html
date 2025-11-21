@@ -486,7 +486,7 @@ deleteDSPFactory(m_factory);
 <h4 id="creation-api_1">Creation API</h4>
 <p>The interpreter backend API is similar to the LLVM backend API: </p>
 <ul>
-<li>given a FAUST source code (as a file or a string),  calling the <code>createInterpreterDSPFactory</code>  function runs the compilation chain (Faust + interpreter backend) and generates the <em>prototype</em> of the class, as an <code>interpreter_dsp_factory</code> pointer. This factory actually contains the compiled bytecode for the given DSP</li>
+<li>given a FAUST source code (as a string or a file), calling the <code>createInterpreterDSPFactoryFromString</code> or <code>createInterpreterDSPFactoryFromFile</code> functions runs the compilation chain (Faust + interpreter backend) and generates the <em>prototype</em> of the class, as an <code>interpreter_dsp_factory</code> pointer. This factory actually contains the compiled bytecode for the given DSP</li>
 <li>alternatively the <code>createInterpreterDSPFactoryFromBoxes</code> allows to create the factory from a box expression built with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h">box API</a></li>
 <li>alternatively the <code>createInterpreterDSPFactoryFromSignals</code> allows to create the factory from a list of outputs signals built with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h">signal API</a></li>
 <li>the library keeps an internal cache of all allocated <em>factories</em> so that the compilation of the same DSP code -- that is the same source code and the same set of <em>normalized</em> (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer </li>
@@ -515,7 +515,7 @@ deleteDSPFactory(m_factory);
 <h4 id="creation-api_2">Creation API</h4>
 <p>The Wasm backend API is similar to the LLVM/Interpreter backends API: </p>
 <ul>
-<li>given a FAUST source code (as a file or a string),  calling the <code>createWasmDSPFactory</code>  function runs the compilation chain (Faust + wasm backend) and generates the <em>prototype</em> of the class, as an <code>wasm_dsp_factory</code> pointer. This factory actually contains the compiled wasm for the given DSP</li>
+<li>given a FAUST source code (as a string or a file), calling the <code>createWasmDSPFactoryFromString</code> or <code>createWasmDSPFactoryFromFile</code> functions runs the compilation chain (Faust + wasm backend) and generates the <em>prototype</em> of the class, as an <code>wasm_dsp_factory</code> pointer. This factory actually contains the compiled wasm for the given DSP</li>
 <li>alternatively the <code>createWasmDSPFactoryFromBoxes</code> allows to create the factory from a box expression built with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-box.h">box API</a></li>
 <li>alternatively the <code>createWasmDSPFactoryFromSignals</code> allows to create the factory from a list of outputs signals built with the <a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/libfaust-signal.h">signal API</a></li>
 <li>the library keeps an internal cache of all allocated <em>factories</em> so that the compilation of the same DSP code -- that is the same source code and the same set of <em>normalized</em> (sorted in a canonical order) compilation options -- will return the same (reference counted) factory pointer </li>
