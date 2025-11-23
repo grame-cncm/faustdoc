@@ -241,7 +241,7 @@ The `freq1` and  `freq2` controllers now don't have the same path in each group 
 <img src="group2.png" class="mx-auto d-block" width="60%">
 <center>*Four freq1 and freq2 controllers*</center>
 
-Using the relative pathname as explained in [Labels as Pathnames](../manual/syntax.md#labels-as-pathnames) possibly allows us to move `freq1` one step higher in the hierarchical structure, thus having again a unique path (like `/foo/Freq1`) and controller: 
+Using the relative pathname as explained in [Labels as Pathnames](../manual/syntax.md#labels-as-pathnames) possibly allows us to move `freq1` one level higher in the hierarchical structure, thus having again a unique path (like `/foo/Freq1`) and controller: 
 
 ```
 import("stdfaust.lib");
