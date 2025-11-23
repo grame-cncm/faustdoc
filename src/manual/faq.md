@@ -166,7 +166,7 @@ import("stdfaust.lib");
 nBands = 8;
 filterBank(N) = hgroup("Filter Bank",seq(i,N,oneBand(i)))
 with {
-    oneBand(j) = vgroup("[%j]Band",fi.peak_eq(l,f,b))
+    oneBand(j) = vgroup("Band",fi.peak_eq(l,f,b))
     with {
         a = j+1; // just so that band numbers don't start at 0
         l = vslider("[2]Level[unit:db]",0,-70,12,0.01) : si.smoo;
@@ -184,7 +184,7 @@ import("stdfaust.lib");
 nBands = 8;
 filterBank(N) = hgroup("Filter Bank",seq(i,N,oneBand(i)))
 with {
-    oneBand(j) = vgroup("[%j]Band %a",fi.peak_eq(l,f,b))
+    oneBand(j) = vgroup("Band %a",fi.peak_eq(l,f,b))
     with {
         a = j+1; // just so that band numbers don't start at 0
         l = vslider("[2]Level[unit:db]",0,-70,12,0.01) : si.smoo;

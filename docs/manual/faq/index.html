@@ -494,7 +494,7 @@ count(x)     = 1;             // rule R2
 nBands = 8;
 filterBank(N) = hgroup(&quot;Filter Bank&quot;,seq(i,N,oneBand(i)))
 with {
-    oneBand(j) = vgroup(&quot;[%j]Band&quot;,fi.peak_eq(l,f,b))
+    oneBand(j) = vgroup(&quot;Band&quot;,fi.peak_eq(l,f,b))
     with {
         a = j+1; // just so that band numbers don't start at 0
         l = vslider(&quot;[2]Level[unit:db]&quot;,0,-70,12,0.01) : si.smoo;
@@ -509,7 +509,7 @@ process = filterBank(nBands);
 nBands = 8;
 filterBank(N) = hgroup(&quot;Filter Bank&quot;,seq(i,N,oneBand(i)))
 with {
-    oneBand(j) = vgroup(&quot;[%j]Band %a&quot;,fi.peak_eq(l,f,b))
+    oneBand(j) = vgroup(&quot;Band %a&quot;,fi.peak_eq(l,f,b))
     with {
         a = j+1; // just so that band numbers don't start at 0
         l = vslider(&quot;[2]Level[unit:db]&quot;,0,-70,12,0.01) : si.smoo;
