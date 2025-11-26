@@ -3107,24 +3107,14 @@ The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. Th
 
 ### Sensors Control Metadatas
 
-Sensors control metadata can be used to map the built-in sensors of mobile devices to some of the parameters of a Faust program.
-
-**Compatibility**
-
-These metadatas are compatible with the following Faust targets and no additional step is required for them to be taken into account when the corresponding application is generated:
-
-* [`faust2android`](../manual/tools.md#faust2android)
-* [`faust2ios`](../manual/tools.md#faust2ios)
-* [`faust2smartkeyb`](../manual/tools.md#faust2smartkeyb)
-
-Sensors control metadatas have five parameters and follow the following syntax:
+Sensors control metadata can be used to map the built-in sensors of mobile devices to some of the parameters of a Faust program. They have five parameters and follow the following syntax:
 
 ```
 [acc: a b c d e] // for accelerometer
 [gyr: a b c d e] // for gyroscope
 ```
 
-They can be used in a Faust UI parameter declaration:
+They can be used in a Faust UI parameter declaration, for accelerometer:
 
 ```
 parameter = nentry("UIparamName[acc: a b c d e]",def,min,max,step);
@@ -3137,6 +3127,24 @@ with:
 * `c`: the minimum acceleration (m/s^2)
 * `d`: the center acceleration (m/s^2)
 * `e`: the maximum acceleration (m/s^2)
+* `def`: the default/init value of the parameter
+* `min`: the minimum value of the parameter
+* `max`: the maximum value of the parameter
+* `step`: the step of the parameter (precision)
+
+and for gyroscope:
+
+```
+parameter = nentry("UIparamName[gyr: a b c d e]",def,min,max,step);
+```
+
+with:
+
+* `a`: the gyroscope axis (**0**: x, **1**: y, **2**: z)
+* `b`: the gyroscope curve (see figure below)
+* `c`: the minimum angular velocity (rad/s)
+* `d`: the center angular velocity (rad/s)
+* `e`: the maximum angular velocity (rad/s)
 * `def`: the default/init value of the parameter
 * `min`: the minimum value of the parameter
 * `max`: the maximum value of the parameter
