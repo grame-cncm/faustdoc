@@ -4343,19 +4343,11 @@ process = os.sawtooth(freq);
 <li>Web platform</li>
 </ul>
 <h3 id="sensors-control-metadatas">Sensors Control Metadatas</h3>
-<p>Sensors control metadata can be used to map the built-in sensors of mobile devices to some of the parameters of a Faust program.</p>
-<p><strong>Compatibility</strong></p>
-<p>These metadatas are compatible with the following Faust targets and no additional step is required for them to be taken into account when the corresponding application is generated:</p>
-<ul>
-<li><a href="../tools/#faust2android"><code>faust2android</code></a></li>
-<li><a href="../tools/#faust2ios"><code>faust2ios</code></a></li>
-<li><a href="../tools/#faust2smartkeyb"><code>faust2smartkeyb</code></a></li>
-</ul>
-<p>Sensors control metadatas have five parameters and follow the following syntax:</p>
+<p>Sensors control metadata can be used to map the built-in sensors of mobile devices to some of the parameters of a Faust program. They have five parameters and follow the following syntax:</p>
 <pre><code>[acc: a b c d e] // for accelerometer
 [gyr: a b c d e] // for gyroscope
 </code></pre>
-<p>They can be used in a Faust UI parameter declaration:</p>
+<p>They can be used in a Faust UI parameter declaration, for accelerometer:</p>
 <pre><code>parameter = nentry(&quot;UIparamName[acc: a b c d e]&quot;,def,min,max,step);
 </code></pre>
 <p>with:</p>
@@ -4365,6 +4357,21 @@ process = os.sawtooth(freq);
 <li><code>c</code>: the minimum acceleration (m/s^2)</li>
 <li><code>d</code>: the center acceleration (m/s^2)</li>
 <li><code>e</code>: the maximum acceleration (m/s^2)</li>
+<li><code>def</code>: the default/init value of the parameter</li>
+<li><code>min</code>: the minimum value of the parameter</li>
+<li><code>max</code>: the maximum value of the parameter</li>
+<li><code>step</code>: the step of the parameter (precision)</li>
+</ul>
+<p>and for gyroscope:</p>
+<pre><code>parameter = nentry(&quot;UIparamName[gyr: a b c d e]&quot;,def,min,max,step);
+</code></pre>
+<p>with:</p>
+<ul>
+<li><code>a</code>: the gyroscope axis (<strong>0</strong>: x, <strong>1</strong>: y, <strong>2</strong>: z)</li>
+<li><code>b</code>: the gyroscope curve (see figure below)</li>
+<li><code>c</code>: the minimum angular velocity (rad/s)</li>
+<li><code>d</code>: the center angular velocity (rad/s)</li>
+<li><code>e</code>: the maximum angular velocity (rad/s)</li>
 <li><code>def</code>: the default/init value of the parameter</li>
 <li><code>min</code>: the minimum value of the parameter</li>
 <li><code>max</code>: the maximum value of the parameter</li>
