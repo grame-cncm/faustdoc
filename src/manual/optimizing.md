@@ -552,11 +552,11 @@ Manually testing each of them and their combination is out of reach. So several 
 
 ### faustbench
 
-The **faustbench** tool uses the C++ backend to generate a set of C++ files produced with different Faust compiler options. All files are then compiled in a unique binary that will measure DSP CPU of all versions of the compiled DSP. The tool is supposed to be launched in a terminal, but it can be used to generate an iOS project, ready to be launched and tested in Xcode. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faustbench).
+The **faustbench** tool uses the C++ backend to generate a set of C++ files produced with different Faust compiler options. All files are then compiled in a unique binary that will measure DSP CPU of all versions of the compiled DSP. The tool is supposed to be launched in a terminal, but it can be used to generate an iOS project, ready to be launched and tested in Xcode. A more complete documentation is available on [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faustbench).
 
 ### faustbench-llvm
 
-The **faustbench-llvm** tool uses the `libfaust` library and its LLVM backend to dynamically compile DSP objects produced with different Faust compiler options, and then measure their DSP CPU usage. Additional Faust compiler options can be given beside the ones that will be automatically explored by the tool. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faustbench-llvm).
+The **faustbench-llvm** tool uses the `libfaust` library and its LLVM backend to dynamically compile DSP objects produced with different Faust compiler options, and then measure their DSP CPU usage. Additional Faust compiler options can be given beside the ones that will be automatically explored by the tool. A more complete documentation is available on [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faustbench-llvm).
 
 ### faust2bench
 
@@ -637,7 +637,7 @@ The **faustcompilerbenchtool** is a suite of utilities designed to analyze and m
 
 ### dynamic-faust
 
-The **dynamic-faust** tool uses the dynamic compilation chain (based on the LLVM backend), and compiles a Faust DSP source to a LLVM IR (.ll), bicode (.bc), machine code (.mc) or object code (.o) output file. This is an alternative to the C++ compilation chain, since DSP code can be compiled to object code (.o),  then used and linked in a regular C++ project. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#dynamic-faust).
+The **dynamic-faust** tool uses the dynamic compilation chain (based on the LLVM backend), and compiles a Faust DSP source to a LLVM IR (.ll), bicode (.bc), machine code (.mc) or object code (.o) output file. This is an alternative to the C++ compilation chain, since DSP code can be compiled to object code (.o),  then used and linked in a regular C++ project. A more complete documentation is available on [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#dynamic-faust).
 
 ### Optimizing with any faust2xx tool
 
@@ -651,4 +651,4 @@ On modern CPUs, compiling native code dedicated to the target processor is criti
 
 ### faust2object
 
-The `faust2object` tool  either uses the standard C++ compiler or the LLVM dynamic compilation chain (the [dynamic-faust](../manual/optimizing.md#dynamic-faust) tool) to compile a Faust DSP to object code files (.o) and wrapper C++ header files for different CPUs. The DSP name is used in the generated C++ and object code files, thus allowing to generate distinct versions of the code that can finally be linked together in a single binary. A more complete documentation is available on the [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faust2object).
+The `faust2object` tool  either uses the standard C++ compiler or the LLVM dynamic compilation chain (the [dynamic-faust](../manual/optimizing.md#dynamic-faust) tool) to compile a Faust DSP to object code files (.o) and wrapper C++ header files for different CPUs. The DSP name is used in the generated C++ and object code files, thus allowing to generate distinct versions of the code that can finally be linked together in a single binary. A more complete documentation is available on [this page](https://github.com/grame-cncm/faust/tree/master-dev/tools/benchmark#faust2object).
