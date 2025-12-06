@@ -1,10 +1,10 @@
 
-declare name "vital_rev";
+declare name "springreverb";
 declare version "0.1";
-declare author "David Braun";
-declare description "Vital demo application.";
+declare author "Daniel Leonov";
+declare description "Spring reverb demo application.";
 
 import("stdfaust.lib");
 
-process = dm.vital_rev_demo;	
+process = dm.springreverb_demo;	
 

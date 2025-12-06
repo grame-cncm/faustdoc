@@ -838,6 +838,25 @@ And finally the `createDSPCrossfader` tool allows you to crossfade between two D
 
 Note that this idea of decorating or combining several C++ `dsp` objects can perfectly be extended in specific projects, to meet other needs: like muting some part of a graph of several DSPs for instance. But keep in mind that keeping the `dsp` API then allows to take profit of all already available `UI` and `audio` based classes.
 
+#### Example of a smoothing decorator
+
+[smoothing_dsp](https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-dsp.h) is a ready-made decorator that wraps any `dsp` instance and transparently smooths its input controllers. It accepts a smoothing duration (seconds) at construction and a compile-time policy choosing between the built-in linear (`smoothing_dsp_linear`) or exponential (`smoothing_dsp_exp`) ramp. Buttons and checkboxes are treated as toggles and bypass smoothing, jumping directly to their new value.
+
+Typical usage:
+
+```cpp
+// Wrap an existing dsp with 20 ms linear smoothing.
+::dsp* raw = new mydsp();
+::dsp* linSmooth = new smoothing_dsp_linear(raw, 0.020);
+
+// Or exponential smoothing over 50 ms.
+::dsp* raw = new mydsp();
+::dsp* expSmooth= new smoothing_dsp_exp(raw, 0.050);
+```
+
+Because the decorator still exposes the `dsp` API, it can itself be combined using the combiner helpers above (for example, smoothing a branch of a `dsp_parallelizer`), reused with any existing UI class, and cloned safely alongside the wrapped DSP.
+
+
 ### Sample Accurate Control
 
 DSP audio languages usually deal with several timing dimensions when treating control events and generating audio samples. For performance reasons, systems maintain separated audio rate for samples generation and control rate for asynchronous messages handling.

@@ -426,6 +426,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#example-of-a-smoothing-decorator" class="nav-link">Example of a smoothing decorator</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#sample-accurate-control" class="nav-link">Sample Accurate Control</a>
@@ -1539,6 +1543,18 @@ process = no.noise;
 <p>This methology is followed to implement the three remaining composition operators (<em>split</em>, <em>merge</em>, <em>recursion</em>), which ends up with a C++ API to combine DSPs with the usual five operators: <code>createDSPSequencer</code>, <code>createDSPParallelizer</code>, <code>createDSPSplitter</code>, <code>createDSPMerger</code>, <code>createDSPRecursiver</code> to be used at C++ level to dynamically combine DSPs.</p>
 <p>And finally the <code>createDSPCrossfader</code> tool allows you to crossfade between two DSP modules. The crossfade parameter (as a slider) controls the mix between the two modules outputs. When <em>Crossfade = 1</em>, the first DSP only is computed, when <em>Crossfade = 0</em>, the second DSP only is computed, otherwise both DSPs are computed and mixed.</p>
 <p>Note that this idea of decorating or combining several C++ <code>dsp</code> objects can perfectly be extended in specific projects, to meet other needs: like muting some part of a graph of several DSPs for instance. But keep in mind that keeping the <code>dsp</code> API then allows to take profit of all already available <code>UI</code> and <code>audio</code> based classes.</p>
+<h4 id="example-of-a-smoothing-decorator">Example of a smoothing decorator</h4>
+<p><a href="https://github.com/grame-cncm/faust/blob/master-dev/architecture/faust/dsp/proxy-dsp.h">smoothing_dsp</a> is a ready-made decorator that wraps any <code>dsp</code> instance and transparently smooths its input controllers. It accepts a smoothing duration (seconds) at construction and a compile-time policy choosing between the built-in linear (<code>smoothing_dsp_linear</code>) or exponential (<code>smoothing_dsp_exp</code>) ramp. Buttons and checkboxes are treated as toggles and bypass smoothing, jumping directly to their new value.</p>
+<p>Typical usage:</p>
+<pre><code class="language-cpp">// Wrap an existing dsp with 20 ms linear smoothing.
+::dsp* raw = new mydsp();
+::dsp* linSmooth = new smoothing_dsp_linear(raw, 0.020);
+
+// Or exponential smoothing over 50 ms.
+::dsp* raw = new mydsp();
+::dsp* expSmooth= new smoothing_dsp_exp(raw, 0.050);
+</code></pre>
+<p>Because the decorator still exposes the <code>dsp</code> API, it can itself be combined using the combiner helpers above (for example, smoothing a branch of a <code>dsp_parallelizer</code>), reused with any existing UI class, and cloned safely alongside the wrapped DSP.</p>
 <h3 id="sample-accurate-control">Sample Accurate Control</h3>
 <p>DSP audio languages usually deal with several timing dimensions when treating control events and generating audio samples. For performance reasons, systems maintain separated audio rate for samples generation and control rate for asynchronous messages handling.</p>
 <p>The audio stream is most often computed by blocks, and control is updated between blocks. To smooth control parameter changes, some languages chose to interpolate parameter values between blocks.</p>

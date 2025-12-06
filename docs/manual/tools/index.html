@@ -616,7 +616,10 @@ Options:
    -osc : activates OSC control
    -midi : activates MIDI control
    -qrcode : activates QR code generation
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
@@ -631,7 +634,10 @@ Options:
    -osc : activates OSC control
    -midi : activates MIDI control
    -qrcode : activates QR code generation
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
@@ -645,7 +651,10 @@ Options:
    -httpd : activates HTTP control
    -osc : activates OSC control
    -midi : activates MIDI control
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
    -arch32 : compiles a 32 bits binary
    -arch64 : compiles a 64 bits binary
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
@@ -966,11 +975,10 @@ Compiles Faust programs to SVG and opens them with feh
 <h2 id="faust2gen">faust2gen</h2>
 <pre class=faust-tools>
 Usage: faust2gen [options] &lt;file.dsp>
-Require: Max/MSP SDK
 Compiles Faust programs to a fausgen~/mc.faustgen patch
 Options:
-   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
-   -mc : to activate multi-channels model
+   -nvoices &lt;num> : to produce a polyphonic ready patch to be used with MIDI events
+   -mc : to use a mc.faustgen~ object
 </pre>
 
 <h2 id="faust2hothouse">faust2hothouse</h2>
@@ -1225,6 +1233,7 @@ Options:
 <pre class=faust-tools>
 Usage: faust2minimal [options] [Faust options] &lt;file.dsp>
 Compiles Faust programs to a minimal executable
+   -clone : Use architecture/minimal-clone.cpp (state-transfer demo: clone/copy ctor/assignment)
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
@@ -1301,6 +1310,7 @@ Options:
    -httpd : activates HTTP control
    -osc : activates OSC control
    -midi : activates MIDI control
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
    -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
@@ -1317,6 +1327,7 @@ Options:
    -osc : activates OSC control
    -midi : activates MIDI control
    -qrcode : activates QR code generation
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
    -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
    -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
@@ -1373,7 +1384,7 @@ Options:
 
 <h2 id="faust2pwgtk">faust2pwgtk</h2>
 <pre class=faust-tools>
-Usage: faust2pipewire [options] [Faust options] &lt;file.dsp>
+Usage: faust2pwgtk [options] [Faust options] &lt;file.dsp>
 Target platform: Linux
 Require: Pipewire
 Compiles Faust programs to Pipewire and GTK
@@ -1394,6 +1405,22 @@ Options:
 
 <h2 id="faust2pwqt">faust2pwqt</h2>
 <pre class=faust-tools>
+Usage: faust2pwqt [options] [Faust options] &lt;file.dsp>
+Require: Pipewire, QT
+Compiles Faust programs to Pipewire and QT
+Options:
+   -httpd : activates HTTP control
+   -osc : activates OSC control
+   -midi : activates MIDI control
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
+   -qrcode : activates QR code generation
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
+   -preset &lt;directory> : add a preset manager on top of GUI and save the preset files in the given directory
+   -preset auto : add a preset manager on top of GUI and save the preset files in a system temporary directory
+   -resample : to resample soundfiles to the audio driver sample rate.
+   Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
 <h2 id="faust2raqt">faust2raqt</h2>
@@ -1406,8 +1433,11 @@ Options:
    -osc : activates OSC control
    -midi : activates MIDI control
    -qrcode : activates QR code generation
-   -poly : produces a polyphonic DSP, ready to be used with MIDI events
+   -soundfile : when compiling a DSP using the 'soundfile' primitive, add required resources
    -nodeploy : skip self-contained application generation (using 'macdeployqt')
+   -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -effect &lt;effect.dsp> : generates a polyphonic DSP connected to a global output effect, ready to be used with MIDI or OSC
+   -effect auto : generates a polyphonic DSP connected to a global output effect defined as 'effect' in &lt;file.dsp>, ready to be used with MIDI or OSC
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
