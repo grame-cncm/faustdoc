@@ -1680,6 +1680,7 @@ process = echo(1.6, 0.6, 0.7), echo(0.7, feedback, gain);
 <p>will have the flat memory layout:</p>
 <pre><code class="language-c++">int IOTA0;
 int fSampleRate;
+float fConst0;
 int iConst1;
 float fRec0[65536];
 FAUSTFLOAT fHslider0;
@@ -1711,6 +1712,7 @@ float fRec1[65536];
 <p>The first remark is that scalar values will typically stay in the DSP structure, and the point is to move the big array buffers (<code>fRec0</code> and <code>fRec1</code> in the example) into separated memory blocks. The <code>-mem (--memory-manager)</code> option can be used to generate adapted code. On the previous DSP program, we now have the following generated C++ code: </p>
 <pre><code class="language-c++">int IOTA0;
 int fSampleRate;
+float fConst0;
 int iConst1;
 float* fRec0;
 FAUSTFLOAT fHslider0;
@@ -1729,6 +1731,9 @@ float* fRec1;
 <p>Here is the API for the memory manager:</p>
 <pre><code class="language-c++">struct dsp_memory_manager {
 
+    enum MemType { kInt32, kInt32_ptr, kFloat, kFloat_ptr, kDouble, kDouble_ptr, kQuad, 
+        kQuad_ptr, kFixedPoint, kFixedPoint_ptr, kObj, kObj_ptr, kSound, kSound_ptr };
+
     virtual ~dsp_memory_manager() {}
 
     /**
@@ -1738,12 +1743,15 @@ float* fRec1;
     virtual void begin(size_t count);
 
     /**
-    * Give the Memory Manager information on a given memory zone.
-    * @param size - the size in bytes of the memory zone
-    * @param reads - the number of Read access to the zone used to compute one frame
-    * @param writes - the number of Write access to the zone used to compute one frame
-    */
-    virtual void info(size_t size, size_t reads, size_t writes) {}
+     * Give the Memory Manager information on a given memory zone.
+     * @param name - the memory zone name
+     * @param type - the memory zone type (in MemType)
+     * @param size - the size in unit of the memory type of the memory zone
+     * @param size_bytes - the size in bytes of the memory zone
+     * @param reads - the number of Read access to the zone used to compute one frame
+     * @param writes - the number of Write access to the zone used to compute one frame
+     */
+    virtual void info(const char* name, MemType type, size_t size, size_t size_bytes, size_t reads, size_t writes) {}
 
     /**
     * Inform the Memory Manager that all memory zones have been described, 
@@ -1772,19 +1780,21 @@ float* fRec1;
 <pre><code class="language-c++">static void memoryInfo() {
     fManager-&gt;begin(3);
     // mydsp
-    fManager-&gt;info(56, 9, 1);
+    fManager-&gt;info(&quot;mydsp&quot;, dsp_memory_manager::kObj_ptr, 0, 60, 9, 1);
     // fRec0
-    fManager-&gt;info(262144, 2, 1);
+    fManager-&gt;info(&quot;fRec0&quot;, dsp_memory_manager::kFloat_ptr, 65536, 262144, 2, 1);
     // fRec1
-    fManager-&gt;info(262144, 2, 1);
+    fManager-&gt;info(&quot;fRec1&quot;, dsp_memory_manager::kFloat_ptr, 65536, 262144, 2, 1);
     fManager-&gt;end();
 }
 </code></pre>
 <p>The <code>begin</code> method is first generated to inform that three separated memory zones will be needed. Then three consecutive calls to the <code>info</code> method are generated, one for the DSP object itself, one for each recursive delay array. The <code>end</code> method is then called to finish the memory layout description, and let the memory manager prepare the actual allocations. </p>
-<p>Note that the memory layout information is also available in the JSON file generated using the <code>-json</code> option, to possibly be used statically by the architecture machinery (that is at compile time). With the previous program, the memory layout section is:</p>
+<p>Note that the complete memory layout information is also available in the JSON file generated using the <code>-json</code> option, to possibly be used statically by the architecture machinery (that is at compile time). With the previous program, the memory layout section is:</p>
 <pre><code class="language-json">&quot;memory_layout&quot;: [
-    { &quot;name&quot;: &quot;mydsp&quot;, &quot;type&quot;: &quot;kObj_ptr&quot;, &quot;size&quot;: 0, &quot;size_bytes&quot;: 56, &quot;read&quot;: 9, &quot;write&quot;: 1 },
+    { &quot;name&quot;: &quot;mydsp&quot;, &quot;type&quot;: &quot;kObj_ptr&quot;, &quot;size&quot;: 0, &quot;size_bytes&quot;: 60, &quot;read&quot;: 9, &quot;write&quot;: 1 },
     { &quot;name&quot;: &quot;IOTA0&quot;, &quot;type&quot;: &quot;kInt32&quot;, &quot;size&quot;: 1, &quot;size_bytes&quot;: 4, &quot;read&quot;: 7, &quot;write&quot;: 1 },
+    { &quot;name&quot;: &quot;fSampleRate&quot;, &quot;type&quot;: &quot;kInt32&quot;, &quot;size&quot;: 1, &quot;size_bytes&quot;: 4, &quot;read&quot;: 0, &quot;write&quot;: 0 },
+    { &quot;name&quot;: &quot;fConst0&quot;, &quot;type&quot;: &quot;kFloat&quot;, &quot;size&quot;: 1, &quot;size_bytes&quot;: 4, &quot;read&quot;: 0, &quot;write&quot;: 0 },
     { &quot;name&quot;: &quot;iConst1&quot;, &quot;type&quot;: &quot;kInt32&quot;, &quot;size&quot;: 1, &quot;size_bytes&quot;: 4, &quot;read&quot;: 1, &quot;write&quot;: 0 },
     { &quot;name&quot;: &quot;fRec0&quot;, &quot;type&quot;: &quot;kFloat_ptr&quot;, &quot;size&quot;: 65536, &quot;size_bytes&quot;: 262144, &quot;read&quot;: 2, &quot;write&quot;: 1 },
     { &quot;name&quot;: &quot;iConst2&quot;, &quot;type&quot;: &quot;kInt32&quot;, &quot;size&quot;: 1, &quot;size_bytes&quot;: 4, &quot;read&quot;: 1, &quot;write&quot;: 0 },
@@ -1812,6 +1822,7 @@ float* fRec1;
 
 static void destroy(dsp* dsp) {
     static_cast&lt;mydsp*&gt;(dsp)-&gt;memoryDestroy();
+    static_cast&lt;mydsp*&gt;(dsp)-&gt;~mydsp();
     fManager-&gt;destroy(dsp);
 }
 </code></pre>
@@ -1900,17 +1911,17 @@ class mydsp : public dsp {
 <pre><code class="language-c++">static void memoryInfo() {
     fManager-&gt;begin(6);
     // mydspSIG0
-    fManager-&gt;info(4, 0, 0);
+    fManager-&gt;info(&quot;mydspSIG0&quot;, dsp_memory_manager::kObj_ptr, 0, 4, 0, 0);
     // itbl0mydspSIG0
-    fManager-&gt;info(28, 1, 0);
+    fManager-&gt;info(&quot;itbl0mydspSIG0&quot;, dsp_memory_manager::kInt32_ptr, 0, 28, 1, 0);
     // mydspSIG1
-    fManager-&gt;info(4, 0, 0);
+    fManager-&gt;info(&quot;mydspSIG1&quot;, dsp_memory_manager::kObj_ptr, 0, 4, 0, 0);
     // ftbl1mydspSIG1
-    fManager-&gt;info(28, 1, 0);
+    fManager-&gt;info(&quot;ftbl1mydspSIG1&quot;, dsp_memory_manager::kFloat_ptr, 0, 28, 1, 0);
     // mydsp
-    fManager-&gt;info(28, 0, 0);
+    fManager-&gt;info(&quot;mydsp&quot;, dsp_memory_manager::kObj_ptr, 0, 28, 0, 0);
     // iRec0
-    fManager-&gt;info(8, 3, 2);
+    fManager-&gt;info(&quot;iRec0&quot;, dsp_memory_manager::kInt32_ptr, 2, 8, 3, 2);
     fManager-&gt;end();
 }
 </code></pre>
@@ -1929,9 +1940,9 @@ class mydsp : public dsp {
         // for the future allocations done in memoryCreate()
     }
 
-    virtual void info(size_t size, size_t reads, size_t writes)
+    virtual void info(const char* name, MemType type, size_t size, size_t size_bytes, size_t reads, size_t writes) 
     {
-        // TODO: use 'size', ‘reads’ and ‘writes’
+        // TODO: use 'size_bytes', ‘reads’ and ‘writes’
         // to prepare memory layout for allocation
     }
 

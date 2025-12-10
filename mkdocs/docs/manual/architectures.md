@@ -1057,6 +1057,7 @@ will have the flat memory layout:
 ```c++
 int IOTA0;
 int fSampleRate;
+float fConst0;
 int iConst1;
 float fRec0[65536];
 FAUSTFLOAT fHslider0;
@@ -1097,6 +1098,7 @@ The first remark is that scalar values will typically stay in the DSP structure,
 ```c++
 int IOTA0;
 int fSampleRate;
+float fConst0;
 int iConst1;
 float* fRec0;
 FAUSTFLOAT fHslider0;
@@ -1119,6 +1121,9 @@ Here is the API for the memory manager:
 ```c++
 struct dsp_memory_manager {
 
+    enum MemType { kInt32, kInt32_ptr, kFloat, kFloat_ptr, kDouble, kDouble_ptr, kQuad, 
+        kQuad_ptr, kFixedPoint, kFixedPoint_ptr, kObj, kObj_ptr, kSound, kSound_ptr };
+
     virtual ~dsp_memory_manager() {}
 
     /**
@@ -1128,12 +1133,15 @@ struct dsp_memory_manager {
     virtual void begin(size_t count);
 
     /**
-    * Give the Memory Manager information on a given memory zone.
-    * @param size - the size in bytes of the memory zone
-    * @param reads - the number of Read access to the zone used to compute one frame
-    * @param writes - the number of Write access to the zone used to compute one frame
-    */
-    virtual void info(size_t size, size_t reads, size_t writes) {}
+     * Give the Memory Manager information on a given memory zone.
+     * @param name - the memory zone name
+     * @param type - the memory zone type (in MemType)
+     * @param size - the size in unit of the memory type of the memory zone
+     * @param size_bytes - the size in bytes of the memory zone
+     * @param reads - the number of Read access to the zone used to compute one frame
+     * @param writes - the number of Write access to the zone used to compute one frame
+     */
+    virtual void info(const char* name, MemType type, size_t size, size_t size_bytes, size_t reads, size_t writes) {}
 
     /**
     * Inform the Memory Manager that all memory zones have been described, 
@@ -1167,28 +1175,32 @@ The C++ generated code now contains a new `memoryInfo` method, which interacts w
 static void memoryInfo() {
     fManager->begin(3);
     // mydsp
-    fManager->info(56, 9, 1);
+    fManager->info("mydsp", dsp_memory_manager::kObj_ptr, 0, 60, 9, 1);
     // fRec0
-    fManager->info(262144, 2, 1);
+    fManager->info("fRec0", dsp_memory_manager::kFloat_ptr, 65536, 262144, 2, 1);
     // fRec1
-    fManager->info(262144, 2, 1);
+    fManager->info("fRec1", dsp_memory_manager::kFloat_ptr, 65536, 262144, 2, 1);
     fManager->end();
 }
 ```
+
 The `begin` method is first generated to inform that three separated memory zones will be needed. Then three consecutive calls to the `info` method are generated, one for the DSP object itself, one for each recursive delay array. The `end` method is then called to finish the memory layout description, and let the memory manager prepare the actual allocations. 
 
-Note that the memory layout information is also available in the JSON file generated using the `-json` option, to possibly be used statically by the architecture machinery (that is at compile time). With the previous program, the memory layout section is:
+Note that the complete memory layout information is also available in the JSON file generated using the `-json` option, to possibly be used statically by the architecture machinery (that is at compile time). With the previous program, the memory layout section is:
 
 ```json
 "memory_layout": [
-    { "name": "mydsp", "type": "kObj_ptr", "size": 0, "size_bytes": 56, "read": 9, "write": 1 },
+    { "name": "mydsp", "type": "kObj_ptr", "size": 0, "size_bytes": 60, "read": 9, "write": 1 },
     { "name": "IOTA0", "type": "kInt32", "size": 1, "size_bytes": 4, "read": 7, "write": 1 },
+    { "name": "fSampleRate", "type": "kInt32", "size": 1, "size_bytes": 4, "read": 0, "write": 0 },
+    { "name": "fConst0", "type": "kFloat", "size": 1, "size_bytes": 4, "read": 0, "write": 0 },
     { "name": "iConst1", "type": "kInt32", "size": 1, "size_bytes": 4, "read": 1, "write": 0 },
     { "name": "fRec0", "type": "kFloat_ptr", "size": 65536, "size_bytes": 262144, "read": 2, "write": 1 },
     { "name": "iConst2", "type": "kInt32", "size": 1, "size_bytes": 4, "read": 1, "write": 0 },
     { "name": "fRec1", "type": "kFloat_ptr", "size": 65536, "size_bytes": 262144, "read": 2, "write": 1 }
 ]
 ```
+
 Finally the `memoryCreate` and `memoryDestroy` methods are generated. The `memoryCreate` method asks the memory manager to allocate the `fRec0` and `fRec1` buffers:
 
 ```c++
@@ -1218,6 +1230,7 @@ static mydsp* create() {
 
 static void destroy(dsp* dsp) {
     static_cast<mydsp*>(dsp)->memoryDestroy();
+    static_cast<mydsp*>(dsp)->~mydsp();
     fManager->destroy(dsp);
 }
 ```
@@ -1323,17 +1336,17 @@ The `memoryInfo` method now has the following shape, with the two `itbl0mydspSIG
 static void memoryInfo() {
     fManager->begin(6);
     // mydspSIG0
-    fManager->info(4, 0, 0);
+    fManager->info("mydspSIG0", dsp_memory_manager::kObj_ptr, 0, 4, 0, 0);
     // itbl0mydspSIG0
-    fManager->info(28, 1, 0);
+    fManager->info("itbl0mydspSIG0", dsp_memory_manager::kInt32_ptr, 0, 28, 1, 0);
     // mydspSIG1
-    fManager->info(4, 0, 0);
+    fManager->info("mydspSIG1", dsp_memory_manager::kObj_ptr, 0, 4, 0, 0);
     // ftbl1mydspSIG1
-    fManager->info(28, 1, 0);
+    fManager->info("ftbl1mydspSIG1", dsp_memory_manager::kFloat_ptr, 0, 28, 1, 0);
     // mydsp
-    fManager->info(28, 0, 0);
+    fManager->info("mydsp", dsp_memory_manager::kObj_ptr, 0, 28, 0, 0);
     // iRec0
-    fManager->info(8, 3, 2);
+    fManager->info("iRec0", dsp_memory_manager::kInt32_ptr, 2, 8, 3, 2);
     fManager->end();
 }
 ```
@@ -1356,9 +1369,9 @@ struct malloc_memory_manager : public dsp_memory_manager {
         // for the future allocations done in memoryCreate()
     }
 
-    virtual void info(size_t size, size_t reads, size_t writes)
+    virtual void info(const char* name, MemType type, size_t size, size_t size_bytes, size_t reads, size_t writes) 
     {
-        // TODO: use 'size', ‘reads’ and ‘writes’
+        // TODO: use 'size_bytes', ‘reads’ and ‘writes’
         // to prepare memory layout for allocation
     }
 
