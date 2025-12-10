@@ -494,6 +494,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="4"><a href="#using-an-hybrid-staticdynamic-custom-memory-manager" class="nav-link">Using an hybrid static/dynamic custom memory manager</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="4"><a href="#allocating-several-dsp-instances" class="nav-link">Allocating several DSP instances</a>
               <ul class="nav flex-column">
               </ul>
@@ -2052,6 +2056,8 @@ DSP.memoryDestroy();
 ...
 </code></pre>
 <p>More complex custom memory allocators can be developed by refining this <code>malloc_memory_manager</code> example, possibly defining real-time memory allocators...etc... The <a href="https://www.rebeltech.org">OWL</a> architecture file uses a custom <a href="https://github.com/RebelTechnology/OwlProgram/blob/feature/faust-mem-priority/FaustSource/owl.cpp">OwlMemoryManager</a>.</p>
+<h4 id="using-an-hybrid-staticdynamic-custom-memory-manager">Using an hybrid static/dynamic custom memory manager</h4>
+<p>The <code>begin/info/end</code> methods of the memory manager are primarily intended for use with a dynamic memory manager, which decides at runtime the most suitable allocation strategy for a given DSP. However, this is not always possible—or even desirable. It is therefore perfectly valid to use the <code>memory_layout</code> description from the JSON at compile time to predefine the allocation scheme (for example, using #pragma directives to reserve a global memory segment). In this case, only the <code>allocate/destroy</code> methods need to be implemented and used at runtime, in order to effectively allocate and release memory regions within this compile-time predefined segment. This approach enables a hybrid static/dynamic memory management strategy, combining compile-time layout planning with runtime memory control.</p>
 <h4 id="allocating-several-dsp-instances">Allocating several DSP instances</h4>
 <p>In a multiple instances scheme, static data structures shared by all instances have to be allocated once at beginning using <code>mydsp::classInit</code>, and deallocated at the end using <code>mydsp::classDestroy</code>. Individual instances are then allocated with <code>mydsp::create()</code> and deallocated with <code>mydsp::destroy()</code>, possibly directly using regular <code>new/delete</code>, or using stack allocation as explained before.</p>
 <h3 id="measuring-the-dsp-cpu">Measuring the DSP CPU</h3>

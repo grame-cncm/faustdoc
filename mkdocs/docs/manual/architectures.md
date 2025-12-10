@@ -1493,6 +1493,11 @@ DSP.memoryDestroy();
 ```
 More complex custom memory allocators can be developed by refining this `malloc_memory_manager` example, possibly defining real-time memory allocators...etc... The [OWL](https://www.rebeltech.org) architecture file uses a custom [OwlMemoryManager](https://github.com/RebelTechnology/OwlProgram/blob/feature/faust-mem-priority/FaustSource/owl.cpp).
 
+#### Using an hybrid static/dynamic custom memory manager
+
+The `begin/info/end` methods of the memory manager are primarily intended for use with a dynamic memory manager, which decides at runtime the most suitable allocation strategy for a given DSP. However, this is not always possible—or even desirable. It is therefore perfectly valid to use the `memory_layout` description from the JSON at compile time to predefine the allocation scheme (for example, using #pragma directives to reserve a global memory segment). In this case, only the `allocate/destroy` methods need to be implemented and used at runtime, in order to effectively allocate and release memory regions within this compile-time predefined segment. This approach enables a hybrid static/dynamic memory management strategy, combining compile-time layout planning with runtime memory control.
+
+
 #### Allocating several DSP instances
 
 In a multiple instances scheme, static data structures shared by all instances have to be allocated once at beginning using `mydsp::classInit`, and deallocated at the end using `mydsp::classDestroy`. Individual instances are then allocated with `mydsp::create()` and deallocated with `mydsp::destroy()`, possibly directly using regular `new/delete`, or using stack allocation as explained before.
