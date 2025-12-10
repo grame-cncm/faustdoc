@@ -1332,7 +1332,7 @@ class mydsp : public dsp {
 
 The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are generated as static global pointers. The `classInit` method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. 
 
-**Finally, the `init` method is now empty. Because the static tables are now allocated on the heap, the architecture code must invoke `classInit` and `classDestroy` once to manage the allocation and deallocation of these tables, and use `instanceInit` for the initialization of each DSP instance.**
+**Finally, the `init` method is now empty. Because the static tables are now possibly allocated on the heap, the architecture code must invoke `classInit` and `classDestroy` once to manage the allocation and deallocation of these tables, and use `instanceInit` for the initialization of each DSP instance.**
 
 The `memoryInfo` method now has the following shape, with the two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables:
 

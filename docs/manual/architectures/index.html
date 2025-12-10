@@ -1908,7 +1908,7 @@ class mydsp : public dsp {
 }
 </code></pre>
 <p>The two <code>itbl0mydspSIG0</code> and <code>ftbl1mydspSIG1</code> tables are generated as static global pointers. The <code>classInit</code> method uses the <code>fManager</code> object used to allocate tables. A new <code>classDestroy</code> method is generated to deallocate the tables. </p>
-<p><strong>Finally, the <code>init</code> method is now empty. Because the static tables are now allocated on the heap, the architecture code must invoke <code>classInit</code> and <code>classDestroy</code> once to manage the allocation and deallocation of these tables, and use <code>instanceInit</code> for the initialization of each DSP instance.</strong></p>
+<p><strong>Finally, the <code>init</code> method is now empty. Because the static tables are now possibly allocated on the heap, the architecture code must invoke <code>classInit</code> and <code>classDestroy</code> once to manage the allocation and deallocation of these tables, and use <code>instanceInit</code> for the initialization of each DSP instance.</strong></p>
 <p>The <code>memoryInfo</code> method now has the following shape, with the two <code>itbl0mydspSIG0</code> and <code>ftbl1mydspSIG1</code> tables:</p>
 <pre><code class="language-c++">static void memoryInfo() {
     fManager-&gt;begin(6);
