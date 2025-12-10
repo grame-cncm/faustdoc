@@ -740,10 +740,12 @@ The dsp class is central to the Faust architecture design:
 
 + the `getNumInputs`, `getNumOutputs` methods provides information about the signal processor
 + the`buildUserInterface` method creates the user interface using a given UI class object (see later)
-+ the`init` method (and some more specialized methods like `instanceInit`, `instanceConstants`, etc.) is called to initialize the dsp object with a given sampling rate, typically obtained from the audio architecture
++ the `init` method (and some more specialized methods like `instanceInit`, `instanceConstants`, etc.) is called to initialize the dsp object with a given sampling rate, typically obtained from the audio architecture. The `init` method calls the `classInit` to allocate static tables and `instanceInit` to allocate the given instance
 + the`compute` method is called by the audio architecture to execute the actual audio processing. It takes a `count` number of samples to process, and `inputs` and `outputs` arrays of non-interleaved float/double samples, to be allocated and handled by the audio driver with the required dsp input and outputs channels (as given by  `getNumInputs` and `getNumOutputs`)
 + the `clone` method can be used to duplicate the instance
 + the`metadata(Meta* m)`method can be called with a `Meta` object to decode the instance global metadata (see next section)
+
+**When multiple DSP instances are created, the recommended approach is to call `classInit` only once to do static tables allocation once, and then call `instanceInit` on each DSP instance**.
 
 (note that `FAUSTFLOAT` label is typically defined to be the actual type of sample: either `float` or `double` using `#define FAUSTFLOAT float` in the code for instance).
 
@@ -1284,7 +1286,7 @@ class mydsp : public dsp {
 }
 ```
 
-The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are static global arrays. They are filled in the `classInit` method. The architecture code will typically call the `init` method (which calls `classInit`) on a given DSP, to allocate class related arrays and the DSP itself. If several DSPs are going to be allocated, calling `classInit` only once then the `instanceInit` method on each allocated DSP is the way to go.
+The `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are static global arrays initialized in the `classInit` method. The architecture code usually calls the `init` method which in turn calls `classInit` to initialize both the class-level data and the DSP instance itself. 
 
 In the `-mem` mode, the generated C++ code is now:
 
@@ -1328,7 +1330,9 @@ class mydsp : public dsp {
 }
 ```
 
-The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are generated as static global pointers. The `classInit` method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. Finally the `init` method is now empty, since the architecture file is supposed to use the `classInit/classDestroy` method once to allocate and deallocate static tables, and the `instanceInit` method on each allocated DSP.
+The two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables are generated as static global pointers. The `classInit` method uses the `fManager` object used to allocate tables. A new `classDestroy` method is generated to deallocate the tables. 
+
+**Finally, the `init` method is now empty. Because the static tables are now allocated on the heap, the architecture code must invoke `classInit` and `classDestroy` once to manage the allocation and deallocation of these tables, and use `instanceInit` for the initialization of each DSP instance.**
 
 The `memoryInfo` method now has the following shape, with the two `itbl0mydspSIG0` and `ftbl1mydspSIG1` tables:
 
