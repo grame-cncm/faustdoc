@@ -1971,88 +1971,110 @@ class mydsp : public dsp {
 <p>The specialized <code>malloc_memory_manager</code> class can now be used the following way:</p>
 <pre><code class="language-c++">// Allocate a global static custom memory manager
 static malloc_memory_manager gManager;
-
+...
 // Setup the global custom memory manager on the DSP class
 mydsp::fManager = &amp;gManager;
-
-// Make the memory manager get information on all subcontainers,
-// static tables, DSP and arrays and prepare memory allocation
-mydsp::memoryInfo();
-
-// Done once before allocating any DSP, to allocate static tables
-mydsp::classInit(44100);
-
-// ‘Placement new’ and 'memoryCreate' are used inside the ‘create’ method 
-dsp* DSP = mydsp::create();
-
-// Init the DSP instance
-DSP-&gt;instanceInit(44100);
-
 ...
-... // use the DSP
+void foo()
+{
+    // Make the memory manager get information on all subcontainers,
+    // static tables, DSP and arrays and prepare memory allocation
+    mydsp::memoryInfo();
+
+    // Done once before allocating any DSP, to allocate static tables
+    mydsp::classInit(44100);
+
+    // ‘Placement new’ and 'memoryCreate' are used inside the ‘create’ method 
+    dsp* DSP = mydsp::create();
+
+    // Init the DSP instance
+    DSP-&gt;instanceInit(44100);
+
+    ...
+    ... // use the DSP
+    ...
+
+    // 'memoryDestroy' and memory manager 'destroy' are used to deallocate memory
+    mydsp::destroy(DSP);
+}
 ...
-
-// 'memoryDestroy' and memory manager 'destroy' are used to deallocate memory
-mydsp::destroy();
-
 // Done once after the last DSP has been destroyed
 mydsp::classDestroy();
 </code></pre>
 <p>Note that the client code can still choose to allocate/deallocate the DSP instance using the regular C++ <code>new/delete</code> operators:</p>
 <pre><code class="language-c++">// Allocate a global static custom memory manager
 static malloc_memory_manager gManager;
-
+...
 // Setup the global custom memory manager on the DSP class
 mydsp::fManager = &amp;gManager;
-
-// Make the memory manager get information on all subcontainers,
-// static tables, DSP and arrays and prepare memory allocation
-mydsp::memoryInfo();
-
-// Done once before allocating any DSP, to allocate static tables
-mydsp::classInit(44100);
-
-// Use regular C++ new
-dsp* DSP = new mydsp();
-
-/// Allocate internal buffers
-DSP-&gt;memoryCreate();
-
-// Init the DSP instance
-DSP-&gt;instanceInit(44100);
-
 ...
-... // use the DSP
-...
+void foo()
+{
+    // Make the memory manager get information on all subcontainers,
+    // static tables, DSP and arrays and prepare memory allocation
+    mydsp::memoryInfo();
 
-// Deallocate internal buffers
-DSP-&gt;memoryDestroy();
+    // Done once before allocating any DSP, to allocate static tables
+    mydsp::classInit(44100);
 
-// Use regular C++ delete
-delete DSP;
+    // Use regular C++ new
+    dsp* DSP = new mydsp();
+
+    /// Allocate internal buffers
+    DSP-&gt;memoryCreate();
+
+    // Init the DSP instance
+    DSP-&gt;instanceInit(44100);
+
+    ...
+    ... // use the DSP
+    ...
+
+    // Deallocate internal buffers
+    DSP-&gt;memoryDestroy();
+
+    // Use regular C++ delete
+    delete DSP;
+}
 
 // Done once after the last DSP has been destroyed
 mydsp::classDestroy();
 </code></pre>
 <p>Or even on the stack with:</p>
-<pre><code class="language-c++">...
-
-// Allocation on the stack
-mydsp DSP;
-
-// Allocate internal buffers
-DSP.memoryCreate();
-
-// Init the DSP instance
-DSP.instanceInit(44100);
-
+<pre><code class="language-c++">// Allocate a global static custom memory manager
+static malloc_memory_manager gManager;
 ...
-... // use the DSP
+// Setup the global custom memory manager on the DSP class
+mydsp::fManager = &amp;gManager;
+...   
+void foo()
+{
+    // Make the memory manager get information on all subcontainers,
+    // static tables, DSP and arrays and prepare memory allocation
+    mydsp::memoryInfo();
+
+    // Done once before allocating any DSP, to allocate static tables
+    mydsp::classInit(44100);
+
+    // Allocation on the stack
+    mydsp DSP;
+
+    // Allocate internal buffers
+    DSP.memoryCreate();
+
+    // Init the DSP instance
+    DSP.instanceInit(44100);
+
+    ...
+    ... // use the DSP
+    ...
+
+    // Deallocate internal buffers
+    DSP.memoryDestroy();
+}
 ...
-
-// Deallocate internal buffers
-DSP.memoryDestroy();
-
+// Done once after the last DSP has been destroyed
+mydsp::classDestroy();
 ...
 </code></pre>
 <p>More complex custom memory allocators can be developed by refining this <code>malloc_memory_manager</code> example, possibly defining real-time memory allocators...etc... The <a href="https://www.rebeltech.org">OWL</a> architecture file uses a custom <a href="https://github.com/RebelTechnology/OwlProgram/blob/feature/faust-mem-priority/FaustSource/owl.cpp">OwlMemoryManager</a>.</p>
