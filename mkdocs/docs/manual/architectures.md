@@ -2510,6 +2510,9 @@ A basic flutter app as a proof of concept utilizing Faust's C API export with Da
 #### [libMfxFaust](https://github.com/Simon-L/libMfxFaust)
 This library is intended for use with Luajit through the FFI, DspFaust.cpp contains code at the end of the file that exposes functions in C namespace to easily call from Luajit, but plain C will work just as well.
 
+#### [MfxFaust.lua](https://github.com/Simon-L/MfxFaust.lua)
+An environment to prototype Faust dsp, with live recompiling, oscilloscope view, hot reloading, soundfile and MIDI.
+
 ### Haskell tools 
 
 #### [hs-faust](https://github.com/DivitMittal/hs-faust)
