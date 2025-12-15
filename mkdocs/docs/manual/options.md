@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.81.8
+## FAUST compiler version 2.83.1
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -82,7 +82,8 @@ usage : faust [options] file1 [file2 ...].
   -vhdl-trace    --vhdl-trace             activate trace.
   -vhdl-float    --vhdl-float             uses IEEE-754 format for samples instead of fixed point.
   -vhdl-components <file> --vhdl-components <file>    path to a file describing custom components for the VHDL backend.
-  -fpga-mem <n>  --fpga-mem <n>           FPGA block ram max size, used in -mem1/-mem2 mode.
+  -fpga-mem <n>     --fpga-mem <n>        FPGA block ram max size, used in -mem1/-mem2 mode.
+  -fpga-mem-th <n>  --fpga-mem-th <n>     FPGA array size threshold (in unit of the memory type), used in -mem1/-mem2 mode.
   -wi <n>     --widening-iterations <n>   number of iterations before widening in signal bounding.
   -ni <n>     --narrowing-iterations <n>  number of iterations before stopping narrowing in signal bounding.
   -rnt        --rust-no-faustdsp-trait    (Rust only) Don't generate FaustDsp trait implmentation.

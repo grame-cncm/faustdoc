@@ -570,18 +570,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#faust2wwise" class="nav-link">faust2wwise</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2wwisecmd" class="nav-link">faust2wwise.cmd</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#faust2wwisepy" class="nav-link">faust2wwise.py</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
               </ul>
             </li>
         </ul>
@@ -880,13 +868,16 @@ Options:
 
 <h2 id="faust2daisy">faust2daisy</h2>
 <pre class=faust-tools>
-faust2daisy [-patch] [-midi] [-nvoices &lt;num>] [-sr &lt;num>] [-bs &lt;num>] [-source] [Faust options (-vec -vs 8...)] &lt;file.dsp>
+faust2daisy [-patch] [-sram] [-qspi] [-sdram] [-mem-thresh] [-midi] [-nvoices &lt;num>] [-sr &lt;num>] [-bs &lt;num>] [-source] [Faust options (-vec -vs 8...)] &lt;file.dsp>
 Compiles Faust programs to Daisy boards (see https://github.com/grame-cncm/faust/tree/master-dev/architecture/daisy)
 Options:
+   -sram : flashing to sram (medium sized programs), requires daisy bootloader
+   -qspi : flashing to qspi memory (biggest programs), requires daisy bootloader
    -patch : to compile for 4 ins/outs Patch (knob[1,2,3,4])
    -pod : to compile for 2 ins/outs Pod (knob[1,3])
    -patchsm : to compile for the patch.Init() eurorack module
    -sdram : to compile using SDRAM for long delay lines/tables etc.
+   -mem-thresh &lt;num> : Memory threshold in bytes above which data is stored on SDRAM, requires -sdram
    -midi : activates MIDI control
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
    -sr &lt;num> : to specify sample rate
@@ -1612,34 +1603,6 @@ Compiles Faust programs to VCV Rack modules (see https://github.com/grame-cncm/f
    -version &lt;1|2> : to set the plugin version, 2 by default
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 
-</pre>
-
-<h2 id="faust2wwise">faust2wwise</h2>
-<pre class=faust-tools>
-Error: Wwise root directory not found.
-Make sure Wwise is installed and environment variables are set:
-  AudioKinetic Launcher -> Install options (tool icon) -> Set environment variables
-Then restart your terminal or IDE.
-Expected environment variables:
-  WWISEROOT (i.e. C:\Program Files (x86)\Audiokinetic\Wwise&lt;version>)
-Error: One or more important environment variables are unset.
-Please ensure Wwise and Faust are properly installed and configured.
-</pre>
-
-<h2 id="faust2wwisecmd">faust2wwise.cmd</h2>
-<pre class=faust-tools>
-</pre>
-
-<h2 id="faust2wwisepy">faust2wwise.py</h2>
-<pre class=faust-tools>
-Error: Wwise root directory not found.
-Make sure Wwise is installed and environment variables are set:
-  AudioKinetic Launcher -> Install options (tool icon) -> Set environment variables
-Then restart your terminal or IDE.
-Expected environment variables:
-  WWISEROOT (i.e. C:\Program Files (x86)\Audiokinetic\Wwise&lt;version>)
-Error: One or more important environment variables are unset.
-Please ensure Wwise and Faust are properly installed and configured.
 </pre></div>
         </div>
     </div>
