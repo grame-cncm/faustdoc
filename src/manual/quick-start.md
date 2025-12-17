@@ -291,14 +291,23 @@ Since we're only using functions from [`demo.lib`](https://faustlibraries.grame.
 
 Make a string physical model based on a feedback comb filter:
 
+<!-- faust-run -->
 ```
 import("stdfaust.lib");
-// freq, res and gate definitions go here
+
+// freq, res and gate definitions
+freq = hslider("frequency[unit:Hz]", 440, 20, 2000, 1);
+res  = hslider("resonance", 0.99, 0, 0.999, 0.001);
+gate = button("trigger");
+
+// String model
 string(frequency,resonance,trigger) = trigger : ba.impulsify : fi.fb_fcomb(1024,del,1,resonance)
 with {
 	del = ma.SR/frequency;
 };
+
 process = string(freq,res,gate);
 ```
+<!-- /faust-run -->
 
 Sampling rate is defined in [`maths.lib`](https://faustlibraries.grame.fr/libs/maths/) as [`SR`](https://faustlibraries.grame.fr/libs/maths/#masr). We're using it here to compute the length of the delay of the comb filter. [`with{}`](syntax.md#witht-expression) is a Faust primitive to attach local variables to a function. So in the current case, `del` is a local variable of `string`.

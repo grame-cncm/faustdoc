@@ -647,14 +647,30 @@ process =
 <p>Since we're only using functions from <a href="https://faustlibraries.grame.fr/libs/demos/"><code>demo.lib</code></a> here, there's no need to define any UI since it is built-in in the functions that we're calling. Note that the mono output of <code>dm.wah4_demo</code> is split to fit the stereo input of <code>dm.phaser2_demo</code>. The last three effects have the same number of inputs and outputs (2x2) so no need to split or merge them.</p>
 <h3 id="string-physical-model-based-on-a-comb-filter">String Physical Model Based On a Comb Filter</h3>
 <p>Make a string physical model based on a feedback comb filter:</p>
-<pre><code>import(&quot;stdfaust.lib&quot;);
-// freq, res and gate definitions go here
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+import("stdfaust.lib");
+
+// freq, res and gate definitions
+freq = hslider("frequency[unit:Hz]", 440, 20, 2000, 1);
+res  = hslider("resonance", 0.99, 0, 0.999, 0.001);
+gate = button("trigger");
+
+// String model
 string(frequency,resonance,trigger) = trigger : ba.impulsify : fi.fb_fcomb(1024,del,1,resonance)
 with {
     del = ma.SR/frequency;
 };
+
 process = string(freq,res,gate);
-</code></pre>
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
 <p>Sampling rate is defined in <a href="https://faustlibraries.grame.fr/libs/maths/"><code>maths.lib</code></a> as <a href="https://faustlibraries.grame.fr/libs/maths/#masr"><code>SR</code></a>. We're using it here to compute the length of the delay of the comb filter. <a href="../syntax/#witht-expression"><code>with{}</code></a> is a Faust primitive to attach local variables to a function. So in the current case, <code>del</code> is a local variable of <code>string</code>.</p></div>
         </div>
     </div>
