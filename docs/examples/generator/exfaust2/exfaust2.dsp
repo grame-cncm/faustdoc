@@ -1,10 +1,10 @@
 
-declare name "filterOSC";
-declare version "0.0";
-declare author "JOS, revised by RM";
-declare description "Simple application demoing filter based oscillators.";
+//-----------------------------------
+//  Examples of the DX7 library
+//  From algorithm 1 to 32
+//-----------------------------------
 
 import("stdfaust.lib");
 
-process = dm.oscrs_demo;
+process = dx.algorithm(1) <: _,_;
 
