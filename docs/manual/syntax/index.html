@@ -2152,6 +2152,27 @@ v(t) = max(0, v(t-1) + (n(t-1)<a(t))/a(t) - (n(t-1)>=a(t))/r(t)) * (g(t)<=g(t-1)
 <pre><code>...component(&quot;freeverb.dsp&quot;)[foo(x) = ...;]...
 };
 </code></pre>
+<p>Combined with the <code>environment</code> construct, <em>explicit substitution</em> can be used to express a form of <em>default parameter values</em> or <em>keyword arguments</em> for function definitions:</p>
+<pre><code>import(&quot;stdfaust.lib&quot;);
+
+// Filter parameters in an environment  
+fPar = environment {
+    freq = 1000;
+    Q = 0.707;
+    gain = 1.0;
+};
+
+// Filter parametrized with an environment
+filter(p) = fi.resonlp(p.freq, p.Q, p.gain);
+
+// Usage examples
+// all defaults
+process = no.noise : filter(fPar);                    
+ // override freq    
+process = no.noise : filter(fPar[freq = 2000;]);     
+ // override freq and Q    
+process = no.noise : filter(fPar[freq = 200; Q = 2.0;]);
+</code></pre>
 <h3 id="foreign-expressions">Foreign Expressions</h3>
 <p>Reference to external C <em>functions</em>, <em>variables</em> and <em>constants</em> can be introduced using the <em>foreign expressions</em> mechanism.</p>
 <p><img src="img/foreignexp.svg" class="mx-auto d-block"></p>

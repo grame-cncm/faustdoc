@@ -1056,6 +1056,30 @@ For example we can create a customized version of `component("freeverb.dsp")`, w
 };
 ```
 
+Combined with the `environment` construct, *explicit substitution* can be used to express a form of *default parameter values* or *keyword arguments* for function definitions:
+
+```
+import("stdfaust.lib");
+
+// Filter parameters in an environment  
+fPar = environment {
+    freq = 1000;
+    Q = 0.707;
+    gain = 1.0;
+};
+
+// Filter parametrized with an environment
+filter(p) = fi.resonlp(p.freq, p.Q, p.gain);
+
+// Usage examples
+// all defaults
+process = no.noise : filter(fPar);                    
+ // override freq    
+process = no.noise : filter(fPar[freq = 2000;]);     
+ // override freq and Q    
+process = no.noise : filter(fPar[freq = 200; Q = 2.0;]);
+```
+
 ### Foreign Expressions
 
 Reference to external C *functions*, *variables* and *constants* can be introduced using the *foreign expressions* mechanism.
