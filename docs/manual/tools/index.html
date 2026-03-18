@@ -873,13 +873,19 @@ Compiles Faust programs to Daisy boards (see https://github.com/grame-cncm/faust
 Options:
    -sram : flashing to sram (medium sized programs), requires daisy bootloader
    -qspi : flashing to qspi memory (biggest programs), requires daisy bootloader
+   -seed : Using Daisy seed
+   -patchsm : Using Daisy Patch submodule
    -patch : to compile for 4 ins/outs Patch (knob[1,2,3,4])
    -pod : to compile for 2 ins/outs Pod (knob[1,3])
-   -patchsm : to compile for the patch.Init() eurorack module
    -sdram : to compile using SDRAM for long delay lines/tables etc.
+   -config-file &lt;filename> : JSON file to specify mapping of a platform (like pod, patch) to the chip, like pod_spec.json in Faust architecture files for Daisy
    -mem-thresh &lt;num> : Memory threshold in bytes above which data is stored on SDRAM, requires -sdram
-   -midi : activates MIDI control
+   -midi : Enables MIDI (USB, with default Daisy USB)
+   -midi-uart : Enables MIDI through UART pins (for Pod for example)
+   -rx-pin : RX Pin for MIDI UART
+   -tx-pin : TX Pin for MIDI UART
    -nvoices &lt;num> : produces a polyphonic DSP with &lt;num> voices, ready to be used with MIDI events
+   -poly-mode &lt;mode> : Mode for polyphony, options : &lt;stealing> or &lt;blocking> (defaults to stealing)
    -sr &lt;num> : to specify sample rate
    -bs &lt;num> : to specify buffer size
    -source : to only create the source folder

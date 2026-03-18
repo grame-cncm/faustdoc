@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.83.1
+## FAUST compiler version 2.85.4
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -28,7 +28,7 @@ usage : faust [options] file1 [file2 ...].
 ---------------------------------------
 ~~~faust-options
   -lang <lang> --language                 select output language,
-                                          'lang' should be c, cpp (default), cmajor, codebox, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust, sdf3, vhdl or wast/wasm.
+                                          'lang' should be asc, c, cpp (default), cmajor, codebox, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust, sdf3, vhdl or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.
@@ -86,7 +86,7 @@ usage : faust [options] file1 [file2 ...].
   -fpga-mem-th <n>  --fpga-mem-th <n>     FPGA array size threshold (in unit of the memory type), used in -mem1/-mem2 mode.
   -wi <n>     --widening-iterations <n>   number of iterations before widening in signal bounding.
   -ni <n>     --narrowing-iterations <n>  number of iterations before stopping narrowing in signal bounding.
-  -rnt        --rust-no-faustdsp-trait    (Rust only) Don't generate FaustDsp trait implmentation.
+  -rnt        --rust-no-faustdsp-trait    (Rust only) Don't generate FaustDsp trait implementation.
   -rnlm       --rust-no-libm              (Rust only) Don't generate FFI calls to libm.
 ~~~
 ## Block diagram options:
