@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.85.4
+## FAUST compiler version 2.85.5
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
