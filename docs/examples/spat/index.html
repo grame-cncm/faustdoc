@@ -330,6 +330,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#spcap" class="nav-link">spcap</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#wfs" class="nav-link">wfs</a>
               <ul class="nav flex-column">
               </ul>
@@ -406,9 +410,32 @@ process = vgroup("Spatializer 1x8", sp.spat(8, angle, distance));
 </div>
 <!-- /faust-run -->
 
-<h2 id="wfs">wfs</h2>
+<h2 id="spcap">spcap</h2>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+declare name      "spcap";
+declare version   "1.0";
+declare author    "Grame";
+declare license   "BSD";
+declare copyright "(c)GRAME 2026";
+
+import("stdfaust.lib");
+
+// Spatialize 1 sound source on 8 speakers
+process = sp.spcap_ui(8);
+
+
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="wfs">wfs</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name      "wfs";
