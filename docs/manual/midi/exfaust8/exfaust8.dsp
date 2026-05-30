@@ -9,7 +9,7 @@ clocker = checkbox("MIDI clock[midi:clock]");
 play = checkbox("ON/OFF [midi:start] [midi:stop]");    
 
 // detect front
-front(x) = (x-x') != 0.0;      
+front(x) = x != x';      
 
 // count number of peaks during one second
 freq(x) = (x-x@ma.SR) : + ~ _;   
