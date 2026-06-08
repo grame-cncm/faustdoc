@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <title>Using LLMs - Faust Documentation
+    </title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="/css/quickref.css" rel="stylesheet">
+    <link href="/css/github.min.css" rel="stylesheet">
+    <link href="/rail/railroad-diagrams.css" rel="stylesheet">
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <script src="../../js/bootstrap.min.js" defer></script>
+    <script src="../../js/MathJax-2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"defer></script>
+    <script src="../../js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+<body>
+    <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="../.."><img
+                    src="../../img/faustText.svg" width="150px"> </a>
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Expanded navigation -->
+            <div id="navbar-collapse" class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li class="navitem">
+                        <a href="../.." class="nav-link">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manual <b
+                                class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li>
+    <a href="../introduction/" class="dropdown-item">Introduction</a>
+</li>
+                            
+<li>
+    <a href="../overview/" class="dropdown-item">Overview of the Faust Universe</a>
+</li>
+                            
+<li>
+    <a href="../quick-start/" class="dropdown-item">Quick Start</a>
+</li>
+                            
+<li>
+    <a href="../syntax/" class="dropdown-item">Faust Syntax</a>
+</li>
+                            
+<li>
+    <a href="../errors/" class="dropdown-item">Error Messages</a>
+</li>
+                            
+<li>
+    <a href="../compiler/" class="dropdown-item">Using the Compiler</a>
+</li>
+                            
+<li>
+    <a href="../options/" class="dropdown-item">Compiler Options</a>
+</li>
+                            
+<li>
+    <a href="../tools/" class="dropdown-item">faust2[...] Tools</a>
+</li>
+                            
+<li>
+    <a href="../architectures/" class="dropdown-item">Architecture Files</a>
+</li>
+                            
+<li>
+    <a href="../embedding/" class="dropdown-item">Embedding the Compiler</a>
+</li>
+                            
+<li>
+    <a href="../optimizing/" class="dropdown-item">Optimizing the Code</a>
+</li>
+                            
+<li>
+    <a href="../debugging/" class="dropdown-item">Debugging the Code</a>
+</li>
+                            
+<li>
+    <a href="../deploying/" class="dropdown-item">Deploying on the Web</a>
+</li>
+                            
+<li>
+    <a href="../remote/" class="dropdown-item">Remote Compilation</a>
+</li>
+                            
+<li>
+    <a href="../mathdoc/" class="dropdown-item">Mathematical Documentation</a>
+</li>
+                            
+<li>
+    <a href="../osc/" class="dropdown-item">OSC Support</a>
+</li>
+                            
+<li>
+    <a href="../http/" class="dropdown-item">HTTP Support</a>
+</li>
+                            
+<li>
+    <a href="../midi/" class="dropdown-item">MIDI Support</a>
+</li>
+                            
+<li>
+    <a href="../soundfiles/" class="dropdown-item">Soundfiles Support</a>
+</li>
+                            
+<li>
+    <a href="./" class="dropdown-item active">Using LLMs</a>
+</li>
+                            
+<li>
+    <a href="../community/" class="dropdown-item">Community</a>
+</li>
+                            
+<li>
+    <a href="../faq/" class="dropdown-item">Frequently Asked Questions</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Examples <b
+                                class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li>
+    <a href="../../examples" class="dropdown-item"> All examples </a>
+</li>
+                            
+<li>
+    <a href="../../examples/ambisonics/" class="dropdown-item"> ambisonics </a>
+</li>
+                            
+<li>
+    <a href="../../examples/analysis/" class="dropdown-item"> analysis </a>
+</li>
+                            
+<li>
+    <a href="../../examples/bela/" class="dropdown-item"> bela </a>
+</li>
+                            
+<li>
+    <a href="../../examples/delayEcho/" class="dropdown-item"> delayEcho </a>
+</li>
+                            
+<li>
+    <a href="../../examples/dynamic/" class="dropdown-item"> dynamic </a>
+</li>
+                            
+<li>
+    <a href="../../examples/filtering/" class="dropdown-item"> filtering </a>
+</li>
+                            
+<li>
+    <a href="../../examples/gameaudio/" class="dropdown-item"> gameaudio </a>
+</li>
+                            
+<li>
+    <a href="../../examples/generator/" class="dropdown-item"> generator </a>
+</li>
+                            
+<li>
+    <a href="../../examples/misc/" class="dropdown-item"> misc </a>
+</li>
+                            
+<li>
+    <a href="../../examples/phasing/" class="dropdown-item"> phasing </a>
+</li>
+                            
+<li>
+    <a href="../../examples/physicalModeling/" class="dropdown-item"> physicalModeling </a>
+</li>
+                            
+<li>
+    <a href="../../examples/pitchShifting/" class="dropdown-item"> pitchShifting </a>
+</li>
+                            
+<li>
+    <a href="../../examples/psychoacoustic/" class="dropdown-item"> psychoacoustic </a>
+</li>
+                            
+<li>
+    <a href="../../examples/reverb/" class="dropdown-item"> reverb </a>
+</li>
+                            
+<li>
+    <a href="../../examples/smartKeyboard/" class="dropdown-item"> smartKeyboard </a>
+</li>
+                            
+<li>
+    <a href="../../examples/spat/" class="dropdown-item"> spat </a>
+</li>
+                            
+<li>
+    <a href="../../rsrc/examples.zip" class="dropdown-item"> Download examples </a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b
+                                class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item">Faust & JUCE</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/teensy/" class="dropdown-item">DSP on the Teensy With Faust</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/esp32/" class="dropdown-item">DSP on the ESP-32 With Faust</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/basic-osc/" class="dropdown-item">Making a Sine Oscillator From Scratch</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/summation/" class="dropdown-item">RMS and Summation in Faust</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/box-api/" class="dropdown-item">Using the box API</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/signal-api/" class="dropdown-item">Using the signal API</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/julia/" class="dropdown-item">Using Faust in Julia</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/cmajor/" class="dropdown-item">Using Faust in Cmajor</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/jsfx/" class="dropdown-item">Using Faust in JSFX</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/rnbo/" class="dropdown-item">Using Faust in RNBO with codebox~</a>
+</li>
+                            
+<li>
+    <a href="../../tutorials/debugging/" class="dropdown-item">Advanced debugging with interp-tracer</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Workshops <b
+                                class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li>
+    <a href="../../workshops/2018-12-01-paw/" class="dropdown-item"> 2018-12-01 PAW </a>
+</li>
+                            
+<li>
+    <a href="../../workshops/2020-03-24-faust-citi/" class="dropdown-item"> 2020-03-24 CITI </a>
+</li>
+                            
+<li>
+    <a href="../../workshops/2020-04-10-faust-101/" class="dropdown-item"> 2020-04-10 Faust 101 </a>
+</li>
+                            
+<li>
+    <a href="../../workshops/2020-04-10-faust-juce/" class="dropdown-item"> 2020-04-10 Faust & JUCE </a>
+</li>
+                            
+<li>
+    <a href="../../workshops/2020-11-21-faust-vcvrack/" class="dropdown-item"> 2020-11-21 Faust & VCV Rack </a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="navitem">
+                        <a href="../../about/" class="nav-link">About</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <i class="fa fa-search"></i> Search
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="container">
+        <div class="row"><div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#using-llms-with-faust" class="nav-link">Using LLMs with Faust</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#typical-uses" class="nav-link">Typical Uses</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#prompting-faust-code" class="nav-link">Prompting Faust Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#what-to-check" class="nav-link">What to Check</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-library-documentation-with-llms" class="nav-link">Using Library Documentation with LLMs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#mcp-and-interactive-sessions" class="nav-link">MCP and Interactive Sessions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#text-to-code-and-host-applications" class="nav-link">Text-to-Code and Host Applications</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#practical-verification" class="nav-link">Practical Verification</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#prompt-patterns" class="nav-link">Prompt Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#limitations" class="nav-link">Limitations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#further-reading-and-related-tools" class="nav-link">Further Reading and Related Tools</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+            <div class="col-md-9 main-container" role="main">
+
+<h1 id="using-llms-with-faust">Using LLMs with Faust</h1>
+<p>Large Language Models (LLMs) can help write, explain, debug, and document Faust
+programs. They are useful for turning a musical or signal-processing idea into a
+first draft, proposing variations, finding standard-library functions, and
+driving a short compile/listen/revise loop.</p>
+<p>They should not replace the Faust compiler, the library documentation, or
+listening tests. Generated DSP code must still be compiled, inspected, measured,
+and auditioned.</p>
+<p>Faust is a strong target for LLM-assisted programming because it is compact,
+textual, and structured around signal flow. A <code>.dsp</code> file is not just code
+generated by a model: it is an auditable artifact shared by the model, the Faust
+compiler, and the human reviewer. The composition operators describe routing,
+the compiler checks arity and feedback structure, and SVG block diagrams make
+nontrivial signal flow visible.</p>
+<p>For DSP, this is often a better division of labor than asking an LLM to write a
+complete C++ implementation. The LLM can write a compact Faust specification;
+the Faust compiler then generates C++, WebAssembly, LLVM IR, Rust, Cmajor, JAX,
+or another target.</p>
+<h2 id="typical-uses">Typical Uses</h2>
+<p>LLMs are most useful when the task has a clear sound, interface, or diagnostic
+goal:</p>
+<ul>
+<li>draft an oscillator, filter, effect, instrument, physical model, or analysis
+  patch;</li>
+<li>explain existing Faust code as signal flow;</li>
+<li>translate a block-diagram idea into Faust composition operators;</li>
+<li>propose standard-library functions for a task;</li>
+<li>add controls, metadata, MIDI mappings, or polyphonic structure;</li>
+<li>debug compiler errors and arity/routing problems;</li>
+<li>generate small variations while preserving an existing interface;</li>
+<li>document a DSP for users or maintainers.</li>
+</ul>
+<p>The most productive loop is:</p>
+<pre><code class="language-text">prompt -&gt; generated Faust -&gt; compile -&gt; inspect JSON/SVG -&gt; listen/measure
+       -&gt; targeted correction -&gt; repeat
+</code></pre>
+<h2 id="prompting-faust-code">Prompting Faust Code</h2>
+<p>Prompts work better when they include Faust-specific constraints:</p>
+<ul>
+<li>desired sound or processing task;</li>
+<li>number of inputs and outputs;</li>
+<li>control names, ranges, and defaults;</li>
+<li>whether to use <code>import("stdfaust.lib");</code>;</li>
+<li>MIDI, polyphony, metadata, or target platform requirements;</li>
+<li>whether readability or optimization matters more.</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-text">Write a Faust stereo chorus effect.
+Requirements:
+- use import(&quot;stdfaust.lib&quot;);
+- two audio inputs and two audio outputs;
+- controls: rate [0.05..8] Hz, depth [0..1], feedback [0..0.95], mix [0..1];
+- keep the code readable;
+- return only the .dsp code.
+</code></pre>
+<p>For debugging, include the compiler diagnostic and the complete current program:</p>
+<pre><code class="language-text">This Faust program fails to compile. Explain the error and return a corrected
+version. Preserve the public controls and stereo I/O.
+
+&lt;paste compiler diagnostic&gt;
+&lt;paste Faust code&gt;
+</code></pre>
+<p>For refinement, ask for a minimal edit:</p>
+<pre><code class="language-text">Modify only the filter section so the resonance is safer at high cutoff values.
+Keep all UI paths and control ranges unchanged.
+</code></pre>
+<h2 id="what-to-check">What to Check</h2>
+<p>LLMs often produce plausible-looking Faust code that still needs correction.
+Common issues include:</p>
+<ul>
+<li>missing <code>import("stdfaust.lib");</code>;</li>
+<li>invented library names or wrong function arity;</li>
+<li>wrong number of inputs or outputs;</li>
+<li>invalid use of <code>:</code> / <code>,</code> / <code>&lt;:</code> / <code>:&gt;</code> / <code>~</code>;</li>
+<li>wrong delay or feedback topology, especially around <code>~</code>;</li>
+<li>unsafe UI ranges or defaults;</li>
+<li>code that compiles but clips, self-oscillates, denormalizes, or produces
+  silence;</li>
+<li>argument-order or unit mistakes in library calls that compile cleanly but
+  implement the wrong DSP.</li>
+</ul>
+<p>Always run the compiler. When possible, also inspect JSON metadata and SVG block
+diagrams:</p>
+<pre><code class="language-bash">faust -lang cpp mypatch.dsp -o /tmp/mypatch.cpp
+faust -json mypatch.dsp -o /tmp/mypatch.json
+faust -svg mypatch.dsp
+</code></pre>
+<p>Treat the compiler as an oracle for what it can prove cheaply: syntax, symbol
+existence, arity, routing, and many feedback-shape errors. It cannot prove
+musical taste, correct parameter scaling, intended units, stability for every
+parameter trajectory, or whether the best library primitive was chosen.</p>
+<h2 id="using-library-documentation-with-llms">Using Library Documentation with LLMs</h2>
+<p>LLMs are much more reliable when they can consult the actual Faust library
+documentation instead of relying on memory. A practical retrieval workflow is:</p>
+<ol>
+<li>load the general LLM entry point for the libraries;</li>
+<li>search the generated library index for relevant functions;</li>
+<li>provide exact names, signatures, I/O shape, parameter meaning, examples, and
+   license information;</li>
+<li>ask the model to use only those functions;</li>
+<li>compile the result and feed diagnostics back into the conversation.</li>
+</ol>
+<p>The Faust libraries site documents its LLM-oriented exports in the
+<a href="https://faustlibraries.grame.fr/contributing/#llms">Contributing / LLMs</a>
+section and publishes a dedicated entry point:</p>
+<pre><code class="language-text">https://faustlibraries.grame.fr/llms.txt
+</code></pre>
+<p>The libraries repository can also generate machine-readable JSON exports from
+the <code>.lib</code> sources. The generator starts from <code>stdfaust.lib</code>, follows
+<code>library("...")</code> and <code>import("...")</code> directives, and extracts documented
+symbols with fields such as summary, usage, parameters, notes, I/O counts when
+derivable, test code, references, source location, and per-symbol license
+metadata.</p>
+<p>Useful commands in a Faust libraries checkout:</p>
+<pre><code class="language-bash">make doc-index
+make doc-index-split
+make doc-index-commercial
+</code></pre>
+<p>The split layout is usually best for LLM workflows because it loads a compact
+global index first, then retrieves one module or symbol on demand. The
+commercial-compatible export is useful for license-sensitive generation; it is
+a practical filter, not a legal opinion.</p>
+<p>The local query tool can be used directly:</p>
+<pre><code class="language-bash">python3 scripts/faust_doc_api.py --pretty search_faust_lib reverb --limit 5
+python3 scripts/faust_doc_api.py --pretty get_faust_symbol de.delay
+python3 scripts/faust_doc_api.py --pretty list_faust_module delays --limit 20
+python3 scripts/faust_doc_api.py --pretty get_faust_examples delay
+python3 scripts/faust_doc_api.py --pretty explain_faust_symbol_for_goal \
+  re.springreverb &quot;build a metallic spring reverb&quot;
+</code></pre>
+<p>For prompts, prefer concise retrieved context: exact signature, argument order,
+units, I/O shape, one-line purpose, usage example, and license status. A bare
+list of names is less useful because the compiler already rejects unknown
+symbols. The high-value information is discovery, semantics, and custom library
+documentation that the model has not seen in training.</p>
+<p>Example:</p>
+<pre><code class="language-text">Use only these retrieved Faust functions:
+- fi.lowpass(...)
+- de.delay(...)
+- si.smoo
+
+All functions above are acceptable for the target license policy.
+Build a mono tape-delay effect with delay time, feedback, tone, and wet/dry mix.
+Do not invent other library functions.
+</code></pre>
+<h2 id="mcp-and-interactive-sessions">MCP and Interactive Sessions</h2>
+<p>The Model Context Protocol (MCP) lets an LLM call tools instead of only
+generating text. For Faust, MCP tools can:</p>
+<ul>
+<li>check syntax;</li>
+<li>compile a DSP;</li>
+<li>start audio in a browser or Node/WebAudio runtime;</li>
+<li>list UI parameters from generated JSON;</li>
+<li>set and read parameter values;</li>
+<li>return audio metrics;</li>
+<li>search Faust library documentation.</li>
+</ul>
+<p>A minimal interaction can look like:</p>
+<pre><code class="language-text">compile_and_start(faust_code=&quot;process = os.osc(440) * 0.2;&quot;)
+get_param_values()
+set_param(path=&quot;/freq&quot;, value=220)
+set_param(path=&quot;/gain&quot;, value=0.1)
+</code></pre>
+<p>This creates two feedback loops:</p>
+<ul>
+<li>symbolic: source -&gt; compiler -&gt; errors, JSON, generated code, diagrams;</li>
+<li>perceptual: audio -&gt; listening, peak/RMS, spectrum, stability checks.</li>
+</ul>
+<p>Browser-based MCP systems such as
+<a href="https://github.com/grame-cncm/faustbrowser-mcp">faustbrowser-mcp</a> delegate audio
+execution to a real browser runtime. A small server exposes MCP tools and
+bridges the LLM client to a browser UI using Web Audio, Web MIDI when available,
+controls, meters, and diagrams. This is well suited to prototyping, teaching,
+and sound design, but generated DSP still needs review before production use.</p>
+<h2 id="text-to-code-and-host-applications">Text-to-Code and Host Applications</h2>
+<p>Text-to-Faust projects such as
+<a href="https://github.com/orlarey/faustcode">faustcode</a> accept a natural-language
+description and return Faust source code:</p>
+<pre><code class="language-text">&quot;Make a resonant low-pass filtered sawtooth bass with an ADSR envelope.&quot;
+</code></pre>
+<p>These tools are best understood as generators, not correctness or style oracles.
+Their output should immediately enter the normal Faust workflow: compile,
+inspect JSON, render the block diagram, listen, measure, and revise.</p>
+<p>An LLM can also sit inside a larger music application, where it may create
+tracks, load devices, edit clips, connect modulators, or set sidechains. Faust
+then remains the DSP language for effects and instruments, while the model
+operates the host symbolically. The important rule is that AI actions should
+remain visible, editable, undoable, and testable.</p>
+<h2 id="practical-verification">Practical Verification</h2>
+<p>For generated or modified Faust code, check:</p>
+<ul>
+<li>compile with the target Faust version;</li>
+<li>input/output arity;</li>
+<li>UI names, ranges, and defaults;</li>
+<li>silence, clipping, NaNs, and runaway feedback;</li>
+<li>extreme parameter values;</li>
+<li>MIDI and polyphony metadata, if used;</li>
+<li>CPU cost for constrained targets;</li>
+<li>block diagrams for nontrivial routing.</li>
+</ul>
+<p>For nontrivial patches, ask the LLM to explain the signal graph in terms of
+Faust's five composition operators:</p>
+<pre><code class="language-text">~   feedback
+,   parallel composition
+:   sequential composition
+&lt;:  split
+:&gt;  merge
+</code></pre>
+<p>Then compare the explanation with the generated block diagram. Mismatches often
+indicate that either the code or the explanation is wrong.</p>
+<h2 id="prompt-patterns">Prompt Patterns</h2>
+<p>Generate:</p>
+<pre><code class="language-text">Write a Faust DSP for a mono-in/stereo-out shimmer reverb prototype.
+Use import(&quot;stdfaust.lib&quot;). Keep the code compact and compilable.
+Controls: mix, decay, shimmer, tone. Return only Faust code.
+</code></pre>
+<p>Explain:</p>
+<pre><code class="language-text">Explain this Faust program as a signal-flow graph. Identify inputs, outputs,
+UI controls, and feedback paths.
+</code></pre>
+<p>Repair:</p>
+<pre><code class="language-text">This code does not compile with Faust. Fix the smallest possible part.
+Preserve all UI labels and ranges.
+</code></pre>
+<p>Review:</p>
+<pre><code class="language-text">Review this Faust effect for unsafe feedback, clipping risk, parameter ranges,
+and library calls that may have wrong units or argument order.
+</code></pre>
+<p>Use retrieved documentation:</p>
+<pre><code class="language-text">Here are the exact library functions available:
+&lt;paste retrieved docs&gt;
+
+Use only these functions. Do not invent library names.
+</code></pre>
+<h2 id="limitations">Limitations</h2>
+<p>Faust reduces some LLM risks, but it does not remove review. Its compiler can
+prove important structural facts about wiring, arity, and feedback form; it does
+not prove that a reverb is beautiful, that a compressor has the intended feel,
+or that a physical model matches a target instrument.</p>
+<p>Current LLMs also have less Faust training data than Python, JavaScript, or C++.
+They often know the basic operators but may be less fluent with idiomatic
+<code>stdfaust.lib</code> usage, recursion patterns, and long-tail library functions. More
+public, well-licensed, idiomatic Faust examples and prompt-to-Faust examples
+with tests directly improve this situation.</p>
+<p>Treat LLM output as a draft: compile it, test it, inspect metadata and block
+diagrams, listen critically, and keep human review in the loop.</p>
+<h2 id="further-reading-and-related-tools">Further Reading and Related Tools</h2>
+<ul>
+<li>The <a href="https://faustdoc.grame.fr/manual/">Faust manual</a>, especially syntax,
+  block-diagram composition, JSON metadata, SVG diagrams, and embedding.</li>
+<li>The <a href="https://faustlibraries.grame.fr/contributing/#llms">Faust Libraries LLM documentation</a>
+  and <a href="https://faustlibraries.grame.fr/llms.txt">llms.txt</a>.</li>
+<li><a href="https://github.com/grame-cncm/faustbrowser-mcp">faustbrowser-mcp</a>, for
+  browser-based MCP compilation, inspection, and control.</li>
+<li><a href="https://github.com/orlarey/faustcode">faustcode</a>, another more sophisticated browser-based MCP compilation, inspection, and control tool.</li>
+<li><a href="https://github.com/josmithiii/gists">Julius O. Smith's gists</a>, including
+  agent/skill material and DSP grounding context.</li>
+<li>Julius O. Smith's
+  <a href="https://ccrma.stanford.edu/~jos/pdf/IFC26-handout.pdf">IFC 2026 handout</a>
+  and local IFC 2026 slides on Faust and AI programming.</li>
+</ul></div>
+        </div>
+    </div>
+
+    <footer class="col-md-12">
+        <hr>
+        <p>Copyright &copy; 2020-2026 <a href="https://www.grame.fr">Grame-CNCM</a></p>
+    </footer>
+    <script>
+        var base_url = "../..",
+        shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+    </script>
+    <script src="../../js/base.js" defer></script>
+    <script src="/js/faust-web-component.js" defer></script>
+    <script src="../../search/main.js" defer></script>
+
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    </body>
+
+</html>
