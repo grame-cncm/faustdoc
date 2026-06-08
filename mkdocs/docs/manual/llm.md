@@ -183,6 +183,22 @@ Build a mono tape-delay effect with delay time, feedback, tone, and wet/dry mix.
 Do not invent other library functions.
 ```
 
+## Claude Code Faust Plugin
+
+Julius O. Smith's `/faust` skill is also packaged as an installable Claude Code
+plugin. In Claude Code:
+
+```text
+/plugin marketplace add josmithiii/gists
+/plugin install faust@josmithiii-gists
+```
+
+After installation, the Faust skill triggers automatically on Faust-related
+requests; it does not need to be invoked explicitly. It carries the same kind of
+terse Faust primer and idiomatic examples described above, so the model starts
+with useful context about syntax, arity, composition operators, recursion, and
+standard-library usage before generating or reviewing Faust code.
+
 ## MCP and Interactive Sessions
 
 The Model Context Protocol (MCP) lets an LLM call tools instead of only

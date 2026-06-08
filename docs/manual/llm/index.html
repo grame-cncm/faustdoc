@@ -342,6 +342,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#claude-code-faust-plugin" class="nav-link">Claude Code Faust Plugin</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#mcp-and-interactive-sessions" class="nav-link">MCP and Interactive Sessions</a>
               <ul class="nav flex-column">
               </ul>
@@ -514,6 +518,17 @@ All functions above are acceptable for the target license policy.
 Build a mono tape-delay effect with delay time, feedback, tone, and wet/dry mix.
 Do not invent other library functions.
 </code></pre>
+<h2 id="claude-code-faust-plugin">Claude Code Faust Plugin</h2>
+<p>Julius O. Smith's <code>/faust</code> skill is also packaged as an installable Claude Code
+plugin. In Claude Code:</p>
+<pre><code class="language-text">/plugin marketplace add josmithiii/gists
+/plugin install faust@josmithiii-gists
+</code></pre>
+<p>After installation, the Faust skill triggers automatically on Faust-related
+requests; it does not need to be invoked explicitly. It carries the same kind of
+terse Faust primer and idiomatic examples described above, so the model starts
+with useful context about syntax, arity, composition operators, recursion, and
+standard-library usage before generating or reviewing Faust code.</p>
 <h2 id="mcp-and-interactive-sessions">MCP and Interactive Sessions</h2>
 <p>The Model Context Protocol (MCP) lets an LLM call tools instead of only
 generating text. For Faust, MCP tools can:</p>
