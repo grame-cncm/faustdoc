@@ -211,31 +211,11 @@ This creates two feedback loops:
 - perceptual: audio -> listening, peak/RMS, spectrum, stability checks.
 
 Browser-based MCP systems such as
-[faustbrowser-mcp](https://github.com/grame-cncm/faustbrowser-mcp) delegate audio
+[faustbrowser-mcp](https://github.com/grame-cncm/faustbrowser-mcp) or [faustcode](https://github.com/orlarey/faustcode) delegate audio
 execution to a real browser runtime. A small server exposes MCP tools and
 bridges the LLM client to a browser UI using Web Audio, Web MIDI when available,
 controls, meters, and diagrams. This is well suited to prototyping, teaching,
 and sound design, but generated DSP still needs review before production use.
-
-## Text-to-Code and Host Applications
-
-Text-to-Faust projects such as
-[faustcode](https://github.com/orlarey/faustcode) accept a natural-language
-description and return Faust source code:
-
-```text
-"Make a resonant low-pass filtered sawtooth bass with an ADSR envelope."
-```
-
-These tools are best understood as generators, not correctness or style oracles.
-Their output should immediately enter the normal Faust workflow: compile,
-inspect JSON, render the block diagram, listen, measure, and revise.
-
-An LLM can also sit inside a larger music application, where it may create
-tracks, load devices, edit clips, connect modulators, or set sidechains. Faust
-then remains the DSP language for effects and instruments, while the model
-operates the host symbolically. The important rule is that AI actions should
-remain visible, editable, undoable, and testable.
 
 ## Practical Verification
 

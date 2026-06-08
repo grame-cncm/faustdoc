@@ -346,10 +346,6 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#text-to-code-and-host-applications" class="nav-link">Text-to-Code and Host Applications</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#practical-verification" class="nav-link">Practical Verification</a>
               <ul class="nav flex-column">
               </ul>
@@ -542,25 +538,11 @@ set_param(path=&quot;/gain&quot;, value=0.1)
 <li>perceptual: audio -&gt; listening, peak/RMS, spectrum, stability checks.</li>
 </ul>
 <p>Browser-based MCP systems such as
-<a href="https://github.com/grame-cncm/faustbrowser-mcp">faustbrowser-mcp</a> delegate audio
+<a href="https://github.com/grame-cncm/faustbrowser-mcp">faustbrowser-mcp</a> or <a href="https://github.com/orlarey/faustcode">faustcode</a> delegate audio
 execution to a real browser runtime. A small server exposes MCP tools and
 bridges the LLM client to a browser UI using Web Audio, Web MIDI when available,
 controls, meters, and diagrams. This is well suited to prototyping, teaching,
 and sound design, but generated DSP still needs review before production use.</p>
-<h2 id="text-to-code-and-host-applications">Text-to-Code and Host Applications</h2>
-<p>Text-to-Faust projects such as
-<a href="https://github.com/orlarey/faustcode">faustcode</a> accept a natural-language
-description and return Faust source code:</p>
-<pre><code class="language-text">&quot;Make a resonant low-pass filtered sawtooth bass with an ADSR envelope.&quot;
-</code></pre>
-<p>These tools are best understood as generators, not correctness or style oracles.
-Their output should immediately enter the normal Faust workflow: compile,
-inspect JSON, render the block diagram, listen, measure, and revise.</p>
-<p>An LLM can also sit inside a larger music application, where it may create
-tracks, load devices, edit clips, connect modulators, or set sidechains. Faust
-then remains the DSP language for effects and instruments, while the model
-operates the host symbolically. The important rule is that AI actions should
-remain visible, editable, undoable, and testable.</p>
 <h2 id="practical-verification">Practical Verification</h2>
 <p>For generated or modified Faust code, check:</p>
 <ul>
