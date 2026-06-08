@@ -358,6 +358,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#commercial-projects-using-llms-with-faust" class="nav-link">Commercial Projects using LLMs with Faust</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#limitations" class="nav-link">Limitations</a>
               <ul class="nav flex-column">
               </ul>
@@ -604,6 +608,38 @@ and library calls that may have wrong units or argument order.
 
 Use only these functions. Do not invent library names.
 </code></pre>
+<h2 id="commercial-projects-using-llms-with-faust">Commercial Projects using LLMs with Faust</h2>
+<p>Several public products and applications are starting to use the same general
+loop described above: natural-language prompt, generated or controlled DSP,
+automatic checking, browser or hardware preview, and export to a playable
+result. Examples include:</p>
+<ul>
+<li><a href="https://chaosaudio.com/blogs/whats-new/introducing-ai-fx-builder-create-any-effect-you-can-imagine">Chaos Audio AI FX Builder</a>
+  for the <a href="https://chaosaudio.com/products/stratus">Stratus</a> and Nimbus
+  hardware platforms. Chaos Audio describes a system where the user writes a
+  plain-English effect prompt, the service generates a new effect algorithm in
+  Faust, iterates automatically to debug and refine it, and then deploys the
+  result to the pedal. The builder also exposes the generated Faust code for
+  users who want to inspect or edit the DSP.</li>
+<li><a href="https://www.pluginmaker.ai">pluginmaker.ai</a>, a browser-based AI platform for
+  generating VST/AU instruments and effects from text prompts. The workflow is
+  aimed at musicians rather than DSP developers: describe the plugin, preview it
+  in the browser, customize the sound and interface, then export a plugin for a
+  DAW.</li>
+<li><a href="https://magda.land">MAGDA</a> and its open-source
+  <a href="https://github.com/Conceptual-Machines/magda-core">magda-core</a> repository.
+  MAGDA is a DAW built around automation, transformation, and fast musical
+  iteration. It includes AI agents that understand the session, generate
+  commands in an internal DSL, and can operate musical structures and devices.
+  Faust appears as the DSP layer for its effects bank and experimental Faust
+  device, making it another example of LLMs controlling a larger music
+  environment while Faust remains the auditable audio-processing language.</li>
+</ul>
+<p>These projects are useful reference points for Faust because they show how LLMs
+can move beyond isolated code snippets into complete product workflows. They
+also make the review rules in this page more important: generated DSP should be
+compiled, tested, inspected, and checked against licensing constraints before it
+is shipped to users.</p>
 <h2 id="limitations">Limitations</h2>
 <p>Faust reduces some LLM risks, but it does not remove review. Its compiler can
 prove important structural facts about wiring, arity, and feedback form; it does

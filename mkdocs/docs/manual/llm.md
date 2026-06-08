@@ -300,6 +300,40 @@ Here are the exact library functions available:
 Use only these functions. Do not invent library names.
 ```
 
+## Commercial Projects using LLMs with Faust
+
+Several public products and applications are starting to use the same general
+loop described above: natural-language prompt, generated or controlled DSP,
+automatic checking, browser or hardware preview, and export to a playable
+result. Examples include:
+
+- [Chaos Audio AI FX Builder](https://chaosaudio.com/blogs/whats-new/introducing-ai-fx-builder-create-any-effect-you-can-imagine)
+  for the [Stratus](https://chaosaudio.com/products/stratus) and Nimbus
+  hardware platforms. Chaos Audio describes a system where the user writes a
+  plain-English effect prompt, the service generates a new effect algorithm in
+  Faust, iterates automatically to debug and refine it, and then deploys the
+  result to the pedal. The builder also exposes the generated Faust code for
+  users who want to inspect or edit the DSP.
+- [pluginmaker.ai](https://www.pluginmaker.ai), a browser-based AI platform for
+  generating VST/AU instruments and effects from text prompts. The workflow is
+  aimed at musicians rather than DSP developers: describe the plugin, preview it
+  in the browser, customize the sound and interface, then export a plugin for a
+  DAW.
+- [MAGDA](https://magda.land) and its open-source
+  [magda-core](https://github.com/Conceptual-Machines/magda-core) repository.
+  MAGDA is a DAW built around automation, transformation, and fast musical
+  iteration. It includes AI agents that understand the session, generate
+  commands in an internal DSL, and can operate musical structures and devices.
+  Faust appears as the DSP layer for its effects bank and experimental Faust
+  device, making it another example of LLMs controlling a larger music
+  environment while Faust remains the auditable audio-processing language.
+
+These projects are useful reference points for Faust because they show how LLMs
+can move beyond isolated code snippets into complete product workflows. They
+also make the review rules in this page more important: generated DSP should be
+compiled, tested, inspected, and checked against licensing constraints before it
+is shipped to users.
+
 ## Limitations
 
 Faust reduces some LLM risks, but it does not remove review. Its compiler can
