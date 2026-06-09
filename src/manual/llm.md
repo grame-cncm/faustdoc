@@ -300,7 +300,7 @@ Here are the exact library functions available:
 Use only these functions. Do not invent library names.
 ```
 
-## Commercial Projects using LLMs with Faust
+## Projects using LLMs with Faust
 
 Several public products and applications are starting to use the same general
 loop described above: natural-language prompt, generated or controlled DSP,
