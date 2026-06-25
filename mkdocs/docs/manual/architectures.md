@@ -2480,6 +2480,10 @@ A work-in-progress project to integrate Faust generated Rust code with [NIH-plug
 
 A plugin to load Faust dsp files and JIT-compile them with LLVM. A simple GUI is provided to select which script to load and where to look for the Faust libraries that this script may import. The selected DSP script is saved as part of the plugin state and therefore is saved with your DAW project.
 
+#### [FAUST Build](https://codeberg.org/crop/blech)
+
+This repository is a Monorepo of the crates needed to develop a DSP engine inspired by supernova written in Rust. DSPs are generated using FAUST.
+
 ### WebAssembly tools 
 
 #### [Deploying Faust DSP on the Web](deploying.md)
