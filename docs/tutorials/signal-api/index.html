@@ -693,7 +693,7 @@ process = _ <: @(500) + 0.5, @(3000) * 1.5;
     )
 }
 </code></pre>
-<p>In the <code>compute</code> method, the single <code>fVec0</code> delay line is read at 2 differents indexes:</p>
+<p>In the <code>compute</code> method, the single <code>fVec0</code> delay line is read at two different indexes:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
     FAUSTFLOAT* input0 = inputs[0];
@@ -1029,7 +1029,7 @@ process = 10,1,int(_) : rdtable;
     }
 }
 </code></pre>
-<p>An the <code>compute</code> method that access the <code>itbl0mydspSIG0</code> table:</p>
+<p>And the <code>compute</code> method that accesses the <code>itbl0mydspSIG0</code> table:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
     FAUSTFLOAT* input0 = inputs[0];
@@ -1086,7 +1086,7 @@ process = 10,1,int(_),int(_),int(_) : rwtable;
     }
 }
 </code></pre>
-<p>An the <code>compute</code> method that reads and writes in the <code>itbl0</code> table:</p>
+<p>And the <code>compute</code> method that reads from and writes to the <code>itbl0</code> table:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
 {
     FAUSTFLOAT* input0 = inputs[0];

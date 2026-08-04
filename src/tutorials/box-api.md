@@ -608,7 +608,7 @@ void fillmydspSIG0(int count, int* table)
 }
 ```
 
-An the `compute` method that access the `itbl0mydspSIG0` table:
+And the `compute` method that accesses the `itbl0mydspSIG0` table:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
@@ -670,7 +670,7 @@ void fillmydspSIG0(int count, int* table)
 }
 ```
 
-An the `compute` method that reads and writes in the `itbl0` table:
+And the `compute` method that reads from and writes to the `itbl0` table:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 

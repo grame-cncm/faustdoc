@@ -35,7 +35,7 @@ gFreq = midifreq * bend;
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
-// Same for volum & modulation:
+// Same for volume and modulation:
 volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
 volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
 volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);

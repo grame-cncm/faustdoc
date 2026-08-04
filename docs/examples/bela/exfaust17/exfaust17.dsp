@@ -6,7 +6,7 @@ import("stdfaust.lib");
 // A very simple subtractive synthesizer with 1 VCO 1 VCF.
 // The VCO Waveform is variable between Saw and Square
 // The frequency is modulated by an LFO
-// The envelope control volum and filter frequency
+// The envelope controls volume and filter frequency
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MIDI IMPLEMENTATION:

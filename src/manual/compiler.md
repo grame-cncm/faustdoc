@@ -491,13 +491,13 @@ parallel.
 
 #### The Scheduler Code Generator
 
-With the [`--scheduler` (or `-sch`) option](../manual/options.md) given to the Faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worked threads is created and each thread uses it's own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.
+With the [`--scheduler` (or `-sch`) option](../manual/options.md) given to the Faust compiler, the computation graph is cut into separate computation loops (called "tasks"), and a "Work Stealing Scheduler" is used to activate and execute them following their dependencies. A pool of worker threads is created and each thread uses its own local WSQ (Work Stealing Queue) of tasks. A WSQ is a special queue with a Push operation, a "private" LIFO Pop operation and a "public" FIFO Pop operation.
 
-Starting from a ready task, each thread follows the dependencies, possibly pushing ready sub-tasks into it's own local WSQ. When no more tasks can be activated on a given computation path, the thread pops a task from it's local WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from other threads WSQ.
+Starting from a ready task, each thread follows the dependencies, possibly pushing ready sub-tasks into its own local WSQ. When no more tasks can be activated on a given computation path, the thread pops a task from its local WSQ. If the WSQ is empty, then the thread is allowed to "steal" tasks from other threads' WSQs.
 
-The local LIFO Pop operation allows better cache locality and the FIFO steal Pop "larger chuck" of work to be done. The reason for this is that many work stealing workloads are divide-and-conquer in nature, stealing one of the oldest task implicitly also steals a (potentially) large sub-tree of computations that will unfold once that piece of work is stolen and run.
+The local LIFO Pop operation allows better cache locality, and the FIFO steal Pop takes a larger chunk of work to be done. The reason for this is that many work-stealing workloads are divide-and-conquer in nature: stealing one of the oldest tasks implicitly also steals a potentially large subtree of computations that will unfold once that piece of work is stolen and run.
 
-Compared to the OpenMP model (`-omp`) the new model is worse for simple Faust programs and usually starts to behave comparable or sometimes better for "complex enough" Faust programs. In any case, since OpenMP does not behave so well with GCC compilers, and is unusable on OSX in real-time contexts, this new scheduler option has it's own value.  We plan to improve it adding a "pipelining" idea in the future.
+Compared to the OpenMP model (`-omp`), the new model performs worse for simple Faust programs and usually starts to behave comparably, or sometimes better, for "complex enough" Faust programs. In any case, since OpenMP does not behave as well with GCC compilers and is unusable on macOS in real-time contexts, this new scheduler option has its own value. We plan to improve it by adding a "pipelining" idea in the future.
 
 #### Example of Parallel Scheduler Code
 

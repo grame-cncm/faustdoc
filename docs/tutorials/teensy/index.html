@@ -489,7 +489,7 @@ void loop() {
 </code></pre>
 <p>Note that in this example, a potentiometer connected to the Analog Input 0 of the Teensy is used to control the dry/wet mix of the reverb.</p>
 <h2 id="additional-configuration-for-low-audio-latency">Additional Configuration for Low Audio Latency</h2>
-<p>Thanks to its bare-metal architecture, the Teensy allows for extremely low audio latency which would be more or less impossible to achieve if an operating system was used. Audio latency is mostly determined by the block size of the system. The default block size of the Teensy Audio Library is 128 samples but it can be cranked down to 8 samples (only if Faust DSP objects are used exclusively) without impacting performances too much (see the <a href="https://zenodo.org/record/3249282#.XRxurXVfhjE">corresponding SMC paper</a>). Block size is set by a C++ macro (<code>AUDIO_BLOCK_SAMPLES</code>) that can be overridden before compilation by passing it as an argument to the C++ compiler by substituting the following line in <code>boards.txt</code> (see previous section):</p>
+<p>Thanks to its bare-metal architecture, the Teensy allows for extremely low audio latency that would be more or less impossible to achieve with an operating system. Audio latency is mostly determined by the system's block size. The default block size of the Teensy Audio Library is 128 samples, but it can be reduced to 8 samples (only if Faust DSP objects are used exclusively) without significantly impacting performance (see the <a href="https://zenodo.org/record/3249282#.XRxurXVfhjE">corresponding SMC paper</a>). The block size is set by a C++ macro (<code>AUDIO_BLOCK_SAMPLES</code>) that can be overridden before compilation by passing it as an argument to the C++ compiler; substitute the following line in <code>boards.txt</code> (see the previous section):</p>
 <pre><code>teensy36.build.flags.defs=-D__MK66FX1M0__ -DTEENSYDUINO=146
 </code></pre>
 <p>with:</p>
@@ -504,7 +504,7 @@ void loop() {
 <p>on the Teensy 4.0.</p>
 <p>Similarly, the sampling rate (44100KHz by default) can be set using the <code>AUDIO_SAMPLE_RATE_EXACT</code> macro. Note that computing the "exact" sampling rate compatible with the clock of your Teensy might be a bit tricky. For example, <code>AUDIO_SAMPLE_RATE_EXACT</code> is 44117.64706 by default and not 44100, etc.</p>
 <h3 id="warning">Warning!!!</h3>
-<p>In the latest version of the Teensy Audio Library, a "weird" correction to the code of the built-in freeverb function has been made an will prevent you from using a block size of 8 samples. Here's a fix to this problem that should be made in the installed version of <code>effect_freeverb.cpp</code>:</p>
+<p>In the latest version of the Teensy Audio Library, a "weird" correction to the code of the built-in freeverb function has been made and will prevent you from using a block size of 8 samples. Here's a fix to this problem that should be made in the installed version of <code>effect_freeverb.cpp</code>:</p>
 <pre><code>0, 0, 0, {
 0, 0, 0, 0, 0, 0, 0, 0,
 #if AUDIO_BLOCK_SAMPLES &gt; 8
@@ -515,7 +515,7 @@ void loop() {
 #endif
 </code></pre>
 <h2 id="notes-about-computational-power-and-memory-footprint">Notes About Computational Power and Memory Footprint</h2>
-<p>While the Teensy 3.6 is relatively powerful and can be used to run complex DSP algorithm (up to 90 Faust sine waves in parallel), it doesn't have a lot of RAM. For that reason, algorithms with a large memory footprint (e.g., anything using delay a lot such a reverbs, wave table oscillators, etc.) might have to be adapted to be run on the Teensy. For example, the default Faust sine wave oscillator uses a table of 65536 samples which is to big to be loaded in the Teensy RAM. Hence, its definition should be adapted, e.g.:</p>
+<p>While the Teensy 3.6 is relatively powerful and can be used to run complex DSP algorithms (up to 90 Faust sine waves in parallel), it does not have much RAM. For that reason, algorithms with a large memory footprint (e.g., anything using delays extensively, such as reverbs or wavetable oscillators) might have to be adapted to run on the Teensy. For example, the default Faust sine wave oscillator uses a table of 65,536 samples, which is too big to be loaded into Teensy RAM. Hence, its definition should be adapted, e.g.:</p>
 <pre><code>osc(freq) = rdtable(tablesize, os.sinwaveform(tablesize), int(os.phasor(tablesize,freq)))
 with{
     tablesize = 1 &lt;&lt; 15; // instead of 1 &lt;&lt; 16

@@ -161,7 +161,7 @@ Note that in this example, a potentiometer connected to the Analog Input 0 of th
 
 ## Additional Configuration for Low Audio Latency
 
-Thanks to its bare-metal architecture, the Teensy allows for extremely low audio latency which would be more or less impossible to achieve if an operating system was used. Audio latency is mostly determined by the block size of the system. The default block size of the Teensy Audio Library is 128 samples but it can be cranked down to 8 samples (only if Faust DSP objects are used exclusively) without impacting performances too much (see the [corresponding SMC paper](https://zenodo.org/record/3249282#.XRxurXVfhjE)). Block size is set by a C++ macro (`AUDIO_BLOCK_SAMPLES`) that can be overridden before compilation by passing it as an argument to the C++ compiler by substituting the following line in `boards.txt` (see previous section):
+Thanks to its bare-metal architecture, the Teensy allows for extremely low audio latency that would be more or less impossible to achieve with an operating system. Audio latency is mostly determined by the system's block size. The default block size of the Teensy Audio Library is 128 samples, but it can be reduced to 8 samples (only if Faust DSP objects are used exclusively) without significantly impacting performance (see the [corresponding SMC paper](https://zenodo.org/record/3249282#.XRxurXVfhjE)). The block size is set by a C++ macro (`AUDIO_BLOCK_SAMPLES`) that can be overridden before compilation by passing it as an argument to the C++ compiler; substitute the following line in `boards.txt` (see the previous section):
 
 ```
 teensy36.build.flags.defs=-D__MK66FX1M0__ -DTEENSYDUINO=146
@@ -191,7 +191,7 @@ Similarly, the sampling rate (44100KHz by default) can be set using the `AUDIO_S
 
 ### Warning!!!
 
-In the latest version of the Teensy Audio Library, a "weird" correction to the code of the built-in freeverb function has been made an will prevent you from using a block size of 8 samples. Here's a fix to this problem that should be made in the installed version of `effect_freeverb.cpp`:
+In the latest version of the Teensy Audio Library, a "weird" correction to the code of the built-in freeverb function has been made and will prevent you from using a block size of 8 samples. Here's a fix to this problem that should be made in the installed version of `effect_freeverb.cpp`:
 
 ```
 0, 0, 0, {
@@ -206,7 +206,7 @@ In the latest version of the Teensy Audio Library, a "weird" correction to the c
 
 ## Notes About Computational Power and Memory Footprint
 
-While the Teensy 3.6 is relatively powerful and can be used to run complex DSP algorithm (up to 90 Faust sine waves in parallel), it doesn't have a lot of RAM. For that reason, algorithms with a large memory footprint (e.g., anything using delay a lot such a reverbs, wave table oscillators, etc.) might have to be adapted to be run on the Teensy. For example, the default Faust sine wave oscillator uses a table of 65536 samples which is to big to be loaded in the Teensy RAM. Hence, its definition should be adapted, e.g.:
+While the Teensy 3.6 is relatively powerful and can be used to run complex DSP algorithms (up to 90 Faust sine waves in parallel), it does not have much RAM. For that reason, algorithms with a large memory footprint (e.g., anything using delays extensively, such as reverbs or wavetable oscillators) might have to be adapted to run on the Teensy. For example, the default Faust sine wave oscillator uses a table of 65,536 samples, which is too big to be loaded into Teensy RAM. Hence, its definition should be adapted, e.g.:
 
 ```
 osc(freq) = rdtable(tablesize, os.sinwaveform(tablesize), int(os.phasor(tablesize,freq)))

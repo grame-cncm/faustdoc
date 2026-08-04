@@ -51,7 +51,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 ```
 <!-- /faust-run -->
 
-[`fi.resonlp`](https://faustlibraries.grame.fr/libs/filters/#firesonlp) has four arguments (in order): *cut-off frequency*, *q*, *gain* and its *input*. Note that you can have a quick look of what the arguments of a function are simply by hovering it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables don't have a type in Faust and everything is considered as a signal. The Faust compiler takes care of making the right optimizations by choosing which variable is run at audio rate, what their types are, etc. Thus, `ctFreq`, `q` and `gain` could well be controlled by oscillators (i.e., signals running at audio rate) here. 
+[`fi.resonlp`](https://faustlibraries.grame.fr/libs/filters/#firesonlp) has four arguments (in order): *cut-off frequency*, *q*, *gain* and its *input*. Note that you can quickly check a function's arguments by hovering over it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables do not have a type in Faust and everything is considered a signal. The Faust compiler takes care of making the right optimizations by choosing which variables run at audio rate and what their types are. Thus, `ctFreq`, `q`, and `gain` could also be controlled by oscillators (i.e., signals running at audio rate).
 
 Since the input of the filter is not specified as an argument here (but it could, of course), it automatically becomes an "implicit" input/argument of `fi.resonlp`. The `:` [sequential composition operator](syntax.md#sequential-composition) can be used to connect two elements that have the same number of outputs and inputs. Since `no.noise` has one output and `fi.resonlp(ctFreq,q,gain)` has one implicit input, we can connect them together. This is essentially the same as writing something like:
 
@@ -285,7 +285,7 @@ process =
 ```
 <!-- /faust-run -->
 
-Since we're only using functions from [`demo.lib`](https://faustlibraries.grame.fr/libs/demos/) here, there's no need to define any UI since it is built-in in the functions that we're calling. Note that the mono output of `dm.wah4_demo` is split to fit the stereo input of `dm.phaser2_demo`. The last three effects have the same number of inputs and outputs (2x2) so no need to split or merge them.
+Since we're only using functions from [`demo.lib`](https://faustlibraries.grame.fr/libs/demos/) here, there's no need to define any UI since it is built into the functions that we're calling. Note that the mono output of `dm.wah4_demo` is split to fit the stereo input of `dm.phaser2_demo`. The last three effects have the same number of inputs and outputs (2x2), so there is no need to split or merge them.
 
 ### String Physical Model Based On a Comb Filter
 

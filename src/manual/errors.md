@@ -443,4 +443,4 @@ All compiler options cannot be used with all backends. Moreover, some compiler o
 
 # Warning messages
 
-Warning messages do not stop the compilation process, but allow to get usefull informations on potential problematic code. The messages can be printed using the `-wall` compilation option. Mathematical out-of-domain error warning messages are displayed when both `-wall` and `-me` options are used.
+Warning messages do not stop the compilation process, but provide useful information about potentially problematic code. The messages can be printed using the `-wall` compilation option. Mathematical out-of-domain error warning messages are displayed when both the `-wall` and `-me` options are used.

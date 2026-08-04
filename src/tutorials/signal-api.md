@@ -299,7 +299,7 @@ static void test4()
     )
 }
 ```
-In the `compute` method, the single `fVec0` delay line is read at 2 differents indexes:
+In the `compute` method, the single `fVec0` delay line is read at two different indexes:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
@@ -675,7 +675,7 @@ void fillmydspSIG0(int count, int* table)
 }
 ```
 
-An the `compute` method that access the `itbl0mydspSIG0` table:
+And the `compute` method that accesses the `itbl0mydspSIG0` table:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 
@@ -738,7 +738,7 @@ void fillmydspSIG0(int count, int* table)
 }
 ```
 
-An the `compute` method that reads and writes in the `itbl0` table:
+And the `compute` method that reads from and writes to the `itbl0` table:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) 

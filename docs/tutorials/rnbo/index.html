@@ -380,7 +380,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#generating-the-rnbo-patch-from-a-faust-dsp-program-found-in-the-web" class="nav-link">Generating the RNBO patch from a Faust DSP program found in the web</a>
+            <li class="nav-item" data-level="3"><a href="#generating-an-rnbo-patch-from-a-faust-dsp-program-found-on-the-web" class="nav-link">Generating an RNBO Patch from a Faust DSP Program Found on the Web</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -564,7 +564,7 @@ Options:
 <p><img src="img/faust-rnbo1-ter.png" class="mx-auto d-block" width="100%">
 <center><em><code>rnbo~</code> subpatcher with parameter control machinery in <code>p</code> mode</em></center></p>
 <h3 id="bargraph-handling">Bargraph handling</h3>
-<p>In Faust, bargraph are typically used to analyze audio signals where computed values are sent at control rate. This cannot be directly done in the RNBO model where only audio signals can be sent from the codebox code. So additional audio outputs are created for bargraph, and will be sampled (using <code>snapshot~</code> and <code>change</code>) and be connected to <code>param</code> objects, like input controllers.</p>
+<p>In Faust, bargraphs are typically used to analyze audio signals, where computed values are sent at the control rate. This cannot be done directly in the RNBO model, where only audio signals can be sent from codebox~ code. Therefore, additional audio outputs are created for bargraphs, sampled (using <code>snapshot~</code> and <code>change</code>), and connected to <code>param</code> objects as input controllers.</p>
 <p>So for instance the following example: </p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
@@ -645,10 +645,10 @@ with {
 <p>compiled with the command:</p>
 <pre><code class="language-bash">faust2rnbo -midi -nvoices 12 organ.dsp 
 </code></pre>
-<p>will create a patch containing a <code>rnbo~</code> object with 12 voices, and with a <code>notein</code> object added in the subpatcher correctly connected to the appropriate <em>freq/gain/gate</em> aware parameters. Additional mapping depending of the <a href="../../manual/midi/#standard-polyphony-parameters">convention used</a> to describe the pitch (freq or key) or gain (gain or velocity) will be added when needed, with the generated user-interface:</p>
+<p>will create a patch containing a <code>rnbo~</code> object with 12 voices, with a <code>notein</code> object added to the subpatcher and correctly connected to the appropriate <em>freq/gain/gate</em>-aware parameters. Additional mapping, depending on the <a href="../../manual/midi/#standard-polyphony-parameters">convention used</a> to describe the pitch (freq or key) or gain (gain or velocity), will be added when needed, resulting in the following user interface:</p>
 <p><img src="img/faust-rnbo4.png" class="mx-auto d-block" width="100%">
 <center><em>Generated polyphonic RNBO patch with MIDI control</em></center></p>
-<p>In the DSP, note that the master slider can be controlled using the crl 7 (= Volume) MIDI message. </p>
+<p>In the DSP, note that the master slider can be controlled using the Ctrl 7 (= Volume) MIDI message.</p>
 <p>Note that here again, the <code>rnbo~</code> object subpatcher can be generated using the <code>-sp</code> option and possibly used in other context.</p>
 <h3 id="polyphonic-instruments-with-an-effect">Polyphonic instruments with an effect</h3>
 <p>The following polyphonic ready instrument DSP, with an <a href="../../manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a>, can be converted to a polyphonic MIDI ready patch:</p>
@@ -677,27 +677,27 @@ effect = dm.freeverb_demo;
 <p>To be compiled with the following:</p>
 <pre><code class="language-bash">faust2rnbo -midi -nvoices 16 -effect auto organ2.dsp 
 </code></pre>
-<p>with the generated user-interface and the polyphonic DSP <code>rnbo~</code> object, using the <code>p</code> abstraction model to load and activate the polyphonic instrument (as a <code>organ2.rnbopat</code> file), connected to the global effect (as a <code>organ2_effect.rnbopat</code> file). Having a single <code>rnbo~</code> object with the two embedded subpachers is mandatory  to properly create the exported project:</p>
+<p>with the generated user interface and the polyphonic DSP <code>rnbo~</code> object, using the <code>p</code> abstraction model to load and activate the polyphonic instrument (as an <code>organ2.rnbopat</code> file), connected to the global effect (as an <code>organ2_effect.rnbopat</code> file). Having a single <code>rnbo~</code> object with the two embedded subpatchers is mandatory to properly create the exported project:</p>
 <p><img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
 <center><em>Generated polyphonic RNBO patch with MIDI control</em></center></p>
-<p>and the <code>rnbo~</code> subpather:
+<p>and the <code>rnbo~</code> subpatcher:
 <img src="img/faust-rnbo5-bis.png" class="mx-auto d-block" width="100%">
-<center><em><code>rnbo~</code> subpatcher with the polyphonic instrument and global effect as <code>p</code>abstractions</em></center></p>
+<center><em><code>rnbo~</code> subpatcher with the polyphonic instrument and global effect as <code>p</code> abstractions</em></center></p>
 <h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
 <p>Faust DSP programs can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as RNBO patches.</p>
 <h3 id="generating-a-rnbo-patch">Generating a RNBO patch</h3>
-<p>The output as a RNBO patch can directly be generated using the <em>Platform = rnbo</em> and <em>Architecture = rnbo</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.maxpat</code> file.to be opened with Max/MSP.</p>
+<p>An RNBO patch can be generated directly using the <em>Platform = rnbo</em> and <em>Architecture = rnbo</em> export options. The resulting <em>foo</em> folder is self-contained and contains the <code>foo.maxpat</code> file to be opened with Max/MSP.</p>
 <p><img src="img/export.png" class="mx-auto d-block" width="40%">
 <center><em>Exporting the code</em></center> </p>
 <h3 id="generating-the-rnbo-patch-in-polyphonic-mode">Generating the RNBO patch in polyphonic mode</h3>
 <p>DSP programs following the polyphonic <a href="../../manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> can be generated using the <em>Platform = rnbo</em> and <em>Architecture = rnbo-poly</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.maxpat</code> file to be opened with Max/MSP.</p>
 <h3 id="generating-the-rnbo-patch-in-polyphonic-mode-with-a-global-effect">Generating the RNBO patch in polyphonic mode with a global effect</h3>
-<p>DSP programs following the polyphonic <a href="../../manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> with and an <a href="../../manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a> can be generated using the <em>Platform = rnbo</em> and <em>Architecture = rnbo-poly-effect</em> export options. The resulting <em>foo</em> folder is self-contained, containing the <code>foo.maxpat</code>, <code>foo.rnbopat</code>and <code>foo_effect.rnbopat</code> files (using the <code>p</code> abstraction model), with <code>foo.maxpat</code> file to be opened with Max/MSP.</p>
-<h3 id="generating-the-rnbo-patch-from-a-faust-dsp-program-found-in-the-web">Generating the RNBO patch from a Faust DSP program found in the web</h3>
+<p>DSP programs following the polyphonic <a href="../../manual/midi/#midi-polyphony-support">freq/gate/gain convention</a> with an <a href="../../manual/midi/#audio-effects-and-polyphonic-synthesizer">integrated effect</a> can be generated using the <em>Platform = rnbo</em> and <em>Architecture = rnbo-poly-effect</em> export options. The resulting <em>foo</em> folder is self-contained and contains the <code>foo.maxpat</code>, <code>foo.rnbopat</code>, and <code>foo_effect.rnbopat</code> files (using the <code>p</code> abstraction model); open <code>foo.maxpat</code> with Max/MSP.</p>
+<h3 id="generating-an-rnbo-patch-from-a-faust-dsp-program-found-on-the-web">Generating an RNBO Patch from a Faust DSP Program Found on the Web</h3>
 <p>Faust DSP programs found on the Web can also be converted:</p>
 <ul>
 <li>
-<p>for instance the <a href="https://faust.grame.fr/community/powered-by-faust/#fverb">fverb</a> listed on the <a href="https://faust.grame.fr/community/powered-by-faust/">Powered By Faust</a> page. The DSP content can simply be loaded using the <code>https://faustide.grame.fr/?code=URL</code> syntax, so with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp">https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp</a>, tested in the Faust Web IDE, then converted in a RNBO patch as already showed.</p>
+<p>for instance, the <a href="https://faust.grame.fr/community/powered-by-faust/#fverb">fverb</a> listed on the <a href="https://faust.grame.fr/community/powered-by-faust/">Powered By Faust</a> page. Its DSP content can be loaded using the <code>https://faustide.grame.fr/?code=URL</code> syntax with the following URL: <a href="https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp">https://faustide.grame.fr/?code=https://raw.githubusercontent.com/jpcima/fverb/master/fverb.dsp</a>, tested in the Faust Web IDE, then converted to an RNBO patch as described above.</p>
 </li>
 <li>
 <p>examples of the <a href="https://faustplayground.grame.fr/">faustplayground</a> platform can be <a href="https://github.com/grame-cncm/faustplayground/tree/master/public/faust-modules">found here</a> and possibly converted. </p>

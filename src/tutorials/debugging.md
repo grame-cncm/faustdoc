@@ -214,7 +214,7 @@ without any added range constraining code.
 
 ##  Debugging the select2 primitive
 
-The `select2` primitive has a strict semantic, but for code optimization strategies, the generated code [is not fully strict]( ../manual/faq.md#does-select2-behaves-as-a-standard-cc-like-if). 
+The `select2` primitive has strict semantics, but for code-optimization purposes, the generated code [is not fully strict](../manual/faq.md#does-select2-behave-like-a-standard-cc-if).
 
 For the following DSP program:
 
@@ -226,7 +226,7 @@ with {
 };
 ```
 
-the generated  C++ is using the `((cond) ? then : else)` form which actually only computes one of the *then* or *else* branch depending of the `button("gate")` condition: 
+the generated C++ uses the `((cond) ? then : else)` form, which actually only computes one of the *then* or *else* branches depending on the `button("gate")` condition:
 
 ```C++
 virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
@@ -268,5 +268,5 @@ More specialized test input signals can be used by directly modifying the `debug
  
  - by carefully checking signal range, like verifying the min/max values in `vslider/hslider/nentry` user-interface items
  - by checking mathematical function domains 
- - by checking indexes when using by `rdtable\rwtable` primitives
+ - by checking indexes when using `rdtable`/`rwtable` primitives
  - ...

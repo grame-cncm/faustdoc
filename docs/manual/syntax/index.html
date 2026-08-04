@@ -912,7 +912,7 @@
             </li>
               </ul>
             </li>
-            <li class="nav-item" data-level="3"><a href="#sensors-control-metadatas" class="nav-link">Sensors Control Metadatas</a>
+            <li class="nav-item" data-level="3"><a href="#sensor-control-metadata" class="nav-link">Sensor Control Metadata</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -1116,7 +1116,7 @@ count((x,xs)) = 1+count(xs);
 <p>the first rule will always match and the second rule will never be called.</p>
 <p>Please note that number arguments in pattern matching rules are typically <a href="#constant-numerical-expressions">constant numerical expressions</a>, so can be the result of more complex expressions involving computations done at compile-time.</p>
 <h2 id="expressions">Expressions</h2>
-<p>Despite its textual syntax, Faust is conceptually a block-diagram language. Faust expressions represent DSP block-diagrams and are assembled from primitive ones using various <em>composition</em> operations. More traditional <em>numerical</em> expressions in infix notation are also possible. Additionally Faust provides time based expressions, like delays, expressions related to lexical environments, expressions to interface with foreign function and lambda expressions.</p>
+<p>Despite its textual syntax, Faust is conceptually a block-diagram language. Faust expressions represent DSP block-diagrams and are assembled from primitive ones using various <em>composition</em> operations. More traditional <em>numerical</em> expressions in infix notation are also possible. Additionally, Faust provides time-based expressions, such as delays; expressions related to lexical environments; expressions that interface with foreign functions; and lambda expressions.</p>
 <p><img src="img/expression.svg" class="mx-auto d-block"></p>
 <h3 id="constant-numerical-expressions">Constant Numerical Expressions</h3>
 <p>Some language primitives (like <code>rdtable</code>, <code>rwtable</code>, <code>hslider</code> etc.) take constant numbers as some of their parameters. This is the case also for expressions using pattern matching techniques. Those numbers can be directly given in the code, but can also be computed by more complex expressions <em>which have to produce numbers known at compile time</em>. We will refer to them as <a href="#constant-numerical-expressions">constant numerical expressions</a> in the documentation.</p>
@@ -1213,7 +1213,7 @@ process = ve.autowah(level),ve.autowah(level);
 </div>
 <!-- /faust-run -->
 
-<p>Note that there's a better to write this last example using the <a href="#par-iteration"><code>par</code> iteration</a>: </p>
+<p>Note that there is a better way to write this last example using the <a href="#par-iteration"><code>par</code> iteration</a>:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -1931,7 +1931,7 @@ process = prod(i,nOscs,os.osc(freq*(i+1+shift)))*envelope;
 </tr>
 </tbody>
 </table>
-<p>For commutative operations that doesn't matter. But for non-commutative ones, it is more "natural" to fix the second argument.  We use divide by 2 (<code>/(2)</code>) or rise to the cube (<code>^(3)</code>) more often than the other way around.</p>
+<p>For commutative operations, that does not matter. But for non-commutative ones, it is more "natural" to fix the second argument. We use division by 2 (<code>/(2)</code>) or raising to the cube (<code>^(3)</code>) more often than the other way around.</p>
 <p>Please note that this rule only applies to infix operators, not to other primitives or functions. If you partially apply a regular function to a single argument, it will correspond to the first parameter.</p>
 <p><strong>Example: Gain Controller</strong></p>
 <p>The following example demonstrates the use of partial application in the context of a gain controller:</p>
@@ -2205,7 +2205,7 @@ process = no.noise : filter(fPar[freq = 200; Q = 2.0;]);
 BS = fvariable(int count, &lt;math.h&gt;);
 </code></pre>
 <p>Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are computed once, during the initialization period. </p>
-<p>Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.</p>
+<p>Foreign variables are considered to vary at block speed. This means that expressions depending on external variables are computed every block.</p>
 <h4 id="include-file">Include File</h4>
 <p>In declaring foreign functions one has also to specify the include file. It allows the Faust compiler to add the corresponding <code>#include</code> in the generated code.</p>
 <p><img src="img/includefile.svg" class="mx-auto d-block"></p>
@@ -2330,7 +2330,7 @@ process = \(x,y).(y,x);
 <!-- TODO: Diagram was removed here since everything is listed below: may be we should put a table summarizing everything. -->
 
 <h3 id="numbers">Numbers</h3>
-<p>Faust considers two types of numbers: <em>integers</em> and <em>floats</em>. Integers are implemented as signed 32-bits integers, and floats are implemented either with a simple, double, or extended precision depending of the compiler options. Floats are available in decimal or scientific notation. </p>
+<p>Faust considers two types of numbers: <em>integers</em> and <em>floats</em>. Integers are implemented as signed 32-bit integers, and floats use single, double, or extended precision depending on the compiler options. Floats are available in decimal or scientific notation.</p>
 <p><img src="img/numbers.svg" class="mx-auto d-block"></p>
 <p>Like any other Faust expression, numbers are signal processors. For example the number 0.95 is a signal processor of type <script type="math/tex">\mathbb{S}^{0}\rightarrow\mathbb{S}^{1}</script> that transforms an empty tuple of signals <script type="math/tex">()</script> into a 1-tuple of signals <script type="math/tex">(y)</script> such that <script type="math/tex">\forall t\in\mathbb{N}, y(t)=0.95</script>.</p>
 <p>Operations on <em>integer</em> numbers follow the standard C semantic for <code>+, -, *</code> operations and can possibly overflow if the result cannot be represented as a  32-bits integer. The <code>/</code> operation is treated separately and cast both of its arguments to floats before doing the division, and thus the result takes the float type.</p>
@@ -2428,7 +2428,7 @@ process = triangleOsc(f);
 </ul>
 <p>If more outputs than the actual number of channels in the sound file are used, the audio channels will be automatically duplicated up to the wanted number of outputs (so for instance, if a stereo file is used with four output channels, the same group of two channels will be duplicated).</p>
 <p>If the soundfile cannot be loaded for whatever reason, a default sound with one channel, a length of 1024 frames and null outputs (with samples of value 0) will be used. Note also that soundfiles are entirely loaded in memory by the architecture file, so that the read index signal can access any sample.</p>
-<p>A minimal example to play a stereo soundfile until it's end can be written with:</p>
+<p>A minimal example to play a stereo soundfile until its end can be written with:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust38/exfaust38.svg" class="mx-auto d-block">
 <faust-editor><!--
@@ -3596,7 +3596,7 @@ process = sig;
 
 <p>While the behavior of this last solution is identical to the first one, the generated code will be a bit different and potentially less efficient.</p>
 <h4 id="select3-primitive"><code>select3</code> Primitive</h4>
-<p>The <code>select3</code> primitive is a "three-ways selector". It has four input signals: <script type="math/tex">s</script>, <script type="math/tex">x_0</script>, <script type="math/tex">x_1</script>, <script type="math/tex">x_2</script> and one output signal <script type="math/tex">y</script>. At each instant the value of the selector signal <script type="math/tex">s(t)</script> is used to dynamically route samples from the other three inputs <script type="math/tex">x_0(t)</script>, <script type="math/tex">x_1(t)</script> and <script type="math/tex">x_2(t)</script> to the output <script type="math/tex">y(t)</script>. </p>
+<p>The <code>select3</code> primitive is a "three-way selector". It has four input signals: <script type="math/tex">s</script>, <script type="math/tex">x_0</script>, <script type="math/tex">x_1</script>, <script type="math/tex">x_2</script> and one output signal <script type="math/tex">y</script>. At each instant, the value of the selector signal <script type="math/tex">s(t)</script> is used to dynamically route samples from the other three inputs <script type="math/tex">x_0(t)</script>, <script type="math/tex">x_1(t)</script> and <script type="math/tex">x_2(t)</script> to the output <script type="math/tex">y(t)</script>.</p>
 <ul>
 <li><strong>Type:</strong> <script type="math/tex">(s,x_0,x_1,x_2)\rightarrow y</script>
 </li>
@@ -3979,7 +3979,7 @@ process = _ <: attach(_,abs : ba.linear2db : vbargraph("Level",-60,0));
 
 <p>Note the use of the <a href="#attach-primitive"><code>attach</code></a> primitive here that forces the compilation of the <code>vbargraph</code> without using its output signal (see section on the <a href="#attach-primitive"><code>attach</code> primitive</a>).</p>
 <h4 id="hbargraph-primitive"><code>hbargraph</code> Primitive</h4>
-<p>The <code>hbargraph</code> primitive implements an horizontal bargraph (typically a meter displaying the level of a signal).</p>
+<p>The <code>hbargraph</code> primitive implements a horizontal bargraph (typically a meter displaying the level of a signal).</p>
 <p><strong>Usage</strong></p>
 <p><code>hbargraph</code> takes an input signal and outputs it while making it available to the UI.</p>
 <pre><code>_ : hbargraph(&quot;label&quot;,min,max) : _
@@ -4026,7 +4026,7 @@ process = par(i,8,hslider("Voice %i",0.9,0,1,0.01));
 <p>An escape mechanism is provided. If the sign <code>%</code> is followed by itself, it will be included in the resulting string. For example <code>"feedback (%%)"</code> will result in <code>"feedback (%)"</code>.</p>
 <p>The variable name can be enclosed in curly brackets to clearly separate it from the rest of the string, as in <code>par(i,8,hslider("Voice %{i}", 0.9, 0, 1, 0.01))</code>.</p>
 <h4 id="labels-as-pathnames">Labels as Pathnames</h4>
-<p>Thanks to <a href="#hgroup-primitive">horizontal</a>, <a href="#vgroup-primitive">vertical</a>, and <a href="#tgroup-primitive">tabs</a> groups, user interfaces have a hierarchical structure analog to a hierarchical file system. Each widget has an associated <em>path name</em> obtained by concatenating the labels of all its surrounding groups with its own label.</p>
+<p>Thanks to <a href="#hgroup-primitive">horizontal</a>, <a href="#vgroup-primitive">vertical</a>, and <a href="#tgroup-primitive">tabs</a> groups, user interfaces have a hierarchical structure analogous to a hierarchical file system. Each widget has an associated <em>path name</em> obtained by concatenating the labels of all its surrounding groups with its own label.</p>
 <p>In the following example:</p>
 <pre><code>hgroup(&quot;Foo&quot;,
     ...
@@ -4335,9 +4335,9 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h4 id="scalexx-metadata"><code>[scale:xx]</code> Metadata</h4>
-<p>The <code>[scale:xx]</code> metadata allows for the specification of a scale (different than the default linear one) to the parameter in the UI. <code>[scale:log]</code> can be used to change to scale to logarithmic and <code>[scale:exp]</code> to exponential.</p>
+<p>The <code>[scale:xx]</code> metadata allows a scale other than the default linear one to be specified for a parameter in the UI. <code>[scale:log]</code> can be used to change the scale to logarithmic and <code>[scale:exp]</code> to exponential.</p>
 <h4 id="tooltipxx-metadata"><code>[tooltip:xx]</code> Metadata</h4>
-<p>The <code>[tooltip:xx]</code> metadata allows for the specification of a "tooltip" when the mouse hover a parameter in the interface. This is very convenient when implementing complex interfaces.   </p>
+<p>The <code>[tooltip:xx]</code> metadata allows for the specification of a "tooltip" when the mouse hovers over a parameter in the interface. This is very convenient when implementing complex interfaces.</p>
 <p><strong>Usage</strong></p>
 <pre><code>[tooltip:xx]
 </code></pre>
@@ -4360,14 +4360,14 @@ process = os.sawtooth(freq);
 <!-- /faust-run -->
 
 <h4 id="hidden01-metadata"><code>[hidden:0|1]</code> Metadata</h4>
-<p>The <code>[hidden:0|1]</code> metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a <a href="#sensors-control-metadatas">motion sensor</a> or <a href="../osc/">OSC messages</a> and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using <code>faust2android</code>, <code>faust2ios</code> or in the Web platform.</p>
+<p>The <code>[hidden:0|1]</code> metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a <a href="#sensor-control-metadata">motion sensor</a> or <a href="../osc/">OSC messages</a> and we do not want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using <code>faust2android</code>, <code>faust2ios</code>, or the Web platform.</p>
 <p><strong>Compatibility</strong></p>
 <ul>
 <li>iOS </li>
 <li>Android</li>
 <li>Web platform</li>
 </ul>
-<h3 id="sensors-control-metadatas">Sensors Control Metadatas</h3>
+<h3 id="sensor-control-metadata">Sensor Control Metadata</h3>
 <p>Sensors control metadata can be used to map the built-in sensors of mobile devices to some of the parameters of a Faust program. They have five parameters and follow the following syntax:</p>
 <pre><code>[acc: a b c d e] // for accelerometer
 [gyr: a b c d e] // for gyroscope
@@ -4428,7 +4428,7 @@ process = os.osc(500)*g;
 <h3 id="widget-modulation">Widget Modulation</h3>
 <p><em>Widget modulation</em> acts on the widgets of an existing Faust expression, but without requiring any manual modifications of the expression's code. This operation is done directly by the compiler, according to a list of <em>target widgets</em> and associated <em>modulators</em>. Target widgets are specified by their label, as used in the graphical user interface. Modulators are Faust expressions that describe how to transform the signal produced by widgets. The syntax of a widget modulation is the following:</p>
 <p><img src="img/widgetModulation.jpg" class="mx-auto d-block" width="60%"></p>
-<p>Here is a very simple example, assuming freeverb is a fully fonctional reverb with a <code>"Wet"</code> slider:</p>
+<p>Here is a very simple example, assuming freeverb is a fully functional reverb with a <code>"Wet"</code> slider:</p>
 <pre><code>[&quot;Wet&quot; -&gt; freeverb]
 </code></pre>
 <p>The resulting circuit will have three inputs instead of two. The additional input is for the <code>"Wet"</code> widget. It acts on the values produced by the widget inside the freeverb expression. By default, the additional input signal, and the widget signal are multiplied together. In the following example, an external LFO is connected to this additional input:</p>
@@ -4447,7 +4447,7 @@ process = os.osc(500)*g;
 <p>To indicate that the modulation signal should be added, instead of multiplied, one could write:</p>
 <pre><code>[&quot;Wet&quot;: + -&gt; freeverb]
 </code></pre>
-<p>Multiplications and addition are examples of  <code>2-&gt;1</code> modulators, but two other types are allowed: <code>0-&gt;1</code> and <code>1-&gt;1</code>. </p>
+<p>Multiplication and addition are examples of <code>2-&gt;1</code> modulators, but two other types are allowed: <code>0-&gt;1</code> and <code>1-&gt;1</code>.</p>
 <h5 id="modulators-with-no-inputs">Modulators with no inputs</h5>
 <p>Modulators with no inputs <code>0-&gt;1</code> completely replace the target widget (it won't appear anymore in the user interface). Let's say that we want to remove the <code>"Damp"</code> slider and replace it with the constant <code>0.5</code>, we can write:</p>
 <pre><code>[&quot;Damp&quot;: 0.5 -&gt; freeverb]

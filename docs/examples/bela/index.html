@@ -436,12 +436,12 @@ import("stdfaust.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Additive synthesizer, must be used with OSC message to program sound.
-// It as 8 harmonics. Each have it's own volume envelop.
+// It has 8 harmonics. Each has its own volume envelope.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// OSC messages (see BELA console for precise adress)
-// For each harmonics (%rang indicate harmonic number, starting at 0) :
+// OSC messages (see the BELA console for the precise address)
+// For each harmonic (%rang indicates the harmonic number, starting at 0):
 // vol%rang : General Volume (vol0 control the volume of the fundamental)
 // A%rang : Attack
 // D%rang : Decay
@@ -490,18 +490,18 @@ import("stdfaust.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Additive synthesizer, must be used with OSC message to program sound.
-// It as 8 harmonics. Each have it's own volume envelope.
+// It has 8 harmonics. Each has its own volume envelope.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // ANALOG IMPLEMENTATION:
 //
-// ANALOG_0 : vol0 (volum of fundamental)
+// ANALOG_0 : vol0 (volume of the fundamental)
 // ANALOG_1 : vol1
 // ...
 // ANALOG_7 : vol7
 //
-// OSC messages (see BELA console for precise adress)
-// For each harmonics (%rang indicate harmonic number, starting at 0) :
+// OSC messages (see the BELA console for the precise address)
+// For each harmonic (%rang indicates the harmonic number, starting at 0):
 // A%rang : Attack
 // D%rang : Decay
 // S%rang : Sustain
@@ -580,7 +580,7 @@ gFreq = midifreq * bend;
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
-// Same for volum & modulation:
+// Same for volume and modulation:
 volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
 volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
 volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
@@ -719,7 +719,7 @@ gFreq = midifreq * bend;
 
 //=================================== Parameters Mapping =================================
 //========================================================================================
-// Same for volum & modulation:
+// Same for volume and modulation:
 volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
 volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
 volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
@@ -1008,7 +1008,7 @@ import("stdfaust.lib");
 // ANALOG 6 : Reverberation Dry/Wet
 // ANALOG 7 : Reverberation Room size
 //
-// Available by OSC : (see BELA console for precise adress)
+// Available via OSC (see the BELA console for the precise address)
 // Rate         : Chorus LFO modulation rate (Hz)
 // Deviation    : Chorus delay time deviation.
 //
@@ -1254,7 +1254,7 @@ import("stdfaust.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
+// It is possible to add more table steps.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MIDI IMPLEMENTATION:
@@ -1332,7 +1332,7 @@ import("stdfaust.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
+// It is possible to add more table steps.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // ANALOG IMPLEMENTATION:
@@ -1412,7 +1412,7 @@ import("stdfaust.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
+// It is possible to add more table steps.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MIDI IMPLEMENTATION:
@@ -1568,7 +1568,7 @@ import("stdfaust.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
-// It's possible to add more tables step.
+// It is possible to add more table steps.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // ANALOG IMPLEMENTATION:
@@ -1747,7 +1747,7 @@ import("stdfaust.lib");
 // ANALOG 6 : Pitchshifter L
 // ANALOG 7 : Pitchshifter R
 //
-// Available by OSC : (see BELA console for precise adress)
+// Available via OSC (see the BELA console for the precise address)
 // Feedback filter:
 // crossLF : Crossfeedback Lowpass
 // crossHF : Crossfeedback Highpass
@@ -2148,7 +2148,7 @@ import("stdfaust.lib");
 // A very simple subtractive synthesizer with 1 VCO 1 VCF.
 // The VCO Waveform is variable between Saw and Square
 // The frequency is modulated by an LFO
-// The envelope control volum and filter frequency
+// The envelope controls volume and filter frequency
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MIDI IMPLEMENTATION:
@@ -2238,7 +2238,7 @@ import("stdfaust.lib");
 // A very simple subtractive synthesizer with 1 VCO 1 VCF.
 // The VCO Waveform is variable between Saw and Square
 // The frequency is modulated by an LFO
-// The envelope control volum and filter frequency
+// The envelope controls volume and filter frequency
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // ANALOG IMPLEMENTATION:
@@ -2330,7 +2330,7 @@ import("stdfaust.lib");
 // A very simple subtractive synthesizer with 1 VCO 1 VCF.
 // The VCO Waveform is variable between Saw and Square
 // The frequency is modulated by an LFO
-// The envelope control volum and filter frequency
+// The envelope controls volume and filter frequency
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // MIDI IMPLEMENTATION:
@@ -2499,7 +2499,7 @@ import("stdfaust.lib");
 // A very simple subtractive synthesizer with 1 VCO 1 VCF.
 // The VCO Waveform is variable between Saw and Square
 // The frequency is modulated by an LFO
-// The envelope control volum and filter frequency
+// The envelope controls volume and filter frequency
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // ANALOG IMPLEMENTATION:

@@ -1,5 +1,5 @@
 
-// WARNING: This a "legacy example based on a deprecated library". Check noises.lib
+// WARNING: This is a "legacy example based on a deprecated library". Check noises.lib
 // for more accurate examples of noise functions
 
 <mdoc>
@@ -58,7 +58,7 @@ The white noise then corresponds to:
 process = noise * vslider("Volume[style:knob]", 0, 0, 1, 0.1);
 
 <mdoc>
-Endly, the sound level of this program is controlled by a user slider, which gives the following equation: 
+Finally, the sound level of this program is controlled by a user slider, which gives the following equation:
 <equation>process</equation>
 
 \section{Block-diagram schema of process}
@@ -66,7 +66,7 @@ This process is illustrated on figure 1.
 <diagram>process</diagram>
 
 \section{Notice of this documentation}
-You might be careful of certain information and naming conventions used in this documentation:
+Pay attention to the information and naming conventions used in this documentation:
 <notice />
 
 \section{Listing of the input code}

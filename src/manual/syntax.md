@@ -235,7 +235,7 @@ Please note that number arguments in pattern matching rules are typically [const
 
 ## Expressions
 
-Despite its textual syntax, Faust is conceptually a block-diagram language. Faust expressions represent DSP block-diagrams and are assembled from primitive ones using various *composition* operations. More traditional *numerical* expressions in infix notation are also possible. Additionally Faust provides time based expressions, like delays, expressions related to lexical environments, expressions to interface with foreign function and lambda expressions.
+Despite its textual syntax, Faust is conceptually a block-diagram language. Faust expressions represent DSP block-diagrams and are assembled from primitive ones using various *composition* operations. More traditional *numerical* expressions in infix notation are also possible. Additionally, Faust provides time-based expressions, such as delays; expressions related to lexical environments; expressions that interface with foreign functions; and lambda expressions.
 
 <img src="img/expression.svg" class="mx-auto d-block">
 
@@ -309,7 +309,7 @@ process = ve.autowah(level),ve.autowah(level);
 ```
 <!-- /faust-run -->
 
-Note that there's a better to write this last example using the [`par` iteration](#par-iteration): 
+Note that there is a better way to write this last example using the [`par` iteration](#par-iteration):
 
 <!-- faust-run -->
 ```
@@ -789,7 +789,7 @@ When doing partial application with an *infix operator*, it is important to note
 | `<(C)` | \(\equiv\) | `_,C : <` |
 | `/(C)` | \(\equiv\) | `_,C : /` |
 
-For commutative operations that doesn't matter. But for non-commutative ones, it is more "natural" to fix the second argument.  We use divide by 2 (`/(2)`) or rise to the cube (`^(3)`) more often than the other way around.
+For commutative operations, that does not matter. But for non-commutative ones, it is more "natural" to fix the second argument. We use division by 2 (`/(2)`) or raising to the cube (`^(3)`) more often than the other way around.
 
 Please note that this rule only applies to infix operators, not to other primitives or functions. If you partially apply a regular function to a single argument, it will correspond to the first parameter.
 
@@ -1130,7 +1130,7 @@ BS = fvariable(int count, <math.h>);
 
 Foreign constants are not supposed to vary. Therefore expressions involving only foreign constants are computed once, during the initialization period. 
 
-Foreign variables are considered to vary at block speed. This means that expressions depending of external variables are computed every block.
+Foreign variables are considered to vary at block speed. This means that expressions depending on external variables are computed every block.
 
 #### Include File 
 
@@ -1298,7 +1298,7 @@ The primitive signal processing operations represent the built-in functionalitie
 
 ### Numbers
 
-Faust considers two types of numbers: *integers* and *floats*. Integers are implemented as signed 32-bits integers, and floats are implemented either with a simple, double, or extended precision depending of the compiler options. Floats are available in decimal or scientific notation. 
+Faust considers two types of numbers: *integers* and *floats*. Integers are implemented as signed 32-bit integers, and floats use single, double, or extended precision depending on the compiler options. Floats are available in decimal or scientific notation.
 
 <img src="img/numbers.svg" class="mx-auto d-block">
 
@@ -1398,7 +1398,7 @@ If more outputs than the actual number of channels in the sound file are used, t
 
 If the soundfile cannot be loaded for whatever reason, a default sound with one channel, a length of 1024 frames and null outputs (with samples of value 0) will be used. Note also that soundfiles are entirely loaded in memory by the architecture file, so that the read index signal can access any sample.
 
-A minimal example to play a stereo soundfile until it's end can be written with:
+A minimal example to play a stereo soundfile until its end can be written with:
 
 <!-- faust-run -->
 ```
@@ -2353,7 +2353,7 @@ While the behavior of this last solution is identical to the first one, the gene
 
 #### `select3` Primitive
 
-The `select3` primitive is a "three-ways selector". It has four input signals: \(s\), \(x_0\), \(x_1\), \(x_2\) and one output signal \(y\). At each instant the value of the selector signal \(s(t)\) is used to dynamically route samples from the other three inputs \(x_0(t)\), \(x_1(t)\) and \(x_2(t)\) to the output \(y(t)\). 
+The `select3` primitive is a "three-way selector". It has four input signals: \(s\), \(x_0\), \(x_1\), \(x_2\) and one output signal \(y\). At each instant, the value of the selector signal \(s(t)\) is used to dynamically route samples from the other three inputs \(x_0(t)\), \(x_1(t)\) and \(x_2(t)\) to the output \(y(t)\).
 
 * **Type:** \((s,x_0,x_1,x_2)\rightarrow y\) 
 * **Mathematical Description:** 
@@ -2728,7 +2728,7 @@ Note the use of the [`attach`](#attach-primitive) primitive here that forces the
 
 #### `hbargraph` Primitive
 
-The `hbargraph` primitive implements an horizontal bargraph (typically a meter displaying the level of a signal).
+The `hbargraph` primitive implements a horizontal bargraph (typically a meter displaying the level of a signal).
 
 **Usage**
 
@@ -2784,7 +2784,7 @@ The variable name can be enclosed in curly brackets to clearly separate it from 
 
 #### Labels as Pathnames
 
-Thanks to [horizontal](#hgroup-primitive), [vertical](#vgroup-primitive), and [tabs](#tgroup-primitive) groups, user interfaces have a hierarchical structure analog to a hierarchical file system. Each widget has an associated *path name* obtained by concatenating the labels of all its surrounding groups with its own label.
+Thanks to [horizontal](#hgroup-primitive), [vertical](#vgroup-primitive), and [tabs](#tgroup-primitive) groups, user interfaces have a hierarchical structure analogous to a hierarchical file system. Each widget has an associated *path name* obtained by concatenating the labels of all its surrounding groups with its own label.
 
 In the following example:
 
@@ -3093,11 +3093,11 @@ process = os.sawtooth(freq);
 
 #### `[scale:xx]` Metadata
 
-The `[scale:xx]` metadata allows for the specification of a scale (different than the default linear one) to the parameter in the UI. `[scale:log]` can be used to change to scale to logarithmic and `[scale:exp]` to exponential.
+The `[scale:xx]` metadata allows a scale other than the default linear one to be specified for a parameter in the UI. `[scale:log]` can be used to change the scale to logarithmic and `[scale:exp]` to exponential.
 
 #### `[tooltip:xx]` Metadata
 
-The `[tooltip:xx]` metadata allows for the specification of a "tooltip" when the mouse hover a parameter in the interface. This is very convenient when implementing complex interfaces.   
+The `[tooltip:xx]` metadata allows for the specification of a "tooltip" when the mouse hovers over a parameter in the interface. This is very convenient when implementing complex interfaces.
 
 **Usage**
 
@@ -3121,7 +3121,7 @@ process = os.sawtooth(freq);
 
 #### `[hidden:0|1]` Metadata
 
-The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a [motion sensor](#sensors-control-metadatas) or [OSC messages](osc.md) and we don't want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using `faust2android`, `faust2ios` or in the Web platform.
+The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. This is convenient when controlling a parameter with a [motion sensor](#sensor-control-metadata) or [OSC messages](osc.md) and we do not want it to be visible in the interface. This feature is commonly used when making apps for Android and iOS using `faust2android`, `faust2ios`, or the Web platform.
 
 **Compatibility**
 
@@ -3129,7 +3129,7 @@ The `[hidden:0|1]` metadata can be used to hide a parameter in the interface. Th
 * Android
 * Web platform
 
-### Sensors Control Metadatas
+### Sensor Control Metadata
 
 Sensors control metadata can be used to map the built-in sensors of mobile devices to some of the parameters of a Faust program. They have five parameters and follow the following syntax:
 
@@ -3208,7 +3208,7 @@ Complex nonlinear mappings can be implemented using this system.
 
 <img src="img/widgetModulation.jpg" class="mx-auto d-block" width="60%">
 
-Here is a very simple example, assuming freeverb is a fully fonctional reverb with a `"Wet"` slider:
+Here is a very simple example, assuming freeverb is a fully functional reverb with a `"Wet"` slider:
 
 ```
 ["Wet" -> freeverb]
@@ -3246,7 +3246,7 @@ To indicate that the modulation signal should be added, instead of multiplied, o
 ["Wet": + -> freeverb]
 ```
 
-Multiplications and addition are examples of  `2->1` modulators, but two other types are allowed: `0->1` and `1->1`. 
+Multiplication and addition are examples of `2->1` modulators, but two other types are allowed: `0->1` and `1->1`.
 
 ##### Modulators with no inputs
 

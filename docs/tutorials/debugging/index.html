@@ -517,7 +517,7 @@ with {
 <p>without any added range constraining code.</p>
 <p><strong>Note that <code>-ct 1</code> option is the default, so safe code is always generated.</strong> </p>
 <h2 id="debugging-the-select2-primitive">Debugging the select2 primitive</h2>
-<p>The <code>select2</code> primitive has a strict semantic, but for code optimization strategies, the generated code <a href="../../manual/faq/#does-select2-behaves-as-a-standard-cc-like-if">is not fully strict</a>. </p>
+<p>The <code>select2</code> primitive has strict semantics, but for code-optimization purposes, the generated code <a href="../../manual/faq/#does-select2-behave-like-a-standard-cc-if">is not fully strict</a>.</p>
 <p>For the following DSP program:</p>
 <pre><code>process = select2(button(&quot;gate&quot;), branch1, branch2)
 with {
@@ -525,7 +525,7 @@ with {
     branch2 = (hslider(&quot;bar&quot;, 0.5, -1, 1, 0.01):sqrt);
 };
 </code></pre>
-<p>the generated  C++ is using the <code>((cond) ? then : else)</code> form which actually only computes one of the <em>then</em> or <em>else</em> branch depending of the <code>button("gate")</code> condition: </p>
+<p>the generated C++ uses the <code>((cond) ? then : else)</code> form, which actually only computes one of the <em>then</em> or <em>else</em> branches depending on the <code>button("gate")</code> condition:</p>
 <pre><code class="language-C++">virtual void compute(int count, FAUSTFLOAT** RESTRICT inputs, FAUSTFLOAT** RESTRICT outputs) 
 {
     FAUSTFLOAT* output0 = outputs[0];
@@ -556,7 +556,7 @@ with {
 <ul>
 <li>by carefully checking signal range, like verifying the min/max values in <code>vslider/hslider/nentry</code> user-interface items</li>
 <li>by checking mathematical function domains </li>
-<li>by checking indexes when using by <code>rdtable\rwtable</code> primitives</li>
+<li>by checking indexes when using <code>rdtable</code>/<code>rwtable</code> primitives</li>
 <li>...</li>
 </ul></div>
         </div>

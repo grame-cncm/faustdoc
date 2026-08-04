@@ -4,12 +4,12 @@ import("stdfaust.lib");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Additive synthesizer, must be used with OSC message to program sound.
-// It as 8 harmonics. Each have it's own volume envelop.
+// It has 8 harmonics. Each has its own volume envelope.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// OSC messages (see BELA console for precise adress)
-// For each harmonics (%rang indicate harmonic number, starting at 0) :
+// OSC messages (see the BELA console for the precise address)
+// For each harmonic (%rang indicates the harmonic number, starting at 0):
 // vol%rang	: General Volume (vol0 control the volume of the fundamental)
 // A%rang : Attack
 // D%rang : Decay

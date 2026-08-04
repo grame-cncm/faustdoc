@@ -413,7 +413,7 @@ process = no.noise : fi.resonlp(ctFreq,q,gain);
 </div>
 <!-- /faust-run -->
 
-<p><a href="https://faustlibraries.grame.fr/libs/filters/#firesonlp"><code>fi.resonlp</code></a> has four arguments (in order): <em>cut-off frequency</em>, <em>q</em>, <em>gain</em> and its <em>input</em>. Note that you can have a quick look of what the arguments of a function are simply by hovering it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables don't have a type in Faust and everything is considered as a signal. The Faust compiler takes care of making the right optimizations by choosing which variable is run at audio rate, what their types are, etc. Thus, <code>ctFreq</code>, <code>q</code> and <code>gain</code> could well be controlled by oscillators (i.e., signals running at audio rate) here. </p>
+<p><a href="https://faustlibraries.grame.fr/libs/filters/#firesonlp"><code>fi.resonlp</code></a> has four arguments (in order): <em>cut-off frequency</em>, <em>q</em>, <em>gain</em> and its <em>input</em>. Note that you can quickly check a function's arguments by hovering over it in the online IDE. Here, we're setting the first three arguments with fixed variables. Variables do not have a type in Faust and everything is considered a signal. The Faust compiler takes care of making the right optimizations by choosing which variables run at audio rate and what their types are. Thus, <code>ctFreq</code>, <code>q</code>, and <code>gain</code> could also be controlled by oscillators (i.e., signals running at audio rate).</p>
 <p>Since the input of the filter is not specified as an argument here (but it could, of course), it automatically becomes an "implicit" input/argument of <code>fi.resonlp</code>. The <code>:</code> <a href="../syntax/#sequential-composition">sequential composition operator</a> can be used to connect two elements that have the same number of outputs and inputs. Since <code>no.noise</code> has one output and <code>fi.resonlp(ctFreq,q,gain)</code> has one implicit input, we can connect them together. This is essentially the same as writing something like:</p>
 <!-- faust-run -->
 <div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
@@ -648,7 +648,7 @@ process =
 </div>
 <!-- /faust-run -->
 
-<p>Since we're only using functions from <a href="https://faustlibraries.grame.fr/libs/demos/"><code>demo.lib</code></a> here, there's no need to define any UI since it is built-in in the functions that we're calling. Note that the mono output of <code>dm.wah4_demo</code> is split to fit the stereo input of <code>dm.phaser2_demo</code>. The last three effects have the same number of inputs and outputs (2x2) so no need to split or merge them.</p>
+<p>Since we're only using functions from <a href="https://faustlibraries.grame.fr/libs/demos/"><code>demo.lib</code></a> here, there's no need to define any UI since it is built into the functions that we're calling. Note that the mono output of <code>dm.wah4_demo</code> is split to fit the stereo input of <code>dm.phaser2_demo</code>. The last three effects have the same number of inputs and outputs (2x2), so there is no need to split or merge them.</p>
 <h3 id="string-physical-model-based-on-a-comb-filter">String Physical Model Based On a Comb Filter</h3>
 <p>Make a string physical model based on a feedback comb filter:</p>
 <!-- faust-run -->

@@ -18,7 +18,7 @@ amp(3) = hslider("amp3", 0.25, 0, 3, 0.01);
 // panner function
 panner(pan, x) = x*sqrt(1-pan), x*sqrt(pan);
 
-// additive synth: 3 sine oscillators with adsr envelop
+// additive synth: 3 sine oscillators with ADSR envelope
 partial(i) = amp(i+1)*os.osc((i+1)*freq);
 
 process = sum(i, 3, partial(i))

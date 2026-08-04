@@ -93,7 +93,7 @@ This can be helpful for [debugging purposes](../manual/debugging.md#debugging-at
 
 So again remember that `select2` cannot be used to **avoid computing something**. For computations that need to avoid some values or ranges (like doing  `val/0` that would return `INF`, or `log` of a negative value that would return `NaN`), the solution is to use  `min` and  `max` to force the arguments to be in the correct domain of values. For example, to avoid division by 0, you can write `1/max(ma.EPSILON, x)`. 
 
-Note that `select2` is also typically used to compute  `rdtable/rwtable` access indexes. In this case computing an array *out-of-bound* index, if is not used later on, is not a problem. 
+Note that `select2` is also typically used to compute `rdtable`/`rwtable` access indexes. In this case, computing an *out-of-bounds* array index is not a problem if it is not used later.
 
 ## What properties does the Faust compiler and generated code have ? [WIP]
 
@@ -118,7 +118,7 @@ The DSP memory footprint is perfectly known at compile time, so the generated co
 
 ### CPU footprint  
 
-Since the generated code computes the sample in a *finite number* of operations, the CPU use has an upper bound which is a very helpful property when deploying a program in a real-time audio context. Read the [Does select2 behaves as a standard C/C++ like if ?](#does-select2-behaves-as-a-standard-cc-like-if) for some subtle issues concerning the `select2` primitive.
+Since the generated code computes the sample in a *finite number* of operations, CPU use has an upper bound, which is a helpful property when deploying a program in a real-time audio context. Read [Does `select2` Behave Like a Standard C/C++ `if`?](#does-select2-behave-like-a-standard-cc-if) for some subtle issues concerning the `select2` primitive.
 
 
 ## Pattern matching and lists
