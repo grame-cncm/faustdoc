@@ -148,6 +148,12 @@ This repo demonstrates pwm audio output with an added DAC for pi-zero-2 using ci
 
 Compile, play, and analyze Faust DSPs inside the VS Code bottom panel (next to Terminal / Debug Console), with hardware + on-screen MIDI, swappable test signals, a triggered oscilloscope, and a spectrum analyzer with pre/post overlay and frequency-response mode.
 
+#### [FaustX](https://github.com/roomi-fields/faustx)
+
+A superset of Faust for live coding. Faust names are macros, so writing a name twice builds two circuits and no expression can point at an instance that already exists; FaustX adds that address, and the gestures that follow from it — replacing a module's body while its memory stays, bypassing it while its tail runs out, rewiring or removing it, driving a control with a signal. It translates to plain Faust and requires no change to the compiler.
+
+It ships with a catalogue of the 998 public library functions, generated from the Faust documentation itself: parameter names, starting values, bounds, and measured input and output counts.
+
 ### Contributing
 
 Feel free to contribute by [forking this project](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks) and [creating a pull request](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request), or by mailing the library description [here](mailto:research@grame.fr).
