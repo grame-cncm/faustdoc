@@ -1390,7 +1390,7 @@ The `soundfile("label[url:{'path1';'path2';'path3'}]", n)` primitive allows acce
 
 A `soundfile` has: 
 
-* two inputs: the sound number (as a integer between 0 and 255, automatically promoted to *int*), and the read index in the sound (automatically promoted to *int*, which will access the last sample of the sound if the read index is greater than the sound length)
+* two inputs: the sound number (as a integer between 0 and 255, automatically promoted to *int*), and the read index in the sound (automatically promoted to *int*). **Note that when the read index is higher or equal to the sample length, the soundfile primitive will return the last sample.**
 * two fixed outputs: the first one is the length in samples of the currently accessed sound, the second one is the nominal sample rate in Hz of the currently accessed sound
 * `n` several more outputs for the sound channels themselves, as a integer [constant numerical expression](#constant-numerical-expressions)
 

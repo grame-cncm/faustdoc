@@ -133,7 +133,7 @@ The \lstinline'soundfile("label[url:\{'path1';'path2';'path3';\}]", n)' primitiv
 A soundfile has:
 
 \begin{itemize}
-	\item two inputs: the sound number (as an integer between 0 and 255, automatically promoted to \textit{int}), and the read index in the sound (automatically promoted to \textit{int}, which will access the last sample of the sound if the read index is greater than the sound length)
+	\item two inputs: the sound number (as an integer between 0 and 255, automatically promoted to \textit{int}), and the read index in the sound (automatically promoted to \textit{int}). \textbf{Note that when the read index is higher or equal to the sample length, the soundfile primitive will return the last sample.}
 	\item two fixed outputs: the first one is the length in samples of the currently accessed sound, the second one is the nominal sample rate in Hz of the currently accessed sound
 	\item \lstinline'n' additional outputs for the sound channels themselves, as an integer \textit{constant numerical expression}
 \end{itemize}
