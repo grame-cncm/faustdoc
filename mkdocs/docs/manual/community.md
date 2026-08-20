@@ -4,6 +4,10 @@ Here is a list of additional material contributed by the community of Faust deve
 
 ## Articles, Video and Blog Posts
 
+#### [Plucked, Struck, Blown](https://drishan.com/work/plucked-struck-blown/)
+
+Three physical-modeling instruments in ~60 lines of Faust each, compiled to 9 KB AudioWorklet WASM, performed offline into a sound gallery, and reverse-engineered by batched gradient descent on a 5090.
+
 #### [Building an Audiovisual Synth #6: New Audio Engine with FAUST](https://matthiasmeissen.substack.com/p/building-an-audiovisual-synth-6-new)
 
 Building a drum engine with FAUST and Rust.
