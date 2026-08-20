@@ -27,7 +27,7 @@ Exploring Faust programming by Shubhangi Choudhary.
 
 Create a Simple Stereo Compressor with FAUST and HISE by Tania Ghosh.
 
-#### [Luca Spanedda blog posts](https://lucaspanedda.github.io/Blog) 
+#### [Luca Spanedda blog posts](https://lucaspanedda.github.io/posts) 
 
 - A tutorial on Digital Filters in Faust
 - Exploring Pseudo-Random and Stochastic Signals in Digital Sound
