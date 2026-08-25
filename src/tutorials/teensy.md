@@ -4,8 +4,8 @@
 
 The [Teensy](https://www.pjrc.com/teensy) is a development board series based on a microcontroller and distributed by [PJRC](https://www.pjrc.com). The Teensy 3.(2+) boards are based on an ARM Cortex-M4 providing plenty of computational power for real-time audio signal processing applications. In particular, the Cortex-M4 used on the [Teensy 3.6](https://www.pjrc.com/teensy/techspecs.html) (MK66FX1M0VMD18) hosts a Floating Point Unit (FPU) and has a clock of 180MHz (overclockable to 240MHz). PJRC recently released the [Teensy 4.0](https://www.pjrc.com/store/teensy40.html), which is based on a Cortex-M7 (FPU) with a clock of 600MHz and much more memory than the 3.6. When combined with their respective [audio shields](https://www.pjrc.com/store/teensy3_audio.html) (also distributed by PJRC), the Teensy 3.6/4.0 can be used to synthesize and process sound with advanced algorithms. [This paper](https://zenodo.org/record/3249282#.XRxurXVfhjE) provides a survey on the performance of such systems when used with Faust-generated DSP objects.
 
-<img src="img/teensy.jpg" class="mx-auto d-block" width="40%">
-<center>*The Teensy and Its Audio Shield*</center>
+<p><img src="img/teensy.jpg" class="mx-auto d-block" width="40%">
+<center><em>The Teensy and Its Audio Shield</em></center> </p>
 
 Using this type of chip for embedded real-time audio DSP presents a wide range of advantages:
 

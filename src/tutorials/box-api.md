@@ -8,15 +8,15 @@ The box API provides an *intermediate access point within the Faust compilation 
 
 The Faust compiler is composed of several steps:
 
-<img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
-<center>*The compilation chain*</center>
+<p><img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
+<center><em>The compilation chain</em></center> </p>
 
 Starting from the DSP source code, the *Semantic Phase* produces signals as conceptually infinite streams of samples or control values. Those signals are then compiled in imperative code (C/C++, LLVM IR, WebAssembly, etc.) in the *Code Generation Phase*.
 
 The *Semantic Phase* itself is composed of several steps:
 
-<img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
-<center>*The semantic phase*</center>
+<p><img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
+<center><em>The semantic phase</em></center> </p>
 
 The initial DSP code using the Block Diagram Algebra (BDA) is translated into a flat circuit in normal form in the *Evaluation, lambda-calculus* step. 
 

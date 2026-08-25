@@ -76,8 +76,8 @@ Path/UIZone dictionary: Dict{String, UIZone}("/Oscillator/volume" => UIZone(:fHs
 ```
 With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerful [Plots.jl](http://docs.juliaplots.org/latest/) package), and showing here the effect of the `si.smoo` at the beginning of the signals:
 
-<img src="img/osc-display.png" class="mx-auto d-block" width="60%">
-<center>*Displaying the outputs*</center>
+<p><img src="img/osc-display.png" class="mx-auto d-block" width="60%">
+<center><em>Displaying the outputs</em></center> </p>
 
 
 ### Looking at the generated code
@@ -270,8 +270,8 @@ faust2portaudiojulia -play 2 osc.dsp
 
 Will create the **osc.jl** file, directly execute it using **Julia**, with PortAudio based audio rendering and GTK GUI (and with 2 threads needed for GTK and audio). **Note** that the GUI is still quite simple:
 
-<img src="img/osc-gtk.png" class="mx-auto d-block" width="55%">
-<center>*The GTK based controller*</center>
+<p><img src="img/osc-gtk.png" class="mx-auto d-block" width="55%">
+<center><em>The GTK based controller</em></center> </p>
 
 
 The following command:
@@ -305,8 +305,8 @@ You can possibly use the [faust-osc-controller](https://github.com/grame-cncm/fa
 faust-osc-controller /Oscillator -port 5001 -outport 5000 -xmit 1
 ```
 
-<img src="img/faust-osc-controller.png" class="mx-auto d-block" width="50%">
-<center>*The faust-osc-controller OSC controller*</center>
+<p><img src="img/faust-osc-controller.png" class="mx-auto d-block" width="50%">
+<center><em>The faust-osc-controller OSC controller</em></center> </p>
 
 And finally the `faust-osc-controller` tool can be automatically started along the OSC receiver with the `faust2portaudiojulia -play 2 -oscc osc.dsp` command.
 
@@ -318,8 +318,8 @@ Faust DSP program can be written, tested in the [Faust Web IDE](https://faustide
 
 The output of the Julia backend can directly be generated using the *Platform = source* and *Architecture = julia* export options. As previously explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.
 
-<img src="img/export.png" class="mx-auto d-block" width="40%">
-<center>*Exporting the code*</center>
+<p><img src="img/export.png" class="mx-auto d-block" width="40%">
+<center><em>Exporting the code</em></center> </p>
 
 ### Generating a minimal working Julia file
 
@@ -446,7 +446,7 @@ Assuming a working Julia environment is setup, the following commands can be use
 ```
  With the following result in VS code:
  
-<img src="img/faust-jl-package.png" class="mx-auto d-block" width="80%">
-<center>*Using Julia in VS code*</center>
+<p><img src="img/faust-jl-package.png" class="mx-auto d-block" width="80%">
+<center><em>Using Julia in VS code</em></center> </p>
 
 More sophisticated analysis can be done, like [this example](https://github.com/sletz/Faust.jl/blob/main/examples/finitediff.jl), or this projet to experiment [using NNs in Faust](https://github.com/corajr/faust_nn). 

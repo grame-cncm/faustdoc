@@ -197,8 +197,8 @@ process = filterBank(nBands);
 
 to produce this GUI:
 
-<img src="pathname.png" class="mx-auto d-block" width="50%">
-<center>*Distinct GUI items to have different pathnames*</center>
+<p><img src="pathname.png" class="mx-auto d-block" width="50%">
+<center><em>Distinct GUI items to have different pathnames</em></center> </p>
 
 The rules are the following:
 
@@ -220,8 +220,8 @@ freq2 = hslider("Freq2", 500, 200, 2000, 0.01);
 
 process = os.osc(freq1) + os.square(freq2), os.osc(freq1) + os.triangle(freq2);
 ```
-<img src="group1.png" class="mx-auto d-block" width="50%">
-<center>*Shared freq1 and freq2 controllers*</center>
+<p><img src="group1.png" class="mx-auto d-block" width="50%">
+<center><em>Shared freq1 and freq2 controllers</em></center> </p>
 
 So even if  `freq1` and  `freq2` controllers are used as parameters at four different places, `freq1` used in `os.osc(freq1)` and `os.square(freq1)` will have the same path (like `/foo/Freq1`), be associated with a unique controller, and will finally appear once in the GUI. The same mechanism applies to `freq2`.
 
@@ -238,8 +238,8 @@ process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", o
 
 The `freq1` and  `freq2` controllers now don't have the same path in each group (like `/foo/Voice1/Freq1` and `/foo/Voice1/Freq2` in the first group, and `/foo/Voice2/Freq1` and `/foo/Voice2/Freq2` in the second group), and so four separate controllers and UI items are finally created. 
 
-<img src="group2.png" class="mx-auto d-block" width="60%">
-<center>*Four freq1 and freq2 controllers*</center>
+<p><img src="group2.png" class="mx-auto d-block" width="60%">
+<center><em>Four freq1 and freq2 controllers</em></center> </p>
 
 Using the relative pathname as explained in [Labels as Pathnames](../manual/syntax.md#labels-as-pathnames) possibly allows us to move `freq1` one level higher in the hierarchical structure, thus having again a unique path (like `/foo/Freq1`) and controller: 
 
@@ -252,8 +252,8 @@ freq2 = hslider("Freq2", 500, 200, 2000, 0.01);
 process = hgroup("Voice1", os.osc(freq1) + os.square(freq2)), hgroup("Voice2", os.osc(freq1) + os.triangle(freq2));
 ```
 
-<img src="group3.png" class="mx-auto d-block" width="40%">
-<center>*freq1 moved one step higher in the hierarchical structure*</center>
+<p><img src="group3.png" class="mx-auto d-block" width="40%">
+<center><em>freq1 moved one step higher in the hierarchical structure</em></center> </p>
 
 Note that the name for a given `hgroup`, `vgroup`, or `tgroup` can be used more than once, and they will be merged. This can be useful when you want to define different names for different widget signals, but still want to group them. For example, this pattern can be used to separate a synth's UI design from the implementation of the synth's DSP:
 
@@ -274,8 +274,8 @@ with {
 process = synth_ui;
 ```
 
-<img src="group4.png" class="mx-auto d-block" width="40%">
-<center>*naming and grouping*</center>
+<p><img src="group4.png" class="mx-auto d-block" width="40%">
+<center><em>naming and grouping</em></center> </p>
 
 ## What Are the Rules Used for Partial Application?
 

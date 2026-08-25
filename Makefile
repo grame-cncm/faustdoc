@@ -70,12 +70,12 @@ test:
 build:
 	$(MAKE) all
 	$(MAKE) dependencies
-	cd $(MKDIR) && mkdocs build
+	cd $(MKDIR) && python3 -m mkdocs build
 	git checkout docs/CNAME
 	
 serve:
 	@echo "you can browse the site at http://localhost:8000"
-	cd $(MKDIR) && mkdocs serve
+	cd $(MKDIR) && python3 -m mkdocs serve
 
 all:
 	$(MAKE) examples

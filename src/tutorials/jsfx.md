@@ -43,8 +43,8 @@ This will generate JSFX code that follows the standard JSFX file structure:
 ``` 
 
 This code can be directly imported into Reaper or placed in the Reaper Effects directory. 
-<img src="img/jsfx_reaper.png" class="mx-auto d-block" width="100%">
-<center>*Generated JSFX plugin in Reaper*</center>
+<p><img src="img/jsfx_reaper.png" class="mx-auto d-block" width="100%">
+<center><em>Generated JSFX plugin in Reaper</em></center> </p>
 
 The generated code is fully self-contained and can be directly imported as a Reaper JSFX audio plugin, on any supported platform. 
 

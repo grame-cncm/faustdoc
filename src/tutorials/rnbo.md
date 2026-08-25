@@ -195,23 +195,23 @@ faust2rnbo osc.dsp
 
 will directly compile the `osc.dsp` file and generate the `osc.maxpat` file, that can be opened in Max/MSP, with the following user-interface:
 
-<img src="img/faust-rnbo1.png" class="mx-auto d-block" width="100%">
-<center>*Generated RNBO patch*</center>
+<p><img src="img/faust-rnbo1.png" class="mx-auto d-block" width="100%">
+<center><em>Generated RNBO patch</em></center> </p>
 
 and with the `rnbo~` subpatcher containing the codebox object as well as the parameter control machinery:
 
-<img src="img/faust-rnbo2.png" class="mx-auto d-block" width="100%">
-<center>*`rnbo~` subpatcher with parameter control machinery (after manual editing)*</center>
+<p><img src="img/faust-rnbo2.png" class="mx-auto d-block" width="100%">
+<center><em><code>rnbo~</code> subpatcher with parameter control machinery (after manual editing)</em></center> </p>
 
 Note that the `rnbo~` object subpatcher can be generated using the `-sp` option and possibly used in other contexts as explained on [this page](https://rnbo.cycling74.com/learn/abstractions). So `faust2rnbo -sp osc.dsp` will create both `osc.maxpat` and `osc.rnbopat` files. In this case the main patch uses the [patchername/paramname](https://rnbo.cycling74.com/learn/rnbo-abstractions-and-rnbopat-files#parameters-in-subpatchers-and-abstractions) parameter naming convention:
 
-<img src="img/faust-rnbo1-bis.png" class="mx-auto d-block" width="100%">
-<center>*Generated RNBO patch in -sp mode *</center>
+<p><img src="img/faust-rnbo1-bis.png" class="mx-auto d-block" width="100%">
+<center><em>Generated RNBO patch in -sp mode</em></center> </p>
 
 and the subpatcher contains a `p` object to load and use the `osc.rnbopat` file:
 
-<img src="img/faust-rnbo1-ter.png" class="mx-auto d-block" width="100%">
-<center>*`rnbo~` subpatcher with parameter control machinery in `p` mode*</center>
+<p><img src="img/faust-rnbo1-ter.png" class="mx-auto d-block" width="100%">
+<center><em><code>rnbo~</code> subpatcher with parameter control machinery in <code>p</code> mode</em></center> </p>
 
 ### Bargraph handling
 
@@ -235,13 +235,13 @@ with {
 
 compiled with **faust2rnbo** will create a subpatcher with 2 audio inputs and 4 audio outputs (2 real ones and 2 used for bargraph), and the user-interface:
 
-<img src="img/faust-rnbo2-bis.png" class="mx-auto d-block" width="100%">
-<center>*`rnbo~` subpatcher with additional audio outputs for bargraph*</center>
+<p><img src="img/faust-rnbo2-bis.png" class="mx-auto d-block" width="100%">
+<center><em><code>rnbo~</code> subpatcher with additional audio outputs for bargraph</em></center> </p>
 
 and the main patch with parameters displaying the bargraph values:
 
-<img src="img/faust-rnbo2-ter.png" class="mx-auto d-block" width="100%">
-<center>*RNBO main patch displaying bargraph values*</center>
+<p><img src="img/faust-rnbo2-ter.png" class="mx-auto d-block" width="100%">
+<center><em>RNBO main patch displaying bargraph values</em></center> </p>
 
 ### MIDI control
 
@@ -272,8 +272,8 @@ faust2rnbo -midi osc.dsp
 
 will compile a `osc.maxpat` file containing additional `midiin/midiout` objects, with the following user-interface:
 
-<img src="img/faust-rnbo3.png" class="mx-auto d-block" width="100%">
-<center>*Generated RNBO patch with MIDI control*</center>
+<p><img src="img/faust-rnbo3.png" class="mx-auto d-block" width="100%">
+<center><em>Generated RNBO patch with MIDI control</em></center> </p>
 
 ### Polyphonic instruments
 
@@ -300,8 +300,8 @@ faust2rnbo -midi -nvoices 12 organ.dsp
 ```
 will create a patch containing a `rnbo~` object with 12 voices, with a `notein` object added to the subpatcher and correctly connected to the appropriate *freq/gain/gate*-aware parameters. Additional mapping, depending on the [convention used](../manual/midi.md#standard-polyphony-parameters) to describe the pitch (freq or key) or gain (gain or velocity), will be added when needed, resulting in the following user interface:
 
-<img src="img/faust-rnbo4.png" class="mx-auto d-block" width="100%">
-<center>*Generated polyphonic RNBO patch with MIDI control*</center>
+<p><img src="img/faust-rnbo4.png" class="mx-auto d-block" width="100%">
+<center><em>Generated polyphonic RNBO patch with MIDI control</em></center> </p>
 
 In the DSP, note that the master slider can be controlled using the Ctrl 7 (= Volume) MIDI message.
 
@@ -336,12 +336,12 @@ faust2rnbo -midi -nvoices 16 -effect auto organ2.dsp
 
 with the generated user interface and the polyphonic DSP `rnbo~` object, using the `p` abstraction model to load and activate the polyphonic instrument (as an `organ2.rnbopat` file), connected to the global effect (as an `organ2_effect.rnbopat` file). Having a single `rnbo~` object with the two embedded subpatchers is mandatory to properly create the exported project:
 
-<img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
-<center>*Generated polyphonic RNBO patch with MIDI control*</center>
+<p><img src="img/faust-rnbo5.png" class="mx-auto d-block" width="100%">
+<center><em>Generated polyphonic RNBO patch with MIDI control</em></center> </p>
 
 and the `rnbo~` subpatcher:
-<img src="img/faust-rnbo5-bis.png" class="mx-auto d-block" width="100%">
-<center>*`rnbo~` subpatcher with the polyphonic instrument and global effect as `p` abstractions*</center>
+<p><img src="img/faust-rnbo5-bis.png" class="mx-auto d-block" width="100%">
+<center><em><code>rnbo~</code> subpatcher with the polyphonic instrument and global effect as <code>p</code> abstractions</em></center> </p>
 
 ## Using the Faust Web IDE
 
@@ -351,8 +351,8 @@ Faust DSP programs can be written, tested in the [Faust Web IDE](https://faustid
 
 An RNBO patch can be generated directly using the *Platform = rnbo* and *Architecture = rnbo* export options. The resulting *foo* folder is self-contained and contains the `foo.maxpat` file to be opened with Max/MSP.
 
-<img src="img/export.png" class="mx-auto d-block" width="40%">
-<center>*Exporting the code*</center> 
+<p><img src="img/export.png" class="mx-auto d-block" width="40%">
+<center><em>Exporting the code</em></center> </p>
 
 ### Generating the RNBO patch in polyphonic mode
 

@@ -430,11 +430,13 @@
 <h4 id="faust-compiler-structure">Faust compiler structure</h4>
 <p>The Faust compiler is composed of several steps:</p>
 <p><img src="img/compilation-chain.png" class="mx-auto d-block" width="60%">
-<center><em>The compilation chain</em></center></p>
+<center><em>The compilation chain</em></center> </p>
+
 <p>Starting from the DSP source code, the <em>Semantic Phase</em> produces signals as conceptually infinite streams of samples or control values. Those signals are then compiled in imperative code (C/C++, LLVM IR, WebAssembly, etc.) in the <em>Code Generation Phase</em>.</p>
 <p>The <em>Semantic Phase</em> itself is composed of several steps:</p>
 <p><img src="img/semantic-phase.png" class="mx-auto d-block" width="80%">
-<center><em>The semantic phase</em></center></p>
+<center><em>The semantic phase</em></center> </p>
+
 <p>The initial DSP code using the Block Diagram Algebra (BDA) is translated into a flat circuit in normal form in the <em>Evaluation, lambda-calculus</em> step.  </p>
 <p>The list of output signals is produced by the <em>Symbolic Propagation</em> step. Each output signal is then simplified and a set of optimizations are done (normal form computation and simplification, delay line sharing, typing, etc.) to finally produce a <em>list of output signals in normal form</em>. </p>
 <p>The <em>Code Generation Phase</em> translates the signals into an intermediate representation named FIR (Faust Imperative Representation), which is then converted to the final target language (C/C++, LLVM IR, WebAssembly, etc.) with a set of backends.</p>

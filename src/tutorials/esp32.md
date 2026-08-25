@@ -2,8 +2,8 @@
 
 The [ESP32](https://www.espressif.com/en/products/hardware/esp32/overview) is an inexpensive microcontroller providing built-in Bluetooth and Wi-Fi support, many GPIOs and analog inputs, etc. Its extremely low price (a few dollars) makes it very attractive, and it is being used in an increasing number of boards. A wide range of "unknown/secret" development boards targeting audio applications are based on the ESP32 and can be found on Alibaba/AliExpress. While most of them target the development of "intelligent speakers" (e.g., Alexa, etc.), they host all the components needed to carry out real-time DSP applications and can therefore be used to develop digital musical instruments, effect processors, synthesizer hardware, etc. The [TTGO T-Audio](https://github.com/LilyGO/TTGO-TAudio) and the [ESP32 Audio Dev Kit](https://blog.hackster.io/seeed-drops-new-esp32-audio-development-kit-for-audio-related-iot-projects-ad38d1f02637) are good examples of such boards.
 
-<img src="img/esp32.jpg" class="mx-auto d-block" width="80%">
-<center>*The TTGO T-Audio (left) and the ESP32 Audio Dev Kit (right)*</center>
+<p><img src="img/esp32.jpg" class="mx-auto d-block" width="80%">
+<center><em>The TTGO T-Audio (left) and the ESP32 Audio Dev Kit (right)</em></center> </p>
 
 They both host relatively good-quality audio codecs with stereo inputs and outputs, a built-in amplifier, battery circuit, external RAM, and various motion sensors (only for the TTGO T-Audio), all for less than $15. Since these boards don't run any OS, very low audio latency can be achieved (i.e., buffer sizes of eight samples, etc.). Compared to the [Teensy 3.6/4.0 and their respective audio shields](teensy.md), these boards are much cheaper, they're more powerful than the Teensy 3.6 (dual core with a much higher clock) and, most importantly, they have enough RAM to run DSP algorithms with a large memory footprint such as reverbs, echoes, etc. (which is relatively limited on the Teensy 3.6 and 4.0). Finally, the ESP32 ecosystem is entirely open source (including its loader)! In many ways, they can compete with much more expensive dedicated audio platforms such as the BELA (<$150), etc. 
 

@@ -206,8 +206,8 @@ Faust DSP programs can be written and tested in the [Faust Web IDE](https://faus
 
 The output as a Cmajor program can directly be generated using the *Platform = cmajor* and *Architecture = cmajor* export options. The resulting *foo* folder is self-contained, containing the `foo.cmajor` and `foo.cmajorpatch` files. The program can be executed using the `cmaj play foo/foo.cmajorpatch` command or possibly [converted as a JUCE plugin](https://github.com/SoundStacks/cmajor/blob/main/docs/Cmaj%20Quick%20Start.md).
 
-<img src="img/export.png" class="mx-auto d-block" width="40%">
-<center>*Exporting the code*</center>
+<p><img src="img/export.png" class="mx-auto d-block" width="40%">
+<center><em>Exporting the code</em></center> </p>
 
 ### Generating the Cmajor output in polyphonic mode
 

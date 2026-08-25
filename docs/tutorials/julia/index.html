@@ -450,7 +450,8 @@ Path/UIZone dictionary: Dict{String, UIZone}(&quot;/Oscillator/volume&quot; =&gt
 </code></pre>
 <p>With the name of the application, the number of input/output channels, the set of controller paths with their range, and a display of the first samples of the computed outputs (using the powerful <a href="http://docs.juliaplots.org/latest/">Plots.jl</a> package), and showing here the effect of the <code>si.smoo</code> at the beginning of the signals:</p>
 <p><img src="img/osc-display.png" class="mx-auto d-block" width="60%">
-<center><em>Displaying the outputs</em></center></p>
+<center><em>Displaying the outputs</em></center> </p>
+
 <h3 id="looking-at-the-generated-code">Looking at the generated code</h3>
 <p>A <code>mydsp{T}</code> data structure, as a subtype of the <code>abstract type dsp</code> is generated, and contains the field definitions with their types, as well as a constructor initializing them:</p>
 <pre><code class="language-julia">mutable struct mydsp{T} &lt;: dsp
@@ -590,7 +591,8 @@ println(&quot;One computed output buffer: &quot;, outputs)
 </code></pre>
 <p>Will create the <strong>osc.jl</strong> file, directly execute it using <strong>Julia</strong>, with PortAudio based audio rendering and GTK GUI (and with 2 threads needed for GTK and audio). <strong>Note</strong> that the GUI is still quite simple:</p>
 <p><img src="img/osc-gtk.png" class="mx-auto d-block" width="55%">
-<center><em>The GTK based controller</em></center></p>
+<center><em>The GTK based controller</em></center> </p>
+
 <p>The following command:</p>
 <pre><code class="language-bash">faust2portaudiojulia -play 2 -osc osc.dsp
 </code></pre>
@@ -610,14 +612,16 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 <pre><code class="language-bash">faust-osc-controller /Oscillator -port 5001 -outport 5000 -xmit 1
 </code></pre>
 <p><img src="img/faust-osc-controller.png" class="mx-auto d-block" width="50%">
-<center><em>The faust-osc-controller OSC controller</em></center></p>
+<center><em>The faust-osc-controller OSC controller</em></center> </p>
+
 <p>And finally the <code>faust-osc-controller</code> tool can be automatically started along the OSC receiver with the <code>faust2portaudiojulia -play 2 -oscc osc.dsp</code> command.</p>
 <h2 id="using-the-faust-web-ide">Using the Faust Web IDE</h2>
 <p>Faust DSP program can be written, tested in the <a href="https://faustide.grame.fr/">Faust Web IDE</a> and generated as embeddable Julia code, or possibly as working audio applications.</p>
 <h3 id="generating-the-pure-julia-output">Generating the pure Julia output</h3>
 <p>The output of the Julia backend can directly be generated using the <em>Platform = source</em> and <em>Architecture = julia</em> export options. As previously explained, the resulting file is not self-contained, but shows the code which has to be wrapped with adapted Julia architecture files.</p>
 <p><img src="img/export.png" class="mx-auto d-block" width="40%">
-<center><em>Exporting the code</em></center></p>
+<center><em>Exporting the code</em></center> </p>
+
 <h3 id="generating-a-minimal-working-julia-file">Generating a minimal working Julia file</h3>
 <p>The <em>Platform = julia</em> and <em>Architecture = julia</em> export options allow to generate a self-contained file using the <code>minimal.jl</code>architecture, to be by started with the following command:</p>
 <pre><code class="language-bash">julia -i foo.jl (here -i to stay in interactive mode)
@@ -701,7 +705,8 @@ Faust OSC application 'Oscillator' is running on UDP ports 5000, 5001
 </code></pre>
 <p>With the following result in VS code:</p>
 <p><img src="img/faust-jl-package.png" class="mx-auto d-block" width="80%">
-<center><em>Using Julia in VS code</em></center></p>
+<center><em>Using Julia in VS code</em></center> </p>
+
 <p>More sophisticated analysis can be done, like <a href="https://github.com/sletz/Faust.jl/blob/main/examples/finitediff.jl">this example</a>, or this projet to experiment <a href="https://github.com/corajr/faust_nn">using NNs in Faust</a>. </p></div>
         </div>
     </div>
