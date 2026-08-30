@@ -1,6 +1,11 @@
 
 MAKE 	?= make
-AWK		?= awk
+# macOS's bundled /usr/bin/awk (the "one true awk") can corrupt multi-byte
+# UTF-8 sequences when a large record forces a buffer reallocation; prefer
+# gawk when available since it handles this correctly.
+AWK		?= $(shell command -v gawk 2>/dev/null || echo awk)
+
+export LC_ALL := en_US.UTF-8
 
 MKDIR    := mkdocs
 DOCDIR   := $(MKDIR)/docs
