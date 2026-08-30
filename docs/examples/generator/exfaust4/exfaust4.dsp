@@ -30,7 +30,7 @@ noise   = random/2147483647.0;
 
 <mdoc>
 \subsection{Just add a user interface element to play volume!}
-Finally, the sound level of this program is controlled by a user slider, which gives the following equation:
+Endly, the sound level of this program is controlled by a user slider, which gives the following equation: 
 <equation>process</equation>
 </mdoc>
 
@@ -44,7 +44,7 @@ process = noise * vslider("Volume[style:knob][acc: 0 0 -10 0 10]", 0.5, 0, 1, 0.
 
 <mdoc>
 \section{Notice of this documentation}
-Pay attention to the information and naming conventions used in this documentation:
+You might be careful of certain information and naming conventions used in this documentation:
 <notice/>
 
 \section{Listing of the input code}
