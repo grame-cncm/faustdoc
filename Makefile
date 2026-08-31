@@ -59,6 +59,9 @@ help:
 	@echo "  svg      : build the svg files"
 	@echo "             the 'svg' target should be the last target called"
 	@echo "  qref     : build the quick reference section"
+	@echo "             (this also builds the 'rail' tool if needed, see below)"
+	@echo "  rail     : (re)build the 'rail' tool used by qref to generate syntax diagrams"
+	@echo "             not required standalone, qref builds it automatically on demand"
 	@echo "  options  : build the compiler options page"
 	@echo "  tools    : build the faust tools page"
 	@echo "  examples : build the faust examples page"
@@ -102,7 +105,10 @@ clean:
 md : $(MD)
 
 qref :
-	make -C quick-reference 
+	make -C quick-reference
+
+rail :
+	$(MAKE) -C quick-reference/tools/rail-src
 
 options: $(DOCDIR)/manual/options.md
 

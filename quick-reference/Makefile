@@ -2,6 +2,7 @@
 MAKE ?= make
 
 CHAPTERS := $(wildcard chapters/*.tex)
+RAIL     := tools/rail-src/rail
 
 .PHONY: mkdocs
 
@@ -34,11 +35,15 @@ menu:
 	$(MAKE) -C mkdocs menu
 
 
-faust-quick-reference.pdf: faust-quick-reference.tex $(CHAPTERS)
+faust-quick-reference.pdf: faust-quick-reference.tex $(CHAPTERS) $(RAIL)
 	pdflatex faust-quick-reference.tex
-	rail faust-quick-reference
+	$(RAIL) faust-quick-reference
 	pdflatex faust-quick-reference.tex
+
+$(RAIL):
+	$(MAKE) -C tools/rail-src
 
 clean:
 	rm -f *.out *.toc *.pdf *.aux *.dvi *.rai *.rao *.log *.gz *~
 	$(MAKE) -C mkdocs clean
+	$(MAKE) -C tools/rail-src clean

@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\usepackage{rail}
+
+\railoptions{-t}
+
+\relax
+
+\begin{document}
+
+\verb!\\!
+\begin{rail}
+\\
+\end{rail}
+
+\verb!x \\!
+\begin{rail}
+x \\
+\end{rail}
+
+\verb!\\ x!
+\begin{rail}
+\\ x
+\end{rail}
+
+\verb!x \\ y!
+\begin{rail}
+x \\ y
+\end{rail}
+
+\verb!\\ | x \\ | \\ y | x \\ y!
+\begin{rail}
+\\ | x \\ | \\ y | x \\ y
+\end{rail}
+
+\verb!x +!
+\begin{rail}
+x +
+\end{rail}
+
+\verb!\\ +!
+\begin{rail}
+\\ +
+\end{rail}
+
+\verb!\\ + \\!
+\begin{rail}
+\\ + \\
+\end{rail}
+
+\verb!\\ *!
+\begin{rail}
+\\ *
+\end{rail}
+
+\verb!\\ * \\!
+\begin{rail}
+\\ * \\
+\end{rail}
+
+\verb!\\ ?!
+\begin{rail}
+\\ ?
+\end{rail}
+
+\verb!(x *)!
+\begin{rail}
+x *
+\end{rail}
+
+\end{document}
