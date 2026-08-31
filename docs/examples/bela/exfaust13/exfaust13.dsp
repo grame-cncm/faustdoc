@@ -1,71 +1,83 @@
 
-// FROM FAUST DEMO
-// Designed to use the Analog Input for parameter controls.
+import("stdfaust.lib");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// A very simple subtractive synthesizer with 1 VCO 1 VCF.
+// The VCO Waveform is variable between Saw and Square
+// The frequency is modulated by an LFO
+// The envelope control volum and filter frequency
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// ANALOG IMPLEMENTATION:
+//
+// ANALOG_0	: waveform (Saw to square)
+// ANALOG_1	: Filter Cutoff frequency
+// ANALOG_2	: Filter resonance (Q)
+// ANALOG_3	: Filter Envelope Modulation
+//
+// MIDI:
+// CC 79 : Filter keyboard tracking (0 to X2, default 1)
+//
+// Envelope
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+// CC 72 : Release
+//
+// CC 78 : LFO frequency (0.001Hz to 10Hz)
+// CC 1  : LFO Amplitude (Modulation)
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// ANALOG IN:
-// ANALOG 0	: Grain Size
-// ANALOG 1	: Speed
-// ANALOG 2	: Probability
-// (others analog inputs are not used)
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
+// HUI //////////////////////////////////////////////////
+// Keyboard
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 0.5, 0.01);// MIDI KEYBOARD
 
-process = vgroup("Granulator", environment {
-    declare name "Granulator";
-    declare author "Adapted from sfIter by Christophe Lebreton";
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
-    /* =========== DESCRIPTION =============
+// VCO
+wfFade = hslider("waveform[BELA: ANALOG_0]",0.5,0,1,0.001):si.smoo;
 
-    - The granulator takes very small parts of a sound, called GRAINS, and plays them at a varying speed
-    - Front = Medium size grains
-    - Back = short grains
-    - Left Slow rhythm
-    - Right = Fast rhythm
-    - Bottom = Regular occurrences
-    - Head = Irregular occurrences 
-    */
+// VCF
+res = hslider("resonnance[BELA: ANALOG_2]",0.5,0,1,0.001):si.smoo;
+fr = hslider("fc[BELA: ANALOG_1]", 15, 15, 12000, 0.001):si.smoo;
+track = hslider("tracking[midi:ctrl 79]", 1, 0, 2, 0.001);
+envMod = hslider("envMod[BELA: ANALOG_3]",50,0,100,0.01):si.smoo;
 
-    import("stdfaust.lib");
+// ENV
+att = 0.01 * (hslider("attack[midi:ctrl 73]",0.1,0.1,400,0.001));
+dec = 0.01 * (hslider("decay[midi:ctrl 76]",60,0.1,400,0.001));
+sust = hslider("sustain[midi:ctrl 77]",0.2,0,1,0.001);
+rel = 0.01 * (hslider("release[midi:ctrl 72]",100,0.1,400,0.001));
 
-    process = hgroup("Granulator", *(excitation : ampf));
+// LFO
+lfoFreq = hslider("lfoFreq[midi:ctrl 78]",6,0.001,10,0.001):si.smoo;
+modwheel = hslider("modwheel[midi:ctrl 1]",0,0,0.5,0.001):si.smoo;
 
-    excitation = noiseburst(gate,P) * (gain);
-    ampf = an.amp_follower_ud(duree_env,duree_env);
+// PROCESS /////////////////////////////////////////////
+allfreq = (midifreq * bend) + LFO;
+// VCF
+cutoff = ((allfreq * track) + fr + (envMod * midigain * env)) : min(ma.SR/8);
 
-    //----------------------- NOISEBURST ------------------------- 
+// VCO
+oscillo(f) = (os.sawtooth(f)*(1-wfFade))+(os.square(f)*wfFade);
 
-    noiseburst(gate,P) = no.noise : *(gate : trigger(P))
-        with { 
-            upfront(x) = (x-x') > 0;
-            decay(n,x) = x - (x>0)/n; 
-            release(n) = + ~ decay(n); 
-            trigger(n) = upfront : release(n) : > (0.0);
-        };
+// VCA
+volume = midigain * env;
 
-    //-------------------------------------------------------------
+// Enveloppe
+env = en.adsre(att, dec, sust, rel, midigate);
 
-    P = freq; // fundamental period in samples
-    freq = hslider("[1]GrainSize[BELA: ANALOG_0]", 200, 5, 2205, 1);
-    // the frequency gives the white noise band width
-    Pmax = 4096; // maximum P (for de.delay-line allocation)
+// LFO
+LFO = os.lf_triangle(lfoFreq)*modwheel*10;
 
-    // PHASOR_BIN //////////////////////////////
-    phasor_bin(init) = (+(float(speed)/float(ma.SR)) : fmod(_,1.0)) ~ *(init);
-    gate = phasor_bin(1) : -(0.001) : pulsar;
-    gain = 1;
-                            
-    // PULSAR //////////////////////////////
-    // Pulsar allows to create a more or less random 'pulse'(proba).
+// SYNTH ////////////////////////////////////////////////
+synth = (oscillo(allfreq) : ve.moog_vcf(res,cutoff)) * volume;
 
-    pulsar = _ <: ((_<(ratio_env)) : @(100))*(proba>(_,abs(no.noise) : ba.latch)); 
-    speed = hslider("[2]Speed[BELA: ANALOG_1]", 10, 1, 20, 0.0001) : fi.lowpass(1,1);
-
-    ratio_env = 0.5;
-    fade = 0.5; // min > 0 to avoid division by 0
-
-    proba = hslider("[3]Probability[BELA: ANALOG_2]", 70, 50, 100, 1) * (0.01) : fi.lowpass(1,1);
-    duree_env = 1/(speed : /(ratio_env*(0.25)*fade));
-}.process);
+// PROCESS /////////////////////////////////////////////
+process = synth;
 

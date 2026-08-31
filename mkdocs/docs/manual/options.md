@@ -1,5 +1,5 @@
 # Faust Compiler Options
-## FAUST compiler version 2.85.9
+## FAUST compiler version 2.87.11
 ~~~faust-options
 usage : faust [options] file1 [file2 ...].
         where options represent zero or more compiler options 
@@ -28,7 +28,7 @@ usage : faust [options] file1 [file2 ...].
 ---------------------------------------
 ~~~faust-options
   -lang <lang> --language                 select output language,
-                                          'lang' should be asc, c, cpp (default), cmajor, codebox, csharp, dlang, fir, interp, java, jax, jsfx, julia, llvm, ocpp, rust, sdf3, vhdl or wast/wasm.
+                                          'lang' should be asc, c, cpp (default), cmajor, codebox, csharp, dlang, fir, interp, java, jsfx, julia, linen, llvm, nnx, ocpp, rust, sdf3, vhdl or wast/wasm.
   -single     --single-precision-floats   use single precision floats for internal computations (default).
   -double     --double-precision-floats   use double precision floats for internal computations.
   -quad       --quad-precision-floats     use quad precision floats for internal computations.
@@ -59,6 +59,9 @@ usage : faust [options] file1 [file2 ...].
   -mem2       --memory-manager2           use iControl/fControl, iZone/fZone model and no explicit memory manager.
   -mem3       --memory-manager3           use iControl/fControl, iZone/fZone model and no explicit memory manager with access as function parameters.
   -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
+               mode 2 bitcasts float/double values and tests their IEEE-754 exponent; zero/subnormal values become +0.0.
+               exponent masks: binary32 0x7F800000 (2139095040), binary64 0x7FF0000000000000 (9218868437227405312).
+  -hlf <n>    --hash-load-factor <n>      load factor that triggers tlib hash table growth (0.7 by default) ; internal compiler tuning knob, never changes generated code, see TLIB.md.
   -rui        --range-ui                  whether to generate code to constraint vslider/hslider/nentry values in [min..max] range.
   -fui        --freeze-ui                 whether to freeze vslider/hslider/nentry to a given value (init value by default).
   -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compiling a dsp file.

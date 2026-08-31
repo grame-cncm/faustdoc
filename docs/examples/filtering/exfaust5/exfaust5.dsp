@@ -1,46 +1,27 @@
 
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
+// Forward Deep Neural Net (DNN), any number of layers of any size each
 
-declare name 		"bandFilter";
-declare version 	"1.0";
-declare author 		"Grame";
-declare license 	"BSD";
-declare copyright 	"(c)GRAME 2006";
+declare name    "DNN";
+declare author  "JOS";
+declare license "STK-4.3";
 
 import("stdfaust.lib");
 
-//---------------------second order filter--------------------------
-// filter(Q,F,G)
-//  			Q : quality factor [1..100]
-//				F :	frequency (Hz)
-//				G : gain [0..1]
-//------------------------------------------------------------------
+layerSizes = (8,5,8); // autoencoder with 8 in & out, 5-state hidden layer
+w(m,n,k) = m*100+n*10+k; // placeholder weights: m=layer, n=fromNode, k=destNode
 
-filter(Q,F,G) = fi.TF2((1 +  K/Q + K*K) 	/ D,
-						 2 * (K*K - 1) 		/ D,
-						(1 - K/Q + K*K) 	/ D,
-						 2 * (K*K - 1) 		/ D,
-						(1 - V*K/Q + K*K) 	/ D
-					 )
-		with {
-				V = ba.db2linear(G);
-				K = tan(ma.PI*F/ma.SR);
-				D = 1 + V*K/Q + K*K;
-		};
+M = ba.count(layerSizes);
+N(l) = ba.take(l+1,layerSizes); // Nodes per layer
 
-//--------------- Band Filter with user interface ------------------
-// bandfilter(F)
-//  			F :	default frequency (Hz)
-//
-//------------------------------------------------------------------
-
-bandfilter(F) = filter(nentry("Q factor [style:knob]",50,0.1,100,0.1),
-					    nentry("freq [unit:Hz][style:knob]", F, 20, 20000, 1),
-						0 - vslider("gain [unit:dB]", 0, -50, 50, 0.1)
-						);
-
-//------------------------- Process --------------------------------
-
-process = vgroup("Bandfilter", bandfilter(1000));
+process = seq(m, M-1, layer(m))
+// look at weights:
+// process = par(m,M,par(n,N(m),par(k,N(m),w(m,n,k))))
+with {
+  layer(m) = weights(m) :> nonlinearities(m);
+  nonlinearities(m) = bus(N(m)*N(m+1)) :> par(n,N(m+1),nl(n));
+  weights(m) = bus(N(m)) <: par(n,N(m),(bus(N(m+1))<:wts(m,n)));
+  wts(m,n) = bus(N(m+1)) : par(k,N(m+1),*(w(m,n,k)));
+  nl(n,x) = x * (x>0); // ReLU
+  bus(N) = par(k,N,_);
+};
 

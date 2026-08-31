@@ -1,38 +1,69 @@
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Simple synthetizer that use sy.dubDub of the standard Faust library.
-// The frequency is modulated by a 1 octave keyboard
-// The 2 filter's parameters are modulated by a 2d x/y sensor (Trill Craft sensor)
-// A checkbox active the buffering of the parameters value.
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// Trill Sensor implementation:
-//
-// this sample use :
-//  - 1 craft sensor for the 1 octave keyboard and some control touch
-//  - 1 square sensor for the control of the 2 Filter parameters cut off frequency & Q
-//
 import("stdfaust.lib");
-// Sensor Configuration //////////////////////////////////////////////////
-declare trill_mappings "{ 'SQUARE' : {'0' : 40 } ; 'CRAFT' : {'0' : 48} }";             //i2c address for each trill sensor
-declare trill_settings "{ 'CRAFT_0' : { 'prescaler' : 4 ; 'threshold' : 0.015 }}";      //sensibility settings for the crafts sensors
 
-// Parameter Configuration //////////////////////////////////////////////////
-// Keyboard
-declare trill_keyboard "{'CRAFT_0' : {'start_pin' : 15 ; 'end_pin' : 27 ; 'start_note' : {'C' : 2} }}"; // the scale of the keyboard is chromatic by default. For another scale add the parameter 'scale' : {1 ; 1 ; 0.5 ; ...} with each space between the notes
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Simple demo of wavetable synthesis. A LFO modulate the interpolation between 4 tables.
+// It's possible to add more tables step.
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// MIDI IMPLEMENTATION:
+//
+// CC 1 : LFO Depth (wave travel modulation)
+// CC 14 : LFO Frequency
+// CC 70 : Wave travelling
+//
+// CC 73 : Attack
+// CC 76 : Decay
+// CC 77 : Sustain
+// CC 72 : Release
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// GENERAL
+midigate = button("gate");
+midifreq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
+midigain = nentry("gain", 0.5, 0, 1, 0.01);
 
-gate = button("gate");
-freq = nentry("freq[unit:Hz]", 440, 20, 20000, 1);
-gain = nentry("gain", 0.5, 0, 0.5, 0.01);          // Trill KEYBOARD
+waveTravel = hslider("waveTravel [midi:ctrl]",0,0,1,0.01);
 
-// Filter
-CUTOFF_MIN = 350;
-Q_MIN = 0.8;
-touchsqsensor = (button("touch[TRILL:SQUARE_LVL_0]") > 0.1);    //square sensor pressed
-buffering = (checkbox("buffering[TRILL:CRAFT_0 PIN 0]") == 0);  //activation of buffering of the filter's parameters values
-ctfreq = hslider("cutoff freq [TRILL:SQUARE_XPOS_0]", CUTOFF_MIN, CUTOFF_MIN, 2000, 0.1) : ba.bypass1(buffering, max(CUTOFF_MIN, ba.sAndH(touchsqsensor))) : si.smoo;       //value of the trill x square sensor for cut off frequency
-q = hslider("Q [TRILL:SQUARE_YPOS_0]", Q_MIN, Q_MIN, 10, 0.001): ba.bypass1(buffering, max(Q_MIN, ba.sAndH(touchsqsensor))) : si.smoo;                                      //value of the trill y square sensor for Q
+// pitchwheel
+bend = ba.semi2ratio(hslider("bend [midi:pitchwheel]",0,-2,2,0.01));
 
-// Process  //////////////////////////////////////////////////
-process = sy.dubDub(freq, ctfreq, q, gate) * gain;
+gFreq = midifreq * bend;
+
+// LFO
+lfoDepth = hslider("lfoDepth[midi:ctrl 1]",0,0.,1,0.001):si.smoo;
+lfoFreq = hslider("lfoFreq[midi:ctrl 14]",0.1,0.01,10,0.001):si.smoo;
+moov = ((os.lf_trianglepos(lfoFreq) * lfoDepth) + waveTravel) : min(1) : max(0);
+
+volA = hslider("A[midi:ctrl 73]",0.01,0.01,4,0.01);
+volD = hslider("D[midi:ctrl 76]",0.6,0.01,8,0.01);
+volS = hslider("S[midi:ctrl 77]",0.2,0,1,0.01);
+volR = hslider("R[midi:ctrl 72]",0.8,0.01,8,0.01);
+envelop = en.adsre(volA,volD,volS,volR,midigate);
+
+// Out Amplitude
+vol = envelop * midigain;
+
+WF(tablesize, rang) = abs((fmod((1+(float(ba.time)*rang)/float(tablesize)), 4.0))-2) -1.;
+
+// 4 WF maxi with this version:
+scanner(nb, position) = -(_,soustraction) : *(_,coef) : cos : max(0)
+with {
+	coef = 3.14159 * ((nb-1)*0.5);
+	soustraction = select2(position>0, 0, (position/(nb-1)));
+};
+
+wfosc(freq) = (rdtable(tablesize, wt1, faze)*(moov : scanner(4,0)))+(rdtable(tablesize, wt2, faze)*(moov : scanner(4,1)))
+				+ (rdtable(tablesize, wt3, faze)*(moov : scanner(4,2)))+(rdtable(tablesize, wt4, faze)*(moov : scanner(4,3)))
+with {
+	tablesize = 1024;
+	wt1 = WF(tablesize, 16);
+	wt2 = WF(tablesize, 8);
+	wt3 = WF(tablesize, 6);
+	wt4 = WF(tablesize, 4);
+	faze = int(os.phasor(tablesize,freq));
+};
+
+process = wfosc(gFreq) * vol;
+

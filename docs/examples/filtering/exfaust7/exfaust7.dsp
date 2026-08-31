@@ -1,13 +1,12 @@
 
-declare name "diodeLadder";
-declare description "Demonstration of diodeLadder";
-declare author "Eric Tarr";
+declare name "graphicEqLab";
+declare description "Signal generators through a filter bank with spectrum analysis display";
 
 import("stdfaust.lib");
 
-Q = hslider("Q",1,0.7072,25,0.01);
-normFreq = hslider("freq",0.1,0,1,0.001):si.smoo;
-switch = checkbox("Saw/Noise");
-inputSignal = (no.noise *switch), (os.sawtooth(100)*(1-switch)) :> _; 
+process = 
+ vgroup("[1]",dm.sawtooth_demo) : 
+ vgroup("[2]",dm.filterbank_demo) : 
+ vgroup("[3]",dm.spectral_level_demo) <:
+  _,_;
 
-process = inputSignal : ve.diodeLadder(normFreq,Q) <:_,_;

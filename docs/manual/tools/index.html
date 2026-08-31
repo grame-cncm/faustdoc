@@ -370,6 +370,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#faust2clap" class="nav-link">faust2clap</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#faust2cmajor" class="nav-link">faust2cmajor</a>
               <ul class="nav flex-column">
               </ul>
@@ -820,6 +824,30 @@ Options:
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 </pre>
 
+<h2 id="faust2clap">faust2clap</h2>
+<pre class=faust-tools>
+usage: faust2clap [-h] [-nvoices N] [-midi] [--clap-sdk DIR] [--no-install]
+                  dsp_file
+
+Compile a Faust DSP program into a CLAP plugin.
+
+positional arguments:
+  dsp_file        input .dsp file
+
+optional arguments:
+  -h, --help      show this help message and exit
+  -nvoices N      build a polyphonic instrument with N voices (instruments
+                  only); without it the DSP's own `declare nvoices` is used,
+                  else the plugin is monophonic
+  -midi           accepted for consistency with the other faust2xx tools; CLAP
+                  plugins always receive host MIDI
+  --clap-sdk DIR  directory containing clap-sdk/ and clap-helpers/
+  --no-install    build only, do not copy to the user CLAP directory
+
+Unrecognised options are passed through to the Faust compiler, so `-vec -lv 0
+-I /path/to/lib` work as they do for the other faust2xx tools.
+</pre>
+
 <h2 id="faust2cmajor">faust2cmajor</h2>
 <pre class=faust-tools>
 Usage: faust2cmajor [options] [Faust options] &lt;file.dsp>
@@ -893,6 +921,9 @@ Options:
    -sr &lt;num> : to specify sample rate
    -bs &lt;num> : to specify buffer size
    -source : to only create the source folder
+   -sd : to load soundfiles from the SD card at runtime instead of inlining to QSPI
+   -sd-debug : to print loaded soundfile info over USB serial at startup
+   -upload-sd : to upload soundfiles to the SD card (does not build the DSP, just the uploader)
    Faust options : any option (e.g. -vec -vs 8...). See the Faust compiler documentation.
 
 </pre>

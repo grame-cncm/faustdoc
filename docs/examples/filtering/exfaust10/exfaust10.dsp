@@ -1,15 +1,14 @@
 
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
+declare name "korg35HPF";
+declare description "Demonstration of the Korg 35 HPF";
+declare author "Eric Tarr";
 
-declare name "highShelf";
+import("stdfaust.lib");
 
-import("maxmsp.lib");
+Q = hslider("Q",1,0.5,10,0.01);
+normFreq = hslider("freq",0.5,0,1,0.001):si.smoo;
+switch = checkbox("Saw/Noise");
 
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
+inputSignal = (no.noise *switch), (os.sawtooth(100)*(1-switch)) :> _; 
 
-process(x) = highShelf(x,F,G,Q);
-
-
+process = inputSignal : ve.korg35HPF(normFreq,Q) <:_,_;

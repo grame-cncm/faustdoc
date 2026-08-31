@@ -330,23 +330,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#bpf" class="nav-link">BPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#dnn" class="nav-link">DNN</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#hpf" class="nav-link">HPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#lpf" class="nav-link">LPF</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
             <li class="nav-item" data-level="2"><a href="#bandfilter" class="nav-link">bandFilter</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#bpf" class="nav-link">BPF</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -355,6 +343,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#diodeladder" class="nav-link">diodeLadder</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#dnn" class="nav-link">DNN</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -367,6 +359,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#highshelf" class="nav-link">highShelf</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#hpf" class="nav-link">HPF</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -391,6 +387,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#lowshelf" class="nav-link">lowShelf</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#lpf" class="nav-link">LPF</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -438,11 +438,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#peaknotch" class="nav-link">peakNotch</a>
+            <li class="nav-item" data-level="2"><a href="#peakingeq" class="nav-link">peakingEQ</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#peakingeq" class="nav-link">peakingEQ</a>
+            <li class="nav-item" data-level="2"><a href="#peaknotch" class="nav-link">peakNotch</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -522,117 +522,9 @@ process(x) = APF(x,F,G,Q);
 </div>
 <!-- /faust-run -->
 
-<h2 id="bpf">BPF</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
-<faust-editor><!--
-
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
-
-declare name "BPF";
-
-import("maxmsp.lib");
-
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
-
-process(x) = BPF(x,F,G,Q);
-
-
---></faust-editor>
-<br>
-</div>
-<!-- /faust-run -->
-
-<h2 id="dnn">DNN</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
-<faust-editor><!--
-
-// Forward Deep Neural Net (DNN), any number of layers of any size each
-
-declare name    "DNN";
-declare author  "JOS";
-declare license "STK-4.3";
-
-import("stdfaust.lib");
-
-layerSizes = (8,5,8); // autoencoder with 8 in & out, 5-state hidden layer
-w(m,n,k) = m*100+n*10+k; // placeholder weights: m=layer, n=fromNode, k=destNode
-
-M = ba.count(layerSizes);
-N(l) = ba.take(l+1,layerSizes); // Nodes per layer
-
-process = seq(m, M-1, layer(m))
-// look at weights:
-// process = par(m,M,par(n,N(m),par(k,N(m),w(m,n,k))))
-with {
-  layer(m) = weights(m) :> nonlinearities(m);
-  nonlinearities(m) = bus(N(m)*N(m+1)) :> par(n,N(m+1),nl(n));
-  weights(m) = bus(N(m)) <: par(n,N(m),(bus(N(m+1))<:wts(m,n)));
-  wts(m,n) = bus(N(m+1)) : par(k,N(m+1),*(w(m,n,k)));
-  nl(n,x) = x * (x>0); // ReLU
-  bus(N) = par(k,N,_);
-};
-
---></faust-editor>
-<br>
-</div>
-<!-- /faust-run -->
-
-<h2 id="hpf">HPF</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
-<faust-editor><!--
-
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
-
-declare name "HPF";
-
-import("maxmsp.lib");
-
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
-
-process(x) = HPF(x,F,G,Q);
-
-
---></faust-editor>
-<br>
-</div>
-<!-- /faust-run -->
-
-<h2 id="lpf">LPF</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
-<faust-editor><!--
-
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
-
-declare name "LPF";
-
-import("maxmsp.lib");
-
-G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
-
-process(x) = LPF(x,F,G,Q);
-
-
---></faust-editor>
-<br>
-</div>
-<!-- /faust-run -->
-
 <h2 id="bandfilter">bandFilter</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust1/exfaust1.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check filters.lib
@@ -685,9 +577,33 @@ process = vgroup("Bandfilter", bandfilter(1000));
 </div>
 <!-- /faust-run -->
 
+<h2 id="bpf">BPF</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust2/exfaust2.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
+
+declare name "BPF";
+
+import("maxmsp.lib");
+
+G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = BPF(x,F,G,Q);
+
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
 <h2 id="crybaby">cryBaby</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust3/exfaust3.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "cryBaby";
@@ -702,7 +618,7 @@ process = dm.crybaby_demo;
 
 <h2 id="diodeladder">diodeLadder</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust4/exfaust4.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "diodeLadder";
@@ -722,9 +638,45 @@ process = inputSignal : ve.diodeLadder(normFreq,Q) <:_,_;
 </div>
 <!-- /faust-run -->
 
+<h2 id="dnn">DNN</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust5/exfaust5.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+// Forward Deep Neural Net (DNN), any number of layers of any size each
+
+declare name    "DNN";
+declare author  "JOS";
+declare license "STK-4.3";
+
+import("stdfaust.lib");
+
+layerSizes = (8,5,8); // autoencoder with 8 in & out, 5-state hidden layer
+w(m,n,k) = m*100+n*10+k; // placeholder weights: m=layer, n=fromNode, k=destNode
+
+M = ba.count(layerSizes);
+N(l) = ba.take(l+1,layerSizes); // Nodes per layer
+
+process = seq(m, M-1, layer(m))
+// look at weights:
+// process = par(m,M,par(n,N(m),par(k,N(m),w(m,n,k))))
+with {
+  layer(m) = weights(m) :> nonlinearities(m);
+  nonlinearities(m) = bus(N(m)*N(m+1)) :> par(n,N(m+1),nl(n));
+  weights(m) = bus(N(m)) <: par(n,N(m),(bus(N(m+1))<:wts(m,n)));
+  wts(m,n) = bus(N(m+1)) : par(k,N(m+1),*(w(m,n,k)));
+  nl(n,x) = x * (x>0); // ReLU
+  bus(N) = par(k,N,_);
+};
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
 <h2 id="filterbank">filterBank</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust6/exfaust6.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "filterBank";
@@ -741,7 +693,7 @@ process = dm.filterbank_demo;
 
 <h2 id="graphiceqlab">graphicEqLab</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust7/exfaust7.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "graphicEqLab";
@@ -762,7 +714,7 @@ process =
 
 <h2 id="highshelf">highShelf</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust8/exfaust8.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check filters.lib
@@ -784,9 +736,33 @@ process(x) = highShelf(x,F,G,Q);
 </div>
 <!-- /faust-run -->
 
+<h2 id="hpf">HPF</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust9/exfaust9.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
+
+declare name "HPF";
+
+import("maxmsp.lib");
+
+G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = HPF(x,F,G,Q);
+
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
 <h2 id="korg35hpf">korg35HPF</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust10/exfaust10.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "korg35HPF";
@@ -809,7 +785,7 @@ process = inputSignal : ve.korg35HPF(normFreq,Q) <:_,_;
 
 <h2 id="korg35lpf">korg35LPF</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust11/exfaust11.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 declare name "korg35LPF";
@@ -832,7 +808,7 @@ process = inputSignal : ve.korg35LPF(normFreq,Q) <:_,_;
 
 <h2 id="lfboost">lfBoost</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust12/exfaust12.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check filters.lib
@@ -883,7 +859,7 @@ process = vgroup("lowboost", lfboost(nentry("freq [unit:Hz][style:knob]", 100, 2
 
 <h2 id="lowboost">lowBoost</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust13/exfaust13.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check filters.lib
@@ -934,7 +910,7 @@ process             = vgroup("low-freq shelving boost", lfboost(freq,gain));
 
 <h2 id="lowcut">lowCut</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust14/exfaust14.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check filters.lib
@@ -985,7 +961,7 @@ process = vgroup("low-freq shelving cut", lfcut(freq,att));
 
 <h2 id="lowshelf">lowShelf</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust15/exfaust15.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check filters.lib
@@ -1000,6 +976,30 @@ F = hslider("Freq", 1000, 100, 10000, 1);
 Q = hslider("Q", 1, 0.01, 100, 0.01);
 
 process(x) = lowShelf(x,F,G,Q);
+
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="lpf">LPF</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust16/exfaust16.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
+
+declare name "LPF";
+
+import("maxmsp.lib");
+
+G = hslider("Gain [unit:dB]", 0, -10, 10, 0.1);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = LPF(x,F,G,Q);
 
 
 --></faust-editor>
@@ -1251,33 +1251,9 @@ process = dm.parametric_eq_demo;
 </div>
 <!-- /faust-run -->
 
-<h2 id="peaknotch">peakNotch</h2>
-<!-- faust-run -->
-<div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
-<faust-editor><!--
-
-// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
-// for more accurate examples of filter functions
-
-declare name "peakNotch"; 
-
-import("maxmsp.lib");
-
-G = hslider("Gain [unit: lin]", 1, 0, 8, 0.01);
-F = hslider("Freq", 1000, 100, 10000, 1);
-Q = hslider("Q", 1, 0.01, 100, 0.01);
-
-process(x) = peakNotch(x,F,G,Q);
-
-
---></faust-editor>
-<br>
-</div>
-<!-- /faust-run -->
-
 <h2 id="peakingeq">peakingEQ</h2>
 <!-- faust-run -->
-<div class="faust-run"><img src="exfaust29/exfaust29.svg" class="mx-auto d-block">
+<div class="faust-run"><img src="exfaust28/exfaust28.svg" class="mx-auto d-block">
 <faust-editor><!--
 
 // WARNING: This a "legacy example based on a deprecated library". Check filters.lib
@@ -1292,6 +1268,30 @@ F = hslider("Freq", 1000, 100, 10000, 1);
 Q = hslider("Q", 1, 0.01, 100, 0.01);
 
 process(x) = peakingEQ(x,F,G,Q);
+
+
+--></faust-editor>
+<br>
+</div>
+<!-- /faust-run -->
+
+<h2 id="peaknotch">peakNotch</h2>
+<!-- faust-run -->
+<div class="faust-run"><img src="exfaust29/exfaust29.svg" class="mx-auto d-block">
+<faust-editor><!--
+
+// WARNING: This a "legacy example based on a deprecated library". Check filters.lib
+// for more accurate examples of filter functions
+
+declare name "peakNotch"; 
+
+import("maxmsp.lib");
+
+G = hslider("Gain [unit: lin]", 1, 0, 8, 0.01);
+F = hslider("Freq", 1000, 100, 10000, 1);
+Q = hslider("Q", 1, 0.01, 100, 0.01);
+
+process(x) = peakNotch(x,F,G,Q);
 
 
 --></faust-editor>
