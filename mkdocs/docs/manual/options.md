@@ -58,11 +58,35 @@ usage : faust [options] file1 [file2 ...].
   -mem1       --memory-manager1           allocations done using a custom memory manager, using the iControl/fControl and iZone/fZone model.
   -mem2       --memory-manager2           use iControl/fControl, iZone/fZone model and no explicit memory manager.
   -mem3       --memory-manager3           use iControl/fControl, iZone/fZone model and no explicit memory manager with access as function parameters.
+  -ls         --loop-split                (ocpp, experimental) emit the materialized DAG as separate loops.
+  -ls-sched <s> --loop-split-scheduling <s> intra-loop op order: df (default), bf, model, layers, cs2, cs2b (implies -ls).
+  -ls-R <n>   --loop-split-registers <n>  register budget of the model scheduler (default 20, implies -ls).
+  -ls-U <n>   --loop-split-width <n>      superscalar width of the model scheduler (default 4, implies -ls).
+  -ls-fuse    --loop-split-fuse           greedy single-consumer fusion of the super-node partition (implies -ls).
+  -ls-fuse-ops <n> --loop-split-fuse-ops <n> op-count budget of a fused block (default 1024, compile-time guard; the cost oracle decides, implies -ls-fuse).
+  -mindelay <n> --min-delay <n>           (ocpp, experimental) semantic floor for large variable delays: emits max(d, n) when certified dmin < n and dmax >= 32*n; with n >= vector size, long feedback cycles split legally.
+  -rp         --ring-preload              (ocpp, experimental) ring reads leave as a burst at the head of the loop body, a register move stays at the original slot.
+  -sig        --signature                 (ocpp) print the program's static signature on one line (size, recurrence bound, selects, compute/memory nodes, streams, shapes) before emission -- the material of the option election.
+  -ss <n>     --scheduling-strategy <n>   (ocpp, experimental) instruction order of the loop body: 0 depth-first (default), 8 aligned, 9 bank-compositional, 11/12 compositional deep/wide spine.
+  -fir        --fir-iir                   (ocpp, experimental) recognise FIR/IIR kernels in the signal graph and emit their dedicated forms.
+  -iirt       --iir-transposed            (ocpp, experimental) transposed emission for the all-pole kernels recognised by -fir.
+  -lsum       --lower-sums                (ocpp, experimental) recover the polynomial form of large sums before emission.
+  -mxr        --matrix-rows               (ocpp, experimental) group families of parallel rows over a shared vector into matrix-vector emission.
+  -temp <n>   --temp-threshold <n>        (ocpp, experimental) materialize single-use expressions of n operations or more as temporaries (1 = SSA form, 0 = off).
+  -stage <n>  --staging-threshold <n>     (ocpp, experimental) stage expressions nested deeper than n into named temporaries.
+  -reassoc    --reassociate               (ocpp, experimental) late reassociation of the sums inside single-definition recursive groups (minimal recurrence chain).
+  -lazyselect --lazy-select               (ocpp, experimental) compute the branches of a selection only when selected.
+  -selectn    --select-n                  (ocpp, experimental) rebuild N-way dispatches from their select2 chains (implies -lazyselect).
+  -gatequiv   --gate-equivalence          (ocpp, experimental) one canonical form for the two spellings of a gated signal, so guards reach further.
+  -ls-cl <n>  --loop-split-cl <n>         oracle: per-loop per-chunk overhead (default 20 cycles, implies -ls-fuse).
+  -ls-spill <n> --loop-split-spill-weight <n> oracle: cycles per register-cycle above R (default 4, implies -ls-fuse).
+  -ls-load <n> --loop-split-load-weight <n> oracle: issue slots per buffer load (0 = free, default 1, implies -ls-fuse).
   -ftz <n>    --flush-to-zero <n>         code added to recursive signals [0:no (default), 1:fabs based, 2:mask based (fastest)].
-               mode 2 bitcasts float/double values and tests their IEEE-754 exponent; zero/subnormal values become +0.0.
-               exponent masks: binary32 0x7F800000 (2139095040), binary64 0x7FF0000000000000 (9218868437227405312).
   -hlf <n>    --hash-load-factor <n>      load factor that triggers tlib hash table growth (0.7 by default) ; internal compiler tuning knob, never changes generated code, see TLIB.md.
   -rui        --range-ui                  whether to generate code to constraint vslider/hslider/nentry values in [min..max] range.
+  -eta        --eta-normalization         normalization loop with the eta harvest: definitions no longer recursive replace their projections (one pass by default).
+  -etai <n>   --eta-iterations <n>        iteration budget of the eta normalization loop (implies -eta; the loop may stop earlier).
+  -co         --canonical-order           order the terms of normalized sums and products by value (history-independent) instead of the default serial order.
   -fui        --freeze-ui                 whether to freeze vslider/hslider/nentry to a given value (init value by default).
   -inj <f>    --inject <f>                inject source file <f> into architecture file instead of compiling a dsp file.
   -scal       --scalar                    generate non-vectorized code (default).
@@ -87,8 +111,6 @@ usage : faust [options] file1 [file2 ...].
   -vhdl-components <file> --vhdl-components <file>    path to a file describing custom components for the VHDL backend.
   -fpga-mem <n>     --fpga-mem <n>        FPGA block ram max size, used in -mem1/-mem2 mode.
   -fpga-mem-th <n>  --fpga-mem-th <n>     FPGA array size threshold (in unit of the memory type), used in -mem1/-mem2 mode.
-  -wi <n>     --widening-iterations <n>   number of iterations before widening in signal bounding.
-  -ni <n>     --narrowing-iterations <n>  number of iterations before stopping narrowing in signal bounding.
   -rnt        --rust-no-faustdsp-trait    (Rust only) Don't generate FaustDsp trait implementation.
   -rnlm       --rust-no-libm              (Rust only) Don't generate FFI calls to libm.
 ~~~

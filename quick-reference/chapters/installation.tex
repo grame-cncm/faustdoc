@@ -1,7 +1,7 @@
 \chapter{Compiling and Installing \faust}
 \label{install}
 
-The \faust source distribution \lstinline'faust-2.87.11.tar.gz' can be downloaded from GitHub (\myurl{https://github.com/grame-cncm/faust/releases}).
+The \faust source distribution \lstinline'faust-2.88.0.tar.gz' can be downloaded from GitHub (\myurl{https://github.com/grame-cncm/faust/releases}).
 
 \section{Organization of the distribution}
 The first step is to decompress the downloaded archive. 
@@ -9,7 +9,7 @@ The first step is to decompress the downloaded archive.
 	tar xzf faust-.tar.gz
 \end{lstlisting}
 
-The resulting \lstinline'faust-2.87.11/' folder should contain the following elements:
+The resulting \lstinline'faust-2.88.0/' folder should contain the following elements:
 
 \begin{tabular}{ll}
 	\lstinline'architecture/' 		&\faust libraries and architecture files\\
@@ -27,18 +27,18 @@ The resulting \lstinline'faust-2.87.11/' folder should contain the following ele
 \section{Compilation}
 \faust has no dependencies outside standard libraries. Therefore, the compilation should be straightforward. There is no configuration phase; to compile the \faust compiler simply do:
 \begin{lstlisting}
-	cd faust-2.87.11/
+	cd faust-2.88.0/
 	make
 \end{lstlisting}
 
 If the compilation is successful you can test the compiler before installing it:
 \begin{lstlisting}
-	[cd faust-2.87.11/]
+	[cd faust-2.88.0/]
 	./build/bin/faust -v
 \end{lstlisting}
 It should output:
 \begin{lstlisting}
-FAUST Version 2.87.11
+FAUST Version 2.88.0
 Embedded backends: 
    DSP to AssemblyScript
    DSP to C
@@ -62,7 +62,7 @@ Copyright (C) 2002-2026, GRAME - Centre National de Creation Musicale. All right
 
 You can then try to compile one of the examples:
 \begin{lstlisting}
-	[cd faust-2.87.11/]
+	[cd faust-2.88.0/]
 	./build/bin/faust examples/generator/noise.dsp
 \end{lstlisting}
 It should produce some C++ code on the standard output.
@@ -70,12 +70,12 @@ It should produce some C++ code on the standard output.
 \section{Installation}
 You can install \faust with:
 \begin{lstlisting}
-	[cd faust-2.87.11/]
+	[cd faust-2.88.0/]
 	sudo make install
 \end{lstlisting}
 or
 \begin{lstlisting}
-	[cd faust-2.87.11/]
+	[cd faust-2.88.0/]
 	su
 	make install
 \end{lstlisting}
