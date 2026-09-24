@@ -13150,11 +13150,22 @@ const dependencies = {
 				"f011",
 				"M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 224c0 17.7 14.3 32 32 32s32-14.3 32-32l0-224zM143.5 120.6c13.6-11.3 15.4-31.5 4.1-45.1s-31.5-15.4-45.1-4.1C49.7 115.4 16 181.8 16 256c0 132.5 107.5 240 240 240s240-107.5 240-240c0-74.2-33.8-140.6-86.6-184.6c-13.6-11.3-33.8-9.4-45.1 4.1s-9.4 33.8 4.1 45.1c38.9 32.3 63.5 81 63.5 135.4c0 97.2-78.8 176-176 176s-176-78.8-176-176c0-54.4 24.7-103.1 63.5-135.4z"
 			]
+		},
+		{
+			prefix: "fas",
+			iconName: "right-to-bracket",
+			icon: [
+				512,
+				512,
+				["sign-in-alt"],
+				"f2f6",
+				"M217.9 105.9L340.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L217.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1L32 320c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM352 416l64 0c17.7 0 32-14.3 32-32l0-256c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l64 0c53 0 96 43 96 96l0 256c0 53-43 96-96 96l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"
+			]
 		}
 	]) library$1.add(icon);
 	var compiler;
 	var svgDiagrams;
-	var default_generator = new FaustMonoDspGenerator();
+	var get_mono_generator = () => new FaustMonoDspGenerator();
 	var get_poly_generator = () => new FaustPolyDspGenerator();
 	async function loadFaust() {
 		compiler = new FaustCompiler_default(new LibFaust_default(await instantiateFaustModuleFromFile_default(libfaust_wasm_default$2, libfaust_wasm_default$1, libfaust_wasm_default)));
@@ -13165,19 +13176,19 @@ const dependencies = {
 	audioCtx.destination.channelInterpretation = "discrete";
 	var deviceUpdateCallbacks = [];
 	var devices = [];
-	async function _getInputDevices() {
+	async function refreshInputDevices() {
 		if (navigator.mediaDevices) {
-			navigator.mediaDevices.ondevicechange = _getInputDevices;
-			try {
-				await navigator.mediaDevices.getUserMedia({ audio: true });
-			} catch (e) {}
+			navigator.mediaDevices.ondevicechange = () => {
+				refreshInputDevices();
+			};
 			devices = await navigator.mediaDevices.enumerateDevices();
 			for (const callback of deviceUpdateCallbacks) callback(devices);
 		}
+		return devices;
 	}
 	var getInputDevicesPromise;
 	async function getInputDevices() {
-		if (!getInputDevicesPromise) getInputDevicesPromise = _getInputDevices();
+		if (!getInputDevicesPromise) getInputDevicesPromise = refreshInputDevices();
 		await getInputDevicesPromise;
 		return devices;
 	}
@@ -28465,7 +28476,7 @@ const dependencies = {
 	var ruleNodeProp = new NodeProp({ combine(a, b) {
 		let cur, root, take;
 		while (a || b) {
-			if (!a || b && a.depth >= b.depth) {
+			if (!a || b && a.depth < b.depth) {
 				take = b;
 				b = b.next;
 			} else {
@@ -28648,7 +28659,7 @@ const dependencies = {
 	constructs would fill a stack of books, and be impractical to
 	write themes for. So try to make do with this set. If all else
 	fails, [open an
-	issue](https://github.com/codemirror/codemirror.next) to propose a
+	issue](https://code.haverbeke.berlin/codemirror/dev/issues) to propose a
 	new tag, or [define](#highlight.Tag^define) a local custom tag for
 	your use case.
 	
@@ -36769,6 +36780,226 @@ const dependencies = {
 		}
 	};
 	//#endregion
+	//#region src/testsignals.dsp?raw
+	var testsignals_default = "declare name \"Test signals\";\nimport(\"stdfaust.lib\");\n\n// Test signals for the inputs of <faust-editor> and <faust-widget>.\n// The component lists the entries of the \"signal\" menu in its input selector\n// and shows the other controls in its Input panel: a new signal is a new entry\n// of the menu and of the selectn below.\nsignal  = nentry(\"signal [style:menu{'impulse':0;'white noise':1;'pink noise':2;'sine':3;'sweep':4;'square':5;'sawtooth':6;'pulse train':7;'step':8;'tone burst':9}]\", 0, 0, 9, 1);\nlevel   = hslider(\"[0]level [unit:dB]\", -12, -60, 0, 0.1) : ba.db2linear;\nfreq    = hslider(\"[1]freq [unit:Hz] [scale:log]\", 440, 20, 20000, 1);\nperiod  = hslider(\"[2]period [unit:s]\", 1, 0.05, 10, 0.01);\nrestart = button(\"[3]restart\");\n\n// Samples since the start of the period; back to 0 at time 0, when the signal\n// changes and when restart is pressed, so that an impulse or a sweep starts at once\nn     = ba.sec2samp(period);\nreset = (1 - 1') | (signal != signal') | ba.impulsify(restart);\ncount = \\(c).(select2(reset, (c + 1) % n, 0)) ~ _;\ncycle = count / n;                                // 0..1 once per period\n\nimpulse = count == 0;                             // one sample at 1 per period\nsweep   = os.osc(20 * pow(1000, cycle));          // log sweep 20 Hz -> 20 kHz over period\nstep    = cycle < 0.5;                            // 1 then 0, half a period each\nburst   = os.osc(freq) * (cycle < 0.1);           // sine during the first tenth\n\nprocess = ba.selectn(10, signal,\n    impulse,              // 0 impulse\n    no.noise,             // 1 white noise\n    no.pink_noise,        // 2 pink noise\n    os.osc(freq),         // 3 sine\n    sweep,                // 4 sweep\n    os.square(freq),      // 5 square (band limited)\n    os.sawtooth(freq),    // 6 sawtooth (band limited)\n    os.lf_imptrain(freq), // 7 pulse train\n    step,                 // 8 step\n    burst                 // 9 tone burst\n) * level;\n";
+	//#endregion
+	//#region src/input.ts
+	var TEST = "test:";
+	var DEVICE = "device:";
+	var FILE = "file";
+	var testSignalsPromise;
+	function getTestSignals() {
+		if (!testSignalsPromise) testSignalsPromise = (async () => {
+			await faustPromise;
+			const generator = new FaustMonoDspGenerator();
+			await generator.compile(compiler, "testsignals", testsignals_default, "-ftz 2");
+			return generator;
+		})();
+		return testSignalsPromise;
+	}
+	var audioFilePromise;
+	function getAudioFile() {
+		if (!audioFilePromise) {
+			audioFilePromise = (async () => {
+				const scriptSrc = document.querySelector("script[src$=\"faust-web-component.js\"]")?.src ?? "";
+				const baseUrl = scriptSrc.substring(0, scriptSrc.lastIndexOf("/") + 1);
+				const file = await fetch(baseUrl + "02-XYLO1.mp3");
+				return audioCtx.decodeAudioData(await file.arrayBuffer());
+			})();
+			audioFilePromise.catch(() => audioFilePromise = void 0);
+		}
+		return audioFilePromise;
+	}
+	function findItem(items, label) {
+		for (const item of items) {
+			if (item.label === label && item.address) return item;
+			if (item.items) {
+				const found = findItem(item.items, label);
+				if (found) return found;
+			}
+		}
+	}
+	function menuEntries(style) {
+		const menu = style.match(/^menu\{(.*)\}$/);
+		if (!menu) return [];
+		return menu[1].split(";").map((entry) => {
+			const colon = entry.lastIndexOf(":");
+			return [entry.slice(1, colon - 1), Number(entry.slice(colon + 1))];
+		});
+	}
+	function withoutItem(items, address) {
+		return items.filter((item) => item.address !== address).map((item) => item.items ? {
+			...item,
+			items: withoutItem(item.items, address)
+		} : item);
+	}
+	var InputSource = class {
+		onTestSignal = () => {};
+		select;
+		panel;
+		choice;
+		node;
+		source;
+		stream;
+		merger;
+		testNode;
+		testNodePromise;
+		testUI;
+		signalAddress = "";
+		signals = [];
+		token = 0;
+		constructor(select, panel, input) {
+			this.select = select;
+			this.panel = panel;
+			this.choice = input === null ? null : this.valueOf(input);
+			select.onchange = () => {
+				this.choice = select.value;
+				this.connect();
+			};
+			deviceUpdateCallbacks.push((devices) => this.updateDevices(devices));
+		}
+		async attach(node) {
+			this.detach();
+			const token = this.token;
+			this.node = node;
+			if (node.numberOfInputs === 0) {
+				this.select.disabled = true;
+				this.select.replaceChildren(new Option("Audio input"));
+				return;
+			}
+			const generator = await getTestSignals();
+			if (token !== this.token) return;
+			const item = findItem(generator.getUI(), "signal");
+			this.signalAddress = item.address;
+			this.signals = menuEntries(item.meta?.find((m) => m.style)?.style ?? "");
+			const devices = await getInputDevices();
+			if (token !== this.token) return;
+			this.select.disabled = false;
+			this.fill(devices);
+			await this.connect();
+		}
+		detach() {
+			this.token++;
+			this.disconnect();
+			this.node = void 0;
+			this.onTestSignal(false);
+		}
+		resizePanel() {
+			this.testUI?.resize();
+		}
+		valueOf(input) {
+			const name = input.trim().toLowerCase();
+			if (name === "audio file" || name === "file") return FILE;
+			return TEST + name;
+		}
+		fill(devices) {
+			const tests = document.createElement("optgroup");
+			tests.label = "Test signals";
+			for (const [label, value] of this.signals) tests.appendChild(new Option(label, TEST + value));
+			const inputs = devices.filter((device) => device.kind === "audioinput");
+			const group = document.createElement("optgroup");
+			group.label = "Devices";
+			for (const [i, device] of inputs.entries()) {
+				const label = device.label || (inputs.length > 1 ? `Microphone ${i + 1}` : "Microphone");
+				group.appendChild(new Option(label, DEVICE + device.deviceId));
+			}
+			const file = document.createElement("optgroup");
+			file.label = "File";
+			file.appendChild(new Option("Audio File", FILE));
+			this.select.replaceChildren(tests, group, file);
+			if (this.choice?.startsWith(TEST)) {
+				const name = this.choice.slice(5);
+				const signal = this.signals.find(([label]) => label.toLowerCase() === name);
+				if (signal) this.choice = TEST + signal[1];
+			}
+			const values = [...this.select.options].map((option) => option.value);
+			if (this.choice === null || !values.includes(this.choice)) {
+				if (this.choice !== null && !this.choice.startsWith(DEVICE)) console.warn(`faust-web-component: unknown input "${this.choice.replace(TEST, "")}"`);
+				this.choice = inputs.length > 0 ? DEVICE + inputs[0].deviceId : values[0];
+			}
+			this.select.value = this.choice;
+		}
+		updateDevices(devices) {
+			if (this.select.disabled) return;
+			this.fill(devices);
+		}
+		getTestNode() {
+			if (!this.testNodePromise) this.testNodePromise = (async () => {
+				const testNode = await (await getTestSignals()).createNode(audioCtx);
+				const ui = withoutItem(testNode.getUI(), this.signalAddress);
+				const testUI = new import_dist.FaustUI({
+					ui,
+					root: this.panel
+				});
+				testUI.paramChangeByUI = (path, value) => testNode.setParamValue(path, value);
+				this.panel.style.width = testUI.minWidth * 1.25 + "px";
+				this.panel.style.height = testUI.minHeight * 1.25 + "px";
+				this.testNode = testNode;
+				this.testUI = testUI;
+				return testNode;
+			})();
+			return this.testNodePromise;
+		}
+		async connect() {
+			const token = ++this.token;
+			this.disconnect();
+			const node = this.node;
+			const choice = this.choice;
+			if (!node || !choice) return;
+			if (!choice.startsWith(TEST)) this.onTestSignal(false);
+			try {
+				if (choice.startsWith(TEST)) {
+					const testNode = await this.getTestNode();
+					if (token !== this.token) return;
+					testNode.setParamValue(this.signalAddress, Number(choice.slice(5)));
+					const channels = Math.min(32, Math.max(1, node.getNumInputs()));
+					this.merger = new ChannelMergerNode(audioCtx, { numberOfInputs: channels });
+					for (let i = 0; i < channels; i++) testNode.connect(this.merger, 0, i);
+					this.merger.connect(node);
+					this.onTestSignal(true);
+				} else if (choice === FILE) {
+					const buffer = await getAudioFile();
+					if (token !== this.token) return;
+					const source = audioCtx.createBufferSource();
+					source.buffer = buffer;
+					source.connect(node);
+					source.start();
+					this.source = source;
+				} else {
+					const deviceId = choice.slice(7) || void 0;
+					const stream = await navigator.mediaDevices.getUserMedia({ audio: {
+						deviceId,
+						echoCancellation: false,
+						noiseSuppression: false,
+						autoGainControl: false
+					} });
+					if (token !== this.token) {
+						for (const track of stream.getTracks()) track.stop();
+						return;
+					}
+					this.stream = stream;
+					this.source = audioCtx.createMediaStreamSource(stream);
+					this.source.connect(node);
+					const id = stream.getAudioTracks()[0]?.getSettings().deviceId;
+					if (id) this.choice = DEVICE + id;
+					refreshInputDevices();
+				}
+			} catch (error) {
+				console.error("Cannot connect the audio input: ", error);
+			}
+		}
+		disconnect() {
+			if (this.source instanceof AudioBufferSourceNode) this.source.stop();
+			this.source?.disconnect();
+			this.source = void 0;
+			for (const track of this.stream?.getTracks() ?? []) track.stop();
+			this.stream = void 0;
+			this.testNode?.disconnect();
+			this.merger?.disconnect();
+			this.merger = void 0;
+		}
+	};
+	//#endregion
 	//#region src/faustText.svg
 	var faustText_default = "data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='UTF-8'%20standalone='no'?%3e%3csvg%20xmlns:dc='http://purl.org/dc/elements/1.1/'%20xmlns:cc='http://creativecommons.org/ns%23'%20xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23'%20xmlns:svg='http://www.w3.org/2000/svg'%20xmlns='http://www.w3.org/2000/svg'%20version='1.1'%20id='svg2'%20xml:space='preserve'%20width='64.333328'%20height='12.414666'%20viewBox='0%200%2064.333327%2012.414666'%3e%3cmetadata%20id='metadata8'%3e%3crdf:RDF%3e%3ccc:Work%20rdf:about=''%3e%3cdc:format%3eimage/svg+xml%3c/dc:format%3e%3cdc:type%20rdf:resource='http://purl.org/dc/dcmitype/StillImage'/%3e%3cdc:title/%3e%3c/cc:Work%3e%3c/rdf:RDF%3e%3c/metadata%3e%3cdefs%20id='defs6'%3e%3cclipPath%20clipPathUnits='userSpaceOnUse'%20id='clipPath18'%3e%3cpath%20d='M%200,93.507%20H%2093.507%20V%200%20H%200%20Z'%20id='path16'/%3e%3c/clipPath%3e%3c/defs%3e%3cg%20style='fill:%23ffffff'%20id='g10'%20transform='matrix(1.3333333,0,0,-1.3333333,-31.440266,68.495732)'%3e%3cg%20id='g12'%20style='fill:%23ffffff'%3e%3cg%20id='g14'%20clip-path='url(%23clipPath18)'%20style='fill:%23ffffff'%3e%3cg%20id='g20'%20transform='translate(69.0172,49.3868)'%20style='fill:%23ffffff'%3e%3cpath%20d='M%200,0%20V%20-7.026%20H%20-2.017%20V%200%20H%20-4.843%20V%201.747%20H%202.813%20V%200%20Z%20m%20-8.276,-5.615%20c%20-0.176,-0.333%20-0.415,-0.62%20-0.718,-0.863%20-0.302,-0.243%20-0.658,-0.433%20-1.067,-0.569%20-0.409,-0.136%20-0.849,-0.204%20-1.321,-0.204%20-0.435,0%20-0.833,0.041%20-1.193,0.124%20-0.361,0.082%20-0.685,0.191%20-0.973,0.327%20-0.289,0.135%20-0.548,0.29%20-0.779,0.463%20-0.232,0.174%20-0.431,0.352%20-0.598,0.534%20l%201.278,1.384%20c%200.115,-0.125%200.248,-0.252%200.4,-0.381%200.152,-0.129%200.321,-0.247%200.509,-0.352%200.187,-0.106%200.392,-0.191%200.614,-0.255%200.221,-0.065%200.46,-0.097%200.716,-0.097%200.15,0%200.3,0.021%200.447,0.064%200.149,0.043%200.285,0.107%200.41,0.191%200.124,0.084%200.223,0.185%200.296,0.303%200.073,0.119%200.11,0.253%200.11,0.404%200,0.327%20-0.158,0.581%20-0.474,0.762%20-0.316,0.181%20-0.817,0.36%20-1.504,0.536%20-0.333,0.078%20-0.64,0.192%20-0.922,0.342%20-0.283,0.151%20-0.526,0.332%20-0.729,0.543%20-0.204,0.211%20-0.361,0.453%20-0.474,0.726%20-0.112,0.274%20-0.169,0.578%20-0.169,0.914%200,0.368%200.065,0.714%200.195,1.038%200.13,0.325%200.328,0.611%200.595,0.859%200.266,0.247%200.597,0.443%200.993,0.589%200.397,0.145%200.865,0.218%201.406,0.218%200.446,0%200.842,-0.046%201.187,-0.137%200.344,-0.092%200.637,-0.201%200.877,-0.329%200.24,-0.127%200.437,-0.258%200.591,-0.391%200.155,-0.134%200.271,-0.239%200.348,-0.316%20l%20-1.143,-1.266%20c%20-0.099,0.078%20-0.212,0.162%20-0.338,0.255%20-0.127,0.093%20-0.268,0.179%20-0.425,0.258%20-0.156,0.08%20-0.33,0.147%20-0.521,0.201%20-0.19,0.053%20-0.391,0.08%20-0.601,0.08%20-0.142,0%20-0.28,-0.022%20-0.416,-0.067%20-0.135,-0.046%20-0.258,-0.105%20-0.367,-0.178%20-0.11,-0.073%20-0.198,-0.161%20-0.264,-0.265%20-0.066,-0.103%20-0.1,-0.211%20-0.1,-0.323%200,-0.301%200.159,-0.544%200.477,-0.73%200.318,-0.185%200.753,-0.34%201.307,-0.465%200.327,-0.077%200.645,-0.184%200.955,-0.319%200.311,-0.136%200.588,-0.314%200.832,-0.536%200.244,-0.222%200.441,-0.493%200.591,-0.814%200.15,-0.321%200.225,-0.711%200.225,-1.172%200,-0.392%20-0.088,-0.754%20-0.263,-1.086%20m%20-10.307,1.854%20c%200,-0.527%20-0.086,-1.01%20-0.257,-1.449%20-0.172,-0.439%20-0.418,-0.813%20-0.74,-1.124%20-0.321,-0.31%20-0.71,-0.553%20-1.167,-0.729%20-0.456,-0.175%20-0.965,-0.263%20-1.526,-0.263%20-0.56,0%20-1.067,0.086%20-1.522,0.257%20-0.455,0.171%20-0.841,0.414%20-1.159,0.729%20-0.318,0.315%20-0.563,0.691%20-0.734,1.13%20-0.171,0.439%20-0.256,0.922%20-0.256,1.449%20v%205.446%20h%201.985%20v%20-5.271%20c%200,-0.295%200.029,-0.56%200.086,-0.795%200.058,-0.235%200.153,-0.437%200.284,-0.606%200.131,-0.169%200.304,-0.301%200.521,-0.394%200.217,-0.094%200.481,-0.14%200.795,-0.14%200.309,0%200.57,0.046%200.785,0.14%200.214,0.093%200.388,0.225%200.521,0.394%200.133,0.169%200.227,0.371%200.283,0.606%200.056,0.235%200.084,0.5%200.084,0.795%20v%205.271%20h%202.017%20z%20M%20-30.68,-7.026%20c%20-0.596,0%20-1.078,0.482%20-1.078,1.077%200,0.595%200.482,1.078%201.078,1.078%200.595,0%201.077,-0.483%201.077,-1.078%200,-0.595%20-0.482,-1.077%20-1.077,-1.077%20m%20-1.702,3.551%20-1.067,3.314%20-1.092,-3.314%20-0.054,-0.181%20h%20-1.899%20l%202.018,5.403%20h%202.196%20l%201.977,-5.4%20-2.023,-0.005%20z%20m%20-3.708,-3.551%20c%20-0.595,0%20-1.078,0.482%20-1.078,1.077%200,0.595%200.483,1.078%201.078,1.078%200.595,0%201.078,-0.483%201.078,-1.078%200,-0.595%20-0.483,-1.077%20-1.078,-1.077%20M%20-39.541,0%20h%20-3.912%20v%20-1.991%20h%202.974%20v%20-1.696%20h%20-2.974%20v%20-3.339%20h%20-1.984%20v%208.773%20h%205.896%20z'%20style='fill:%23ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none'%20id='path22'/%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
 	//#endregion
@@ -36820,12 +37051,17 @@ const dependencies = {
 		prefix: "fas",
 		iconName: "chart-line"
 	}).html[0]}</button>
+                <button title="Test signal" id="tab-input" class="button tab" disabled>${icon({
+		prefix: "fas",
+		iconName: "right-to-bracket"
+	}).html[0]}</button>
             </div>
             <div id="sidebar-content">
                 <div id="faust-ui"></div>
                 <div id="faust-diagram"></div>
                 <div id="faust-scope"></div>
                 <div id="faust-spectrum"></div>
+                <div id="faust-input"></div>
             </div>
         </div>
     </div>
@@ -36854,7 +37090,7 @@ const dependencies = {
         align-items: center;
     }
 
-    #faust-ui {
+    #faust-ui, #faust-input {
         width: 232px;
         max-height: 150px;
     }
@@ -37020,6 +37256,13 @@ const dependencies = {
 			const sidebarContent = this.shadowRoot.querySelector("#sidebar-content");
 			const tabButtons = [...this.shadowRoot.querySelectorAll(".tab")];
 			const tabContents = [...sidebarContent.querySelectorAll("div")];
+			const inputTab = this.shadowRoot.querySelector("#tab-input");
+			const faustInput = this.shadowRoot.querySelector("#faust-input");
+			const inputSource = new InputSource(this.shadowRoot.querySelector("#audio-input"), faustInput, this.getAttribute("input"));
+			inputSource.onTestSignal = (active) => {
+				inputTab.disabled = !active;
+				if (!active && inputTab.classList.contains("active")) openTab(0);
+			};
 			const split = Split([editorEl, sidebar], {
 				sizes: [100, 0],
 				minSize: [0, 20],
@@ -37038,13 +37281,11 @@ const dependencies = {
 				sidebarOpen = true;
 			};
 			let node;
-			let input;
 			let analyser;
 			let scope;
 			let spectrum;
 			let gmidi = false;
 			let gnvoices = -1;
-			let sourceNode;
 			let compiledDSPCounter = 0;
 			let compiledSVGCounter = 0;
 			runButton.onclick = async () => {
@@ -37053,12 +37294,15 @@ const dependencies = {
 				code = editor.state.doc.toString();
 				let generator = null;
 				try {
-					await default_generator.compile(compiler, "main", code, "-ftz 2");
-					let { midi, nvoices } = extractMidiAndNvoices(default_generator.getMeta());
+					const mono_generator = get_mono_generator();
+					await mono_generator.compile(compiler, "main", code, "-ftz 2");
+					let { midi, nvoices } = extractMidiAndNvoices(mono_generator.getMeta());
 					gmidi = midi;
 					gnvoices = nvoices;
-					generator = nvoices > 0 ? get_poly_generator() : default_generator;
-					await generator.compile(compiler, "main", code, "-ftz 2");
+					if (nvoices > 0) {
+						generator = get_poly_generator();
+						await generator.compile(compiler, "main", code, "-ftz 2");
+					} else generator = mono_generator;
 					compiledDSPCounter++;
 				} catch (e) {
 					setError(editor, e);
@@ -37068,17 +37312,10 @@ const dependencies = {
 				if (node !== void 0) node.disconnect();
 				if (gnvoices > 0) node = await generator.createNode(audioCtx, gnvoices);
 				else node = await generator.createNode(audioCtx);
-				if (node.numberOfInputs > 0) {
-					audioInputSelector.disabled = false;
-					updateInputDevices(await getInputDevices());
-					await connectInput();
-				} else {
-					audioInputSelector.disabled = true;
-					audioInputSelector.innerHTML = "<option>Audio input</option>";
-				}
+				await inputSource.attach(node);
 				node.connect(audioCtx.destination);
 				stopButton.disabled = false;
-				for (const tabButton of tabButtons) tabButton.disabled = false;
+				for (const tabButton of tabButtons.slice(0, 4)) tabButton.disabled = false;
 				await node.startSensors();
 				if (gmidi) accessMIDIDevice(midiInputCallback(node)).then(() => {
 					console.log("Successfully connected to the MIDI device.");
@@ -37086,7 +37323,7 @@ const dependencies = {
 					console.error("Error accessing MIDI device:", error.message);
 				});
 				openSidebar();
-				for (const tab of tabContents) while (tab.lastChild) tab.lastChild.remove();
+				for (const tab of tabContents.slice(0, 4)) while (tab.lastChild) tab.lastChild.remove();
 				analyser = new AnalyserNode(audioCtx, {
 					fftSize: Math.pow(2, 11),
 					minDecibels: -96,
@@ -37158,10 +37395,12 @@ const dependencies = {
 					cancelAnimationFrame(animPlot);
 					animPlot = void 0;
 				}
+				if (i === 4) inputSource.resizePanel();
 			};
 			for (const [i, tabButton] of tabButtons.entries()) tabButton.onclick = () => openTab(i);
 			stopButton.onclick = () => {
 				if (node !== void 0) {
+					inputSource.detach();
 					node.disconnect();
 					node.stopSensors();
 					node.destroy();
@@ -37169,51 +37408,6 @@ const dependencies = {
 					stopButton.disabled = true;
 				}
 			};
-			const audioInputSelector = this.shadowRoot.querySelector("#audio-input");
-			const updateInputDevices = (devices) => {
-				if (audioInputSelector.disabled) return;
-				while (audioInputSelector.lastChild) audioInputSelector.lastChild.remove();
-				for (const device of devices) if (device.kind === "audioinput") audioInputSelector.appendChild(new Option(device.label || device.deviceId, device.deviceId));
-				audioInputSelector.appendChild(new Option("Audio File", "Audio File"));
-			};
-			deviceUpdateCallbacks.push(updateInputDevices);
-			const connectInput = async () => {
-				const deviceId = audioInputSelector.value;
-				const stream = await navigator.mediaDevices.getUserMedia({ audio: {
-					deviceId,
-					echoCancellation: false,
-					noiseSuppression: false,
-					autoGainControl: false
-				} });
-				if (input) {
-					input.disconnect();
-					input = void 0;
-				}
-				if (node && node.numberOfInputs > 0) {
-					if (deviceId == "Audio File") try {
-						const scriptSrc = document.querySelector("script[src$=\"faust-web-component.js\"]").src;
-						const baseUrl = scriptSrc.substring(0, scriptSrc.lastIndexOf("/") + 1);
-						const arrayBuffer = await (await fetch(baseUrl + "02-XYLO1.mp3")).arrayBuffer();
-						let audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-						sourceNode = audioCtx.createBufferSource();
-						sourceNode.buffer = audioBuffer;
-						sourceNode.connect(node);
-						sourceNode.start();
-					} catch (error) {
-						console.error("Error loading file: ", error);
-					}
-					else {
-						if (sourceNode !== void 0) {
-							sourceNode.stop();
-							sourceNode.disconnect();
-							sourceNode = void 0;
-						}
-						input = audioCtx.createMediaStreamSource(stream);
-						input.connect(node);
-					}
-				}
-			};
-			audioInputSelector.onchange = connectInput;
 		}
 	};
 	//#endregion
@@ -37238,6 +37432,7 @@ const dependencies = {
         <a title="Faust website" id="faust" href="https://faust.grame.fr/" target="_blank"><img src="${faustText_default}" height="15px" /></a>
     </div>
     <div id="faust-ui"></div>
+    <div id="faust-input" hidden></div>
 </div>
 <style>
     #root {
@@ -37300,6 +37495,14 @@ const dependencies = {
         vertical-align: top;
     }
 
+    #faust-input {
+        border-top: 1px solid black;
+    }
+
+    #faust-input[hidden] {
+        display: none;
+    }
+
     .dropdown {
         height: 19px;
         margin: 3px 0 3px 10px;
@@ -37320,23 +37523,30 @@ const dependencies = {
 			const powerButton = this.shadowRoot.querySelector("#power");
 			const faustUIRoot = this.shadowRoot.querySelector("#faust-ui");
 			const audioInputSelector = this.shadowRoot.querySelector("#audio-input");
+			const faustInput = this.shadowRoot.querySelector("#faust-input");
+			const inputSource = new InputSource(audioInputSelector, faustInput, this.getAttribute("input"));
+			inputSource.onTestSignal = (active) => {
+				faustInput.hidden = !active;
+				if (active) inputSource.resizePanel();
+			};
 			faustPromise.then(() => powerButton.disabled = false);
 			let on = false;
 			let gmidi = false;
 			let gnvoices = -1;
 			let node;
-			let input;
 			let faustUI;
 			let generator;
-			let sourceNode;
 			const setup = async () => {
 				await faustPromise;
-				await default_generator.compile(compiler, "main", code, "-ftz 2");
-				let { midi, nvoices } = extractMidiAndNvoices(default_generator.getMeta());
+				const mono_generator = get_mono_generator();
+				await mono_generator.compile(compiler, "main", code, "-ftz 2");
+				let { midi, nvoices } = extractMidiAndNvoices(mono_generator.getMeta());
 				gmidi = midi;
 				gnvoices = nvoices;
-				generator = nvoices > 0 ? get_poly_generator() : default_generator;
-				await generator.compile(compiler, "main", code, "-ftz 2");
+				if (nvoices > 0) {
+					generator = get_poly_generator();
+					await generator.compile(compiler, "main", code, "-ftz 2");
+				} else generator = mono_generator;
 				const ui = generator.getUI();
 				faustUI = new import_dist.FaustUI({
 					ui,
@@ -37360,18 +37570,12 @@ const dependencies = {
 				});
 				faustUI.paramChangeByUI = (path, value) => node?.setParamValue(path, value);
 				node.setOutputParamHandler((path, value) => faustUI.paramChangeByDSP(path, value));
-				if (node.numberOfInputs > 0) {
-					audioInputSelector.disabled = false;
-					updateInputDevices(await getInputDevices());
-					await connectInput();
-				} else {
-					audioInputSelector.disabled = true;
-					audioInputSelector.innerHTML = "<option>Audio input</option>";
-				}
+				await inputSource.attach(node);
 				node.connect(audioCtx.destination);
 				powerButton.style.color = "#ffa500";
 			};
 			const stop = () => {
+				inputSource.detach();
 				node?.disconnect();
 				node?.stopSensors();
 				powerButton.style.color = "#fff";
@@ -37381,50 +37585,6 @@ const dependencies = {
 				else start();
 				on = !on;
 			};
-			const updateInputDevices = (devices) => {
-				if (audioInputSelector.disabled) return;
-				while (audioInputSelector.lastChild) audioInputSelector.lastChild.remove();
-				for (const device of devices) if (device.kind === "audioinput") audioInputSelector.appendChild(new Option(device.label || device.deviceId, device.deviceId));
-				audioInputSelector.appendChild(new Option("Audio File", "Audio File"));
-			};
-			deviceUpdateCallbacks.push(updateInputDevices);
-			const connectInput = async () => {
-				const deviceId = audioInputSelector.value;
-				const stream = await navigator.mediaDevices.getUserMedia({ audio: {
-					deviceId,
-					echoCancellation: false,
-					noiseSuppression: false,
-					autoGainControl: false
-				} });
-				if (input) {
-					input.disconnect();
-					input = void 0;
-				}
-				if (node && node.numberOfInputs > 0) {
-					if (deviceId == "Audio File") try {
-						const scriptSrc = document.querySelector("script[src$=\"faust-web-component.js\"]").src;
-						const baseUrl = scriptSrc.substring(0, scriptSrc.lastIndexOf("/") + 1);
-						const arrayBuffer = await (await fetch(baseUrl + "02-XYLO1.mp3")).arrayBuffer();
-						let audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-						sourceNode = audioCtx.createBufferSource();
-						sourceNode.buffer = audioBuffer;
-						sourceNode.connect(node);
-						sourceNode.start();
-					} catch (error) {
-						console.error("Error loading file: ", error);
-					}
-					else {
-						if (sourceNode !== void 0) {
-							sourceNode.stop();
-							sourceNode.disconnect();
-							sourceNode = void 0;
-						}
-						input = audioCtx.createMediaStreamSource(stream);
-						input.connect(node);
-					}
-				}
-			};
-			audioInputSelector.onchange = connectInput;
 			setTimeout(() => {
 				faustUIRoot.innerHTML = "<p><center>Compiling...</center></p>";
 				setup();
