@@ -916,7 +916,7 @@ Compiles Faust programs to a benchmark executable
 </code></pre>
 <p>So something like <code>faust2bench -vec -lv 0 -vs 4 foo.dsp</code> is used to produce an executable, then launching <code>./foo</code> gives :</p>
 <pre><code>./foo
-./foo : 303.599 MBytes/sec (DSP CPU % : 0.224807 at 44100 Hz)
+./foo : 303.599 Mframes/sec (DSP CPU % : 0.224807 at 44100 Hz)
 </code></pre>
 <p>The <code>-inj</code> option allows to possibly inject and benchmark an external C++ class to be <em>adapted</em> to behave as a <code>dsp</code> class, like in the following <code>adapted.cpp</code> example. The inherited <code>compute</code> method is rewritten to call the external C++ <code>limiterStereo.SetPreGain</code> etc... code to update the controllers, and the method <code>limiterStereo.Process</code> which computes the DSP:</p>
 <pre><code class="language-c++">#include &quot;faust/dsp/dsp.h&quot;
