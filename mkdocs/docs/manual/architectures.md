@@ -1531,7 +1531,7 @@ In a multiple instances scheme, static data structures shared by all instances h
 
 ### Measuring the DSP CPU
 
-The `measure_dsp` class defined in the `faust/dsp/dsp-bench.h` file allows to decorate a given DSP object and measure its `compute` method CPU consumption. Results are given in Megabytes/seconds (higher is better) and DSP CPU at 44,1 kHz. Here is a C++ code example of its use: 
+The `measure_dsp` class defined in the `faust/dsp/dsp-bench.h` file allows to decorate a given DSP object and measure its `compute` method CPU consumption. Results are given in Mframes/sec (millions of frames processed per second, higher is better) and DSP CPU at 44,1 kHz. Being independent of the sample size and of the number of channels, the Mframes/sec value can be directly compared between `float` and `-double` versions of the same DSP. Here is a C++ code example of its use: 
 
 ```c++
 static void bench(dsp* dsp, const string& name)
@@ -1542,10 +1542,10 @@ static void bench(dsp* dsp, const string& name)
     measure_dsp mes(dsp, 1024, 5);
     // Measure the CPU use
     mes.measure();
-    // Returns the Megabytes/seconds and relative standard deviation values
+    // Returns the Mframes/sec and relative standard deviation values
     std::pair<double, double> res = mes.getStats(); 
     // Print the stats
-    cout << name << " MBytes/sec : " << res.first 
+    cout << name << " Mframes/sec : " << res.first 
          << " " << "(DSP CPU % : " << (mes.getCPULoad() * 100) << ")" << endl;
 }
 ```
@@ -1560,7 +1560,7 @@ static void dynamic_bench(const string& in_filename)
     // Discover the best set of parameters
     tuple<double, double, double, TOption> res = optimizer.findOptimizedParameters();
     cout << "Best value for '" << in_filename << "' is : " 
-         << get<0>(res) << " MBytes/sec with ";
+         << get<0>(res) << " Mframes/sec with ";
     for (size_t i = 0; i < get<3>(res).size(); i++) {
         cout << get<3>(res)[i] << " ";
     }

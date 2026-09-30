@@ -572,7 +572,7 @@ So something like `faust2bench -vec -lv 0 -vs 4 foo.dsp` is used to produce an e
 
 ```
 ./foo
-./foo : 303.599 MBytes/sec (DSP CPU % : 0.224807 at 44100 Hz)
+./foo : 303.599 Mframes/sec (DSP CPU % : 0.224807 at 44100 Hz)
 ```
 
 The `-inj` option allows to possibly inject and benchmark an external C++ class to be *adapted* to behave as a `dsp` class, like in the following `adapted.cpp` example. The inherited `compute` method is rewritten to call the external C++ `limiterStereo.SetPreGain` etc... code to update the controllers, and the method `limiterStereo.Process` which computes the DSP:
