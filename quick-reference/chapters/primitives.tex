@@ -138,7 +138,7 @@ A soundfile has:
 	\item \lstinline'n' additional outputs for the sound channels themselves, as an integer \textit{constant numerical expression}
 \end{itemize}
 
-If more outputs than the actual number of channels in the soundfile are used, the sound channels will be automatically duplicated up to the wanted number of outputs (so for instance if a stereo sound is used with four output channels, the same group of two channels will be duplicated).
+If more outputs than the actual number of channels in the soundfile are used, the sound channels will be automatically duplicated up to the wanted number of outputs: output channel $c$ reads the real channel $c$ modulo the number of channels, with no limit on the number of outputs (so for instance if a stereo sound is used with four output channels, the same group of two channels will be duplicated).
 
 If the soundfile cannot be loaded for whatever reason, a default sound with one channel, a length of 1024 frames and null outputs (with samples of value 0) will be used. Note also that soundfiles are entirely loaded in memory by the architecture file, so that the read index signal can access any sample.
 
