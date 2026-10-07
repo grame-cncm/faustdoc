@@ -338,6 +338,11 @@ result. Examples include:
   source. Its on-device AI assistant can draft Faust DSP routines or interface
   layouts from natural-language instructions; the result can be previewed in the
   browser and built as a native plugin.
+- [Han-Vibe](https://dl.acm.org/doi/10.1145/3776574.3831136) by Zhengyang Ma
+  (ICMI 2026) combines Faust DSP editing through DawDreamer with LLM-driven
+  parameter, sequencer, and code changes for live music performance. The author's
+  [HANMAI-LIVE prototype sources](https://github.com/zmk5566/yet-another-vibe-performing)
+  include the Python engine and eight Faust instruments.
 
 These projects are useful reference points for Faust because they show how LLMs
 can move beyond isolated code snippets into complete product workflows. They
