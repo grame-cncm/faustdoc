@@ -249,6 +249,75 @@ Diagram expressions are assembled from primitive ones using either binary compos
 
 <img src="img/diagramexp.svg" class="mx-auto d-block">
 
+#### SVG Block-Diagram Representation
+
+Since a Faust expression *is* a block-diagram, the compiler can draw it. The `-svg` option generates an SVG drawing of the `process` expression (`-ps` generates the same drawing in PostScript):
+
+```
+faust -svg foo.dsp
+```
+
+The drawings are written in a `foo-svg/` folder, whose entry point is `process.svg`. The diagrams displayed after the examples of this documentation are produced this way, and the [Faust IDE](https://faustide.grame.fr) displays them too. The following program uses most of the graphical elements described in this section:
+
+<!-- faust-run -->
+```
+smooth(c) = *(1-c) : + ~ *(c);
+gain = hslider("gain", 0.5, 0, 1, 0.01);
+process = _ <: (smooth(0.9) * gain), (*(-1) : @(10));
+```
+<!-- /faust-run -->
+
+##### Reading a Diagram
+
+* Signals flow **from left to right**. The diagram is surrounded by a dashed frame labelled with the name of the drawn expression (here `process`). Its inputs enter on the left side of the frame and its outputs leave on the right side, marked with arrows.
+* Each primitive block is a **colored box** labelled with its name. Its inputs are on its left side, marked by small arrows, and its outputs on its right side, both numbered from top to bottom. A **black dot** in a corner of the box marks its first input, like the notch of an integrated circuit: it is useful to read boxes drawn in the reverse direction (see recursion below).
+* The color of a box gives its kind:
+
+| Appearance                   | Represents                                                                                           |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------- |
+| orange box                   | a [number](#numbers), with no input and one output                                                   |
+| blue box                     | a [primitive](#primitives) (`+`, `*`, `@`, `mem`, `sin`, `rdtable`, `select2`, etc.), a [foreign function, variable or constant](#foreign-expressions), or a [`waveform`](#waveform-primitive) |
+| teal box                     | a [user interface element](#user-interface-primitives-and-configuration), with its parameters, or a [`soundfile`](#soundfile-primitive) |
+| green box labelled `[n] x`   | the parameter `x` of an [abstraction](#abstractions) that has not been applied                        |
+| dark blue box                | a *folded* sub-diagram, drawn in a separate file (see [Folding](#folding-large-diagrams) below)       |
+| white triangle with a circle | an inverter, i.e. `*(-1)`                                                                            |
+
+* **Wires** are plain lines: the identity function `_` is drawn as a simple wire, and the [cut](#cut-primitive) `!` as a wire that stops. In a [split composition](#split-composition), the wires fan out from one output to several inputs. In a [merge composition](#merge-composition), several wires converge to one input, where their signals are summed. A [`route`](#route-primitive) is drawn as its crossing wires (`-drf` draws a box around them).
+* Each **named definition** used in the expression is surrounded by a dashed frame labelled with its name and the values of its arguments (here `smooth(0.9f)` and `gain`), unless it only contains wires. The groups of the user interface (`hgroup`, `vgroup`, `tgroup`) are drawn the same way.
+* In a [recursive composition](#recursive-composition) `A~B`, the feedback block `B` is placed **above** `A` and drawn **from right to left**: its input arrows point to the left and its black dot is in the bottom right corner. Each output of `A` going back to `B` carries a small **square sign** on the wire, which stands for the implicit one-sample delay of the feedback loop. In the example above, `*(0.9f)` is the feedback block of `+`.
+
+Note that the diagram shows the expression **after evaluation**: definitions, abstractions and [pattern matching](#pattern-matching) are applied, [iterations](#iterations) are expanded, and constant numerical sub-expressions are already computed. With the `-double` option, numbers are displayed without the `f` suffix.
+
+##### Folding Large Diagrams
+
+A diagram with more than 25 boxes (by default) is *folded*: instead of being expanded in place, its named sub-diagrams are drawn as dark blue boxes, and each of them is drawn in its own file of the `foo-svg/` folder. Clicking on a folded box opens its diagram, and clicking on the background of a sub-diagram goes back to the diagram that uses it. This makes it possible to browse large programs, including the code taken from the libraries, one level at a time:
+
+<!-- faust-run -->
+```
+import("stdfaust.lib");
+process = dm.zita_light;
+```
+<!-- /faust-run -->
+
+Only the top-level `process.svg` file is included in this documentation, so the folded boxes are not clickable here.
+
+##### Drawing Options
+
+The following [compiler options](options.md) control the drawing:
+
+| Option      | Effect                                                                                               |
+| ----------- | ---------------------------------------------------------------------------------------------------- |
+| `-svg`      | draw the block-diagram in SVG files                                                                  |
+| `-ps`       | draw the block-diagram in PostScript files                                                           |
+| `-f <n>`    | number of boxes beyond which a diagram is folded (default 25)                                       |
+| `-fc <n>`   | minimal complexity of a sub-diagram to be folded in folding mode (default 2)                         |
+| `-sd`       | simplify the block-diagram before drawing it (for instance `10,20,30,40 :> _` is drawn as `100`)     |
+| `-sn`       | use simple names, without the values of the arguments, for the labels of the frames (`smooth` instead of `smooth(0.9f)`) |
+| `-mns <n>`  | maximal size of the labels, longer labels are abbreviated with `...` (default 40 characters)        |
+| `-drf`      | draw a box around the wires of a `route`                                                             |
+| `-blur`     | add a blurred shadow to the boxes                                                                    |
+| `-sc`       | generate SVG files that scale to the size of the window displaying them                              |
+
 #### Diagram Composition Operations 
 
 Five binary *composition operations* are available to combine block-diagrams: 
