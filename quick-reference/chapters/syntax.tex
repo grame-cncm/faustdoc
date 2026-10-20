@@ -341,7 +341,106 @@ Diagram expressions are assembled from primitive ones using either binary compos
 diagramexp : diagcomposition | diagiteration;
 \end{rail}
 
-\subsubsection{Diagram composition operations} 
+\label{svg-diagrams}
+\subsubsection{SVG block-diagram representation}
+
+Since a \faust expression \textit{is} a block-diagram, the compiler can draw it. The \lstinline'-svg' option generates an SVG drawing of the \lstinline'process' expression (\lstinline'-ps' generates the same drawing in PostScript):
+
+\begin{lstlisting}
+faust -svg foo.dsp
+\end{lstlisting}
+
+The drawings are written in a \lstinline'foo-svg/' folder, whose entry point is \lstinline'process.svg'. The block-diagrams of this document are produced this way, and the Faust IDE displays them too. Figure \ref{figure-svgdiagram} shows the drawing of the following program, which uses most of the graphical elements described in this section:
+
+\begin{lstlisting}
+smooth(c) = *(1-c) : + ~ *(c);
+gain = hslider("gain", 0.5, 0, 1, 0.01);
+process = _ <: (smooth(0.9) * gain), (*(-1) : @(10));
+\end{lstlisting}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{images/svgdiagram}
+\caption{SVG drawing of the smooth and gain example}
+\label{figure-svgdiagram}
+\end{figure}
+
+\paragraph{Reading a diagram}
+
+\begin{itemize}
+\item Signals flow \textbf{from left to right}. The diagram is surrounded by a dashed frame labelled with the name of the drawn expression (here \lstinline'process'). Its inputs enter on the left side of the frame and its outputs leave on the right side, marked with arrows.
+\item Each primitive block is a \textbf{colored box} labelled with its name. Its inputs are on its left side, marked by small arrows, and its outputs on its right side, both numbered from top to bottom. A \textbf{black dot} in a corner of the box marks its first input, like the notch of an integrated circuit: it is useful to read boxes drawn in the reverse direction (see recursion below).
+\item The color of a box gives its kind, as described in Table \ref{table-svgboxes}.
+\item \textbf{Wires} are plain lines: the identity function \lstinline'_' is drawn as a simple wire, and the cut \lstinline'!' as a wire that stops. In a split composition, the wires fan out from one output to several inputs. In a merge composition, several wires converge to one input, where their signals are summed. A \lstinline'route' is drawn as its crossing wires (\lstinline'-drf' draws a box around them).
+\item Each \textbf{named definition} used in the expression is surrounded by a dashed frame labelled with its name and the values of its arguments (here \lstinline'smooth(0.9f)' and \lstinline'gain'), unless it only contains wires. The groups of the user interface (\lstinline'hgroup', \lstinline'vgroup', \lstinline'tgroup') are drawn the same way.
+\item In a recursive composition \lstinline'A~B', the feedback block \lstinline'B' is placed \textbf{above} \lstinline'A' and drawn \textbf{from right to left}: its input arrows point to the left and its black dot is in the bottom right corner. Each output of \lstinline'A' going back to \lstinline'B' carries a small \textbf{square sign} on the wire, which stands for the implicit one-sample delay of the feedback loop. In Figure \ref{figure-svgdiagram}, \lstinline'*(0.9f)' is the feedback block of \lstinline'+'.
+\end{itemize}
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Appearance} & \textbf{Represents} \\
+		\hline
+		orange box & a number, with no input and one output \\
+		blue box & a primitive, a foreign function or constant, a waveform \\
+		teal box & a user interface element, or a soundfile \\
+		green box \texttt{[n] x} & the parameter \texttt{x} of an unapplied abstraction \\
+		dark blue box & a folded sub-diagram, drawn in a separate file \\
+		white triangle & an inverter, i.e. \texttt{*(-1)} \\
+		\hline
+	\end{tabular}
+\caption{Boxes of the SVG block-diagrams}
+	\label{table-svgboxes}
+\end{table}
+
+Note that the diagram shows the expression \textbf{after evaluation}: definitions, abstractions and pattern matching are applied, iterations are expanded, and constant numerical sub-expressions are already computed. With the \lstinline'-double' option, numbers are displayed without the \lstinline'f' suffix.
+
+\paragraph{Folding large diagrams}
+
+A diagram with more than 25 boxes (by default) is \textit{folded}: instead of being expanded in place, its named sub-diagrams are drawn as dark blue boxes, and each of them is drawn in its own file of the \lstinline'foo-svg/' folder. Clicking on a folded box opens its diagram, and clicking on the background of a sub-diagram goes back to the diagram that uses it. This makes it possible to browse large programs, including the code taken from the libraries, one level at a time. Figure \ref{figure-svgfold} shows the top-level drawing of the following program:
+
+\begin{lstlisting}
+import("stdfaust.lib");
+process = dm.zita_light;
+\end{lstlisting}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{images/svgfold}
+\caption{A folded block-diagram}
+\label{figure-svgfold}
+\end{figure}
+
+\paragraph{Drawing options}
+
+The compiler options of Table \ref{table-svgoptions} control the drawing.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Option} & \textbf{Effect} \\
+		\hline
+		\texttt{-svg} & draw the block-diagram in SVG files \\
+		\texttt{-ps} & draw the block-diagram in PostScript files \\
+		\texttt{-f \farg{n}} & number of boxes beyond which a diagram is folded (default 25) \\
+		\texttt{-fc \farg{n}} & minimal complexity of a folded sub-diagram (default 2) \\
+		\texttt{-sd} & simplify the block-diagram before drawing it \\
+		\texttt{-sn} & use simple names, without the values of the arguments \\
+		\texttt{-mns \farg{n}} & maximal size of the labels (default 40 characters) \\
+		\texttt{-drf} & draw a box around the wires of a \texttt{route} \\
+		\texttt{-blur} & add a blurred shadow to the boxes \\
+		\texttt{-sc} & generate SVG files that scale to the size of their window \\
+		\hline
+	\end{tabular}
+\caption{Options controlling the SVG block-diagrams}
+	\label{table-svgoptions}
+\end{table}
+
+For instance, with \lstinline'-sd', \lstinline'10,20,30,40 :> _' is drawn as a single box \lstinline'100', and with \lstinline'-sn', the frame \lstinline'smooth(0.9f)' is labelled \lstinline'smooth'.
+
+\subsubsection{Diagram composition operations}
 Five binary \emph{composition operations} are available to combine block-diagrams: \textit{recursion}, \textit{parallel}, \textit{sequential}, \textit{split} and \textit{merge} composition. One can think of each of these composition operations as a particular way to connect two block diagrams. 
 
 \begin{rail}
