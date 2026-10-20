@@ -1,4 +1,3 @@
 
-import("stdfaust.lib");
-process = outputs(os.osc(440));
+process = _~+(1);
 

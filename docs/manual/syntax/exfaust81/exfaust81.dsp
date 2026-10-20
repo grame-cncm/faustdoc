@@ -1,3 +1,3 @@
 
-process = 3.6 : ceil;
+process = 5.3,2 : remainder;
 

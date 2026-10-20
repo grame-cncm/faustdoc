@@ -1,6 +1,3 @@
 
-import("stdfaust.lib");
-freq = hslider("freq",440,50,1000,0.1);
-gain = hslider("gain",0,0,1,0.01);
-process = os.osc(freq)*gain;
+process = par(i,8,hslider("Voice %i",0.9,0,1,0.01));
 

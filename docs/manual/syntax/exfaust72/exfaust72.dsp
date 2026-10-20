@@ -1,3 +1,3 @@
 
-process = 0.1 : log10;
+process = 0.1 : exp;
 

@@ -1,4 +1,6 @@
 
 import("stdfaust.lib");
-process = _ <: attach(_,abs : ba.linear2db : vbargraph("Level",-60,0));
+freq = hslider("freq",440,50,1000,0.1);
+gain = hslider("gain",0,0,1,0.01);
+process = tgroup("Oscillator",os.sawtooth(freq)*gain);
 

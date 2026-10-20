@@ -1,3 +1,3 @@
 
-process = 4 : sqrt;
+process = 0.1 : log10;
 

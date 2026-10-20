@@ -1,4 +1,4 @@
 
 import("stdfaust.lib");
-process = os.sawtooth(440) <: _,_,_;
+process = 440 : os.osc;
 

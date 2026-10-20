@@ -1,3 +1,3 @@
 
-process = -0.5 : abs;
+process = 2,4 : pow;
 

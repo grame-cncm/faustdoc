@@ -1,4 +1,3 @@
 
-import("stdfaust.lib");
-process = no.noise*checkbox("gate");
+process = @(hslider("N",1,1,20,1));
 

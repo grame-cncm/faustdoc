@@ -1,3 +1,3 @@
 
-process = route(2,2,1,2,2,1);
+process = _,_ <: !,_,_,!; 
 

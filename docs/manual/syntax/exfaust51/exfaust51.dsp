@@ -1,3 +1,3 @@
 
-process = ^(2);
+process = *(0.5);
 

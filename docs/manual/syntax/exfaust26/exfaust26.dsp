@@ -1,3 +1,3 @@
 
-process = @(10);
+process = _';
 
