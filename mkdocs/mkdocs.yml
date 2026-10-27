@@ -92,6 +92,7 @@ extra_css:
 
 extra_javascript:
   - '/js/faust-web-component.js'
+  - '/js/faust-keys.js'
 
 markdown_extensions:
     - mdx_math
