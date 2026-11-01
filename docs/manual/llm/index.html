@@ -338,6 +338,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#syntax-traps-to-give-the-model" class="nav-link">Syntax Traps to Give the Model</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#using-library-documentation-with-llms" class="nav-link">Using Library Documentation with LLMs</a>
               <ul class="nav flex-column">
               </ul>
@@ -468,6 +472,19 @@ faust -svg mypatch.dsp
 existence, arity, routing, and many feedback-shape errors. It cannot prove
 musical taste, correct parameter scaling, intended units, stability for every
 parameter trajectory, or whether the best library primitive was chosen.</p>
+<h2 id="syntax-traps-to-give-the-model">Syntax Traps to Give the Model</h2>
+<p>These are the points of syntax that cost blind coding agents the most attempts
+when they wrote some twenty effects and synthesizers in Faust. They are short
+enough to be pasted into a prompt or a project instruction file.</p>
+<ul>
+<li><strong><code>~</code> adds one sample.</strong> A feedback path has an implicit delay of one sample.
+  A loop of <code>N</code> samples is <code>(+ : @(N - 1)) ~ *(g)</code>. Counting <code>N</code> tunes a string
+  flat, and spoils an allpass section.</li>
+<li><strong><code>-(x)</code> is not a negation.</strong> As an argument it is the section <code>_ - x</code>, which
+  keeps an input of its own, so <code>*(-(x))</code> has two inputs. Write <code>*(0 - x)</code>.</li>
+<li><strong>A <code>waveform</code> carries its size.</strong> <code>waveform{...}</code> is two signals, so the table
+  is <code>rdtable(waveform{...}, i)</code>, without <code>n</code>.</li>
+</ul>
 <h2 id="using-library-documentation-with-llms">Using Library Documentation with LLMs</h2>
 <p>LLMs are much more reliable when they can consult the actual Faust library
 documentation instead of relying on memory. A practical retrieval workflow is:</p>

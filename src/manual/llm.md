@@ -113,6 +113,20 @@ existence, arity, routing, and many feedback-shape errors. It cannot prove
 musical taste, correct parameter scaling, intended units, stability for every
 parameter trajectory, or whether the best library primitive was chosen.
 
+## Syntax Traps to Give the Model
+
+These are the points of syntax that cost blind coding agents the most attempts
+when they wrote some twenty effects and synthesizers in Faust. They are short
+enough to be pasted into a prompt or a project instruction file.
+
+- **`~` adds one sample.** A feedback path has an implicit delay of one sample.
+  A loop of `N` samples is `(+ : @(N - 1)) ~ *(g)`. Counting `N` tunes a string
+  flat, and spoils an allpass section.
+- **`-(x)` is not a negation.** As an argument it is the section `_ - x`, which
+  keeps an input of its own, so `*(-(x))` has two inputs. Write `*(0 - x)`.
+- **A `waveform` carries its size.** `waveform{...}` is two signals, so the table
+  is `rdtable(waveform{...}, i)`, without `n`.
+
 ## Using Library Documentation with LLMs
 
 LLMs are much more reliable when they can consult the actual Faust library
