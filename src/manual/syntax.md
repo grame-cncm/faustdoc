@@ -278,7 +278,7 @@ process = _ <: (smooth(0.9) * gain), (*(-1) : @(10));
 | orange box                   | a [number](#numbers), with no input and one output                                                   |
 | blue box                     | a [primitive](#primitives) (`+`, `*`, `@`, `mem`, `sin`, `rdtable`, `select2`, etc.), a [foreign function, variable or constant](#foreign-expressions), or a [`waveform`](#waveform-primitive) |
 | teal box                     | a [user interface element](#user-interface-primitives-and-configuration), with its parameters, or a [`soundfile`](#soundfile-primitive) |
-| green box labelled `[n] x`   | the parameter `x` of an [abstraction](#abstractions) that has not been applied                        |
+| green box labelled `[n] x`   | the parameter `x` of an [abstraction](#abstractions) that has not been applied (see [Unapplied Abstractions in a Diagram](#unapplied-abstractions-in-a-diagram) below) |
 | dark blue box                | a *folded* sub-diagram, drawn in a separate file (see [Folding](#folding-large-diagrams) below)       |
 | white triangle with a circle | an inverter, i.e. `*(-1)`                                                                            |
 
@@ -287,6 +287,30 @@ process = _ <: (smooth(0.9) * gain), (*(-1) : @(10));
 * In a [recursive composition](#recursive-composition) `A~B`, the feedback block `B` is placed **above** `A` and drawn **from right to left**: its input arrows point to the left and its black dot is in the bottom right corner. Each output of `A` going back to `B` carries a small **square sign** on the wire, which stands for the implicit one-sample delay of the feedback loop. In the example above, `*(0.9f)` is the feedback block of `+`.
 
 Note that the diagram shows the expression **after evaluation**: definitions, abstractions and [pattern matching](#pattern-matching) are applied, [iterations](#iterations) are expanded, and constant numerical sub-expressions are already computed. With the `-double` option, numbers are displayed without the `f` suffix.
+
+##### Unapplied Abstractions in a Diagram
+
+An abstraction can only be expanded when it is applied to arguments. When it is not ([unapplied abstraction](#unapplied-abstractions)), the compiler draws it with *slots*: green boxes labelled `[n] x`, where `x` is the name of a parameter and `n` the number the compiler gave to this parameter. For example:
+
+<!-- faust-run -->
+```
+process(x,y) = x + y;
+```
+<!-- /faust-run -->
+
+`process(x,y) = x + y` is the abstraction `\(x,y).(x+y)`, a block with two inputs and one output. Its diagram is the sequential composition of two parts:
+
+* On the left, one **input slot** per parameter, in the order of the declaration: `[1] x` then `[2] y`. Each input slot has one input and no output. It receives a signal entering the abstraction: the first input of `process` is bound to `x`, the second to `y`.
+* On the right, the **body** `x + y`, that is `(x, y) : +`. Each occurrence of a parameter in the body is an **output slot**, with no input and one output, which produces the signal bound to this parameter.
+
+No wire connects an input slot to the output slots of the same parameter: the number is the link. The signal that enters `[1] x` on the left is the one that leaves every `[1] x` box on the right. Consequently:
+
+* A parameter used several times appears several times in the body: with `f(x) = x*x`, `[1] x` is drawn once as an input slot and twice as an output slot, feeding both inputs of `*`.
+* A parameter that is not used only appears as an input slot, and its signal is discarded.
+* The order of the output slots follows the body, not the declaration: `process(x,y) = y + x` draws `[2] y` above `[1] x` before the `+`.
+* The numbers are given in the order in which the compiler meets the parameters in the whole program, so they distinguish parameters with the same name: in `f(x) = x*x; g(x) = x+1; process = f, g;`, the parameter of `f` is `[1] x` and the one of `g` is `[2] x`.
+
+A composition does not apply an abstraction: with `f(x) = x*x`, `process = _ : f` connects the wire to `f`, which is still drawn with its slots, inside a frame labelled `f`. An abstraction without a name, such as `\(x,y).(x+y)` written directly in an expression, is surrounded by a dashed frame labelled `Abstraction`. Once the abstraction is applied, as in `process = f(_)`, the slots disappear: the parameter is replaced by its argument.
 
 ##### Folding Large Diagrams
 
