@@ -1,10 +1,8 @@
 
-import("stdfaust.lib");
-ar(a,r,g) = v
-letrec {
-  'n = (n+1) * (g<=g');
-  'v = max(0, v + (n<a)/a - (n>=a)/r) * (g<=g');
+pink = f : + ~ g 
+with {
+  f(x) = 0.04957526213389*x - 0.06305581334498*x' + 0.01483220320740*x'';
+  g(x) = 1.80116083982126*x - 0.80257737639225*x';
 };
-gate = button("gate");
-process = os.osc(440)*ar(1000,1000,gate);
+process = pink;
 

@@ -1,5 +1,4 @@
 
 import("stdfaust.lib");
-level = 1;
-process = ve.autowah(level),ve.autowah(level);
+process = os.osc(440),os.sawtooth(550),os.triangle(660);
 

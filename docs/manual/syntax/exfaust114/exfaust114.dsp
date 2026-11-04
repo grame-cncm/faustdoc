@@ -1,3 +1,4 @@
 
-process = par(i,8,hslider("Voice %i",0.9,0,1,0.01));
+import("stdfaust.lib");
+process = _ <: attach(_,abs : ba.linear2db : hbargraph("Level",-60,0));
 

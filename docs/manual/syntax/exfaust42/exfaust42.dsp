@@ -1,3 +1,3 @@
 
-process = _+_;
+process = +;
 

@@ -1,4 +1,5 @@
 
 import("stdfaust.lib");
-process = 440 : os.osc;
+level = 1;
+process = par(i,2,ve.autowah(level));
 

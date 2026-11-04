@@ -1,3 +1,3 @@
 
-process = 1 >> 2;
+process = 1 << 2;
 

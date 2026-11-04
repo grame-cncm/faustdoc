@@ -1,3 +1,3 @@
 
-process = @(hslider("N",1,1,20,1));
+process = @(hslider("N",1,1,10,1));
 

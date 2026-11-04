@@ -1,4 +1,4 @@
 
-import("stdfaust.lib");
-process = outputs(os.osc(440));
+a1 = 0.999; // the pole
+process = +~*(a1);
 

@@ -2,5 +2,5 @@
 import("stdfaust.lib");
 drive = 0.6;
 offset = 0;
-process = par(i,2,ef.cubicnl(drive,offset)) <: par(i,2,dm.zita_light);
+process = ef.cubicnl(drive,offset) <: dm.zita_light;
 

@@ -1,4 +1,3 @@
 
-a1 = 0.999; // the pole
-process = +~*(a1);
+process = _~+(1);
 

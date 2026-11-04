@@ -1,4 +1,4 @@
 
 import("stdfaust.lib");
-process = no.noise*checkbox("gate");
+process = no.noise*button("gate");
 

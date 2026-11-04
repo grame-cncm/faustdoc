@@ -1,6 +1,7 @@
 
 import("stdfaust.lib");
-freq = hslider("freq",440,50,1000,0.1);
-gain = hslider("gain",0,0,1,0.01);
-process = vgroup("Oscillator",os.sawtooth(freq)*gain);
+oscGroup(x) = hgroup("Oscillator",x);
+freq = oscGroup(vslider("freq",440,50,1000,0.1));
+gain = oscGroup(vslider("gain",0,0,1,0.01));
+process = os.sawtooth(freq)*gain;
 

@@ -1,5 +1,5 @@
 
 import("stdfaust.lib");
-repeat(fx) = fx : fx;
-process = repeat(dm.zita_light); 
+mono = \(fx).(_ <: fx :> _);
+process = mono(dm.zita_light);
 
