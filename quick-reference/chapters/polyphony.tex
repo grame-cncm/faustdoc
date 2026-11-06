@@ -80,6 +80,8 @@ With the following code, note that a polyphonic instrument may be used outside o
 
 The \code{mydsp_poly} class is also ready for MIDI control and can react to {\it keyon/keyoff} and {\it pitchwheel} messages. Other MIDI control parameters can directly be added in the DSP source code. 
 
+Each voice remembers the MIDI channel of the note that started it. A \emph{keyoff} message releases the voice playing that pitch on its own channel, so the same note held on two channels uses two voices, released separately. The \emph{All Notes Off} (CC 123) message releases, and the \emph{All Sound Off} (CC 120) message immediately mutes, only the voices started on its channel. To play only the notes of one channel, see the \lstinline'[midichannel:n]' option and the \code{--midi-channel} parameter in chapter \ref{midi}.
+
 \section{Deploying the polyphonic instrument}
 
 Several architecture files and associated scripts have been updated to handle polyphonic instruments:
@@ -87,6 +89,8 @@ Several architecture files and associated scripts have been updated to handle po
 As an example on macOS, the script \code{faust2caqt foo.dsp} can be used to create a polyphonic CoreAudio/Qt application. The desired number of voices is either declared via \code{nvoices} metadata or changed with the \code{-nvoices num} additional parameter\footnote{The \code{-nvoices} parameter takes precedence over the metadata value.}. MIDI control is activated using the \code{-midi} parameter. 
 
 The number of allocated voices can possibly be changed at runtime using the \code{-nvoices} parameter to change the default value (so using \code{./foo -nvoices 16} for instance). 
+
+The received MIDI channel can be chosen the same way with the \code{--midi-channel} parameter (so using \code{./foo --midi-channel 2} for instance).
 
 Several other scripts have been adapted using the same conventions.
 

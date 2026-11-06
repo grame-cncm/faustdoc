@@ -27,11 +27,25 @@ A special \lstinline'[midi:xxx yyy...]' metadata entry needs to be added to the 
 
 - \lstinline'[midi:keypress pitch]' in a slider or bargraph will register the UI element's state-variable to be driven by the MIDI key-pressure (an integer between 0 and 127) from MIDI key,
 
-- \lstinline'[midi:pgm num]' in a slider or bargraph will map the UI element value to the progchange value, so \emph{progchange} message with the same \emph{num} value will be sent. When used with a button or checkbox, 1 will send the \emph{progchange} message with \emph{num} value, 0 will send nothing,
+- \lstinline'[midi:pgm]' in a slider or nentry will use the UI element range: a received \emph{progchange} value inside this range sets the UI element, and moving the UI element sends the corresponding \emph{progchange} message,
 
-- \lstinline'[midi:chanpress num]' in a slider or bargraph will map the UI element value to the chanpress value, so \emph{chanpress} message with the same \emph{num} value will be sent. When used with a button or checkbox, 1 will send the \emph{chanpress} message with \emph{num} value, 0 will send nothing,
+- \lstinline'[midi:chanpress]' in a slider or bargraph will map the UI element value to (0, 127) range, driven by the MIDI channel pressure. When used with a button or checkbox, 1 will be mapped to 127, 0 will be mapped to 0,
 
 - \lstinline'[midi:pitchwheel]' in a slider or bargraph will map the UI element value to (0,16383) range. When used with a button or checkbox, 1 will be mapped to 16383, 0 will be mapped to 0.
+
+\section{MIDI channels}
+
+All the metadata above accept an optional MIDI channel as last parameter, for instance \lstinline'[midi:ctrl 7 2]', \lstinline'[midi:keyon 60 2]' or \lstinline'[midi:pitchwheel 2]'. The UI element then only receives the messages of this channel, and only sends its messages on this channel. Channels are numbered from 1 to 16, and channel 0 (or no channel) means all channels.
+
+A whole program, including its polyphonic voices (see chapter \ref{poly}), can be restricted to a single channel with the \lstinline'[midichannel:n]' option (or the \code{midichannel} metadata):
+
+\begin{lstlisting}
+declare options "[midi:on][midichannel:2]";
+\end{lstlisting}
+
+Notes, controllers, program change, pressure and pitch-bend messages received on another channel are then ignored. Clock, start, stop and SysEx messages are always received, and the messages sent by the program are not affected. With \lstinline'[midichannel:2]', a UI element declared with \lstinline'[midi:ctrl 7 3]' never receives anything: the channel of a UI element should then be the program channel, or 0.
+
+The standalone applications built with the \code{-midi} option of the \code{faust2xxx} scripts accept a \code{--midi-channel n} parameter at runtime (so using \code{./foo --midi-channel 2} for instance), which takes precedence over the metadata value. Plugin architectures do not apply it, since the host already routes the MIDI channels to each instrument.
 
 \section{A Simple Example}
 
