@@ -378,6 +378,14 @@
             </li>
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#receiving-a-single-midi-channel" class="nav-link">Receiving a Single MIDI Channel</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#choosing-the-channel-when-starting-an-application" class="nav-link">Choosing the Channel When Starting an Application</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#midi-polyphony-support" class="nav-link">MIDI Polyphony Support</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="3"><a href="#standard-polyphony-parameters" class="nav-link">Standard Polyphony Parameters</a>
@@ -385,6 +393,10 @@
               </ul>
             </li>
             <li class="nav-item" data-level="3"><a href="#configuring-and-activating-polyphony" class="nav-link">Configuring and Activating Polyphony</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#polyphony-and-midi-channels" class="nav-link">Polyphony and MIDI Channels</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -410,8 +422,6 @@
             <div class="col-md-9 main-container" role="main">
 
 <h1 id="midi-and-polyphony-support">MIDI and Polyphony Support</h1>
-<!-- TODO: something should be said about MIDI channels -->
-
 <p>Similarly to <a href="../osc/">OSC</a>, several Faust architectures also provide MIDI support. This allows Faust applications to be controlled from any MIDI device (or to control MIDI devices). MIDI is also the preferred way to control polyphonic instruments.</p>
 <!-- TODO: more about link between MIDI and polyphony in general -->
 
@@ -422,7 +432,7 @@
 <p>or by using the <code>-midi</code> option in most <a href="../tools/"><code>faust2xx</code></a> scripts.</p>
 <!-- TODO: the tables indicating which architectures implement MIDI support should be placed here. -->
 
-<p>MIDI control is configured in Faust using <a href="../syntax/#metadata">metadata</a> in <a href="../syntax/#user-interface-primitives-and-configuration">UI elements</a>. MIDI channels from 1 to 16 can be used at reception or sending time. <strong>By convention, using the channel = 0 value (or no channel setting) means "all channels".</strong> That is, at reception time, MIDI messages received on all channels can be used to control a given parameter, and at sending time, the MIDI message associated to a parameter will be sent on all channels.</p>
+<p>MIDI control is configured in Faust using <a href="../syntax/#metadata">metadata</a> in <a href="../syntax/#user-interface-primitives-and-configuration">UI elements</a>. MIDI channels from 1 to 16 can be used at reception or sending time. <strong>By convention, using the channel = 0 value (or no channel setting) means "all channels".</strong> That is, at reception time, MIDI messages received on all channels can be used to control a given parameter, and at sending time, the MIDI message associated to a parameter will be sent on all channels. To make a whole program (including its polyphonic voices) respond to a single channel, see <a href="#receiving-a-single-midi-channel">Receiving a Single MIDI Channel</a>.</p>
 <p>MIDI metadata are decoded by a special architecture that parses incoming MIDI messages and updates the appropriate control parameters, or sends MIDI messages when the UI elements (i.e., sliders, buttons, etc.) are moved. </p>
 <p>All MIDI configuration metadata in Faust follow the following format:</p>
 <pre><code>[midi:xxx yyy...]
@@ -679,6 +689,37 @@ process = os.osc(8*freq(front(clocker))) * play;
 </div>
 <!-- /faust-run -->
 
+<h2 id="receiving-a-single-midi-channel">Receiving a Single MIDI Channel</h2>
+<p>The channel given in the metadata above concerns one control. To make a whole program respond to a single MIDI channel, for instance a synthesizer sharing a keyboard or a sequencer with other instruments, the channel can be declared in the <a href="../syntax/#standard-metadata">standard <code>options</code> metadata</a>:</p>
+<pre><code>declare options &quot;[midi:on][midichannel:2]&quot;;
+</code></pre>
+<p>The <code>declare midichannel "2";</code> form is also accepted. Channels are numbered from 1 to 16, and 0 (the default) means all channels. The filter is applied before the MIDI messages reach the program:</p>
+<ul>
+<li>notes, controllers (including RPN and NRPN), program changes, channel and key pressure, and pitch-bend messages received on another channel are ignored, both by the <code>[midi:xxx]</code> controls and by the <a href="#midi-polyphony-support">polyphonic voices</a>;</li>
+<li>clock, start, stop and continue messages (see <a href="#midi-sync">MIDI Sync</a>) and SysEx messages are always received;</li>
+<li>the MIDI messages sent by the program are not affected.</li>
+</ul>
+<p>The channel of the whole program comes first: with <code>[midichannel:2]</code>, a control declared with <code>[midi:ctrl 7 3]</code> never receives anything, since channel 3 is already filtered out. The channel of a control should then be the program channel, or 0.</p>
+<p><strong>Example</strong></p>
+<p>The following polyphonic synthesizer only plays the notes received on channel 2, and its volume follows CC 7 on that channel only:</p>
+<pre><code>declare options &quot;[midi:on][nvoices:8][midichannel:2]&quot;;
+import(&quot;stdfaust.lib&quot;);
+freq = hslider(&quot;freq&quot;,200,50,1000,0.01);
+gain = hslider(&quot;gain&quot;,0.5,0,1,0.01);
+gate = button(&quot;gate&quot;);
+volume = hslider(&quot;volume[midi:ctrl 7]&quot;,0.5,0,1,0.01) : si.smoo;
+envelope = en.adsr(0.01,0.01,0.8,0.1,gate)*gain;
+process = os.sawtooth(freq)*envelope*volume &lt;: _,_;
+</code></pre>
+<h3 id="choosing-the-channel-when-starting-an-application">Choosing the Channel When Starting an Application</h3>
+<p>The standalone applications built with the <code>-midi</code> option of the <a href="../tools/"><code>faust2xx</code></a> scripts based on the ALSA, CoreAudio, JACK, NetJack, PipeWire, PortAudio, RtAudio and miniaudio architectures (for instance <code>faust2jackconsole</code>, <code>faust2jaqt</code>, <code>faust2caqt</code>, <code>faust2paconsole</code>, <code>faust2alsaconsole</code> or <code>faust2pwconsole</code>) accept a <code>--midi-channel</code> option, which takes precedence over the <code>[midichannel:N]</code> metadata:</p>
+<pre><code>faust2jackconsole -midi synth.dsp
+./synth --midi-channel 2
+</code></pre>
+<p>The option is listed by <code>./synth -h</code>. An invalid value (not a number, or outside 0..16) is reported, and replaced by 0 (all channels).</p>
+<p>The web applications generated by <a href="https://github.com/grame-cncm/faustwasm">faustwasm</a> read the same metadata. The standalone page generated with <code>faust2wasm-ts -standalone</code> has a <em>Channel</em> menu next to the MIDI input menu (the computer keyboard then plays on the chosen channel), the PWA version accepts a <code>?midichannel=N</code> parameter in its URL, and the Web Audio nodes provide <code>setMidiChannel(n)</code> and <code>getMidiChannel()</code>.</p>
+<p>In C++ code embedding a Faust program, the channel is set on the MIDI handler with <code>midi_handler::setChannel(n)</code> (or <code>MidiUI::setChannel(n)</code>), and <code>MidiMeta::getChannel(dsp, argv)</code> returns the channel given by the <code>--midi-channel</code> option or by the metadata.</p>
+<p>Plugin architectures (VST, AU, LV2, CLAP, JUCE, Max/MSP...) do not apply the <code>[midichannel:N]</code> metadata: the host already routes the MIDI channels to each instrument.</p>
 <h2 id="midi-polyphony-support">MIDI Polyphony Support</h2>
 <p>Polyphony is conveniently handled in Faust directly by Faust Architectures. Note that programming polyphonic instrument completely from scratch in Faust and without relying on architectures is also possible. In fact, this feature is indispensable if complex signal interactions between the different voices have to be described (like sympathetic strings resonance in a physical model, etc.). However, since all voices would always be computed, this approach could be too CPU costly for simpler or more limited needs. In this case describing a single voice in a Faust DSP program and externally combining several of them with a special <em>polyphonic instrument aware</em> architecture file is a better solution. Moreover, this special architecture file takes care of dynamic voice allocation and control MIDI messages decoding and mapping. </p>
 <p>Polyphony support can be added to any Faust program (as long as the target architecture supports it) simply by adding the <code>[nvoices:n]</code> metadata to the <a href="#standard-metadata">standard <code>option</code> metadata</a> where <code>n</code> is the maximum number of voices of polyphony to be allocated:</p>
@@ -786,6 +827,13 @@ process = os.sawtooth(freq)*envelope;
 <pre><code>faust2jaqt faustProgram.dsp
 </code></pre>
 <p>will generate a MIDI-controllable polyphonic synthesizer.</p>
+<h3 id="polyphony-and-midi-channels">Polyphony and MIDI Channels</h3>
+<p>Each voice of polyphony remembers the MIDI channel of the note that started it:</p>
+<ul>
+<li>a key-off message releases the voice playing that pitch on its own channel: the same note held on two channels uses two voices, released separately;</li>
+<li>the <em>All Notes Off</em> (CC 123) message releases, and the <em>All Sound Off</em> (CC 120) message immediately mutes, only the voices started on its channel. The <em>Panic</em> button of the polyphonic user interface still stops all voices.</li>
+</ul>
+<p>Combined with the <a href="#receiving-a-single-midi-channel"><code>[midichannel:N]</code> metadata or the <code>--midi-channel</code> option</a>, a polyphonic instrument only plays the notes of its own channel.</p>
 <h3 id="audio-effects-and-polyphonic-synthesizer">Audio Effects and Polyphonic Synthesizer</h3>
 <p>While audio audio effects can be added directly to the <code>process</code> line of a Faust synthesizer, for example:</p>
 <pre><code>process = os.sawtooth(freq)*envelope : reverb;
